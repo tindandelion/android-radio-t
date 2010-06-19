@@ -25,7 +25,7 @@ public class PodcastListActivity extends ListActivity {
 
 	public void setPodcastList(PodcastItem[] podcastItems) {
 		ListAdapter listAdaptor = new ArrayAdapter<PodcastItem>(this, 
-		android.R.layout.simple_list_item_1, podcastItems);
+		R.layout.podcast_list_item, R.id.podcast_item_view_number, podcastItems);
 		
 		setListAdapter(listAdaptor);
 	}

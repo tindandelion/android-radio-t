@@ -6,6 +6,7 @@ import org.dandelion.radiot.PodcastListActivity;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -33,10 +34,21 @@ public class PodcastListDisplayTest extends
 	
 	@UiThreadTest
 	public void testDisplayPodcastItem() throws Exception {
-		setPodcastListItems(new String[]{"#121"});
+		activity.setPodcastList(new PodcastItem[] {
+				new PodcastItem("#121", "19.06.2010", "Show notes")
+		});
 		
-		TextView child = (TextView) getItemViewAt(0);
-		assertEquals("#121", child.getText().toString());
+		LinearLayout element = (LinearLayout) getItemViewAt(0);
+		
+		assertEquals("#121", 
+				getTextOfElement(element, org.dandelion.radiot.R.id.podcast_item_view_number));
+		assertEquals("19.06.2010",
+				getTextOfElement(element, org.dandelion.radiot.R.id.podcast_item_view_date));
+	}
+
+	private String getTextOfElement(LinearLayout view, int elementId) {
+		TextView textView = (TextView) view.findViewById(elementId);
+		return textView.getText().toString();
 	}
 
 	private View getItemViewAt(int index) {
