@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent" android:layout_height="fill_parent" android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="wrap_content"
+	android:orientation="vertical">
 	<TextView android:id="@+id/podcast_item_view_number"
 		android:layout_width="wrap_content" android:layout_height="wrap_content"
-		android:textStyle="bold" android:textSize="24sp" />
+		android:layout_alignParentLeft="true" android:textStyle="bold"
+		android:textSize="24sp" android:text="#121" />
 	<TextView android:id="@+id/podcast_item_view_date"
 		android:layout_width="wrap_content" android:layout_height="wrap_content"
-		android:textStyle="bold" android:textSize="24sp" android:text="10.10.2010" />
+		android:layout_alignParentRight="true" android:textStyle="bold"
+		android:textSize="24sp" android:text="10.10.2010" />
 	<TextView android:id="@+id/podcast_item_view_shownotes"
 		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:layout_below="@id/podcast_item_view_number"
+		android:paddingLeft="5dp"
 		android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ultricies, augue sit amet dignissim interdum, tortor tellus aliquet lectus, nec tincidunt lectus tellus ut quam. Nam volutpat, lorem sit amet eleifend viverra, diam massa tempus odio, nec tincidunt lectus odio sit amet tellus. Quisque ac diam ligula, semper lacinia purus." />
-</LinearLayout>
+</RelativeLayout>
