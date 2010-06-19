@@ -12,15 +12,19 @@ import android.widget.TextView;
 public class PodcastListActivity extends ListActivity {
 
 	class PodcastListAdaptor extends ArrayAdapter<PodcastItem> {
+		
 		public PodcastListAdaptor(PodcastItem[] model) { 
-			super(PodcastListActivity.this, R.layout.podcast_list_item, 
-					R.id.podcast_item_view_number, model);
+			super(PodcastListActivity.this, 0, model);
 		}
 		
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			LayoutInflater inflater = getLayoutInflater();
-			View row = inflater.inflate(R.layout.podcast_list_item, parent, false);
+			View row = convertView;
+			if (row == null) {
+				LayoutInflater inflater = getLayoutInflater();
+				row = inflater.inflate(R.layout.podcast_list_item, parent, false);
+			}
+			
 			return fillRowWithData(row, getItem(position));
 		}
 
