@@ -2,10 +2,41 @@ package org.dandelion.radiot;
 
 import android.app.ListActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
+import android.widget.TextView;
 
 public class PodcastListActivity extends ListActivity {
+
+	class PodcastListAdaptor extends ArrayAdapter<PodcastItem> {
+		public PodcastListAdaptor(PodcastItem[] model) { 
+			super(PodcastListActivity.this, R.layout.podcast_list_item, 
+					R.id.podcast_item_view_number, model);
+		}
+		
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			LayoutInflater inflater = getLayoutInflater();
+			View row = inflater.inflate(R.layout.podcast_list_item, parent, false);
+			return fillRowWithData(row, getItem(position));
+		}
+
+		private View fillRowWithData(View row, PodcastItem item) {
+			setElementText(row, R.id.podcast_item_view_number, item.getNumber());
+			setElementText(row, R.id.podcast_item_view_date, item.getDate());
+			setElementText(row, R.id.podcast_item_view_shownotes, item.getShowNotes());
+			return row;
+		}
+
+		private void setElementText(View row, int resourceId,
+				String value) {
+			TextView view = (TextView) row.findViewById(resourceId);
+			view.setText(value);
+		}
+	}
 
 	/** Called when the activity is first created. */
 	@Override
@@ -17,16 +48,16 @@ public class PodcastListActivity extends ListActivity {
 
 	private PodcastItem[] samplePodcastList() {
 		return new PodcastItem[] {
-				new PodcastItem("#121"),
-				new PodcastItem("#122"),
-				new PodcastItem("#123")
+				new PodcastItem("#121", "18.06.2010", "Show notes"),
+				new PodcastItem("#122", "19.06.2010", "Show notes"),
+				new PodcastItem("#123", "20.06.2010", "Show notes")
 		};
 	}
 
 	public void setPodcastList(PodcastItem[] podcastItems) {
-		ListAdapter listAdaptor = new ArrayAdapter<PodcastItem>(this, 
-		R.layout.podcast_list_item, R.id.podcast_item_view_number, podcastItems);
-		
+		ListAdapter listAdaptor = new PodcastListAdaptor(podcastItems);
 		setListAdapter(listAdaptor);
 	}
+	
+	
 }

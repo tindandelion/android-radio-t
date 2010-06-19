@@ -44,6 +44,8 @@ public class PodcastListDisplayTest extends
 				getTextOfElement(element, org.dandelion.radiot.R.id.podcast_item_view_number));
 		assertEquals("19.06.2010",
 				getTextOfElement(element, org.dandelion.radiot.R.id.podcast_item_view_date));
+		assertEquals("Show notes", 
+				getTextOfElement(element, org.dandelion.radiot.R.id.podcast_item_view_shownotes));
 	}
 
 	private String getTextOfElement(LinearLayout view, int elementId) {
