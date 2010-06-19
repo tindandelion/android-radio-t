@@ -12,14 +12,21 @@ public class PodcastListActivity extends ListActivity {
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	
-	    setPodcastList(new String[]{"#121", "#122", "#123"});
+	    setPodcastList(samplePodcastList());
 	}
 
-	public void setPodcastList(String[] items) {
-		ListAdapter listAdaptor = new ArrayAdapter<String>(this, 
-		android.R.layout.simple_list_item_1, items);
+	private PodcastItem[] samplePodcastList() {
+		return new PodcastItem[] {
+				new PodcastItem("#121"),
+				new PodcastItem("#122"),
+				new PodcastItem("#123")
+		};
+	}
+
+	public void setPodcastList(PodcastItem[] podcastItems) {
+		ListAdapter listAdaptor = new ArrayAdapter<PodcastItem>(this, 
+		android.R.layout.simple_list_item_1, podcastItems);
 		
 		setListAdapter(listAdaptor);
 	}
-
 }

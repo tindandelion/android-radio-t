@@ -1,5 +1,6 @@
 package org.dandelion.radiot.test;
 
+import org.dandelion.radiot.PodcastItem;
 import org.dandelion.radiot.PodcastListActivity;
 
 import android.test.ActivityInstrumentationTestCase2;
@@ -47,7 +48,11 @@ public class PodcastListDisplayTest extends
 	}
 
 	private void setPodcastListItems(String[] items) {
-		activity.setPodcastList(items);
+		PodcastItem podcastItems[] = new PodcastItem[items.length]; 
+		for (int i = 0; i < items.length; i++) {
+			podcastItems[i] = new PodcastItem(items[i]);
+		}
+		activity.setPodcastList(podcastItems);
 	}
 	
 }
