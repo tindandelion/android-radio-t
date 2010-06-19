@@ -2,7 +2,6 @@ package org.dandelion.radiot;
 
 import android.app.ListActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 
