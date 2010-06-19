@@ -38,7 +38,7 @@ public class PodcastListDisplayTest extends
 				new PodcastItem("#121", "19.06.2010", "Show notes")
 		});
 		
-		LinearLayout element = (LinearLayout) getItemViewAt(0);
+		View element = getItemViewAt(0);
 		
 		assertEquals("#121", 
 				getTextOfElement(element, org.dandelion.radiot.R.id.podcast_item_view_number));
@@ -48,7 +48,7 @@ public class PodcastListDisplayTest extends
 				getTextOfElement(element, org.dandelion.radiot.R.id.podcast_item_view_shownotes));
 	}
 
-	private String getTextOfElement(LinearLayout view, int elementId) {
+	private String getTextOfElement(View view, int elementId) {
 		TextView textView = (TextView) view.findViewById(elementId);
 		return textView.getText().toString();
 	}
