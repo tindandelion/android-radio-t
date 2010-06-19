@@ -4,7 +4,6 @@ import org.dandelion.radiot.PodcastListActivity;
 
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
-import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
