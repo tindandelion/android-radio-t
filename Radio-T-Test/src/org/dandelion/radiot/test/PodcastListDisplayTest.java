@@ -2,33 +2,28 @@ package org.dandelion.radiot.test;
 
 import org.dandelion.radiot.PodcastItem;
 import org.dandelion.radiot.PodcastListActivity;
-import org.dandelion.radiot.PodcastListActivity.IPodcastPlayer;
 
+import android.content.Intent;
 import android.net.Uri;
-import android.test.ActivityInstrumentationTestCase2;
+import android.test.ActivityUnitTestCase;
 import android.test.UiThreadTest;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
 public class PodcastListDisplayTest extends
-		ActivityInstrumentationTestCase2<PodcastListActivity> implements
-		IPodcastPlayer {
+		ActivityUnitTestCase<PodcastListActivity> {
 
 	private PodcastListActivity activity;
-	private Uri playedPodcastUri;
 
 	public PodcastListDisplayTest() {
-		super("org.dandelion.radiot", PodcastListActivity.class);
+		super(PodcastListActivity.class);
 	}
 
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		setActivityInitialTouchMode(false);
-		activity = getActivity();
-		activity.setPodcastPlayer(this);
+		activity = startActivity(new Intent(), null, null);
 	}
 
 	@UiThreadTest
@@ -51,17 +46,21 @@ public class PodcastListDisplayTest extends
 				org.dandelion.radiot.R.id.podcast_item_view_shownotes));
 	}
 
-	public void testPlayingPodcastOnClick() throws Exception {
-		activity.runOnUiThread(new Runnable() {
-			public void run() {
-				setupOneItemList(new PodcastItem("#121", "19.06.2010",
-						"Show notes", "http://link"));
-			}
-		});
-		
-		sendKeys(KeyEvent.KEYCODE_DPAD_CENTER);
+	@UiThreadTest
+	public void testStartPlayActivityOnClick() throws Exception {
+		View listItem = setupOneItemList(new PodcastItem("#121", "19.06.2010",
+				"Show notes", "http://link"));
 
-		assertPlayedPodcastAtLink("http://link");
+		clickOnItem(listItem);
+		Intent intent = getStartedActivityIntent();
+
+		assertEquals("audio/mp3", intent.getType());
+		assertEquals("http://link", intent.getDataString());
+		assertEquals(Intent.ACTION_VIEW, intent.getAction());
+	}
+
+	private void clickOnItem(View listItem) {
+		getListView().performItemClick(listItem, 0, 0);
 	}
 
 	private View setupOneItemList(PodcastItem item) {
@@ -87,10 +86,5 @@ public class PodcastListDisplayTest extends
 	}
 
 	public void playPodcastUri(Uri uri) {
-		playedPodcastUri = uri;
-	}
-
-	private void assertPlayedPodcastAtLink(String link) {
-		assertEquals(Uri.parse(link), playedPodcastUri);
 	}
 }

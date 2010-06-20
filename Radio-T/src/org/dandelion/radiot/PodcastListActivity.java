@@ -4,7 +4,6 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,18 +12,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class PodcastListActivity extends ListActivity {
-
-	public interface IPodcastPlayer {
-		void playPodcastUri(Uri uri);
-	}
-
-	class PodcastPlayer implements IPodcastPlayer {
-		public void playPodcastUri(Uri uri) {
-			Intent intent = new Intent(Intent.ACTION_VIEW);
-			intent.setDataAndType(uri, "audio/mp3");
-			startActivity(intent);
-		}
-	}
 
 	class PodcastListAdapter extends ArrayAdapter<PodcastItem> {
 
@@ -60,15 +47,12 @@ public class PodcastListActivity extends ListActivity {
 
 	private static final String LINK = "http://radio-t.com/downloads/rt_podcast190.mp3";
 
-	private IPodcastPlayer podcastPlayer;
 	private PodcastListAdapter listAdapter;
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		setPodcastPlayer(new PodcastPlayer());
 		setPodcastList(samplePodcastList());
 	}
 
@@ -87,14 +71,16 @@ public class PodcastListActivity extends ListActivity {
 		setListAdapter(listAdapter);
 	}
 
-	public void setPodcastPlayer(IPodcastPlayer player) {
-		podcastPlayer = player;
-	}
-
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
-		podcastPlayer.playPodcastUri(listAdapter.getItem(position)
+		playPodcast(listAdapter.getItem(position)
 				.getAudioUri());
+	}
+
+	private void playPodcast(Uri uri) {
+		Intent intent = new Intent(Intent.ACTION_VIEW);
+		intent.setDataAndType(uri, "audio/mp3");
+		startActivity(intent);
 	}
 }
