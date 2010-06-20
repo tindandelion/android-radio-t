@@ -1,8 +1,10 @@
 package org.dandelion.radiot;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +17,14 @@ public class PodcastListActivity extends ListActivity {
 	public interface IPodcastPlayer {
 		void playPodcastUri(Uri uri);
 	}
-	
+
 	class PodcastPlayer implements IPodcastPlayer {
 		public void playPodcastUri(Uri uri) {
-
+			Intent intent = new Intent(Intent.ACTION_VIEW);
+			intent.setDataAndType(uri, "audio/mp3");
+			startActivity(intent);
 		}
 	}
-
 
 	class PodcastListAdapter extends ArrayAdapter<PodcastItem> {
 
@@ -64,16 +67,19 @@ public class PodcastListActivity extends ListActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		setPodcastPlayer(new PodcastPlayer());
 		setPodcastList(samplePodcastList());
 	}
 
 	private PodcastItem[] samplePodcastList() {
 		return new PodcastItem[] {
-				new PodcastItem("#121", "18.06.2010", "Show notes for 121", LINK),
-				new PodcastItem("#122", "19.06.2010", "Show notes for 122", LINK),
-				new PodcastItem("#123", "20.06.2010", "Show notes for 123", LINK) };
+				new PodcastItem("#121", "18.06.2010", "Show notes for 121",
+						LINK),
+				new PodcastItem("#122", "19.06.2010", "Show notes for 122",
+						LINK),
+				new PodcastItem("#123", "20.06.2010", "Show notes for 123",
+						LINK) };
 	}
 
 	public void setPodcastList(PodcastItem[] podcastItems) {
