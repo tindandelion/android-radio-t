@@ -1,5 +1,7 @@
 package org.dandelion.radiot;
 
+import java.util.ArrayList;
+
 import android.app.ListActivity;
 import android.content.Intent;
 import android.net.Uri;
@@ -12,11 +14,18 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class PodcastListActivity extends ListActivity {
+	public interface IPodcastProvider {
+		public abstract void retrievePodcasts(PodcastListAdapter listAdapter);
+	}	
 
-	class PodcastListAdapter extends ArrayAdapter<PodcastItem> {
+	class PodcastListAdapter extends ArrayAdapter<PodcastInfo> {
 
-		public PodcastListAdapter(PodcastItem[] model) {
+		public PodcastListAdapter(PodcastInfo[] model) {
 			super(PodcastListActivity.this, 0, model);
+		}
+		
+		public PodcastListAdapter() {
+			super(PodcastListActivity.this, 0, new ArrayList<PodcastInfo>());
 		}
 
 		@Override
@@ -31,7 +40,7 @@ public class PodcastListActivity extends ListActivity {
 			return fillRowWithData(row, getItem(position));
 		}
 
-		private View fillRowWithData(View row, PodcastItem item) {
+		private View fillRowWithData(View row, PodcastInfo item) {
 			setElementText(row, R.id.podcast_item_view_number, item.getNumber());
 			setElementText(row, R.id.podcast_item_view_date, item.getDate());
 			setElementText(row, R.id.podcast_item_view_shownotes, item
@@ -45,30 +54,32 @@ public class PodcastListActivity extends ListActivity {
 		}
 	}
 
-	private static final String LINK = "http://radio-t.com/downloads/rt_podcast190.mp3";
-
 	private PodcastListAdapter listAdapter;
+	private static IPodcastProvider podcastProvider;
+	
+	private static IPodcastProvider getPodcastProvider() {
+		if (podcastProvider == null) {
+			podcastProvider = new SamplePodcastProvider(); 
+		} 
+		return podcastProvider; 
+	}
+	
+	public static void usePodcastProvider(IPodcastProvider provider) {
+		podcastProvider = provider;
+	}
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setPodcastList(samplePodcastList());
-	}
-
-	private PodcastItem[] samplePodcastList() {
-		return new PodcastItem[] {
-				new PodcastItem("#121", "18.06.2010", "Show notes for 121",
-						LINK),
-				new PodcastItem("#122", "19.06.2010", "Show notes for 122",
-						LINK),
-				new PodcastItem("#123", "20.06.2010", "Show notes for 123",
-						LINK) };
-	}
-
-	public void setPodcastList(PodcastItem[] podcastItems) {
-		listAdapter = new PodcastListAdapter(podcastItems);
+		listAdapter = new PodcastListAdapter();
 		setListAdapter(listAdapter);
+		refreshPodcasts();
+	}
+	
+	public void refreshPodcasts() {
+		listAdapter.clear();
+		getPodcastProvider().retrievePodcasts(listAdapter);
 	}
 
 	@Override

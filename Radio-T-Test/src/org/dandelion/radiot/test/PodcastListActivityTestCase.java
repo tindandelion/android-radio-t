@@ -1,10 +1,10 @@
 package org.dandelion.radiot.test;
 
-import org.dandelion.radiot.PodcastItem;
+import org.dandelion.radiot.PodcastInfo;
 import org.dandelion.radiot.PodcastListActivity;
+import org.dandelion.radiot.SamplePodcastProvider;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.test.ActivityUnitTestCase;
 import android.test.UiThreadTest;
 import android.view.View;
@@ -15,6 +15,7 @@ public class PodcastListActivityTestCase extends
 		ActivityUnitTestCase<PodcastListActivity> {
 
 	private PodcastListActivity activity;
+	private SamplePodcastProvider podcastProvider;
 
 	public PodcastListActivityTestCase() {
 		super(PodcastListActivity.class);
@@ -23,6 +24,8 @@ public class PodcastListActivityTestCase extends
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
+		podcastProvider = new SamplePodcastProvider();
+		PodcastListActivity.usePodcastProvider(podcastProvider);
 		activity = startActivity(new Intent(), null, null);
 	}
 
@@ -35,7 +38,7 @@ public class PodcastListActivityTestCase extends
 
 	@UiThreadTest
 	public void testDisplayPodcastItem() throws Exception {
-		View listItem = setupOneItemList(new PodcastItem("#121", "19.06.2010",
+		View listItem = setupOneItemList(new PodcastInfo("#121", "19.06.2010",
 				"Show notes"));
 
 		assertEquals("#121", getTextOfElement(listItem,
@@ -48,7 +51,7 @@ public class PodcastListActivityTestCase extends
 
 	@UiThreadTest
 	public void testStartPlayActivityOnClick() throws Exception {
-		View listItem = setupOneItemList(new PodcastItem("#121", "19.06.2010",
+		View listItem = setupOneItemList(new PodcastInfo("#121", "19.06.2010",
 				"Show notes", "http://link"));
 
 		clickOnItem(listItem);
@@ -63,9 +66,14 @@ public class PodcastListActivityTestCase extends
 		getListView().performItemClick(listItem, 0, 0);
 	}
 
-	private View setupOneItemList(PodcastItem item) {
-		activity.setPodcastList(new PodcastItem[] { item });
+	private View setupOneItemList(PodcastInfo item) {
+		setPodcastList(new PodcastInfo[] { item });
 		return getListView().getAdapter().getView(0, null, null);
+	}
+
+	private void setPodcastList(PodcastInfo[] items) {
+		podcastProvider.setPodcastList(items);
+		activity.refreshPodcasts();
 	}
 
 	private String getTextOfElement(View view, int elementId) {
@@ -78,13 +86,10 @@ public class PodcastListActivityTestCase extends
 	}
 
 	private void setPodcastListItems(String[] items) {
-		PodcastItem podcastItems[] = new PodcastItem[items.length];
+		PodcastInfo podcastItems[] = new PodcastInfo[items.length];
 		for (int i = 0; i < items.length; i++) {
-			podcastItems[i] = new PodcastItem(items[i]);
+			podcastItems[i] = new PodcastInfo(items[i]);
 		}
-		activity.setPodcastList(podcastItems);
-	}
-
-	public void playPodcastUri(Uri uri) {
+		setPodcastList(podcastItems);
 	}
 }
