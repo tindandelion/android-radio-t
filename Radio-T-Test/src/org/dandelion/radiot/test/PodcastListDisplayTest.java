@@ -5,6 +5,7 @@ import org.dandelion.radiot.PodcastListActivity;
 
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -34,34 +35,39 @@ public class PodcastListDisplayTest extends
 
 	@UiThreadTest
 	public void testDisplayPodcastItem() throws Exception {
-		activity.setPodcastList(new PodcastItem[] { new PodcastItem("#121",
-				"19.06.2010", "Show notes") });
+		View listItem = setupOneItemList(new PodcastItem("#121",
+				"19.06.2010", "Show notes"));
 
-		View element = getItemViewAt(0);
-
-		assertEquals("#121", getTextOfElement(element,
+		assertEquals("#121", getTextOfElement(listItem,
 				org.dandelion.radiot.R.id.podcast_item_view_number));
-		assertEquals("19.06.2010", getTextOfElement(element,
+		assertEquals("19.06.2010", getTextOfElement(listItem,
 				org.dandelion.radiot.R.id.podcast_item_view_date));
-		assertEquals("Show notes", getTextOfElement(element,
+		assertEquals("Show notes", getTextOfElement(listItem,
 				org.dandelion.radiot.R.id.podcast_item_view_shownotes));
 	}
 
 	@UiThreadTest
-	public void testPlayingPodcast() throws Exception {
-		activity.setPodcastList(new PodcastItem[] { new PodcastItem("#121",
-				"19.06.2010", "Show notes", "http://link") });
+	public void testPlayingPodcastOnClick() throws Exception {
+		View listItem = setupOneItemList(new PodcastItem("#121",
+				"19.06.2010", "Show notes", "http://link"));
+		
+		listItem.performClick();
+		
+		assertOpenedMediaFile("http://link");
+	}
 
+	private void assertOpenedMediaFile(String link) {
 		fail();
+	}
+
+	private View setupOneItemList(PodcastItem item) {
+		activity.setPodcastList(new PodcastItem[] { item });
+		return getListView().getAdapter().getView(0, null, null);
 	}
 
 	private String getTextOfElement(View view, int elementId) {
 		TextView textView = (TextView) view.findViewById(elementId);
 		return textView.getText().toString();
-	}
-
-	private View getItemViewAt(int index) {
-		return getListView().getAdapter().getView(index, null, null);
 	}
 
 	private ListView getListView() {
