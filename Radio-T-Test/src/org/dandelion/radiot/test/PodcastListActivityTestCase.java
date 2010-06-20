@@ -31,7 +31,10 @@ public class PodcastListActivityTestCase extends
 
 	@UiThreadTest
 	public void testDisplayPodcastList() throws Exception {
-		setPodcastListItems(new String[] { "#121", "#122" });
+		setPodcastList(new PodcastInfo[] { 
+				new PodcastInfo("#121"),
+				new PodcastInfo("#122")
+		});
 
 		assertEquals(2, getListView().getCount());
 	}
@@ -83,13 +86,5 @@ public class PodcastListActivityTestCase extends
 
 	private ListView getListView() {
 		return activity.getListView();
-	}
-
-	private void setPodcastListItems(String[] items) {
-		PodcastInfo podcastItems[] = new PodcastInfo[items.length];
-		for (int i = 0; i < items.length; i++) {
-			podcastItems[i] = new PodcastInfo(items[i]);
-		}
-		setPodcastList(podcastItems);
 	}
 }
