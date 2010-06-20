@@ -80,7 +80,7 @@ public class PodcastListActivity extends ListActivity {
 
 	private void playPodcast(Uri uri) {
 		Intent intent = new Intent(Intent.ACTION_VIEW);
-		intent.setDataAndType(uri, "audio/mp3");
+		intent.setDataAndType(uri, "audio/mpeg");
 		startActivity(intent);
 	}
 }

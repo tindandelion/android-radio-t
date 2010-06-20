@@ -11,12 +11,12 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class PodcastListDisplayTest extends
+public class PodcastListActivityTestCase extends
 		ActivityUnitTestCase<PodcastListActivity> {
 
 	private PodcastListActivity activity;
 
-	public PodcastListDisplayTest() {
+	public PodcastListActivityTestCase() {
 		super(PodcastListActivity.class);
 	}
 
@@ -54,7 +54,7 @@ public class PodcastListDisplayTest extends
 		clickOnItem(listItem);
 		Intent intent = getStartedActivityIntent();
 
-		assertEquals("audio/mp3", intent.getType());
+		assertEquals("audio/mpeg", intent.getType());
 		assertEquals("http://link", intent.getDataString());
 		assertEquals(Intent.ACTION_VIEW, intent.getAction());
 	}
