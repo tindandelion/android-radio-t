@@ -28,6 +28,9 @@ public class PodcastInfo {
 		this(number, null, null);
 	}
 
+	public PodcastInfo() {
+	}
+
 	public String getDate() {
 		return date;
 	}
@@ -43,5 +46,9 @@ public class PodcastInfo {
 	@Override
 	public String toString() {
 		return number;
+	}
+
+	public void setNumber(String value) {
+		number = value;
 	}
 }

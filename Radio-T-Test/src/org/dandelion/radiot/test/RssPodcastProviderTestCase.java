@@ -11,12 +11,30 @@ import android.test.InstrumentationTestCase;
 
 public class RssPodcastProviderTestCase extends InstrumentationTestCase {
 
+	private RssPodcastProvider provider;
+
+	@Override
+	protected void setUp() throws Exception {
+		super.setUp();
+		provider = new RssPodcastProvider();
+	}
+
 	public void testCreateAppropriateNumberOfPodcastItems() throws Exception {
-		RssPodcastProvider provider = new RssPodcastProvider();
-		
-		List<PodcastInfo> items = provider.readRssFeed(testRssStream());
+		List<PodcastInfo> items = parseRssFeed();
 
 		assertEquals(2, items.size());
+	}
+
+	private List<PodcastInfo> parseRssFeed() throws Exception {
+		return provider.readRssFeed(testRssStream());
+	}
+
+	public void testReadingPodcastNumber() throws Exception {
+		List<PodcastInfo> items = parseRssFeed();
+		
+		PodcastInfo item = items.get(0);
+		
+		assertEquals("#191", item.getNumber());
 	}
 
 	private InputStream testRssStream() throws Exception {
