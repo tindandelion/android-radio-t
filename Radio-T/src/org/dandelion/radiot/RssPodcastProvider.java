@@ -1,46 +1,50 @@
 package org.dandelion.radiot;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import org.dandelion.radiot.PodcastListActivity.IPodcastProvider;
-import org.dandelion.radiot.PodcastListActivity.PodcastListAdapter;
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import android.net.Uri;
 
-public class RssPodcastProvider implements IPodcastProvider {
+public class RssPodcastProvider {
+
 	public class RssHandler extends DefaultHandler {
 
-	}
+		private List<PodcastInfo> podcastItems = new ArrayList<PodcastInfo>();
 
-	private Uri feedUri;
-
-	public RssPodcastProvider(Uri feedUri) {
-		this.feedUri = feedUri;
-	}
-
-	public void retrievePodcasts(PodcastListAdapter listAdapter) {
-		ArrayList<PodcastInfo> list = new ArrayList<PodcastInfo>();
-		try {
-			parseFeed(list);
-		} catch (Exception e) {
+		public List<PodcastInfo> getPodcastItems() {
+			return podcastItems;
 		}
 		
-		for (PodcastInfo info : list) {
-			listAdapter.add(info);
+		@Override
+		public void startElement(String uri, String localName, String qName,
+				Attributes attributes) throws SAXException {
+			super.startElement(uri, localName, qName, attributes);
+			if (localName.equalsIgnoreCase("item")) {
+				podcastItems.add(new PodcastInfo("1"));
+			}
 		}
+
 	}
 
-	public void parseFeed(ArrayList<PodcastInfo> list) throws Exception {
+	public List<PodcastInfo> readRssFeed(InputStream source) throws ParserConfigurationException, SAXException, IOException {
 		SAXParser parser = createParser();
 		RssHandler handler = new RssHandler();
-		parser.parse(feedUri.toString(), handler);
+		parser.parse(source, handler);
+		return handler.getPodcastItems();
 	}
 
-	private SAXParser createParser() throws Exception {
-		return SAXParserFactory.newInstance().newSAXParser();
+	private SAXParser createParser() throws ParserConfigurationException, SAXException {
+		SAXParserFactory factory = SAXParserFactory.newInstance();
+		return factory.newSAXParser();
 	}
+	
 }

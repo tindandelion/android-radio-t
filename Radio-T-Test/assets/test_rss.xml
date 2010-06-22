@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom" xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/" xmlns:media="http://search.yahoo.com/mrss/"
+	xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
+	xmlns:creativeCommons="http://backend.userland.com/creativeCommonsRssModule"
+	version="2.0">
+
+	<channel>
+		<title>Радио-Т</title>
+
+		<link>http://radio-t.com</link>
+		<description>Импровизации на Hi-Tech темы</description>
+		<lastBuildDate>Tue, 15 Jun 2010 08:12:20 +0000</lastBuildDate>
+		<generator>http://wordpress.org/?v=2.9.2</generator>
+		<language>ru</language>
+		<sy:updatePeriod>hourly</sy:updatePeriod>
+		<sy:updateFrequency>1</sy:updateFrequency>
+		<atom10:link xmlns:atom10="http://www.w3.org/2005/Atom"
+			rel="self" type="application/rss+xml" href="http://feeds.rucast.net/Radio-t" />
+		<feedburner:info xmlns:feedburner="http://rssnamespace.org/feedburner/ext/1.0"
+			uri="radio-t" />
+		<atom10:link xmlns:atom10="http://www.w3.org/2005/Atom"
+			rel="hub" href="http://pubsubhubbub.appspot.com/" />
+		<media:copyright>Creative Commons - Attribution, Noncommercial, No
+			Derivative Works 3.0 License.</media:copyright>
+		<media:thumbnail url="http://radio-t.com/logo.jpg" />
+		<media:keywords>hitech,russian,radio,t,tech,tech,news</media:keywords>
+		<media:category scheme="http://www.itunes.com/dtds/podcast-1.0.dtd">Technology/Tech News
+		</media:category>
+		<itunes:owner>
+			<itunes:email>podcast@radio-t.com</itunes:email>
+			<itunes:name>Umputun, Bobuk, Gray, Marinka</itunes:name>
+		</itunes:owner>
+		<itunes:author>Umputun, Bobuk, Gray, Marinka</itunes:author>
+		<itunes:explicit>no</itunes:explicit>
+		<itunes:image href="http://radio-t.com/logo.jpg" />
+		<itunes:keywords>hitech,russian,radio,t,tech,tech,news
+		</itunes:keywords>
+		<itunes:subtitle>Еженедельные импровизации на хай–тек темы
+		</itunes:subtitle>
+		<itunes:summary>Еженедельные импровизации на хай–тек темы
+		</itunes:summary>
+		<itunes:category text="Technology">
+			<itunes:category text="Tech News" />
+		</itunes:category>
+		<creativeCommons:license>http://creativecommons.org/licenses/by-nc-nd/3.0/
+		</creativeCommons:license>
+		<item>
+			<title>Радио-Т 191</title>
+			<link>http://radio-t.com/podcasts/radio-t-191/</link>
+			<comments>http://radio-t.com/podcasts/radio-t-191/#comments</comments>
+			<pubDate>Sun, 13 Jun 2010 01:37:22 +0000</pubDate>
+			<dc:creator>podcast@radio-t.com (Umputun, Bobuk, Gray, Marinka)
+			</dc:creator>
+			<category><![CDATA[Подкасты]]></category>
+			<category><![CDATA[Apple]]></category>
+			<category><![CDATA[Computex]]></category>
+			<category><![CDATA[iphome]]></category>
+			<category><![CDATA[Linux]]></category>
+			<category><![CDATA[safari]]></category>
+			<category><![CDATA[АТТ]]></category>
+
+			<guid isPermaLink="false">http://radio-t.com/?p=1343</guid>
+			<description><![CDATA[<p>- Нам показали  iPhone 4
+- То, что нам не показали
+- Computex 2010 с креном в таблетки
+- MS тихо делает нам приятно
+- Почему умное ПО это плохо
+- Pulse обидел NYT
+- Хакеры атaкуют AT&#38;T</p>
+<p>Спонсор этого выпуска – хостинг fastvps.ru</p>
+<p>Аудио
+radio-t.torrent
+резервный торрент</p>
+]]></description>
+			<content:encoded><![CDATA[<p>- Нам показали <a href="http://habrahabr.ru/blogs/apple/95711/"> iPhone </a>4<img class="alignright size-medium wp-image-1344" title="Apple" src="http://radio-t.com/wp-content/uploads/2010/06/alg_iphone_steve-jobs_2-300x222.jpg" alt="" width="250" /><br />
+- То, что нам<a href="http://mashable.com/2010/06/07/apple-wwdc-focus/"> не показали</a><br />
+- <a href="http://www.opennet.ru/opennews/art.shtml?num=26874">Computex 2010</a> с креном в таблетки<br />
+- <a href="http://www.opennet.ru/opennews/art.shtml?num=26921">MS </a>тихо делает нам приятно<br />
+- Почему <a href="http://java.dzone.com/articles/dont-build-software-thats-too">умное </a>ПО это плохо<br />
+- Pulse <a href="http://bits.blogs.nytimes.com/2010/06/08/times-company-objects-to-news-reader-app/">обидел </a>NYT<br />
+- Хакеры атaкуют <a href="http://www.switched.com/2010/06/10/hackers-target-atandt-ipad-users-obtain-114-000-high-profile-e-ma/">AT&amp;T</a></p>
+<p><strong><em>Спонсор этого выпуска – хостинг </em><a href="http://fastvps.ru/"><em>fastvps.ru</em></a></strong></p>
+<p><a href="http://radio-t.com/downloads/rt_podcast191.mp3">Аудио</a><br />
+<a href="http://radio-t.com/downloads/rt_podcast191.mp3.torrent">radio-t.torrent</a><br />
+<a href="http://dl.dropbox.com/u/71582/podcast.torrents/radio-t.com/rt_podcast191.mp3.torrent">резервный торрент</a></p>
+]]></content:encoded>
+			<wfw:commentRss>http://radio-t.com/podcasts/radio-t-191/feed/
+			</wfw:commentRss>
+			<slash:comments>20</slash:comments>
+			<enclosure url="http://radio-t.com/downloads/rt_podcast191.mp3"
+				length="5242880" type="audio/mpeg" />
+			<media:content url="http://radio-t.com/downloads/rt_podcast191.mp3"
+				fileSize="5242880" type="audio/mpeg" />
+			<itunes:explicit>no</itunes:explicit>
+			<itunes:subtitle> - Нам показали iPhone 4 - То, что нам не показали -
+				Computex 2010 с креном в таблетки - MS тихо делает нам приятно -
+				Почему умное ПО это плохо - Pulse обидел NYT - Хакеры атaкуют
+				AT&amp;#38;T Спонсор этого выпуска – хостинг fastvps.ru Аудио
+				radio-t.torrent р</itunes:subtitle>
+			<itunes:author>Umputun, Bobuk, Gray, Marinka</itunes:author>
+			<itunes:summary> - Нам показали iPhone 4 - То, что нам не показали -
+				Computex 2010 с креном в таблетки - MS тихо делает нам приятно -
+				Почему умное ПО это плохо - Pulse обидел NYT - Хакеры атaкуют
+				AT&amp;#38;T Спонсор этого выпуска – хостинг fastvps.ru Аудио
+				radio-t.torrent резервный торрент </itunes:summary>
+			<itunes:keywords>hitech,russian,radio,t,tech,tech,news
+			</itunes:keywords>
+		</item>
+		<item>
+			<title>Радио-Т 190</title>
+			<link>http://radio-t.com/podcasts/radio-t-190/</link>
+			<comments>http://radio-t.com/podcasts/radio-t-190/#comments</comments>
+			<pubDate>Sun, 06 Jun 2010 00:18:46 +0000</pubDate>
+			<dc:creator>podcast@radio-t.com (Umputun, Bobuk, Gray, Marinka)
+			</dc:creator>
+			<category><![CDATA[Подкасты]]></category>
+			<category><![CDATA[DB]]></category>
+			<category><![CDATA[google]]></category>
+			<category><![CDATA[Parallels Desktop Upgrade]]></category>
+			<category><![CDATA[Windows]]></category>
+			<category><![CDATA[гость]]></category>
+			<category><![CDATA[идиоты]]></category>
+
+			<guid isPermaLink="false">http://radio-t.com/?p=1329</guid>
+			<description><![CDATA[<p>- В гугле не будет виндузов. MS против
+- Почему нет миграции на W7 и как это решить
+- Джобс отвечает за все
+- Windows много среди сервизов
+- ASUS Eee Pad обещает больше, круче и позже
+- Не ходите по картам через магистрали
+- В Европе это можно
+- VoltDB no-sql без NO
+- Темы наших слушателей</p>
+<p>Аудио
+radio-t.torrent</p>
+<p>* Лог чата</p>
+]]></description>
+			<content:encoded><![CDATA[<p>- В <a href="http://lenta.ru/news/2010/06/01/refuse/">гугле</a> не будет виндузов. MS против<img class="alignright size-medium wp-image-1331" title="nowin" src="http://radio-t.com/wp-content/uploads/2010/06/Screen-shot-2010-06-05-at-7.16.22-PM-299x300.png" alt="" width="230" /><br />
+- Почему нет миграции на W7 и как это решить<br />
+- Джобс <a href="http://mashable.com/2010/06/02/steve-jobs-d8/">отвечает</a> за все<br />
+- Windows <a href="http://www.osnews.com/story/23412/Windows_Increases_Lead_in_Server_Unit_Sales">много</a> среди сервизов<br />
+- <a href="http://www.engadget.com/2010/05/31/asus-eee-pad-official-intel-culv-processors-windows-7-and-a-1/">ASUS Eee Pad</a> обещает больше, круче и позже<br />
+- <a href="http://www.switched.com/2010/05/31/woman-hit-by-car-sues-google-for-bad-directions/">Не ходите</a> по картам через магистрали<br />
+- В Европе <a href="http://techcrunch.com/2010/05/29/apple-ipad-offers-freedom-for-porn-at-least-in-one-berlin-ad/">это</a> можно<br />
+- <a href="http://www.readwriteweb.com/enterprise/2010/06/voltdb-launches-open-source-next-generation-database-management-system.php">VoltDB</a> no-sql без NO<br />
+- <a href="http://radio-t.com/temi_dlja_vipuskov/temy-dlya-190/">Темы</a> наших слушателей</p>
+<p><a href="http://radio-t.com/downloads/rt_podcast190.mp3">Аудио</a><br />
+<a href="http://radio-t.com/downloads/rt_podcast190.mp3.torrent">radio-t.torrent</a></p>
+<p>* <a href="http://chat.radio-t.com/logs/radio-t-190.html">Лог чата</a></p>
+]]></content:encoded>
+			<wfw:commentRss>http://radio-t.com/podcasts/radio-t-190/feed/
+			</wfw:commentRss>
+			<slash:comments>17</slash:comments>
+			<enclosure url="http://radio-t.com/downloads/rt_podcast190.mp3"
+				length="5242880" type="audio/mpeg" />
+			<media:content url="http://radio-t.com/downloads/rt_podcast190.mp3"
+				fileSize="5242880" type="audio/mpeg" />
+			<itunes:explicit>no</itunes:explicit>
+			<itunes:subtitle> - В гугле не будет виндузов. MS против - Почему нет
+				миграции на W7 и как это решить - Джобс отвечает за все - Windows
+				много среди сервизов - ASUS Eee Pad обещает больше, круче и позже -
+				Не ходите по картам через магистрали - В Европе это можно - VoltDB n
+			</itunes:subtitle>
+			<itunes:author>Umputun, Bobuk, Gray, Marinka</itunes:author>
+			<itunes:summary> - В гугле не будет виндузов. MS против - Почему нет
+				миграции на W7 и как это решить - Джобс отвечает за все - Windows
+				много среди сервизов - ASUS Eee Pad обещает больше, круче и позже -
+				Не ходите по картам через магистрали - В Европе это можно - VoltDB
+				no-sql без NO - Темы наших слушателей Аудио radio-t.torrent * Лог
+				чата </itunes:summary>
+			<itunes:keywords>hitech,russian,radio,t,tech,tech,news
+			</itunes:keywords>
+		</item>
+	</channel>
+</rss><!-- Dynamic page generated in 2.535 seconds. -->
+	<!--
+		Cached page generated by WP-Super-Cache on 2010-06-18 21:50:44
+	-->
