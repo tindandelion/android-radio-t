@@ -20,17 +20,17 @@ public class RssPodcastProvider {
 
 		private static final String ITEM = "item";
 
-		private List<PodcastInfo> items;
-		private PodcastInfo currentItem;
+		private List<PodcastItem> items;
+		private PodcastItem currentItem;
 
-		public List<PodcastInfo> getPodcastItems() {
+		public List<PodcastItem> getPodcastItems() {
 			return items;
 		}
 		
 		@Override
 		public void startDocument() throws SAXException {
 			super.startDocument();
-			items = new ArrayList<PodcastInfo>();
+			items = new ArrayList<PodcastItem>();
 		}
 		
 		@Override
@@ -38,7 +38,7 @@ public class RssPodcastProvider {
 				Attributes attributes) throws SAXException {
 			super.startElement(uri, localName, qName, attributes);
 			if (localName.equalsIgnoreCase(ITEM)) {
-				currentItem = new PodcastInfo();
+				currentItem = new PodcastItem();
 			}
 		}
 		
@@ -58,7 +58,7 @@ public class RssPodcastProvider {
 
 	}
 
-	public List<PodcastInfo> readRssFeed(InputStream contentStream) throws ParserConfigurationException, SAXException, IOException {
+	public List<PodcastItem> readRssFeed(InputStream contentStream) throws ParserConfigurationException, SAXException, IOException {
 		SAXParser parser = createParser();
 		RssHandler handler = new RssHandler();
 		parser.parse(contentStream, handler);

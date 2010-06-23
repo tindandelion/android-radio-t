@@ -3,7 +3,7 @@ package org.dandelion.radiot.test;
 import java.io.InputStream;
 import java.util.List;
 
-import org.dandelion.radiot.PodcastInfo;
+import org.dandelion.radiot.PodcastItem;
 import org.dandelion.radiot.RssPodcastProvider;
 
 import android.content.res.AssetManager;
@@ -20,12 +20,12 @@ public class RssPodcastProviderTestCase extends InstrumentationTestCase {
 	}
 
 	public void testCreateAppropriateNumberOfPodcastItems() throws Exception {
-		List<PodcastInfo> items = parseRssFeed();
+		List<PodcastItem> items = parseRssFeed();
 
 		assertEquals(2, items.size());
 	}
 
-	private List<PodcastInfo> parseRssFeed() throws Exception {
+	private List<PodcastItem> parseRssFeed() throws Exception {
 		return provider.readRssFeed(testRssStream());
 	}
 

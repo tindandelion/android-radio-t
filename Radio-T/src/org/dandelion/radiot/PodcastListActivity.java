@@ -18,14 +18,14 @@ public class PodcastListActivity extends ListActivity {
 		public abstract void retrievePodcasts(PodcastListAdapter listAdapter);
 	}	
 
-	class PodcastListAdapter extends ArrayAdapter<PodcastInfo> {
+	class PodcastListAdapter extends ArrayAdapter<PodcastItem> {
 
-		public PodcastListAdapter(PodcastInfo[] model) {
+		public PodcastListAdapter(PodcastItem[] model) {
 			super(PodcastListActivity.this, 0, model);
 		}
 		
 		public PodcastListAdapter() {
-			super(PodcastListActivity.this, 0, new ArrayList<PodcastInfo>());
+			super(PodcastListActivity.this, 0, new ArrayList<PodcastItem>());
 		}
 
 		@Override
@@ -40,7 +40,7 @@ public class PodcastListActivity extends ListActivity {
 			return fillRowWithData(row, getItem(position));
 		}
 
-		private View fillRowWithData(View row, PodcastInfo item) {
+		private View fillRowWithData(View row, PodcastItem item) {
 			setElementText(row, R.id.podcast_item_view_number, item.getNumber());
 			setElementText(row, R.id.podcast_item_view_date, item.getDate());
 			setElementText(row, R.id.podcast_item_view_shownotes, item

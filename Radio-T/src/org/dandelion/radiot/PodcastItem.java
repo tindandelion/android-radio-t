@@ -2,13 +2,13 @@ package org.dandelion.radiot;
 
 import android.net.Uri;
 
-public class PodcastInfo {
+public class PodcastItem {
 	private String number;
 	private String date;
 	private String showNotes;
 	private Uri audioUri;
 
-	public PodcastInfo(String number, String date, String showNotes,
+	public PodcastItem(String number, String date, String showNotes,
 			String audioLink) {
 		this.number = number;
 		this.date = date;
@@ -20,15 +20,15 @@ public class PodcastInfo {
 		return audioUri;
 	}
 
-	public PodcastInfo(String number, String date, String showNotes) {
+	public PodcastItem(String number, String date, String showNotes) {
 		this(number, date, showNotes, "");
 	}
 
-	public PodcastInfo(String number) {
+	public PodcastItem(String number) {
 		this(number, null, null);
 	}
 
-	public PodcastInfo() {
+	public PodcastItem() {
 	}
 
 	public String getDate() {

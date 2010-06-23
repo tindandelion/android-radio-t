@@ -1,6 +1,6 @@
 package org.dandelion.radiot.test;
 
-import org.dandelion.radiot.PodcastInfo;
+import org.dandelion.radiot.PodcastItem;
 import org.dandelion.radiot.PodcastListActivity;
 import org.dandelion.radiot.SamplePodcastProvider;
 
@@ -31,9 +31,9 @@ public class PodcastListActivityTestCase extends
 
 	@UiThreadTest
 	public void testDisplayPodcastList() throws Exception {
-		setPodcastList(new PodcastInfo[] { 
-				new PodcastInfo("#121"),
-				new PodcastInfo("#122")
+		setPodcastList(new PodcastItem[] { 
+				new PodcastItem("#121"),
+				new PodcastItem("#122")
 		});
 
 		assertEquals(2, getListView().getCount());
@@ -41,7 +41,7 @@ public class PodcastListActivityTestCase extends
 
 	@UiThreadTest
 	public void testDisplayPodcastItem() throws Exception {
-		View listItem = setupOneItemList(new PodcastInfo("#121", "19.06.2010",
+		View listItem = setupOneItemList(new PodcastItem("#121", "19.06.2010",
 				"Show notes"));
 
 		assertEquals("#121", getTextOfElement(listItem,
@@ -54,7 +54,7 @@ public class PodcastListActivityTestCase extends
 
 	@UiThreadTest
 	public void testStartPlayActivityOnClick() throws Exception {
-		View listItem = setupOneItemList(new PodcastInfo("#121", "19.06.2010",
+		View listItem = setupOneItemList(new PodcastItem("#121", "19.06.2010",
 				"Show notes", "http://link"));
 
 		clickOnItem(listItem);
@@ -69,12 +69,12 @@ public class PodcastListActivityTestCase extends
 		getListView().performItemClick(listItem, 0, 0);
 	}
 
-	private View setupOneItemList(PodcastInfo item) {
-		setPodcastList(new PodcastInfo[] { item });
+	private View setupOneItemList(PodcastItem item) {
+		setPodcastList(new PodcastItem[] { item });
 		return getListView().getAdapter().getView(0, null, null);
 	}
 
-	private void setPodcastList(PodcastInfo[] items) {
+	private void setPodcastList(PodcastItem[] items) {
 		podcastProvider.setPodcastList(items);
 		activity.refreshPodcasts();
 	}
