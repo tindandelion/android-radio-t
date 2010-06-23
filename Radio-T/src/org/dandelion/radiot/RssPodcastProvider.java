@@ -20,29 +20,17 @@ public class RssPodcastProvider {
 
 		private static final String ITEM = "item";
 
-		private static final String TITLE = "title";
-		
 		private List<PodcastInfo> items;
 		private PodcastInfo currentItem;
-
-		private StringBuilder builder;
 
 		public List<PodcastInfo> getPodcastItems() {
 			return items;
 		}
 		
 		@Override
-		public void characters(char[] ch, int start, int length)
-				throws SAXException {
-			super.characters(ch, start, length);
-			builder.append(ch, start, length);
-		}
-		
-		@Override
 		public void startDocument() throws SAXException {
 			super.startDocument();
 			items = new ArrayList<PodcastInfo>();
-			builder = new StringBuilder();
 		}
 		
 		@Override
@@ -51,7 +39,6 @@ public class RssPodcastProvider {
 			super.startElement(uri, localName, qName, attributes);
 			if (localName.equalsIgnoreCase(ITEM)) {
 				currentItem = new PodcastInfo();
-				builder.setLength(0);
 			}
 		}
 		
@@ -64,16 +51,9 @@ public class RssPodcastProvider {
 				return;
 			}
 			
-			if (localName.equalsIgnoreCase(TITLE)) {
-				currentItem.setNumber(extractPodcastNumber());
-			}
 			if (localName.equalsIgnoreCase(ITEM)) {
 				items.add(currentItem);
 			}
-		}
-
-		private String extractPodcastNumber() {
-			return builder.toString();
 		}
 
 	}

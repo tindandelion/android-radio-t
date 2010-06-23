@@ -29,14 +29,6 @@ public class RssPodcastProviderTestCase extends InstrumentationTestCase {
 		return provider.readRssFeed(testRssStream());
 	}
 
-	public void testReadingPodcastNumber() throws Exception {
-		List<PodcastInfo> items = parseRssFeed();
-		
-		PodcastInfo item = items.get(0);
-		
-		assertEquals("#191", item.getNumber());
-	}
-
 	private InputStream testRssStream() throws Exception {
 		AssetManager assets = getInstrumentation().getContext().getAssets();
 		return assets.open("test_rss.xml");
