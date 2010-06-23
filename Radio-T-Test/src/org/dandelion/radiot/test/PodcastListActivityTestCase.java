@@ -32,8 +32,8 @@ public class PodcastListActivityTestCase extends
 	@UiThreadTest
 	public void testDisplayPodcastList() throws Exception {
 		setPodcastList(new PodcastItem[] { 
-				new PodcastItem("#121"),
-				new PodcastItem("#122")
+				new PodcastItem(121),
+				new PodcastItem(122)
 		});
 
 		assertEquals(2, getListView().getCount());
@@ -41,7 +41,7 @@ public class PodcastListActivityTestCase extends
 
 	@UiThreadTest
 	public void testDisplayPodcastItem() throws Exception {
-		View listItem = setupOneItemList(new PodcastItem("#121", "19.06.2010",
+		View listItem = setupOneItemList(new PodcastItem(121, "19.06.2010",
 				"Show notes"));
 
 		assertEquals("#121", getTextOfElement(listItem,
@@ -54,7 +54,7 @@ public class PodcastListActivityTestCase extends
 
 	@UiThreadTest
 	public void testStartPlayActivityOnClick() throws Exception {
-		View listItem = setupOneItemList(new PodcastItem("#121", "19.06.2010",
+		View listItem = setupOneItemList(new PodcastItem(121, "19.06.2010",
 				"Show notes", "http://link"));
 
 		clickOnItem(listItem);

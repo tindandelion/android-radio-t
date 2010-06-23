@@ -41,7 +41,8 @@ public class PodcastListActivity extends ListActivity {
 		}
 
 		private View fillRowWithData(View row, PodcastItem item) {
-			setElementText(row, R.id.podcast_item_view_number, item.getNumber());
+			setElementText(row, R.id.podcast_item_view_number, "#"
+					+ item.getNumber());
 			setElementText(row, R.id.podcast_item_view_date, item.getDate());
 			setElementText(row, R.id.podcast_item_view_shownotes, item
 					.getShowNotes());
@@ -85,8 +86,7 @@ public class PodcastListActivity extends ListActivity {
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
-		playPodcast(listAdapter.getItem(position)
-				.getAudioUri());
+		playPodcast(listAdapter.getItem(position).getAudioUri());
 	}
 
 	private void playPodcast(Uri uri) {

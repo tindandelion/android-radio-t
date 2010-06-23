@@ -24,11 +24,11 @@ public class SamplePodcastProvider implements IPodcastProvider {
 
 	private static PodcastItem[] samplePodcastList() {
 		return new PodcastItem[] {
-				new PodcastItem("#121", "18.06.2010", "Show notes for 121",
+				new PodcastItem(121, "18.06.2010", "Show notes for 121",
 						SamplePodcastProvider.LINK),
-				new PodcastItem("#122", "19.06.2010", "Show notes for 122",
+				new PodcastItem(122, "19.06.2010", "Show notes for 122",
 						SamplePodcastProvider.LINK),
-				new PodcastItem("#123", "20.06.2010", "Show notes for 123",
+				new PodcastItem(123, "20.06.2010", "Show notes for 123",
 						SamplePodcastProvider.LINK) };
 	}
 
