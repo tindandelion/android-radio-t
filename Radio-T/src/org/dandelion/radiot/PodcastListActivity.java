@@ -32,7 +32,8 @@ public class PodcastListActivity extends ListActivity {
 		}
 
 		private View fillRowWithData(View row, PodcastItem item) {
-			setElementText(row, R.id.podcast_item_view_number, item.getNumber());
+			setElementText(row, R.id.podcast_item_view_number, "#"
+					+ item.getNumber());
 			setElementText(row, R.id.podcast_item_view_date, item.getDate());
 			setElementText(row, R.id.podcast_item_view_shownotes, item
 					.getShowNotes());
@@ -58,12 +59,9 @@ public class PodcastListActivity extends ListActivity {
 
 	private PodcastItem[] samplePodcastList() {
 		return new PodcastItem[] {
-				new PodcastItem("#121", "18.06.2010", "Show notes for 121",
-						LINK),
-				new PodcastItem("#122", "19.06.2010", "Show notes for 122",
-						LINK),
-				new PodcastItem("#123", "20.06.2010", "Show notes for 123",
-						LINK) };
+				new PodcastItem(121, "18.06.2010", "Show notes for 121", LINK),
+				new PodcastItem(122, "19.06.2010", "Show notes for 122", LINK),
+				new PodcastItem(123, "20.06.2010", "Show notes for 123", LINK) };
 	}
 
 	public void setPodcastList(PodcastItem[] podcastItems) {
@@ -74,8 +72,7 @@ public class PodcastListActivity extends ListActivity {
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
-		playPodcast(listAdapter.getItem(position)
-				.getAudioUri());
+		playPodcast(listAdapter.getItem(position).getAudioUri());
 	}
 
 	private void playPodcast(Uri uri) {

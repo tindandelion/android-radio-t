@@ -3,29 +3,29 @@ package org.dandelion.radiot;
 import android.net.Uri;
 
 public class PodcastItem {
-	private String number;
+	private int number;
 	private String date;
 	private String showNotes;
 	private Uri audioUri;
-
-	public PodcastItem(String number, String date, String showNotes,
+	
+	public PodcastItem(int number, String date, String showNotes,
 			String audioLink) {
 		this.number = number;
 		this.date = date;
 		this.showNotes = showNotes;
 		this.audioUri = Uri.parse(audioLink);
 	}
-
-	public Uri getAudioUri() {
-		return audioUri;
-	}
-
-	public PodcastItem(String number, String date, String showNotes) {
+	
+	public PodcastItem(int number, String date, String showNotes) {
 		this(number, date, showNotes, "");
 	}
 
-	public PodcastItem(String number) {
-		this(number, null, null);
+	public PodcastItem(int number) {
+		this(number, null, null, "");
+	}
+
+	public Uri getAudioUri() {
+		return audioUri;
 	}
 
 	public String getDate() {
@@ -36,12 +36,12 @@ public class PodcastItem {
 		return showNotes;
 	}
 
-	public String getNumber() {
+	public int getNumber() {
 		return number;
 	}
 
 	@Override
 	public String toString() {
-		return number;
+		return Integer.toString(number);
 	}
 }
