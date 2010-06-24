@@ -16,7 +16,9 @@ import android.widget.TextView;
 public class PodcastListActivityTestCase extends
 		ActivityUnitTestCase<PodcastListActivity> {
 
+	// This date is 19.06.2010 
 	private static final Date SAMPLE_DATE = new Date(110, 05, 19);
+	
 	private PodcastListActivity activity;
 	private SamplePodcastProvider podcastProvider;
 
