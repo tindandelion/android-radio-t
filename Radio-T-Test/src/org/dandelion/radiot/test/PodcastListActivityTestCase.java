@@ -59,7 +59,7 @@ public class PodcastListActivityTestCase extends
 	@UiThreadTest
 	public void testStartPlayActivityOnClick() throws Exception {
 		View listItem = setupOneItemList(new PodcastItem(121, new Date(),
-				"Show notes", "http://link"));
+				null, "http://link"));
 
 		clickOnItem(listItem);
 		Intent intent = getStartedActivityIntent();
