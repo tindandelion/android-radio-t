@@ -1,5 +1,7 @@
 package org.dandelion.radiot.test;
 
+import java.util.Date;
+
 import org.dandelion.radiot.PodcastItem;
 import org.dandelion.radiot.PodcastListActivity;
 import org.dandelion.radiot.SamplePodcastProvider;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 public class PodcastListActivityTestCase extends
 		ActivityUnitTestCase<PodcastListActivity> {
 
+	private static final Date SAMPLE_DATE = new Date(110, 05, 19);
 	private PodcastListActivity activity;
 	private SamplePodcastProvider podcastProvider;
 
@@ -41,8 +44,9 @@ public class PodcastListActivityTestCase extends
 
 	@UiThreadTest
 	public void testDisplayPodcastItem() throws Exception {
-		View listItem = setupOneItemList(new PodcastItem(121, "19.06.2010",
-				"Show notes"));
+		PodcastItem item = new PodcastItem(121, SAMPLE_DATE,
+				"Show notes", "");
+		View listItem = setupOneItemList(item);
 
 		assertEquals("#121", getTextOfElement(listItem,
 				org.dandelion.radiot.R.id.podcast_item_view_number));
@@ -54,7 +58,7 @@ public class PodcastListActivityTestCase extends
 
 	@UiThreadTest
 	public void testStartPlayActivityOnClick() throws Exception {
-		View listItem = setupOneItemList(new PodcastItem(121, "19.06.2010",
+		View listItem = setupOneItemList(new PodcastItem(121, new Date(),
 				"Show notes", "http://link"));
 
 		clickOnItem(listItem);

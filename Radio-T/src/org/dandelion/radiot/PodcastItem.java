@@ -1,23 +1,21 @@
 package org.dandelion.radiot;
 
+import java.util.Date;
+
 import android.net.Uri;
 
 public class PodcastItem {
 	private int number;
-	private String date;
+	private Date date;
 	private String showNotes;
 	private Uri audioUri;
-	
-	public PodcastItem(int number, String date, String showNotes,
+
+	public PodcastItem(int number, Date issueDate, String showNotes,
 			String audioLink) {
 		this.number = number;
-		this.date = date;
+		this.date = issueDate;
 		this.showNotes = showNotes;
 		this.audioUri = Uri.parse(audioLink);
-	}
-	
-	public PodcastItem(int number, String date, String showNotes) {
-		this(number, date, showNotes, "");
 	}
 
 	public PodcastItem(int number) {
@@ -31,7 +29,7 @@ public class PodcastItem {
 	public PodcastItem() {
 	}
 
-	public String getDate() {
+	Date getDate() {
 		return date;
 	}
 
@@ -42,10 +40,4 @@ public class PodcastItem {
 	public int getNumber() {
 		return number;
 	}
-
-	@Override
-	public String toString() {
-		return Integer.toString(number);
-	}
-
 }

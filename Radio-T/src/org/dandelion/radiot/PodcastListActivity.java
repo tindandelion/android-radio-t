@@ -1,6 +1,8 @@
 package org.dandelion.radiot;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import android.app.ListActivity;
 import android.content.Intent;
@@ -16,14 +18,14 @@ import android.widget.TextView;
 public class PodcastListActivity extends ListActivity {
 	public interface IPodcastProvider {
 		public abstract void retrievePodcasts(PodcastListAdapter listAdapter);
-	}	
+	}
 
 	class PodcastListAdapter extends ArrayAdapter<PodcastItem> {
 
 		public PodcastListAdapter(PodcastItem[] model) {
 			super(PodcastListActivity.this, 0, model);
 		}
-		
+
 		public PodcastListAdapter() {
 			super(PodcastListActivity.this, 0, new ArrayList<PodcastItem>());
 		}
@@ -41,12 +43,23 @@ public class PodcastListActivity extends ListActivity {
 		}
 
 		private View fillRowWithData(View row, PodcastItem item) {
-			setElementText(row, R.id.podcast_item_view_number, "#"
-					+ item.getNumber());
-			setElementText(row, R.id.podcast_item_view_date, item.getDate());
+			setElementText(row, R.id.podcast_item_view_number,
+					formatNumber(item.getNumber()));
+			setElementText(row, R.id.podcast_item_view_date,
+					formatDateString(item.getDate()));
 			setElementText(row, R.id.podcast_item_view_shownotes, item
 					.getShowNotes());
 			return row;
+		}
+
+		private String formatNumber(int number) {
+			return "#" + number;
+		}
+
+		private String formatDateString(Date date) {
+			SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+			String strDate = format.format(date);
+			return strDate;
 		}
 
 		private void setElementText(View row, int resourceId, String value) {
@@ -57,14 +70,14 @@ public class PodcastListActivity extends ListActivity {
 
 	private PodcastListAdapter listAdapter;
 	private static IPodcastProvider podcastProvider;
-	
+
 	private static IPodcastProvider getPodcastProvider() {
 		if (podcastProvider == null) {
-			podcastProvider = new SamplePodcastProvider(); 
-		} 
-		return podcastProvider; 
+			podcastProvider = new SamplePodcastProvider();
+		}
+		return podcastProvider;
 	}
-	
+
 	public static void usePodcastProvider(IPodcastProvider provider) {
 		podcastProvider = provider;
 	}
@@ -77,9 +90,10 @@ public class PodcastListActivity extends ListActivity {
 		setListAdapter(listAdapter);
 		refreshPodcasts();
 	}
-	
+
 	public void refreshPodcasts() {
 		listAdapter.clear();
+
 		getPodcastProvider().retrievePodcasts(listAdapter);
 	}
 
