@@ -14,44 +14,46 @@ import android.test.InstrumentationTestCase;
 public class RssFeedParserTestCase extends InstrumentationTestCase {
 
 	private RssFeedParser provider;
+	private String feedContent;
+	private List<PodcastItem> items;
 
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
 		provider = new RssFeedParser();
+		feedContent = "";
 	}
 
 	public void testCreateAppropriateNumberOfPodcastItems() throws Exception {
-		List<PodcastItem> items = parseRssFeed(twoItemsXml());
+		newFeedItem("");
+		newFeedItem("");
+		
+		items = parseRssFeed();
 
 		assertEquals(2, items.size());
 		assertNotNull(items.get(0));
 	}
-	
+
 	public void testExtractingPodcastNumber() throws Exception {
-		List<PodcastItem> items = parseRssFeed(podcastNumberRss());
+		newFeedItem("<number>Radio 192</number>");
+		
+		items = parseRssFeed();
 
 		PodcastItem item = items.get(0);
 		assertEquals(192, item.getNumber());
 	}
 
-	private String podcastNumberRss() {
-		return
-		"<rss><channel>" + 
-		"<item><number>Radio 192</number></item>" + 
-		"</channel></rss>";
+	private void newFeedItem(String itemContent) {
+		feedContent = feedContent + "<item>" + itemContent + "</item>";
 	}
 
-	private List<PodcastItem> parseRssFeed(String contents)
+	private List<PodcastItem> parseRssFeed()
 			throws SAXException, IOException {
-		InputStream stream = new ByteArrayInputStream(contents.getBytes());
+		InputStream stream = new ByteArrayInputStream(getCompleteFeed().getBytes());
 		return provider.readRssFeed(stream);
 	}
 
-	private String twoItemsXml() {
-		return
-		"<rss><channel>" + 
-		"<item></item><item></item>" + 
-		"</channel></rss>";
+	private String getCompleteFeed() {
+		return "<rss><channel>" + feedContent + "</channel></rss>";
 	}
 }

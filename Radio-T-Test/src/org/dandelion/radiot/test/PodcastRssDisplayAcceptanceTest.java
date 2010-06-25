@@ -1,3 +1,5 @@
+package org.dandelion.radiot.test;
+
 import org.dandelion.radiot.PodcastListActivity;
 
 import android.content.Intent;
@@ -12,8 +14,8 @@ public class PodcastRssDisplayAcceptanceTest extends
 		super(PodcastListActivity.class);
 	}
 
-	@UiThreadTest
-	public void testDisplayTheListOfPodcastsFromRss() throws Exception {
+	@UiThreadTest 
+	public void _testDisplayTheListOfPodcastsFromRss() throws Exception {
 		PodcastListActivity activity = startActivity(new Intent(), null, null);
 		ListView list = activity.getListView();
 
