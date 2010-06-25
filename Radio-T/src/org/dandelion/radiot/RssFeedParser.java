@@ -28,17 +28,23 @@ public class RssFeedParser {
 		RootElement root = new RootElement("rss");
 		Element channel = root.getChild("channel");
 		Element item = channel.getChild("item");
-		final PodcastItem current = new PodcastItem();
+		final PodcastItem currentItem = new PodcastItem();
 		
 		item.setEndElementListener(new EndElementListener() {
 			public void end() {
-				items.add(current.copy());
+				items.add(currentItem.copy());
 			}
 		});
 		
 		item.getChild("number").setEndTextElementListener(new EndTextElementListener() {
-			public void end(String value) {
-				current.extractPodcastNumber(value);
+			public void end(String body) {
+				currentItem.extractPodcastNumber(body);
+			}
+		});
+		
+		item.getChild("pubDate").setEndTextElementListener(new EndTextElementListener() {
+			public void end(String body) {
+				currentItem.extractPubDate(body);
 			}
 		});
 		

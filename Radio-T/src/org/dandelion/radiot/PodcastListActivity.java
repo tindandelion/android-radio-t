@@ -46,7 +46,7 @@ public class PodcastListActivity extends ListActivity {
 			setElementText(row, R.id.podcast_item_view_number,
 					formatNumber(item.getNumber()));
 			setElementText(row, R.id.podcast_item_view_date,
-					formatDateString(item.getDate()));
+					formatDateString(item.getPubDate()));
 			setElementText(row, R.id.podcast_item_view_shownotes, item
 					.getShowNotes());
 			return row;
