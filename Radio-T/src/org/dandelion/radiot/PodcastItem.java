@@ -53,6 +53,7 @@ public class PodcastItem implements Cloneable {
 	}
 
 	public void extractPodcastNumber(String value) {
+		//TODO: Check errors while extracting number 
 		Matcher matcher = NUMBER_PATTERN.matcher(value);
 		matcher.find();
 		number = Integer.parseInt(matcher.group());
