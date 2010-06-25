@@ -40,4 +40,12 @@ public class PodcastItem {
 	public int getNumber() {
 		return number;
 	}
+
+	public PodcastItem copy() {
+		try {
+			return (PodcastItem) clone();
+		} catch (CloneNotSupportedException e) {
+			return null;
+		}
+	}
 }

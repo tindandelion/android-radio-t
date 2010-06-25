@@ -4,19 +4,19 @@ import java.io.InputStream;
 import java.util.List;
 
 import org.dandelion.radiot.PodcastItem;
-import org.dandelion.radiot.RssPodcastProvider;
+import org.dandelion.radiot.RssFeedParser;
 
 import android.content.res.AssetManager;
 import android.test.InstrumentationTestCase;
 
-public class RssPodcastProviderTestCase extends InstrumentationTestCase {
+public class RssFeedParserTestCase extends InstrumentationTestCase {
 
-	private RssPodcastProvider provider;
+	private RssFeedParser provider;
 
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		provider = new RssPodcastProvider();
+		provider = new RssFeedParser();
 	}
 
 	public void testCreateAppropriateNumberOfPodcastItems() throws Exception {
