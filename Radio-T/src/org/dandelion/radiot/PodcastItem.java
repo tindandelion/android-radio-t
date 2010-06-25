@@ -4,7 +4,7 @@ import java.util.Date;
 
 import android.net.Uri;
 
-public class PodcastItem {
+public class PodcastItem implements Cloneable {
 	private int number;
 	private Date date;
 	private String showNotes;

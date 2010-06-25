@@ -25,6 +25,7 @@ public class RssFeedParserTestCase extends InstrumentationTestCase {
 		List<PodcastItem> items = parseRssFeed(twoItemsXml());
 
 		assertEquals(2, items.size());
+		assertNotNull(items.get(0));
 	}
 
 	private List<PodcastItem> parseRssFeed(String contents)
