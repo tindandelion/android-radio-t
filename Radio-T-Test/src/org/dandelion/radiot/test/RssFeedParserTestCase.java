@@ -1,12 +1,14 @@
 package org.dandelion.radiot.test;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
 import org.dandelion.radiot.PodcastItem;
 import org.dandelion.radiot.RssFeedParser;
+import org.xml.sax.SAXException;
 
-import android.content.res.AssetManager;
 import android.test.InstrumentationTestCase;
 
 public class RssFeedParserTestCase extends InstrumentationTestCase {
@@ -20,17 +22,21 @@ public class RssFeedParserTestCase extends InstrumentationTestCase {
 	}
 
 	public void testCreateAppropriateNumberOfPodcastItems() throws Exception {
-		List<PodcastItem> items = parseRssFeed();
+		List<PodcastItem> items = parseRssFeed(twoItemsXml());
 
 		assertEquals(2, items.size());
 	}
 
-	private List<PodcastItem> parseRssFeed() throws Exception {
-		return provider.readRssFeed(testRssStream());
+	private List<PodcastItem> parseRssFeed(String contents)
+			throws SAXException, IOException {
+		InputStream stream = new ByteArrayInputStream(contents.getBytes());
+		return provider.readRssFeed(stream);
 	}
 
-	private InputStream testRssStream() throws Exception {
-		AssetManager assets = getInstrumentation().getContext().getAssets();
-		return assets.open("test_rss.xml");
+	private String twoItemsXml() {
+		return
+		"<rss><channel>" + 
+		"<item></item><item></item>" + 
+		"</channel></rss>";
 	}
 }
