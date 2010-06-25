@@ -1,10 +1,13 @@
 package org.dandelion.radiot;
 
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import android.net.Uri;
 
 public class PodcastItem implements Cloneable {
+	private static final Pattern NUMBER_PATTERN = Pattern.compile("\\d+");
 	private int number;
 	private Date date;
 	private String showNotes;
@@ -47,5 +50,11 @@ public class PodcastItem implements Cloneable {
 		} catch (CloneNotSupportedException e) {
 			return null;
 		}
+	}
+
+	public void extractPodcastNumber(String value) {
+		Matcher matcher = NUMBER_PATTERN.matcher(value);
+		matcher.find();
+		number = Integer.parseInt(matcher.group());
 	}
 }

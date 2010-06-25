@@ -10,6 +10,7 @@ import org.xml.sax.SAXException;
 
 import android.sax.Element;
 import android.sax.EndElementListener;
+import android.sax.EndTextElementListener;
 import android.sax.RootElement;
 import android.util.Xml;
 
@@ -32,6 +33,12 @@ public class RssFeedParser {
 		item.setEndElementListener(new EndElementListener() {
 			public void end() {
 				items.add(current.copy());
+			}
+		});
+		
+		item.getChild("number").setEndTextElementListener(new EndTextElementListener() {
+			public void end(String value) {
+				current.extractPodcastNumber(value);
 			}
 		});
 		

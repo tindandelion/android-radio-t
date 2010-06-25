@@ -27,6 +27,20 @@ public class RssFeedParserTestCase extends InstrumentationTestCase {
 		assertEquals(2, items.size());
 		assertNotNull(items.get(0));
 	}
+	
+	public void testExtractingPodcastNumber() throws Exception {
+		List<PodcastItem> items = parseRssFeed(podcastNumberRss());
+
+		PodcastItem item = items.get(0);
+		assertEquals(192, item.getNumber());
+	}
+
+	private String podcastNumberRss() {
+		return
+		"<rss><channel>" + 
+		"<item><number>Radio 192</number></item>" + 
+		"</channel></rss>";
+	}
 
 	private List<PodcastItem> parseRssFeed(String contents)
 			throws SAXException, IOException {
