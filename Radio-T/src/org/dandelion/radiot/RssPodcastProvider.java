@@ -60,4 +60,9 @@ public class RssPodcastProvider implements IPodcastProvider {
 	protected InputStream openContentStream() throws IOException {
 		return null;
 	}
+
+	public List<PodcastItem> getPodcastList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

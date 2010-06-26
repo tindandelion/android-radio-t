@@ -3,6 +3,7 @@ package org.dandelion.radiot;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import android.app.ListActivity;
 import android.content.Intent;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 public class PodcastListActivity extends ListActivity {
 	public interface IPodcastProvider {
 		public abstract void retrievePodcasts(PodcastListAdapter listAdapter);
+		public abstract List<PodcastItem> getPodcastList();
 	}
 
 	class PodcastListAdapter extends ArrayAdapter<PodcastItem> {
