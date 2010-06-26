@@ -15,7 +15,7 @@ public class RssPodcastProvider implements IPodcastProvider {
 		return null;
 	}
 
-	private List<PodcastItem> retrievePodcasts() {
+	protected List<PodcastItem> retrievePodcasts() {
 		RssFeedParser feedParser = new RssFeedParser();
 		try {
 			InputStream contentStream = openContentStream();

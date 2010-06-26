@@ -45,7 +45,7 @@ public class PodcastRssDisplayAcceptanceTest extends
 	}
 
 	@UiThreadTest
-	public void testDisplayTheListOfPodcastsFromRss() throws Exception {
+	public void testRetrieveAndDisplayPodcast() throws Exception {
 		ListView list = activity.getListView();
 
 		assertEquals(17, list.getCount());

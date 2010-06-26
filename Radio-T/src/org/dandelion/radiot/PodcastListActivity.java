@@ -8,8 +8,10 @@ import java.util.Date;
 import java.util.List;
 
 import android.app.ListActivity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -121,7 +123,6 @@ public class PodcastListActivity extends ListActivity {
 		for (PodcastItem item : newList) {
 			listAdapter.add(item);
 		}
-		showNotification("Refreshed");
 	}
 
 	@Override
@@ -142,13 +143,38 @@ public class PodcastListActivity extends ListActivity {
 		intent.setDataAndType(uri, "audio/mpeg");
 		startActivity(intent);
 	}
-
-	private void showNotification(String string) {
-		Toast.makeText(this, string, Toast.LENGTH_SHORT).show();
-	}
 }
 
 class RemoteRssProvider extends RssPodcastProvider {
+	class RefreshTask extends AsyncTask<Void, Void, Void> {
+		
+		private PodcastListActivity activity;
+		private List<PodcastItem> podcasts;
+		private ProgressDialog progress;
+
+		public RefreshTask(PodcastListActivity activity) {
+			super();
+			this.activity = activity;
+		}
+		@Override
+		protected void onPreExecute() {
+			progress = ProgressDialog.show(activity, "", "Loading");
+		}
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			podcasts = retrievePodcasts();
+			return null;
+		}
+		
+		@Override
+		protected void onPostExecute(Void result) {
+			progress.dismiss();
+			activity.updatePodcasts(podcasts);
+		}
+
+	}
+
 	private String feedUrl;
 
 	public RemoteRssProvider(String feedUrl) {
@@ -160,5 +186,10 @@ class RemoteRssProvider extends RssPodcastProvider {
 		URL url = new URL(feedUrl);
 		return url.openStream();
 	} 
+	
+	@Override
+	public void refreshPodcasts(PodcastListActivity activity) {
+		new RefreshTask(activity).execute();
+	}
 }
 
