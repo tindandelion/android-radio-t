@@ -22,12 +22,12 @@ public class PodcastListActivity extends ListActivity {
 
 	class PodcastListAdapter extends ArrayAdapter<PodcastItem> {
 
-		public PodcastListAdapter(PodcastItem[] model) {
-			super(PodcastListActivity.this, 0, model);
-		}
-
 		public PodcastListAdapter() {
 			super(PodcastListActivity.this, 0, new ArrayList<PodcastItem>());
+		}
+
+		public PodcastListAdapter(PodcastItem[] model) {
+			super(PodcastListActivity.this, 0, model);
 		}
 
 		@Override
@@ -46,14 +46,10 @@ public class PodcastListActivity extends ListActivity {
 			setElementText(row, R.id.podcast_item_view_number,
 					formatNumber(item.getNumber()));
 			setElementText(row, R.id.podcast_item_view_date,
-					formatDateString(item.getDate()));
+					formatDateString(item.getPubDate()));
 			setElementText(row, R.id.podcast_item_view_shownotes, item
 					.getShowNotes());
 			return row;
-		}
-
-		private String formatNumber(int number) {
-			return "#" + number;
 		}
 
 		private String formatDateString(Date date) {
@@ -62,25 +58,26 @@ public class PodcastListActivity extends ListActivity {
 			return strDate;
 		}
 
+		private String formatNumber(int number) {
+			return "#" + number;
+		}
+
 		private void setElementText(View row, int resourceId, String value) {
 			TextView view = (TextView) row.findViewById(resourceId);
 			view.setText(value);
 		}
 	}
 
-	private PodcastListAdapter listAdapter;
-	private static IPodcastProvider podcastProvider;
-
-	private static IPodcastProvider getPodcastProvider() {
-		if (podcastProvider == null) {
-			podcastProvider = new SamplePodcastProvider();
-		}
-		return podcastProvider;
+	public static void resetPodcastProvider() {
+		podcastProvider = null;
 	}
-
 	public static void usePodcastProvider(IPodcastProvider provider) {
 		podcastProvider = provider;
 	}
+
+	private PodcastListAdapter listAdapter;
+
+	private static IPodcastProvider podcastProvider;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -101,6 +98,13 @@ public class PodcastListActivity extends ListActivity {
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
 		playPodcast(listAdapter.getItem(position).getAudioUri());
+	}
+
+	private IPodcastProvider getPodcastProvider() {
+		if (podcastProvider == null) {
+			podcastProvider = new RssPodcastProvider(this);
+		}
+		return podcastProvider;
 	}
 
 	private void playPodcast(Uri uri) {
