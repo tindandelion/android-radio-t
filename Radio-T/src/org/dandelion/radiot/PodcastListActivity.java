@@ -9,11 +9,15 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class PodcastListActivity extends ListActivity {
 	public interface IPodcastProvider {
@@ -47,8 +51,8 @@ public class PodcastListActivity extends ListActivity {
 					formatNumber(item.getNumber()));
 			setElementText(row, R.id.podcast_item_view_date,
 					formatDateString(item.getPubDate()));
-			setElementText(row, R.id.podcast_item_view_shownotes, item
-					.getShowNotes());
+			setElementText(row, R.id.podcast_item_view_shownotes,
+					item.getShowNotes());
 			return row;
 		}
 
@@ -71,6 +75,7 @@ public class PodcastListActivity extends ListActivity {
 	public static void resetPodcastProvider() {
 		podcastProvider = null;
 	}
+
 	public static void usePodcastProvider(IPodcastProvider provider) {
 		podcastProvider = provider;
 	}
@@ -88,10 +93,28 @@ public class PodcastListActivity extends ListActivity {
 		refreshPodcasts();
 	}
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.podcast_list, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.refresh:
+			refreshPodcasts();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+
 	public void refreshPodcasts() {
 		listAdapter.clear();
-
 		getPodcastProvider().retrievePodcasts(listAdapter);
+		showNotification("Refreshed");
 	}
 
 	@Override
@@ -111,5 +134,9 @@ public class PodcastListActivity extends ListActivity {
 		Intent intent = new Intent(Intent.ACTION_VIEW);
 		intent.setDataAndType(uri, "audio/mpeg");
 		startActivity(intent);
+	}
+
+	private void showNotification(String string) {
+		Toast.makeText(this, string, Toast.LENGTH_SHORT).show();
 	}
 }
