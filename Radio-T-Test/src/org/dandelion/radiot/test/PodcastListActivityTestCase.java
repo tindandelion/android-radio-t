@@ -1,10 +1,12 @@
 package org.dandelion.radiot.test;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.dandelion.radiot.PodcastItem;
 import org.dandelion.radiot.PodcastListActivity;
-import org.dandelion.radiot.SamplePodcastProvider;
+import org.dandelion.radiot.PodcastListActivity.IPodcastProvider;
 
 import android.content.Intent;
 import android.test.ActivityUnitTestCase;
@@ -14,13 +16,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class PodcastListActivityTestCase extends
-		ActivityUnitTestCase<PodcastListActivity> {
+		ActivityUnitTestCase<PodcastListActivity> implements IPodcastProvider {
 
 	// This date is 19.06.2010 
 	private static final Date SAMPLE_DATE = new Date(110, 05, 19);
 	
 	private PodcastListActivity activity;
-	private SamplePodcastProvider podcastProvider;
+	private ArrayList<PodcastItem> podcasts;
 
 	public PodcastListActivityTestCase() {
 		super(PodcastListActivity.class);
@@ -29,8 +31,8 @@ public class PodcastListActivityTestCase extends
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		podcastProvider = new SamplePodcastProvider();
-		PodcastListActivity.usePodcastProvider(podcastProvider);
+		podcasts = new ArrayList<PodcastItem>();
+		PodcastListActivity.usePodcastProvider(this);
 		activity = startActivity(new Intent(), null, null);
 	}
 	
@@ -42,10 +44,10 @@ public class PodcastListActivityTestCase extends
 
 	@UiThreadTest
 	public void testDisplayPodcastList() throws Exception {
-		setPodcastList(new PodcastItem[] { 
-				new PodcastItem(121),
-				new PodcastItem(122)
-		});
+		addPodcastItem(new PodcastItem(121));
+		addPodcastItem(new PodcastItem(122));
+		
+		activity.refreshPodcasts();
 
 		assertEquals(2, getListView().getCount());
 	}
@@ -65,13 +67,13 @@ public class PodcastListActivityTestCase extends
 	}
 
 	private View setupOneItemList(PodcastItem item) {
-		setPodcastList(new PodcastItem[] { item });
+		addPodcastItem(item);
+		activity.refreshPodcasts();
 		return getListView().getAdapter().getView(0, null, null);
 	}
 
-	private void setPodcastList(PodcastItem[] items) {
-		podcastProvider.setPodcastList(items);
-		activity.refreshPodcasts();
+	private void addPodcastItem(PodcastItem item) {
+		podcasts.add(item);
 	}
 
 	private String getTextOfElement(View view, int elementId) {
@@ -81,5 +83,9 @@ public class PodcastListActivityTestCase extends
 
 	private ListView getListView() {
 		return activity.getListView();
+	}
+
+	public List<PodcastItem> getPodcastList() {
+		return podcasts;
 	}
 }

@@ -13,6 +13,7 @@ import android.util.Log;
 
 public class RssPodcastProvider implements IPodcastProvider {
 	
+	// TODO Move LocalRssProvider closer to tests
 	public static class LocalRssProvider extends RssPodcastProvider {
 		private static final String RSS_FILENAME = "podcast_rss.xml";
 
