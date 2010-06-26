@@ -48,6 +48,12 @@ public class RssFeedParser {
 			}
 		});
 		
+		item.getChild("description").setEndTextElementListener(new EndTextElementListener() {
+			public void end(String body) {
+				currentItem.setShowNotes(body);
+			}
+		});
+		
 		return root.getContentHandler();
 	}
 }

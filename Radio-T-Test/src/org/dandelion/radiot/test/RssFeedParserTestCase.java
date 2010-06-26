@@ -16,7 +16,8 @@ public class RssFeedParserTestCase extends TestCase {
 
 	private RssFeedParser provider;
 	private String feedContent;
-	private List<PodcastItem> items;
+	private List<PodcastItem> parsedItems;
+	private PodcastItem firstParsedItem;
 
 	@Override
 	protected void setUp() throws Exception {
@@ -29,29 +30,32 @@ public class RssFeedParserTestCase extends TestCase {
 		newFeedItem("");
 		newFeedItem("");
 		
-		items = parseRssFeed();
+		parseRssFeed();
 
-		assertEquals(2, items.size());
-		assertNotNull(items.get(0));
+		assertEquals(2, parsedItems.size());
+		assertNotNull(parsedItems.get(0));
 	}
 
 	public void testExtractingPodcastNumber() throws Exception {
 		newFeedItem("<title>Radio 192</title>");
 		
-		items = parseRssFeed();
-		PodcastItem item = items.get(0);
+		parseRssFeed();
 		
-		assertEquals(192, item.getNumber());
+		assertEquals(192, firstParsedItem.getNumber());
 	}
 	
 	public void testExtractPodcastDate() throws Exception {
 		newFeedItem("<pubDate>Sun, 13 Jun 2010 01:37:22 +0000</pubDate>");
 		
-		items = parseRssFeed();
-		PodcastItem item = items.get(0);
-		String strDate = new SimpleDateFormat("dd.MM.yyyy").format(item.getPubDate());
-		
+		parseRssFeed();
+		String strDate = new SimpleDateFormat("dd.MM.yyyy").format(firstParsedItem.getPubDate());
 		assertEquals("13.06.2010", strDate);
+	}
+	
+	public void testExtractShowNotes() throws Exception {
+		newFeedItem("<description><![CDATA[Show notes]]></description>");
+		parseRssFeed();
+		assertEquals("Show notes", firstParsedItem.getShowNotes());
 	}
 	
 
@@ -59,10 +63,11 @@ public class RssFeedParserTestCase extends TestCase {
 		feedContent = feedContent + "<item>" + itemContent + "</item>";
 	}
 
-	private List<PodcastItem> parseRssFeed()
+	private void parseRssFeed()
 			throws SAXException, IOException {
 		InputStream stream = new ByteArrayInputStream(getCompleteFeed().getBytes());
-		return provider.readRssFeed(stream);
+		parsedItems = provider.readRssFeed(stream);
+		firstParsedItem = parsedItems.get(0);
 	}
 
 	private String getCompleteFeed() {
