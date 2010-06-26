@@ -33,6 +33,12 @@ public class PodcastListActivityTestCase extends
 		PodcastListActivity.usePodcastProvider(podcastProvider);
 		activity = startActivity(new Intent(), null, null);
 	}
+	
+	@Override
+	protected void tearDown() throws Exception {
+		PodcastListActivity.resetPodcastProvider();
+		super.tearDown();
+	}
 
 	@UiThreadTest
 	public void testDisplayPodcastList() throws Exception {

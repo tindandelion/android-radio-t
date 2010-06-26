@@ -13,13 +13,13 @@ public class PodcastRssDisplayAcceptanceTest extends
 	public PodcastRssDisplayAcceptanceTest() {
 		super(PodcastListActivity.class);
 	}
-
+	
 	@UiThreadTest 
-	public void _testDisplayTheListOfPodcastsFromRss() throws Exception {
+	public void testDisplayTheListOfPodcastsFromRss() throws Exception {
 		PodcastListActivity activity = startActivity(new Intent(), null, null);
 		ListView list = activity.getListView();
 
-		assertEquals(16, list.getCount());
+		assertEquals(17, list.getCount());
 	}
 
 }
