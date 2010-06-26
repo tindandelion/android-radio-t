@@ -22,7 +22,6 @@ import android.widget.Toast;
 
 public class PodcastListActivity extends ListActivity {
 	public interface IPodcastProvider {
-		public abstract void retrievePodcasts(PodcastListAdapter listAdapter);
 		public abstract List<PodcastItem> getPodcastList();
 	}
 
@@ -117,8 +116,14 @@ public class PodcastListActivity extends ListActivity {
 
 	public void refreshPodcasts() {
 		listAdapter.clear();
-		getPodcastProvider().retrievePodcasts(listAdapter);
+		for (PodcastItem item : retrievePodcasts()) {
+			listAdapter.add(item);
+		}
 		showNotification("Refreshed");
+	}
+
+	private List<PodcastItem> retrievePodcasts() {
+		return getPodcastProvider().getPodcastList();
 	}
 
 	@Override

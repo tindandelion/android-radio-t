@@ -3,10 +3,10 @@ package org.dandelion.radiot;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.dandelion.radiot.PodcastListActivity.IPodcastProvider;
-import org.dandelion.radiot.PodcastListActivity.PodcastListAdapter;
 
 import android.content.res.AssetManager;
 import android.util.Log;
@@ -43,26 +43,20 @@ public class RssPodcastProvider implements IPodcastProvider {
 		} 
 	}
 
-	public void retrievePodcasts(PodcastListAdapter listAdapter) {
-		RssFeedParser feedParser = new RssFeedParser();
-		try {
-			InputStream contentStream = openContentStream();
-			List<PodcastItem> items = feedParser.readRssFeed(contentStream);
-			for (PodcastItem podcastItem : items) {
-				listAdapter.add(podcastItem);
-			}
-			contentStream.close();
-		} catch (Exception e) {
-			Log.e("RadioT", "Error loading podcast RSS", e);
-		} 
-	}
-
 	protected InputStream openContentStream() throws IOException {
 		return null;
 	}
 
 	public List<PodcastItem> getPodcastList() {
-		// TODO Auto-generated method stub
-		return null;
+		RssFeedParser feedParser = new RssFeedParser();
+		try {
+			InputStream contentStream = openContentStream();
+			List<PodcastItem> items = feedParser.readRssFeed(contentStream);
+			contentStream.close();
+			return items;
+		} catch (Exception e) {
+			Log.e("RadioT", "Error loading podcast RSS", e);
+			return new ArrayList<PodcastItem>();
+		}
 	}
 }
