@@ -32,4 +32,9 @@ public class PodcastItemTestCase extends TestCase {
 		item.extractPodcastNumber("Blah");
 		assertEquals(0, item.getNumber());
 	}
+	
+	public void testExtractPublicationDate() throws Exception {
+		item.extractPubDate("Sun, 13 Jun 2010 01:37:22 +0000");
+		assertNotNull(item.getPubDate());
+	}
 }

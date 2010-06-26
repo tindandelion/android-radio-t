@@ -3,6 +3,7 @@ package org.dandelion.radiot;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,7 +12,7 @@ import android.net.Uri;
 public class PodcastItem implements Cloneable {
 	private static final Pattern NUMBER_PATTERN = Pattern.compile("\\d+");
 	private static SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat(
-			"EEE, dd MMM yyyy HH:mm:ss Z");
+			"EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);
 
 	private int number;
 	private Date pubDate;
@@ -65,10 +66,18 @@ public class PodcastItem implements Cloneable {
 	}
 
 	public void extractPubDate(String value) {
-		// TODO Check date conversion errors
 		try {
 			pubDate = DATE_FORMATTER.parse(value);
 		} catch (ParseException e) {
+			throw new RuntimeException(e);
 		}
+	}
+
+	public void setShowNotes(String value) {
+		showNotes = value;
+	}
+
+	public void extractAudioUri(String value) {
+		audioUri = Uri.parse(value);
 	}
 }
