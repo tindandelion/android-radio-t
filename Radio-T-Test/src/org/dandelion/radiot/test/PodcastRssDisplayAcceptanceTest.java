@@ -1,5 +1,8 @@
 package org.dandelion.radiot.test;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import org.dandelion.radiot.PodcastItem;
 import org.dandelion.radiot.PodcastListActivity;
 import org.dandelion.radiot.RssPodcastProvider;
@@ -14,7 +17,8 @@ import android.widget.ListView;
 
 public class PodcastRssDisplayAcceptanceTest extends
 		ActivityUnitTestCase<PodcastListActivity> {
-
+	private static final String RSS_FILENAME = "podcast_rss.xml";
+	
 	private PodcastListActivity activity;
 
 	public PodcastRssDisplayAcceptanceTest() {
@@ -24,12 +28,20 @@ public class PodcastRssDisplayAcceptanceTest extends
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		AssetManager assets = getInstrumentation().getTargetContext()
-				.getAssets();
 		PodcastListActivity
-				.usePodcastProvider(new RssPodcastProvider.LocalRssProvider(
-						assets));
+				.usePodcastProvider(localRssProvider());
 		activity = startActivity(new Intent(), null, null);
+	}
+
+	private RssPodcastProvider localRssProvider() {
+		final AssetManager assets = getInstrumentation().getTargetContext()
+				.getAssets();
+		return new RssPodcastProvider() {
+			@Override
+			protected InputStream openContentStream() throws IOException {
+				return assets.open(RSS_FILENAME);
+			}
+		};
 	}
 
 	@UiThreadTest

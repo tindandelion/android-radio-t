@@ -8,29 +8,11 @@ import java.util.List;
 
 import org.dandelion.radiot.PodcastListActivity.IPodcastProvider;
 
-import android.content.res.AssetManager;
 import android.util.Log;
 
 public class RssPodcastProvider implements IPodcastProvider {
 	
-	// TODO Move LocalRssProvider closer to tests
-	public static class LocalRssProvider extends RssPodcastProvider {
-		private static final String RSS_FILENAME = "podcast_rss.xml";
-
-		private AssetManager assets;
-		
-		public LocalRssProvider(AssetManager assets) {
-			this.assets = assets;
-		}
-		
-		@Override
-		protected InputStream openContentStream() throws IOException {
-			return assets.open(RSS_FILENAME);
-		}
-	}
-	
 	public static class RemoteRssProvider extends RssPodcastProvider {
-		
 		private String feedUrl;
 
 		public RemoteRssProvider(String feedUrl) {
