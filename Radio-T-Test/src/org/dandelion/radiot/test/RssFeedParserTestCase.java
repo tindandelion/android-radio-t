@@ -12,6 +12,8 @@ import org.dandelion.radiot.PodcastItem;
 import org.dandelion.radiot.RssFeedParser;
 import org.xml.sax.SAXException;
 
+import android.net.Uri;
+
 public class RssFeedParserTestCase extends TestCase {
 
 	private RssFeedParser provider;
@@ -29,7 +31,7 @@ public class RssFeedParserTestCase extends TestCase {
 	public void testCreateAppropriateNumberOfPodcastItems() throws Exception {
 		newFeedItem("");
 		newFeedItem("");
-		
+
 		parseRssFeed();
 
 		assertEquals(2, parsedItems.size());
@@ -38,34 +40,51 @@ public class RssFeedParserTestCase extends TestCase {
 
 	public void testExtractingPodcastNumber() throws Exception {
 		newFeedItem("<title>Radio 192</title>");
-		
+
 		parseRssFeed();
-		
+
 		assertEquals(192, firstParsedItem.getNumber());
 	}
-	
+
 	public void testExtractPodcastDate() throws Exception {
 		newFeedItem("<pubDate>Sun, 13 Jun 2010 01:37:22 +0000</pubDate>");
-		
+
 		parseRssFeed();
-		String strDate = new SimpleDateFormat("dd.MM.yyyy").format(firstParsedItem.getPubDate());
+		String strDate = new SimpleDateFormat("dd.MM.yyyy")
+				.format(firstParsedItem.getPubDate());
 		assertEquals("13.06.2010", strDate);
 	}
-	
+
 	public void testExtractShowNotes() throws Exception {
 		newFeedItem("<description><![CDATA[Show notes]]></description>");
 		parseRssFeed();
 		assertEquals("Show notes", firstParsedItem.getShowNotes());
 	}
-	
+
+	public void testExtractPodcastLink() throws Exception {
+		newFeedItem("<enclosure url=\"http://podcast-link\" type=\"audio/mpeg\"/>");
+		parseRssFeed();
+		assertEquals(Uri.parse("http://podcast-link"),
+				firstParsedItem.getAudioUri());
+	}
+
+	public void testSkipNonAudioEnsclosures() throws Exception {
+		newFeedItem("<enclosure url=\"http://podcast-link\" type=\"audio/mpeg\"/>"
+				+ "<enclosure url=\"http://yet-another-link\" type=\"text/xml\"/>");
+		
+		parseRssFeed();
+		
+		assertEquals(Uri.parse("http://podcast-link"),
+				firstParsedItem.getAudioUri());
+	}
 
 	private void newFeedItem(String itemContent) {
 		feedContent = feedContent + "<item>" + itemContent + "</item>";
 	}
 
-	private void parseRssFeed()
-			throws SAXException, IOException {
-		InputStream stream = new ByteArrayInputStream(getCompleteFeed().getBytes());
+	private void parseRssFeed() throws SAXException, IOException {
+		InputStream stream = new ByteArrayInputStream(getCompleteFeed()
+				.getBytes());
 		parsedItems = provider.readRssFeed(stream);
 		firstParsedItem = parsedItems.get(0);
 	}

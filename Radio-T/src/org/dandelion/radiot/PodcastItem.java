@@ -76,4 +76,8 @@ public class PodcastItem implements Cloneable {
 	public void setShowNotes(String value) {
 		showNotes = value;
 	}
+
+	public void extractAudioUri(String value) {
+		audioUri = Uri.parse(value);
+	}
 }
