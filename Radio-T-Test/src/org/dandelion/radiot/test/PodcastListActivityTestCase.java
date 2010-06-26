@@ -64,23 +64,6 @@ public class PodcastListActivityTestCase extends
 				org.dandelion.radiot.R.id.podcast_item_view_shownotes));
 	}
 
-	@UiThreadTest
-	public void testStartPlayActivityOnClick() throws Exception {
-		View listItem = setupOneItemList(new PodcastItem(121, new Date(),
-				null, "http://link"));
-
-		clickOnItem(listItem);
-		Intent intent = getStartedActivityIntent();
-
-		assertEquals("audio/mpeg", intent.getType());
-		assertEquals("http://link", intent.getDataString());
-		assertEquals(Intent.ACTION_VIEW, intent.getAction());
-	}
-
-	private void clickOnItem(View listItem) {
-		getListView().performItemClick(listItem, 0, 0);
-	}
-
 	private View setupOneItemList(PodcastItem item) {
 		setPodcastList(new PodcastItem[] { item });
 		return getListView().getAdapter().getView(0, null, null);
