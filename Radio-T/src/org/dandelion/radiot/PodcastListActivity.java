@@ -1,7 +1,6 @@
 package org.dandelion.radiot;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -28,11 +27,7 @@ public class PodcastListActivity extends ListActivity {
 	class PodcastListAdapter extends ArrayAdapter<PodcastItem> {
 
 		public PodcastListAdapter() {
-			super(PodcastListActivity.this, 0, new ArrayList<PodcastItem>());
-		}
-
-		public PodcastListAdapter(PodcastItem[] model) {
-			super(PodcastListActivity.this, 0, model);
+			super(PodcastListActivity.this, 0);
 		}
 
 		@Override
