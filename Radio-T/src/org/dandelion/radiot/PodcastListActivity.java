@@ -1,5 +1,8 @@
 package org.dandelion.radiot;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -129,7 +132,7 @@ public class PodcastListActivity extends ListActivity {
 
 	private IPodcastProvider getPodcastProvider() {
 		if (podcastProvider == null) {
-			podcastProvider = new RssPodcastProvider.RemoteRssProvider(PODCAST_URL);
+			podcastProvider = new RemoteRssProvider(PODCAST_URL);
 		}
 		return podcastProvider;
 	}
@@ -144,3 +147,18 @@ public class PodcastListActivity extends ListActivity {
 		Toast.makeText(this, string, Toast.LENGTH_SHORT).show();
 	}
 }
+
+class RemoteRssProvider extends RssPodcastProvider {
+	private String feedUrl;
+
+	public RemoteRssProvider(String feedUrl) {
+		this.feedUrl = feedUrl;
+	}
+	
+	@Override
+	protected InputStream openContentStream() throws IOException {
+		URL url = new URL(feedUrl);
+		return url.openStream();
+	} 
+}
+
