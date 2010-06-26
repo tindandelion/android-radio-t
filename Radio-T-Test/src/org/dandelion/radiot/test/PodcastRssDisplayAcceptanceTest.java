@@ -2,8 +2,10 @@ package org.dandelion.radiot.test;
 
 import org.dandelion.radiot.PodcastItem;
 import org.dandelion.radiot.PodcastListActivity;
+import org.dandelion.radiot.RssPodcastProvider;
 
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.net.Uri;
 import android.test.ActivityUnitTestCase;
 import android.test.UiThreadTest;
@@ -22,6 +24,8 @@ public class PodcastRssDisplayAcceptanceTest extends
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
+		AssetManager assets = getInstrumentation().getTargetContext().getAssets();
+		PodcastListActivity.usePodcastProvider(new RssPodcastProvider.LocalRssProvider(assets));
 		activity = startActivity(new Intent(), null, null);
 	}
 	

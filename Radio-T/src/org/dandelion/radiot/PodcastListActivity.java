@@ -68,6 +68,8 @@ public class PodcastListActivity extends ListActivity {
 		}
 	}
 
+	private static final String PODCAST_URL = "http://feeds.rucast.net/radio-t";
+
 	public static void resetPodcastProvider() {
 		podcastProvider = null;
 	}
@@ -102,7 +104,7 @@ public class PodcastListActivity extends ListActivity {
 
 	private IPodcastProvider getPodcastProvider() {
 		if (podcastProvider == null) {
-			podcastProvider = new RssPodcastProvider(this);
+			podcastProvider = new RssPodcastProvider.RemoteRssProvider(PODCAST_URL);
 		}
 		return podcastProvider;
 	}

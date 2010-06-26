@@ -2,21 +2,45 @@ package org.dandelion.radiot;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.List;
 
 import org.dandelion.radiot.PodcastListActivity.IPodcastProvider;
 import org.dandelion.radiot.PodcastListActivity.PodcastListAdapter;
 
-import android.content.Context;
+import android.content.res.AssetManager;
 import android.util.Log;
 
 public class RssPodcastProvider implements IPodcastProvider {
 	
-	private static final String RSS_FILENAME = "podcast_rss.xml";
-	private Context context;
+	public static class LocalRssProvider extends RssPodcastProvider {
+		private static final String RSS_FILENAME = "podcast_rss.xml";
 
-	public RssPodcastProvider(Context context) {
-		this.context = context;
+		private AssetManager assets;
+		
+		public LocalRssProvider(AssetManager assets) {
+			this.assets = assets;
+		}
+		
+		@Override
+		protected InputStream openContentStream() throws IOException {
+			return assets.open(RSS_FILENAME);
+		}
+	}
+	
+	public static class RemoteRssProvider extends RssPodcastProvider {
+		
+		private String feedUrl;
+
+		public RemoteRssProvider(String feedUrl) {
+			this.feedUrl = feedUrl;
+		}
+		
+		@Override
+		protected InputStream openContentStream() throws IOException {
+			URL url = new URL(feedUrl);
+			return url.openStream();
+		} 
 	}
 
 	public void retrievePodcasts(PodcastListAdapter listAdapter) {
@@ -29,12 +53,11 @@ public class RssPodcastProvider implements IPodcastProvider {
 			}
 			contentStream.close();
 		} catch (Exception e) {
-			Log.e("RadioT", "Error while parsing RSS", e);
+			Log.e("RadioT", "Error loading podcast RSS", e);
 		} 
 	}
 
-	private InputStream openContentStream() throws IOException {
-		return context.getAssets().open(RSS_FILENAME);
+	protected InputStream openContentStream() throws IOException {
+		return null;
 	}
-
 }
