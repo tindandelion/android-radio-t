@@ -48,7 +48,7 @@ public class RssPodcastProvider implements IPodcastProvider {
 		return null;
 	}
 
-	public List<PodcastItem> getPodcastList() {
+	private List<PodcastItem> retrievePodcasts() {
 		RssFeedParser feedParser = new RssFeedParser();
 		try {
 			InputStream contentStream = openContentStream();
@@ -59,5 +59,9 @@ public class RssPodcastProvider implements IPodcastProvider {
 			Log.e("RadioT", "Error loading podcast RSS", e);
 			return new ArrayList<PodcastItem>();
 		}
+	}
+
+	public void refreshPodcasts(PodcastListActivity activity) {
+		activity.updatePodcasts(retrievePodcasts());
 	}
 }

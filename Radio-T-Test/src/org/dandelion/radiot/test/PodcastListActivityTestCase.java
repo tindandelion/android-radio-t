@@ -2,7 +2,6 @@ package org.dandelion.radiot.test;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import org.dandelion.radiot.PodcastItem;
 import org.dandelion.radiot.PodcastListActivity;
@@ -16,7 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class PodcastListActivityTestCase extends
-		ActivityUnitTestCase<PodcastListActivity> implements IPodcastProvider {
+		ActivityUnitTestCase<PodcastListActivity> {
 
 	// This date is 19.06.2010 
 	private static final Date SAMPLE_DATE = new Date(110, 05, 19);
@@ -32,8 +31,15 @@ public class PodcastListActivityTestCase extends
 	protected void setUp() throws Exception {
 		super.setUp();
 		podcasts = new ArrayList<PodcastItem>();
-		PodcastListActivity.usePodcastProvider(this);
+		PodcastListActivity.usePodcastProvider(nullPodcastProvider());
 		activity = startActivity(new Intent(), null, null);
+	}
+
+	private IPodcastProvider nullPodcastProvider() {
+		return new IPodcastProvider() {
+			public void refreshPodcasts(PodcastListActivity activity) {
+			}
+		};
 	}
 	
 	@Override
@@ -44,10 +50,10 @@ public class PodcastListActivityTestCase extends
 
 	@UiThreadTest
 	public void testDisplayPodcastList() throws Exception {
-		addPodcastItem(new PodcastItem(121));
-		addPodcastItem(new PodcastItem(122));
+		podcasts.add(new PodcastItem(121));
+		podcasts.add(new PodcastItem(122));
 		
-		activity.refreshPodcasts();
+		activity.updatePodcasts(podcasts);
 
 		assertEquals(2, getListView().getCount());
 	}
@@ -67,13 +73,9 @@ public class PodcastListActivityTestCase extends
 	}
 
 	private View setupOneItemList(PodcastItem item) {
-		addPodcastItem(item);
-		activity.refreshPodcasts();
-		return getListView().getAdapter().getView(0, null, null);
-	}
-
-	private void addPodcastItem(PodcastItem item) {
 		podcasts.add(item);
+		activity.updatePodcasts(podcasts);
+		return getListView().getAdapter().getView(0, null, null);
 	}
 
 	private String getTextOfElement(View view, int elementId) {
@@ -83,9 +85,5 @@ public class PodcastListActivityTestCase extends
 
 	private ListView getListView() {
 		return activity.getListView();
-	}
-
-	public List<PodcastItem> getPodcastList() {
-		return podcasts;
 	}
 }
