@@ -46,7 +46,7 @@ public class PodcastRssDisplayAcceptanceTest extends
 		
 		assertNotNull(intent);
 		assertEquals("audio/mpeg", intent.getType());
-		assertEquals(audioUri.toString(), intent.getDataString());
+		assertEquals(audioUri, intent.getData());
 		assertEquals(Intent.ACTION_VIEW, intent.getAction());
 	}
 
