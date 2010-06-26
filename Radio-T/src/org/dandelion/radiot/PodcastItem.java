@@ -58,10 +58,10 @@ public class PodcastItem implements Cloneable {
 	}
 
 	public void extractPodcastNumber(String value) {
-		// TODO Check number conversion errors
 		Matcher matcher = NUMBER_PATTERN.matcher(value);
-		matcher.find();
-		number = Integer.parseInt(matcher.group());
+		if (matcher.find()) {
+			number = Integer.parseInt(matcher.group());
+		}
 	}
 
 	public void extractPubDate(String value) {

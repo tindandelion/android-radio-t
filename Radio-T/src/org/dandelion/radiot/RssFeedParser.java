@@ -36,7 +36,7 @@ public class RssFeedParser {
 			}
 		});
 		
-		item.getChild("number").setEndTextElementListener(new EndTextElementListener() {
+		item.getChild("title").setEndTextElementListener(new EndTextElementListener() {
 			public void end(String body) {
 				currentItem.extractPodcastNumber(body);
 			}

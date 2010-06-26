@@ -36,7 +36,7 @@ public class RssFeedParserTestCase extends TestCase {
 	}
 
 	public void testExtractingPodcastNumber() throws Exception {
-		newFeedItem("<number>Radio 192</number>");
+		newFeedItem("<title>Radio 192</title>");
 		
 		items = parseRssFeed();
 		PodcastItem item = items.get(0);
