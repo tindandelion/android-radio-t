@@ -17,7 +17,7 @@ import android.sax.RootElement;
 import android.sax.StartElementListener;
 import android.util.Xml;
 
-public class RssFeedModel implements PodcastList.IPodcastListModel {
+public class RssFeedModel implements PodcastList.IModel {
 	public interface IFeedSource {
 		InputStream openContentStream() throws IOException;
 	}

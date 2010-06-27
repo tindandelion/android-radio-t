@@ -1,6 +1,9 @@
 package org.dandelion.radiot.test;
 
 import org.dandelion.radiot.PodcastItem;
+import org.dandelion.radiot.PodcastList;
+import org.dandelion.radiot.PodcastList.IModel;
+import org.dandelion.radiot.PodcastList.IPresenter;
 import org.dandelion.radiot.PodcastListActivity;
 import org.dandelion.radiot.RssFeedModel;
 
@@ -27,9 +30,10 @@ public class PodcastRssDisplayAcceptanceTest extends
 		super.setUp();
 		AssetManager assets = getInstrumentation().getTargetContext()
 				.getAssets();
-
-		PodcastListActivity.useModel(new RssFeedModel(
-				new RssFeedModel.AssetFeedSource(assets, RSS_FILENAME)));
+		
+		IModel model = new RssFeedModel(new RssFeedModel.AssetFeedSource(assets, RSS_FILENAME));
+		IPresenter presenter = PodcastList.createPresenter(model);
+		PodcastListActivity.setDefaultPresenter(presenter);
 
 		activity = startActivity(new Intent(), null, null);
 	}

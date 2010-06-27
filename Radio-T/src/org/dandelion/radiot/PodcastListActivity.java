@@ -4,13 +4,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import org.dandelion.radiot.PodcastList.IPodcastListModel;
+import org.dandelion.radiot.PodcastList.IPresenter;
+import org.dandelion.radiot.PodcastList.IView;
 
 import android.app.ListActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,36 +21,40 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class PodcastListActivity extends ListActivity {
-	private static final String PODCAST_URL = "http://feeds.rucast.net/radio-t";
-	private static PodcastList.IPodcastListModel defaultModel;
+public class PodcastListActivity extends ListActivity implements IView {
+	private static IPresenter defaultPresenter;
 
-	public static void resetModel() {
-		defaultModel = null;
+	private static final String PODCAST_URL = "http://feeds.rucast.net/radio-t";
+
+	public static PodcastList.IPresenter createDefaultPresenter() {
+		return PodcastList.createPresenter(new RssFeedModel(
+				new RssFeedModel.UrlFeedSource(PODCAST_URL)));
 	}
 
-	public static void useModel(IPodcastListModel podcastListModel) {
-		defaultModel = podcastListModel;
+	public static PodcastList.IPresenter getDefaultPresenter() {
+		if (null == defaultPresenter) {
+			defaultPresenter = createDefaultPresenter();
+		}
+		return defaultPresenter;
+	}
+
+	public static void resetDefaultPresenter() {
+		defaultPresenter = null;
+	}
+
+	public static void setDefaultPresenter(PodcastList.IPresenter presenter) {
+		defaultPresenter = presenter;
 	}
 
 	private PodcastListAdapter listAdapter;
-	private IPodcastListModel model;
+	private IPresenter presenter;
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		listAdapter = new PodcastListAdapter();
-		setListAdapter(listAdapter);
-		model = getModel();
-		refreshPodcasts();
-	}
-
-	private PodcastList.IPodcastListModel getModel() {
-		if (null == defaultModel) {
-			return new RssFeedModel(new RssFeedModel.UrlFeedSource(PODCAST_URL));
-		}
-		return defaultModel;
+		initListAdapter();
+		initPresenter();
 	}
 
 	@Override
@@ -72,11 +76,7 @@ public class PodcastListActivity extends ListActivity {
 	}
 
 	public void refreshPodcasts() {
-		try {
-			updatePodcasts(model.retrievePodcasts());
-		} catch (Exception e) {
-			Log.e("RadioT", "Error updating podcast: " + e.getMessage());
-		}
+		presenter.refreshData();
 	}
 
 	public void updatePodcasts(List<PodcastItem> newList) {
@@ -90,6 +90,16 @@ public class PodcastListActivity extends ListActivity {
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
 		playPodcast(listAdapter.getItem(position).getAudioUri());
+	}
+
+	private void initListAdapter() {
+		listAdapter = new PodcastListAdapter();
+		setListAdapter(listAdapter);
+	}
+
+	private void initPresenter() {
+		presenter = getDefaultPresenter();
+		presenter.initialize(this);
 	}
 
 	private void playPodcast(Uri uri) {
