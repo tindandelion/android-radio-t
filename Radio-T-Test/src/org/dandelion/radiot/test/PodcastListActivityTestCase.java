@@ -1,5 +1,6 @@
 package org.dandelion.radiot.test;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -15,10 +16,11 @@ import android.widget.TextView;
 public class PodcastListActivityTestCase extends
 		ActivityUnitTestCase<PodcastListActivity> {
 
-	// This date is 19.06.2010 
+	// This date is 19.06.2010
 	private static final Date SAMPLE_DATE = new Date(110, 05, 19);
-	
+
 	private PodcastListActivity activity;
+
 	public PodcastListActivityTestCase() {
 		super(PodcastListActivity.class);
 	}
@@ -40,22 +42,28 @@ public class PodcastListActivityTestCase extends
 	@UiThreadTest
 	public void testDisplayPodcastItem() throws Exception {
 		ArrayList<PodcastItem> items = new ArrayList<PodcastItem>();
-		items.add(new PodcastItem(121, SAMPLE_DATE,
-				"Show notes", ""));
-		
+		items.add(new PodcastItem(121, SAMPLE_DATE, "Show notes", ""));
+
 		activity.updatePodcasts(items);
 		View listItem = activity.getListAdapter().getView(0, null, null);
 
-		assertEquals("#121", getTextOfElement(listItem,
-				org.dandelion.radiot.R.id.podcast_item_view_number));
-		assertEquals("19.06.2010", getTextOfElement(listItem,
-				org.dandelion.radiot.R.id.podcast_item_view_date));
-		assertEquals("Show notes", getTextOfElement(listItem,
-				org.dandelion.radiot.R.id.podcast_item_view_shownotes));
+		assertTextEquals(listItem, "podcast_item_view_number", "#121");
+		assertTextEquals(listItem, "podcast_item_view_date", "19.06.2010");
+		assertTextEquals(listItem, "podcast_item_view_shownotes", "Show notes");
 	}
 
-	private String getTextOfElement(View view, int elementId) {
-		TextView textView = (TextView) view.findViewById(elementId);
-		return textView.getText().toString();
+	public void assertTextEquals(View listItem, String elementName, String value)
+			throws Exception {
+		int id = getIdByName(elementName);
+		TextView textView = (TextView) listItem.findViewById(id);
+		assertEquals(value, textView.getText());
+	}
+
+	public int getIdByName(String elementName) throws NoSuchFieldException,
+			IllegalAccessException {
+		Class cls = org.dandelion.radiot.R.id.class;
+		Field field = cls.getDeclaredField(elementName);
+		int i = field.getInt(cls);
+		return i;
 	}
 }

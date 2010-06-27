@@ -75,7 +75,7 @@ public class PodcastListActivity extends ListActivity {
 		try {
 			updatePodcasts(model.retrievePodcasts());
 		} catch (Exception e) {
-			Log.e("RadioT", "Error updating podcast: "+ e.getMessage());
+			Log.e("RadioT", "Error updating podcast: " + e.getMessage());
 		}
 	}
 
@@ -97,7 +97,7 @@ public class PodcastListActivity extends ListActivity {
 		intent.setDataAndType(uri, "audio/mpeg");
 		startActivity(intent);
 	}
-	
+
 	class PodcastListAdapter extends ArrayAdapter<PodcastItem> {
 
 		public PodcastListAdapter() {
@@ -142,4 +142,3 @@ public class PodcastListActivity extends ListActivity {
 		}
 	}
 }
-
