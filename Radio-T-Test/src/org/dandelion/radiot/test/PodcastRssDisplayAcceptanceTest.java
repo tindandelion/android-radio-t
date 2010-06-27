@@ -38,7 +38,7 @@ public class PodcastRssDisplayAcceptanceTest extends
 				.getAssets();
 		return new RssPodcastProvider() {
 			@Override
-			protected InputStream openContentStream() throws IOException {
+			public InputStream openContentStream() throws IOException {
 				return assets.open(RSS_FILENAME);
 			}
 		};

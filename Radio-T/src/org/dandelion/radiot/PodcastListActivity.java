@@ -181,7 +181,7 @@ class RemoteRssProvider extends RssPodcastProvider {
 	}
 	
 	@Override
-	protected InputStream openContentStream() throws IOException {
+	public InputStream openContentStream() throws IOException {
 		URL url = new URL(feedUrl);
 		return url.openStream();
 	} 

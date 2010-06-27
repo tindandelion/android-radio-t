@@ -9,22 +9,23 @@ import java.util.List;
 import junit.framework.TestCase;
 
 import org.dandelion.radiot.PodcastItem;
-import org.dandelion.radiot.RssFeedParser;
-import org.xml.sax.SAXException;
+import org.dandelion.radiot.RssFeedModel;
+import org.dandelion.radiot.RssFeedModel.IFeedSource;
 
 import android.net.Uri;
 
-public class RssFeedParserTestCase extends TestCase {
+public class RssFeedModelTestCase extends TestCase implements IFeedSource {
 
-	private RssFeedParser provider;
+	private RssFeedModel model;
 	private String feedContent;
 	private List<PodcastItem> parsedItems;
 	private PodcastItem firstParsedItem;
+	protected boolean streamClosed;
 
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		provider = new RssFeedParser();
+		model = new RssFeedModel(this);
 		feedContent = "";
 	}
 
@@ -71,25 +72,41 @@ public class RssFeedParserTestCase extends TestCase {
 	public void testSkipNonAudioEnsclosures() throws Exception {
 		newFeedItem("<enclosure url=\"http://podcast-link\" type=\"audio/mpeg\"/>"
 				+ "<enclosure url=\"http://yet-another-link\" type=\"text/xml\"/>");
-		
+
 		parseRssFeed();
-		
+
 		assertEquals(Uri.parse("http://podcast-link"),
 				firstParsedItem.getAudioUri());
+	}
+
+	public void testEnsureStreamIsClosed() throws Exception {
+		streamClosed = false;
+		parseRssFeed();
+		assertTrue(streamClosed);
 	}
 
 	private void newFeedItem(String itemContent) {
 		feedContent = feedContent + "<item>" + itemContent + "</item>";
 	}
 
-	private void parseRssFeed() throws SAXException, IOException {
-		InputStream stream = new ByteArrayInputStream(getCompleteFeed()
-				.getBytes());
-		parsedItems = provider.readRssFeed(stream);
-		firstParsedItem = parsedItems.get(0);
+	private void parseRssFeed() throws Exception {
+		parsedItems = model.retrievePodcasts();
+		if (!parsedItems.isEmpty()) {
+			firstParsedItem = parsedItems.get(0);
+		}
 	}
 
 	private String getCompleteFeed() {
 		return "<rss><channel>" + feedContent + "</channel></rss>";
+	}
+
+	public InputStream openContentStream() {
+		return new ByteArrayInputStream(getCompleteFeed().getBytes()) {
+			@Override
+			public void close() throws IOException {
+				super.close();
+				streamClosed = true;
+			}
+		};
 	}
 }
