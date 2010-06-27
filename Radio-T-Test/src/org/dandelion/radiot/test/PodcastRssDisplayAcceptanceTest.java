@@ -32,7 +32,7 @@ public class PodcastRssDisplayAcceptanceTest extends
 				.getAssets();
 		
 		IModel model = new RssFeedModel(new RssFeedModel.AssetFeedSource(assets, RSS_FILENAME));
-		IPresenter presenter = PodcastList.createPresenter(model);
+		IPresenter presenter = PodcastList.createSyncPresenter(model);
 		PodcastListActivity.setDefaultPresenter(presenter);
 
 		activity = startActivity(new Intent(), null, null);

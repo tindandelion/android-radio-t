@@ -9,6 +9,12 @@ public class PodcastList {
 	
 	public interface IView {
 		void updatePodcasts(List<PodcastItem> podcasts);
+
+		void showProgress();
+
+		void closeProgress();
+
+		void showErrorMessage(String errorMessage);
 	}
 	
 	public interface IPresenter { 
@@ -25,8 +31,12 @@ public class PodcastList {
 			}
 		};
 	}
+	
+	public static IPresenter createAsyncPresenter(IModel model) {
+		return new AsyncPresenter(model);
+	}
 
-	public static IPresenter createPresenter(final IModel model) {
+	public static IPresenter createSyncPresenter(final IModel model) {
 		return new IPresenter() {
 			private IView view;
 
@@ -39,7 +49,6 @@ public class PodcastList {
 			
 			public void initialize(IView view) {
 				this.view = view;
-				refreshData();
 			}
 		};
 	}

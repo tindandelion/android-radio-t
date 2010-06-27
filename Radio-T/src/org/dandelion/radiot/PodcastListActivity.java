@@ -7,7 +7,9 @@ import java.util.List;
 import org.dandelion.radiot.PodcastList.IPresenter;
 import org.dandelion.radiot.PodcastList.IView;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,7 +29,7 @@ public class PodcastListActivity extends ListActivity implements IView {
 	private static final String PODCAST_URL = "http://feeds.rucast.net/radio-t";
 
 	public static PodcastList.IPresenter createDefaultPresenter() {
-		return PodcastList.createPresenter(new RssFeedModel(
+		return PodcastList.createAsyncPresenter(new RssFeedModel(
 				new RssFeedModel.UrlFeedSource(PODCAST_URL)));
 	}
 
@@ -49,12 +51,15 @@ public class PodcastListActivity extends ListActivity implements IView {
 	private PodcastListAdapter listAdapter;
 	private IPresenter presenter;
 
+	private ProgressDialog progress;
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		initListAdapter();
 		initPresenter();
+		presenter.refreshData();
 	}
 
 	@Override
@@ -150,5 +155,20 @@ public class PodcastListActivity extends ListActivity implements IView {
 			TextView view = (TextView) row.findViewById(resourceId);
 			view.setText(value);
 		}
+	}
+
+	public void showProgress() {
+		progress = ProgressDialog.show(this, "", "Loading...");
+	}
+
+	public void closeProgress() {
+		progress.dismiss();
+	}
+
+	public void showErrorMessage(String errorMessage) {
+		new AlertDialog.Builder(this)
+			.setTitle("Error")
+			.setMessage(errorMessage)
+			.show();
 	}
 }
