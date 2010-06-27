@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.test.ActivityUnitTestCase;
 import android.test.UiThreadTest;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.TextView;
 
 public class PodcastListActivityTestCase extends
@@ -20,8 +19,6 @@ public class PodcastListActivityTestCase extends
 	private static final Date SAMPLE_DATE = new Date(110, 05, 19);
 	
 	private PodcastListActivity activity;
-	private ArrayList<PodcastItem> podcasts;
-
 	public PodcastListActivityTestCase() {
 		super(PodcastListActivity.class);
 	}
@@ -29,7 +26,7 @@ public class PodcastListActivityTestCase extends
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		podcasts = new ArrayList<PodcastItem>();
+		new ArrayList<PodcastItem>();
 		PodcastListActivity.useModel(null);
 		activity = startActivity(new Intent(), null, null);
 	}
@@ -41,20 +38,13 @@ public class PodcastListActivityTestCase extends
 	}
 
 	@UiThreadTest
-	public void testDisplayPodcastList() throws Exception {
-		podcasts.add(new PodcastItem(121));
-		podcasts.add(new PodcastItem(122));
-		
-		activity.updatePodcasts(podcasts);
-
-		assertEquals(2, getListView().getCount());
-	}
-
-	@UiThreadTest
 	public void testDisplayPodcastItem() throws Exception {
-		PodcastItem item = new PodcastItem(121, SAMPLE_DATE,
-				"Show notes", "");
-		View listItem = setupOneItemList(item);
+		ArrayList<PodcastItem> items = new ArrayList<PodcastItem>();
+		items.add(new PodcastItem(121, SAMPLE_DATE,
+				"Show notes", ""));
+		
+		activity.updatePodcasts(items);
+		View listItem = activity.getListAdapter().getView(0, null, null);
 
 		assertEquals("#121", getTextOfElement(listItem,
 				org.dandelion.radiot.R.id.podcast_item_view_number));
@@ -64,18 +54,8 @@ public class PodcastListActivityTestCase extends
 				org.dandelion.radiot.R.id.podcast_item_view_shownotes));
 	}
 
-	private View setupOneItemList(PodcastItem item) {
-		podcasts.add(item);
-		activity.updatePodcasts(podcasts);
-		return getListView().getAdapter().getView(0, null, null);
-	}
-
 	private String getTextOfElement(View view, int elementId) {
 		TextView textView = (TextView) view.findViewById(elementId);
 		return textView.getText().toString();
-	}
-
-	private ListView getListView() {
-		return activity.getListView();
 	}
 }

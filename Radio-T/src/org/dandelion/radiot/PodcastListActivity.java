@@ -22,50 +22,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class PodcastListActivity extends ListActivity {
-	class PodcastListAdapter extends ArrayAdapter<PodcastItem> {
-
-		public PodcastListAdapter() {
-			super(PodcastListActivity.this, 0);
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			View row = convertView;
-			if (row == null) {
-				LayoutInflater inflater = getLayoutInflater();
-				row = inflater.inflate(R.layout.podcast_list_item, parent,
-						false);
-			}
-
-			return fillRowWithData(row, getItem(position));
-		}
-
-		private View fillRowWithData(View row, PodcastItem item) {
-			setElementText(row, R.id.podcast_item_view_number,
-					formatNumber(item.getNumber()));
-			setElementText(row, R.id.podcast_item_view_date,
-					formatDateString(item.getPubDate()));
-			setElementText(row, R.id.podcast_item_view_shownotes,
-					item.getShowNotes());
-			return row;
-		}
-
-		private String formatDateString(Date date) {
-			SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-			String strDate = format.format(date);
-			return strDate;
-		}
-
-		private String formatNumber(int number) {
-			return "#" + number;
-		}
-
-		private void setElementText(View row, int resourceId, String value) {
-			TextView view = (TextView) row.findViewById(resourceId);
-			view.setText(value);
-		}
-	}
-
 	private static final String PODCAST_URL = "http://feeds.rucast.net/radio-t";
 	private static PodcastList.IPodcastListModel defaultModel;
 
@@ -140,6 +96,50 @@ public class PodcastListActivity extends ListActivity {
 		Intent intent = new Intent(Intent.ACTION_VIEW);
 		intent.setDataAndType(uri, "audio/mpeg");
 		startActivity(intent);
+	}
+	
+	class PodcastListAdapter extends ArrayAdapter<PodcastItem> {
+
+		public PodcastListAdapter() {
+			super(PodcastListActivity.this, 0);
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			View row = convertView;
+			if (row == null) {
+				LayoutInflater inflater = getLayoutInflater();
+				row = inflater.inflate(R.layout.podcast_list_item, parent,
+						false);
+			}
+
+			return fillRowWithData(row, getItem(position));
+		}
+
+		private View fillRowWithData(View row, PodcastItem item) {
+			setElementText(row, R.id.podcast_item_view_number,
+					formatNumber(item.getNumber()));
+			setElementText(row, R.id.podcast_item_view_date,
+					formatDateString(item.getPubDate()));
+			setElementText(row, R.id.podcast_item_view_shownotes,
+					item.getShowNotes());
+			return row;
+		}
+
+		private String formatDateString(Date date) {
+			SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+			String strDate = format.format(date);
+			return strDate;
+		}
+
+		private String formatNumber(int number) {
+			return "#" + number;
+		}
+
+		private void setElementText(View row, int resourceId, String value) {
+			TextView view = (TextView) row.findViewById(resourceId);
+			view.setText(value);
+		}
 	}
 }
 
