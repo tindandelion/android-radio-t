@@ -22,12 +22,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class PodcastListActivity extends ListActivity {
-	public interface IPodcastProvider {
-		public abstract void refreshPodcasts(PodcastListActivity activity);
-
-		public abstract IPodcastListModel getModel();
-	}
-
 	class PodcastListAdapter extends ArrayAdapter<PodcastItem> {
 
 		public PodcastListAdapter() {
@@ -75,12 +69,12 @@ public class PodcastListActivity extends ListActivity {
 	private static final String PODCAST_URL = "http://feeds.rucast.net/radio-t";
 	private static PodcastList.IPodcastListModel defaultModel;
 
-	public static void resetResetModel() {
+	public static void resetModel() {
 		defaultModel = null;
 	}
 
-	public static void useModel(IPodcastProvider provider) {
-		defaultModel = provider.getModel();
+	public static void useModel(IPodcastListModel podcastListModel) {
+		defaultModel = podcastListModel;
 	}
 
 	private PodcastListAdapter listAdapter;

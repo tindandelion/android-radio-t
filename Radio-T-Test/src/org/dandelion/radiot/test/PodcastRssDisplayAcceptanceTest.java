@@ -3,7 +3,6 @@ package org.dandelion.radiot.test;
 import org.dandelion.radiot.PodcastItem;
 import org.dandelion.radiot.PodcastListActivity;
 import org.dandelion.radiot.RssFeedModel;
-import org.dandelion.radiot.RssPodcastProvider;
 
 import android.content.Intent;
 import android.content.res.AssetManager;
@@ -16,7 +15,7 @@ import android.widget.ListView;
 public class PodcastRssDisplayAcceptanceTest extends
 		ActivityUnitTestCase<PodcastListActivity> {
 	private static final String RSS_FILENAME = "podcast_rss.xml";
-	
+
 	private PodcastListActivity activity;
 
 	public PodcastRssDisplayAcceptanceTest() {
@@ -26,15 +25,13 @@ public class PodcastRssDisplayAcceptanceTest extends
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		PodcastListActivity
-				.useModel(localRssProvider());
-		activity = startActivity(new Intent(), null, null);
-	}
-
-	private RssPodcastProvider localRssProvider() {
-		final AssetManager assets = getInstrumentation().getTargetContext()
+		AssetManager assets = getInstrumentation().getTargetContext()
 				.getAssets();
-		return new RssPodcastProvider(new RssFeedModel.AssetFeedSource(assets, RSS_FILENAME));
+
+		PodcastListActivity.useModel(new RssFeedModel(
+				new RssFeedModel.AssetFeedSource(assets, RSS_FILENAME)));
+
+		activity = startActivity(new Intent(), null, null);
 	}
 
 	@UiThreadTest
