@@ -1,18 +1,16 @@
 package org.dandelion.radiot;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.dandelion.radiot.PodcastList.IPodcastListModel;
+
 import android.app.ListActivity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,6 +24,8 @@ import android.widget.TextView;
 public class PodcastListActivity extends ListActivity {
 	public interface IPodcastProvider {
 		public abstract void refreshPodcasts(PodcastListActivity activity);
+
+		public abstract IPodcastListModel getModel();
 	}
 
 	class PodcastListAdapter extends ArrayAdapter<PodcastItem> {
@@ -73,18 +73,18 @@ public class PodcastListActivity extends ListActivity {
 	}
 
 	private static final String PODCAST_URL = "http://feeds.rucast.net/radio-t";
+	private static PodcastList.IPodcastListModel defaultModel;
 
-	public static void resetPodcastProvider() {
-		podcastProvider = null;
+	public static void resetResetModel() {
+		defaultModel = null;
 	}
 
-	public static void usePodcastProvider(IPodcastProvider provider) {
-		podcastProvider = provider;
+	public static void useModel(IPodcastProvider provider) {
+		defaultModel = provider.getModel();
 	}
 
 	private PodcastListAdapter listAdapter;
-
-	private static IPodcastProvider podcastProvider;
+	private IPodcastListModel model;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -92,7 +92,15 @@ public class PodcastListActivity extends ListActivity {
 		super.onCreate(savedInstanceState);
 		listAdapter = new PodcastListAdapter();
 		setListAdapter(listAdapter);
+		model = getModel();
 		refreshPodcasts();
+	}
+
+	private PodcastList.IPodcastListModel getModel() {
+		if (null == defaultModel) {
+			return new RssFeedModel(new RssFeedModel.UrlFeedSource(PODCAST_URL));
+		}
+		return defaultModel;
 	}
 
 	@Override
@@ -114,7 +122,11 @@ public class PodcastListActivity extends ListActivity {
 	}
 
 	public void refreshPodcasts() {
-		getPodcastProvider().refreshPodcasts(this);
+		try {
+			updatePodcasts(model.retrievePodcasts());
+		} catch (Exception e) {
+			Log.e("RadioT", "Error updating podcast: "+ e.getMessage());
+		}
 	}
 
 	public void updatePodcasts(List<PodcastItem> newList) {
@@ -130,65 +142,10 @@ public class PodcastListActivity extends ListActivity {
 		playPodcast(listAdapter.getItem(position).getAudioUri());
 	}
 
-	private IPodcastProvider getPodcastProvider() {
-		if (podcastProvider == null) {
-			podcastProvider = new RemoteRssProvider(PODCAST_URL);
-		}
-		return podcastProvider;
-	}
-
 	private void playPodcast(Uri uri) {
 		Intent intent = new Intent(Intent.ACTION_VIEW);
 		intent.setDataAndType(uri, "audio/mpeg");
 		startActivity(intent);
-	}
-}
-
-class RemoteRssProvider extends RssPodcastProvider {
-	class RefreshTask extends AsyncTask<Void, Void, Void> {
-		
-		private PodcastListActivity activity;
-		private List<PodcastItem> podcasts;
-		private ProgressDialog progress;
-
-		public RefreshTask(PodcastListActivity activity) {
-			super();
-			this.activity = activity;
-		}
-		@Override
-		protected void onPreExecute() {
-			progress = ProgressDialog.show(activity, "", "Loading");
-		}
-
-		@Override
-		protected Void doInBackground(Void... params) {
-			podcasts = retrievePodcasts();
-			return null;
-		}
-		
-		@Override
-		protected void onPostExecute(Void result) {
-			progress.dismiss();
-			activity.updatePodcasts(podcasts);
-		}
-
-	}
-
-	private String feedUrl;
-
-	public RemoteRssProvider(String feedUrl) {
-		this.feedUrl = feedUrl;
-	}
-	
-	@Override
-	public InputStream openContentStream() throws IOException {
-		URL url = new URL(feedUrl);
-		return url.openStream();
-	} 
-	
-	@Override
-	public void refreshPodcasts(PodcastListActivity activity) {
-		new RefreshTask(activity).execute();
 	}
 }
 

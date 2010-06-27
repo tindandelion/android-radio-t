@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import org.dandelion.radiot.PodcastItem;
+import org.dandelion.radiot.PodcastList.IPodcastListModel;
 import org.dandelion.radiot.PodcastListActivity;
 import org.dandelion.radiot.PodcastListActivity.IPodcastProvider;
 
@@ -31,7 +32,7 @@ public class PodcastListActivityTestCase extends
 	protected void setUp() throws Exception {
 		super.setUp();
 		podcasts = new ArrayList<PodcastItem>();
-		PodcastListActivity.usePodcastProvider(nullPodcastProvider());
+		PodcastListActivity.useModel(nullPodcastProvider());
 		activity = startActivity(new Intent(), null, null);
 	}
 
@@ -39,12 +40,15 @@ public class PodcastListActivityTestCase extends
 		return new IPodcastProvider() {
 			public void refreshPodcasts(PodcastListActivity activity) {
 			}
+			public IPodcastListModel getModel() {
+				return null;
+			}
 		};
 	}
 	
 	@Override
 	protected void tearDown() throws Exception {
-		PodcastListActivity.resetPodcastProvider();
+		PodcastListActivity.resetResetModel();
 		super.tearDown();
 	}
 

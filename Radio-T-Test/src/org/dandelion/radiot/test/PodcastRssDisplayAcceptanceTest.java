@@ -1,10 +1,8 @@
 package org.dandelion.radiot.test;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 import org.dandelion.radiot.PodcastItem;
 import org.dandelion.radiot.PodcastListActivity;
+import org.dandelion.radiot.RssFeedModel;
 import org.dandelion.radiot.RssPodcastProvider;
 
 import android.content.Intent;
@@ -29,19 +27,14 @@ public class PodcastRssDisplayAcceptanceTest extends
 	protected void setUp() throws Exception {
 		super.setUp();
 		PodcastListActivity
-				.usePodcastProvider(localRssProvider());
+				.useModel(localRssProvider());
 		activity = startActivity(new Intent(), null, null);
 	}
 
 	private RssPodcastProvider localRssProvider() {
 		final AssetManager assets = getInstrumentation().getTargetContext()
 				.getAssets();
-		return new RssPodcastProvider() {
-			@Override
-			public InputStream openContentStream() throws IOException {
-				return assets.open(RSS_FILENAME);
-			}
-		};
+		return new RssPodcastProvider(new RssFeedModel.AssetFeedSource(assets, RSS_FILENAME));
 	}
 
 	@UiThreadTest
