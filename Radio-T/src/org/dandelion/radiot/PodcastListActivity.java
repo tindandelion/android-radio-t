@@ -26,7 +26,7 @@ import android.widget.TextView;
 public class PodcastListActivity extends ListActivity implements IView {
 	private static IPresenter defaultPresenter;
 
-	private static final String PODCAST_URL = "http://feeds.rucast.net/radio-t";
+	private static final String PODCAST_URL = "http://feedsqq.rucast.net/radio-t";
 
 	public static PodcastList.IPresenter createDefaultPresenter() {
 		return PodcastList.createAsyncPresenter(new RssFeedModel(
@@ -167,7 +167,7 @@ public class PodcastListActivity extends ListActivity implements IView {
 
 	public void showErrorMessage(String errorMessage) {
 		new AlertDialog.Builder(this)
-			.setTitle("Error")
+			.setTitle("Error loading podcast feed")
 			.setMessage(errorMessage)
 			.show();
 	}
