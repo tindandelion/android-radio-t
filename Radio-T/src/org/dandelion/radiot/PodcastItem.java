@@ -8,6 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import android.net.Uri;
+import android.text.Html;
 
 public class PodcastItem implements Cloneable {
 	private static final Pattern NUMBER_PATTERN = Pattern.compile("\\d+");
@@ -73,8 +74,9 @@ public class PodcastItem implements Cloneable {
 		}
 	}
 
-	public void setShowNotes(String value) {
-		showNotes = value;
+	public void extractShowNotes(String value) {
+		String noHtml = Html.fromHtml(value).toString();
+		showNotes = noHtml.replaceAll("\n", " ");
 	}
 
 	public void extractAudioUri(String value) {
