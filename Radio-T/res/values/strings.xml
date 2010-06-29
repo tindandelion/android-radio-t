@@ -2,4 +2,9 @@
 <resources>
     <string name="hello">Hello World!</string>
     <string name="app_name">Radio-T for Android</string>
+    <string-array name="main_menu">
+    	<item>Подкасты</item>
+    	<item>После-шоу</item>
+    	<item>Прямой эфир</item>
+    </string-array>
 </resources>

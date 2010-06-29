@@ -2,6 +2,7 @@ package org.dandelion.radiot;
 
 import android.app.ListActivity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -22,11 +23,9 @@ public class HomeScreen extends ListActivity {
 	}
 
 	private void initList() {
+		String[] menu_items = getResources().getStringArray(R.array.main_menu);
 		ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_list_item_1);
-		listAdapter.add("Подкасты");
-		listAdapter.add("После-шоу");
-		listAdapter.add("Прямой эфир");
+				android.R.layout.simple_list_item_1, menu_items);
 		setListAdapter(listAdapter);
 	}
 }
