@@ -2,13 +2,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent" android:layout_height="fill_parent">
 	<ImageView android:layout_width="fill_parent"
-		android:layout_height="fill_parent" android:src="@drawable/background" 
-		android:scaleType="center"/>
+		android:layout_height="fill_parent" android:src="@drawable/background"
+		android:scaleType="center" />
+	<TextView android:layout_width="wrap_content"
+		android:textScaleX="1.1" android:layout_height="wrap_content"
+		android:textColor="#FFFFFF" android:textStyle="bold" android:textSize="25dp"
+		android:text="@string/main_title" />
 	<TextView android:id="@+id/logo_text" android:layout_width="wrap_content"
 		android:layout_height="wrap_content" android:layout_alignParentRight="true"
 		android:gravity="right" android:text="@string/logo_text"
 		android:textStyle="bold" />
 	<ListView android:id="@android:id/list" android:layout_width="fill_parent"
-		android:padding="10dp" android:layout_height="fill_parent"
-		android:layout_below="@id/logo_text" />
+		android:layout_height="wrap_content" android:layout_below="@id/logo_text"
+		android:background="#90000000" android:layout_margin="10dp"/>
 </RelativeLayout>
