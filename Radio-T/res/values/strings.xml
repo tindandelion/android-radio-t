@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="logo_text">Импровизации на\nHi-Tech темы</string>
+	<string name="logo_text">Импровизации\nна Hi-Tech темы</string>
 	<string name="main_title">Радио</string>
     <string name="app_name">Radio-T for Android</string>
     <string-array name="main_menu">
