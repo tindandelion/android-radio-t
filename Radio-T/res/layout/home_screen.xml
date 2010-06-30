@@ -8,11 +8,15 @@
 		android:textScaleX="1.1" android:layout_height="wrap_content"
 		android:textColor="#FFFFFF" android:textStyle="bold" android:textSize="25dp"
 		android:text="@string/main_title" />
+
+	<ImageView android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:src="@drawable/logo" />
 	<TextView android:id="@+id/logo_text" android:layout_width="wrap_content"
 		android:layout_height="wrap_content" android:layout_alignParentRight="true"
 		android:gravity="right" android:text="@string/logo_text"
+		android:textScaleX="1.1" android:textColor="#F0F0F0"
 		android:textStyle="bold" />
 	<ListView android:id="@android:id/list" android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:layout_below="@id/logo_text"
-		android:background="#90000000" android:layout_margin="10dp"/>
+		android:background="#90000000" android:layout_margin="10dp" />
 </RelativeLayout>
