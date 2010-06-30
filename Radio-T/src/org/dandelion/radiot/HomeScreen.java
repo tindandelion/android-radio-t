@@ -4,6 +4,7 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -25,7 +26,7 @@ public class HomeScreen extends ListActivity {
 	private void initList() {
 		String[] menu_items = getResources().getStringArray(R.array.main_menu);
 		ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_list_item_1, menu_items);
+				R.layout.home_screen_item, R.id.home_screen_item_title, menu_items);
 		setListAdapter(listAdapter);
 	}
 }
