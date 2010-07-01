@@ -35,7 +35,7 @@ public class PodcastListActivity extends ListActivity implements IView {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		initListAdapter();
-		initPresenter();
+		presenter = PodcastList.getPresenter(this);
 		presenter.refreshData();
 	}
 
@@ -77,11 +77,6 @@ public class PodcastListActivity extends ListActivity implements IView {
 	private void initListAdapter() {
 		listAdapter = new PodcastListAdapter();
 		setListAdapter(listAdapter);
-	}
-
-	private void initPresenter() {
-		presenter = PodcastList.Factory.getInstance().getPresenter();
-		presenter.initialize(this);
 	}
 
 	private void playPodcast(Uri uri) {

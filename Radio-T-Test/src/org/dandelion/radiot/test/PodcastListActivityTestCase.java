@@ -6,6 +6,7 @@ import java.util.Date;
 
 import org.dandelion.radiot.PodcastItem;
 import org.dandelion.radiot.PodcastList;
+import org.dandelion.radiot.PodcastList.IView;
 import org.dandelion.radiot.PodcastListActivity;
 import org.dandelion.radiot.PodcastList.IModel;
 import org.dandelion.radiot.PodcastList.IPresenter;
@@ -30,18 +31,28 @@ public class PodcastListActivityTestCase extends
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		PodcastList.Factory.setInstance(new PodcastList.Factory() {
+		PodcastList.setFactory(new PodcastList.Factory() {
 			@Override
 			public IPresenter createPresenter(IModel model) {
-				return PodcastList.nullPresenter();
+				return nullPresenter();
 			}
 		});
 		activity = startActivity(new Intent(), null, null);
 	}
 
+	protected IPresenter nullPresenter() {
+		return new PodcastList.IPresenter() {
+			public void refreshData() {
+			}
+		
+			public void initialize(IView view) {
+			}
+		};
+	}
+
 	@Override
 	protected void tearDown() throws Exception {
-		PodcastList.Factory.setInstance(null);
+		PodcastList.resetFactory();
 		super.tearDown();
 	}
 

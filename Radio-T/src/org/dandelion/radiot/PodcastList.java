@@ -3,10 +3,12 @@ package org.dandelion.radiot;
 import java.util.List;
 
 public class PodcastList {
+	private static Factory factory;
+
 	public interface IModel {
-		List<PodcastItem> retrievePodcasts() throws Exception; 
+		List<PodcastItem> retrievePodcasts() throws Exception;
 	}
-	
+
 	public interface IView {
 		void updatePodcasts(List<PodcastItem> podcasts);
 
@@ -16,59 +18,53 @@ public class PodcastList {
 
 		void showErrorMessage(String errorMessage);
 	}
-	
-	public interface IPresenter { 
+
+	public interface IPresenter {
 		void initialize(IView view);
+
 		void refreshData();
+	}
+	
+	public static IPresenter getPresenter(IView view) {
+		
+		return getFactory().getPresenter(view);
+	}
+	
+	private static Factory getFactory() {
+		if (null == factory) {
+			factory = new Factory();
+		}
+		return factory;
+	}
+
+	public static void setFactory(Factory newInstance) {
+		factory = newInstance;
+	}
+	
+	public static void resetFactory() {
+		setFactory(null);
 	}
 
 	public static class Factory {
 		private static final String PODCAST_URL = "http://feeds.rucast.net/radio-t";
-		private static Factory instance;
-	
-		public static Factory getInstance() {
-			if (null == instance) {
-				instance = new Factory();
-			}
-			return instance;
-		}
-		
-		public static void setInstance(Factory newInstance) {
-			instance = newInstance;
-		}
-	
 		private IPresenter presenter;
-	
-		public PodcastList.IPresenter getPresenter() {
+
+		public PodcastList.IPresenter getPresenter(IView view) {
 			if (null == presenter) {
-				IModel model = new RssFeedModel(
-						new RssFeedModel.UrlFeedSource(PODCAST_URL));
+				IModel model = createModel();
 				presenter = createPresenter(model);
 			}
+			presenter.initialize(view);
 			return presenter;
 		}
 
-		public IPresenter createPresenter(IModel model) {
-			return PodcastList.createAsyncPresenter(model);
+		public IModel createModel() {
+			return new RssFeedModel(new RssFeedModel.UrlFeedSource(PODCAST_URL));
 		}
-		
-		public void resetPresenter() {
-			presenter = null;
-		}
-	}
 
-	public static IPresenter nullPresenter() {
-		return new IPresenter() {
-			public void refreshData() {
-			}
-			
-			public void initialize(IView view) {
-			}
-		};
-	}
-	
-	public static IPresenter createAsyncPresenter(IModel model) {
-		return new AsyncPresenter(model);
+		public IPresenter createPresenter(IModel model) {
+			return new AsyncPresenter(model);
+		}
 	}
 
 	public static IPresenter createSyncPresenter(final IModel model) {
@@ -81,7 +77,7 @@ public class PodcastList {
 				} catch (Exception e) {
 				}
 			}
-			
+
 			public void initialize(IView view) {
 				this.view = view;
 			}

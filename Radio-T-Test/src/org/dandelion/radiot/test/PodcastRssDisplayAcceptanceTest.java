@@ -28,15 +28,17 @@ public class PodcastRssDisplayAcceptanceTest extends
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		AssetManager assets = getInstrumentation().getTargetContext()
+		PodcastList.setFactory(new PodcastList.Factory() {
+			@Override
+			public IModel createModel() {
+				AssetManager assets = getInstrumentation().getTargetContext()
 				.getAssets();
-		
-		IModel model = new RssFeedModel(new RssFeedModel.AssetFeedSource(assets, RSS_FILENAME));
-		final IPresenter presenter = PodcastList.createSyncPresenter(model);
-		PodcastList.Factory.setInstance(new PodcastList.Factory() {
+				return new RssFeedModel(new RssFeedModel.AssetFeedSource(assets, RSS_FILENAME));
+			}
+			
 			@Override
 			public IPresenter createPresenter(IModel model) {
-				return presenter;
+				return PodcastList.createSyncPresenter(model);
 			}
 		});
 
@@ -45,7 +47,7 @@ public class PodcastRssDisplayAcceptanceTest extends
 	
 	@Override
 	protected void tearDown() throws Exception {
-		PodcastList.Factory.setInstance(null);
+		PodcastList.resetFactory();
 		super.tearDown();
 	}
 
