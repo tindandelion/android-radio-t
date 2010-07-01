@@ -7,6 +7,8 @@ import java.util.Date;
 import org.dandelion.radiot.PodcastItem;
 import org.dandelion.radiot.PodcastList;
 import org.dandelion.radiot.PodcastListActivity;
+import org.dandelion.radiot.PodcastList.IModel;
+import org.dandelion.radiot.PodcastList.IPresenter;
 
 import android.content.Intent;
 import android.test.ActivityUnitTestCase;
@@ -28,13 +30,18 @@ public class PodcastListActivityTestCase extends
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		PodcastList.Factory.getInstance().setPresenter(PodcastList.nullPresenter());
+		PodcastList.Factory.setInstance(new PodcastList.Factory() {
+			@Override
+			public IPresenter createPresenter(IModel model) {
+				return PodcastList.nullPresenter();
+			}
+		});
 		activity = startActivity(new Intent(), null, null);
 	}
 
 	@Override
 	protected void tearDown() throws Exception {
-		PodcastList.Factory.getInstance().resetPresenter();
+		PodcastList.Factory.setInstance(null);
 		super.tearDown();
 	}
 

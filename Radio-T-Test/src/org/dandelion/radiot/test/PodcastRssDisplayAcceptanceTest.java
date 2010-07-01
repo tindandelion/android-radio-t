@@ -32,10 +32,21 @@ public class PodcastRssDisplayAcceptanceTest extends
 				.getAssets();
 		
 		IModel model = new RssFeedModel(new RssFeedModel.AssetFeedSource(assets, RSS_FILENAME));
-		IPresenter presenter = PodcastList.createSyncPresenter(model);
-		PodcastList.Factory.getInstance().setPresenter(presenter);
+		final IPresenter presenter = PodcastList.createSyncPresenter(model);
+		PodcastList.Factory.setInstance(new PodcastList.Factory() {
+			@Override
+			public IPresenter createPresenter(IModel model) {
+				return presenter;
+			}
+		});
 
 		activity = startActivity(new Intent(), null, null);
+	}
+	
+	@Override
+	protected void tearDown() throws Exception {
+		PodcastList.Factory.setInstance(null);
+		super.tearDown();
 	}
 
 	@UiThreadTest

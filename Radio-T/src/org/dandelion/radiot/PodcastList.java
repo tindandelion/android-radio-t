@@ -32,19 +32,24 @@ public class PodcastList {
 			}
 			return instance;
 		}
+		
+		public static void setInstance(Factory newInstance) {
+			instance = newInstance;
+		}
 	
 		private IPresenter presenter;
 	
 		public PodcastList.IPresenter getPresenter() {
 			if (null == presenter) {
-				presenter = PodcastList.createAsyncPresenter(new RssFeedModel(
-						new RssFeedModel.UrlFeedSource(PODCAST_URL)));
+				IModel model = new RssFeedModel(
+						new RssFeedModel.UrlFeedSource(PODCAST_URL));
+				presenter = createPresenter(model);
 			}
 			return presenter;
 		}
-	
-		public void setPresenter(PodcastList.IPresenter value) {
-			presenter = value;
+
+		public IPresenter createPresenter(IModel model) {
+			return PodcastList.createAsyncPresenter(model);
 		}
 		
 		public void resetPresenter() {
