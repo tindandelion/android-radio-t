@@ -25,17 +25,22 @@ import android.widget.TextView;
 
 public class PodcastListActivity extends ListActivity implements IView {
 
+	public static final String URL_KEY = "podcast_url";
 	private PodcastListAdapter listAdapter;
 	private IPresenter presenter;
 
 	private ProgressDialog progress;
+
+	public void closeProgress() {
+		progress.dismiss();
+	}
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		initListAdapter();
-		presenter = PodcastList.getPresenter(this);
+		presenter = PodcastList.getPresenter(this, getFeedUrlFromExtra());
 		presenter.refreshData();
 	}
 
@@ -61,6 +66,15 @@ public class PodcastListActivity extends ListActivity implements IView {
 		presenter.refreshData();
 	}
 
+	public void showErrorMessage(String errorMessage) {
+		new AlertDialog.Builder(this).setTitle("Error loading podcast feed")
+				.setMessage(errorMessage).show();
+	}
+
+	public void showProgress() {
+		progress = ProgressDialog.show(this, "", "Loading...");
+	}
+
 	public void updatePodcasts(List<PodcastItem> newList) {
 		listAdapter.clear();
 		for (PodcastItem item : newList) {
@@ -72,6 +86,14 @@ public class PodcastListActivity extends ListActivity implements IView {
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
 		playPodcast(listAdapter.getItem(position).getAudioUri());
+	}
+
+	private String getFeedUrlFromExtra() {
+		Bundle extras = getIntent().getExtras();
+		if (null == extras) {
+			return null;
+		}
+		return extras.getString(URL_KEY);
 	}
 
 	private void initListAdapter() {
@@ -127,18 +149,5 @@ public class PodcastListActivity extends ListActivity implements IView {
 			TextView view = (TextView) row.findViewById(resourceId);
 			view.setText(value);
 		}
-	}
-
-	public void showProgress() {
-		progress = ProgressDialog.show(this, "", "Loading...");
-	}
-
-	public void closeProgress() {
-		progress.dismiss();
-	}
-
-	public void showErrorMessage(String errorMessage) {
-		new AlertDialog.Builder(this).setTitle("Error loading podcast feed")
-				.setMessage(errorMessage).show();
 	}
 }

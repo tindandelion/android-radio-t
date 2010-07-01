@@ -8,6 +8,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 public class HomeScreen extends ListActivity {
+	private static final String PODCAST_URL = "http://feeds.rucast.net/radio-t";
+	private static final String PIRATES_URL = "http://feeds.feedburner.com/pirate-radio-t";
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +22,7 @@ public class HomeScreen extends ListActivity {
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		Intent intent = new Intent(this, PodcastListActivity.class);
+		intent.putExtra(PodcastListActivity.URL_KEY, PIRATES_URL);
 		startActivity(intent);
 	}
 

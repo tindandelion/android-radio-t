@@ -29,9 +29,10 @@ public class PodcastList {
 		InputStream openContentStream() throws IOException;
 	}
 
-	public static IPresenter getPresenter(IView view) {
+	public static IPresenter getPresenter(IView view, String feedUrl) {
 		Factory f = getFactory();
-		IModel model = f.createModel();
+		IFeedSource feedSource = f.createFeedSource(feedUrl);
+		IModel model = f.createModel(feedSource);
 		IPresenter presenter = f.createPresenter(model, view);
 		return presenter;
 	}
@@ -52,10 +53,8 @@ public class PodcastList {
 	}
 
 	public static class Factory {
-		private static final String PODCAST_URL = "http://feeds.rucast.net/radio-t";
-
-		public IModel createModel() {
-			return new RssFeedModel(createFeedSource(PODCAST_URL));
+		public IModel createModel(IFeedSource feedSource) {
+			return new RssFeedModel(feedSource);
 		}
 
 		public IFeedSource createFeedSource(String url) {
