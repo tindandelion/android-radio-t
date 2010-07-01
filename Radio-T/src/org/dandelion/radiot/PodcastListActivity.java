@@ -23,9 +23,30 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class PodcastListActivity extends ListActivity implements IView {
-	private static IPresenter defaultPresenter;
+class PodcastListFactory {
+	private static PodcastListFactory instance;
 
+	public static PodcastListFactory getInstance() {
+		if (null == instance) { 
+			instance = new PodcastListFactory();
+		}
+		return instance;
+	}
+
+	private IPresenter presenter;
+	
+	public PodcastList.IPresenter getPresenter() {
+		return presenter;
+	}
+	
+	public void setPresenter(PodcastList.IPresenter value) { 
+		presenter = value;
+	}
+	
+}
+
+
+public class PodcastListActivity extends ListActivity implements IView {
 	private static final String PODCAST_URL = "http://feeds.rucast.net/radio-t";
 
 	public static PodcastList.IPresenter createDefaultPresenter() {
@@ -34,18 +55,20 @@ public class PodcastListActivity extends ListActivity implements IView {
 	}
 
 	public static PodcastList.IPresenter getDefaultPresenter() {
-		if (null == defaultPresenter) {
-			defaultPresenter = createDefaultPresenter();
+		IPresenter p = PodcastListFactory.getInstance().getPresenter();
+		if (null == p) {
+			p = createDefaultPresenter();
+			PodcastListFactory.getInstance().setPresenter(p);
 		}
-		return defaultPresenter;
+		return p;
 	}
 
 	public static void resetDefaultPresenter() {
-		defaultPresenter = null;
+		PodcastListFactory.getInstance().setPresenter(null);
 	}
 
 	public static void setDefaultPresenter(PodcastList.IPresenter presenter) {
-		defaultPresenter = presenter;
+		PodcastListFactory.getInstance().setPresenter(presenter);
 	}
 
 	private PodcastListAdapter listAdapter;
