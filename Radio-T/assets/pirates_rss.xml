@@ -12,7 +12,7 @@
 	<sy:updateFrequency>1</sy:updateFrequency>
 	<generator>http://wordpress.org/?v=3.0</generator>
 		<atom10:link xmlns:atom10="http://www.w3.org/2005/Atom" rel="self" type="application/rss+xml" href="http://feeds.feedburner.com/pirate-radio-t" /><feedburner:info xmlns:feedburner="http://rssnamespace.org/feedburner/ext/1.0" uri="pirate-radio-t" /><atom10:link xmlns:atom10="http://www.w3.org/2005/Atom" rel="hub" href="http://pubsubhubbub.appspot.com/" /><media:thumbnail url="http://pirate.radio-t.com/cover-pirate.jpg" /><media:category scheme="http://www.itunes.com/dtds/podcast-1.0.dtd">Technology/Tech News</media:category><itunes:owner><itunes:email>podcast@radio-t.com</itunes:email><itunes:name>Umputun, Bobuk, Gray, Marinka</itunes:name></itunes:owner><itunes:author>Umputun, Bobuk, Gray, Marinka</itunes:author><itunes:explicit>no</itunes:explicit><itunes:image href="http://pirate.radio-t.com/cover-pirate.jpg" /><itunes:subtitle>Пираты Радио-Т</itunes:subtitle><itunes:summary>После-шоу РТ</itunes:summary><itunes:category text="Technology"><itunes:category text="Tech News" /></itunes:category><item>
-		<title>После РТ 193</title>
+		<title>После РТ 10193</title>
 		<link>http://pirates.radio-t.com/audio/posle-rt-193/</link>
 		<comments>http://pirates.radio-t.com/audio/posle-rt-193/#comments</comments>
 		<pubDate>Sat, 26 Jun 2010 23:40:53 +0000</pubDate>

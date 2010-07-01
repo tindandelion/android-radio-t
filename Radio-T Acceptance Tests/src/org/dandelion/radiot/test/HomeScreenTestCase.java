@@ -31,4 +31,10 @@ public class HomeScreenTestCase extends
 		solo.assertCurrentActivity("Main podcast list is not shown",
 				PodcastListActivity.class);
 	}
+
+	public void testShowAfterShowPage() throws Exception {
+		solo.clickOnText("После-шоу");
+		assertTrue("The sample podcast record for pirates is not found",
+				solo.waitForText("#10193"));
+	}
 }
