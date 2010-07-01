@@ -12,11 +12,8 @@ public class AsyncPresenter implements PodcastList.IPresenter {
 	private RefreshTask task;
 	private IModel model;
 
-	public AsyncPresenter(PodcastList.IModel model) {
+	public AsyncPresenter(PodcastList.IModel model, IView view) {
 		this.model = model;
-	}
-
-	public void initialize(PodcastList.IView view) {
 		this.view = view;
 	}
 

@@ -4,6 +4,7 @@ import org.dandelion.radiot.PodcastItem;
 import org.dandelion.radiot.PodcastList;
 import org.dandelion.radiot.PodcastList.IModel;
 import org.dandelion.radiot.PodcastList.IPresenter;
+import org.dandelion.radiot.PodcastList.IView;
 import org.dandelion.radiot.PodcastListActivity;
 import org.dandelion.radiot.RssFeedModel;
 
@@ -37,8 +38,8 @@ public class PodcastRssDisplayAcceptanceTest extends
 			}
 			
 			@Override
-			public IPresenter createPresenter(IModel model) {
-				return PodcastList.createSyncPresenter(model);
+			public IPresenter createPresenter(IModel model, IView view) {
+				return PodcastList.createSyncPresenter(model, view);
 			}
 		});
 

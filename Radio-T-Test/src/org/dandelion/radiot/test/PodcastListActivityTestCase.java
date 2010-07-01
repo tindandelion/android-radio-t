@@ -33,7 +33,7 @@ public class PodcastListActivityTestCase extends
 		super.setUp();
 		PodcastList.setFactory(new PodcastList.Factory() {
 			@Override
-			public IPresenter createPresenter(IModel model) {
+			public IPresenter createPresenter(IModel model, IView view) {
 				return nullPresenter();
 			}
 		});
@@ -43,9 +43,6 @@ public class PodcastListActivityTestCase extends
 	protected IPresenter nullPresenter() {
 		return new PodcastList.IPresenter() {
 			public void refreshData() {
-			}
-		
-			public void initialize(IView view) {
 			}
 		};
 	}

@@ -1,7 +1,11 @@
 package org.dandelion.radiot.test;
 
 import org.dandelion.radiot.HomeScreen;
+import org.dandelion.radiot.PodcastList;
+import org.dandelion.radiot.PodcastList.IView;
 import org.dandelion.radiot.PodcastListActivity;
+import org.dandelion.radiot.PodcastList.IModel;
+import org.dandelion.radiot.PodcastList.IPresenter;
 
 import com.jayway.android.robotium.solo.Solo;
 
@@ -19,11 +23,13 @@ public class HomeScreenTestCase extends
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
+		PodcastList.setFactory(new PodcastList.Factory() {
+			@Override
+			public IPresenter createPresenter(IModel model, IView view) {
+				return PodcastList.createSyncPresenter(model, view);
+			}
+		});
 		solo = new Solo(getInstrumentation(), getActivity());
-	}
-
-	public void testPreconditions() throws Exception {
-		assertNotNull(solo);
 	}
 
 	public void testOpenPodcastsPage() throws Exception {
