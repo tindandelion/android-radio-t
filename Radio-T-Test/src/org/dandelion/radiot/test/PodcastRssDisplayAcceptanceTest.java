@@ -18,7 +18,7 @@ import android.widget.ListView;
 
 public class PodcastRssDisplayAcceptanceTest extends
 		ActivityUnitTestCase<PodcastListActivity> {
-	private static final String RSS_FILENAME = "podcast_rss.xml";
+	private static final String RSS_FILENAME = "radio-t.xml";
 
 	private PodcastListActivity activity;
 
@@ -31,11 +31,11 @@ public class PodcastRssDisplayAcceptanceTest extends
 		super.setUp();
 		PodcastList.setFactory(new PodcastList.Factory() {
 			@Override
-			public IModel createModel() {
+			public PodcastList.IFeedSource createFeedSource(String url) {
 				AssetManager assets = getInstrumentation().getTargetContext()
 				.getAssets();
-				return new RssFeedModel(new RssFeedModel.AssetFeedSource(assets, RSS_FILENAME));
-			}
+				return new RssFeedModel.AssetFeedSource(assets, RSS_FILENAME);
+			};
 			
 			@Override
 			public IPresenter createPresenter(IModel model, IView view) {

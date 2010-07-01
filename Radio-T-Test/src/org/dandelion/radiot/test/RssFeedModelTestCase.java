@@ -9,12 +9,12 @@ import java.util.List;
 import junit.framework.TestCase;
 
 import org.dandelion.radiot.PodcastItem;
+import org.dandelion.radiot.PodcastList;
 import org.dandelion.radiot.RssFeedModel;
-import org.dandelion.radiot.RssFeedModel.IFeedSource;
 
 import android.net.Uri;
 
-public class RssFeedModelTestCase extends TestCase implements IFeedSource {
+public class RssFeedModelTestCase extends TestCase implements PodcastList.IFeedSource {
 
 	private RssFeedModel model;
 	private String feedContent;

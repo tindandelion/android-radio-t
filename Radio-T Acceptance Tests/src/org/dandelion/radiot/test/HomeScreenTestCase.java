@@ -2,14 +2,17 @@ package org.dandelion.radiot.test;
 
 import org.dandelion.radiot.HomeScreen;
 import org.dandelion.radiot.PodcastList;
-import org.dandelion.radiot.PodcastList.IView;
-import org.dandelion.radiot.PodcastListActivity;
+import org.dandelion.radiot.PodcastList.IFeedSource;
 import org.dandelion.radiot.PodcastList.IModel;
 import org.dandelion.radiot.PodcastList.IPresenter;
+import org.dandelion.radiot.PodcastList.IView;
+import org.dandelion.radiot.RssFeedModel.AssetFeedSource;
+
+import android.content.res.AssetManager;
+import android.net.Uri;
+import android.test.ActivityInstrumentationTestCase2;
 
 import com.jayway.android.robotium.solo.Solo;
-
-import android.test.ActivityInstrumentationTestCase2;
 
 public class HomeScreenTestCase extends
 		ActivityInstrumentationTestCase2<HomeScreen> {
@@ -24,6 +27,18 @@ public class HomeScreenTestCase extends
 	protected void setUp() throws Exception {
 		super.setUp();
 		PodcastList.setFactory(new PodcastList.Factory() {
+			
+			@Override
+			public IFeedSource createFeedSource(String url) {
+				AssetManager assets = getInstrumentation().getTargetContext().getAssets();
+				return new AssetFeedSource(assets, getLocalFileName(url));
+			}
+			
+			private String getLocalFileName(String url) {
+				Uri uri = Uri.parse(url);
+				return uri.getLastPathSegment() + ".xml";
+			}
+
 			@Override
 			public IPresenter createPresenter(IModel model, IView view) {
 				return PodcastList.createSyncPresenter(model, view);
@@ -34,8 +49,8 @@ public class HomeScreenTestCase extends
 
 	public void testOpenPodcastsPage() throws Exception {
 		solo.clickOnText("Подкасты");
-		solo.assertCurrentActivity("Main podcast list is not shown",
-				PodcastListActivity.class);
+		assertTrue("The sample podcast record for main podcast show is not found",
+				solo.waitForText("#5192"));
 	}
 
 	public void testShowAfterShowPage() throws Exception {

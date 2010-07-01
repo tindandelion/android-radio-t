@@ -18,11 +18,8 @@ import android.sax.StartElementListener;
 import android.util.Xml;
 
 public class RssFeedModel implements PodcastList.IModel {
-	public interface IFeedSource {
-		InputStream openContentStream() throws IOException;
-	}
 	
-	public static class AssetFeedSource implements IFeedSource {
+	public static class AssetFeedSource implements PodcastList.IFeedSource {
 		private AssetManager assets;
 		private String filename;
 		public AssetFeedSource(AssetManager assets, String filename) {
@@ -34,7 +31,7 @@ public class RssFeedModel implements PodcastList.IModel {
 		}
 	}
 	
-	public static class UrlFeedSource implements IFeedSource {
+	public static class UrlFeedSource implements PodcastList.IFeedSource {
 		private String address;
 		public UrlFeedSource(String url) {
 			this.address = url;
@@ -46,9 +43,9 @@ public class RssFeedModel implements PodcastList.IModel {
 	}
 
 	private ArrayList<PodcastItem> items;
-	private IFeedSource feedSource;
+	private PodcastList.IFeedSource feedSource;
 
-	public RssFeedModel(IFeedSource source) {
+	public RssFeedModel(PodcastList.IFeedSource source) {
 		feedSource = source;
 	}
 	

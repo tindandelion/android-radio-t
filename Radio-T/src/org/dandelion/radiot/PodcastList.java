@@ -1,5 +1,7 @@
 package org.dandelion.radiot;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 public class PodcastList {
@@ -21,6 +23,10 @@ public class PodcastList {
 
 	public interface IPresenter {
 		void refreshData();
+	}
+	
+	public interface IFeedSource {
+		InputStream openContentStream() throws IOException;
 	}
 
 	public static IPresenter getPresenter(IView view) {
@@ -49,7 +55,11 @@ public class PodcastList {
 		private static final String PODCAST_URL = "http://feeds.rucast.net/radio-t";
 
 		public IModel createModel() {
-			return new RssFeedModel(new RssFeedModel.UrlFeedSource(PODCAST_URL));
+			return new RssFeedModel(createFeedSource(PODCAST_URL));
+		}
+
+		public IFeedSource createFeedSource(String url) {
+			return new RssFeedModel.UrlFeedSource(url);
 		}
 
 		public IPresenter createPresenter(IModel model, IView view) {
