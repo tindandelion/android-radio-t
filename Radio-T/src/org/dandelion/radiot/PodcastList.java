@@ -22,6 +22,36 @@ public class PodcastList {
 		void refreshData();
 	}
 
+	public static class Factory {
+		private static final String PODCAST_URL = "http://feeds.rucast.net/radio-t";
+		private static Factory instance;
+	
+		public static Factory getInstance() {
+			if (null == instance) {
+				instance = new Factory();
+			}
+			return instance;
+		}
+	
+		private IPresenter presenter;
+	
+		public PodcastList.IPresenter getPresenter() {
+			if (null == presenter) {
+				presenter = PodcastList.createAsyncPresenter(new RssFeedModel(
+						new RssFeedModel.UrlFeedSource(PODCAST_URL)));
+			}
+			return presenter;
+		}
+	
+		public void setPresenter(PodcastList.IPresenter value) {
+			presenter = value;
+		}
+		
+		public void resetPresenter() {
+			presenter = null;
+		}
+	}
+
 	public static IPresenter nullPresenter() {
 		return new IPresenter() {
 			public void refreshData() {

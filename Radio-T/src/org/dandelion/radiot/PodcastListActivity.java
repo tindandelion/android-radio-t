@@ -23,53 +23,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-class PodcastListFactory {
-	private static PodcastListFactory instance;
-
-	public static PodcastListFactory getInstance() {
-		if (null == instance) { 
-			instance = new PodcastListFactory();
-		}
-		return instance;
-	}
-
-	private IPresenter presenter;
-	
-	public PodcastList.IPresenter getPresenter() {
-		return presenter;
-	}
-	
-	public void setPresenter(PodcastList.IPresenter value) { 
-		presenter = value;
-	}
-	
-}
-
-
 public class PodcastListActivity extends ListActivity implements IView {
-	private static final String PODCAST_URL = "http://feeds.rucast.net/radio-t";
-
-	public static PodcastList.IPresenter createDefaultPresenter() {
-		return PodcastList.createAsyncPresenter(new RssFeedModel(
-				new RssFeedModel.UrlFeedSource(PODCAST_URL)));
-	}
-
-	public static PodcastList.IPresenter getDefaultPresenter() {
-		IPresenter p = PodcastListFactory.getInstance().getPresenter();
-		if (null == p) {
-			p = createDefaultPresenter();
-			PodcastListFactory.getInstance().setPresenter(p);
-		}
-		return p;
-	}
-
-	public static void resetDefaultPresenter() {
-		PodcastListFactory.getInstance().setPresenter(null);
-	}
-
-	public static void setDefaultPresenter(PodcastList.IPresenter presenter) {
-		PodcastListFactory.getInstance().setPresenter(presenter);
-	}
 
 	private PodcastListAdapter listAdapter;
 	private IPresenter presenter;
@@ -126,7 +80,7 @@ public class PodcastListActivity extends ListActivity implements IView {
 	}
 
 	private void initPresenter() {
-		presenter = getDefaultPresenter();
+		presenter = PodcastList.Factory.getInstance().getPresenter();
 		presenter.initialize(this);
 	}
 
@@ -189,9 +143,7 @@ public class PodcastListActivity extends ListActivity implements IView {
 	}
 
 	public void showErrorMessage(String errorMessage) {
-		new AlertDialog.Builder(this)
-			.setTitle("Error loading podcast feed")
-			.setMessage(errorMessage)
-			.show();
+		new AlertDialog.Builder(this).setTitle("Error loading podcast feed")
+				.setMessage(errorMessage).show();
 	}
 }

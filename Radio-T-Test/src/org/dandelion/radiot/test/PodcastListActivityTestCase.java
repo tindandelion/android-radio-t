@@ -19,7 +19,6 @@ public class PodcastListActivityTestCase extends
 
 	// This date is 19.06.2010
 	private static final Date SAMPLE_DATE = new Date(110, 05, 19);
-
 	private PodcastListActivity activity;
 
 	public PodcastListActivityTestCase() {
@@ -29,14 +28,13 @@ public class PodcastListActivityTestCase extends
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		new ArrayList<PodcastItem>();
-		PodcastListActivity.setDefaultPresenter(PodcastList.nullPresenter());
+		PodcastList.Factory.getInstance().setPresenter(PodcastList.nullPresenter());
 		activity = startActivity(new Intent(), null, null);
 	}
 
 	@Override
 	protected void tearDown() throws Exception {
-		PodcastListActivity.resetDefaultPresenter();
+		PodcastList.Factory.getInstance().resetPresenter();
 		super.tearDown();
 	}
 
