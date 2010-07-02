@@ -35,7 +35,7 @@ public class PodcastListActivityTestCase extends
 		ArrayList<PodcastItem> items = new ArrayList<PodcastItem>();
 		items.add(new PodcastItem(121, SAMPLE_DATE, "Show notes", ""));
 		
-		activity = startActivityForFeed("");
+		activity = startActivity(new Intent(), null, null);
 		activity.updatePodcasts(items);
 		View listItem = activity.getListAdapter().getView(0, null, null);
 
@@ -45,17 +45,24 @@ public class PodcastListActivityTestCase extends
 	}
 	
 	public void testGetsFeedUrlFromBundleExtra() throws Exception {
-		startActivityForFeed("podcast_feed_url");
+		Intent intent = new Intent();
+		intent.putExtra(PodcastListActivity.URL_KEY, "podcast_feed_url");
+		
+		startActivity(intent, null, null);
+		
 		assertEquals("podcast_feed_url", feedSourceUrl);
 		
 	}
-
-	private PodcastListActivity startActivityForFeed(String value) {
+	
+	public void testGettingTitleFromExtra() throws Exception {
 		Intent intent = new Intent();
-		intent.putExtra(PodcastListActivity.URL_KEY, value);
-		return startActivity(intent, null, null);
+		intent.putExtra(PodcastListActivity.TITLE_KEY, "Custom title");
+		
+		activity = startActivity(intent, null, null);
+		
+		assertEquals("Custom title", activity.getTitle());
 	}
-
+	
 	protected IPresenter nullPresenter() {
 		return new PodcastList.IPresenter() {
 			public void refreshData() {

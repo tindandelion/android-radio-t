@@ -6,6 +6,7 @@ import org.dandelion.radiot.PodcastList.IFeedSource;
 import org.dandelion.radiot.PodcastList.IModel;
 import org.dandelion.radiot.PodcastList.IPresenter;
 import org.dandelion.radiot.PodcastList.IView;
+import org.dandelion.radiot.PodcastListActivity;
 import org.dandelion.radiot.RssFeedModel.AssetFeedSource;
 
 import android.content.res.AssetManager;
@@ -57,5 +58,17 @@ public class HomeScreenTestCase extends
 		solo.clickOnText("После-шоу");
 		assertTrue("The sample podcast record for pirates is not found",
 				solo.waitForText("#10193"));
+	}
+	
+	public void testShowingCorrectActivityTitle() throws Exception {
+		solo.clickOnText("Подкасты");
+		
+		waitForPodcastListToOpen();
+		
+		assertEquals("Подкасты", solo.getCurrentActivity().getTitle());
+	}
+
+	private void waitForPodcastListToOpen() {
+		solo.assertCurrentActivity("Failed to open the podcast list", PodcastListActivity.class);
 	}
 }

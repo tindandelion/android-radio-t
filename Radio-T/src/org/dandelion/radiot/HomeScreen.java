@@ -39,13 +39,13 @@ public class HomeScreen extends ListActivity {
 		items.add(new HomeScreenItem(R.string.main_show_home_item) {
 			@Override
 			public void execute() {
-				PodcastListActivity.start(HomeScreen.this, PODCAST_URL);
+				PodcastListActivity.start(HomeScreen.this, this.toString(), PODCAST_URL);
 			}
 		});
 		items.add(new HomeScreenItem(R.string.after_show_home_item) {
 			@Override
 			public void execute() {
-				PodcastListActivity.start(HomeScreen.this, PIRATES_URL);
+				PodcastListActivity.start(HomeScreen.this, this.toString(), PIRATES_URL);
 			}
 		});
 		return items;

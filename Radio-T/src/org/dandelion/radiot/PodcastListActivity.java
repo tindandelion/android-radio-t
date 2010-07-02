@@ -27,18 +27,21 @@ import android.widget.TextView;
 public class PodcastListActivity extends ListActivity implements IView {
 
 	public static final String URL_KEY = "podcast_url";
+	public static final String TITLE_KEY = "title";
 	private PodcastListAdapter listAdapter;
 	private IPresenter presenter;
 
 	private ProgressDialog progress;
+	private Bundle extras;
 
 	public void closeProgress() {
 		progress.dismiss();
 	}
 	
-	public static void start(Context context, String url) {
+	public static void start(Context context, String title, String url) {
 		Intent intent = new Intent(context, PodcastListActivity.class);
-		intent.putExtra(PodcastListActivity.URL_KEY, url);
+		intent.putExtra(URL_KEY, url);
+		intent.putExtra(TITLE_KEY, title);
 		context.startActivity(intent);
 	}
 
@@ -46,9 +49,18 @@ public class PodcastListActivity extends ListActivity implements IView {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		extras = getIntent().getExtras();
+		setTitle(getTitleFromExtra());
 		initListAdapter();
 		presenter = PodcastList.getPresenter(this, getFeedUrlFromExtra());
 		presenter.refreshData();
+	}
+
+	private String getTitleFromExtra() {
+		if (null == extras) {
+			return "";
+		}
+		return extras.getString(TITLE_KEY);
 	}
 
 	@Override
@@ -96,7 +108,6 @@ public class PodcastListActivity extends ListActivity implements IView {
 	}
 
 	private String getFeedUrlFromExtra() {
-		Bundle extras = getIntent().getExtras();
 		if (null == extras) {
 			return null;
 		}
