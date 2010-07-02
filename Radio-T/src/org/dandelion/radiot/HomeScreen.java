@@ -3,10 +3,7 @@ package org.dandelion.radiot;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.dandelion.radiot.HomeScreen.HomeScreenItem;
-
 import android.app.ListActivity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -31,12 +28,6 @@ public class HomeScreen extends ListActivity {
 		item.execute();
 	}
 
-	private void startPodcastListActivityForUrl(String url) {
-		Intent intent = new Intent(this, PodcastListActivity.class);
-		intent.putExtra(PodcastListActivity.URL_KEY, url);
-		startActivity(intent);
-	}
-
 	private void initList() {
 		listAdapter = new ArrayAdapter<HomeScreenItem>(this,
 				R.layout.home_screen_item, R.id.home_screen_item_title, getHomeSceenItems());
@@ -45,16 +36,16 @@ public class HomeScreen extends ListActivity {
 
 	private List<HomeScreenItem> getHomeSceenItems() {
 		List<HomeScreenItem> items = new ArrayList<HomeScreenItem>();
-		items.add(new HomeScreenItem("Подкасты") {
+		items.add(new HomeScreenItem(R.string.main_show_home_item) {
 			@Override
 			public void execute() {
-				startPodcastListActivityForUrl(PODCAST_URL);
+				PodcastListActivity.start(HomeScreen.this, PODCAST_URL);
 			}
 		});
-		items.add(new HomeScreenItem("После-шоу") {
+		items.add(new HomeScreenItem(R.string.after_show_home_item) {
 			@Override
 			public void execute() {
-				startPodcastListActivityForUrl(PIRATES_URL);
+				PodcastListActivity.start(HomeScreen.this, PIRATES_URL);
 			}
 		});
 		return items;
@@ -63,8 +54,8 @@ public class HomeScreen extends ListActivity {
 	class HomeScreenItem {
 		private String title;
 
-		public HomeScreenItem(String title) {
-			this.title = title;
+		public HomeScreenItem(int titleId) {
+			this.title = getString(titleId);
 		}
 		
 		public void execute() {

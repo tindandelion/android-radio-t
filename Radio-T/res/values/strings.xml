@@ -3,9 +3,7 @@
 	<string name="logo_text">Импровизации\nна Hi-Tech темы</string>
 	<string name="main_title">Радио</string>
     <string name="app_name">Radio-T for Android</string>
-    <string-array name="main_menu">
-    	<item>Подкасты</item>
-    	<item>После-шоу</item>
-    	<item>Прямой эфир</item>
-    </string-array>
+    
+    <string name="main_show_home_item">Подкасты</string>
+    <string name="after_show_home_item">После-шоу</string>
 </resources>

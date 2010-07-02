@@ -10,6 +10,7 @@ import org.dandelion.radiot.PodcastList.IView;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -33,6 +34,12 @@ public class PodcastListActivity extends ListActivity implements IView {
 
 	public void closeProgress() {
 		progress.dismiss();
+	}
+	
+	public static void start(Context context, String url) {
+		Intent intent = new Intent(context, PodcastListActivity.class);
+		intent.putExtra(PodcastListActivity.URL_KEY, url);
+		context.startActivity(intent);
 	}
 
 	/** Called when the activity is first created. */
