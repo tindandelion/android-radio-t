@@ -3,7 +3,6 @@ package org.dandelion.radiot.test;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import junit.framework.TestCase;
@@ -51,9 +50,8 @@ public class RssFeedModelTestCase extends TestCase implements PodcastList.IFeedS
 		newFeedItem("<pubDate>Sun, 13 Jun 2010 01:37:22 +0000</pubDate>");
 
 		parseRssFeed();
-		String strDate = new SimpleDateFormat("dd.MM.yyyy")
-				.format(firstParsedItem.getPubDate());
-		assertEquals("13.06.2010", strDate);
+		
+		assertEquals("13.06.2010", firstParsedItem.getPubDate());
 	}
 
 	public void testExtractShowNotes() throws Exception {

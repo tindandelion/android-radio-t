@@ -36,13 +36,16 @@ public final class R {
         public static final int podcast_list=0x7f050000;
     }
     public static final class string {
-        public static final int after_show_title=0x7f040004;
-        public static final int app_name=0x7f040002;
-        public static final int listen_button_text=0x7f040007;
-        public static final int live_show_info=0x7f040006;
-        public static final int live_show_title=0x7f040005;
-        public static final int logo_text=0x7f040000;
-        public static final int main_show_title=0x7f040003;
-        public static final int main_title=0x7f040001;
+        public static final int after_show_title=0x7f040007;
+        public static final int app_name=0x7f040005;
+        public static final int listen_button_text=0x7f04000a;
+        public static final int live_show_info=0x7f040009;
+        public static final int live_show_title=0x7f040008;
+        public static final int loading_message=0x7f040001;
+        public static final int logo_text=0x7f040003;
+        public static final int main_show_title=0x7f040006;
+        public static final int main_title=0x7f040004;
+        public static final int refresh_menu_item=0x7f040000;
+        public static final int rss_load_error_title=0x7f040002;
     }
 }

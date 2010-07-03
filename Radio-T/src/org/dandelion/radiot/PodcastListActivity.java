@@ -84,12 +84,12 @@ public class PodcastListActivity extends ListActivity implements IView {
 	}
 
 	public void showErrorMessage(String errorMessage) {
-		new AlertDialog.Builder(this).setTitle("Error loading podcast feed")
+		new AlertDialog.Builder(this).setTitle(R.string.rss_load_error_title)
 				.setMessage(errorMessage).show();
 	}
 
 	public void showProgress() {
-		progress = ProgressDialog.show(this, "", "Loading...");
+		progress = ProgressDialog.show(this, null, getString(R.string.loading_message));
 	}
 
 	public void updatePodcasts(List<PodcastItem> newList) {
