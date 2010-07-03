@@ -157,7 +157,7 @@ public class PodcastListActivity extends ListActivity implements IView {
 			return strDate;
 		}
 
-		private String formatNumber(int number) {
+		private String formatNumber(String number) {
 			return "#" + number;
 		}
 

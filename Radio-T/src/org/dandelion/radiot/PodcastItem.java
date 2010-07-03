@@ -15,14 +15,14 @@ public class PodcastItem implements Cloneable {
 	private static SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat(
 			"EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);
 
-	private int number;
+	private String number;
 	private Date pubDate;
 	private String showNotes;
 	private Uri audioUri;
 
 	public PodcastItem(int number, Date issueDate, String showNotes,
 			String audioLink) {
-		this.number = number;
+		this.number = Integer.toString(number);
 		this.pubDate = issueDate;
 		this.showNotes = showNotes;
 		this.audioUri = Uri.parse(audioLink);
@@ -47,7 +47,7 @@ public class PodcastItem implements Cloneable {
 		return showNotes;
 	}
 
-	public int getNumber() {
+	public String getNumber() {
 		return number;
 	}
 
@@ -62,8 +62,11 @@ public class PodcastItem implements Cloneable {
 	public void extractPodcastNumber(String value) {
 		Matcher matcher = NUMBER_PATTERN.matcher(value);
 		if (matcher.find()) {
-			number = Integer.parseInt(matcher.group());
+			number = "#" + matcher.group();
+		} else {
+			number = value;
 		}
+
 	}
 
 	public void extractPubDate(String value) {

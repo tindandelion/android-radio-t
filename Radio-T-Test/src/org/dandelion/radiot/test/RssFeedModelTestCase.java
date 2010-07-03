@@ -44,7 +44,7 @@ public class RssFeedModelTestCase extends TestCase implements PodcastList.IFeedS
 
 		parseRssFeed();
 
-		assertEquals(192, firstParsedItem.getNumber());
+		assertEquals("#192", firstParsedItem.getNumber());
 	}
 
 	public void testExtractPodcastDate() throws Exception {
