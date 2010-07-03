@@ -82,6 +82,16 @@ public class RssFeedModelTestCase extends TestCase implements PodcastList.IFeedS
 		parseRssFeed();
 		assertTrue(streamClosed);
 	}
+	
+	public void testHandleParsingErrors() throws Exception {
+		newFeedItem("<number>102");
+		try {
+			parseRssFeed();
+		} catch (Exception e) {
+			return;
+		}
+		fail("Should have raised the exception");
+	}
 
 	private void newFeedItem(String itemContent) {
 		feedContent = feedContent + "<item>" + itemContent + "</item>";
