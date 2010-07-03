@@ -1,0 +1,761 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" xmlns:slash="http://purl.org/rss/1.0/modules/slash/" xmlns:media="http://search.yahoo.com/mrss/" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:creativeCommons="http://backend.userland.com/creativeCommonsRssModule" version="2.0">
+
+<channel>
+	<title>Радио-Т</title>
+	
+	<link>http://radio-t.com</link>
+	<description>Импровизации на Hi-Tech темы</description>
+	<lastBuildDate>Mon, 21 Jun 2010 20:50:59 +0000</lastBuildDate>
+	<language>ru</language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.org/?v=3.0</generator>
+		<atom10:link xmlns:atom10="http://www.w3.org/2005/Atom" rel="self" type="application/rss+xml" href="http://feeds.rucast.net/Radio-t" /><feedburner:info xmlns:feedburner="http://rssnamespace.org/feedburner/ext/1.0" uri="radio-t" /><atom10:link xmlns:atom10="http://www.w3.org/2005/Atom" rel="hub" href="http://pubsubhubbub.appspot.com/" /><media:copyright>Creative Commons - Attribution, Noncommercial, No Derivative Works 3.0 License.</media:copyright><media:thumbnail url="http://radio-t.com/logo.jpg" /><media:keywords>hitech,russian,radio,t,tech,tech,news</media:keywords><media:category scheme="http://www.itunes.com/dtds/podcast-1.0.dtd">Technology/Tech News</media:category><itunes:owner><itunes:email>podcast@radio-t.com</itunes:email><itunes:name>Umputun, Bobuk, Gray, Marinka</itunes:name></itunes:owner><itunes:author>Umputun, Bobuk, Gray, Marinka</itunes:author><itunes:explicit>no</itunes:explicit><itunes:image href="http://radio-t.com/logo.jpg" /><itunes:keywords>hitech,russian,radio,t,tech,tech,news</itunes:keywords><itunes:subtitle>Еженедельные импровизации на хай–тек темы</itunes:subtitle><itunes:summary>Еженедельные импровизации на хай–тек темы</itunes:summary><itunes:category text="Technology"><itunes:category text="Tech News" /></itunes:category><creativeCommons:license>http://creativecommons.org/licenses/by-nc-nd/3.0/</creativeCommons:license><item>
+		<title>Радио-Т 5192</title>
+		<link>http://radio-t.com/podcasts/radio-t-192/</link>
+		<comments>http://radio-t.com/podcasts/radio-t-192/#comments</comments>
+		<pubDate>Sun, 20 Jun 2010 01:23:01 +0000</pubDate>
+		<dc:creator>podcast@radio-t.com (Umputun, Bobuk, Gray, Marinka)</dc:creator>
+				<category><![CDATA[Подкасты]]></category>
+		<category><![CDATA[.me]]></category>
+		<category><![CDATA[ipad]]></category>
+		<category><![CDATA[Linux]]></category>
+		<category><![CDATA[LOR]]></category>
+		<category><![CDATA[убийцы]]></category>
+		<category><![CDATA[WP]]></category>
+		<category><![CDATA[наркоманы]]></category>
+
+		<guid isPermaLink="false">http://radio-t.com/?p=1355</guid>
+		<description><![CDATA[<p>- Наше громкое ура ЛОРу
+- WordPress 3.0 и вечный вопрос &#8220;как так?&#8221;
+- MobileMe лучше, но не для всех
+- Защита от XSS и атак и от SQL-впрыскиваний
+- RIM тоже хочет убийцу
+- Нам показали, что будет Google TV
+- iPad доведет до казенного дома
+- Урюпинсим детям интернетов не увидить
+- YouTube даст немного поредактировать
+- Чем их заинтересовать ?</p>
+<p>Спонсор этого выпуска [...]]]></description>
+			<content:encoded><![CDATA[<p>- Наше громкое ура <a href="http://www.linux.org.ru/news/linux-org-ru/5000089">ЛОРу<img class="alignright size-full wp-image-1356" title="LOR" src="http://radio-t.com/wp-content/uploads/2010/06/Screen-shot-2010-06-19-at-8.21.59-PM.png" alt="" width="268" height="206" /></a><br />
+- <a href="http://habrahabr.ru/blogs/wordpress/96768/">WordPress 3.0</a> и вечный вопрос &#8220;как так?&#8221;<br />
+- <a href="http://www.appleinsider.com/articles/10/06/18/inside_apples_new_mobileme_web_and_ios_apps.html">MobileMe</a> лучше, но не для всех<br />
+- <a href="http://www.opennet.ru/opennews/art.shtml?num=26997">Защита</a> от XSS и атак и от SQL-впрыскиваний<br />
+- <a href="http://www.mobile-review.com/fullnews/main/2010/June/15.shtml#29606">RIM</a> тоже хочет убийцу<br />
+- Нам показали, что будет <a href="http://mashable.com/2010/06/15/google-tv-video/">Google TV</a><br />
+- <a href="http://mashable.com/2010/06/13/ipod-touch-marijuana-ipad-craigslist/">iPad</a> доведет до казенного дома<br />
+- Урюпинсим детям <a href="http://habrahabr.ru/blogs/lenta/96748/">интернетов</a> не увидить<br />
+- <a href="http://www.readwriteweb.com/archives/youtube_gets_a_cloud-based_video_editor.php">YouTube</a> даст немного поредактировать<br />
+- Чем <a href="http://agile.dzone.com/articles/3-things-motivate-us">их</a> заинтересовать ?</p>
+<p><strong><em>Спонсор этого выпуска – хостинг </em><a href="http://fastvps.ru/"><em>fastvps.ru</em></a></strong></p>
+<p><a href="http://radio-t.com/downloads/rt_podcast192.mp3">Аудио</a><br />
+<a href="http://radio-t.com/downloads/rt_podcast192.mp3.torrent">radio-t.torrent</a></p>
+<p><a href="http://chat.radio-t.com/logs/radio-t-192.html">Лог чата</a></p>
+]]></content:encoded>
+			<wfw:commentRss>http://radio-t.com/podcasts/radio-t-192/feed/</wfw:commentRss>
+		<slash:comments>28</slash:comments>
+<enclosure url="http://radio-t.com/downloads/rt_podcast192.mp3" length="5242880" type="audio/mpeg" />
+		<media:content url="http://radio-t.com/downloads/rt_podcast192.mp3" fileSize="5242880" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit><itunes:subtitle> - Наше громкое ура ЛОРу - WordPress 3.0 и вечный вопрос &amp;#8220;как так?&amp;#8221; - MobileMe лучше, но не для всех - Защита от XSS и атак и от SQL-впрыскиваний - RIM тоже хочет убийцу - Нам показали, что будет Google TV - iPad доведет до казенного дома - Ур</itunes:subtitle><itunes:author>Umputun, Bobuk, Gray, Marinka</itunes:author><itunes:summary> - Наше громкое ура ЛОРу - WordPress 3.0 и вечный вопрос &amp;#8220;как так?&amp;#8221; - MobileMe лучше, но не для всех - Защита от XSS и атак и от SQL-впрыскиваний - RIM тоже хочет убийцу - Нам показали, что будет Google TV - iPad доведет до казенного дома - Урюпинсим детям интернетов не увидить - YouTube даст немного поредактировать - Чем их заинтересовать ? Спонсор этого выпуска [...]</itunes:summary><itunes:keywords>hitech,russian,radio,t,tech,tech,news</itunes:keywords></item>
+		<item>
+		<title>Радио-Т 191</title>
+		<link>http://radio-t.com/podcasts/radio-t-191/</link>
+		<comments>http://radio-t.com/podcasts/radio-t-191/#comments</comments>
+		<pubDate>Sun, 13 Jun 2010 01:37:22 +0000</pubDate>
+		<dc:creator>podcast@radio-t.com (Umputun, Bobuk, Gray, Marinka)</dc:creator>
+				<category><![CDATA[Подкасты]]></category>
+		<category><![CDATA[Apple]]></category>
+		<category><![CDATA[Computex]]></category>
+		<category><![CDATA[iphome]]></category>
+		<category><![CDATA[Linux]]></category>
+		<category><![CDATA[safari]]></category>
+		<category><![CDATA[АТТ]]></category>
+
+		<guid isPermaLink="false">http://radio-t.com/?p=1343</guid>
+		<description><![CDATA[<p>- Нам показали  iPhone 4
+- То, что нам не показали
+- Computex 2010 с креном в таблетки
+- MS тихо делает нам приятно
+- Почему умное ПО это плохо
+- Pulse обидел NYT
+- Хакеры атaкуют AT&#38;T</p>
+<p>Спонсор этого выпуска – хостинг [...]]]></description>
+			<content:encoded><![CDATA[<p>- Нам показали <a href="http://habrahabr.ru/blogs/apple/95711/"> iPhone </a>4<img class="alignright size-medium wp-image-1344" title="Apple" src="http://radio-t.com/wp-content/uploads/2010/06/alg_iphone_steve-jobs_2-300x222.jpg" alt="" width="250" /><br />
+- То, что нам<a href="http://mashable.com/2010/06/07/apple-wwdc-focus/"> не показали</a><br />
+- <a href="http://www.opennet.ru/opennews/art.shtml?num=26874">Computex 2010</a> с креном в таблетки<br />
+- <a href="http://www.opennet.ru/opennews/art.shtml?num=26921">MS </a>тихо делает нам приятно<br />
+- Почему <a href="http://java.dzone.com/articles/dont-build-software-thats-too">умное </a>ПО это плохо<br />
+- Pulse <a href="http://bits.blogs.nytimes.com/2010/06/08/times-company-objects-to-news-reader-app/">обидел </a>NYT<br />
+- Хакеры атaкуют <a href="http://www.switched.com/2010/06/10/hackers-target-atandt-ipad-users-obtain-114-000-high-profile-e-ma/">AT&amp;T</a></p>
+<p><strong><em>Спонсор этого выпуска – хостинг </em><a href="http://fastvps.ru/"><em>fastvps.ru</em></a></strong></p>
+<p><a href="http://radio-t.com/downloads/rt_podcast191.mp3">Аудио</a><br />
+<a href="http://radio-t.com/downloads/rt_podcast191.mp3.torrent">radio-t.torrent</a><br />
+<a href="http://dl.dropbox.com/u/71582/podcast.torrents/radio-t.com/rt_podcast191.mp3.torrent">резервный торрент</a></p>
+]]></content:encoded>
+			<wfw:commentRss>http://radio-t.com/podcasts/radio-t-191/feed/</wfw:commentRss>
+		<slash:comments>20</slash:comments>
+<enclosure url="http://radio-t.com/downloads/rt_podcast191.mp3" length="5242880" type="audio/mpeg" />
+		<media:content url="http://radio-t.com/downloads/rt_podcast191.mp3" fileSize="5242880" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit><itunes:subtitle> - Нам показали iPhone 4 - То, что нам не показали - Computex 2010 с креном в таблетки - MS тихо делает нам приятно - Почему умное ПО это плохо - Pulse обидел NYT - Хакеры атaкуют AT&amp;#38;T Спонсор этого выпуска – хостинг [...]</itunes:subtitle><itunes:author>Umputun, Bobuk, Gray, Marinka</itunes:author><itunes:summary> - Нам показали iPhone 4 - То, что нам не показали - Computex 2010 с креном в таблетки - MS тихо делает нам приятно - Почему умное ПО это плохо - Pulse обидел NYT - Хакеры атaкуют AT&amp;#38;T Спонсор этого выпуска – хостинг [...]</itunes:summary><itunes:keywords>hitech,russian,radio,t,tech,tech,news</itunes:keywords></item>
+		<item>
+		<title>Радио-Т 190</title>
+		<link>http://radio-t.com/podcasts/radio-t-190/</link>
+		<comments>http://radio-t.com/podcasts/radio-t-190/#comments</comments>
+		<pubDate>Sun, 06 Jun 2010 00:18:46 +0000</pubDate>
+		<dc:creator>podcast@radio-t.com (Umputun, Bobuk, Gray, Marinka)</dc:creator>
+				<category><![CDATA[Подкасты]]></category>
+		<category><![CDATA[DB]]></category>
+		<category><![CDATA[google]]></category>
+		<category><![CDATA[Parallels Desktop Upgrade]]></category>
+		<category><![CDATA[Windows]]></category>
+		<category><![CDATA[гость]]></category>
+		<category><![CDATA[идиоты]]></category>
+
+		<guid isPermaLink="false">http://radio-t.com/?p=1329</guid>
+		<description><![CDATA[<p>- В гугле не будет виндузов. MS против
+- Почему нет миграции на W7 и как это решить
+- Джобс отвечает за все
+- Windows много среди сервизов
+- ASUS Eee Pad обещает больше, круче и позже
+- Не ходите по картам через магистрали
+- В Европе это можно
+- VoltDB no-sql без NO
+- Темы наших слушателей</p>
+<p>Аудио
+radio-t.torrent</p>
+<p>* [...]]]></description>
+			<content:encoded><![CDATA[<p>- В <a href="http://lenta.ru/news/2010/06/01/refuse/">гугле</a> не будет виндузов. MS против<img class="alignright size-medium wp-image-1331" title="nowin" src="http://radio-t.com/wp-content/uploads/2010/06/Screen-shot-2010-06-05-at-7.16.22-PM-299x300.png" alt="" width="230" /><br />
+- Почему нет миграции на W7 и как это решить<br />
+- Джобс <a href="http://mashable.com/2010/06/02/steve-jobs-d8/">отвечает</a> за все<br />
+- Windows <a href="http://www.osnews.com/story/23412/Windows_Increases_Lead_in_Server_Unit_Sales">много</a> среди сервизов<br />
+- <a href="http://www.engadget.com/2010/05/31/asus-eee-pad-official-intel-culv-processors-windows-7-and-a-1/">ASUS Eee Pad</a> обещает больше, круче и позже<br />
+- <a href="http://www.switched.com/2010/05/31/woman-hit-by-car-sues-google-for-bad-directions/">Не ходите</a> по картам через магистрали<br />
+- В Европе <a href="http://techcrunch.com/2010/05/29/apple-ipad-offers-freedom-for-porn-at-least-in-one-berlin-ad/">это</a> можно<br />
+- <a href="http://www.readwriteweb.com/enterprise/2010/06/voltdb-launches-open-source-next-generation-database-management-system.php">VoltDB</a> no-sql без NO<br />
+- <a href="http://radio-t.com/temi_dlja_vipuskov/temy-dlya-190/">Темы</a> наших слушателей</p>
+<p><a href="http://radio-t.com/downloads/rt_podcast190.mp3">Аудио</a><br />
+<a href="http://radio-t.com/downloads/rt_podcast190.mp3.torrent">radio-t.torrent</a></p>
+<p>* <a href="http://chat.radio-t.com/logs/radio-t-190.html">Лог чата</a></p>
+]]></content:encoded>
+			<wfw:commentRss>http://radio-t.com/podcasts/radio-t-190/feed/</wfw:commentRss>
+		<slash:comments>17</slash:comments>
+<enclosure url="http://radio-t.com/downloads/rt_podcast190.mp3" length="5242880" type="audio/mpeg" />
+		<media:content url="http://radio-t.com/downloads/rt_podcast190.mp3" fileSize="5242880" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit><itunes:subtitle> - В гугле не будет виндузов. MS против - Почему нет миграции на W7 и как это решить - Джобс отвечает за все - Windows много среди сервизов - ASUS Eee Pad обещает больше, круче и позже - Не ходите по картам через магистрали - В Европе это можно - VoltDB n</itunes:subtitle><itunes:author>Umputun, Bobuk, Gray, Marinka</itunes:author><itunes:summary> - В гугле не будет виндузов. MS против - Почему нет миграции на W7 и как это решить - Джобс отвечает за все - Windows много среди сервизов - ASUS Eee Pad обещает больше, круче и позже - Не ходите по картам через магистрали - В Европе это можно - VoltDB no-sql без NO - Темы наших слушателей Аудио radio-t.torrent * [...]</itunes:summary><itunes:keywords>hitech,russian,radio,t,tech,tech,news</itunes:keywords></item>
+		<item>
+		<title>Радио-Т 189</title>
+		<link>http://radio-t.com/podcasts/radio-t-189/</link>
+		<comments>http://radio-t.com/podcasts/radio-t-189/#comments</comments>
+		<pubDate>Sun, 30 May 2010 03:12:19 +0000</pubDate>
+		<dc:creator>podcast@radio-t.com (Umputun, Bobuk, Gray, Marinka)</dc:creator>
+				<category><![CDATA[Подкасты]]></category>
+		<category><![CDATA[Apple]]></category>
+		<category><![CDATA[google]]></category>
+		<category><![CDATA[ipad]]></category>
+		<category><![CDATA[Java]]></category>
+		<category><![CDATA[Linux]]></category>
+		<category><![CDATA[юбилей]]></category>
+		<category><![CDATA[Хабр]]></category>
+
+		<guid isPermaLink="false">http://radio-t.com/?p=1321</guid>
+		<description><![CDATA[<p>- Юбилеи Java, Хабра и пакмана
+- 13e версии линуксов (№1, №2)
+- iPad против нетбуков, последний бой
+- Не убийца, но интересный
+- Apple ответит на угрозу Google TV
+- Почему не писать юнит тесты
+- Что нам покажут 7го
+- Темы наших слушателей</p>
+<p>Аудио
+radio-t.torrent</p>
+<p>* Лог чата</p>
+<p>** Звук в этом выпуске не фонтан. [...]]]></description>
+			<content:encoded><![CDATA[<p>- Юбилеи <a href="http://habrahabr.ru/blogs/java/94716/">Java</a>, <a href="http://habrahabr.ru/blogs/social_networks/94537/">Хабра</a> и <a href="http://habrahabr.ru/blogs/google/94639/">пакмана</a><img class="alignright size-medium wp-image-1322" title="java" src="http://radio-t.com/wp-content/uploads/2010/05/java-logo_svg-a-225x300.jpg" alt="" width="190" /><br />
+- 13e версии линуксов (<a href="http://habrahabr.ru/blogs/open_source/94524/">№1</a>, <a href="http://habrahabr.ru/blogs/fedora/94505/">№2</a>)<br />
+- iPad против нетбуков, последний <a href="http://mashable.com/2010/05/25/ipad-versus-netbook/">бой</a><br />
+- Не убийца, но <a href="http://www.engadget.com/2010/05/28/shogo-10-inch-linux-tablet-is-a-qooq-minus-the-recipes-and-th/">интересный</a><br />
+- Apple <a href="http://techcrunch.com/2010/05/28/new-apple-tv/">ответит</a> на угрозу Google TV<br />
+- Почему не писать <a href="http://blogs.msdn.com/b/cashto/archive/2009/03/31/it-s-ok-not-to-write-unit-tests.aspx">юнит тесты</a><br />
+- <a href="http://techcrunch.com/2010/05/24/steve-jobs-non-disappointing-keynote-will-begin-monday-june-7-at-10-am/">Что</a> нам покажут 7го<br />
+- <a href="http://radio-t.com/temi_dlja_vipuskov/temy-dlya-189/">Темы</a> наших слушателей</p>
+<p><a href="http://radio-t.com/downloads/rt_podcast189.mp3">Аудио</a><br />
+<a href="http://radio-t.com/downloads/rt_podcast189.mp3.torrent">radio-t.torrent</a></p>
+<p>* <a href="http://chat.radio-t.com/logs/radio-t-189.html">Лог чата</a></p>
+<p>** <em>Звук в этом выпуске не фонтан. Из бэкапа</em></p>
+]]></content:encoded>
+			<wfw:commentRss>http://radio-t.com/podcasts/radio-t-189/feed/</wfw:commentRss>
+		<slash:comments>14</slash:comments>
+<enclosure url="http://radio-t.com/downloads/rt_podcast189.mp3" length="21390" type="audio/mpeg" />
+		<media:content url="http://radio-t.com/downloads/rt_podcast189.mp3" fileSize="21390" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit><itunes:subtitle> - Юбилеи Java, Хабра и пакмана - 13e версии линуксов (№1, №2) - iPad против нетбуков, последний бой - Не убийца, но интересный - Apple ответит на угрозу Google TV - Почему не писать юнит тесты - Что нам покажут 7го - Темы наших слушателей Аудио radio-t.t</itunes:subtitle><itunes:author>Umputun, Bobuk, Gray, Marinka</itunes:author><itunes:summary> - Юбилеи Java, Хабра и пакмана - 13e версии линуксов (№1, №2) - iPad против нетбуков, последний бой - Не убийца, но интересный - Apple ответит на угрозу Google TV - Почему не писать юнит тесты - Что нам покажут 7го - Темы наших слушателей Аудио radio-t.torrent * Лог чата ** Звук в этом выпуске не фонтан. [...]</itunes:summary><itunes:keywords>hitech,russian,radio,t,tech,tech,news</itunes:keywords></item>
+		<item>
+		<title>Радио-Т 188</title>
+		<link>http://radio-t.com/podcasts/radio-t-188/</link>
+		<comments>http://radio-t.com/podcasts/radio-t-188/#comments</comments>
+		<pubDate>Sun, 23 May 2010 01:13:56 +0000</pubDate>
+		<dc:creator>podcast@radio-t.com (Umputun, Bobuk, Gray, Marinka)</dc:creator>
+				<category><![CDATA[Подкасты]]></category>
+		<category><![CDATA[google]]></category>
+		<category><![CDATA[saas]]></category>
+		<category><![CDATA[Vista]]></category>
+		<category><![CDATA[железки]]></category>
+		<category><![CDATA[облака]]></category>
+
+		<guid isPermaLink="false">http://radio-t.com/?p=1308</guid>
+		<description><![CDATA[<p>- Гугл приготовил TV, волны, сетевой диск, фонты и прочая
+- Что такое SaaS и почему нас это волнует
+- Облака уволят всех админов
+- Виста была ошибкой
+- Ноутбук на 15 часов. Редакция требует 150!
+- Они слушали наши сети. Но не специально</p>
+<p>Аудио
+radio-t.torrent</p>
+<p>* Лог чата
+** Очень нестандартный набор ведущих и [...]]]></description>
+			<content:encoded><![CDATA[<p><img class="alignright size-full wp-image-1310" title="gtv" src="http://radio-t.com/wp-content/uploads/2010/05/screenshot-20100522-81232.png" alt="" width="192" height="198" />- Гугл приготовил <a href="http://mashable.com/2010/05/20/google-tv-facts/">TV</a>, <a href="http://internetno.net/2010/05/20/google-wave-open/">волны</a>, <a href="http://habrahabr.ru/blogs/google/94022/">сетевой диск</a>, <a href="http://mashable.com/2010/05/19/google-font-api/">фонты</a> и прочая<br />
+- Что такое <a href="http://cnews.ru/news/top/index.shtml?2010/05/13/390880">SaaS</a> и почему нас это волнует<br />
+- <a href="http://net.compulenta.ru/531841/">Облака</a> уволят всех админов<br />
+- <a href="http://business.compulenta.ru/532078/">Виста</a> была ошибкой<br />
+- <a href="http://www.engadget.com/2010/05/21/msi-rolls-out-wind-u160dx-netbook-with-15-hour-battery/">Ноутбук</a> на 15 часов. Редакция требует 150!<br />
+- <a href="http://www.bbc.co.uk/russian/science/2010/05/100514_google_wifi.shtml">Они</a> слушали наши сети. Но не специально</p>
+<p><a href="http://radio-t.com/downloads/rt_podcast188.mp3">Аудио</a><br />
+<a href="http://radio-t.com/downloads/rt_podcast188.mp3.torrent">radio-t.torrent</a></p>
+<p>* <a href="http://chat.radio-t.com/logs/radio-t-188.html">Лог чата</a><br />
+** Очень нестандартный набор ведущих и необычный выпуск</p>
+]]></content:encoded>
+			<wfw:commentRss>http://radio-t.com/podcasts/radio-t-188/feed/</wfw:commentRss>
+		<slash:comments>18</slash:comments>
+<enclosure url="http://radio-t.com/downloads/rt_podcast188.mp3" length="63374788" type="audio/mpeg" />
+		<media:content url="http://radio-t.com/downloads/rt_podcast188.mp3" fileSize="63374788" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit><itunes:subtitle> - Гугл приготовил TV, волны, сетевой диск, фонты и прочая - Что такое SaaS и почему нас это волнует - Облака уволят всех админов - Виста была ошибкой - Ноутбук на 15 часов. Редакция требует 150! - Они слушали наши сети. Но не специально Аудио radio-t.tor</itunes:subtitle><itunes:author>Umputun, Bobuk, Gray, Marinka</itunes:author><itunes:summary> - Гугл приготовил TV, волны, сетевой диск, фонты и прочая - Что такое SaaS и почему нас это волнует - Облака уволят всех админов - Виста была ошибкой - Ноутбук на 15 часов. Редакция требует 150! - Они слушали наши сети. Но не специально Аудио radio-t.torrent * Лог чата ** Очень нестандартный набор ведущих и [...]</itunes:summary><itunes:keywords>hitech,russian,radio,t,tech,tech,news</itunes:keywords></item>
+		<item>
+		<title>Радио-Т 187</title>
+		<link>http://radio-t.com/podcasts/radio-t-187/</link>
+		<comments>http://radio-t.com/podcasts/radio-t-187/#comments</comments>
+		<pubDate>Sun, 16 May 2010 01:52:50 +0000</pubDate>
+		<dc:creator>podcast@radio-t.com (Umputun, Bobuk, Gray, Marinka)</dc:creator>
+				<category><![CDATA[Подкасты]]></category>
+		<category><![CDATA[C++]]></category>
+		<category><![CDATA[Facebook]]></category>
+		<category><![CDATA[google]]></category>
+		<category><![CDATA[ipad]]></category>
+		<category><![CDATA[твитер]]></category>
+		<category><![CDATA[биржа]]></category>
+		<category><![CDATA[конец всего]]></category>
+
+		<guid isPermaLink="false">http://radio-t.com/?p=1301</guid>
+		<description><![CDATA[<p>- Новый виток браузер-войн и планы на FF4
+- Что происходит с Facebook. Уходим все?
+- iPad с матовым экраном и совсем недорого
+- Биржевый и амазоновский армагедон
+- Из твитера вылез старый баг
+- Вещать линки с умом и сообразительностью
+- iiView точно убьет iPad
+- Sony NEX-3 прекрасна
+- Google против Microsoft Office 2010
+- Новая стандартная библиотека С++</p>
+<p>Аудио
+radio-t.torrent</p>
+<p>* [...]]]></description>
+			<content:encoded><![CDATA[<p><img class="alignright size-full wp-image-1302" title="amgdn" src="http://radio-t.com/wp-content/uploads/2010/05/slav.jpg" alt="" width="240" height="180" />- Новый виток браузер-войн и планы на FF4<br />
+- Что происходит с Facebook. Уходим все?<br />
+- iPad с матовым экраном и совсем недорого<br />
+- Биржевый и амазоновский армагедон<br />
+- Из твитера вылез старый баг<br />
+- Вещать линки с умом и сообразительностью<br />
+- iiView точно убьет iPad<br />
+- Sony NEX-3 прекрасна<br />
+- Google против Microsoft Office 2010<br />
+- Новая стандартная библиотека С++</p>
+<p><a href="http://radio-t.com/downloads/rt_podcast187.mp3">Аудио</a><br />
+<a href="http://radio-t.com/downloads/rt_podcast187.mp3.torrent">radio-t.torrent</a></p>
+<p>* <a href="http://chat.radio-t.com/logs/radio-t-187.html">Лог чата</a></p>
+]]></content:encoded>
+			<wfw:commentRss>http://radio-t.com/podcasts/radio-t-187/feed/</wfw:commentRss>
+		<slash:comments>77</slash:comments>
+<enclosure url="http://radio-t.com/downloads/rt_podcast187.mp3" length="69249204" type="audio/mpeg" />
+		<media:content url="http://radio-t.com/downloads/rt_podcast187.mp3" fileSize="69249204" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit><itunes:subtitle> - Новый виток браузер-войн и планы на FF4 - Что происходит с Facebook. Уходим все? - iPad с матовым экраном и совсем недорого - Биржевый и амазоновский армагедон - Из твитера вылез старый баг - Вещать линки с умом и сообразительностью - iiView точно убье</itunes:subtitle><itunes:author>Umputun, Bobuk, Gray, Marinka</itunes:author><itunes:summary> - Новый виток браузер-войн и планы на FF4 - Что происходит с Facebook. Уходим все? - iPad с матовым экраном и совсем недорого - Биржевый и амазоновский армагедон - Из твитера вылез старый баг - Вещать линки с умом и сообразительностью - iiView точно убьет iPad - Sony NEX-3 прекрасна - Google против Microsoft Office 2010 - Новая стандартная библиотека С++ Аудио radio-t.torrent * [...]</itunes:summary><itunes:keywords>hitech,russian,radio,t,tech,tech,news</itunes:keywords></item>
+		<item>
+		<title>Радио-Т 186</title>
+		<link>http://radio-t.com/podcasts/radio-t-186/</link>
+		<comments>http://radio-t.com/podcasts/radio-t-186/#comments</comments>
+		<pubDate>Sat, 08 May 2010 23:59:08 +0000</pubDate>
+		<dc:creator>podcast@radio-t.com (Umputun, Bobuk, Gray, Marinka)</dc:creator>
+				<category><![CDATA[Подкасты]]></category>
+		<category><![CDATA[странное]]></category>
+		<category><![CDATA[разное]]></category>
+
+		<guid isPermaLink="false">http://radio-t.com/?p=1289</guid>
+		<description><![CDATA[<p>- Гостей много не бывает
+- Webby Awards нашли героев
+- На нерусские сайты больше нет хода
+- iPad для заграницы почти даром
+- Google стал другим и уже не торт
+- 6 проектов верхнего уровня у апача
+- Страшные сайты Минфина США
+- 10% процетов народа того &#8230;
+- Другие 10% digg &#8211; этого &#8230;
+- Саратовские ученные узнали все
+- Свой код надо ненавидеть</p>
+<p>Аудио
+radio-t.torrent</p>
+<p>* [...]]]></description>
+			<content:encoded><![CDATA[<p>- Гостей много не бывает<a href="http://radio-t.com/wp-content/uploads/2010/05/0904-webby-awards-m.jpg"><img class="alignright size-full wp-image-1290" title="0904-webby-awards-m" src="http://radio-t.com/wp-content/uploads/2010/05/0904-webby-awards-m.jpg" alt="" width="210" height="210" /></a><br />
+- <a href="http://internetno.net/2010/05/05/webby-awards-2010/">Webby Awards</a> нашли героев<br />
+- На <a href="http://www.readwriteweb.com/archives/icann_frees_country_codes_from_the_alphabet.php">нерусские</a> сайты больше нет хода<br />
+- <a href="http://www.engadget.com/2010/05/07/ipad-international-launch-is-go-on-may-28/">iPad</a> для заграницы почти даром<br />
+- <a href="http://mashable.com/2010/05/05/new-google-search/">Google</a> стал другим и уже не торт<br />
+- <a href="http://soft.compulenta.ru/528799/">6 проектов</a> верхнего уровня у апача<br />
+- Страшные сайты <a href="http://www.securitylab.ru/news/393503.php">Минфина США</a><br />
+- 10% процетов народа <a href="http://mashable.com/2010/05/05/texting-during-sex/">того</a> &#8230;<br />
+- Другие 10% <a href="http://techcrunch.com/2010/05/06/digg-cuts-10-of-staff/">digg</a> &#8211; этого &#8230;<br />
+- Саратовские ученные узнали <a href="http://ruformator.ru/news/article0665D/default.asp">все</a><br />
+- Свой код надо <a href="http://coderoom.wordpress.com/2010/04/22/7-reasons-to-hate-your-code/">ненавидеть</a></p>
+<p><a href="http://radio-t.com/downloads/rt_podcast186.mp3">Аудио</a><br />
+<a href="http://radio-t.com/downloads/rt_podcast186.mp3.torrent">radio-t.torrent</a></p>
+<p>* <a href="http://chat.radio-t.com/logs/radio-t-186.html">Лог чата</a></p>
+]]></content:encoded>
+			<wfw:commentRss>http://radio-t.com/podcasts/radio-t-186/feed/</wfw:commentRss>
+		<slash:comments>42</slash:comments>
+<enclosure url="http://radio-t.com/downloads/rt_podcast186.mp3" length="64912878" type="audio/mpeg" />
+		<media:content url="http://radio-t.com/downloads/rt_podcast186.mp3" fileSize="64912878" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit><itunes:subtitle> - Гостей много не бывает - Webby Awards нашли героев - На нерусские сайты больше нет хода - iPad для заграницы почти даром - Google стал другим и уже не торт - 6 проектов верхнего уровня у апача - Страшные сайты Минфина США - 10% процетов народа того &amp;#8</itunes:subtitle><itunes:author>Umputun, Bobuk, Gray, Marinka</itunes:author><itunes:summary> - Гостей много не бывает - Webby Awards нашли героев - На нерусские сайты больше нет хода - iPad для заграницы почти даром - Google стал другим и уже не торт - 6 проектов верхнего уровня у апача - Страшные сайты Минфина США - 10% процетов народа того &amp;#8230; - Другие 10% digg &amp;#8211; этого &amp;#8230; - Саратовские ученные узнали все - Свой код надо ненавидеть Аудио radio-t.torrent * [...]</itunes:summary><itunes:keywords>hitech,russian,radio,t,tech,tech,news</itunes:keywords></item>
+		<item>
+		<title>Радио-Т 185</title>
+		<link>http://radio-t.com/podcasts/radio-t-185/</link>
+		<comments>http://radio-t.com/podcasts/radio-t-185/#comments</comments>
+		<pubDate>Sun, 02 May 2010 01:20:09 +0000</pubDate>
+		<dc:creator>podcast@radio-t.com (Umputun, Bobuk, Gray, Marinka)</dc:creator>
+				<category><![CDATA[Подкасты]]></category>
+		<category><![CDATA[HP]]></category>
+		<category><![CDATA[Linux]]></category>
+		<category><![CDATA[nokia]]></category>
+		<category><![CDATA[opera]]></category>
+		<category><![CDATA[palm]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+
+		<guid isPermaLink="false">http://radio-t.com/?p=1277</guid>
+		<description><![CDATA[<p>- Palm продался, полностью
+- Ubuntu Lucid Lynx 10.04
+- ICQ теперь совсем наш
+- Теперь нам ясно за что Apple не любит Flash
+- Nokia N8 глазами знающего гостя
+- Opera 10.52 для Mac &#8211; все не так плохо
+- Bik.e вместо колеса
+- Cassandra с поддержкой и дикие тесты монго
+- TDD без Т даже лучше чем с Т</p>
+<p>Аудио
+radio-t.torrent</p>
+<p>* [...]]]></description>
+			<content:encoded><![CDATA[<p>- <a href="http://www.hp.com/hpinfo/newsroom/press/2010/100428xa.html">Palm</a> продался, полностью<img class="alignright size-medium wp-image-1278" title="palm-logo" src="http://radio-t.com/wp-content/uploads/2010/05/palm-logo-300x300.jpg" alt="" width="200" /><br />
+- <a href="http://www.linux.org.ru/news/ubuntu/4832160">Ubuntu</a> Lucid Lynx 10.04<br />
+- <a href="http://internetno.net/2010/04/28/aol-dst-icq/">ICQ</a> теперь совсем наш<br />
+- Теперь нам ясно за что <a href="http://business.compulenta.ru/527992/">Apple</a> не любит Flash<br />
+- <a href="http://www.engadget.com/2010/04/28/nokia-n8-fights-back-with-heavenly-hd-video-sample/">Nokia N8</a> глазами знающего гостя<br />
+- <a href="http://www.osnews.com/story/23212/Opera_10_52_for_Mac_Released">Opera 10.52</a> для Mac &#8211; все не так плохо<br />
+- <a href="http://habrahabr.ru/blogs/gadgets/92495/">Bik.e</a> вместо колеса<br />
+- <a href="http://architects.dzone.com/news/apache-cassandra-gets">Cassandra</a> с поддержкой и дикие тесты <a href="http://www.michaelckennedy.net/blog/2010/04/29/MongoDBVsSQLServer2008PerformanceShowdown.aspx">монго</a><br />
+- <a href="http://coderoom.wordpress.com/2010/04/27/tdd-without-the-t/">TDD</a> без Т даже лучше чем с Т</p>
+<p><a href="http://radio-t.com/downloads/rt_podcast185.mp3">Аудио</a><br />
+<a href="http://radio-t.com/downloads/rt_podcast185.mp3.torrent">radio-t.torrent</a></p>
+<p>* <a href="http://chat.radio-t.com/logs/radio-t-185.html">Лог чата</a></p>
+]]></content:encoded>
+			<wfw:commentRss>http://radio-t.com/podcasts/radio-t-185/feed/</wfw:commentRss>
+		<slash:comments>22</slash:comments>
+<enclosure url="http://radio-t.com/downloads/rt_podcast185.mp3" length="5242880" type="audio/mpeg" />
+		<media:content url="http://radio-t.com/downloads/rt_podcast185.mp3" fileSize="5242880" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit><itunes:subtitle> - Palm продался, полностью - Ubuntu Lucid Lynx 10.04 - ICQ теперь совсем наш - Теперь нам ясно за что Apple не любит Flash - Nokia N8 глазами знающего гостя - Opera 10.52 для Mac &amp;#8211; все не так плохо - Bik.e вместо колеса - Cassandra с поддержкой и д</itunes:subtitle><itunes:author>Umputun, Bobuk, Gray, Marinka</itunes:author><itunes:summary> - Palm продался, полностью - Ubuntu Lucid Lynx 10.04 - ICQ теперь совсем наш - Теперь нам ясно за что Apple не любит Flash - Nokia N8 глазами знающего гостя - Opera 10.52 для Mac &amp;#8211; все не так плохо - Bik.e вместо колеса - Cassandra с поддержкой и дикие тесты монго - TDD без Т даже лучше чем с Т Аудио radio-t.torrent * [...]</itunes:summary><itunes:keywords>hitech,russian,radio,t,tech,tech,news</itunes:keywords></item>
+		<item>
+		<title>Радио-Т 184</title>
+		<link>http://radio-t.com/podcasts/radio-t-184/</link>
+		<comments>http://radio-t.com/podcasts/radio-t-184/#comments</comments>
+		<pubDate>Sun, 25 Apr 2010 00:13:45 +0000</pubDate>
+		<dc:creator>podcast@radio-t.com (Umputun, Bobuk, Gray, Marinka)</dc:creator>
+				<category><![CDATA[Подкасты]]></category>
+		<category><![CDATA[Adobe]]></category>
+		<category><![CDATA[Apple]]></category>
+		<category><![CDATA[iphone]]></category>
+		<category><![CDATA[Java]]></category>
+		<category><![CDATA[таблетки]]></category>
+		<category><![CDATA[OS/2]]></category>
+		<category><![CDATA[антивирус]]></category>
+
+		<guid isPermaLink="false">http://radio-t.com/?p=1270</guid>
+		<description><![CDATA[<p>- Странная история с телефоном
+- OS/2 вернется на радость ветеранам
+- Совсем не клавиатура от ASUS
+- Apple порадовал себя и инвесторов
+- Гибельные антивирусы недели
+- Python проникнет в SEC
+- JavaFX 1.3 вышел
+- Adobe сильно переживает и ругается
+- В ожидании нашествия таблеток
+- Социальные документы которые никто не видел
+- Гугл прикупила разработчиков железа</p>
+<p>Аудио
+radio-t.torrent</p>
+<p>* [...]]]></description>
+			<content:encoded><![CDATA[<p><img class="alignright size-medium wp-image-1271" title="os2" src="http://radio-t.com/wp-content/uploads/2010/04/os2warp4-300x225.png" alt="" width="240" height="180" />- Странная история с <a href="http://techcrunch.com/2010/04/19/iphone-hd-4g/">телефоном</a><br />
+- <a href="http://www.osnews.com/story/23180/Rumour_IBM_To_Re-Launch_OS_2">OS/2</a> вернется на радость ветеранам<br />
+- Совсем не клавиатура от <a href="http://www.crunchgear.com/2010/04/22/asus-eee-keyboard-its-a-keyboard-no-its-a-netbook/">ASUS</a><br />
+- <a href="http://www.readwriteweb.com/archives/apple_announces_second-quarter_earnings.php">Apple</a> порадовал себя и инвесторов<br />
+- Гибельные <a href="http://soft.compulenta.ru/525759/">антивирусы</a> недели<br />
+- Python проникнет в <a href="http://www.opennet.ru/opennews/art.shtml?num=26323">SEC</a><br />
+- <a href="http://habrahabr.ru/blogs/java/91764/">JavaFX 1.3</a> вышел<br />
+- Adobe сильно <a href="http://www.mikechambers.com/blog/2010/04/20/on-adobe-flash-cs5-and-iphone-applications/">переживает</a> и <a href="http://hitech.tomsk.ru/newssoftware/14939-adobe-sovetuet-razrabotchikam-perekhodit-na.html">ругается</a><br />
+- В ожидании <a href="http://itc.ua/node/45660">нашествия</a> <a href="http://www.engadget.com/2010/04/23/android-eee-pad-to-debut-in-june-could-ship-as-early-as-july/">таблеток</a><br />
+- <a href="http://internetno.net/2010/04/22/microsoft-zapuskaet-sotsialnyiy-word/">Социальные</a> документы которые никто не видел<br />
+- Гугл прикупила разработчиков <a href="http://itc.ua/node/45630">железа</a></p>
+<p><a href="http://radio-t.com/downloads/rt_podcast184.mp3">Аудио</a><br />
+<a href="http://radio-t.com/downloads/rt_podcast184.mp3.torrent">radio-t.torrent</a></p>
+<p>* <a href="http://chat.radio-t.com/logs/radio-t-184.html">Лог чата</a></p>
+]]></content:encoded>
+			<wfw:commentRss>http://radio-t.com/podcasts/radio-t-184/feed/</wfw:commentRss>
+		<slash:comments>9</slash:comments>
+<enclosure url="http://radio-t.com/downloads/rt_podcast184.mp3" length="5242880" type="audio/mpeg" />
+		<media:content url="http://radio-t.com/downloads/rt_podcast184.mp3" fileSize="5242880" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit><itunes:subtitle> - Странная история с телефоном - OS/2 вернется на радость ветеранам - Совсем не клавиатура от ASUS - Apple порадовал себя и инвесторов - Гибельные антивирусы недели - Python проникнет в SEC - JavaFX 1.3 вышел - Adobe сильно переживает и ругается - В ожид</itunes:subtitle><itunes:author>Umputun, Bobuk, Gray, Marinka</itunes:author><itunes:summary> - Странная история с телефоном - OS/2 вернется на радость ветеранам - Совсем не клавиатура от ASUS - Apple порадовал себя и инвесторов - Гибельные антивирусы недели - Python проникнет в SEC - JavaFX 1.3 вышел - Adobe сильно переживает и ругается - В ожидании нашествия таблеток - Социальные документы которые никто не видел - Гугл прикупила разработчиков железа Аудио radio-t.torrent * [...]</itunes:summary><itunes:keywords>hitech,russian,radio,t,tech,tech,news</itunes:keywords></item>
+		<item>
+		<title>Радио-Т 183</title>
+		<link>http://radio-t.com/podcasts/radio-t-183/</link>
+		<comments>http://radio-t.com/podcasts/radio-t-183/#comments</comments>
+		<pubDate>Sun, 18 Apr 2010 00:05:43 +0000</pubDate>
+		<dc:creator>podcast@radio-t.com (Umputun, Bobuk, Gray, Marinka)</dc:creator>
+				<category><![CDATA[Подкасты]]></category>
+		<category><![CDATA[google]]></category>
+		<category><![CDATA[Java]]></category>
+		<category><![CDATA[языки]]></category>
+		<category><![CDATA[трояны]]></category>
+		<category><![CDATA[безопасность]]></category>
+
+		<guid isPermaLink="false">http://radio-t.com/?p=1249</guid>
+		<description><![CDATA[<p>- Гугл хакнули несмотря на усилия по защите. Мнение эксперта
+- Новинки из мира ноутбуков Apple
+- Перераспределение долей рынка ПК
+- Серьезное обновление Google Docs
+- Смена паролей это зло, по мнению MS
+- Построим наш суперкомпьютер на 9ти битных байтах
+- iPad слишком хорош для продаж за границами
+- Рейтинг языков страннее чем обычно
+- Что у нас с Java без главного. [...]]]></description>
+			<content:encoded><![CDATA[<p><img class="alignright size-medium wp-image-1250" title="Google" src="http://radio-t.com/wp-content/uploads/2010/04/google-300x211.jpg" alt="" width="300" height="211" />- Гугл хакнули несмотря на <a href="http://www.securitylab.ru/news/393027.php">усилия</a> по защите. Мнение эксперта<br />
+- Новинки из мира ноутбуков <a href="http://hitech.tomsk.ru/newsmobile/14805-apple-vypustila-novye-macbook-pro.html">Apple</a><br />
+- Перераспределение <a href="http://itc.ua/node/45484">долей рынка</a> ПК<br />
+- Серьезное <a href="http://googlesystem.blogspot.com/2010/04/major-update-for-google-docs.html">обновление</a> Google Docs<br />
+- Смена паролей это <a href="http://www.securitylab.ru/news/392954.php">зло</a>, по мнению MS<br />
+- Построим наш <a href="http://corp.cnews.ru/news/top/index.shtml?2010/04/16/386907">суперкомпьютер</a> на 9ти битных байтах<br />
+- iPad слишком хорош для продаж <a href="http://www.engadget.com/2010/04/14/ipad-international-launch-delayed-until-the-end-of-may/">за границами</a><br />
+- Рейтинг <a href="http://soft.compulenta.ru/523692/">языков</a> страннее чем обычно<br />
+- Что у нас с Java без <a href="http://www.opennet.ru/opennews/art.shtml?num=26182">главного</a>. Google <a href="http://soft.compulenta.ru/523702/">переживает</a><br />
+- Ответ iPad от <a href="http://www.engadget.com/2010/04/16/dells-7-inch-and-10-inch-streak-tablets-leaked/">Dell</a><br />
+- <a href="http://www.securitylab.ru/news/392811.php">Трояны</a> против торентов и любителей погорячее</p>
+<p><a href="http://radio-t.com/downloads/rt_podcast183.mp3">Аудио</a><br />
+<a href="http://radio-t.com/downloads/rt_podcast183.mp3.torrent">radio-t.torrent</a></p>
+<p>* <a href="http://chat.radio-t.com/logs/radio-t-183.html">Лог чата</a></p>
+]]></content:encoded>
+			<wfw:commentRss>http://radio-t.com/podcasts/radio-t-183/feed/</wfw:commentRss>
+		<slash:comments>15</slash:comments>
+<enclosure url="http://radio-t.com/downloads/rt_podcast183.mp3" length="5242880" type="audio/mpeg" />
+		<media:content url="http://radio-t.com/downloads/rt_podcast183.mp3" fileSize="5242880" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit><itunes:subtitle> - Гугл хакнули несмотря на усилия по защите. Мнение эксперта - Новинки из мира ноутбуков Apple - Перераспределение долей рынка ПК - Серьезное обновление Google Docs - Смена паролей это зло, по мнению MS - Построим наш суперкомпьютер на 9ти битных байтах </itunes:subtitle><itunes:author>Umputun, Bobuk, Gray, Marinka</itunes:author><itunes:summary> - Гугл хакнули несмотря на усилия по защите. Мнение эксперта - Новинки из мира ноутбуков Apple - Перераспределение долей рынка ПК - Серьезное обновление Google Docs - Смена паролей это зло, по мнению MS - Построим наш суперкомпьютер на 9ти битных байтах - iPad слишком хорош для продаж за границами - Рейтинг языков страннее чем обычно - Что у нас с Java без главного. [...]</itunes:summary><itunes:keywords>hitech,russian,radio,t,tech,tech,news</itunes:keywords></item>
+		<item>
+		<title>Радио-Т 182</title>
+		<link>http://radio-t.com/podcasts/radio-t-182/</link>
+		<comments>http://radio-t.com/podcasts/radio-t-182/#comments</comments>
+		<pubDate>Sun, 11 Apr 2010 00:35:43 +0000</pubDate>
+		<dc:creator>podcast@radio-t.com (Umputun, Bobuk, Gray, Marinka)</dc:creator>
+				<category><![CDATA[Подкасты]]></category>
+		<category><![CDATA[Apple]]></category>
+		<category><![CDATA[ipad]]></category>
+		<category><![CDATA[Linux]]></category>
+		<category><![CDATA[nosql]]></category>
+		<category><![CDATA[гады]]></category>
+
+		<guid isPermaLink="false">http://radio-t.com/?p=1241</guid>
+		<description><![CDATA[<p>- Удивительные продажи iPad. Кто все эти люди?
+- Откровения от Apple о новой OS
+ &#8211; Им лучше видно на чем нам писать
+- Parallels стала еще ближе к Linux
+- Пользователей Ubuntu посчитали
+- Голосованиe за NoSQL</p>
+<p>Аудио
+radio-t.torrent</p>
+<p>* Лог чата</p>
+<p>** Да, мы в курсе, что у Бобука заикается дорожка. Увы, и техника не железная, [...]]]></description>
+			<content:encoded><![CDATA[<p><img class="alignright size-full wp-image-1242" title="ipad-umputun" src="http://radio-t.com/wp-content/uploads/2010/04/IMG_1729.jpg" alt="" width="210" height="158" />- Удивительные <a href="http://www.engadget.com/2010/04/08/apples-sold-450-000-ipads-as-of-today-pushed-3-5-million-ipad/">продажи</a> iPad. Кто все эти <a href="http://www.cio.com/article/589775/Who_Bought_Apple_s_300_000_IPads_Take_a_Guess">люди</a>?<br />
+- Откровения от Apple о <a href="http://www.appsafari.com/news/11295/iphone-os-40-features/">новой OS<br />
+</a> &#8211; Им лучше видно на чем нам писать<br />
+- <a href="http://www.opennet.ru/opennews/art.shtml?num=26113">Parallels</a> стала еще ближе к Linux<br />
+- Пользователей <a href="http://www.opennet.ru/opennews/art.shtml?num=26144">Ubuntu</a> посчитали<br />
+- Голосованиe за <a href="http://java.dzone.com/articles/nosql-dzone-poll-results">NoSQL</a></p>
+<p><a href="http://radio-t.com/downloads/rt_podcast182.mp3">Аудио</a><br />
+<a href="http://radio-t.com/downloads/rt_podcast182.mp3.torrent">radio-t.torrent</a></p>
+<p>* <a href="http://chat.radio-t.com/logs/radio-t-182.html">Лог чата</a></p>
+<p>** Да, мы в курсе, что у Бобука заикается дорожка. Увы, и техника не железная, иногда ломается</p>
+]]></content:encoded>
+			<wfw:commentRss>http://radio-t.com/podcasts/radio-t-182/feed/</wfw:commentRss>
+		<slash:comments>31</slash:comments>
+<enclosure url="http://radio-t.com/downloads/rt_podcast182.mp3" length="5242880" type="audio/mpeg" />
+		<media:content url="http://radio-t.com/downloads/rt_podcast182.mp3" fileSize="5242880" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit><itunes:subtitle> - Удивительные продажи iPad. Кто все эти люди? - Откровения от Apple о новой OS &amp;#8211; Им лучше видно на чем нам писать - Parallels стала еще ближе к Linux - Пользователей Ubuntu посчитали - Голосованиe за NoSQL Аудио radio-t.torrent * Лог чата ** Да, м</itunes:subtitle><itunes:author>Umputun, Bobuk, Gray, Marinka</itunes:author><itunes:summary> - Удивительные продажи iPad. Кто все эти люди? - Откровения от Apple о новой OS &amp;#8211; Им лучше видно на чем нам писать - Parallels стала еще ближе к Linux - Пользователей Ubuntu посчитали - Голосованиe за NoSQL Аудио radio-t.torrent * Лог чата ** Да, мы в курсе, что у Бобука заикается дорожка. Увы, и техника не железная, [...]</itunes:summary><itunes:keywords>hitech,russian,radio,t,tech,tech,news</itunes:keywords></item>
+		<item>
+		<title>Радио-Т 181</title>
+		<link>http://radio-t.com/podcasts/radio-t-181/</link>
+		<comments>http://radio-t.com/podcasts/radio-t-181/#comments</comments>
+		<pubDate>Sat, 03 Apr 2010 23:47:03 +0000</pubDate>
+		<dc:creator>podcast@radio-t.com (Umputun, Bobuk, Gray, Marinka)</dc:creator>
+				<category><![CDATA[Подкасты]]></category>
+		<category><![CDATA[Linux]]></category>
+		<category><![CDATA[nosql]]></category>
+		<category><![CDATA[шуточки]]></category>
+		<category><![CDATA[SCO]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+		<category><![CDATA[пираты]]></category>
+
+		<guid isPermaLink="false">http://radio-t.com/?p=1226</guid>
+		<description><![CDATA[<p>- Шуточки 2010
+- Ubuntu не шутит, но смешно
+- Конец истории &#8220;SCO против всех&#8221;
+- Борьба с пиратами средствами хайтека
+- Linux на PS3 теперь вне закона
+- Solaris 10 больше не халява
+- Apache CouchDB застабилизировался
+- Wolfram Alpha починила ошибку
+- Twitter по новому
+- Повсеместная слежка за второй половиной
+- Приход Red Hat Enterprise Linux 5.5
+- Такие плохие пароли
+- HP и Dell [...]]]></description>
+			<content:encoded><![CDATA[<p><img class="alignright size-medium wp-image-1227" title="noapple" src="http://radio-t.com/wp-content/uploads/2010/04/noapple-300x298.jpg" alt="" width="240" height="238" />- <a href="http://www.opennet.ru/opennews/art.shtml?num=26046">Шуточки</a> 2010<br />
+- <a href="http://www.opennet.ru/opennews/art.shtml?num=25994">Ubuntu</a> не шутит, но смешно<br />
+- Конец истории &#8220;<a href="http://www.opennet.ru/opennews/art.shtml?num=26031">SCO</a> против всех&#8221;<br />
+- <a href="http://itc.ua/node/45123">Борьба</a> с пиратами средствами хайтека<br />
+- Linux на <a href="http://www.crunchgear.com/2010/03/29/no-more-linux-for-the-ps3/">PS3</a> теперь вне закона<br />
+- <a href="http://www.opennet.ru/opennews/art.shtml?num=26003">Solaris 10</a> больше не халява<br />
+- Apache <a href="http://www.opennet.ru/opennews/art.shtml?num=26023">CouchDB</a> застабилизировался<br />
+- <a href="http://www.readwriteweb.com/archives/wolfram_alpha_admits_mistake_mobile_site_is_back_i.php">Wolfram Alpha</a> починила ошибку<br />
+- <a href="http://techcrunch.com/2010/03/30/twitter-launches-a-new-dynamic-homepage/">Twitter</a> по новому<br />
+- Повсеместная <a href="http://hitech.tomsk.ru/newsinternet/14671-jelektronnaja-slezhka-za-svoejj-vtorojj.html">слежка</a> за второй половиной<br />
+- Приход Red Hat Enterprise Linux <a href="http://www.opennet.ru/opennews/art.shtml?num=26021">5.5</a><br />
+- Такие плохие <a href="http://lifehacker.com/5505400/how-id-hack-your-weak-passwords">пароли</a><br />
+- HP и Dell <a href="http://cnews.ru/news/top/index.shtml?2010/04/02/385231">разочаровались</a><br />
+- Как поступать с <a href="http://net.compulenta.ru/520144/">бумагой</a></p>
+<p><a href="http://radio-t.com/downloads/rt_podcast181.mp3">Аудио</a><br />
+<a href="http://radio-t.com/downloads/rt_podcast181.mp3.torrent">radio-t.torrent</a></p>
+<p>* <a href="http://chat.radio-t.com/logs/radio-t-181.html">Лог чата</a></p>
+]]></content:encoded>
+			<wfw:commentRss>http://radio-t.com/podcasts/radio-t-181/feed/</wfw:commentRss>
+		<slash:comments>24</slash:comments>
+<enclosure url="http://radio-t.com/downloads/rt_podcast181.mp3" length="5242880" type="audio/mpeg" />
+		<media:content url="http://radio-t.com/downloads/rt_podcast181.mp3" fileSize="5242880" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit><itunes:subtitle> - Шуточки 2010 - Ubuntu не шутит, но смешно - Конец истории &amp;#8220;SCO против всех&amp;#8221; - Борьба с пиратами средствами хайтека - Linux на PS3 теперь вне закона - Solaris 10 больше не халява - Apache CouchDB застабилизировался - Wolfram Alpha починила о</itunes:subtitle><itunes:author>Umputun, Bobuk, Gray, Marinka</itunes:author><itunes:summary> - Шуточки 2010 - Ubuntu не шутит, но смешно - Конец истории &amp;#8220;SCO против всех&amp;#8221; - Борьба с пиратами средствами хайтека - Linux на PS3 теперь вне закона - Solaris 10 больше не халява - Apache CouchDB застабилизировался - Wolfram Alpha починила ошибку - Twitter по новому - Повсеместная слежка за второй половиной - Приход Red Hat Enterprise Linux 5.5 - Такие плохие пароли - HP и Dell [...]</itunes:summary><itunes:keywords>hitech,russian,radio,t,tech,tech,news</itunes:keywords></item>
+		<item>
+		<title>Радио-Т 180</title>
+		<link>http://radio-t.com/podcasts/radio-t-180/</link>
+		<comments>http://radio-t.com/podcasts/radio-t-180/#comments</comments>
+		<pubDate>Sun, 28 Mar 2010 01:53:30 +0000</pubDate>
+		<dc:creator>podcast@radio-t.com (Umputun, Bobuk, Gray, Marinka)</dc:creator>
+				<category><![CDATA[Подкасты]]></category>
+		<category><![CDATA[google]]></category>
+		<category><![CDATA[mongodb]]></category>
+		<category><![CDATA[Open-Source]]></category>
+		<category><![CDATA[Яндекс]]></category>
+		<category><![CDATA[китай]]></category>
+
+		<guid isPermaLink="false">http://radio-t.com/?p=1215</guid>
+		<description><![CDATA[<p>- Google ушел из Китая по туманным причинам
+- Необыкновенный, но забавный &#8220;хедсет&#8221;
+- Британские ученые наносят ответный удар
+- А Столман негодует
+- Глава Parallels обозвал Open Source
+- MongoDB 1.4 нам на радость
+- Яндекс полюбил хром
+- YouTube упал, и надолго
+- Скоро и телевизор от сами-знаете-кого
+- Токийская биржа и мелкий банк полюбили Linux
+- Каждому ученику немного win7</p>
+<p>Аудио
+radio-t.torrent</p>
+<p>* [...]]]></description>
+			<content:encoded><![CDATA[<p>- <a href="http://internet.cnews.ru/news/top/index.shtml?2010/03/23/383772">Google</a> ушел из Китая по туманным причинам<img class="alignright size-medium wp-image-1217" title="mongo" src="http://radio-t.com/wp-content/uploads/2010/03/Screen-shot-2010-03-27-at-8.48.22-PM-173x300.png" alt="" width="173" height="260" /><br />
+- Необыкновенный, но забавный &#8220;<a href="http://www.engadget.com/2010/03/25/cell-mate-headset-heads-on/">хедсет</a>&#8221;<br />
+- Британские <a href="http://www.securitylab.ru/news/392194.php">ученые</a> наносят ответный удар<br />
+- А <a href="http://www.linux.org.ru/news/gnu/4697488">Столман</a> негодует<br />
+- <a href="http://cnews.ru/news/line/index.shtml?2010/03/25/384327">Глава</a> Parallels обозвал Open Source<br />
+- <a href="http://www.opennet.ru/opennews/art.shtml?num=25969">MongoDB</a> 1.4 нам на радость<br />
+- <a href="http://techcrunch.com/2010/03/26/yandex-google-chrome/">Яндекс</a> полюбил хром<br />
+- <a href="http://internet.cnews.ru/news/top/index.shtml?2010/03/25/384302">YouTube</a> упал, и надолго<br />
+- Скоро и <a href="http://cnews.ru/news/top/index.shtml?2010/03/25/384285">телевизор</a> от сами-знаете-кого<br />
+- Токийская <a href="http://www.opennet.ru/opennews/art.shtml?num=25911">биржа</a> и мелкий банк полюбили Linux<br />
+- Каждому ученику немного <a href="http://cnews.ru/news/top/index.shtml?2010/03/24/384162">win7</a></p>
+<p><a href="http://radio-t.com/downloads/rt_podcast180.mp3">Аудио</a><br />
+<a href="http://radio-t.com/downloads/rt_podcast180.mp3.torrent">radio-t.torrent</a></p>
+<p>* <a href="http://chat.radio-t.com/logs/radio-t-180.html">Лог чата</a></p>
+]]></content:encoded>
+			<wfw:commentRss>http://radio-t.com/podcasts/radio-t-180/feed/</wfw:commentRss>
+		<slash:comments>21</slash:comments>
+<enclosure url="http://radio-t.com/downloads/rt_podcast180.mp3" length="5242880" type="audio/mpeg" />
+		<media:content url="http://radio-t.com/downloads/rt_podcast180.mp3" fileSize="5242880" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit><itunes:subtitle> - Google ушел из Китая по туманным причинам - Необыкновенный, но забавный &amp;#8220;хедсет&amp;#8221; - Британские ученые наносят ответный удар - А Столман негодует - Глава Parallels обозвал Open Source - MongoDB 1.4 нам на радость - Яндекс полюбил хром - YouTu</itunes:subtitle><itunes:author>Umputun, Bobuk, Gray, Marinka</itunes:author><itunes:summary> - Google ушел из Китая по туманным причинам - Необыкновенный, но забавный &amp;#8220;хедсет&amp;#8221; - Британские ученые наносят ответный удар - А Столман негодует - Глава Parallels обозвал Open Source - MongoDB 1.4 нам на радость - Яндекс полюбил хром - YouTube упал, и надолго - Скоро и телевизор от сами-знаете-кого - Токийская биржа и мелкий банк полюбили Linux - Каждому ученику немного win7 Аудио radio-t.torrent * [...]</itunes:summary><itunes:keywords>hitech,russian,radio,t,tech,tech,news</itunes:keywords></item>
+		<item>
+		<title>Радио-Т 179</title>
+		<link>http://radio-t.com/podcasts/radio-t-179/</link>
+		<comments>http://radio-t.com/podcasts/radio-t-179/#comments</comments>
+		<pubDate>Sun, 21 Mar 2010 19:51:25 +0000</pubDate>
+		<dc:creator>podcast@radio-t.com (Umputun, Bobuk, Gray, Marinka)</dc:creator>
+				<category><![CDATA[Подкасты]]></category>
+		<category><![CDATA[.com]]></category>
+		<category><![CDATA[Apple]]></category>
+		<category><![CDATA[google]]></category>
+		<category><![CDATA[mapreduce]]></category>
+		<category><![CDATA[palm]]></category>
+		<category><![CDATA[милиция]]></category>
+
+		<guid isPermaLink="false">http://radio-t.com/?p=1204</guid>
+		<description><![CDATA[<p>- Четверть века зоне .com
+- Гугл нервно курит на втором месте
+- Самые конкурсные ИТ специальности
+- Дети британских ученых хакают а потом лечатся
+- Новая концепция OS от любимой компании MS
+- Наша IT долина под Москвой
+- Что с Palm и зачем это Google
+- MapReduce для простых слушателей
+- Милиция озверела, но не окончательно
+- Их нравы</p>
+<p>Аудио
+radio-t.torrent</p>
+<p>* [...]]]></description>
+			<content:encoded><![CDATA[<p><a href="http://radio-t.com/wp-content/uploads/2010/03/dreamstime_98786431.jpg"><img class="alignright size-medium wp-image-1209" title="dreamstime_9878643" src="http://radio-t.com/wp-content/uploads/2010/03/dreamstime_98786431-300x300.jpg" alt="" width="240" height="240" /></a>- Четверть века<a href="http://internet.cnews.ru/news/line/index.shtml?2010/03/15/382726"> зоне .com</a><br />
+- Гугл нервно курит на <a href="http://internet.cnews.ru/news/line/index.shtml?2010/03/17/383035">втором</a> месте<br />
+- Самые конкурсные ИТ <a href="http://www.securitylab.ru/news/391826.php">специальности</a><br />
+- Дети британских ученых <a href="http://soft.compulenta.ru/516132/">хакают</a> а потом <a href="http://science.compulenta.ru/515680/">лечатся</a><br />
+- Новая <a href="http://soft.compulenta.ru/515862/">концепция</a> OS от любимой компании MS<br />
+- Наша <a href="http://science.compulenta.ru/515727/">IT долина</a> под Москвой<br />
+- Что с <a href="http://habrahabr.ru/blogs/google/88145/">Palm</a> и зачем это Google<br />
+- <a href="http://ayende.com/Blog/archive/2010/03/14/map-reduce-ndash-a-visual-explanation.aspx">MapReduce</a> для простых слушателей<br />
+- <a href="http://www.securitylab.ru/news/391848.php">Милиция</a> озверела, но не окончательно<br />
+- <a href="http://habrahabr.ru/blogs/microsoft/87795/">Их</a> нравы</p>
+<p><a href="http://radio-t.com/downloads/rt_podcast179.mp3">Аудио</a><br />
+<a href="http://radio-t.com/downloads/rt_podcast179.mp3.torrent">radio-t.torrent</a></p>
+<p>* <a href="http://chat.radio-t.com/logs/radio-t-179.html">Лог чата</a></p>
+]]></content:encoded>
+			<wfw:commentRss>http://radio-t.com/podcasts/radio-t-179/feed/</wfw:commentRss>
+		<slash:comments>28</slash:comments>
+<enclosure url="http://radio-t.com/downloads/rt_podcast179.mp3" length="5242880" type="audio/mpeg" />
+		<media:content url="http://radio-t.com/downloads/rt_podcast179.mp3" fileSize="5242880" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit><itunes:subtitle> - Четверть века зоне .com - Гугл нервно курит на втором месте - Самые конкурсные ИТ специальности - Дети британских ученых хакают а потом лечатся - Новая концепция OS от любимой компании MS - Наша IT долина под Москвой - Что с Palm и зачем это Google - M</itunes:subtitle><itunes:author>Umputun, Bobuk, Gray, Marinka</itunes:author><itunes:summary> - Четверть века зоне .com - Гугл нервно курит на втором месте - Самые конкурсные ИТ специальности - Дети британских ученых хакают а потом лечатся - Новая концепция OS от любимой компании MS - Наша IT долина под Москвой - Что с Palm и зачем это Google - MapReduce для простых слушателей - Милиция озверела, но не окончательно - Их нравы Аудио radio-t.torrent * [...]</itunes:summary><itunes:keywords>hitech,russian,radio,t,tech,tech,news</itunes:keywords></item>
+		<item>
+		<title>Радио-Т 178</title>
+		<link>http://radio-t.com/podcasts/radio-t-178/</link>
+		<comments>http://radio-t.com/podcasts/radio-t-178/#comments</comments>
+		<pubDate>Sun, 14 Mar 2010 02:58:42 +0000</pubDate>
+		<dc:creator>podcast@radio-t.com (Umputun, Bobuk, Gray, Marinka)</dc:creator>
+				<category><![CDATA[Подкасты]]></category>
+		<category><![CDATA[google]]></category>
+		<category><![CDATA[Linux]]></category>
+		<category><![CDATA[таблетки]]></category>
+		<category><![CDATA[SCO]]></category>
+		<category><![CDATA[twitter]]></category>
+		<category><![CDATA[атаки]]></category>
+
+		<guid isPermaLink="false">http://radio-t.com/?p=1196</guid>
+		<description><![CDATA[<p>- SearchWiki весь вышел
+- Новое &#8220;право на сеть&#8221;
+- Прболемы зоны .xxx
+- Очень много атак на одно приложение
+- Twitter следит за ссылками, для пользы дела
+- Странный ридер от Google
+- Расцвет таблеток не за горами
+- Полетим близко, низко и медленно
+- SCO вернется к привычному &#8220;делу&#8221;
+- Почему линукс все еще отстой</p>
+<p>Аудио
+radio-t.torrent</p>
+<p>* [...]]]></description>
+			<content:encoded><![CDATA[<p><img class="alignright size-medium wp-image-1197" title="jetpac" src="http://radio-t.com/wp-content/uploads/2010/03/10mar10jetpack25-276x300.jpg" alt="" width="221" height="240" />- <a href="http://habrahabr.ru/blogs/google/87354/">SearchWiki</a> весь вышел<br />
+- Новое &#8220;<a href="http://internet.cnews.ru/news/line/index.shtml?2010/03/09/382035">право на сеть</a>&#8221;<br />
+- Прболемы зоны .<a href="http://net.compulenta.ru/514172/">xxx</a><br />
+- Очень много атак на одно <a href="http://itc.ua/node/44783">приложение</a><br />
+- Twitter <a href="http://internetno.net/2010/03/11/twitter-nachal-sledit-za-ssyilkami/">следит</a> за ссылками, для пользы дела<br />
+- Странный <a href="http://www.mobile-review.com/fullnews/main/2010/March/12.shtml#28554">ридер</a> от Google<br />
+- Расцвет <a href="http://www.engadget.com/2010/03/12/lenovo-ceo-says-mobile-internet-products-will-soon-account-for/">таблеток</a> не за горами<br />
+- <a href="http://www.engadget.com/2010/03/10/martin-jetpack-priced-at-86-000-mere-mortals-will-soon-be-able/">Полетим</a> близко, низко и медленно<br />
+- <a href="http://www.linux.org.ru/news/sco/4634143">SCO</a> вернется к привычному &#8220;делу&#8221;<br />
+- Почему линукс все еще <a href="http://blogs.zdnet.com/hardware/?p=7532">отстой</a></p>
+<p><a href="http://radio-t.com/downloads/rt_podcast178.mp3">Аудио</a><br />
+<a href="http://radio-t.com/downloads/rt_podcast178.mp3.torrent">radio-t.torrent</a></p>
+<p>* <a href="http://chat.radio-t.com/logs/radio-t-178.html">Лог чата</a></p>
+]]></content:encoded>
+			<wfw:commentRss>http://radio-t.com/podcasts/radio-t-178/feed/</wfw:commentRss>
+		<slash:comments>25</slash:comments>
+<enclosure url="http://radio-t.com/downloads/rt_podcast178.mp3" length="5242880" type="audio/mpeg" />
+		<media:content url="http://radio-t.com/downloads/rt_podcast178.mp3" fileSize="5242880" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit><itunes:subtitle> - SearchWiki весь вышел - Новое &amp;#8220;право на сеть&amp;#8221; - Прболемы зоны .xxx - Очень много атак на одно приложение - Twitter следит за ссылками, для пользы дела - Странный ридер от Google - Расцвет таблеток не за горами - Полетим близко, низко и медл</itunes:subtitle><itunes:author>Umputun, Bobuk, Gray, Marinka</itunes:author><itunes:summary> - SearchWiki весь вышел - Новое &amp;#8220;право на сеть&amp;#8221; - Прболемы зоны .xxx - Очень много атак на одно приложение - Twitter следит за ссылками, для пользы дела - Странный ридер от Google - Расцвет таблеток не за горами - Полетим близко, низко и медленно - SCO вернется к привычному &amp;#8220;делу&amp;#8221; - Почему линукс все еще отстой Аудио radio-t.torrent * [...]</itunes:summary><itunes:keywords>hitech,russian,radio,t,tech,tech,news</itunes:keywords></item>
+		<item>
+		<title>Радио-Т 177</title>
+		<link>http://radio-t.com/podcasts/radio-t-177/</link>
+		<comments>http://radio-t.com/podcasts/radio-t-177/#comments</comments>
+		<pubDate>Sun, 07 Mar 2010 05:02:47 +0000</pubDate>
+		<dc:creator>podcast@radio-t.com (Umputun, Bobuk, Gray, Marinka)</dc:creator>
+				<category><![CDATA[Подкасты]]></category>
+
+		<guid isPermaLink="false">http://radio-t.com/?p=1189</guid>
+		<description><![CDATA[<p>- Apple против HTC и Google
+- Новая Ubuntu очень неоднозначна
+- Не глотайте железо, это глупо
+- Нетбуки уходят, но не совсем
+- Твитер вырос в 26 раз
+- Интернет паспорт от Google и MS
+- Opera 10.50 тут
+- Через 3 года не будет компьютеров
+- Умный антивирус Яндекса</p>
+<p>Аудио
+radio-t.torrent</p>
+<p>* [...]]]></description>
+			<content:encoded><![CDATA[<p><a href="http://radio-t.com/wp-content/uploads/2010/03/dreamstime_13088566.jpg"><img class="alignright size-medium wp-image-1190" title="dreamstime_13088566" src="http://radio-t.com/wp-content/uploads/2010/03/dreamstime_13088566-300x300.jpg" alt="" width="216" height="216" /></a>- <a href="http://business.compulenta.ru/511250/">Apple</a> против HTC и Google<br />
+- Новая <a href="http://www.opennet.ru/opennews/art.shtml?num=25666">Ubuntu</a> очень неоднозначна<br />
+- Не глотайте <a href="http://www.securitylab.ru/news/391314.php">железо</a>, это глупо<br />
+- <a href="http://cnews.ru/news/top/index.shtml?2010/03/05/381713">Нетбуки</a> уходят, но не совсем<br />
+- Твитер вырос в <a href="http://internet.cnews.ru/news/top/index.shtml?2010/03/04/381633">26 раз</a><br />
+- Интернет <a href="http://www.securitylab.ru/news/391355.php">паспорт</a> от Google и MS<br />
+- <a href="http://www.mobile-review.com/fullnews/main/2010/March/02.shtml#28427">Opera 10.50</a> тут<br />
+- Через 3 года <a href="http://tech.yahoo.com/blogs/null/161280;_ylt=AlQVDO0LMo_zHo.3Wlo1_qB0fNdF">не будет</a> компьютеров<br />
+- Умный <a href="http://www.thg.ru/technews/20100301_233800.html">антивирус</a> Яндекса</p>
+<p><a href="http://radio-t.com/downloads/rt_podcast177.mp3">Аудио</a><br />
+<a href="http://radio-t.com/downloads/rt_podcast177.mp3.torrent">radio-t.torrent</a></p>
+<p>* <a href="http://chat.radio-t.com/logs/radio-t-177.html">Лог чата</a></p>
+]]></content:encoded>
+			<wfw:commentRss>http://radio-t.com/podcasts/radio-t-177/feed/</wfw:commentRss>
+		<slash:comments>21</slash:comments>
+<enclosure url="http://radio-t.com/downloads/rt_podcast177.mp3" length="5242880" type="audio/mpeg" />
+		<media:content url="http://radio-t.com/downloads/rt_podcast177.mp3" fileSize="5242880" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit><itunes:subtitle> - Apple против HTC и Google - Новая Ubuntu очень неоднозначна - Не глотайте железо, это глупо - Нетбуки уходят, но не совсем - Твитер вырос в 26 раз - Интернет паспорт от Google и MS - Opera 10.50 тут - Через 3 года не будет компьютеров - Умный антивирус</itunes:subtitle><itunes:author>Umputun, Bobuk, Gray, Marinka</itunes:author><itunes:summary> - Apple против HTC и Google - Новая Ubuntu очень неоднозначна - Не глотайте железо, это глупо - Нетбуки уходят, но не совсем - Твитер вырос в 26 раз - Интернет паспорт от Google и MS - Opera 10.50 тут - Через 3 года не будет компьютеров - Умный антивирус Яндекса Аудио radio-t.torrent * [...]</itunes:summary><itunes:keywords>hitech,russian,radio,t,tech,tech,news</itunes:keywords></item>
+		<item>
+		<title>Радио-Т 176</title>
+		<link>http://radio-t.com/podcasts/radio-t-176/</link>
+		<comments>http://radio-t.com/podcasts/radio-t-176/#comments</comments>
+		<pubDate>Sun, 28 Feb 2010 00:08:42 +0000</pubDate>
+		<dc:creator>podcast@radio-t.com (Umputun, Bobuk, Gray, Marinka)</dc:creator>
+				<category><![CDATA[Подкасты]]></category>
+		<category><![CDATA[C++]]></category>
+		<category><![CDATA[Linux]]></category>
+		<category><![CDATA[сурово]]></category>
+		<category><![CDATA[скайп]]></category>
+		<category><![CDATA[гики]]></category>
+
+		<guid isPermaLink="false">http://radio-t.com/?p=1173</guid>
+		<description><![CDATA[<p>- 15 лет этому правильному индейцу
+- C++ отстой? Ну, не совсем и совсем нет
+- Не надо раздеваться в интернетах
+- Скайп по телевизору
+- Приход касандры в твитер к добру
+- Чак Норис против раутеров
+- Взрослый AppStore
+- Темы наших слушателей</p>
+<p>Аудио
+radio-t.torrent</p>
+<p>* [...]]]></description>
+			<content:encoded><![CDATA[<p><a href="http://radio-t.com/wp-content/uploads/2010/02/dreamstime_4743497.jpg"><img class="alignright size-medium wp-image-1174" style="margin: 1px; border: 1px solid white;" title="dreamstime_4743497" src="http://radio-t.com/wp-content/uploads/2010/02/dreamstime_4743497-300x209.jpg" alt="" width="240" height="167" /></a>- 15 лет этому правильному <a href="http://www.opennet.ru/opennews/art.shtml?num=25540">индейцу</a><br />
+- C++ <a href="http://efxam.blogspot.com/2009/10/why-c-doesnt-suck.html">отстой</a>? Ну, не совсем и совсем нет<br />
+- Не надо <a href="http://internet.cnews.ru/news/line/index.shtml?2010/02/25/380591">раздеваться</a> в интернетах<br />
+- Скайп по <a href="http://cnews.ru/news/top/index.shtml?2010/02/26/380727">телевизору</a><br />
+- Приход <a href="http://www.linux.org.ru/news/clusters/4588335">касандры</a> в твитер к добру<br />
+- <a href="http://www.linux.org.ru/news/security/4586997">Чак Норис</a> против раутеров<br />
+- <a href="http://soft.compulenta.ru/508999/">Взрослый</a> AppStore<br />
+- <a href="http://radio-t.com/temi_dlja_vipuskov/temy-dlya-176/">Темы</a> наших слушателей</p>
+<p><a href="http://radio-t.com/downloads/rt_podcast176.mp3">Аудио</a><br />
+<a href="http://radio-t.com/downloads/rt_podcast176.mp3.torrent">radio-t.torrent</a></p>
+<p>* <a href="http://chat.radio-t.com/logs/radio-t-176.html">Лог чата</a></p>
+]]></content:encoded>
+			<wfw:commentRss>http://radio-t.com/podcasts/radio-t-176/feed/</wfw:commentRss>
+		<slash:comments>25</slash:comments>
+<enclosure url="http://radio-t.com/downloads/rt_podcast176.mp3" length="5242880" type="audio/mpeg" />
+		<media:content url="http://radio-t.com/downloads/rt_podcast176.mp3" fileSize="5242880" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit><itunes:subtitle> - 15 лет этому правильному индейцу - C++ отстой? Ну, не совсем и совсем нет - Не надо раздеваться в интернетах - Скайп по телевизору - Приход касандры в твитер к добру - Чак Норис против раутеров - Взрослый AppStore - Темы наших слушателей Аудио radio-t.</itunes:subtitle><itunes:author>Umputun, Bobuk, Gray, Marinka</itunes:author><itunes:summary> - 15 лет этому правильному индейцу - C++ отстой? Ну, не совсем и совсем нет - Не надо раздеваться в интернетах - Скайп по телевизору - Приход касандры в твитер к добру - Чак Норис против раутеров - Взрослый AppStore - Темы наших слушателей Аудио radio-t.torrent * [...]</itunes:summary><itunes:keywords>hitech,russian,radio,t,tech,tech,news</itunes:keywords></item>
+	<copyright>Creative Commons - Attribution, Noncommercial, No Derivative Works 3.0 License.</copyright><media:credit role="author">Umputun, Bobuk, Gray, Marinka</media:credit><media:rating>nonadult</media:rating></channel>
+</rss><!-- Dynamic page generated in 0.830 seconds. --><!-- Cached page generated by WP-Super-Cache on 2010-06-24 06:58:31 -->

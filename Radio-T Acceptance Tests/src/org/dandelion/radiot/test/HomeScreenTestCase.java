@@ -31,7 +31,7 @@ public class HomeScreenTestCase extends
 			
 			@Override
 			public IFeedSource createFeedSource(String url) {
-				AssetManager assets = getInstrumentation().getTargetContext().getAssets();
+				AssetManager assets = getInstrumentation().getContext().getAssets();
 				return new AssetFeedSource(assets, getLocalFileName(url));
 			}
 			
