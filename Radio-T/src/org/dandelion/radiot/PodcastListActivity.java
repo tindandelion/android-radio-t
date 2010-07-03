@@ -120,9 +120,7 @@ public class PodcastListActivity extends ListActivity implements IView {
 	}
 
 	private void playPodcast(Uri uri) {
-		Intent intent = new Intent(Intent.ACTION_VIEW);
-		intent.setDataAndType(uri, "audio/mpeg");
-		startActivity(intent);
+		new ExternalPlayer(this).startPlaying(uri);
 	}
 
 	class PodcastListAdapter extends ArrayAdapter<PodcastItem> {

@@ -6,9 +6,9 @@
     
     <string name="main_show_title">Подкасты</string>
     <string name="after_show_title">После-шоу</string>
-    <string name="on_air_title">Прямой эфир</string>
+    <string name="live_show_title">Прямой эфир</string>
     
-    <string name="on_air_info">\
+    <string name="live_show_info">\
     Передачу в прямом эфире можно послушать каждую субботу\
      с <b>23:00</b> по московскому времени</string>
      <string name="listen_button_text">Слушать</string>

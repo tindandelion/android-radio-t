@@ -13,11 +13,8 @@ public class PodcastList {
 
 	public interface IView {
 		void updatePodcasts(List<PodcastItem> podcasts);
-
 		void showProgress();
-
 		void closeProgress();
-
 		void showErrorMessage(String errorMessage);
 	}
 

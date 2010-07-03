@@ -2,21 +2,22 @@
 <RelativeLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="wrap_content"
-  android:layout_height="wrap_content">
+  android:layout_height="wrap_content"
+  android:layout_gravity="center_vertical">
   
   <TextView
-  	android:id="@+id/on_air_info_view"
+  	android:id="@+id/live_show_info_view"
   	android:padding="10dp"
   	android:layout_width="fill_parent"
   	android:layout_height="wrap_content"
   	android:gravity="center_horizontal"
-  	android:text="@string/on_air_info"
+  	android:text="@string/live_show_info"
   />
   <Button
   	android:layout_width="wrap_content"
   	android:layout_height="wrap_content"
   	android:text="@string/listen_button_text"
-  	android:layout_below="@id/on_air_info_view"
+  	android:layout_below="@id/live_show_info_view"
   	android:layout_centerHorizontal="true"
   	android:onClick="listenButtonClicked"
   />

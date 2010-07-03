@@ -49,10 +49,10 @@ public class HomeScreen extends ListActivity {
 				PodcastListActivity.start(HomeScreen.this, this.toString(), PIRATES_URL);
 			}
 		});
-		items.add(new HomeScreenItem(R.string.on_air_title) {
+		items.add(new HomeScreenItem(R.string.live_show_title) {
 			@Override
 			public void execute() {
-				startActivity(new Intent(HomeScreen.this, OnAirActivity.class));
+				startActivity(new Intent(HomeScreen.this, LiveShowActivity.class));
 			}
 		});
 		return items;
