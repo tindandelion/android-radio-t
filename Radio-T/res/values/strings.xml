@@ -7,4 +7,6 @@
     <string name="main_show_title">Подкасты</string>
     <string name="after_show_title">После-шоу</string>
     <string name="on_air_title">Прямой эфир</string>
+    
+    <string name="on_air_info">А это информация о прямом эфире</string>
 </resources>

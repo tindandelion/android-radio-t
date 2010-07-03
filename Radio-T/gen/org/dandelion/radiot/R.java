@@ -28,7 +28,8 @@ public final class R {
     public static final class layout {
         public static final int home_screen=0x7f030000;
         public static final int home_screen_item=0x7f030001;
-        public static final int podcast_list_item=0x7f030002;
+        public static final int on_air_screen=0x7f030002;
+        public static final int podcast_list_item=0x7f030003;
     }
     public static final class menu {
         public static final int podcast_list=0x7f050000;
@@ -39,6 +40,7 @@ public final class R {
         public static final int logo_text=0x7f040000;
         public static final int main_show_title=0x7f040003;
         public static final int main_title=0x7f040001;
+        public static final int on_air_info=0x7f040006;
         public static final int on_air_title=0x7f040005;
     }
 }
