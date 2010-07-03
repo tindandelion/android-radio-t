@@ -109,7 +109,7 @@ public class PodcastListActivity extends ListActivity implements IView {
 
 	private String getFeedUrlFromExtra() {
 		if (null == extras) {
-			return null;
+			return "";
 		}
 		return extras.getString(URL_KEY);
 	}

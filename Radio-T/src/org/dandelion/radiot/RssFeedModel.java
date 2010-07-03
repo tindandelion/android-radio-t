@@ -9,7 +9,6 @@ import java.util.List;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 
-import android.content.res.AssetManager;
 import android.sax.Element;
 import android.sax.EndElementListener;
 import android.sax.EndTextElementListener;
@@ -18,18 +17,6 @@ import android.sax.StartElementListener;
 import android.util.Xml;
 
 public class RssFeedModel implements PodcastList.IModel {
-	
-	public static class AssetFeedSource implements PodcastList.IFeedSource {
-		private AssetManager assets;
-		private String filename;
-		public AssetFeedSource(AssetManager assets, String filename) {
-			this.assets = assets;
-			this.filename = filename;
-		}
-		public InputStream openContentStream() throws IOException {
-			return assets.open(filename);
-		}
-	}
 	
 	public static class UrlFeedSource implements PodcastList.IFeedSource {
 		private String address;

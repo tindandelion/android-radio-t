@@ -1,15 +1,9 @@
 package org.dandelion.radiot.test;
 
 import org.dandelion.radiot.PodcastItem;
-import org.dandelion.radiot.PodcastList;
-import org.dandelion.radiot.PodcastList.IModel;
-import org.dandelion.radiot.PodcastList.IPresenter;
-import org.dandelion.radiot.PodcastList.IView;
 import org.dandelion.radiot.PodcastListActivity;
-import org.dandelion.radiot.RssFeedModel;
 
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.net.Uri;
 import android.test.ActivityUnitTestCase;
 import android.test.UiThreadTest;
@@ -18,8 +12,6 @@ import android.widget.ListView;
 
 public class PodcastRssDisplayAcceptanceTest extends
 		ActivityUnitTestCase<PodcastListActivity> {
-	private static final String RSS_FILENAME = "radio-t.xml";
-
 	private PodcastListActivity activity;
 
 	public PodcastRssDisplayAcceptanceTest() {
@@ -29,26 +21,15 @@ public class PodcastRssDisplayAcceptanceTest extends
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		PodcastList.setFactory(new PodcastList.Factory() {
-			@Override
-			public PodcastList.IFeedSource createFeedSource(String url) {
-				AssetManager assets = getInstrumentation().getTargetContext()
-				.getAssets();
-				return new RssFeedModel.AssetFeedSource(assets, RSS_FILENAME);
-			};
-			
-			@Override
-			public IPresenter createPresenter(IModel model, IView view) {
-				return PodcastList.createSyncPresenter(model, view);
-			}
-		});
-
-		activity = startActivity(new Intent(), null, null);
+		LocalRssFeedFactory.install(getInstrumentation());
+		Intent intent = new Intent();
+		intent.putExtra(PodcastListActivity.URL_KEY, "radio-t");
+		activity = startActivity(intent, null, null);
 	}
-	
+
 	@Override
 	protected void tearDown() throws Exception {
-		PodcastList.resetFactory();
+		LocalRssFeedFactory.uninstall();
 		super.tearDown();
 	}
 

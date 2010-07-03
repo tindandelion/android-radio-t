@@ -1,16 +1,8 @@
 package org.dandelion.radiot.test;
 
 import org.dandelion.radiot.HomeScreen;
-import org.dandelion.radiot.PodcastList;
-import org.dandelion.radiot.PodcastList.IFeedSource;
-import org.dandelion.radiot.PodcastList.IModel;
-import org.dandelion.radiot.PodcastList.IPresenter;
-import org.dandelion.radiot.PodcastList.IView;
 import org.dandelion.radiot.PodcastListActivity;
-import org.dandelion.radiot.RssFeedModel.AssetFeedSource;
 
-import android.content.res.AssetManager;
-import android.net.Uri;
 import android.test.ActivityInstrumentationTestCase2;
 
 import com.jayway.android.robotium.solo.Solo;
@@ -27,25 +19,14 @@ public class HomeScreenTestCase extends
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		PodcastList.setFactory(new PodcastList.Factory() {
-			
-			@Override
-			public IFeedSource createFeedSource(String url) {
-				AssetManager assets = getInstrumentation().getContext().getAssets();
-				return new AssetFeedSource(assets, getLocalFileName(url));
-			}
-			
-			private String getLocalFileName(String url) {
-				Uri uri = Uri.parse(url);
-				return uri.getLastPathSegment() + ".xml";
-			}
-
-			@Override
-			public IPresenter createPresenter(IModel model, IView view) {
-				return PodcastList.createSyncPresenter(model, view);
-			}
-		});
+		LocalRssFeedFactory.install(getInstrumentation());
 		solo = new Solo(getInstrumentation(), getActivity());
+	}
+	
+	@Override
+	protected void tearDown() throws Exception {
+		LocalRssFeedFactory.uninstall();
+		super.tearDown();
 	}
 
 	public void testOpenPodcastsPage() throws Exception {

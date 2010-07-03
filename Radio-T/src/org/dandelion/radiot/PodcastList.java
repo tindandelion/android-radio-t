@@ -65,15 +65,4 @@ public class PodcastList {
 			return new AsyncPresenter(model, view);
 		}
 	}
-
-	public static IPresenter createSyncPresenter(final IModel model, final IView view) {
-		return new IPresenter() {
-			public void refreshData() {
-				try {
-					view.updatePodcasts(model.retrievePodcasts());
-				} catch (Exception e) {
-				}
-			}
-		};
-	}
 }
