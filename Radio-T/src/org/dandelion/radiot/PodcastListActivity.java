@@ -109,7 +109,7 @@ public class PodcastListActivity extends ListActivity implements IView {
 
 	private String getFeedUrlFromExtra() {
 		if (null == extras) {
-			return "";
+			return null;
 		}
 		return extras.getString(URL_KEY);
 	}
@@ -143,7 +143,7 @@ public class PodcastListActivity extends ListActivity implements IView {
 
 		private View fillRowWithData(View row, PodcastItem item) {
 			setElementText(row, R.id.podcast_item_view_number,
-					formatNumber(item.getNumber()));
+					item.getNumber());
 			setElementText(row, R.id.podcast_item_view_date,
 					formatDateString(item.getPubDate()));
 			setElementText(row, R.id.podcast_item_view_shownotes,
@@ -155,10 +155,6 @@ public class PodcastListActivity extends ListActivity implements IView {
 			SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
 			String strDate = format.format(date);
 			return strDate;
-		}
-
-		private String formatNumber(String number) {
-			return "#" + number;
 		}
 
 		private void setElementText(View row, int resourceId, String value) {

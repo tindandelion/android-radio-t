@@ -15,11 +15,11 @@ import android.net.Uri;
 
 class LocalRssFeedFactory extends PodcastList.Factory {
 	private AssetManager assets;
-	
+
 	public static void install(Instrumentation instrumentation) {
 		PodcastList.setFactory(new LocalRssFeedFactory(instrumentation));
 	}
-	
+
 	public static void uninstall() {
 		PodcastList.resetFactory();
 	}
@@ -27,7 +27,7 @@ class LocalRssFeedFactory extends PodcastList.Factory {
 	public LocalRssFeedFactory(Instrumentation instrumentation) {
 		assets = instrumentation.getContext().getAssets();
 	}
-	
+
 	@Override
 	public IPresenter createPresenter(final IModel model, final IView view) {
 		return new IPresenter() {
@@ -50,9 +50,14 @@ class LocalRssFeedFactory extends PodcastList.Factory {
 			}
 		};
 	}
-	
+
 	private String getLocalFileName(String url) {
-		Uri uri = Uri.parse(url);
-		return uri.getLastPathSegment() + ".xml";
+		String filename;
+		if (null == url) {
+			filename = "radio-t";
+		} else {
+			filename = Uri.parse(url).getLastPathSegment();
+		}
+		return filename + ".xml";
 	}
 }

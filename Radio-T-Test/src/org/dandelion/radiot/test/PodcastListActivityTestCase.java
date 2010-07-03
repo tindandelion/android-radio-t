@@ -6,11 +6,11 @@ import java.util.Date;
 
 import org.dandelion.radiot.PodcastItem;
 import org.dandelion.radiot.PodcastList;
-import org.dandelion.radiot.PodcastList.IView;
-import org.dandelion.radiot.PodcastListActivity;
 import org.dandelion.radiot.PodcastList.IFeedSource;
 import org.dandelion.radiot.PodcastList.IModel;
 import org.dandelion.radiot.PodcastList.IPresenter;
+import org.dandelion.radiot.PodcastList.IView;
+import org.dandelion.radiot.PodcastListActivity;
 
 import android.content.Intent;
 import android.test.ActivityUnitTestCase;
@@ -33,7 +33,7 @@ public class PodcastListActivityTestCase extends
 	@UiThreadTest
 	public void testDisplayPodcastItem() throws Exception {
 		ArrayList<PodcastItem> items = new ArrayList<PodcastItem>();
-		items.add(new PodcastItem(121, SAMPLE_DATE, "Show notes", ""));
+		items.add(new PodcastItem("#121", SAMPLE_DATE, "Show notes", ""));
 		
 		activity = startActivity(new Intent(), null, null);
 		activity.updatePodcasts(items);

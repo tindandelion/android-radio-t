@@ -20,16 +20,12 @@ public class PodcastItem implements Cloneable {
 	private String showNotes;
 	private Uri audioUri;
 
-	public PodcastItem(int number, Date issueDate, String showNotes,
+	public PodcastItem(String number, Date issueDate, String showNotes,
 			String audioLink) {
-		this.number = Integer.toString(number);
+		this.number = number;
 		this.pubDate = issueDate;
 		this.showNotes = showNotes;
 		this.audioUri = Uri.parse(audioLink);
-	}
-
-	public PodcastItem(int number) {
-		this(number, null, null, "");
 	}
 
 	public Uri getAudioUri() {
