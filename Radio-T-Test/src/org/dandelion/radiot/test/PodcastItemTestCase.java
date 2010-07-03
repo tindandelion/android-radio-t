@@ -35,7 +35,12 @@ public class PodcastItemTestCase extends TestCase {
 
 	public void testExtractPublicationDate() throws Exception {
 		item.extractPubDate("Sun, 13 Jun 2010 01:37:22 +0000");
-		assertNotNull(item.getPubDate());
+		assertEquals("13.06.2010", item.getPubDate());
+	}
+	
+	public void testIncorrectPublicationDate() throws Exception {
+		item.extractPubDate("Blah");
+		assertEquals("", item.getPubDate());
 	}
 	
 	public void testRemoveLineBreaksFromShowNotes() throws Exception {

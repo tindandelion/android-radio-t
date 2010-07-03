@@ -12,15 +12,17 @@ import android.text.Html;
 
 public class PodcastItem implements Cloneable {
 	private static final Pattern NUMBER_PATTERN = Pattern.compile("\\d+");
-	private static SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat(
+	private static SimpleDateFormat INPUT_DATE_FORMAT = new SimpleDateFormat(
 			"EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);
+	private static SimpleDateFormat OUTPUT_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
+	
 
 	private String number;
-	private Date pubDate;
+	private String pubDate;
 	private String showNotes;
 	private Uri audioUri;
 
-	public PodcastItem(String number, Date issueDate, String showNotes,
+	public PodcastItem(String number, String issueDate, String showNotes,
 			String audioLink) {
 		this.number = number;
 		this.pubDate = issueDate;
@@ -35,7 +37,7 @@ public class PodcastItem implements Cloneable {
 	public PodcastItem() {
 	}
 
-	public Date getPubDate() {
+	public String getPubDate() {
 		return pubDate;
 	}
 
@@ -67,9 +69,10 @@ public class PodcastItem implements Cloneable {
 
 	public void extractPubDate(String value) {
 		try {
-			pubDate = DATE_FORMATTER.parse(value);
+			Date date = INPUT_DATE_FORMAT.parse(value);
+			pubDate = OUTPUT_DATE_FORMAT.format(date);
 		} catch (ParseException e) {
-			throw new RuntimeException(e);
+			pubDate = "";
 		}
 	}
 

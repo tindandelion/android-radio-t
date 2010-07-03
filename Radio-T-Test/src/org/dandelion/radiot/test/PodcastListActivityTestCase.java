@@ -2,7 +2,6 @@ package org.dandelion.radiot.test;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Date;
 
 import org.dandelion.radiot.PodcastItem;
 import org.dandelion.radiot.PodcastList;
@@ -22,7 +21,6 @@ public class PodcastListActivityTestCase extends
 		ActivityUnitTestCase<PodcastListActivity> {
 
 	// This date is 19.06.2010
-	private static final Date SAMPLE_DATE = new Date(110, 05, 19);
 	protected String feedSourceUrl;
 	private PodcastListActivity activity;
 
@@ -33,7 +31,7 @@ public class PodcastListActivityTestCase extends
 	@UiThreadTest
 	public void testDisplayPodcastItem() throws Exception {
 		ArrayList<PodcastItem> items = new ArrayList<PodcastItem>();
-		items.add(new PodcastItem("#121", SAMPLE_DATE, "Show notes", ""));
+		items.add(new PodcastItem("#121", "19.06.2010", "Show notes", ""));
 		
 		activity = startActivity(new Intent(), null, null);
 		activity.updatePodcasts(items);

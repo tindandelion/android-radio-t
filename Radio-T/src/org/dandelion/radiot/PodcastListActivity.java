@@ -1,7 +1,5 @@
 package org.dandelion.radiot;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import org.dandelion.radiot.PodcastList.IPresenter;
@@ -145,16 +143,10 @@ public class PodcastListActivity extends ListActivity implements IView {
 			setElementText(row, R.id.podcast_item_view_number,
 					item.getNumber());
 			setElementText(row, R.id.podcast_item_view_date,
-					formatDateString(item.getPubDate()));
+					item.getPubDate());
 			setElementText(row, R.id.podcast_item_view_shownotes,
 					item.getShowNotes());
 			return row;
-		}
-
-		private String formatDateString(Date date) {
-			SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-			String strDate = format.format(date);
-			return strDate;
 		}
 
 		private void setElementText(View row, int resourceId, String value) {
