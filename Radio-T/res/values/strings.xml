@@ -4,6 +4,7 @@
 	<string name="main_title">Радио</string>
     <string name="app_name">Radio-T for Android</string>
     
-    <string name="main_show_home_item">Подкасты</string>
-    <string name="after_show_home_item">После-шоу</string>
+    <string name="main_show_title">Подкасты</string>
+    <string name="after_show_title">После-шоу</string>
+    <string name="on_air_title">Прямой эфир</string>
 </resources>

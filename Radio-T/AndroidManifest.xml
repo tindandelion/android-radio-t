@@ -3,8 +3,8 @@
 	package="org.dandelion.radiot" android:versionCode="1"
 	android:versionName="1.0">
 	<application android:icon="@drawable/icon" android:label="@string/app_name">
-		<activity android:name="PodcastListActivity">
-		</activity>
+		<activity android:name="PodcastListActivity" />
+		<activity android:name="OnAirActivity" android:label="@string/on_air_title"/>
 		<activity android:name="HomeScreen"
 		android:theme="@android:style/Theme.NoTitleBar">
 			<intent-filter>

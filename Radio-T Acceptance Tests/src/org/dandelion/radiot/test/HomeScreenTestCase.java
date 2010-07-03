@@ -1,6 +1,7 @@
 package org.dandelion.radiot.test;
 
 import org.dandelion.radiot.HomeScreen;
+import org.dandelion.radiot.OnAirActivity;
 import org.dandelion.radiot.PodcastListActivity;
 
 import android.test.ActivityInstrumentationTestCase2;
@@ -47,6 +48,11 @@ public class HomeScreenTestCase extends
 		waitForPodcastListToOpen();
 		
 		assertEquals("Подкасты", solo.getCurrentActivity().getTitle());
+	}
+	
+	public void testShowingOnAirScreen() throws Exception {
+		solo.clickOnText("Прямой эфир");
+		solo.assertCurrentActivity("Not in the On Air screen", OnAirActivity.class);
 	}
 
 	private void waitForPodcastListToOpen() {

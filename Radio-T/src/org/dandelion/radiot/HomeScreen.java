@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -36,16 +37,22 @@ public class HomeScreen extends ListActivity {
 
 	private List<HomeScreenItem> getHomeSceenItems() {
 		List<HomeScreenItem> items = new ArrayList<HomeScreenItem>();
-		items.add(new HomeScreenItem(R.string.main_show_home_item) {
+		items.add(new HomeScreenItem(R.string.main_show_title) {
 			@Override
 			public void execute() {
 				PodcastListActivity.start(HomeScreen.this, this.toString(), PODCAST_URL);
 			}
 		});
-		items.add(new HomeScreenItem(R.string.after_show_home_item) {
+		items.add(new HomeScreenItem(R.string.after_show_title) {
 			@Override
 			public void execute() {
 				PodcastListActivity.start(HomeScreen.this, this.toString(), PIRATES_URL);
+			}
+		});
+		items.add(new HomeScreenItem(R.string.on_air_title) {
+			@Override
+			public void execute() {
+				startActivity(new Intent(HomeScreen.this, OnAirActivity.class));
 			}
 		});
 		return items;
