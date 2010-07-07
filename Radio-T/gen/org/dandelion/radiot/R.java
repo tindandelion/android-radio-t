@@ -24,7 +24,8 @@ public final class R {
         public static final int podcast_item_view_date=0x7f060006;
         public static final int podcast_item_view_number=0x7f060005;
         public static final int podcast_item_view_shownotes=0x7f060007;
-        public static final int refresh=0x7f060008;
+        public static final int podcast_item_view_tags=0x7f060008;
+        public static final int refresh=0x7f060009;
     }
     public static final class layout {
         public static final int home_screen=0x7f030000;

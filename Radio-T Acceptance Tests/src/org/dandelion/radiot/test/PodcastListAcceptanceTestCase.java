@@ -36,6 +36,15 @@ public class PodcastListAcceptanceTestCase extends
 		assertEquals("20.06.2010", date);
 	}
 
+	public void testDisplayTags() throws Exception {
+		ArrayList<TextView> textViews = getTextViewsForItem(0);
+		CharSequence tags = textViews.get(3).getText();
+
+		assertEquals(
+				"Подкасты | .me | ipad | Linux | LOR",
+				tags);
+	}
+
 	private ArrayList<TextView> getTextViewsForItem(int index) {
 		View itemView = getActivity().getListAdapter().getView(index, null,
 				null);

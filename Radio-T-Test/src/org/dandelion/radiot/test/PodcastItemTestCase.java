@@ -54,4 +54,15 @@ public class PodcastItemTestCase extends TestCase {
 		item.extractShowNotes(notes);
 		assertTrue(item.getShowNotes().contains("Line1 bold text"));
 	}
+	
+	public void testOneTag() throws Exception {
+		item.addTag("Tag 1");
+		assertEquals("Tag 1", item.getTagString());
+	}
+	
+	public void testManyTags() throws Exception {
+		item.addTag("Tag 1");
+		item.addTag("Tag 2");
+		assertEquals("Tag 1 | Tag 2", item.getTagString());
+	}
 }

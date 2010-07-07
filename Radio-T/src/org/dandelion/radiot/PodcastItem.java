@@ -21,6 +21,7 @@ public class PodcastItem implements Cloneable {
 	private String pubDate;
 	private String showNotes;
 	private Uri audioUri;
+	private String tagString;
 
 	public PodcastItem(String number, String issueDate, String showNotes,
 			String audioLink) {
@@ -83,5 +84,17 @@ public class PodcastItem implements Cloneable {
 
 	public void extractAudioUri(String value) {
 		audioUri = Uri.parse(value);
+	}
+
+	public String getTagString() {
+		return tagString;
+	}
+
+	public void addTag(String tag) {
+		if (null == tagString) {
+			tagString = tag;
+		} else {
+			tagString += " | " + tag;
+		}
 	}
 }

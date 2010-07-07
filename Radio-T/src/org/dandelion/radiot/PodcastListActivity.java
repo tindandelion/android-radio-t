@@ -35,7 +35,7 @@ public class PodcastListActivity extends ListActivity implements IView {
 	public void closeProgress() {
 		progress.dismiss();
 	}
-	
+
 	public static void start(Context context, String title, String url) {
 		Intent intent = new Intent(context, PodcastListActivity.class);
 		intent.putExtra(URL_KEY, url);
@@ -89,7 +89,8 @@ public class PodcastListActivity extends ListActivity implements IView {
 	}
 
 	public void showProgress() {
-		progress = ProgressDialog.show(this, null, getString(R.string.loading_message));
+		progress = ProgressDialog.show(this, null,
+				getString(R.string.loading_message));
 	}
 
 	public void updatePodcasts(List<PodcastItem> newList) {
@@ -140,12 +141,12 @@ public class PodcastListActivity extends ListActivity implements IView {
 		}
 
 		private View fillRowWithData(View row, PodcastItem item) {
-			setElementText(row, R.id.podcast_item_view_number,
-					item.getNumber());
-			setElementText(row, R.id.podcast_item_view_date,
-					item.getPubDate());
+			setElementText(row, R.id.podcast_item_view_number, item.getNumber());
+			setElementText(row, R.id.podcast_item_view_date, item.getPubDate());
 			setElementText(row, R.id.podcast_item_view_shownotes,
 					item.getShowNotes());
+			setElementText(row, R.id.podcast_item_view_tags,
+					item.getTagString());
 			return row;
 		}
 
