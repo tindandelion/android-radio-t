@@ -63,6 +63,10 @@ public class PodcastItemTestCase extends TestCase {
 	public void testManyTags() throws Exception {
 		item.addTag("Tag 1");
 		item.addTag("Tag 2");
-		assertEquals("Tag 1 | Tag 2", item.getTagString());
+		assertEquals("Tag 1, Tag 2", item.getTagString());
+	}
+	
+	public void testNoTags() throws Exception {
+		assertEquals("", item.getTagString());
 	}
 }

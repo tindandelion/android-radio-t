@@ -2,6 +2,7 @@ package org.dandelion.radiot;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -21,7 +22,7 @@ public class PodcastItem implements Cloneable {
 	private String pubDate;
 	private String showNotes;
 	private Uri audioUri;
-	private String tagString;
+	private ArrayList<String> tags = new ArrayList<String>();
 
 	public PodcastItem(String number, String issueDate, String showNotes,
 			String audioLink) {
@@ -87,14 +88,24 @@ public class PodcastItem implements Cloneable {
 	}
 
 	public String getTagString() {
-		return tagString;
+		if (tags.isEmpty()) {
+			return "";
+		}
+		StringBuilder builder = new StringBuilder();
+		builder.append(tags.get(0));
+		for (int i = 1; i < tags.size(); i++) {
+			builder
+				.append(", ")
+				.append(tags.get(i));
+		}
+		return builder.toString();
 	}
 
 	public void addTag(String tag) {
-		if (null == tagString) {
-			tagString = tag;
-		} else {
-			tagString += " | " + tag;
-		}
+		tags.add(tag);
+	}
+
+	public boolean hasTag(String tag) {
+		return tags.contains(tag);
 	}
 }

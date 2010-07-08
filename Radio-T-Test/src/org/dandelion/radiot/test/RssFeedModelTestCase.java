@@ -96,7 +96,8 @@ public class RssFeedModelTestCase extends TestCase implements PodcastList.IFeedS
 	public void testExtractingTags() throws Exception {
 		newFeedItem("<category>Tag1</category><category>Tag2</category>");
 		parseRssFeed();
-		assertEquals("Tag1 | Tag2", firstParsedItem.getTagString());
+		assertTrue(firstParsedItem.hasTag("Tag1"));
+		assertTrue(firstParsedItem.hasTag("Tag2"));
 	}
 
 	private void newFeedItem(String itemContent) {

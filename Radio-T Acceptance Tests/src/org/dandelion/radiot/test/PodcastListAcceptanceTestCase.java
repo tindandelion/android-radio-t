@@ -40,9 +40,7 @@ public class PodcastListAcceptanceTestCase extends
 		ArrayList<TextView> textViews = getTextViewsForItem(0);
 		CharSequence tags = textViews.get(3).getText();
 
-		assertEquals(
-				"Подкасты | .me | ipad | Linux | LOR",
-				tags);
+		assertEquals("Подкасты, .me, ipad, Linux, LOR", tags);
 	}
 
 	private ArrayList<TextView> getTextViewsForItem(int index) {
