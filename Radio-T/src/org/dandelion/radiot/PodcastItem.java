@@ -24,14 +24,6 @@ public class PodcastItem implements Cloneable {
 	private Uri audioUri;
 	private ArrayList<String> tags = new ArrayList<String>();
 
-	public PodcastItem(String number, String issueDate, String showNotes,
-			String audioLink) {
-		this.number = number;
-		this.pubDate = issueDate;
-		this.showNotes = showNotes;
-		this.audioUri = Uri.parse(audioLink);
-	}
-
 	public Uri getAudioUri() {
 		return audioUri;
 	}

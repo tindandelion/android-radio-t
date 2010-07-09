@@ -8,13 +8,13 @@ import android.net.Uri;
 import android.test.ActivityUnitTestCase;
 import android.test.UiThreadTest;
 import android.view.View;
-import android.widget.ListView;
 
-public class PodcastRssDisplayAcceptanceTest extends
+// TODO Revisit this class and make it more acceptance-like
+public class PlayingPodcasts extends
 		ActivityUnitTestCase<PodcastListActivity> {
 	private PodcastListActivity activity;
 
-	public PodcastRssDisplayAcceptanceTest() {
+	public PlayingPodcasts() {
 		super(PodcastListActivity.class);
 	}
 
@@ -31,13 +31,6 @@ public class PodcastRssDisplayAcceptanceTest extends
 	protected void tearDown() throws Exception {
 		LocalRssFeedFactory.uninstall();
 		super.tearDown();
-	}
-
-	@UiThreadTest
-	public void testRetrieveAndDisplayPodcast() throws Exception {
-		ListView list = activity.getListView();
-
-		assertEquals(17, list.getCount());
 	}
 
 	@UiThreadTest
