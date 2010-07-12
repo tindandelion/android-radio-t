@@ -4,9 +4,9 @@
 	android:layout_width="fill_parent"
 	android:layout_height="wrap_content">
 	<ImageView
+		android:id="@+id/home_screen_item_icon"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:src="@drawable/podcast_icon"
 		android:paddingTop="7dp"
 		android:paddingBottom="7dp" 
 		android:paddingRight="10dp"/>
