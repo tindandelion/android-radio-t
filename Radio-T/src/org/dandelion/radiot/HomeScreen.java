@@ -55,7 +55,8 @@ public class HomeScreen extends ListActivity {
 						PIRATES_URL);
 			}
 		});
-		items.add(new HomeScreenItem(R.string.live_show_title, 0) {
+		items.add(new HomeScreenItem(R.string.live_show_title,
+				R.drawable.live_show_icon) {
 			@Override
 			public void execute() {
 				startActivity(new Intent(HomeScreen.this,
