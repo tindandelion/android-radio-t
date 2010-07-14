@@ -15,24 +15,38 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.47 r22583"
-   sodipodi:docname="launcher-icon.svg">
+   sodipodi:docname="launcher-icon.svg"
+   inkscape:export-filename="/Users/sergio/Projects/Eclipse/android-radio-t/Radio-T/res/drawable-mdpi/icon.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
   <defs
      id="defs4">
     <linearGradient
        inkscape:collect="always"
-       id="linearGradient3715">
+       id="linearGradient4096">
       <stop
-         style="stop-color:#a7d250;stop-opacity:1"
+         style="stop-color:#9cb53f;stop-opacity:1"
          offset="0"
-         id="stop3717" />
+         id="stop4098" />
       <stop
-         id="stop3723"
-         offset="0.7687633"
-         style="stop-color:#87b331;stop-opacity:1" />
+         id="stop4104"
+         offset="0.77872115"
+         style="stop-color:#9cb53f;stop-opacity:1" />
       <stop
-         style="stop-color:#94bf3d;stop-opacity:0;"
+         style="stop-color:#9cb53f;stop-opacity:0"
          offset="1"
-         id="stop3719" />
+         id="stop4100" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3956">
+      <stop
+         style="stop-color:#217acc;stop-opacity:1"
+         offset="0"
+         id="stop3958" />
+      <stop
+         style="stop-color:#58a2dc;stop-opacity:1"
+         offset="1"
+         id="stop3960" />
     </linearGradient>
     <linearGradient
        id="linearGradient3682">
@@ -81,48 +95,135 @@
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_x="0 : 0.5 : 1"
        sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective2916"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective2990"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3064"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3138"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
     <linearGradient
        inkscape:collect="always"
-       xlink:href="#linearGradient3682"
-       id="linearGradient3688"
-       x1="23.476191"
-       y1="45.999966"
-       x2="23.476191"
-       y2="2.9999666"
+       xlink:href="#linearGradient3956"
+       id="linearGradient3962"
+       x1="24.486101"
+       y1="1048.5149"
+       x2="24.486101"
+       y2="1006.027"
        gradientUnits="userSpaceOnUse" />
     <linearGradient
        inkscape:collect="always"
-       xlink:href="#linearGradient3715"
-       id="linearGradient3721"
-       x1="25.523809"
-       y1="2.9999666"
-       x2="25.523809"
-       y2="18.357109"
+       xlink:href="#linearGradient3956"
+       id="linearGradient3972"
+       x1="-16"
+       y1="25"
+       x2="-16"
+       y2="3"
        gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3956"
+       id="linearGradient3980"
+       gradientUnits="userSpaceOnUse"
+       x1="24.486101"
+       y1="1048.5149"
+       x2="24.486101"
+       y2="1006.027" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4096"
+       id="linearGradient4102"
+       x1="-16"
+       y1="3"
+       x2="-16"
+       y2="11.835802"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.931267,0,0,1.931267,13.337006,42.7267)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4096"
+       id="linearGradient4109"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.931267,0,0,1.931267,53.085549,1056.768)"
+       x1="-16"
+       y1="3"
+       x2="-16"
+       y2="11.835802" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4096"
+       id="linearGradient4115"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.931267,0,0,1.931267,10.110664,65.3112)"
+       x1="-16"
+       y1="3"
+       x2="-16"
+       y2="11.835802" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4096"
+       id="linearGradient4118"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.931267,0,0,1.931267,1.7221732,984.11081)"
+       x1="-16"
+       y1="3"
+       x2="-16"
+       y2="11.835802" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3956"
+       id="linearGradient4120"
+       gradientUnits="userSpaceOnUse"
+       x1="-16"
+       y1="25"
+       x2="-16"
+       y2="3" />
     <filter
        inkscape:collect="always"
-       id="filter3791"
-       x="-0.026746743"
-       width="1.0534935"
-       y="-0.12838436"
-       height="1.2567687">
+       id="filter3640">
       <feGaussianBlur
          inkscape:collect="always"
-         stdDeviation="0.26746743"
-         id="feGaussianBlur3793" />
+         stdDeviation="0.37008777"
+         id="feGaussianBlur3642" />
     </filter>
     <filter
        inkscape:collect="always"
-       id="filter3795"
-       x="-0.12838436"
-       width="1.2567687"
-       y="-0.02567684"
-       height="1.0513537">
+       id="filter3720">
       <feGaussianBlur
          inkscape:collect="always"
-         stdDeviation="0.26746743"
-         id="feGaussianBlur3797" />
+         stdDeviation="0.55"
+         id="feGaussianBlur3722" />
     </filter>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3956"
+       id="linearGradient3729"
+       gradientUnits="userSpaceOnUse"
+       x1="-16"
+       y1="25"
+       x2="-16"
+       y2="3" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -131,8 +232,8 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.7395833"
-     inkscape:cx="27.436531"
+     inkscape:zoom="10.958333"
+     inkscape:cx="20.962956"
      inkscape:cy="24"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -141,7 +242,10 @@
      inkscape:window-height="774"
      inkscape:window-x="0"
      inkscape:window-y="0"
-     inkscape:window-maximized="0">
+     inkscape:window-maximized="0"
+     inkscape:snap-grids="false"
+     showguides="true"
+     inkscape:guide-bbox="true">
     <inkscape:grid
        type="xygrid"
        id="grid2816"
@@ -159,6 +263,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -174,42 +279,43 @@
        height="45.000019"
        width="42"
        xlink:href="file:///Users/sergio/Desktop/IconGraphic_Colors.png" />
-    <path
-       sodipodi:type="arc"
-       style="opacity:1;fill:url(#linearGradient3688);fill-opacity:1;stroke:none"
-       id="path2892"
-       sodipodi:cx="24.5"
-       sodipodi:cy="24.5"
-       sodipodi:rx="21.5"
-       sodipodi:ry="21.5"
-       d="m 46,24.5 a 21.5,21.5 0 1 1 -43,0 21.5,21.5 0 1 1 43,0 z"
-       transform="matrix(0.97674419,0,0,0.97674419,0.06976744,1004.432)" />
-    <path
-       transform="matrix(0.97674419,0,0,0.97674419,0.06976744,1004.432)"
-       d="m 46,24.5 a 21.5,21.5 0 1 1 -43,0 21.5,21.5 0 1 1 43,0 z"
-       sodipodi:ry="21.5"
-       sodipodi:rx="21.5"
-       sodipodi:cy="24.5"
-       sodipodi:cx="24.5"
-       id="path3713"
-       style="opacity:1;fill:url(#linearGradient3721);fill-opacity:1;stroke:none"
-       sodipodi:type="arc" />
+    <g
+       id="g3724"
+       transform="matrix(0.9482387,0,0,0.9482387,1.1195302,53.290955)"
+       inkscape:export-filename="/Users/sergio/Projects/Eclipse/android-radio-t/Radio-T/res/drawable-mdpi/icon.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <path
+         sodipodi:type="arc"
+         style="opacity:0.75;fill:#000000;fill-opacity:1;stroke:none;filter:url(#filter3720)"
+         id="path3654"
+         sodipodi:cx="-16"
+         sodipodi:cy="14"
+         sodipodi:rx="11"
+         sodipodi:ry="11"
+         d="m -5,14 c 0,6.075132 -4.9248678,11 -11,11 -6.075132,0 -11,-4.924868 -11,-11 0,-6.0751322 4.924868,-11 11,-11 6.0751322,0 11,4.9248678 11,11 z"
+         transform="matrix(1.931267,0,0,1.931267,55.029713,1002.5145)" />
+      <path
+         transform="matrix(1.931267,0,0,1.931267,55.029713,1001.1457)"
+         d="m -5,14 c 0,6.075132 -4.9248678,11 -11,11 -6.075132,0 -11,-4.924868 -11,-11 0,-6.0751322 4.924868,-11 11,-11 6.0751322,0 11,4.9248678 11,11 z"
+         sodipodi:ry="11"
+         sodipodi:rx="11"
+         sodipodi:cy="14"
+         sodipodi:cx="-16"
+         id="path3918"
+         style="fill:url(#linearGradient3729);fill-opacity:1;stroke:none"
+         sodipodi:type="arc" />
+      <path
+         style="fill:#ffffff;fill-opacity:0.99170125;stroke:#2877c0;stroke-opacity:1;filter:url(#filter3640)"
+         d="m 13.480457,1017.6365 0,4.75 8.21875,0 0,16.3438 4.71875,0 0,-16.3438 8.34375,0 0,-4.75 -21.28125,0 z"
+         id="path4010" />
+    </g>
     <rect
-       style="fill:#ffffff;fill-opacity:1;stroke:none;filter:url(#filter3791)"
-       id="rect3739"
-       width="24"
-       height="5"
-       x="12"
-       y="1017.3622"
-       ry="0" />
-    <rect
-       ry="0"
-       y="-26.5"
-       x="1017.3622"
-       height="5"
-       width="25.000032"
-       id="rect3741"
-       style="fill:#ffffff;fill-opacity:1;stroke:none;filter:url(#filter3795)"
-       transform="matrix(0,1,-1,0,0,0)" />
+       style="opacity:0.73000004;fill:#000000;fill-opacity:0;stroke:#2877c0;stroke-width:0.2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect3733"
+       width="40"
+       height="40"
+       x="-48.471481"
+       y="1008.0884" />
   </g>
 </svg>
