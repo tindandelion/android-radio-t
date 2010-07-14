@@ -2,22 +2,21 @@ package org.dandelion.radiot.test;
 
 import java.lang.reflect.Field;
 
+import org.dandelion.radiot.PodcastList.Factory;
 import org.dandelion.radiot.PodcastListActivity;
+import org.dandelion.radiot.test.helpers.ApplicationDriver;
+import org.dandelion.radiot.test.helpers.BasicAcceptanceTestCase;
 
-import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
 public class DisplayingPodcastList extends
-		ActivityInstrumentationTestCase2<PodcastListActivity> {
+		BasicAcceptanceTestCase {
 
 	private PodcastListActivity activity;
-
-	public DisplayingPodcastList() {
-		super("org.dandelion.radiot", PodcastListActivity.class);
-	}
-
+	private ApplicationDriver appDriver;
+	
 	public void testDisplayPodcastItemInfo() throws Exception {
 		View itemView = getItemView(0);
 
@@ -32,12 +31,17 @@ public class DisplayingPodcastList extends
 		ListView list = activity.getListView();
 		assertEquals(17, list.getCount());
 	}
+	
+	@Override
+	protected Factory createPodcastListFactory() {
+		return new LocalRssFeedFactory(getInstrumentation());
+	}
 
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		LocalRssFeedFactory.install(getInstrumentation());
-		activity = getActivity();
+		appDriver = createApplicationDriver();
+		activity = appDriver.visitMainShowPage();
 	}
 
 	private void assertTextFieldHasText(View parent, String id, String expected)
@@ -54,7 +58,7 @@ public class DisplayingPodcastList extends
 	}
 
 	private View getItemView(int index) {
-		return getActivity().getListAdapter().getView(index, null, null);
+		return activity.getListAdapter().getView(index, null, null);
 	}
 
 }

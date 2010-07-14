@@ -32,6 +32,7 @@ public class PodcastListActivity extends ListActivity implements IView {
 
 	private ProgressDialog progress;
 	private Bundle extras;
+	private IPodcastPlayer podcastPlayer;
 
 	public void closeProgress() {
 		progress.dismiss();
@@ -51,6 +52,7 @@ public class PodcastListActivity extends ListActivity implements IView {
 		extras = getIntent().getExtras();
 		setTitle(getTitleFromExtra());
 		initListAdapter();
+		setPodcastPlayer(new ExternalPlayer(this));
 		presenter = PodcastList.getPresenter(this, getFeedUrlFromExtra());
 		presenter.refreshData();
 	}
@@ -91,8 +93,8 @@ public class PodcastListActivity extends ListActivity implements IView {
 
 	public void showProgress() {
 		progress = ProgressDialog.show(this, null,
-				getString(R.string.loading_message),
-				true, true, new DialogInterface.OnCancelListener() {
+				getString(R.string.loading_message), true, true,
+				new DialogInterface.OnCancelListener() {
 					public void onCancel(DialogInterface dialog) {
 						presenter.cancelLoading();
 					}
@@ -125,7 +127,7 @@ public class PodcastListActivity extends ListActivity implements IView {
 	}
 
 	private void playPodcast(Uri uri) {
-		new ExternalPlayer(this).startPlaying(uri);
+		podcastPlayer.startPlaying(uri);
 	}
 
 	class PodcastListAdapter extends ArrayAdapter<PodcastItem> {
@@ -164,5 +166,9 @@ public class PodcastListActivity extends ListActivity implements IView {
 
 	public void close() {
 		this.finish();
+	}
+
+	public void setPodcastPlayer(IPodcastPlayer player) {
+		podcastPlayer = player;
 	}
 }

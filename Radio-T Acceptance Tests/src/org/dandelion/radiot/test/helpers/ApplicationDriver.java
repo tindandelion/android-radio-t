@@ -18,9 +18,10 @@ public class ApplicationDriver extends Solo {
 		assertCurrentActivity("Must be on the home screen", HomeScreen.class);
 	}
 	
-	public void visitMainShowPage() {
+	public PodcastListActivity visitMainShowPage() {
 		clickOnText("Подкасты");
 		assertCurrentActivity("Must be on the main show page", PodcastListActivity.class);
+		return (PodcastListActivity) getCurrentActivity();
 	}
 
 	public void visitAfterShowPage() {
@@ -28,8 +29,9 @@ public class ApplicationDriver extends Solo {
 		assertCurrentActivity("Must be on the after show page", PodcastListActivity.class);
 	}
 
-	public void visitLiveShowPage() {
+	public LiveShowActivity visitLiveShowPage() {
 		clickOnText("Прямой эфир");
 		assertCurrentActivity("Must be on the live show page", LiveShowActivity.class);
+		return (LiveShowActivity) getCurrentActivity();
 	}
 }
