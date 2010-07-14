@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 import org.dandelion.radiot.AsyncPresenter;
-import org.dandelion.radiot.HomeScreen;
 import org.dandelion.radiot.PodcastItem;
 import org.dandelion.radiot.PodcastList;
 import org.dandelion.radiot.PodcastList.IFeedSource;
@@ -12,26 +11,26 @@ import org.dandelion.radiot.PodcastList.IModel;
 import org.dandelion.radiot.PodcastList.IPresenter;
 import org.dandelion.radiot.PodcastList.IView;
 import org.dandelion.radiot.test.helpers.ApplicationDriver;
+import org.dandelion.radiot.test.helpers.BasicAcceptanceTestCase;
 
 import android.app.Instrumentation;
-import android.test.ActivityInstrumentationTestCase2;
 
 public class BackButtonFunctionality extends
-		ActivityInstrumentationTestCase2<HomeScreen> {
+		BasicAcceptanceTestCase {
 
 	private ApplicationDriver appDriver;
 	private LockedPodcastListFactory factory;
-
-	public BackButtonFunctionality() {
-		super("org.dandelion.radiot", HomeScreen.class);
-	}
 	
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
+		appDriver = createApplicationDriver();
+	}
+	
+	@Override
+	protected void tweakPodcastListFactory() {
 		factory = new LockedPodcastListFactory(getInstrumentation());
 		PodcastList.setFactory(factory);
-		appDriver = new ApplicationDriver(getInstrumentation(), getActivity());
 	}
 
 	public void testCancelRssLoadingWhenPressingBack() throws Exception {
