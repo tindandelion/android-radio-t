@@ -38,6 +38,8 @@ class LocalRssFeedFactory extends PodcastList.Factory {
 					view.showErrorMessage(e.getMessage());
 				}
 			}
+			public void cancelLoading() {
+			}
 		};
 	}
 

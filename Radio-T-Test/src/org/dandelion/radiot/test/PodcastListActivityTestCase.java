@@ -63,6 +63,8 @@ public class PodcastListActivityTestCase extends
 		return new PodcastList.IPresenter() {
 			public void refreshData() {
 			}
+			public void cancelLoading() {
+			}
 		};
 	}
 

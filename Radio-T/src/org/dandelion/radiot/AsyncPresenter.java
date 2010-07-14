@@ -8,13 +8,19 @@ import org.dandelion.radiot.PodcastList.IView;
 import android.os.AsyncTask;
 
 public class AsyncPresenter implements PodcastList.IPresenter {
-	private IView view;
-	private RefreshTask task;
 	private IModel model;
+	private RefreshTask task;
+	private IView view;
 
 	public AsyncPresenter(PodcastList.IModel model, IView view) {
 		this.model = model;
 		this.view = view;
+	}
+
+	public void cancelLoading() {
+		task.cancel(true);
+		view.closeProgress();
+		view.close();
 	}
 
 	public void refreshData() {
@@ -24,12 +30,17 @@ public class AsyncPresenter implements PodcastList.IPresenter {
 
 	class RefreshTask extends AsyncTask<Void, Void, Void> {
 
-		private List<PodcastItem> podcasts;
 		private String errorMessage;
+		private List<PodcastItem> podcasts;
 
 		@Override
-		protected void onPreExecute() {
-			view.showProgress();
+		protected Void doInBackground(Void... params) {
+			try {
+				podcasts = model.retrievePodcasts();
+			} catch (Exception e) {
+				errorMessage = e.getMessage();
+			}
+			return null;
 		}
 
 		@Override
@@ -40,21 +51,15 @@ public class AsyncPresenter implements PodcastList.IPresenter {
 			} else { 
 				view.showErrorMessage(errorMessage);
 			}
-			
+		}
+
+		@Override
+		protected void onPreExecute() {
+			view.showProgress();
 		}
 
 		private boolean success() {
 			return null == errorMessage;
-		}
-
-		@Override
-		protected Void doInBackground(Void... params) {
-			try {
-				podcasts = model.retrievePodcasts();
-			} catch (Exception e) {
-				errorMessage = e.getMessage();
-			}
-			return null;
 		}
 
 	}

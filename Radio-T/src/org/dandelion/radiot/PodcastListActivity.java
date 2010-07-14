@@ -9,6 +9,7 @@ import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -90,7 +91,12 @@ public class PodcastListActivity extends ListActivity implements IView {
 
 	public void showProgress() {
 		progress = ProgressDialog.show(this, null,
-				getString(R.string.loading_message));
+				getString(R.string.loading_message),
+				true, true, new DialogInterface.OnCancelListener() {
+					public void onCancel(DialogInterface dialog) {
+						presenter.cancelLoading();
+					}
+				});
 	}
 
 	public void updatePodcasts(List<PodcastItem> newList) {
@@ -154,5 +160,9 @@ public class PodcastListActivity extends ListActivity implements IView {
 			TextView view = (TextView) row.findViewById(resourceId);
 			view.setText(value);
 		}
+	}
+
+	public void close() {
+		this.finish();
 	}
 }

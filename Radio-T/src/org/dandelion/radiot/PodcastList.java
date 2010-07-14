@@ -16,10 +16,12 @@ public class PodcastList {
 		void showProgress();
 		void closeProgress();
 		void showErrorMessage(String errorMessage);
+		void close();
 	}
 
 	public interface IPresenter {
 		void refreshData();
+		void cancelLoading();
 	}
 	
 	public interface IFeedSource {
