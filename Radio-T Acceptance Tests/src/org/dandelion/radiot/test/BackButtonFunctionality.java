@@ -7,17 +7,13 @@ import org.dandelion.radiot.AsyncPresenter;
 import org.dandelion.radiot.HomeScreen;
 import org.dandelion.radiot.PodcastItem;
 import org.dandelion.radiot.PodcastList;
-import org.dandelion.radiot.PodcastListActivity;
 import org.dandelion.radiot.PodcastList.IFeedSource;
 import org.dandelion.radiot.PodcastList.IModel;
 import org.dandelion.radiot.PodcastList.IPresenter;
 import org.dandelion.radiot.PodcastList.IView;
+import org.dandelion.radiot.test.helpers.ApplicationDriver;
 
-import com.jayway.android.robotium.solo.Solo;
-
-import android.app.Activity;
 import android.app.Instrumentation;
-import android.os.SystemClock;
 import android.test.ActivityInstrumentationTestCase2;
 
 public class BackButtonFunctionality extends
@@ -46,25 +42,6 @@ public class BackButtonFunctionality extends
 		} finally {
 			factory.allowPodcastRetrievalFinish();
 		}
-	}
-}
-
-class ApplicationDriver extends Solo {
-	public ApplicationDriver(Instrumentation inst, Activity activity) {
-		super(inst, activity);
-	}
-
-	public void assertOnHomeScreen() {
-		assertCurrentActivity("Must be on the home screen", HomeScreen.class);
-	}
-	
-	public void assertOnMainShowPage() {
-		assertCurrentActivity("Must be on the main show page", PodcastListActivity.class);
-	}
-
-	public void visitMainShowPage() {
-		this.clickOnText("Подкасты");
-		assertOnMainShowPage();
 	}
 }
 

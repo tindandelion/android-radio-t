@@ -1,17 +1,14 @@
 package org.dandelion.radiot.test;
 
 import org.dandelion.radiot.HomeScreen;
-import org.dandelion.radiot.LiveShowActivity;
-import org.dandelion.radiot.PodcastListActivity;
+import org.dandelion.radiot.test.helpers.ApplicationDriver;
 
 import android.test.ActivityInstrumentationTestCase2;
-
-import com.jayway.android.robotium.solo.Solo;
 
 public class HomeScreenTestCase extends
 		ActivityInstrumentationTestCase2<HomeScreen> {
 
-	private Solo solo;
+	private ApplicationDriver appDriver;
 
 	public HomeScreenTestCase() {
 		super("org.dandelion.radiot", HomeScreen.class);
@@ -21,7 +18,7 @@ public class HomeScreenTestCase extends
 	protected void setUp() throws Exception {
 		super.setUp();
 		LocalRssFeedFactory.install(getInstrumentation());
-		solo = new Solo(getInstrumentation(), getActivity());
+		appDriver = new ApplicationDriver(getInstrumentation(), getActivity());
 	}
 	
 	@Override
@@ -31,31 +28,23 @@ public class HomeScreenTestCase extends
 	}
 
 	public void testOpenPodcastsPage() throws Exception {
-		solo.clickOnText("Подкасты");
+		appDriver.visitMainShowPage();
 		assertTrue("The sample podcast record for main podcast show is not found",
-				solo.waitForText("#5192"));
+				appDriver.waitForText("#5192"));
 	}
 
 	public void testShowAfterShowPage() throws Exception {
-		solo.clickOnText("После-шоу");
+		appDriver.visitAfterShowPage();
 		assertTrue("The sample podcast record for pirates is not found",
-				solo.waitForText("#10193"));
+				appDriver.waitForText("#10193"));
 	}
 	
 	public void testShowingCorrectActivityTitle() throws Exception {
-		solo.clickOnText("Подкасты");
-		
-		waitForPodcastListToOpen();
-		
-		assertEquals("Подкасты", solo.getCurrentActivity().getTitle());
+		appDriver.visitMainShowPage();
+		assertEquals("Подкасты", appDriver.getCurrentActivity().getTitle());
 	}
 	
 	public void testShowingOnAirScreen() throws Exception {
-		solo.clickOnText("Прямой эфир");
-		solo.assertCurrentActivity("Not in the On Air screen", LiveShowActivity.class);
-	}
-
-	private void waitForPodcastListToOpen() {
-		solo.assertCurrentActivity("Failed to open the podcast list", PodcastListActivity.class);
+		appDriver.visitLiveShowPage();
 	}
 }
