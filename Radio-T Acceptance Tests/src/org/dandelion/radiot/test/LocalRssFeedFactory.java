@@ -16,14 +16,6 @@ import android.net.Uri;
 class LocalRssFeedFactory extends PodcastList.Factory {
 	private AssetManager assets;
 
-	public static void install(Instrumentation instrumentation) {
-		PodcastList.setFactory(new LocalRssFeedFactory(instrumentation));
-	}
-
-	public static void uninstall() {
-		PodcastList.resetFactory();
-	}
-
 	public LocalRssFeedFactory(Instrumentation instrumentation) {
 		assets = instrumentation.getContext().getAssets();
 	}
