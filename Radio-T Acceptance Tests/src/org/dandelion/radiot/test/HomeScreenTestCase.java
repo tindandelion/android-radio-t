@@ -1,30 +1,22 @@
 package org.dandelion.radiot.test;
 
-import org.dandelion.radiot.HomeScreen;
 import org.dandelion.radiot.test.helpers.ApplicationDriver;
+import org.dandelion.radiot.test.helpers.BasicAcceptanceTestCase;
 
-import android.test.ActivityInstrumentationTestCase2;
 
 public class HomeScreenTestCase extends
-		ActivityInstrumentationTestCase2<HomeScreen> {
-
+		BasicAcceptanceTestCase {
+	
 	private ApplicationDriver appDriver;
-
-	public HomeScreenTestCase() {
-		super("org.dandelion.radiot", HomeScreen.class);
-	}
 
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		LocalRssFeedFactory.install(getInstrumentation());
-		appDriver = new ApplicationDriver(getInstrumentation(), getActivity());
+		appDriver = createApplicationDriver();
 	}
-	
-	@Override
-	protected void tearDown() throws Exception {
-		LocalRssFeedFactory.uninstall();
-		super.tearDown();
+
+	protected void tweakPodcastListFactory() {
+		LocalRssFeedFactory.install(getInstrumentation());
 	}
 
 	public void testOpenPodcastsPage() throws Exception {
