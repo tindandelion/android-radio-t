@@ -13,11 +13,15 @@ public class BasicAcceptanceTestCase extends
 	}
 
 	protected ApplicationDriver createApplicationDriver() {
-		tweakPodcastListFactory();
+		PodcastList.Factory factory = createPodcastListFactory();
+		if (null != factory) {
+			PodcastList.setFactory(factory);
+		}
 		return new ApplicationDriver(getInstrumentation(), getActivity());
 	}
 
-	protected void tweakPodcastListFactory() {
+	protected PodcastList.Factory createPodcastListFactory() {
+		return null;
 	}
 
 	@Override

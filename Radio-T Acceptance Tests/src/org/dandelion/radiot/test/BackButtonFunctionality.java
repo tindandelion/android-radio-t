@@ -6,6 +6,7 @@ import java.util.concurrent.CountDownLatch;
 import org.dandelion.radiot.AsyncPresenter;
 import org.dandelion.radiot.PodcastItem;
 import org.dandelion.radiot.PodcastList;
+import org.dandelion.radiot.PodcastList.Factory;
 import org.dandelion.radiot.PodcastList.IFeedSource;
 import org.dandelion.radiot.PodcastList.IModel;
 import org.dandelion.radiot.PodcastList.IPresenter;
@@ -28,9 +29,9 @@ public class BackButtonFunctionality extends
 	}
 	
 	@Override
-	protected void tweakPodcastListFactory() {
+	protected Factory createPodcastListFactory() {
 		factory = new LockedPodcastListFactory(getInstrumentation());
-		PodcastList.setFactory(factory);
+		return factory;
 	}
 
 	public void testCancelRssLoadingWhenPressingBack() throws Exception {

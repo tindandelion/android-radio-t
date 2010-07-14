@@ -1,5 +1,6 @@
 package org.dandelion.radiot.test;
 
+import org.dandelion.radiot.PodcastList;
 import org.dandelion.radiot.test.helpers.ApplicationDriver;
 import org.dandelion.radiot.test.helpers.BasicAcceptanceTestCase;
 
@@ -15,8 +16,9 @@ public class HomeScreenTestCase extends
 		appDriver = createApplicationDriver();
 	}
 
-	protected void tweakPodcastListFactory() {
-		LocalRssFeedFactory.install(getInstrumentation());
+	@Override
+	protected PodcastList.Factory createPodcastListFactory() {
+		return new LocalRssFeedFactory(getInstrumentation());
 	}
 
 	public void testOpenPodcastsPage() throws Exception {
