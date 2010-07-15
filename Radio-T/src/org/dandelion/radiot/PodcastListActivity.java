@@ -25,24 +25,28 @@ import android.widget.TextView;
 
 public class PodcastListActivity extends ListActivity implements IView {
 
-	public static final String URL_KEY = "podcast_url";
 	public static final String TITLE_KEY = "title";
-	private PodcastListAdapter listAdapter;
-	private IPresenter presenter;
-
-	private ProgressDialog progress;
-	private Bundle extras;
-	private IPodcastPlayer podcastPlayer;
-
-	public void closeProgress() {
-		progress.dismiss();
-	}
-
+	public static final String URL_KEY = "podcast_url";
 	public static void start(Context context, String title, String url) {
 		Intent intent = new Intent(context, PodcastListActivity.class);
 		intent.putExtra(URL_KEY, url);
 		intent.putExtra(TITLE_KEY, title);
 		context.startActivity(intent);
+	}
+	private Bundle extras;
+
+	private PodcastListAdapter listAdapter;
+	private IPodcastPlayer podcastPlayer;
+	private IPresenter presenter;
+
+	private ProgressDialog progress;
+
+	public void close() {
+		this.finish();
+	}
+
+	public void closeProgress() {
+		progress.dismiss();
 	}
 
 	/** Called when the activity is first created. */
@@ -54,14 +58,12 @@ public class PodcastListActivity extends ListActivity implements IView {
 		initListAdapter();
 		setPodcastPlayer(new ExternalPlayer(this));
 		presenter = PodcastList.getPresenter(this, getFeedUrlFromExtra());
-		presenter.refreshData();
 	}
-
-	private String getTitleFromExtra() {
-		if (null == extras) {
-			return "";
-		}
-		return extras.getString(TITLE_KEY);
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		presenter.refreshData();
 	}
 
 	@Override
@@ -84,6 +86,10 @@ public class PodcastListActivity extends ListActivity implements IView {
 
 	public void refreshPodcasts() {
 		presenter.refreshData();
+	}
+
+	public void setPodcastPlayer(IPodcastPlayer player) {
+		podcastPlayer = player;
 	}
 
 	public void showErrorMessage(String errorMessage) {
@@ -119,6 +125,13 @@ public class PodcastListActivity extends ListActivity implements IView {
 			return null;
 		}
 		return extras.getString(URL_KEY);
+	}
+
+	private String getTitleFromExtra() {
+		if (null == extras) {
+			return "";
+		}
+		return extras.getString(TITLE_KEY);
 	}
 
 	private void initListAdapter() {
@@ -162,13 +175,5 @@ public class PodcastListActivity extends ListActivity implements IView {
 			TextView view = (TextView) row.findViewById(resourceId);
 			view.setText(value);
 		}
-	}
-
-	public void close() {
-		this.finish();
-	}
-
-	public void setPodcastPlayer(IPodcastPlayer player) {
-		podcastPlayer = player;
 	}
 }

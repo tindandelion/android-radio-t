@@ -48,7 +48,7 @@ public class AsyncPresenter implements PodcastList.IPresenter {
 			view.closeProgress();
 			if (success()) {
 				view.updatePodcasts(podcasts);
-			} else { 
+			} else {
 				view.showErrorMessage(errorMessage);
 			}
 		}
