@@ -7,7 +7,6 @@ import org.dandelion.radiot.AsyncPresenter;
 import org.dandelion.radiot.PodcastItem;
 import org.dandelion.radiot.PodcastList;
 import org.dandelion.radiot.PodcastList.Factory;
-import org.dandelion.radiot.PodcastList.IFeedSource;
 import org.dandelion.radiot.PodcastList.IModel;
 import org.dandelion.radiot.PodcastList.IPresenter;
 import org.dandelion.radiot.PodcastList.IView;
@@ -60,8 +59,8 @@ class LockedPodcastListFactory extends LocalRssFeedFactory {
 	}
 	
 	@Override
-	public IModel createModel(IFeedSource feedSource) {
-		final IModel model = super.createModel(feedSource);
+	public IModel createModel(String url) {
+		final IModel model = super.createModel(url);
 		return new PodcastList.IModel() {
 			@Override
 			public List<PodcastItem> retrievePodcasts() throws Exception {

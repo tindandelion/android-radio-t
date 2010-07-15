@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.dandelion.radiot.PodcastList;
-import org.dandelion.radiot.PodcastList.IFeedSource;
 import org.dandelion.radiot.PodcastList.IModel;
 import org.dandelion.radiot.PodcastList.IPresenter;
 import org.dandelion.radiot.PodcastList.IView;
+import org.dandelion.radiot.RssFeedModel;
 
 import android.app.Instrumentation;
 import android.content.res.AssetManager;
@@ -34,12 +34,12 @@ class LocalRssFeedFactory extends PodcastList.Factory {
 			}
 		};
 	}
-
+	
 	@Override
-	public IFeedSource createFeedSource(final String url) {
-		return new IFeedSource() {
+	public IModel createModel(final String url) {
+		return new RssFeedModel(url) {
 			@Override
-			public InputStream openContentStream() throws IOException {
+			protected InputStream openContentStream() throws IOException {
 				return assets.open(getLocalFileName(url));
 			}
 		};

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import org.dandelion.radiot.PodcastItem;
 import org.dandelion.radiot.PodcastList;
-import org.dandelion.radiot.PodcastList.IFeedSource;
 import org.dandelion.radiot.PodcastList.IModel;
 import org.dandelion.radiot.PodcastList.IPresenter;
 import org.dandelion.radiot.PodcastList.IView;
@@ -73,10 +72,10 @@ public class PodcastListActivityTestCase extends
 		super.setUp();
 		PodcastList.setFactory(new PodcastList.Factory() {
 			@Override
-			public IFeedSource createFeedSource(String url) {
+			public IModel createModel(String url) {
 				feedSourceUrl = url;
-				return super.createFeedSource(url);
-			}
+				return super.createModel(url);
+			};
 
 			@Override
 			public IPresenter createPresenter(IModel model, IView view) {

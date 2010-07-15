@@ -8,12 +8,11 @@ import java.util.List;
 import junit.framework.TestCase;
 
 import org.dandelion.radiot.PodcastItem;
-import org.dandelion.radiot.PodcastList;
 import org.dandelion.radiot.RssFeedModel;
 
 import android.net.Uri;
 
-public class RssFeedModelTestCase extends TestCase implements PodcastList.IFeedSource {
+public class RssFeedModelTestCase extends TestCase {
 
 	private RssFeedModel model;
 	private String feedContent;
@@ -24,8 +23,22 @@ public class RssFeedModelTestCase extends TestCase implements PodcastList.IFeedS
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		model = new RssFeedModel(this);
+		model = createTestModel();
 		feedContent = "";
+	}
+
+	protected RssFeedModel createTestModel() {
+		return new RssFeedModel(null) {
+			protected InputStream openContentStream() throws IOException {
+				return new ByteArrayInputStream(getCompleteFeed().getBytes()) {
+					@Override
+					public void close() throws IOException {
+						super.close();
+						streamClosed = true;
+					}
+				};
+			};
+		};
 	}
 
 	public void testCreateAppropriateNumberOfPodcastItems() throws Exception {
@@ -50,7 +63,7 @@ public class RssFeedModelTestCase extends TestCase implements PodcastList.IFeedS
 		newFeedItem("<pubDate>Sun, 13 Jun 2010 01:37:22 +0000</pubDate>");
 
 		parseRssFeed();
-		
+
 		assertEquals("13.06.2010", firstParsedItem.getPubDate());
 	}
 
@@ -82,7 +95,7 @@ public class RssFeedModelTestCase extends TestCase implements PodcastList.IFeedS
 		parseRssFeed();
 		assertTrue(streamClosed);
 	}
-	
+
 	public void testHandleParsingErrors() throws Exception {
 		newFeedItem("<number>102");
 		try {
@@ -92,7 +105,7 @@ public class RssFeedModelTestCase extends TestCase implements PodcastList.IFeedS
 		}
 		fail("Should have raised the exception");
 	}
-	
+
 	public void testExtractingTags() throws Exception {
 		newFeedItem("<category>Tag1</category><category>Tag2</category>");
 		parseRssFeed();
@@ -113,15 +126,5 @@ public class RssFeedModelTestCase extends TestCase implements PodcastList.IFeedS
 
 	private String getCompleteFeed() {
 		return "<rss><channel>" + feedContent + "</channel></rss>";
-	}
-
-	public InputStream openContentStream() {
-		return new ByteArrayInputStream(getCompleteFeed().getBytes()) {
-			@Override
-			public void close() throws IOException {
-				super.close();
-				streamClosed = true;
-			}
-		};
 	}
 }

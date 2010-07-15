@@ -1,7 +1,5 @@
 package org.dandelion.radiot;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 public class PodcastList {
@@ -23,15 +21,10 @@ public class PodcastList {
 		void refreshData();
 		void cancelLoading();
 	}
-	
-	public interface IFeedSource {
-		InputStream openContentStream() throws IOException;
-	}
 
 	public static IPresenter getPresenter(IView view, String feedUrl) {
 		Factory f = getFactory();
-		IFeedSource feedSource = f.createFeedSource(feedUrl);
-		IModel model = f.createModel(feedSource);
+		IModel model = f.createModel(feedUrl);
 		IPresenter presenter = f.createPresenter(model, view);
 		return presenter;
 	}
@@ -52,12 +45,8 @@ public class PodcastList {
 	}
 
 	public static class Factory {
-		public IModel createModel(IFeedSource feedSource) {
-			return new RssFeedModel(feedSource);
-		}
-
-		public IFeedSource createFeedSource(String url) {
-			return new RssFeedModel.UrlFeedSource(url);
+		public IModel createModel(String url) {
+			return new RssFeedModel(url);
 		}
 
 		public IPresenter createPresenter(IModel model, IView view) {
