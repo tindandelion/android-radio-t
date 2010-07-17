@@ -1,12 +1,10 @@
 package org.dandelion.radiot.test;
 
-import java.util.regex.Pattern;
+import junit.framework.TestCase;
 
 import org.dandelion.radiot.PodcastItem;
 
 import android.net.Uri;
-
-import junit.framework.TestCase;
 
 public class PodcastItemTestCase extends TestCase {
 	private PodcastItem item;
