@@ -52,7 +52,7 @@ public class PodcastList {
 		}
 
 		public IPresenter createPresenter(IModel model) {
-			return new AsyncPresenter(model);
+			return new PodcastListPresenter(model);
 		}
 	}
 }

@@ -3,7 +3,7 @@ package org.dandelion.radiot.test;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.dandelion.radiot.AsyncPresenter;
+import org.dandelion.radiot.PodcastListPresenter;
 import org.dandelion.radiot.PodcastList;
 import org.dandelion.radiot.PodcastList.IModel;
 import org.dandelion.radiot.PodcastList.IPresenter;
@@ -22,7 +22,7 @@ class LocalRssFeedFactory extends PodcastList.Factory {
 
 	@Override
 	public IPresenter createPresenter(final IModel model) {
-		return new AsyncPresenter(model) {
+		return new PodcastListPresenter(model) {
 			public void refreshData() {
 				UpdateProgress progress = new UpdateProgress();
 				preExecute();

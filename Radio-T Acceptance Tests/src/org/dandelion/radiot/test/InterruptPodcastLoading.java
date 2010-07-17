@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
-import org.dandelion.radiot.AsyncPresenter;
+import org.dandelion.radiot.PodcastListPresenter;
 import org.dandelion.radiot.PodcastItem;
 import org.dandelion.radiot.PodcastList;
 import org.dandelion.radiot.PodcastList.Factory;
@@ -79,7 +79,7 @@ class LockedPodcastListFactory extends LocalRssFeedFactory {
 	
 	@Override
 	public IPresenter createPresenter(IModel model) {
-		return new AsyncPresenter(model);
+		return new PodcastListPresenter(model);
 	}
 	
 	@Override

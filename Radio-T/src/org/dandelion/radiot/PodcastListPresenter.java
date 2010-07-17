@@ -2,7 +2,7 @@ package org.dandelion.radiot;
 
 import java.util.List;
 
-import org.dandelion.radiot.AsyncPresenter.UpdateProgress;
+import org.dandelion.radiot.PodcastListPresenter.UpdateProgress;
 import org.dandelion.radiot.PodcastList.IModel;
 import org.dandelion.radiot.PodcastList.IView;
 
@@ -16,13 +16,13 @@ interface IPresenterInternal {
 	void postExecute(UpdateProgress result);
 }
 
-public class AsyncPresenter implements PodcastList.IPresenter,
+public class PodcastListPresenter implements PodcastList.IPresenter,
 		IPresenterInternal {
 	private IModel model;
 	private RefreshTask task;
 	private IView view;
 
-	public AsyncPresenter(PodcastList.IModel model) {
+	public PodcastListPresenter(PodcastList.IModel model) {
 		this.model = model;
 	}
 
