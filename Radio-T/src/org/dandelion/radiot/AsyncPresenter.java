@@ -7,7 +7,16 @@ import org.dandelion.radiot.PodcastList.IView;
 
 import android.os.AsyncTask;
 
-public class AsyncPresenter implements PodcastList.IPresenter {
+interface IPresenterInternal {
+	void doInBackground(UpdateProgress result);
+
+	void preExecute();
+
+	void postExecute(UpdateProgress result);
+}
+
+public class AsyncPresenter implements PodcastList.IPresenter,
+		IPresenterInternal {
 	private IModel model;
 	private RefreshTask task;
 	private IView view;
@@ -24,43 +33,71 @@ public class AsyncPresenter implements PodcastList.IPresenter {
 	}
 
 	public void refreshData() {
-		task = new RefreshTask();
-		task.execute();
+		task = new RefreshTask(this);
+		task.execute(new UpdateProgress());
 	}
 
-	class RefreshTask extends AsyncTask<Void, Void, Void> {
+	public void doInBackground(UpdateProgress progress) {
+		progress.retrievePodcasts(model);
+	}
 
-		private String errorMessage;
-		private List<PodcastItem> podcasts;
+	public void preExecute() {
+		view.showProgress();
+	}
 
-		@Override
-		protected Void doInBackground(Void... params) {
-			try {
-				podcasts = model.retrievePodcasts();
-			} catch (Exception e) {
-				errorMessage = e.getMessage();
-			}
-			return null;
+	public void postExecute(UpdateProgress progress) {
+		view.closeProgress();
+		progress.updateView(view);
+	}
+}
+
+class UpdateProgress {
+	private List<PodcastItem> podcasts;
+	private String errorMessage;
+
+	public boolean isSuccessful() {
+		return null == errorMessage;
+	}
+
+	public void retrievePodcasts(IModel model) {
+		try {
+			podcasts = model.retrievePodcasts();
+		} catch (Exception e) {
+			errorMessage = e.getMessage();
 		}
+	}
 
-		@Override
-		protected void onPostExecute(Void result) {
-			view.closeProgress();
-			if (success()) {
-				view.updatePodcasts(podcasts);
-			} else {
-				view.showErrorMessage(errorMessage);
-			}
+	public void updateView(IView view) {
+		if (isSuccessful()) {
+			view.updatePodcasts(podcasts);
+		} else {
+			view.showErrorMessage(errorMessage);
 		}
+	}
+}
 
-		@Override
-		protected void onPreExecute() {
-			view.showProgress();
-		}
+class RefreshTask extends AsyncTask<UpdateProgress, Void, UpdateProgress> {
 
-		private boolean success() {
-			return null == errorMessage;
-		}
+	private IPresenterInternal presenter;
 
+	public RefreshTask(IPresenterInternal presenter) {
+		this.presenter = presenter;
+	}
+
+	@Override
+	protected UpdateProgress doInBackground(UpdateProgress... params) {
+		UpdateProgress progress = params[0];
+		presenter.doInBackground(progress);
+		return progress;
+	}
+
+	@Override
+	protected void onPostExecute(UpdateProgress progress) {
+		presenter.postExecute(progress);
+	}
+
+	@Override
+	protected void onPreExecute() {
+		presenter.preExecute();
 	}
 }
