@@ -4,8 +4,6 @@ import junit.framework.TestCase;
 
 import org.dandelion.radiot.PodcastItem;
 
-import android.net.Uri;
-
 public class PodcastItemTestCase extends TestCase {
 	private PodcastItem item;
 
@@ -74,16 +72,11 @@ public class PodcastItemTestCase extends TestCase {
 
 	public void testPodcastImageUri() throws Exception {
 		item.extractImageUrl("<img src=\"http://www.image-url.com\" alt=\"\"/>");
-
-		Uri uri = item.getImageUri();
-		assertNotNull(uri);
-		assertEquals("http://www.image-url.com", uri.toString());
+		assertEquals("http://www.image-url.com", item.getImageUrl());
 	}
 
 	public void testNoImageUrl() throws Exception {
 		item.extractImageUrl("bla-bla");
-
-		Uri uri = item.getImageUri();
-		assertNull(uri);
+		assertNull(item.getImageUrl());
 	}
 }

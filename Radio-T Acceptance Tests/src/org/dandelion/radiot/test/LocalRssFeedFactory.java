@@ -24,13 +24,18 @@ class LocalRssFeedFactory extends PodcastList.Factory {
 	public IPresenter createPresenter(final IModel model) {
 		return new PodcastListPresenter.SyncPresenter(model);
 	}
-	
+
 	@Override
 	public IModel createModel(final String url) {
 		return new RssFeedModel(url) {
 			@Override
 			protected InputStream openContentStream() throws IOException {
 				return assets.open(getLocalFileName(url));
+			}
+
+			@Override
+			protected InputStream openImageStream(String address) {
+				return null;
 			}
 		};
 	}

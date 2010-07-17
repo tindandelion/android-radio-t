@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -179,8 +180,16 @@ public class PodcastListActivity extends ListActivity implements IView {
 			setElementText(row, R.id.podcast_item_view_shownotes,
 					item.getShowNotes());
 			setElementText(row, R.id.podcast_item_view_tags,
-					item.getTagString());
+ 					item.getTagString());
+			setPodcastIcon(row, item);
 			return row;
+		}
+
+		private void setPodcastIcon(View row, PodcastItem item) {
+			if (null != item.getImage()) {
+				ImageView image = (ImageView) row.findViewById(R.id.podcast_item_icon);
+				image.setImageDrawable(item.getImage());
+			}
 		}
 
 		private void setElementText(View row, int resourceId, String value) {

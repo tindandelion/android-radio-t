@@ -19,6 +19,7 @@ public class RssFeedModelTestCase extends TestCase {
 	private List<PodcastItem> parsedItems;
 	private PodcastItem firstParsedItem;
 	protected boolean streamClosed;
+	protected String requestedImageUrl;
 
 	@Override
 	protected void setUp() throws Exception {
@@ -29,6 +30,7 @@ public class RssFeedModelTestCase extends TestCase {
 
 	protected RssFeedModel createTestModel() {
 		return new RssFeedModel(null) {
+			@Override
 			protected InputStream openContentStream() throws IOException {
 				return new ByteArrayInputStream(getCompleteFeed().getBytes()) {
 					@Override
@@ -38,6 +40,12 @@ public class RssFeedModelTestCase extends TestCase {
 					}
 				};
 			};
+
+			@Override
+			protected InputStream openImageStream(String url) {
+				requestedImageUrl = url;
+				return null;
+			}
 		};
 	}
 
@@ -116,10 +124,14 @@ public class RssFeedModelTestCase extends TestCase {
 	public void testExtractingImageUrl() throws Exception {
 		newFeedItem("<content:encoded><![CDATA[<img src=\"http://image-url\" />]]></content:encoded>");
 		parseRssFeed();
-		Uri imageUri = firstParsedItem.getImageUri();
-		assertNotNull(imageUri);
-		assertEquals("http://image-url", imageUri.toString());
+		assertEquals("http://image-url", firstParsedItem.getImageUrl());
+	}
 
+	public void testLoadingPodcastImage() throws Exception {
+		newFeedItem("<content:encoded><![CDATA[<img src=\"http://image-url\" />]]></content:encoded>");
+		parseRssFeed();
+
+		assertEquals("http://image-url", requestedImageUrl);
 	}
 
 	private void newFeedItem(String itemContent) {

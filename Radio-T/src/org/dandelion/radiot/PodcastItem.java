@@ -1,5 +1,6 @@
 package org.dandelion.radiot;
 
+import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.text.Html;
 
@@ -24,7 +26,8 @@ public class PodcastItem implements Cloneable {
 	private String showNotes;
 	private Uri audioUri;
 	private ArrayList<String> tags = new ArrayList<String>();
-	private Uri imageUri;
+	private String imageUrl;
+	private Drawable image;
 
 	public Uri getAudioUri() {
 		return audioUri;
@@ -106,11 +109,19 @@ public class PodcastItem implements Cloneable {
 	public void extractImageUrl(String encoded) {
 		Matcher matcher = IMAGE_URL_PATTERN.matcher(encoded);
 		if (matcher.find()) {
-			imageUri = Uri.parse(matcher.group(1));
+			imageUrl = matcher.group(1);
 		}
 	}
 	
-	public Uri getImageUri() {
-		return imageUri;
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public Drawable getImage() {
+		return image;
+	}
+
+	public void loadImage(InputStream stream) {
+		image = Drawable.createFromStream(stream, "");
 	}
 }
