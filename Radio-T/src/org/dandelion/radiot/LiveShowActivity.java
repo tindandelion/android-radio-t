@@ -6,7 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 
 public class LiveShowActivity extends Activity {
-	public static final Uri LIVE_SHOW_URL = Uri.parse("http://stream.radio-t.com:8181/stream.m3u");
+	public static final Uri LIVE_SHOW_URL = Uri
+			.parse("http://stream3.radio-t.com:8181/stream");
 	private IPodcastPlayer podcastPlayer;
 
 	@Override
@@ -16,11 +17,10 @@ public class LiveShowActivity extends Activity {
 		setPodcastPlayer(new ExternalPlayer(this));
 	}
 
-	public void setPodcastPlayer(
-			IPodcastPlayer player) {
+	public void setPodcastPlayer(IPodcastPlayer player) {
 		podcastPlayer = player;
 	}
-	
+
 	public void listenButtonClicked(View button) {
 		podcastPlayer.startPlaying(LIVE_SHOW_URL);
 	}
