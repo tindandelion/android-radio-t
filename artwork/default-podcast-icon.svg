@@ -33,11 +33,11 @@
      pagecolor="#000000"
      bordercolor="#666666"
      borderopacity="1.0"
-     inkscape:pageopacity="1"
+     inkscape:pageopacity="0.52156863"
      inkscape:pageshadow="2"
      inkscape:zoom="7"
      inkscape:cx="40.692641"
-     inkscape:cy="29.015969"
+     inkscape:cy="34.730255"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -46,7 +46,7 @@
      inkscape:window-height="752"
      inkscape:window-x="0"
      inkscape:window-y="0"
-     inkscape:window-maximized="0">
+     inkscape:window-maximized="1">
     <inkscape:grid
        type="xygrid"
        id="grid2816"
@@ -73,14 +73,6 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(0,-980.36218)">
-    <rect
-       style="fill:#ffffff;fill-opacity:0.05882353;stroke:none"
-       id="rect3622"
-       width="74.574829"
-       height="75.462204"
-       x="-1.1445575"
-       y="978.48822"
-       ry="0" />
     <g
        id="g3616"
        transform="translate(0.78597306,0.62373429)"
