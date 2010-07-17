@@ -26,7 +26,7 @@ public final class R {
         public static final int logo_image=0x7f060001;
         public static final int logo_text=0x7f060002;
         public static final int main_title=0x7f060000;
-        public static final int podcast_icon=0x7f060006;
+        public static final int podcast_item_icon=0x7f060006;
         public static final int podcast_item_view_date=0x7f060008;
         public static final int podcast_item_view_number=0x7f060007;
         public static final int podcast_item_view_shownotes=0x7f060009;
