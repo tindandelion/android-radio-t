@@ -113,6 +113,15 @@ public class RssFeedModelTestCase extends TestCase {
 		assertTrue(firstParsedItem.hasTag("Tag2"));
 	}
 
+	public void testExtractingImageUrl() throws Exception {
+		newFeedItem("<content:encoded><![CDATA[<img src=\"http://image-url\" />]]></content:encoded>");
+		parseRssFeed();
+		Uri imageUri = firstParsedItem.getImageUri();
+		assertNotNull(imageUri);
+		assertEquals("http://image-url", imageUri.toString());
+
+	}
+
 	private void newFeedItem(String itemContent) {
 		feedContent = feedContent + "<item>" + itemContent + "</item>";
 	}
@@ -125,6 +134,7 @@ public class RssFeedModelTestCase extends TestCase {
 	}
 
 	private String getCompleteFeed() {
-		return "<rss><channel>" + feedContent + "</channel></rss>";
+		return "<rss xmlns:content=\"http://purl.org/rss/1.0/modules/content/\"><channel>"
+				+ feedContent + "</channel></rss>";
 	}
 }

@@ -91,7 +91,13 @@ public class RssFeedModel implements PodcastList.IModel {
 					}
 				});
 
+		item.getChild("http://purl.org/rss/1.0/modules/content/", "encoded").setEndTextElementListener(
+				new EndTextElementListener() {
+					public void end(String body) {
+						currentItem.extractImageUrl(body);
+					}
+				});
+
 		return root.getContentHandler();
 	}
-
 }

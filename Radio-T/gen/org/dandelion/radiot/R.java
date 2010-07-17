@@ -13,10 +13,11 @@ public final class R {
     public static final class drawable {
         public static final int after_show_icon=0x7f020000;
         public static final int background=0x7f020001;
-        public static final int icon=0x7f020002;
-        public static final int live_show_icon=0x7f020003;
-        public static final int logo=0x7f020004;
-        public static final int podcast_icon=0x7f020005;
+        public static final int default_podcast_icon=0x7f020002;
+        public static final int icon=0x7f020003;
+        public static final int live_show_icon=0x7f020004;
+        public static final int logo=0x7f020005;
+        public static final int podcast_icon=0x7f020006;
     }
     public static final class id {
         public static final int home_screen_item_icon=0x7f060003;
@@ -25,11 +26,12 @@ public final class R {
         public static final int logo_image=0x7f060001;
         public static final int logo_text=0x7f060002;
         public static final int main_title=0x7f060000;
-        public static final int podcast_item_view_date=0x7f060007;
-        public static final int podcast_item_view_number=0x7f060006;
-        public static final int podcast_item_view_shownotes=0x7f060008;
-        public static final int podcast_item_view_tags=0x7f060009;
-        public static final int refresh=0x7f06000a;
+        public static final int podcast_item_icon=0x7f060006;
+        public static final int podcast_item_view_date=0x7f060008;
+        public static final int podcast_item_view_number=0x7f060007;
+        public static final int podcast_item_view_shownotes=0x7f060009;
+        public static final int podcast_item_view_tags=0x7f06000a;
+        public static final int refresh=0x7f06000b;
     }
     public static final class layout {
         public static final int home_screen=0x7f030000;
