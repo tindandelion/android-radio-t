@@ -11,64 +11,106 @@ import org.dandelion.radiot.PodcastList.IPresenter;
 import org.dandelion.radiot.PodcastList.IView;
 import org.dandelion.radiot.PodcastListPresenter;
 
-public class PodcastListPresenterTestCase extends TestCase {
-	
-	private IModel model;
+import android.util.Log;
+
+public class PodcastListPresenterTestCase extends TestCase implements IModel {
+
+	protected List<PodcastItem> displayedPodcasts;
+	private Exception errorToThrow;
+	private List<PodcastItem> podcastsFromModel;
 	private IPresenter presenter;
-	protected List<PodcastItem> currentPodcasts;
+	
+	public List<PodcastItem> retrievePodcasts() throws Exception {
+		if (null != errorToThrow) {
+			throw errorToThrow;
+		}
+		return podcastsFromModel;
+	}
 
 	public void testCachingPodcastList() throws Exception {
-		model = createModel();
-		presenter = createPresenter(model);
-		presenter.attach(createView());
+		ArrayList<PodcastItem> firstPodcasts = newPodcastList();
+		ArrayList<PodcastItem> secondPodcasts = newPodcastList();
 		
-		presenter.refreshData();
-		assertNotNull(currentPodcasts);
-		List<PodcastItem> originalPodcasts = currentPodcasts;
+		modelReturnsPodcasts(firstPodcasts);
+		presenter.refreshData(false);
+		assertDisplaysPodcasts(firstPodcasts);
 		
-		presenter.refreshData();
-		assertTrue(originalPodcasts == currentPodcasts);
+		modelReturnsPodcasts(secondPodcasts);
+		presenter.refreshData(false);
+		assertDisplaysPodcasts(firstPodcasts);
+	}
+
+	public void testDoNotCacheErrorResult() throws Exception {
+		modelThrowsError();
+		presenter.refreshData(false);
+		assertDisplaysPodcasts(null);
+		
+		ArrayList<PodcastItem> podcasts = newPodcastList();
+		modelReturnsPodcasts(podcasts);
+		presenter.refreshData(false);
+		assertDisplaysPodcasts(podcasts);
+	}
+	
+	public void testForceClearCache() throws Exception {
+		ArrayList<PodcastItem> firstPodcasts = newPodcastList();
+		ArrayList<PodcastItem> secondPodcasts = newPodcastList();
+		
+		modelReturnsPodcasts(firstPodcasts);
+		presenter.refreshData(false);
+		assertDisplaysPodcasts(firstPodcasts);
+		
+		modelReturnsPodcasts(secondPodcasts);
+		presenter.refreshData(true);
+		assertDisplaysPodcasts(secondPodcasts);
 	}
 
 	protected PodcastListPresenter createPresenter(IModel model) {
-		return new PodcastListPresenter(model) {
-			@Override
-			public void refreshData() {
-				UpdateProgress progress = new UpdateProgress();
-				preExecute();
-				doInBackground(progress);
-				postExecute(progress);
-			}
-		};
+		return new PodcastListPresenter.SyncPresenter(model);
+	}
+
+	protected ArrayList<PodcastItem> newPodcastList() {
+		return new ArrayList<PodcastItem>();
+	}
+
+	@Override
+	protected void setUp() throws Exception {
+		super.setUp();
+		presenter = createPresenter(this);
+		presenter.attach(createView());
+	}
+
+	private void assertDisplaysPodcasts(ArrayList<PodcastItem> expectedList) {
+		assertTrue(expectedList == displayedPodcasts);
 	}
 
 	private IView createView() {
 		return new IView() {
-			
-			public void updatePodcasts(List<PodcastItem> podcasts) {
-				currentPodcasts = podcasts;
+
+			public void close() {
 			}
-			
-			public void showProgress() {
-			}
-			
-			public void showErrorMessage(String errorMessage) {
-			}
-			
+
 			public void closeProgress() {
 			}
-			
-			public void close() {
+
+			public void showErrorMessage(String errorMessage) {
+			}
+
+			public void showProgress() {
+			}
+
+			public void updatePodcasts(List<PodcastItem> podcasts) {
+				displayedPodcasts = podcasts;
 			}
 		};
 	}
 
-	private IModel createModel() {
-		return new IModel() {
-			public List<PodcastItem> retrievePodcasts() throws Exception {
-				return new ArrayList<PodcastItem>();
-			}
-		};
+	private void modelReturnsPodcasts(ArrayList<PodcastItem> list) {
+		errorToThrow = null;
+		podcastsFromModel = list;
+	}
+
+	private void modelThrowsError() {
+		errorToThrow = new Exception();
 	}
 
 }

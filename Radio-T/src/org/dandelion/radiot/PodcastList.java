@@ -18,7 +18,7 @@ public class PodcastList {
 	}
 
 	public interface IPresenter {
-		void refreshData();
+		void refreshData(boolean resetCache);
 		void cancelLoading();
 		void detach();
 		void attach(IView view);
@@ -52,7 +52,7 @@ public class PodcastList {
 		}
 
 		public IPresenter createPresenter(IModel model) {
-			return new PodcastListPresenter(model);
+			return new PodcastListPresenter.AsyncPresenter(model);
 		}
 	}
 }

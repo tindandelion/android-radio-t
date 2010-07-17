@@ -125,7 +125,7 @@ public class PodcastListActivityTestCase extends
 			return null != view;
 		}
 
-		public void refreshData() {
+		public void refreshData(boolean resetCache) {
 		}
 
 		public void attach(IView view) {

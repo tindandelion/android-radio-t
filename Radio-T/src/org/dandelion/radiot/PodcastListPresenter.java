@@ -18,23 +18,26 @@ interface IPresenterInternal {
 
 public class PodcastListPresenter implements PodcastList.IPresenter,
 		IPresenterInternal {
-	private IModel model;
-	private RefreshTask task;
-	private IView view;
+	protected IModel model;
+	protected IView view;
+	private UpdateProgress lastResult;
 
-	public PodcastListPresenter(PodcastList.IModel model) {
+	private PodcastListPresenter(PodcastList.IModel model) {
 		this.model = model;
 	}
 
 	public void cancelLoading() {
-		task.cancel(true);
-		view.closeProgress();
-		view.close();
 	}
 
-	public void refreshData() {
-		task = new RefreshTask(this);
-		task.execute(new UpdateProgress());
+	public void refreshData(boolean resetCache) {
+		if (null == lastResult || resetCache) {
+			forkWorkerThread();
+		} else {
+			lastResult.updateView(view);
+		}
+	}
+
+	protected void forkWorkerThread() {
 	}
 
 	public void doInBackground(UpdateProgress progress) {
@@ -48,6 +51,9 @@ public class PodcastListPresenter implements PodcastList.IPresenter,
 	public void postExecute(UpdateProgress progress) {
 		view.closeProgress();
 		progress.updateView(view);
+		if (progress.isSuccessful()) {
+			lastResult = progress;
+		}
 	}
 
 	public void detach() {
@@ -60,17 +66,17 @@ public class PodcastListPresenter implements PodcastList.IPresenter,
 
 	public static class UpdateProgress {
 		private List<PodcastItem> podcasts;
-		private String errorMessage;
+		private Exception error;
 
 		public boolean isSuccessful() {
-			return null == errorMessage;
+			return null == error;
 		}
 
 		public void retrievePodcasts(IModel model) {
 			try {
 				podcasts = model.retrievePodcasts();
 			} catch (Exception e) {
-				errorMessage = e.getMessage();
+				error = e;
 			}
 		}
 
@@ -78,8 +84,44 @@ public class PodcastListPresenter implements PodcastList.IPresenter,
 			if (isSuccessful()) {
 				view.updatePodcasts(podcasts);
 			} else {
-				view.showErrorMessage(errorMessage);
+				view.showErrorMessage(error.getMessage());
 			}
+		}
+	}
+	
+	public static class SyncPresenter extends PodcastListPresenter {
+
+		public SyncPresenter(IModel model) {
+			super(model);
+		}
+		
+		@Override
+		protected void forkWorkerThread() {
+			UpdateProgress progress = new UpdateProgress();
+			preExecute();
+			doInBackground(progress);
+			postExecute(progress);
+		}
+	}
+	
+	public static class AsyncPresenter extends PodcastListPresenter {
+		private RefreshTask task;
+		
+		public AsyncPresenter(IModel model) { 
+			super(model);
+		}
+
+		@Override
+		protected void forkWorkerThread() {
+			task = new RefreshTask(this);
+			task.execute(new UpdateProgress());
+		}
+		
+		@Override
+		public void cancelLoading() {
+			task.cancel(true);
+			view.closeProgress();
+			view.close();
 		}
 	}
 }

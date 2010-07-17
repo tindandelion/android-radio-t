@@ -79,7 +79,7 @@ class LockedPodcastListFactory extends LocalRssFeedFactory {
 	
 	@Override
 	public IPresenter createPresenter(IModel model) {
-		return new PodcastListPresenter(model);
+		return new PodcastListPresenter.AsyncPresenter(model);
 	}
 	
 	@Override

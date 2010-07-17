@@ -73,7 +73,7 @@ public class PodcastListActivity extends ListActivity implements IView {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		presenter.refreshData();
+		presenter.refreshData(false);
 	}
 
 	@Override
@@ -101,7 +101,7 @@ public class PodcastListActivity extends ListActivity implements IView {
 	}
 
 	public void refreshPodcasts() {
-		presenter.refreshData();
+		presenter.refreshData(false);
 	}
 
 	public void setPodcastPlayer(IPodcastPlayer player) {

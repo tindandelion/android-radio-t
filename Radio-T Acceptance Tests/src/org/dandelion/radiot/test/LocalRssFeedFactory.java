@@ -22,14 +22,7 @@ class LocalRssFeedFactory extends PodcastList.Factory {
 
 	@Override
 	public IPresenter createPresenter(final IModel model) {
-		return new PodcastListPresenter(model) {
-			public void refreshData() {
-				UpdateProgress progress = new UpdateProgress();
-				preExecute();
-				doInBackground(progress);
-				postExecute(progress);
-			}
-		};
+		return new PodcastListPresenter.SyncPresenter(model);
 	}
 	
 	@Override
