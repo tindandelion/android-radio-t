@@ -93,15 +93,11 @@ public class PodcastListActivity extends ListActivity implements IView {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.refresh:
-			refreshPodcasts();
+			presenter.refreshData(true);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
-	}
-
-	public void refreshPodcasts() {
-		presenter.refreshData(false);
 	}
 
 	public void setPodcastPlayer(IPodcastPlayer player) {
