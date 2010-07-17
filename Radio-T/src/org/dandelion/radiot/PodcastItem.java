@@ -12,7 +12,7 @@ import android.net.Uri;
 import android.text.Html;
 
 public class PodcastItem implements Cloneable {
-	private static final Pattern IMAGE_URL_PATTERN = Pattern.compile("<img.+src=\"(.*)\".*/>");
+	private static final Pattern IMAGE_URL_PATTERN = Pattern.compile("<img.+src=\"(\\S+)\".*/>");
 	private static final Pattern NUMBER_PATTERN = Pattern.compile("\\d+");
 	private static SimpleDateFormat INPUT_DATE_FORMAT = new SimpleDateFormat(
 			"EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);

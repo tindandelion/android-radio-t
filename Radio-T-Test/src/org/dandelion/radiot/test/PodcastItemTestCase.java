@@ -73,7 +73,7 @@ public class PodcastItemTestCase extends TestCase {
 	}
 
 	public void testPodcastImageUri() throws Exception {
-		item.extractImageUrl("<img src=\"http://www.image-url.com\"/>");
+		item.extractImageUrl("<img src=\"http://www.image-url.com\" alt=\"\"/>");
 
 		Uri uri = item.getImageUri();
 		assertNotNull(uri);
