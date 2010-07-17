@@ -4,7 +4,7 @@
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Radio-T"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
-	<classpathentry kind="lib" path="robotium-solo-1.6.0.jar">
+	<classpathentry kind="lib" path="robotium-solo-1.6.0.jar" sourcepath="/Users/sergio/Projects/Eclipse/robotium/robotium-solo/src">
 		<attributes>
 			<attribute name="javadoc_location" value="jar:file:robotium-solo-1.6.0-javadoc.jar!/"/>
 		</attributes>

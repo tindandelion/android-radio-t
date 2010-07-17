@@ -16,6 +16,8 @@ import org.dandelion.radiot.test.helpers.ApplicationDriver;
 import org.dandelion.radiot.test.helpers.BasicAcceptanceTestCase;
 
 import android.app.Instrumentation;
+import android.content.pm.ActivityInfo;
+import android.os.SystemClock;
 
 public class InterruptPodcastLoading extends
 		BasicAcceptanceTestCase {
@@ -53,6 +55,17 @@ public class InterruptPodcastLoading extends
 			appDriver.assertOnHomeScreen();
 		} catch (Exception e) {
 			fail("Should not have failed");
+		}
+	}
+	
+	public void testChangeOrientation() throws Exception {
+		PodcastListActivity activity = appDriver.visitMainShowPage();
+		activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		try {
+			factory.allowPodcastRetrievalFinish();
+			appDriver.waitSomeTime();
+		} catch(Exception ex) { 
+			fail("The orientation change failed: " + ex.getMessage());
 		}
 	}
 }

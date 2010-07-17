@@ -34,4 +34,14 @@ public class ApplicationDriver extends Solo {
 		assertCurrentActivity("Must be on the live show page", LiveShowActivity.class);
 		return (LiveShowActivity) getCurrentActivity();
 	}
+	
+	public void waitSomeTime() {
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	
+
 }
