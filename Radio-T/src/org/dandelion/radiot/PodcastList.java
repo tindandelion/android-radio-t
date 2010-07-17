@@ -20,12 +20,14 @@ public class PodcastList {
 	public interface IPresenter {
 		void refreshData();
 		void cancelLoading();
+		void detach();
+		void attach(IView view);
 	}
 
 	public static IPresenter getPresenter(IView view, String feedUrl) {
 		Factory f = getFactory();
 		IModel model = f.createModel(feedUrl);
-		IPresenter presenter = f.createPresenter(model, view);
+		IPresenter presenter = f.createPresenter(model);
 		return presenter;
 	}
 
@@ -49,8 +51,8 @@ public class PodcastList {
 			return new RssFeedModel(url);
 		}
 
-		public IPresenter createPresenter(IModel model, IView view) {
-			return new AsyncPresenter(model, view);
+		public IPresenter createPresenter(IModel model) {
+			return new AsyncPresenter(model);
 		}
 	}
 }

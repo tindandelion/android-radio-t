@@ -27,12 +27,14 @@ public class PodcastListActivity extends ListActivity implements IView {
 
 	public static final String TITLE_KEY = "title";
 	public static final String URL_KEY = "podcast_url";
+
 	public static void start(Context context, String title, String url) {
 		Intent intent = new Intent(context, PodcastListActivity.class);
 		intent.putExtra(URL_KEY, url);
 		intent.putExtra(TITLE_KEY, title);
 		context.startActivity(intent);
 	}
+
 	private Bundle extras;
 
 	private PodcastListAdapter listAdapter;
@@ -57,13 +59,27 @@ public class PodcastListActivity extends ListActivity implements IView {
 		setTitle(getTitleFromExtra());
 		initListAdapter();
 		setPodcastPlayer(new ExternalPlayer(this));
-		presenter = PodcastList.getPresenter(this, getFeedUrlFromExtra());
+		attachToPresenter();
 	}
-	
+
+	protected void attachToPresenter() {
+		presenter = (IPresenter) getLastNonConfigurationInstance();
+		if (null == presenter) {
+			presenter = PodcastList.getPresenter(this, getFeedUrlFromExtra());
+		}
+		presenter.attach(this);
+	}
+
 	@Override
 	protected void onResume() {
 		super.onResume();
 		presenter.refreshData();
+	}
+
+	@Override
+	public Object onRetainNonConfigurationInstance() {
+		presenter.detach();
+		return presenter;
 	}
 
 	@Override
@@ -175,5 +191,9 @@ public class PodcastListActivity extends ListActivity implements IView {
 			TextView view = (TextView) row.findViewById(resourceId);
 			view.setText(value);
 		}
+	}
+
+	public IPresenter getPresenter() {
+		return presenter;
 	}
 }

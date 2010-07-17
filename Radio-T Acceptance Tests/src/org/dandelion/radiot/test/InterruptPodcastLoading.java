@@ -10,7 +10,6 @@ import org.dandelion.radiot.PodcastList;
 import org.dandelion.radiot.PodcastList.Factory;
 import org.dandelion.radiot.PodcastList.IModel;
 import org.dandelion.radiot.PodcastList.IPresenter;
-import org.dandelion.radiot.PodcastList.IView;
 import org.dandelion.radiot.PodcastListActivity;
 import org.dandelion.radiot.test.helpers.ApplicationDriver;
 import org.dandelion.radiot.test.helpers.BasicAcceptanceTestCase;
@@ -57,7 +56,7 @@ public class InterruptPodcastLoading extends
 		}
 	}
 	
-	public void _testChangeOrientation() throws Exception {
+	public void testChangeOrientation() throws Exception {
 		PodcastListActivity activity = appDriver.visitMainShowPage();
 		activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		try {
@@ -79,8 +78,8 @@ class LockedPodcastListFactory extends LocalRssFeedFactory {
 	}
 	
 	@Override
-	public IPresenter createPresenter(IModel model, IView view) {
-		return new AsyncPresenter(model, view);
+	public IPresenter createPresenter(IModel model) {
+		return new AsyncPresenter(model);
 	}
 	
 	@Override

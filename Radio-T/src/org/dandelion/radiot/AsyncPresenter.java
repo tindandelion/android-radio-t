@@ -2,6 +2,7 @@ package org.dandelion.radiot;
 
 import java.util.List;
 
+import org.dandelion.radiot.AsyncPresenter.UpdateProgress;
 import org.dandelion.radiot.PodcastList.IModel;
 import org.dandelion.radiot.PodcastList.IView;
 
@@ -21,9 +22,8 @@ public class AsyncPresenter implements PodcastList.IPresenter,
 	private RefreshTask task;
 	private IView view;
 
-	public AsyncPresenter(PodcastList.IModel model, IView view) {
+	public AsyncPresenter(PodcastList.IModel model) {
 		this.model = model;
-		this.view = view;
 	}
 
 	public void cancelLoading() {
@@ -49,29 +49,37 @@ public class AsyncPresenter implements PodcastList.IPresenter,
 		view.closeProgress();
 		progress.updateView(view);
 	}
-}
 
-class UpdateProgress {
-	private List<PodcastItem> podcasts;
-	private String errorMessage;
-
-	public boolean isSuccessful() {
-		return null == errorMessage;
+	public void detach() {
+		view = null;
 	}
 
-	public void retrievePodcasts(IModel model) {
-		try {
-			podcasts = model.retrievePodcasts();
-		} catch (Exception e) {
-			errorMessage = e.getMessage();
+	public void attach(IView view) {
+		this.view = view;
+	}
+
+	public static class UpdateProgress {
+		private List<PodcastItem> podcasts;
+		private String errorMessage;
+
+		public boolean isSuccessful() {
+			return null == errorMessage;
 		}
-	}
 
-	public void updateView(IView view) {
-		if (isSuccessful()) {
-			view.updatePodcasts(podcasts);
-		} else {
-			view.showErrorMessage(errorMessage);
+		public void retrievePodcasts(IModel model) {
+			try {
+				podcasts = model.retrievePodcasts();
+			} catch (Exception e) {
+				errorMessage = e.getMessage();
+			}
+		}
+
+		public void updateView(IView view) {
+			if (isSuccessful()) {
+				view.updatePodcasts(podcasts);
+			} else {
+				view.showErrorMessage(errorMessage);
+			}
 		}
 	}
 }

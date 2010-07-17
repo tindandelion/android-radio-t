@@ -21,8 +21,9 @@ class LocalRssFeedFactory extends PodcastList.Factory {
 	}
 
 	@Override
-	public IPresenter createPresenter(final IModel model, final IView view) {
+	public IPresenter createPresenter(final IModel model) {
 		return new IPresenter() {
+			private IView view;
 			public void refreshData() {
 				try {
 					view.updatePodcasts(model.retrievePodcasts());
@@ -31,6 +32,14 @@ class LocalRssFeedFactory extends PodcastList.Factory {
 				}
 			}
 			public void cancelLoading() {
+			}
+			@Override
+			public void detach() {
+				view = null;
+			}
+			@Override
+			public void attach(IView view) {
+				this.view = view;
 			}
 		};
 	}

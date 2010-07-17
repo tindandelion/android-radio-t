@@ -18,9 +18,34 @@ public class PodcastListActivityTestCase extends
 
 	protected String feedSourceUrl;
 	private PodcastListActivity activity;
+	private NullPresenter presenter;
 
 	public PodcastListActivityTestCase() {
 		super(PodcastListActivity.class);
+	}
+
+	public void testAttachesToNewPresenterOnCreation() {
+		activity = startActivity(new Intent(), null, null);
+
+		assertEquals(presenter, activity.getPresenter());
+		assertEquals(activity, presenter.getView());
+	}
+
+	public void testAttachesToSavedPresenterOnCreation() throws Exception {
+		NullPresenter savedPresenter = new NullPresenter();
+		activity = startActivity(new Intent(), null, savedPresenter);
+		assertEquals(savedPresenter, activity.getPresenter());
+		assertEquals(activity, savedPresenter.getView());
+	}
+
+	public void testDetachesPresenterWhenReturningNonConfiurationInstance()
+			throws Exception {
+		activity = startActivity(new Intent(), null, null);
+
+		NullPresenter savedPresenter = (NullPresenter) activity
+				.onRetainNonConfigurationInstance();
+		assertEquals(presenter, savedPresenter);
+		assertFalse(presenter.isAttached());
 	}
 
 	public void testGetsFeedUrlFromBundleExtra() throws Exception {
@@ -41,35 +66,27 @@ public class PodcastListActivityTestCase extends
 
 		assertEquals("Custom title", activity.getTitle());
 	}
-	
+
 	@UiThreadTest
 	public void testUpdatingPodcastList() throws Exception {
 		activity = startActivity(new Intent(), null, null);
 		assertEquals(0, activity.getListView().getCount());
-		
+
 		ArrayList<PodcastItem> newList = new ArrayList<PodcastItem>();
 		PodcastItem itemToDisplay = new PodcastItem();
 		newList.add(itemToDisplay);
-		
+
 		activity.updatePodcasts(newList);
 		assertEquals(1, activity.getListView().getCount());
 		Object displayedItem = activity.getListAdapter().getItem(0);
-		
-		assertEquals(itemToDisplay, displayedItem);
-	}
 
-	protected IPresenter nullPresenter() {
-		return new PodcastList.IPresenter() {
-			public void refreshData() {
-			}
-			public void cancelLoading() {
-			}
-		};
+		assertEquals(itemToDisplay, displayedItem);
 	}
 
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
+		presenter = new NullPresenter();
 		PodcastList.setFactory(new PodcastList.Factory() {
 			@Override
 			public IModel createModel(String url) {
@@ -78,8 +95,8 @@ public class PodcastListActivityTestCase extends
 			};
 
 			@Override
-			public IPresenter createPresenter(IModel model, IView view) {
-				return nullPresenter();
+			public IPresenter createPresenter(IModel model) {
+				return presenter;
 			}
 		});
 	}
@@ -88,5 +105,31 @@ public class PodcastListActivityTestCase extends
 	protected void tearDown() throws Exception {
 		PodcastList.resetFactory();
 		super.tearDown();
+	}
+
+	class NullPresenter implements IPresenter {
+		private Object view = new Object();
+
+		public void cancelLoading() {
+		}
+
+		public void detach() {
+			view = null;
+		}
+
+		public Object getView() {
+			return view;
+		}
+
+		public boolean isAttached() {
+			return null != view;
+		}
+
+		public void refreshData() {
+		}
+
+		public void attach(IView view) {
+			this.view = view;
+		}
 	}
 }
