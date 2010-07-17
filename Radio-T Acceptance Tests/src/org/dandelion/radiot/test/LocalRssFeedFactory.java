@@ -7,7 +7,6 @@ import org.dandelion.radiot.AsyncPresenter;
 import org.dandelion.radiot.PodcastList;
 import org.dandelion.radiot.PodcastList.IModel;
 import org.dandelion.radiot.PodcastList.IPresenter;
-import org.dandelion.radiot.PodcastList.IView;
 import org.dandelion.radiot.RssFeedModel;
 
 import android.app.Instrumentation;
