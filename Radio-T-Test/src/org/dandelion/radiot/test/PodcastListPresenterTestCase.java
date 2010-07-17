@@ -11,8 +11,6 @@ import org.dandelion.radiot.PodcastList.IPresenter;
 import org.dandelion.radiot.PodcastList.IView;
 import org.dandelion.radiot.PodcastListPresenter;
 
-import android.util.Log;
-
 public class PodcastListPresenterTestCase extends TestCase implements IModel {
 
 	protected List<PodcastItem> displayedPodcasts;

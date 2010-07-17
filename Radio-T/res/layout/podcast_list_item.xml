@@ -3,36 +3,47 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
-	android:orientation="vertical"
+	android:paddingLeft="0dp"
 	android:padding="5dp">
+	<ImageView
+		android:id="@+id/podcast_icon"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
+		android:layout_centerVertical="true"
+		android:paddingRight="5dp"
+		android:src="@drawable/default_podcast_icon" />
 	<TextView
 		android:id="@+id/podcast_item_view_number"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_alignParentLeft="true"
-		android:textStyle="bold"
-		android:textSize="20sp" />
+		android:layout_toRightOf="@id/podcast_icon"
+		android:textStyle="bold" />
 	<TextView
 		android:id="@+id/podcast_item_view_date"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_alignParentRight="true"
-		android:textStyle="bold"
-		android:textSize="20sp" />
+		android:textStyle="bold" />
 	<TextView
 		android:id="@+id/podcast_item_view_shownotes"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
 		android:layout_below="@id/podcast_item_view_number"
-		android:maxLines="3"
-		android:paddingLeft="5dp" />
+		android:layout_toRightOf="@id/podcast_icon"
+		android:gravity="fill_horizontal"
+		android:maxLines="4"
+		android:textSize="11sp" />
 	<TextView
 		android:id="@+id/podcast_item_view_tags"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_below="@id/podcast_item_view_shownotes"
+		android:layout_toRightOf="@id/podcast_icon"
 		android:layout_alignParentRight="true"
-		android:textSize="10sp"
+		android:layout_below="@id/podcast_item_view_shownotes"
+		android:gravity="right"
+		android:textSize="9sp"
 		android:paddingLeft="10dp"
+		android:paddingTop="2dp"
 		android:singleLine="true" />
 </RelativeLayout>
