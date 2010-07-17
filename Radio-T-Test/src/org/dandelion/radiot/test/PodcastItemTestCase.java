@@ -1,6 +1,10 @@
 package org.dandelion.radiot.test;
 
+import java.util.regex.Pattern;
+
 import org.dandelion.radiot.PodcastItem;
+
+import android.net.Uri;
 
 import junit.framework.TestCase;
 
@@ -68,5 +72,20 @@ public class PodcastItemTestCase extends TestCase {
 	
 	public void testNoTags() throws Exception {
 		assertEquals("", item.getTagString());
+	}
+	
+	public void testPodcastImageUri() throws Exception {
+		item.extractImageUrl("<img src=\"http://www.image-url.com\"/>");
+		
+		Uri uri = item.getImageUri();
+		assertNotNull(uri);
+		assertEquals("http://www.image-url.com", uri.toString());
+	}
+	
+	public void testNoImageUrl() throws Exception {
+		item.extractImageUrl("bla-bla");
+		
+		Uri uri = item.getImageUri();
+		assertNull(uri);
 	}
 }

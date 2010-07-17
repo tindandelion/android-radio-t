@@ -14,7 +14,10 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.47 r22583"
-   sodipodi:docname="New document 1">
+   sodipodi:docname="default-podcast-icon.svg"
+   inkscape:export-filename="/Users/sergio/Projects/Eclipse/android-radio-t/Radio-T/res/drawable-mdpi/default_podcast_icon.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
   <defs
      id="defs4">
     <inkscape:perspective
@@ -71,7 +74,7 @@
      id="layer1"
      transform="translate(0,-980.36218)">
     <rect
-       style="fill:#ffffff;fill-opacity:0.14798207;stroke:none"
+       style="fill:#ffffff;fill-opacity:0.05882353;stroke:none"
        id="rect3622"
        width="74.574829"
        height="75.462204"
@@ -81,7 +84,7 @@
     <g
        id="g3616"
        transform="translate(0.78597306,0.62373429)"
-       style="opacity:0.26666667">
+       style="opacity:0.2">
       <rect
          ry="10"
          transform="translate(0,980.36218)"
