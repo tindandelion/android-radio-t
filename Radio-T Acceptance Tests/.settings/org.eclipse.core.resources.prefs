@@ -1,7 +1,7 @@
-#Thu Jul 15 01:21:29 MSD 2010
+#Sat Jul 17 11:33:03 MSD 2010
 eclipse.preferences.version=1
-encoding//src/org/dandelion/radiot/test/BackButtonFunctionality.java=UTF-8
 encoding//src/org/dandelion/radiot/test/DisplayingPodcastList.java=UTF-8
 encoding//src/org/dandelion/radiot/test/HomeScreenTestCase.java=UTF-8
+encoding//src/org/dandelion/radiot/test/InterruptPodcastLoading.java=UTF-8
 encoding//src/org/dandelion/radiot/test/LiveShowPlaying.java=UTF-8
 encoding//src/org/dandelion/radiot/test/helpers/ApplicationDriver.java=UTF-8

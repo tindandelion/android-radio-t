@@ -1,5 +1,6 @@
 package org.dandelion.radiot.test;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
@@ -10,12 +11,13 @@ import org.dandelion.radiot.PodcastList.Factory;
 import org.dandelion.radiot.PodcastList.IModel;
 import org.dandelion.radiot.PodcastList.IPresenter;
 import org.dandelion.radiot.PodcastList.IView;
+import org.dandelion.radiot.PodcastListActivity;
 import org.dandelion.radiot.test.helpers.ApplicationDriver;
 import org.dandelion.radiot.test.helpers.BasicAcceptanceTestCase;
 
 import android.app.Instrumentation;
 
-public class BackButtonFunctionality extends
+public class InterruptPodcastLoading extends
 		BasicAcceptanceTestCase {
 
 	private ApplicationDriver appDriver;
@@ -42,6 +44,17 @@ public class BackButtonFunctionality extends
 			factory.allowPodcastRetrievalFinish();
 		}
 	}
+	
+	public void testDestroyingActivityWhileLoading() throws Exception {
+		PodcastListActivity activity = appDriver.visitMainShowPage();
+		activity.finish();
+		try {
+			factory.allowPodcastRetrievalFinish();
+			appDriver.assertOnHomeScreen();
+		} catch (Exception e) {
+			fail("Should not have failed");
+		}
+	}
 }
 
 class LockedPodcastListFactory extends LocalRssFeedFactory {
@@ -60,13 +73,11 @@ class LockedPodcastListFactory extends LocalRssFeedFactory {
 	
 	@Override
 	public IModel createModel(String url) {
-		final IModel model = super.createModel(url);
 		return new PodcastList.IModel() {
 			@Override
 			public List<PodcastItem> retrievePodcasts() throws Exception {
-				List<PodcastItem> result = model.retrievePodcasts();
 				modelLatch.await();
-				return result;
+				return new ArrayList<PodcastItem>();
 			}
 		};
 	}
