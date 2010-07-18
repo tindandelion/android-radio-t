@@ -12,8 +12,8 @@ public final class R {
     }
     public static final class drawable {
         public static final int after_show_icon=0x7f020000;
-        public static final int background=0x7f020001;
-        public static final int default_podcast_icon=0x7f020002;
+        public static final int default_podcast_icon=0x7f020001;
+        public static final int home_screen_background=0x7f020002;
         public static final int icon=0x7f020003;
         public static final int live_show_icon=0x7f020004;
         public static final int logo=0x7f020005;
