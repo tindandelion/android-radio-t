@@ -15,7 +15,10 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.47 r22583"
-   sodipodi:docname="main-logo.svg">
+   sodipodi:docname="main-logo.svg"
+   inkscape:export-filename="/Users/sergio/Projects/Eclipse/android-radio-t/Radio-T/res/drawable-mdpi/logo.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
   <defs
      id="defs4">
     <inkscape:perspective
@@ -86,6 +89,15 @@
        y1="25"
        x2="-16"
        y2="3" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3956"
+       id="linearGradient4325"
+       gradientUnits="userSpaceOnUse"
+       x1="-16"
+       y1="25"
+       x2="-16"
+       y2="3" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -95,8 +107,8 @@
      inkscape:pageopacity="0.48627451"
      inkscape:pageshadow="2"
      inkscape:zoom="4.9497475"
-     inkscape:cx="92.603947"
-     inkscape:cy="35.471"
+     inkscape:cx="49.210742"
+     inkscape:cy="31.532981"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -104,7 +116,7 @@
      inkscape:window-height="752"
      inkscape:window-x="0"
      inkscape:window-y="0"
-     inkscape:window-maximized="0"
+     inkscape:window-maximized="1"
      inkscape:snap-grids="false">
     <inkscape:grid
        type="xygrid"
@@ -123,6 +135,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -131,53 +144,19 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(0,-980.36218)">
-    <image
-       y="969.36218"
-       x="60.083336"
-       id="image3449"
-       height="73.769234"
-       width="79.916664"
-       xlink:href="file:///Users/sergio/Desktop/logo-cut.png" />
     <path
-       transform="matrix(1.5972729,0,0,1.5972729,41.264143,967.51876)"
-       d="m 60.609152,29.977654 a 27.678179,27.678179 0 1 1 -55.3563577,0 27.678179,27.678179 0 1 1 55.3563577,0 z"
-       sodipodi:ry="27.678179"
-       sodipodi:rx="27.678179"
-       sodipodi:cy="29.977654"
-       sodipodi:cx="32.930973"
-       id="path4242"
-       style="opacity:0.20000000000000001;fill:#ffffff;fill-opacity:0.05882353000000000;stroke:#000000;stroke-width:0.62606709;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       sodipodi:type="arc" />
+       style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;color:#000000;fill:#ffffff;fill-opacity:0.32286996;stroke:none;stroke-width:3.21726703999999986;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans"
+       d="m 32.025443,985.14938 a 2.250225,2.250225 0 0 0 1.901496,2.36496 c 15.59922,2.66731 27.69003,15.08866 29.950711,30.75206 a 2.2530519,2.2530519 0 1 0 4.457991,-0.6568 C 65.798678,1000.0321 52.19136,986.06996 34.685736,983.07667 a 2.250225,2.250225 0 0 0 -2.660293,2.07271 z"
+       id="path4242" />
     <path
-       sodipodi:type="arc"
-       style="fill:url(#linearGradient3729);fill-opacity:1;stroke:none"
-       id="path3918"
-       sodipodi:cx="-16"
-       sodipodi:cy="14"
-       sodipodi:rx="11"
-       sodipodi:ry="11"
-       d="m -5,14 a 11,11 0 1 1 -22,0 11,11 0 1 1 22,0 z"
-       transform="matrix(2.5103628,0,0,2.5103628,134.0297,980.25617)" />
-    <path
-       id="path4010"
-       d="m 13.480457,1017.6365 0,4.75 8.21875,0 0,16.3438 4.71875,0 0,-16.3438 8.34375,0 0,-4.75 -21.28125,0 z"
-       style="fill:#ffffff;fill-opacity:0.99170125;stroke:#2877c0;stroke-opacity:1;filter:url(#filter3640)"
-       transform="matrix(1.2998528,0,0,1.2998528,62.499171,-321.08587)" />
-    <path
-       sodipodi:type="arc"
-       style="opacity:0.20000000000000001;fill:#ffffff;fill-opacity:0.05882353000000000;stroke:#000000;stroke-width:0.78880341;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="path4227"
-       sodipodi:cx="32.930973"
-       sodipodi:cy="29.977654"
-       sodipodi:rx="27.678179"
-       sodipodi:ry="27.678179"
-       d="m 60.609152,29.977654 a 27.678179,27.678179 0 1 1 -55.3563577,0 27.678179,27.678179 0 1 1 55.3563577,0 z"
-       transform="matrix(1.267743,0,0,1.267743,52.115883,977.39729)" />
+       style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;color:#000000;fill:#ffffff;fill-opacity:0.32286996;stroke:none;stroke-width:4.05354499999999973;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans"
+       d="m 36.623481,994.3454 a 2.2502251,2.2502251 0 0 0 1.178923,3.13058 c 7.834573,3.16652 13.887604,9.65452 16.472548,17.69972 a 2.2502251,2.2502251 0 1 0 4.271139,-1.3873 c -2.992446,-9.3136 -9.960384,-16.80925 -19.030037,-20.47501 a 2.2502251,2.2502251 0 0 0 -2.892573,1.03201 z"
+       id="path4227" />
     <g
        inkscape:export-ydpi="90"
        inkscape:export-xdpi="90"
        inkscape:export-filename="/Users/sergio/Projects/Eclipse/android-radio-t/Radio-T/res/drawable-mdpi/icon.png"
-       transform="matrix(1.2998528,0,0,1.2998528,-63.769897,-324.52039)"
+       transform="matrix(1.1382573,0,0,1.1382573,-0.27798378,-146.62738)"
        id="g4229">
       <path
          transform="matrix(1.931267,0,0,1.931267,55.029713,1002.5145)"
@@ -191,7 +170,7 @@
          sodipodi:type="arc" />
       <path
          sodipodi:type="arc"
-         style="fill:url(#linearGradient4237);fill-opacity:1;stroke:none"
+         style="fill:url(#linearGradient4325);fill-opacity:1;stroke:none"
          id="path4233"
          sodipodi:cx="-16"
          sodipodi:cy="14"
