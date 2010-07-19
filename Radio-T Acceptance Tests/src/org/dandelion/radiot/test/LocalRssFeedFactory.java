@@ -3,10 +3,10 @@ package org.dandelion.radiot.test;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.dandelion.radiot.PodcastListPresenter;
 import org.dandelion.radiot.PodcastList;
 import org.dandelion.radiot.PodcastList.IModel;
 import org.dandelion.radiot.PodcastList.IPresenter;
+import org.dandelion.radiot.PodcastListPresenter;
 import org.dandelion.radiot.RssFeedModel;
 
 import android.app.Instrumentation;

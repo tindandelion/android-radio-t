@@ -2,17 +2,17 @@ package org.dandelion.radiot.test;
 
 import java.lang.reflect.Field;
 
-import org.dandelion.radiot.PodcastList.Factory;
+import org.dandelion.radiot.PodcastList.IModel;
 import org.dandelion.radiot.PodcastListActivity;
 import org.dandelion.radiot.test.helpers.ApplicationDriver;
-import org.dandelion.radiot.test.helpers.BasicAcceptanceTestCase;
+import org.dandelion.radiot.test.helpers.NewBasicAcceptanceTestCase;
 
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
 public class DisplayingPodcastList extends
-		BasicAcceptanceTestCase {
+		NewBasicAcceptanceTestCase {
 
 	private PodcastListActivity activity;
 	private ApplicationDriver appDriver;
@@ -31,17 +31,13 @@ public class DisplayingPodcastList extends
 		ListView list = activity.getListView();
 		assertEquals(17, list.getCount());
 	}
-	
-	@Override
-	protected Factory createPodcastListFactory() {
-		return new LocalRssFeedFactory(getInstrumentation());
-	}
 
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
 		appDriver = createApplicationDriver();
 		activity = appDriver.visitMainShowPage();
+		testPresenter.assertTaskIsFinished();
 	}
 
 	private void assertTextFieldHasText(View parent, String id, String expected)
