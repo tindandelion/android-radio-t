@@ -18,7 +18,7 @@ public class NewBasicAcceptanceTestCase extends BasicAcceptanceTestCase {
 	protected PodcastList.Factory createPodcastListFactory() {
 		return new PodcastList.Factory() {
 			public IModel createModel(String url) {
-				return createTestModel(null);
+				return createTestModel(url);
 			};
 
 			public IPresenter createPresenter(IModel model) {
@@ -28,7 +28,8 @@ public class NewBasicAcceptanceTestCase extends BasicAcceptanceTestCase {
 	}
 
 	protected IModel createTestModel(final String url) {
-		final AssetManager assets = getInstrumentation().getContext().getAssets();
+		final AssetManager assets = getInstrumentation().getContext()
+				.getAssets();
 		return new RssFeedModel(url) {
 			@Override
 			protected InputStream openContentStream() throws IOException {
@@ -60,7 +61,9 @@ public class NewBasicAcceptanceTestCase extends BasicAcceptanceTestCase {
 	@Override
 	protected void tearDown() throws Exception {
 		super.tearDown();
-		testPresenter.assertNoTasksAreActive();
+		if (null != testPresenter) {
+			testPresenter.assertNoTasksAreActive();
+		}
 	}
 
 }

@@ -9,7 +9,7 @@ import org.dandelion.radiot.PodcastList.IModel;
 import org.dandelion.radiot.PodcastListPresenter;
 
 public class TestPresenter extends PodcastListPresenter.AsyncPresenter {
-	private static final int WAIT_TIMEOUT = 5;
+	private static final int WAIT_TIMEOUT = 60;
 	private CountDownLatch taskCancelLatch;
 	private CountDownLatch taskFinishLatch;
 	private int startedTasksCount;
@@ -60,7 +60,7 @@ public class TestPresenter extends PodcastListPresenter.AsyncPresenter {
 	}
 	
 	public void assertTaskIsFinished() throws InterruptedException {
-		waitForLatch(taskFinishLatch, "Failed to wait for task to be cancelled");
+		waitForLatch(taskFinishLatch, "Failed to wait for task to be finished");
 	}
 
 	protected void waitForLatch(CountDownLatch latch, String failureMessage)

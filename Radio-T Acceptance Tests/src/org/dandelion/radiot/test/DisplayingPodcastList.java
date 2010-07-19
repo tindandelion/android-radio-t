@@ -2,7 +2,6 @@ package org.dandelion.radiot.test;
 
 import java.lang.reflect.Field;
 
-import org.dandelion.radiot.PodcastList.IModel;
 import org.dandelion.radiot.PodcastListActivity;
 import org.dandelion.radiot.test.helpers.ApplicationDriver;
 import org.dandelion.radiot.test.helpers.NewBasicAcceptanceTestCase;
