@@ -3,6 +3,7 @@ package org.dandelion.radiot.test;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import org.dandelion.radiot.PodcastItem;
 import org.dandelion.radiot.PodcastList;
@@ -18,13 +19,38 @@ import android.content.pm.ActivityInfo;
 
 public class InterruptPodcastLoading extends BasicAcceptanceTestCase {
 
+	private static final int WAIT_TIMEOUT = 5;
 	private ApplicationDriver appDriver;
 	private CountDownLatch podcastRetrievalLatch;
+	private CountDownLatch taskCancelLatch;
 
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
-		appDriver = createApplicationDriver();
+	public void testCancelRssLoadingWhenPressingBack() throws Exception {
+		appDriver.visitMainShowPage();
+		appDriver.goBack();
+		assertBackgroundTaskIsCancelled();
+		appDriver.assertOnHomeScreen();
+	}
+
+	public void testChangeOrientation() throws Exception {
+		PodcastListActivity activity = appDriver.visitMainShowPage();
+		activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		try {
+			allowPodcastRetrievalToFinish();
+			appDriver.waitSomeTime();
+		} catch (Exception ex) {
+			fail("The orientation change failed: " + ex.getMessage());
+		}
+	}
+
+	public void testDestroyingActivityWhileLoading() throws Exception {
+		PodcastListActivity activity = appDriver.visitMainShowPage();
+		activity.finish();
+		appDriver.assertOnHomeScreen();
+		assertBackgroundTaskIsCancelled();
+	}
+
+	protected void allowPodcastRetrievalToFinish() {
+		podcastRetrievalLatch.countDown();
 	}
 
 	@Override
@@ -40,10 +66,6 @@ public class InterruptPodcastLoading extends BasicAcceptanceTestCase {
 		};
 	}
 
-	protected IPresenter createTestPresenter(IModel model) {
-		return new PodcastListPresenter.AsyncPresenter(model);
-	}
-
 	protected IModel createTestModel() {
 		podcastRetrievalLatch = new CountDownLatch(1);
 
@@ -56,39 +78,27 @@ public class InterruptPodcastLoading extends BasicAcceptanceTestCase {
 		};
 	}
 
-	public void testCancelRssLoadingWhenPressingBack() throws Exception {
-		appDriver.visitMainShowPage();
-		appDriver.goBack();
-		try {
-			appDriver.assertOnHomeScreen();
-		} finally {
-			allowPodcastRetrievalToFinish();
-		}
+	protected IPresenter createTestPresenter(IModel model) {
+		taskCancelLatch = new CountDownLatch(1);
+		return new PodcastListPresenter.AsyncPresenter(model) {
+			@Override
+			public void taskCancelled() {
+				super.taskCancelled();
+				taskCancelLatch.countDown();
+			}
+		};
 	}
 
-	protected void allowPodcastRetrievalToFinish() {
-		podcastRetrievalLatch.countDown();
+	@Override
+	protected void setUp() throws Exception {
+		super.setUp();
+		appDriver = createApplicationDriver();
 	}
 
-	public void testDestroyingActivityWhileLoading() throws Exception {
-		PodcastListActivity activity = appDriver.visitMainShowPage();
-		activity.finish();
-		try {
-			allowPodcastRetrievalToFinish();
-			appDriver.assertOnHomeScreen();
-		} catch (Exception e) {
-			fail("Should not have failed");
+	private void assertBackgroundTaskIsCancelled() throws InterruptedException {
+		if (taskCancelLatch.await(WAIT_TIMEOUT, TimeUnit.SECONDS)) {
+			return;
 		}
-	}
-
-	public void testChangeOrientation() throws Exception {
-		PodcastListActivity activity = appDriver.visitMainShowPage();
-		activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-		try {
-			allowPodcastRetrievalToFinish();
-			appDriver.waitSomeTime();
-		} catch (Exception ex) {
-			fail("The orientation change failed: " + ex.getMessage());
-		}
+		fail("Failed to wait for task to be cancelled");
 	}
 }

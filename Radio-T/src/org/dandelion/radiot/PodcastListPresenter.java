@@ -10,14 +10,12 @@ import android.os.AsyncTask;
 
 interface IPresenterInternal {
 	void doInBackground(UpdateProgress result);
-
-	void preExecute();
-
-	void postExecute(UpdateProgress result);
+	void taskStarted();
+	void taskFinished(UpdateProgress result);
+	void taskCancelled();
 }
 
-public class PodcastListPresenter implements PodcastList.IPresenter,
-		IPresenterInternal {
+public class PodcastListPresenter implements PodcastList.IPresenter {
 	protected IModel model;
 	protected IView view;
 	private UpdateProgress lastResult;
@@ -44,11 +42,11 @@ public class PodcastListPresenter implements PodcastList.IPresenter,
 		progress.retrievePodcasts(model);
 	}
 
-	public void preExecute() {
+	public void taskStarted() {
 		view.showProgress();
 	}
 
-	public void postExecute(UpdateProgress progress) {
+	public void taskFinished(UpdateProgress progress) {
 		view.closeProgress();
 		progress.updateView(view);
 		if (progress.isSuccessful()) {
@@ -88,26 +86,27 @@ public class PodcastListPresenter implements PodcastList.IPresenter,
 			}
 		}
 	}
-	
+
 	public static class SyncPresenter extends PodcastListPresenter {
 
 		public SyncPresenter(IModel model) {
 			super(model);
 		}
-		
+
 		@Override
 		protected void forkWorkerThread() {
 			UpdateProgress progress = new UpdateProgress();
-			preExecute();
+			taskStarted();
 			doInBackground(progress);
-			postExecute(progress);
+			taskFinished(progress);
 		}
 	}
-	
-	public static class AsyncPresenter extends PodcastListPresenter {
+
+	public static class AsyncPresenter extends PodcastListPresenter implements
+			IPresenterInternal {
 		private RefreshTask task;
-		
-		public AsyncPresenter(IModel model) { 
+
+		public AsyncPresenter(IModel model) {
 			super(model);
 		}
 
@@ -116,12 +115,15 @@ public class PodcastListPresenter implements PodcastList.IPresenter,
 			task = new RefreshTask(this);
 			task.execute(new UpdateProgress());
 		}
-		
+
 		@Override
 		public void cancelLoading() {
 			task.cancel(true);
 			view.closeProgress();
 			view.close();
+		}
+
+		public void taskCancelled() {
 		}
 	}
 }
@@ -143,11 +145,16 @@ class RefreshTask extends AsyncTask<UpdateProgress, Void, UpdateProgress> {
 
 	@Override
 	protected void onPostExecute(UpdateProgress progress) {
-		presenter.postExecute(progress);
+		presenter.taskFinished(progress);
 	}
 
 	@Override
 	protected void onPreExecute() {
-		presenter.preExecute();
+		presenter.taskStarted();
+	}
+	
+	@Override
+	protected void onCancelled() {
+		presenter.taskCancelled();
 	}
 }
