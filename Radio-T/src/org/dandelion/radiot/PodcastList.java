@@ -19,7 +19,7 @@ public class PodcastList {
 
 	public interface IPresenter {
 		void refreshData(boolean resetCache);
-		void cancelLoading();
+		void cancelUpdate();
 		void detach();
 		void attach(IView view);
 	}

@@ -110,7 +110,7 @@ public class PodcastListActivityTestCase extends
 	class NullPresenter implements IPresenter {
 		private Object view = new Object();
 
-		public void cancelLoading() {
+		public void cancelUpdate() {
 		}
 
 		public void detach() {

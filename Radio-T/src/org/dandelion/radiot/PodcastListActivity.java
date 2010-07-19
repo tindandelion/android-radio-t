@@ -78,6 +78,12 @@ public class PodcastListActivity extends ListActivity implements IView {
 	}
 
 	@Override
+	protected void onStop() {
+		presenter.cancelUpdate();
+		super.onStop();
+	}
+
+	@Override
 	public Object onRetainNonConfigurationInstance() {
 		presenter.detach();
 		return presenter;
@@ -115,7 +121,7 @@ public class PodcastListActivity extends ListActivity implements IView {
 				getString(R.string.loading_message), true, true,
 				new DialogInterface.OnCancelListener() {
 					public void onCancel(DialogInterface dialog) {
-						presenter.cancelLoading();
+						presenter.cancelUpdate();
 					}
 				});
 	}

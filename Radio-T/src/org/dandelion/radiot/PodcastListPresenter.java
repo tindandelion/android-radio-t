@@ -24,7 +24,7 @@ public class PodcastListPresenter implements PodcastList.IPresenter {
 		this.model = model;
 	}
 
-	public void cancelLoading() {
+	public void cancelUpdate() {
 	}
 
 	public void refreshData(boolean resetCache) {
@@ -117,7 +117,7 @@ public class PodcastListPresenter implements PodcastList.IPresenter {
 		}
 
 		@Override
-		public void cancelLoading() {
+		public void cancelUpdate() {
 			task.cancel(true);
 			view.closeProgress();
 			view.close();
