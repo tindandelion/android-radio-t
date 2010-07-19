@@ -23,6 +23,8 @@ public class InterruptPodcastLoading extends BasicAcceptanceTestCase {
 	private ApplicationDriver appDriver;
 	private CountDownLatch podcastRetrievalLatch;
 	private CountDownLatch taskCancelLatch;
+	private int numberOfStartedTasks;
+	protected int numberOfFinishedTasks;
 
 	public void testCancelRssLoadingWhenPressingBack() throws Exception {
 		appDriver.visitMainShowPage();
@@ -31,15 +33,18 @@ public class InterruptPodcastLoading extends BasicAcceptanceTestCase {
 		appDriver.assertOnHomeScreen();
 	}
 
-	public void testChangeOrientation() throws Exception {
+	public void testChangeOrientationContinuesBackgroundLoading()
+			throws Exception {
 		PodcastListActivity activity = appDriver.visitMainShowPage();
 		activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-		try {
-			allowPodcastRetrievalToFinish();
-			appDriver.waitSomeTime();
-		} catch (Exception ex) {
-			fail("The orientation change failed: " + ex.getMessage());
-		}
+		appDriver.waitSomeTime();
+		allowPodcastRetrievalToFinish();
+		assertNumberOfStartedBackgroundTasks(1);
+		appDriver.assertShowingPodcastList();
+	}
+
+	private void assertNumberOfStartedBackgroundTasks(int i) {
+		assertEquals(i, numberOfStartedTasks);
 	}
 
 	public void testDestroyingActivityWhileLoading() throws Exception {
@@ -80,11 +85,28 @@ public class InterruptPodcastLoading extends BasicAcceptanceTestCase {
 
 	protected IPresenter createTestPresenter(IModel model) {
 		taskCancelLatch = new CountDownLatch(1);
+		numberOfStartedTasks = 0;
+		numberOfFinishedTasks = 0;
 		return new PodcastListPresenter.AsyncPresenter(model) {
+			@Override
+			public void taskStarted() {
+				super.taskStarted();
+				numberOfStartedTasks += 1;
+			}
+			
+			@Override
+			public void taskFinished(UpdateProgress progress) {
+				super.taskFinished(progress);
+				numberOfFinishedTasks += 1;
+			}
+
 			@Override
 			public void taskCancelled() {
 				super.taskCancelled();
-				taskCancelLatch.countDown();
+				if (null != taskCancelLatch) {
+					taskCancelLatch.countDown();
+				}
+				numberOfFinishedTasks += 1;
 			}
 		};
 	}
@@ -93,6 +115,14 @@ public class InterruptPodcastLoading extends BasicAcceptanceTestCase {
 	protected void setUp() throws Exception {
 		super.setUp();
 		appDriver = createApplicationDriver();
+	}
+	
+	@Override
+	protected void tearDown() throws Exception {
+		super.tearDown();
+		if (numberOfStartedTasks > numberOfFinishedTasks) {
+			fail("Not all background tasks were finished by tear down");
+		}
 	}
 
 	private void assertBackgroundTaskIsCancelled() throws InterruptedException {

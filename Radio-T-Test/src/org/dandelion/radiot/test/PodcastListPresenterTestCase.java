@@ -84,9 +84,6 @@ public class PodcastListPresenterTestCase extends TestCase implements IModel {
 	private IView createView() {
 		return new IView() {
 
-			public void close() {
-			}
-
 			public void closeProgress() {
 			}
 

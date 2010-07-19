@@ -42,6 +42,10 @@ public class ApplicationDriver extends Solo {
 			e.printStackTrace();
 		}
 	}
+
+	public void assertShowingPodcastList() {
+		assertCurrentActivity("Must show podcast list", PodcastListActivity.class);
+	}
 	
 
 }

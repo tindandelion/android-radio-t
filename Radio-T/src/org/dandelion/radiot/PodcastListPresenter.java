@@ -10,8 +10,11 @@ import android.os.AsyncTask;
 
 interface IPresenterInternal {
 	void doInBackground(UpdateProgress result);
+
 	void taskStarted();
+
 	void taskFinished(UpdateProgress result);
+
 	void taskCancelled();
 }
 
@@ -112,18 +115,32 @@ public class PodcastListPresenter implements PodcastList.IPresenter {
 
 		@Override
 		protected void forkWorkerThread() {
-			task = new RefreshTask(this);
-			task.execute(new UpdateProgress());
+			if (!isRunningUpdate()) {
+				task = new RefreshTask(this);
+				task.execute(new UpdateProgress());
+			}
+		}
+
+		private boolean isRunningUpdate() {
+			return task != null;
 		}
 
 		@Override
 		public void cancelUpdate() {
-			task.cancel(true);
-			view.closeProgress();
-			view.close();
+			if (isRunningUpdate()) {
+				task.cancel(true);
+				view.closeProgress();
+			}
+		}
+
+		@Override
+		public void taskFinished(UpdateProgress progress) {
+			super.taskFinished(progress);
+			task = null;
 		}
 
 		public void taskCancelled() {
+			task = null;
 		}
 	}
 }
@@ -152,7 +169,7 @@ class RefreshTask extends AsyncTask<UpdateProgress, Void, UpdateProgress> {
 	protected void onPreExecute() {
 		presenter.taskStarted();
 	}
-	
+
 	@Override
 	protected void onCancelled() {
 		presenter.taskCancelled();

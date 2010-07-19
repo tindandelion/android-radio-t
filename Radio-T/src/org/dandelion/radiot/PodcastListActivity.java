@@ -44,10 +44,6 @@ public class PodcastListActivity extends ListActivity implements IView {
 
 	private ProgressDialog progress;
 
-	public void close() {
-		this.finish();
-	}
-
 	public void closeProgress() {
 		progress.dismiss();
 	}
@@ -121,7 +117,7 @@ public class PodcastListActivity extends ListActivity implements IView {
 				getString(R.string.loading_message), true, true,
 				new DialogInterface.OnCancelListener() {
 					public void onCancel(DialogInterface dialog) {
-						presenter.cancelUpdate();
+						finish();
 					}
 				});
 	}
@@ -186,14 +182,15 @@ public class PodcastListActivity extends ListActivity implements IView {
 			setElementText(row, R.id.podcast_item_view_shownotes,
 					item.getShowNotes());
 			setElementText(row, R.id.podcast_item_view_tags,
- 					item.getTagString());
+					item.getTagString());
 			setPodcastIcon(row, item);
 			return row;
 		}
 
 		private void setPodcastIcon(View row, PodcastItem item) {
 			if (null != item.getImage()) {
-				ImageView image = (ImageView) row.findViewById(R.id.podcast_item_icon);
+				ImageView image = (ImageView) row
+						.findViewById(R.id.podcast_item_icon);
 				image.setImageDrawable(item.getImage());
 			}
 		}
