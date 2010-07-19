@@ -32,6 +32,7 @@ public class PodcastListPresenter implements PodcastList.IPresenter {
 
 	public void refreshData(boolean resetCache) {
 		if (null == lastResult || resetCache) {
+			view.showProgress();
 			forkWorkerThread();
 		} else {
 			lastResult.updateView(view);
@@ -46,7 +47,6 @@ public class PodcastListPresenter implements PodcastList.IPresenter {
 	}
 
 	public void taskStarted() {
-		view.showProgress();
 	}
 
 	public void taskFinished(UpdateProgress progress) {
