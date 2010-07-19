@@ -72,17 +72,22 @@ public class PodcastListActivity extends ListActivity implements IView {
 		super.onResume();
 		presenter.refreshData(false);
 	}
-
+	
 	@Override
-	protected void onStop() {
-		presenter.cancelUpdate();
-		super.onStop();
+	protected void onDestroy() {
+		if (null != presenter) {
+			presenter.cancelUpdate();
+		}
+		super.onDestroy();
 	}
+
 
 	@Override
 	public Object onRetainNonConfigurationInstance() {
 		presenter.detach();
-		return presenter;
+		IPresenter savedPresenter = presenter;
+		presenter = null;
+		return savedPresenter;
 	}
 
 	@Override

@@ -41,11 +41,12 @@ public class PodcastListActivityTestCase extends
 	public void testDetachesPresenterWhenReturningNonConfiurationInstance()
 			throws Exception {
 		activity = startActivity(new Intent(), null, null);
-
+		
 		NullPresenter savedPresenter = (NullPresenter) activity
 				.onRetainNonConfigurationInstance();
 		assertEquals(presenter, savedPresenter);
 		assertFalse(presenter.isAttached());
+		assertNull(activity.getPresenter());
 	}
 
 	public void testGetsFeedUrlFromBundleExtra() throws Exception {
