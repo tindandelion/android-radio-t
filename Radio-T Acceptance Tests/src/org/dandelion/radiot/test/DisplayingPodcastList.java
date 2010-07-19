@@ -4,14 +4,14 @@ import java.lang.reflect.Field;
 
 import org.dandelion.radiot.PodcastListActivity;
 import org.dandelion.radiot.test.helpers.ApplicationDriver;
-import org.dandelion.radiot.test.helpers.NewBasicAcceptanceTestCase;
+import org.dandelion.radiot.test.helpers.PodcastListAcceptanceTestCase;
 
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
 public class DisplayingPodcastList extends
-		NewBasicAcceptanceTestCase {
+		PodcastListAcceptanceTestCase {
 
 	private PodcastListActivity activity;
 	private ApplicationDriver appDriver;
@@ -36,7 +36,7 @@ public class DisplayingPodcastList extends
 		super.setUp();
 		appDriver = createApplicationDriver();
 		activity = appDriver.visitMainShowPage();
-		testPresenter.assertTaskIsFinished();
+		testPresenter.assertPodcastListIsUpdated();
 	}
 
 	private void assertTextFieldHasText(View parent, String id, String expected)

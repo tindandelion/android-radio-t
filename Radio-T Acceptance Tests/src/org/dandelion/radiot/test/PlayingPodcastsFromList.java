@@ -2,24 +2,18 @@ package org.dandelion.radiot.test;
 
 
 import org.dandelion.radiot.PodcastItem;
-import org.dandelion.radiot.PodcastList.Factory;
 import org.dandelion.radiot.PodcastListActivity;
 import org.dandelion.radiot.test.helpers.ApplicationDriver;
-import org.dandelion.radiot.test.helpers.BasicAcceptanceTestCase;
 import org.dandelion.radiot.test.helpers.FakePodcastPlayer;
+import org.dandelion.radiot.test.helpers.PodcastListAcceptanceTestCase;
 
 import android.test.UiThreadTest;
 import android.view.View;
 
-public class PlayingPodcastsFromList extends BasicAcceptanceTestCase {
+public class PlayingPodcastsFromList extends PodcastListAcceptanceTestCase {
 	private PodcastListActivity activity;
 	private ApplicationDriver appDriver;
 	private FakePodcastPlayer player;
-
-	@Override
-	protected Factory createPodcastListFactory() {
-		return new LocalRssFeedFactory(getInstrumentation());
-	}
 
 	@Override
 	protected void setUp() throws Exception {
@@ -28,6 +22,7 @@ public class PlayingPodcastsFromList extends BasicAcceptanceTestCase {
 		activity = appDriver.visitMainShowPage();
 		player = new FakePodcastPlayer();
 		activity.setPodcastPlayer(player);
+		testPresenter.assertPodcastListIsUpdated();
 	}
 
 	@UiThreadTest

@@ -59,7 +59,7 @@ public class TestPresenter extends PodcastListPresenter.AsyncPresenter {
 		waitForLatch(taskCancelLatch, "Failed to wait for task to be cancelled");
 	}
 	
-	public void assertTaskIsFinished() throws InterruptedException {
+	public void assertPodcastListIsUpdated() throws InterruptedException {
 		waitForLatch(taskFinishLatch, "Failed to wait for task to be finished");
 	}
 

@@ -2,6 +2,8 @@ package org.dandelion.radiot.test.helpers;
 
 import org.dandelion.radiot.HomeScreen;
 import org.dandelion.radiot.PodcastList;
+import org.dandelion.radiot.PodcastList.IModel;
+import org.dandelion.radiot.PodcastList.IPresenter;
 
 import android.test.ActivityInstrumentationTestCase2;
 
@@ -13,14 +15,23 @@ public class BasicAcceptanceTestCase extends
 	}
 
 	protected ApplicationDriver createApplicationDriver() {
-		PodcastList.Factory factory = createPodcastListFactory();
-		if (null != factory) {
-			PodcastList.setFactory(factory);
-		}
+		PodcastList.setFactory(new PodcastList.Factory() {
+			public IModel createModel(String url) {
+				return createTestModel(url);
+			};
+
+			public IPresenter createPresenter(IModel model) {
+				return createTestPresenter(model);
+			};
+		});
 		return new ApplicationDriver(getInstrumentation(), getActivity());
 	}
 
-	protected PodcastList.Factory createPodcastListFactory() {
+	protected IPresenter createTestPresenter(IModel model) {
+		return null;
+	}
+
+	protected IModel createTestModel(String url) {
 		return null;
 	}
 

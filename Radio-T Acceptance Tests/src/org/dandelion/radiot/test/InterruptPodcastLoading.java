@@ -9,11 +9,11 @@ import org.dandelion.radiot.PodcastList;
 import org.dandelion.radiot.PodcastList.IModel;
 import org.dandelion.radiot.PodcastListActivity;
 import org.dandelion.radiot.test.helpers.ApplicationDriver;
-import org.dandelion.radiot.test.helpers.NewBasicAcceptanceTestCase;
+import org.dandelion.radiot.test.helpers.PodcastListAcceptanceTestCase;
 
 import android.content.pm.ActivityInfo;
 
-public class InterruptPodcastLoading extends NewBasicAcceptanceTestCase {
+public class InterruptPodcastLoading extends PodcastListAcceptanceTestCase {
 
 	private ApplicationDriver appDriver;
 	protected CountDownLatch podcastRetrievalLatch;

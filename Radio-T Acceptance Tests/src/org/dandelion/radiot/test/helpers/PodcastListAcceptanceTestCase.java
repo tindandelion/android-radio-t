@@ -3,7 +3,6 @@ package org.dandelion.radiot.test.helpers;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.dandelion.radiot.PodcastList;
 import org.dandelion.radiot.PodcastList.IModel;
 import org.dandelion.radiot.PodcastList.IPresenter;
 import org.dandelion.radiot.RssFeedModel;
@@ -11,22 +10,11 @@ import org.dandelion.radiot.RssFeedModel;
 import android.content.res.AssetManager;
 import android.net.Uri;
 
-public class NewBasicAcceptanceTestCase extends BasicAcceptanceTestCase {
+public class PodcastListAcceptanceTestCase extends BasicAcceptanceTestCase {
 	protected TestPresenter testPresenter;
 
+
 	@Override
-	protected PodcastList.Factory createPodcastListFactory() {
-		return new PodcastList.Factory() {
-			public IModel createModel(String url) {
-				return createTestModel(url);
-			};
-
-			public IPresenter createPresenter(IModel model) {
-				return createTestPresenter(model);
-			};
-		};
-	}
-
 	protected IModel createTestModel(final String url) {
 		final AssetManager assets = getInstrumentation().getContext()
 				.getAssets();
@@ -53,6 +41,7 @@ public class NewBasicAcceptanceTestCase extends BasicAcceptanceTestCase {
 		};
 	}
 
+	@Override
 	protected IPresenter createTestPresenter(IModel model) {
 		testPresenter = new TestPresenter(model);
 		return testPresenter;
