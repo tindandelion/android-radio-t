@@ -8,7 +8,7 @@ import junit.framework.Assert;
 import org.dandelion.radiot.PodcastList.IModel;
 import org.dandelion.radiot.PodcastListPresenter;
 
-public class TestPresenter extends PodcastListPresenter.AsyncPresenter {
+public class TestPresenter extends PodcastListPresenter {
 	private static final int WAIT_TIMEOUT = 60;
 	private CountDownLatch taskCancelLatch;
 	private CountDownLatch taskFinishLatch;

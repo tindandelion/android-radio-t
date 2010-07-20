@@ -10,24 +10,19 @@ import android.os.AsyncTask;
 
 interface IPresenterInternal {
 	void doInBackground(UpdateProgress result);
-
 	void taskStarted();
-
 	void taskFinished(UpdateProgress result);
-
 	void taskCancelled();
 }
 
-public class PodcastListPresenter implements PodcastList.IPresenter {
+public class PodcastListPresenter implements PodcastList.IPresenter, IPresenterInternal {
 	protected IModel model;
 	protected IView view;
 	private UpdateProgress lastResult;
+	protected RefreshTask task;
 
-	private PodcastListPresenter(PodcastList.IModel model) {
+	public PodcastListPresenter(PodcastList.IModel model) {
 		this.model = model;
-	}
-
-	public void cancelUpdate() {
 	}
 
 	public void refreshData(boolean resetCache) {
@@ -37,9 +32,6 @@ public class PodcastListPresenter implements PodcastList.IPresenter {
 		} else {
 			lastResult.updateView(view);
 		}
-	}
-
-	protected void forkWorkerThread() {
 	}
 
 	public void doInBackground(UpdateProgress progress) {
@@ -55,6 +47,7 @@ public class PodcastListPresenter implements PodcastList.IPresenter {
 		if (progress.isSuccessful()) {
 			lastResult = progress;
 		}
+		task = null;
 	}
 
 	public void detach() {
@@ -64,6 +57,29 @@ public class PodcastListPresenter implements PodcastList.IPresenter {
 	public void attach(IView view) {
 		this.view = view;
 	}
+
+	protected boolean isRunningUpdate() {
+		return task != null;
+	}
+
+	protected void forkWorkerThread() {
+		if (!isRunningUpdate()) {
+			task = new RefreshTask(this);
+			task.execute(new UpdateProgress());
+		}
+	}
+	
+	public void cancelUpdate() {
+		if (isRunningUpdate()) {
+			task.cancel(true);
+			view.closeProgress();
+		}
+	}
+
+	public void taskCancelled() {
+		task = null;
+	}
+
 
 	public static class UpdateProgress {
 		private List<PodcastItem> podcasts;
@@ -87,60 +103,6 @@ public class PodcastListPresenter implements PodcastList.IPresenter {
 			} else {
 				view.showErrorMessage(error.getMessage());
 			}
-		}
-	}
-
-	public static class SyncPresenter extends PodcastListPresenter {
-
-		public SyncPresenter(IModel model) {
-			super(model);
-		}
-
-		@Override
-		protected void forkWorkerThread() {
-			UpdateProgress progress = new UpdateProgress();
-			taskStarted();
-			doInBackground(progress);
-			taskFinished(progress);
-		}
-	}
-
-	public static class AsyncPresenter extends PodcastListPresenter implements
-			IPresenterInternal {
-		private RefreshTask task;
-
-		public AsyncPresenter(IModel model) {
-			super(model);
-		}
-
-		@Override
-		protected void forkWorkerThread() {
-			if (!isRunningUpdate()) {
-				task = new RefreshTask(this);
-				task.execute(new UpdateProgress());
-			}
-		}
-
-		private boolean isRunningUpdate() {
-			return task != null;
-		}
-
-		@Override
-		public void cancelUpdate() {
-			if (isRunningUpdate()) {
-				task.cancel(true);
-				view.closeProgress();
-			}
-		}
-
-		@Override
-		public void taskFinished(UpdateProgress progress) {
-			super.taskFinished(progress);
-			task = null;
-		}
-
-		public void taskCancelled() {
-			task = null;
 		}
 	}
 }

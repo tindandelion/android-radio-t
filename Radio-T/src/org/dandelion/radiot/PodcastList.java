@@ -51,7 +51,7 @@ public class PodcastList {
 		}
 
 		public IPresenter createPresenter(IModel model) {
-			return new PodcastListPresenter.AsyncPresenter(model);
+			return new PodcastListPresenter(model);
 		}
 	}
 }

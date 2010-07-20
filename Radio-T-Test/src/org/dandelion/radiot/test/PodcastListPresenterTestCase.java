@@ -17,7 +17,7 @@ public class PodcastListPresenterTestCase extends TestCase implements IModel {
 	private Exception errorToThrow;
 	private List<PodcastItem> podcastsFromModel;
 	private IPresenter presenter;
-	
+
 	public List<PodcastItem> retrievePodcasts() throws Exception {
 		if (null != errorToThrow) {
 			throw errorToThrow;
@@ -28,11 +28,11 @@ public class PodcastListPresenterTestCase extends TestCase implements IModel {
 	public void testCachingPodcastList() throws Exception {
 		ArrayList<PodcastItem> firstPodcasts = newPodcastList();
 		ArrayList<PodcastItem> secondPodcasts = newPodcastList();
-		
+
 		modelReturnsPodcasts(firstPodcasts);
 		presenter.refreshData(false);
 		assertDisplaysPodcasts(firstPodcasts);
-		
+
 		modelReturnsPodcasts(secondPodcasts);
 		presenter.refreshData(false);
 		assertDisplaysPodcasts(firstPodcasts);
@@ -42,28 +42,36 @@ public class PodcastListPresenterTestCase extends TestCase implements IModel {
 		modelThrowsError();
 		presenter.refreshData(false);
 		assertDisplaysPodcasts(null);
-		
+
 		ArrayList<PodcastItem> podcasts = newPodcastList();
 		modelReturnsPodcasts(podcasts);
 		presenter.refreshData(false);
 		assertDisplaysPodcasts(podcasts);
 	}
-	
+
 	public void testForceClearCache() throws Exception {
 		ArrayList<PodcastItem> firstPodcasts = newPodcastList();
 		ArrayList<PodcastItem> secondPodcasts = newPodcastList();
-		
+
 		modelReturnsPodcasts(firstPodcasts);
 		presenter.refreshData(false);
 		assertDisplaysPodcasts(firstPodcasts);
-		
+
 		modelReturnsPodcasts(secondPodcasts);
 		presenter.refreshData(true);
 		assertDisplaysPodcasts(secondPodcasts);
 	}
 
 	protected PodcastListPresenter createPresenter(IModel model) {
-		return new PodcastListPresenter.SyncPresenter(model);
+		return new PodcastListPresenter(model) {
+			@Override
+			protected void forkWorkerThread() {
+				UpdateProgress progress = new UpdateProgress();
+				taskStarted();
+				doInBackground(progress);
+				taskFinished(progress);
+			}
+		};
 	}
 
 	protected ArrayList<PodcastItem> newPodcastList() {
