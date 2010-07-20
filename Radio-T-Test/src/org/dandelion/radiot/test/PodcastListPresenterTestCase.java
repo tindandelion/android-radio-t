@@ -68,8 +68,9 @@ public class PodcastListPresenterTestCase extends TestCase implements IModel {
 			protected void forkWorkerThread() {
 				UpdateProgress progress = new UpdateProgress();
 				taskStarted();
-				doInBackground(progress);
-				taskFinished(progress);
+				retrievePodcastList(progress);
+				publishPodcastList(progress);
+				taskFinished();
 			}
 		};
 	}

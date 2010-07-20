@@ -52,14 +52,16 @@ public class InterruptPodcastLoading extends PodcastListAcceptanceTestCase {
 		appDriver = createApplicationDriver();
 	}
 
-
 	protected IModel createTestModel(String url) {
 		podcastRetrievalLatch = new CountDownLatch(1);
-	
+
 		return new PodcastList.IModel() {
 			@Override
 			public List<PodcastItem> retrievePodcasts() throws Exception {
-				podcastRetrievalLatch.await();
+				try {
+					podcastRetrievalLatch.await();
+				} catch (InterruptedException ex) {
+				}
 				return new ArrayList<PodcastItem>();
 			}
 		};

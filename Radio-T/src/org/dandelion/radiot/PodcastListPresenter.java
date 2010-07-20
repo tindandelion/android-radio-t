@@ -9,9 +9,9 @@ import org.dandelion.radiot.PodcastList.IView;
 import android.os.AsyncTask;
 
 interface IPresenterInternal {
-	void doInBackground(UpdateProgress result);
+	void retrievePodcastList(UpdateProgress result);
 	void taskStarted();
-	void taskFinished(UpdateProgress result);
+	void taskFinished();
 	void taskCancelled();
 }
 
@@ -19,7 +19,7 @@ public class PodcastListPresenter implements PodcastList.IPresenter, IPresenterI
 	protected IModel model;
 	protected IView view;
 	private UpdateProgress lastResult;
-	protected RefreshTask task;
+	protected UpdateTask task;
 
 	public PodcastListPresenter(PodcastList.IModel model) {
 		this.model = model;
@@ -34,20 +34,23 @@ public class PodcastListPresenter implements PodcastList.IPresenter, IPresenterI
 		}
 	}
 
-	public void doInBackground(UpdateProgress progress) {
+	public void retrievePodcastList(UpdateProgress progress) {
 		progress.retrievePodcasts(model);
 	}
 
 	public void taskStarted() {
 	}
 
-	public void taskFinished(UpdateProgress progress) {
+	public void taskFinished() {
+		task = null;
+	}
+
+	protected void publishPodcastList(UpdateProgress progress) {
 		view.closeProgress();
 		progress.updateView(view);
 		if (progress.isSuccessful()) {
 			lastResult = progress;
 		}
-		task = null;
 	}
 
 	public void detach() {
@@ -64,8 +67,8 @@ public class PodcastListPresenter implements PodcastList.IPresenter, IPresenterI
 
 	protected void forkWorkerThread() {
 		if (!isRunningUpdate()) {
-			task = new RefreshTask(this);
-			task.execute(new UpdateProgress());
+			task = new UpdateTask();
+			task.execute();
 		}
 	}
 	
@@ -105,35 +108,38 @@ public class PodcastListPresenter implements PodcastList.IPresenter, IPresenterI
 			}
 		}
 	}
+	class UpdateTask extends AsyncTask<Void, Runnable, Void> {
+		@Override
+		protected Void doInBackground(Void... params) {
+			final UpdateProgress progress = new UpdateProgress();
+			retrievePodcastList(progress);
+			publishProgress(new Runnable() {
+				public void run() {
+					publishPodcastList(progress);
+				}
+			});
+			return null;
+		}
+		
+		@Override
+		protected void onProgressUpdate(Runnable... values) {
+			values[0].run();
+		}
+		
+		@Override
+		protected void onPostExecute(Void result) {
+			taskFinished();
+		}
+
+		@Override
+		protected void onPreExecute() {
+			taskStarted();
+		}
+
+		@Override
+		protected void onCancelled() {
+			taskCancelled();
+		}
+	}
 }
 
-class RefreshTask extends AsyncTask<UpdateProgress, Void, UpdateProgress> {
-
-	private IPresenterInternal presenter;
-
-	public RefreshTask(IPresenterInternal presenter) {
-		this.presenter = presenter;
-	}
-
-	@Override
-	protected UpdateProgress doInBackground(UpdateProgress... params) {
-		UpdateProgress progress = params[0];
-		presenter.doInBackground(progress);
-		return progress;
-	}
-
-	@Override
-	protected void onPostExecute(UpdateProgress progress) {
-		presenter.taskFinished(progress);
-	}
-
-	@Override
-	protected void onPreExecute() {
-		presenter.taskStarted();
-	}
-
-	@Override
-	protected void onCancelled() {
-		presenter.taskCancelled();
-	}
-}

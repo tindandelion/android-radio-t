@@ -30,8 +30,8 @@ public class TestPresenter extends PodcastListPresenter {
 	}
 
 	@Override
-	public void taskFinished(UpdateProgress progress) {
-		super.taskFinished(progress);
+	public void taskFinished() {
+		super.taskFinished();
 		finishedTasksCount += 1;
 		taskFinishLatch.countDown();
 	}
