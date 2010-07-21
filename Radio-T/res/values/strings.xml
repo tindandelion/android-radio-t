@@ -12,7 +12,7 @@
     <string name="live_show_title">Прямой эфир</string>
     <string name="about_app_title">О программе</string>
     
-    <string name="version_label">Версия 1.0</string>
+    <string name="version_label">Версия %s</string>
     <string name="feedback_label">Обратная связь</string>
     
     <string name="live_show_info">\
