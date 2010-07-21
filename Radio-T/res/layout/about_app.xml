@@ -1,20 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="wrap_content"
-	android:layout_height="wrap_content"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
 	android:background="@drawable/home_screen_background">
 	<RelativeLayout
 		style="@style/RoundBorderedBox"
 		android:layout_centerInParent="true"
 		android:paddingTop="30dp"
 		android:paddingBottom="30dp">
+		<FrameLayout
+			android:id="@+id/logo"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerHorizontal="true"
+			android:layout_marginBottom="20dp">
+			<include
+				layout="@layout/app_logo" />
+		</FrameLayout>
 		<TextView
 			android:id="@+id/app_name_label"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:textSize="17sp"
 			android:textStyle="bold"
+			android:layout_below="@id/logo"
 			android:layout_centerHorizontal="true"
 			android:text="@string/app_name" />
 		<TextView
@@ -31,7 +41,7 @@
 			android:layout_height="wrap_content"
 			android:layout_below="@id/version_label"
 			android:layout_centerInParent="true"
-			android:layout_marginTop="30dp"
+			android:layout_marginTop="20dp"
 			android:text="@string/feedback_label"
 			android:onClick="sendFeedback" />
 	</RelativeLayout>

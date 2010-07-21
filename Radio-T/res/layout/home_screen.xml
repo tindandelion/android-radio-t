@@ -4,47 +4,36 @@
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
 	android:background="@drawable/home_screen_background">
-	<TextView
-		android:id="@+id/main_title"
-		android:layout_width="wrap_content"
+	<RelativeLayout
+		android:id="@+id/home_screen_header"
+		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:textColor="#FFFFFF"
-		android:layout_alignParentLeft="true"
-		android:layout_alignBottom="@+id/logo_image"
-		android:paddingLeft="7dp"
-		android:paddingBottom="7dp"
-		android:textStyle="bold"
-		android:textSize="23dp"
-		android:textScaleX="1.1"
-		android:text="@string/main_title" />
-	<ImageView
-		android:id="@+id/logo_image"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:src="@drawable/logo"
-		android:layout_marginTop="10dp"
-		android:layout_marginLeft="5dp"
-		android:layout_toRightOf="@id/main_title" />
-	<TextView
-		android:id="@+id/logo_text"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_alignParentRight="true"
-		android:layout_alignTop="@id/logo_image"
-		android:layout_alignBottom="@id/logo_image"
-		android:gravity="center_vertical|right"
-		android:text="@string/logo_text"
-		android:textScaleX="1.1"
-		android:textColor="#A0A0A0"
-		android:textStyle="bold"
-		android:textSize="15dp"
-		android:paddingTop="8dp"
-		android:layout_marginRight="7dp" />
+		android:layout_marginTop="20dp"
+		android:layout_marginRight="7dp"
+		android:layout_marginLeft="7dp">
+		<include
+			android:id="@+id/logo"
+			layout="@layout/app_logo" />
+		<TextView
+			android:id="@+id/logo_text"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+			android:layout_alignTop="@id/logo"
+			android:layout_alignBottom="@id/logo"
+			android:gravity="center_vertical|right"
+			android:text="@string/logo_text"
+			android:textScaleX="1.1"
+			android:textColor="#A0A0A0"
+			android:textStyle="bold"
+			android:textSize="15dp"
+			android:paddingTop="8dp" />
+	</RelativeLayout>
 	<ListView
 		android:id="@+id/podcasts_menu"
 		style="@style/RoundBorderedBox"
-		android:layout_below="@id/logo_image"
-		android:layout_marginTop="30dp" />
+		android:layout_below="@id/home_screen_header"
+		android:layout_marginTop="20dp" />
 	<ListView
 		android:id="@+id/info_menu"
 		style="@style/RoundBorderedBox"
