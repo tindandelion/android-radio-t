@@ -1,18 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="org.dandelion.radiot" android:versionCode="1"
+<manifest
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	package="org.dandelion.radiot"
+	android:versionCode="1"
 	android:versionName="0.1 Beta">
-	<application android:icon="@drawable/icon" android:label="@string/app_name">
-		<activity android:name="PodcastListActivity" />
-		<activity android:name="LiveShowScreen" android:label="@string/live_show_title"/>
-		<activity android:name="AboutAppScreen" android:label="@string/about_app_title"/>		
-		<activity android:name="HomeScreen"
-		android:theme="@android:style/Theme.NoTitleBar">
+	<supports-screens
+		android:largeScreens="true"
+		android:normalScreens="true"
+		android:smallScreens="false"
+		android:anyDensity="true" />
+	<application
+		android:icon="@drawable/icon"
+		android:label="@string/app_name">
+		<activity
+			android:name="PodcastListActivity" />
+		<activity
+			android:name="LiveShowScreen"
+			android:label="@string/live_show_title" />
+		<activity
+			android:name="AboutAppScreen"
+			android:label="@string/about_app_title" />
+		<activity
+			android:name="HomeScreen"
+			android:theme="@android:style/Theme.NoTitleBar">
 			<intent-filter>
-				<action android:name="android.intent.action.MAIN"></action>
-				<category android:name="android.intent.category.LAUNCHER"></category>
+				<action
+					android:name="android.intent.action.MAIN"></action>
+				<category
+					android:name="android.intent.category.LAUNCHER"></category>
 			</intent-filter>
 		</activity>
 	</application>
-	<uses-permission android:name="android.permission.INTERNET"></uses-permission>
-</manifest> 
+	<uses-permission
+		android:name="android.permission.INTERNET"></uses-permission>
+</manifest>
