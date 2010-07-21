@@ -42,22 +42,12 @@
 		android:layout_marginRight="7dp" />
 	<ListView
 		android:id="@+id/podcasts_menu"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
+		style="@style/RoundBorderedBox"
 		android:layout_below="@id/logo_image"
-		android:layout_marginTop="30dp"
-		android:layout_marginLeft="7dp"
-		android:layout_marginRight="7dp"
-		android:padding="5dp"
-		android:background="@drawable/home_screen_list_background" />
+		android:layout_marginTop="30dp" />
 	<ListView
 		android:id="@+id/info_menu"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
+		style="@style/RoundBorderedBox"
 		android:layout_below="@id/podcasts_menu"
-		android:layout_marginTop="15dp"
-		android:layout_marginLeft="7dp"
-		android:layout_marginRight="7dp"
-		android:padding="5dp"
-		android:background="@drawable/home_screen_list_background" />
+		android:layout_marginTop="15dp" />
 </RelativeLayout>
