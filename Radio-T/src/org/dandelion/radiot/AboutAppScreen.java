@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 
 public class AboutAppScreen extends Activity {
-	private static final String FEEDBACK_EMAIL = "s.moshnikov@gmail.com";
+	private static final String FEEDBACK_EMAIL = "apps.dandelion@gmail.com";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
