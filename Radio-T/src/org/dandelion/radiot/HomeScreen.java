@@ -3,18 +3,20 @@ package org.dandelion.radiot;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.ListActivity;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class HomeScreen extends ListActivity {
+public class HomeScreen extends Activity implements OnItemClickListener {
 	private static final String PODCAST_URL = "http://feeds.rucast.net/radio-t";
 	private static final String PIRATES_URL = "http://feeds.feedburner.com/pirate-radio-t";
 	private ArrayAdapter<HomeScreenItem> listAdapter;
@@ -26,15 +28,11 @@ public class HomeScreen extends ListActivity {
 		initList();
 	}
 
-	@Override
-	protected void onListItemClick(ListView l, View v, int position, long id) {
-		HomeScreenItem item = listAdapter.getItem(position);
-		item.execute();
-	}
-
 	private void initList() {
 		listAdapter = new HomeScreenAdapter(getHomeSceenItems());
-		setListAdapter(listAdapter);
+		ListView listView = (ListView) findViewById(R.id.podcasts_menu);
+		listView.setAdapter(listAdapter);
+		listView.setOnItemClickListener(this);
 	}
 
 	private List<HomeScreenItem> getHomeSceenItems() {
@@ -113,5 +111,11 @@ public class HomeScreen extends ListActivity {
 			return row;
 		}
 
+	}
+
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		HomeScreenItem item = listAdapter.getItem(position);
+		item.execute();
 	}
 }
