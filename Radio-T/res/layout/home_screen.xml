@@ -33,10 +33,12 @@
 		android:id="@+id/podcasts_menu"
 		style="@style/RoundBorderedBox"
 		android:layout_below="@id/home_screen_header"
-		android:layout_marginTop="20dp" />
+		android:layout_marginTop="20dp"
+		android:footerDividersEnabled="false" />
 	<ListView
 		android:id="@+id/info_menu"
 		style="@style/RoundBorderedBox"
 		android:layout_below="@id/podcasts_menu"
-		android:layout_marginTop="15dp" />
+		android:layout_marginTop="15dp"
+		android:footerDividersEnabled="false" />
 </RelativeLayout>
