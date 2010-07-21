@@ -30,11 +30,11 @@ public class HomeScreen extends Activity implements OnItemClickListener {
 
 	private List<HomeScreenItem> getInfoMenuItems() {
 		ArrayList<HomeScreenItem> items = new ArrayList<HomeScreenItem>();
-		items.add(new HomeScreenItem(R.string.about_app_title, 0) {
+		items.add(new HomeScreenItem(R.string.about_app_title,
+				R.drawable.about_icon) {
 			@Override
 			public void execute() {
-				startActivity(new Intent(HomeScreen.this,
-						AboutAppScreen.class));
+				startActivity(new Intent(HomeScreen.this, AboutAppScreen.class));
 			}
 		});
 		return items;
@@ -69,8 +69,7 @@ public class HomeScreen extends Activity implements OnItemClickListener {
 				R.drawable.live_show_icon) {
 			@Override
 			public void execute() {
-				startActivity(new Intent(HomeScreen.this,
-						LiveShowScreen.class));
+				startActivity(new Intent(HomeScreen.this, LiveShowScreen.class));
 			}
 		});
 		return items;
