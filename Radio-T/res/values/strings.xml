@@ -10,6 +10,7 @@
     <string name="main_show_title">Подкасты</string>
     <string name="after_show_title">После-шоу</string>
     <string name="live_show_title">Прямой эфир</string>
+    <string name="about_app_title">О программе</string>
     
     <string name="live_show_info">\
     Передачу в прямом эфире можно послушать каждую субботу\
