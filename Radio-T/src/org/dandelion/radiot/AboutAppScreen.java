@@ -44,7 +44,11 @@ public class AboutAppScreen extends Activity {
 		startActivity(Intent.createChooser(intent, null));
 	}
 
+	private CharSequence getAppLabel() {
+		return getPackageManager().getApplicationLabel(getApplicationInfo());
+	}
+
 	private String composeFeedbackEmailSubject() {
-		return "Feedback";
+		return String.format("%s %s: Feedback", getAppLabel(), getAppVersion());
 	}
 }
