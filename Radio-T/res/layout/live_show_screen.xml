@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="wrap_content"
-  android:layout_height="wrap_content"
-  android:layout_gravity="center_vertical">
-  
-  <TextView
-  	android:id="@+id/live_show_info_view"
-  	android:padding="10dp"
-  	android:layout_width="fill_parent"
-  	android:layout_height="wrap_content"
-  	android:gravity="center_horizontal"
-  	android:text="@string/live_show_info"
-  />
-  <Button
-  	android:layout_width="wrap_content"
-  	android:layout_height="wrap_content"
-  	android:text="@string/listen_label"
-  	android:layout_below="@id/live_show_info_view"
-  	android:layout_centerHorizontal="true"
-  	android:onClick="listenButtonClicked"
-  />
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:background="@drawable/home_screen_background">
+	<LinearLayout
+		style="@style/InfoBox"
+		android:orientation="vertical"
+		android:layout_centerInParent="true">
+		<TextView
+			android:id="@+id/live_show_info_view"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:gravity="center_horizontal"
+			android:text="@string/live_show_info" />
+		<Button
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/listen_label"
+			android:layout_marginTop="20dp"
+			android:layout_gravity="center_horizontal"
+			android:onClick="listenButtonClicked" />
+	</LinearLayout>
 </RelativeLayout>

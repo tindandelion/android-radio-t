@@ -5,10 +5,8 @@
 	android:layout_height="fill_parent"
 	android:background="@drawable/home_screen_background">
 	<RelativeLayout
-		style="@style/RoundBorderedBox"
-		android:layout_centerInParent="true"
-		android:paddingTop="30dp"
-		android:paddingBottom="30dp">
+		style="@style/InfoBox"
+		android:layout_centerInParent="true">
 		<FrameLayout
 			android:id="@+id/logo"
 			android:layout_width="wrap_content"
@@ -33,11 +31,10 @@
 			android:layout_height="wrap_content"
 			android:layout_below="@id/app_name_label"
 			android:layout_centerHorizontal="true"
-			android:textStyle="bold"
 			android:text="@string/version_label" />
 		<Button
 			android:id="@+id/feedback_button"
-			android:layout_width="wrap_content"
+			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:layout_below="@id/version_label"
 			android:layout_centerInParent="true"

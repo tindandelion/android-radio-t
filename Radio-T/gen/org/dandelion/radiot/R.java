@@ -71,6 +71,7 @@ public final class R {
         public static final int version_label=0x7f04000a;
     }
     public static final class style {
+        public static final int InfoBox=0x7f050001;
         public static final int RoundBorderedBox=0x7f050000;
     }
 }
