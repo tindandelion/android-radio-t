@@ -72,7 +72,7 @@ public class PodcastListActivity extends ListActivity implements IView {
 		super.onResume();
 		presenter.refreshData(false);
 	}
-	
+
 	@Override
 	protected void onDestroy() {
 		if (null != presenter) {
@@ -80,7 +80,6 @@ public class PodcastListActivity extends ListActivity implements IView {
 		}
 		super.onDestroy();
 	}
-
 
 	@Override
 	public Object onRetainNonConfigurationInstance() {
@@ -193,11 +192,9 @@ public class PodcastListActivity extends ListActivity implements IView {
 		}
 
 		private void setPodcastIcon(View row, PodcastItem item) {
-			if (null != item.getImage()) {
-				ImageView image = (ImageView) row
-						.findViewById(R.id.podcast_item_icon);
-				image.setImageDrawable(item.getImage());
-			}
+			ImageView image = (ImageView) row
+					.findViewById(R.id.podcast_item_icon);
+			image.setImageBitmap(item.getImage());
 		}
 
 		private void setElementText(View row, int resourceId, String value) {

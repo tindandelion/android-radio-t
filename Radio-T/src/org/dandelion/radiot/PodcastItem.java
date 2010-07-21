@@ -9,7 +9,8 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.text.Html;
 
@@ -27,7 +28,7 @@ public class PodcastItem implements Cloneable {
 	private Uri audioUri;
 	private ArrayList<String> tags = new ArrayList<String>();
 	private String imageUrl;
-	private Drawable image;
+	private Bitmap image;
 
 	public Uri getAudioUri() {
 		return audioUri;
@@ -117,11 +118,11 @@ public class PodcastItem implements Cloneable {
 		return imageUrl;
 	}
 
-	public Drawable getImage() {
+	public Bitmap getImage() {
 		return image;
 	}
 
 	public void loadImage(InputStream stream) {
-		image = Drawable.createFromStream(stream, "");
+		image = BitmapFactory.decodeStream(stream);
 	}
 }
