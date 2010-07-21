@@ -3,8 +3,6 @@ package org.dandelion.radiot;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.dandelion.radiot.HomeScreen.HomeScreenItem;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -35,6 +33,8 @@ public class HomeScreen extends Activity implements OnItemClickListener {
 		items.add(new HomeScreenItem(R.string.about_app_title, 0) {
 			@Override
 			public void execute() {
+				startActivity(new Intent(HomeScreen.this,
+						AboutAppScreen.class));
 			}
 		});
 		return items;
@@ -70,7 +70,7 @@ public class HomeScreen extends Activity implements OnItemClickListener {
 			@Override
 			public void execute() {
 				startActivity(new Intent(HomeScreen.this,
-						LiveShowActivity.class));
+						LiveShowScreen.class));
 			}
 		});
 		return items;
@@ -127,7 +127,8 @@ public class HomeScreen extends Activity implements OnItemClickListener {
 
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		HomeScreenItem item = (HomeScreenItem) parent.getAdapter().getItem(position);
+		HomeScreenItem item = (HomeScreenItem) parent.getAdapter().getItem(
+				position);
 		item.execute();
 	}
 }

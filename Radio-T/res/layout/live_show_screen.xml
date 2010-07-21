@@ -16,7 +16,7 @@
   <Button
   	android:layout_width="wrap_content"
   	android:layout_height="wrap_content"
-  	android:text="@string/listen_button_text"
+  	android:text="@string/listen_label"
   	android:layout_below="@id/live_show_info_view"
   	android:layout_centerHorizontal="true"
   	android:onClick="listenButtonClicked"

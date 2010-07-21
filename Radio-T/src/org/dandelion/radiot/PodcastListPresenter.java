@@ -2,9 +2,9 @@ package org.dandelion.radiot;
 
 import java.util.List;
 
-import org.dandelion.radiot.PodcastListPresenter.UpdateProgress;
 import org.dandelion.radiot.PodcastList.IModel;
 import org.dandelion.radiot.PodcastList.IView;
+import org.dandelion.radiot.PodcastListPresenter.UpdateProgress;
 
 import android.os.AsyncTask;
 
