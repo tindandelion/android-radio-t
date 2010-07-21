@@ -11,6 +11,11 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -163,6 +168,9 @@ public class PodcastListActivity extends ListActivity implements IView {
 	}
 
 	class PodcastListAdapter extends ArrayAdapter<PodcastItem> {
+		private final Bitmap defaultPodcastImage = BitmapFactory
+				.decodeResource(PodcastListActivity.this.getResources(),
+						R.drawable.default_podcast_image);
 
 		public PodcastListAdapter() {
 			super(PodcastListActivity.this, 0);
@@ -194,7 +202,11 @@ public class PodcastListActivity extends ListActivity implements IView {
 		private void setPodcastIcon(View row, PodcastItem item) {
 			ImageView image = (ImageView) row
 					.findViewById(R.id.podcast_item_icon);
-			image.setImageBitmap(item.getImage());
+			Bitmap bitmap = item.getImage();
+			if (null == bitmap) {
+				bitmap = defaultPodcastImage;
+			}
+			image.setImageBitmap(bitmap);
 		}
 
 		private void setElementText(View row, int resourceId, String value) {
