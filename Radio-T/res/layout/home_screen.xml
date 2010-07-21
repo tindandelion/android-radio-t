@@ -45,6 +45,9 @@
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:layout_below="@id/logo_image"
-		android:paddingTop="30dp"
-		android:layout_margin="7dp" />
+		android:layout_marginTop="30dp"
+		android:layout_marginLeft="7dp"
+		android:layout_marginRight="7dp"
+		android:padding="5dp"
+		android:background="@drawable/home_screen_list_background" />
 </RelativeLayout>
