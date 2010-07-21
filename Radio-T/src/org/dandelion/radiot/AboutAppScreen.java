@@ -7,7 +7,6 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class AboutAppScreen extends Activity {
 	private static final String FEEDBACK_EMAIL = "s.moshnikov@gmail.com";
