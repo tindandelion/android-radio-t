@@ -64,7 +64,14 @@ public class InterruptPodcastLoading extends PodcastListAcceptanceTestCase {
 				}
 				return new ArrayList<PodcastItem>();
 			}
+
+			@Override
+			public void loadPodcastImage(PodcastItem item) {
+			}
 		};
+	}
+
+	public void loadPodcastImage(PodcastItem item) {
 	}
 
 }

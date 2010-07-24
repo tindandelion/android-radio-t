@@ -8,13 +8,14 @@ import java.util.List;
 import junit.framework.TestCase;
 
 import org.dandelion.radiot.PodcastItem;
+import org.dandelion.radiot.PodcastList.IModel;
 import org.dandelion.radiot.RssFeedModel;
 
 import android.net.Uri;
 
 public class RssFeedModelTestCase extends TestCase {
 
-	private RssFeedModel model;
+	private IModel model;
 	private String feedContent;
 	private List<PodcastItem> parsedItems;
 	private PodcastItem firstParsedItem;
@@ -28,7 +29,7 @@ public class RssFeedModelTestCase extends TestCase {
 		feedContent = "";
 	}
 
-	protected RssFeedModel createTestModel() {
+	protected IModel createTestModel() {
 		return new RssFeedModel(null) {
 			@Override
 			protected InputStream openContentStream() throws IOException {
@@ -125,13 +126,6 @@ public class RssFeedModelTestCase extends TestCase {
 		newFeedItem("<content:encoded><![CDATA[<img src=\"http://image-url\" />]]></content:encoded>");
 		parseRssFeed();
 		assertEquals("http://image-url", firstParsedItem.getImageUrl());
-	}
-
-	public void testLoadingPodcastImage() throws Exception {
-		newFeedItem("<content:encoded><![CDATA[<img src=\"http://image-url\" />]]></content:encoded>");
-		parseRssFeed();
-
-		assertEquals("http://image-url", requestedImageUrl);
 	}
 
 	private void newFeedItem(String itemContent) {

@@ -117,4 +117,7 @@ public class PodcastListPresenterTestCase extends TestCase implements IModel {
 		errorToThrow = new Exception();
 	}
 
+	public void loadPodcastImage(PodcastItem item) {
+	}
+
 }

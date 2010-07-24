@@ -122,7 +122,7 @@ public class PodcastItem implements Cloneable {
 		return image;
 	}
 
-	public void loadImage(InputStream stream) {
+	public void loadImageFromStream(InputStream stream) {
 		image = BitmapFactory.decodeStream(stream);
 	}
 }

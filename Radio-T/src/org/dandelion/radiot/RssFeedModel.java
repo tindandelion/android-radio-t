@@ -95,8 +95,6 @@ public class RssFeedModel implements PodcastList.IModel {
 				.setEndTextElementListener(new EndTextElementListener() {
 					public void end(String body) {
 						currentItem.extractImageUrl(body);
-						currentItem.loadImage(openImageStream(currentItem
-								.getImageUrl()));
 					}
 				});
 
@@ -110,5 +108,10 @@ public class RssFeedModel implements PodcastList.IModel {
 		} catch (Exception ex) {
 			return null;
 		}
+	}
+
+	public void loadPodcastImage(PodcastItem item) {
+		item.loadImageFromStream(openImageStream(item
+				.getImageUrl()));
 	}
 }
