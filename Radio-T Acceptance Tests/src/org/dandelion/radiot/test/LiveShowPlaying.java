@@ -22,7 +22,7 @@ public class LiveShowPlaying extends
 	}
 	
 	public void testStartPlayingAudio() throws Exception {
-		appDriver.clickOnButton("Слушать");
+		appDriver.clickOnText("Слушать сейчас");
 		player.assertIsPlaying(LiveShowScreen.LIVE_SHOW_URL);
 	}
 }
