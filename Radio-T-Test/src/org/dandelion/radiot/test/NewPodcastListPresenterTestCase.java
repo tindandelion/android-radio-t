@@ -13,40 +13,76 @@ import org.dandelion.radiot.PodcastList.IPresenter;
 import org.dandelion.radiot.PodcastList.IView;
 import org.dandelion.radiot.PodcastListPresenter;
 
+import android.graphics.Bitmap;
 import android.os.Looper;
 
 public class NewPodcastListPresenterTestCase extends TestCase {
 	private IPresenter presenter;
 	protected List<PodcastItem> publishedPodcasts;
-	private CountDownLatch updateFinishedLatch;
+	private CountDownLatch podcastListPublishedLatch;
 	private ArrayList<PodcastItem> podcastListToPublish;
 	private CountDownLatch modelPodcastRetrievalLatch;
+	private CountDownLatch updateFinishedLatch;
+	private Bitmap podcastImage;
+	protected CountDownLatch modelImageRetrievalLatch;
 	
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
+		podcastListPublishedLatch = new CountDownLatch(1);
 		updateFinishedLatch = new CountDownLatch(1);
 		modelPodcastRetrievalLatch = new CountDownLatch(1);
+		modelImageRetrievalLatch = new CountDownLatch(1);
+		presenter = newPresenter();
 	}
 
 	public void testRetrieveAndPublishPodcastList() throws Exception {
-		ArrayList<PodcastItem> podcastList = new ArrayList<PodcastItem>();
-		presenter = newPresenter();
+		ArrayList<PodcastItem> podcastList = newPodcastList();
 		
-		triggerPodcastListUpdate(presenter);
+		startPodcastListUpdate();
 		modelReturnsPodcastList(podcastList);
-		waitUntilPodcastListUpdateFinished();
+		waitUntilPodcastListPublished();
 		
 		assertPublishedPodcasts(podcastList);
+	}
+	
+	public void testRetrievePodcastImagesAfterPublishingList() throws Exception {
+		ArrayList<PodcastItem> podcastList = newPodcastList();
+		PodcastItem item = new PodcastItem();
+		podcastList.add(item);
+		
+		modelReturnsPodcastList(podcastList);
+		startPodcastListUpdate();
+		waitUntilPodcastListPublished();
+		assertNull(item.getImage());
+		
+		Bitmap image = Bitmap.createBitmap(1, 1, Bitmap.Config.RGB_565);
+		modelReturnsPodcastImage(image);
+		waitUntilAllUpdateIsFinsihed();
+		assertEquals(image, item.getImage());
+	}
+	private void waitUntilAllUpdateIsFinsihed() throws InterruptedException {
+		if (!updateFinishedLatch.await(60, TimeUnit.SECONDS)) {
+			fail("Failed to wait until all update is finished");
+		}
+	}
+
+	private void modelReturnsPodcastImage(Bitmap bitmap) {
+		podcastImage = bitmap;
+		modelImageRetrievalLatch.countDown();
+	}
+
+	protected ArrayList<PodcastItem> newPodcastList() {
+		return new ArrayList<PodcastItem>();
 	}
 
 	private void assertPublishedPodcasts(ArrayList<PodcastItem> podcastList) {
 		assertEquals(podcastList, publishedPodcasts);
 	}
 
-	private void waitUntilPodcastListUpdateFinished() throws InterruptedException {
-		if (!updateFinishedLatch.await(10, TimeUnit.SECONDS)) { 
-			fail("Failed to wait until update is finished");
+	private void waitUntilPodcastListPublished() throws InterruptedException {
+		if (!podcastListPublishedLatch.await(60, TimeUnit.SECONDS)) { 
+			fail("Failed to wait until podcast list is published");
 		}
 	}
 
@@ -55,12 +91,12 @@ public class NewPodcastListPresenterTestCase extends TestCase {
 		modelPodcastRetrievalLatch.countDown();
 	}
 
-	private void triggerPodcastListUpdate(final IPresenter p) {
+	private void startPodcastListUpdate() {
 		new Thread(new Runnable() {
 			
 			public void run() {
 				Looper.prepare();
-				p.refreshData(false);
+				presenter.refreshData(false);
 				Looper.loop();
 			}
 		}).start();
@@ -73,7 +109,6 @@ public class NewPodcastListPresenterTestCase extends TestCase {
 				super.taskFinished();
 				updateFinishedLatch.countDown();
 			}
-			
 		};
 		p.attach(newView());
 		return p;
@@ -83,6 +118,7 @@ public class NewPodcastListPresenterTestCase extends TestCase {
 		return new IView() {
 			public void updatePodcasts(List<PodcastItem> podcasts) {
 				publishedPodcasts = podcasts;
+				podcastListPublishedLatch.countDown();
 			}
 			
 			public void showProgress() {
@@ -104,7 +140,14 @@ public class NewPodcastListPresenterTestCase extends TestCase {
 				return podcastListToPublish;
 			}
 			
-			public void loadPodcastImage(PodcastItem item) {
+			public Bitmap loadPodcastImage(PodcastItem item) {
+				try {
+					modelImageRetrievalLatch.await();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return podcastImage;
 			}
 		};
 	}

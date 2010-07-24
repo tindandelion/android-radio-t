@@ -1,6 +1,5 @@
 package org.dandelion.radiot;
 
-import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -10,7 +9,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.text.Html;
 
@@ -122,7 +120,7 @@ public class PodcastItem implements Cloneable {
 		return image;
 	}
 
-	public void loadImageFromStream(InputStream stream) {
-		image = BitmapFactory.decodeStream(stream);
+	public void setImage(Bitmap value) {
+		image = value;
 	}
 }

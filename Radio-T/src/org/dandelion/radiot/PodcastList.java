@@ -2,13 +2,14 @@ package org.dandelion.radiot;
 
 import java.util.List;
 
+import android.graphics.Bitmap;
+
 public class PodcastList {
 	private static Factory factory;
 
 	public interface IModel {
 		List<PodcastItem> retrievePodcasts() throws Exception;
-
-		public abstract void loadPodcastImage(PodcastItem item);
+		Bitmap loadPodcastImage(PodcastItem item);
 	}
 
 	public interface IView {

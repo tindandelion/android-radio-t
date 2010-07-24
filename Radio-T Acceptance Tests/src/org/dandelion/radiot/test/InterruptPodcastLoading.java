@@ -12,6 +12,7 @@ import org.dandelion.radiot.test.helpers.ApplicationDriver;
 import org.dandelion.radiot.test.helpers.PodcastListAcceptanceTestCase;
 
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
 
 public class InterruptPodcastLoading extends PodcastListAcceptanceTestCase {
 
@@ -66,12 +67,9 @@ public class InterruptPodcastLoading extends PodcastListAcceptanceTestCase {
 			}
 
 			@Override
-			public void loadPodcastImage(PodcastItem item) {
+			public Bitmap loadPodcastImage(PodcastItem item) {
+				return null;
 			}
 		};
 	}
-
-	public void loadPodcastImage(PodcastItem item) {
-	}
-
 }

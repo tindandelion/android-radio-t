@@ -9,6 +9,8 @@ import java.util.List;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.sax.Element;
 import android.sax.EndElementListener;
 import android.sax.EndTextElementListener;
@@ -110,8 +112,7 @@ public class RssFeedModel implements PodcastList.IModel {
 		}
 	}
 
-	public void loadPodcastImage(PodcastItem item) {
-		item.loadImageFromStream(openImageStream(item
-				.getImageUrl()));
+	public Bitmap loadPodcastImage(PodcastItem item) {
+		return BitmapFactory.decodeStream(openImageStream(item.getImageUrl()));
 	}
 }

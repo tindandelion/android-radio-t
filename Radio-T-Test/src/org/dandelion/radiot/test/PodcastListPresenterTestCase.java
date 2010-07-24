@@ -11,6 +11,8 @@ import org.dandelion.radiot.PodcastList.IPresenter;
 import org.dandelion.radiot.PodcastList.IView;
 import org.dandelion.radiot.PodcastListPresenter;
 
+import android.graphics.Bitmap;
+
 public class PodcastListPresenterTestCase extends TestCase implements IModel {
 
 	protected List<PodcastItem> displayedPodcasts;
@@ -117,7 +119,8 @@ public class PodcastListPresenterTestCase extends TestCase implements IModel {
 		errorToThrow = new Exception();
 	}
 
-	public void loadPodcastImage(PodcastItem item) {
+	public Bitmap loadPodcastImage(PodcastItem item) {
+		return null;
 	}
 
 }

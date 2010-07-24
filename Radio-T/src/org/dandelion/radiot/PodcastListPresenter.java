@@ -110,7 +110,7 @@ public class PodcastListPresenter implements PodcastList.IPresenter, IPresenterI
 
 		public void retrievePodcastImages(IModel model) {
 			for (PodcastItem item : podcasts) {
-				model.loadPodcastImage(item);
+				item.setImage(model.loadPodcastImage(item));
 			}
 		}
 	}
@@ -124,6 +124,7 @@ public class PodcastListPresenter implements PodcastList.IPresenter, IPresenterI
 					publishPodcastList(progress);
 				}
 			});
+			retrievePodcastImages(progress);
 			return null;
 		}
 		
