@@ -107,6 +107,9 @@ public class PodcastListPresenterTestCase extends TestCase implements IModel {
 			public void updatePodcasts(List<PodcastItem> podcasts) {
 				displayedPodcasts = podcasts;
 			}
+
+			public void updatePodcastImage(int index) {
+			}
 		};
 	}
 

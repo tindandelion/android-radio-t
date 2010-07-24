@@ -17,6 +17,7 @@ public class PodcastList {
 		void showProgress();
 		void closeProgress();
 		void showErrorMessage(String errorMessage);
+		void updatePodcastImage(int index);
 	}
 
 	public interface IPresenter {

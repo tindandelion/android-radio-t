@@ -25,6 +25,7 @@ public class NewPodcastListPresenterTestCase extends TestCase {
 	private CountDownLatch updateFinishedLatch;
 	private Bitmap podcastImage;
 	protected CountDownLatch modelImageRetrievalLatch;
+	private int updatedPodcastImage;
 	
 	@Override
 	protected void setUp() throws Exception {
@@ -33,6 +34,7 @@ public class NewPodcastListPresenterTestCase extends TestCase {
 		updateFinishedLatch = new CountDownLatch(1);
 		modelPodcastRetrievalLatch = new CountDownLatch(1);
 		modelImageRetrievalLatch = new CountDownLatch(1);
+		updatedPodcastImage = -1;
 		presenter = newPresenter();
 	}
 
@@ -61,6 +63,27 @@ public class NewPodcastListPresenterTestCase extends TestCase {
 		waitUntilAllUpdateIsFinsihed();
 		assertEquals(image, item.getImage());
 	}
+	
+	public void testUpdatingViewWhenPodcastImageIsLoaded() throws Exception {
+		ArrayList<PodcastItem> podcastList = newPodcastList();
+		PodcastItem item = new PodcastItem();
+		podcastList.add(item);
+		
+		modelReturnsPodcastList(podcastList);
+		startPodcastListUpdate();
+		waitUntilPodcastListPublished();
+		assertNull(item.getImage());
+		
+		Bitmap image = Bitmap.createBitmap(1, 1, Bitmap.Config.RGB_565);
+		modelReturnsPodcastImage(image);
+		waitUntilAllUpdateIsFinsihed();
+		assertPodcastImageUpdated(0);
+	}
+	
+	private void assertPodcastImageUpdated(int i) {
+		assertEquals(i, updatedPodcastImage);
+	}
+
 	private void waitUntilAllUpdateIsFinsihed() throws InterruptedException {
 		if (!updateFinishedLatch.await(60, TimeUnit.SECONDS)) {
 			fail("Failed to wait until all update is finished");
@@ -129,6 +152,10 @@ public class NewPodcastListPresenterTestCase extends TestCase {
 			
 			public void closeProgress() {
 			}
+			
+			public void updatePodcastImage(int index) {
+				updatedPodcastImage = index;
+			}
 		};
 	}
 
@@ -144,7 +171,6 @@ public class NewPodcastListPresenterTestCase extends TestCase {
 				try {
 					modelImageRetrievalLatch.await();
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				return podcastImage;

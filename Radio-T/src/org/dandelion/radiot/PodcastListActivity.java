@@ -215,4 +215,8 @@ public class PodcastListActivity extends ListActivity implements IView {
 	public IPresenter getPresenter() {
 		return presenter;
 	}
+
+	public void updatePodcastImage(int index) {
+		listAdapter.notifyDataSetChanged();
+	}
 }

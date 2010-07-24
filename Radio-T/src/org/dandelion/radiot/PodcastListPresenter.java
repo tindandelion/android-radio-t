@@ -113,6 +113,10 @@ public class PodcastListPresenter implements PodcastList.IPresenter, IPresenterI
 				item.setImage(model.loadPodcastImage(item));
 			}
 		}
+
+		public List<PodcastItem> getPodcastList() {
+			return podcasts;
+		}
 	}
 	class UpdateTask extends AsyncTask<Void, Runnable, Void> {
 		@Override
@@ -147,9 +151,20 @@ public class PodcastListPresenter implements PodcastList.IPresenter, IPresenterI
 		protected void onCancelled() {
 			taskCancelled();
 		}
-	}
-	public void retrievePodcastImages(UpdateProgress progress) {
-		progress.retrievePodcastImages(model);
+		public void retrievePodcastImages(UpdateProgress progress) {
+			List<PodcastItem> podcasts = progress.getPodcastList();
+			for (int i = 0; i < podcasts.size(); i++) {
+				PodcastItem item = podcasts.get(i);
+				final int index = i;
+				
+				item.setImage(model.loadPodcastImage(item));
+				publishProgress(new Runnable() {
+					public void run() {
+						view.updatePodcastImage(index);
+					}
+				});
+			}
+		}
 	}
 }
 

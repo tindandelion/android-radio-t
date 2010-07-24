@@ -2,6 +2,8 @@ package org.dandelion.radiot.test;
 
 import java.util.ArrayList;
 
+import junit.framework.Test;
+
 import org.dandelion.radiot.PodcastItem;
 import org.dandelion.radiot.PodcastList;
 import org.dandelion.radiot.PodcastList.IModel;
@@ -10,8 +12,10 @@ import org.dandelion.radiot.PodcastList.IView;
 import org.dandelion.radiot.PodcastListActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.test.ActivityUnitTestCase;
 import android.test.UiThreadTest;
+import android.view.View;
 
 public class PodcastListActivityTestCase extends
 		ActivityUnitTestCase<PodcastListActivity> {
