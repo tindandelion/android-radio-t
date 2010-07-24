@@ -124,7 +124,6 @@ public class PodcastListPresenter implements PodcastList.IPresenter, IPresenterI
 					publishPodcastList(progress);
 				}
 			});
-			retrievePodcastImages(progress);
 			return null;
 		}
 		
