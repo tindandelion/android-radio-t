@@ -1,4 +1,4 @@
-#Sun Jun 27 19:58:44 MSD 2010
+#Sun Jul 25 10:30:28 MSD 2010
 eclipse.preferences.version=1
-encoding//src/org/dandelion/radiot/test/PodcastItemTestCase.java=UTF-8
-encoding//src/org/dandelion/radiot/test/RssFeedModelTestCase.java=UTF-8
+encoding//src/org/dandelion/radiot/unittest/PodcastItemTestCase.java=UTF-8
+encoding//src/org/dandelion/radiot/unittest/RssFeedModelTestCase.java=UTF-8

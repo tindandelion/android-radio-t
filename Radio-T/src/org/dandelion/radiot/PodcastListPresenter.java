@@ -86,7 +86,6 @@ public class PodcastListPresenter implements PodcastList.IPresenter {
 			if (null != list) {
 				retrievePodcastImages(list);
 			}
-
 			return null;
 		}
 
