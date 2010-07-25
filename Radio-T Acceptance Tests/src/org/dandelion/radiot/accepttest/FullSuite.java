@@ -1,4 +1,4 @@
-package org.dandelion.radiot.accecpttest;
+package org.dandelion.radiot.accepttest;
 
 import android.test.suitebuilder.TestSuiteBuilder;
 import junit.framework.Test;

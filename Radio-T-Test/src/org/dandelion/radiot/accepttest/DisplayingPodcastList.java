@@ -1,10 +1,10 @@
-package org.dandelion.radiot.accecpttest;
+package org.dandelion.radiot.accepttest;
 
 import java.lang.reflect.Field;
 
 import org.dandelion.radiot.PodcastListActivity;
-import org.dandelion.radiot.test.helpers.ApplicationDriver;
-import org.dandelion.radiot.test.helpers.PodcastListAcceptanceTestCase;
+import org.dandelion.radiot.helpers.ApplicationDriver;
+import org.dandelion.radiot.helpers.PodcastListAcceptanceTestCase;
 
 import android.view.View;
 import android.widget.ListView;

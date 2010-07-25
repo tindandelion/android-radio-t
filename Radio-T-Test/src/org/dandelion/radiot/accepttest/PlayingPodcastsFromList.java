@@ -1,11 +1,11 @@
-package org.dandelion.radiot.accecpttest;
+package org.dandelion.radiot.accepttest;
 
 
 import org.dandelion.radiot.PodcastItem;
 import org.dandelion.radiot.PodcastListActivity;
-import org.dandelion.radiot.test.helpers.ApplicationDriver;
-import org.dandelion.radiot.test.helpers.FakePodcastPlayer;
-import org.dandelion.radiot.test.helpers.PodcastListAcceptanceTestCase;
+import org.dandelion.radiot.helpers.ApplicationDriver;
+import org.dandelion.radiot.helpers.FakePodcastPlayer;
+import org.dandelion.radiot.helpers.PodcastListAcceptanceTestCase;
 
 import android.test.UiThreadTest;
 import android.view.View;

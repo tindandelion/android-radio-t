@@ -1,4 +1,4 @@
-package org.dandelion.radiot.accecpttest;
+package org.dandelion.radiot.accepttest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,8 +8,8 @@ import org.dandelion.radiot.PodcastItem;
 import org.dandelion.radiot.PodcastList;
 import org.dandelion.radiot.PodcastList.IModel;
 import org.dandelion.radiot.PodcastListActivity;
-import org.dandelion.radiot.test.helpers.ApplicationDriver;
-import org.dandelion.radiot.test.helpers.PodcastListAcceptanceTestCase;
+import org.dandelion.radiot.helpers.ApplicationDriver;
+import org.dandelion.radiot.helpers.PodcastListAcceptanceTestCase;
 
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
@@ -57,7 +57,6 @@ public class InterruptPodcastLoading extends PodcastListAcceptanceTestCase {
 		podcastRetrievalLatch = new CountDownLatch(1);
 
 		return new PodcastList.IModel() {
-			@Override
 			public List<PodcastItem> retrievePodcasts() throws Exception {
 				try {
 					podcastRetrievalLatch.await();
@@ -65,8 +64,7 @@ public class InterruptPodcastLoading extends PodcastListAcceptanceTestCase {
 				}
 				return new ArrayList<PodcastItem>();
 			}
-
-			@Override
+			
 			public Bitmap loadPodcastImage(PodcastItem item) {
 				return null;
 			}

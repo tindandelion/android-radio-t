@@ -1,9 +1,9 @@
-package org.dandelion.radiot.accecpttest;
+package org.dandelion.radiot.accepttest;
 
 import org.dandelion.radiot.LiveShowScreen;
-import org.dandelion.radiot.test.helpers.ApplicationDriver;
-import org.dandelion.radiot.test.helpers.BasicAcceptanceTestCase;
-import org.dandelion.radiot.test.helpers.FakePodcastPlayer;
+import org.dandelion.radiot.helpers.ApplicationDriver;
+import org.dandelion.radiot.helpers.BasicAcceptanceTestCase;
+import org.dandelion.radiot.helpers.FakePodcastPlayer;
 
 public class LiveShowPlaying extends
 		BasicAcceptanceTestCase {
