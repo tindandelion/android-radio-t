@@ -8,10 +8,10 @@ import java.util.concurrent.TimeUnit;
 import junit.framework.TestCase;
 
 import org.dandelion.radiot.PodcastItem;
-import org.dandelion.radiot.PodcastList.IModel;
 import org.dandelion.radiot.PodcastList.IPresenter;
 import org.dandelion.radiot.PodcastList.IView;
 import org.dandelion.radiot.PodcastListPresenter;
+import org.dandelion.radiot.helpers.TestModel;
 
 import android.graphics.Bitmap;
 import android.os.Looper;
@@ -20,21 +20,17 @@ public class PodcastListPresenterTestCase extends TestCase {
 	private IPresenter presenter;
 	protected List<PodcastItem> publishedPodcasts;
 	private CountDownLatch podcastListPublishedLatch;
-	private ArrayList<PodcastItem> podcastListToPublish;
-	private CountDownLatch modelPodcastRetrievalLatch;
 	private CountDownLatch updateFinishedLatch;
-	private Bitmap podcastImage;
-	protected CountDownLatch modelImageRetrievalLatch;
 	private int updatedPodcastImage;
+	private TestModel model;
 	
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
 		podcastListPublishedLatch = new CountDownLatch(1);
 		updateFinishedLatch = new CountDownLatch(1);
-		modelPodcastRetrievalLatch = new CountDownLatch(1);
-		modelImageRetrievalLatch = new CountDownLatch(1);
 		updatedPodcastImage = -1;
+		model = new TestModel();
 		presenter = newPresenter();
 	}
 
@@ -42,7 +38,7 @@ public class PodcastListPresenterTestCase extends TestCase {
 		ArrayList<PodcastItem> podcastList = newPodcastList();
 		
 		startPodcastListUpdate();
-		modelReturnsPodcastList(podcastList);
+		model.returnsPodcasts(podcastList);
 		waitUntilPodcastListPublished();
 		
 		assertPublishedPodcasts(podcastList);
@@ -53,13 +49,13 @@ public class PodcastListPresenterTestCase extends TestCase {
 		PodcastItem item = new PodcastItem();
 		podcastList.add(item);
 		
-		modelReturnsPodcastList(podcastList);
+		model.returnsPodcasts(podcastList);
 		startPodcastListUpdate();
 		waitUntilPodcastListPublished();
 		assertNull(item.getImage());
 		
 		Bitmap image = Bitmap.createBitmap(1, 1, Bitmap.Config.RGB_565);
-		modelReturnsPodcastImage(image);
+		model.returnsPodcastImage(image);
 		waitUntilAllUpdateIsFinsihed();
 		assertEquals(image, item.getImage());
 	}
@@ -69,13 +65,13 @@ public class PodcastListPresenterTestCase extends TestCase {
 		PodcastItem item = new PodcastItem();
 		podcastList.add(item);
 		
-		modelReturnsPodcastList(podcastList);
+		model.returnsPodcasts(podcastList);
 		startPodcastListUpdate();
 		waitUntilPodcastListPublished();
 		assertNull(item.getImage());
 		
 		Bitmap image = Bitmap.createBitmap(1, 1, Bitmap.Config.RGB_565);
-		modelReturnsPodcastImage(image);
+		model.returnsPodcastImage(image);
 		waitUntilAllUpdateIsFinsihed();
 		assertPodcastImageUpdated(0);
 	}
@@ -88,11 +84,6 @@ public class PodcastListPresenterTestCase extends TestCase {
 		if (!updateFinishedLatch.await(60, TimeUnit.SECONDS)) {
 			fail("Failed to wait until all update is finished");
 		}
-	}
-
-	private void modelReturnsPodcastImage(Bitmap bitmap) {
-		podcastImage = bitmap;
-		modelImageRetrievalLatch.countDown();
 	}
 
 	protected ArrayList<PodcastItem> newPodcastList() {
@@ -109,11 +100,6 @@ public class PodcastListPresenterTestCase extends TestCase {
 		}
 	}
 
-	private void modelReturnsPodcastList(ArrayList<PodcastItem> list) throws InterruptedException {
-		podcastListToPublish = list;
-		modelPodcastRetrievalLatch.countDown();
-	}
-
 	private void startPodcastListUpdate() {
 		new Thread(new Runnable() {
 			
@@ -126,7 +112,7 @@ public class PodcastListPresenterTestCase extends TestCase {
 	}
 
 	private IPresenter newPresenter() {
-		PodcastListPresenter p = new PodcastListPresenter(newModel()) {
+		PodcastListPresenter p = new PodcastListPresenter(model) {
 			@Override
 			public void taskFinished() {
 				super.taskFinished();
@@ -155,25 +141,6 @@ public class PodcastListPresenterTestCase extends TestCase {
 			
 			public void updatePodcastImage(int index) {
 				updatedPodcastImage = index;
-			}
-		};
-	}
-
-	private IModel newModel() {
-		return new IModel() {
-			
-			public List<PodcastItem> retrievePodcasts() throws Exception {
-				modelPodcastRetrievalLatch.await();
-				return podcastListToPublish;
-			}
-			
-			public Bitmap loadPodcastImage(PodcastItem item) {
-				try {
-					modelImageRetrievalLatch.await();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				return podcastImage;
 			}
 		};
 	}
