@@ -15,6 +15,7 @@ public class PodcastListPresenter implements PodcastList.IPresenter {
 
 	public PodcastListPresenter(PodcastList.IModel model) {
 		this.model = model;
+		view = new NullView();
 	}
 
 	public void refresh(boolean resetCache) {
@@ -49,7 +50,7 @@ public class PodcastListPresenter implements PodcastList.IPresenter {
 	}
 
 	public void detach() {
-		view = null;
+		view = new NullView();
 	}
 
 	public void attach(IView view) {
@@ -143,5 +144,23 @@ public class PodcastListPresenter implements PodcastList.IPresenter {
 				});
 			}
 		}
+	}
+}
+
+class NullView implements IView {
+
+	public void updatePodcasts(List<PodcastItem> podcasts) {
+	}
+
+	public void showProgress() {
+	}
+
+	public void closeProgress() {
+	}
+
+	public void showErrorMessage(String errorMessage) {
+	}
+
+	public void updatePodcastImage(int index) {
 	}
 }

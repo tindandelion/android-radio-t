@@ -2,7 +2,7 @@ package org.dandelion.radiot.helpers;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import org.dandelion.radiot.PodcastItem;
 import org.dandelion.radiot.PodcastList.IModel;
@@ -11,36 +11,28 @@ import android.graphics.Bitmap;
 
 public class TestModel implements IModel {
 
-	private CountDownLatch podcastListLatch;
-	private List<PodcastItem> podcastsToReturn;
-	private CountDownLatch imageLatch;
-	private Bitmap imageToReturn;
+	private LinkedBlockingQueue<List<PodcastItem>> podcastQueue;
+	private LinkedBlockingQueue<Bitmap> imageQueue;
 
 	public TestModel() {
-		podcastListLatch = new CountDownLatch(1);
-		imageLatch = new CountDownLatch(1);
-		podcastsToReturn = new ArrayList<PodcastItem>();
+		podcastQueue = new LinkedBlockingQueue<List<PodcastItem>>();
+		imageQueue = new LinkedBlockingQueue<Bitmap>();
 	}
 
 	public List<PodcastItem> retrievePodcasts() throws Exception {
-		try {
-			podcastListLatch.await();
-		} catch (InterruptedException e) {
-		}
-		return podcastsToReturn;
+		return podcastQueue.take();
 	}
 
 	public Bitmap loadPodcastImage(PodcastItem item) {
 		try {
-			imageLatch.await();
+			return imageQueue.take();
 		} catch (InterruptedException e) {
+			return null;
 		}
-		return imageToReturn;
 	}
 
 	public void returnsPodcasts(List<PodcastItem> list) {
-		podcastsToReturn = list;
-		podcastListLatch.countDown();
+		podcastQueue.add(list);
 	}
 
 	public void returnsEmptyPodcastList() {
@@ -48,8 +40,7 @@ public class TestModel implements IModel {
 	}
 
 	public void returnsPodcastImage(Bitmap image) {
-		imageToReturn = image;
-		imageLatch.countDown();
+		imageQueue.add(image);
 	}
 
 }
