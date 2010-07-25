@@ -21,7 +21,7 @@ public class PodcastList {
 	}
 
 	public interface IPresenter {
-		void refreshData(boolean resetCache);
+		void refresh(boolean resetCache);
 		void cancelUpdate();
 		void detach();
 		void attach(IView view);

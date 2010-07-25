@@ -2,6 +2,8 @@ package org.dandelion.radiot.test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import junit.framework.TestCase;
 
@@ -12,118 +14,167 @@ import org.dandelion.radiot.PodcastList.IView;
 import org.dandelion.radiot.PodcastListPresenter;
 
 import android.graphics.Bitmap;
+import android.os.Looper;
 
-public class PodcastListPresenterTestCase extends TestCase implements IModel {
-
-	protected List<PodcastItem> displayedPodcasts;
-	private Exception errorToThrow;
-	private List<PodcastItem> podcastsFromModel;
+public class PodcastListPresenterTestCase extends TestCase {
 	private IPresenter presenter;
+	protected List<PodcastItem> publishedPodcasts;
+	private CountDownLatch podcastListPublishedLatch;
+	private ArrayList<PodcastItem> podcastListToPublish;
+	private CountDownLatch modelPodcastRetrievalLatch;
+	private CountDownLatch updateFinishedLatch;
+	private Bitmap podcastImage;
+	protected CountDownLatch modelImageRetrievalLatch;
+	private int updatedPodcastImage;
+	
+	@Override
+	protected void setUp() throws Exception {
+		super.setUp();
+		podcastListPublishedLatch = new CountDownLatch(1);
+		updateFinishedLatch = new CountDownLatch(1);
+		modelPodcastRetrievalLatch = new CountDownLatch(1);
+		modelImageRetrievalLatch = new CountDownLatch(1);
+		updatedPodcastImage = -1;
+		presenter = newPresenter();
+	}
 
-	public List<PodcastItem> retrievePodcasts() throws Exception {
-		if (null != errorToThrow) {
-			throw errorToThrow;
+	public void testRetrieveAndPublishPodcastList() throws Exception {
+		ArrayList<PodcastItem> podcastList = newPodcastList();
+		
+		startPodcastListUpdate();
+		modelReturnsPodcastList(podcastList);
+		waitUntilPodcastListPublished();
+		
+		assertPublishedPodcasts(podcastList);
+	}
+	
+	public void testRetrievePodcastImagesAfterPublishingList() throws Exception {
+		ArrayList<PodcastItem> podcastList = newPodcastList();
+		PodcastItem item = new PodcastItem();
+		podcastList.add(item);
+		
+		modelReturnsPodcastList(podcastList);
+		startPodcastListUpdate();
+		waitUntilPodcastListPublished();
+		assertNull(item.getImage());
+		
+		Bitmap image = Bitmap.createBitmap(1, 1, Bitmap.Config.RGB_565);
+		modelReturnsPodcastImage(image);
+		waitUntilAllUpdateIsFinsihed();
+		assertEquals(image, item.getImage());
+	}
+	
+	public void testUpdatingViewWhenPodcastImageIsLoaded() throws Exception {
+		ArrayList<PodcastItem> podcastList = newPodcastList();
+		PodcastItem item = new PodcastItem();
+		podcastList.add(item);
+		
+		modelReturnsPodcastList(podcastList);
+		startPodcastListUpdate();
+		waitUntilPodcastListPublished();
+		assertNull(item.getImage());
+		
+		Bitmap image = Bitmap.createBitmap(1, 1, Bitmap.Config.RGB_565);
+		modelReturnsPodcastImage(image);
+		waitUntilAllUpdateIsFinsihed();
+		assertPodcastImageUpdated(0);
+	}
+	
+	private void assertPodcastImageUpdated(int i) {
+		assertEquals(i, updatedPodcastImage);
+	}
+
+	private void waitUntilAllUpdateIsFinsihed() throws InterruptedException {
+		if (!updateFinishedLatch.await(60, TimeUnit.SECONDS)) {
+			fail("Failed to wait until all update is finished");
 		}
-		return podcastsFromModel;
 	}
 
-	public void testCachingPodcastList() throws Exception {
-		ArrayList<PodcastItem> firstPodcasts = newPodcastList();
-		ArrayList<PodcastItem> secondPodcasts = newPodcastList();
-
-		modelReturnsPodcasts(firstPodcasts);
-		presenter.refreshData(false);
-		assertDisplaysPodcasts(firstPodcasts);
-
-		modelReturnsPodcasts(secondPodcasts);
-		presenter.refreshData(false);
-		assertDisplaysPodcasts(firstPodcasts);
-	}
-
-	public void testDoNotCacheErrorResult() throws Exception {
-		modelThrowsError();
-		presenter.refreshData(false);
-		assertDisplaysPodcasts(null);
-
-		ArrayList<PodcastItem> podcasts = newPodcastList();
-		modelReturnsPodcasts(podcasts);
-		presenter.refreshData(false);
-		assertDisplaysPodcasts(podcasts);
-	}
-
-	public void testForceClearCache() throws Exception {
-		ArrayList<PodcastItem> firstPodcasts = newPodcastList();
-		ArrayList<PodcastItem> secondPodcasts = newPodcastList();
-
-		modelReturnsPodcasts(firstPodcasts);
-		presenter.refreshData(false);
-		assertDisplaysPodcasts(firstPodcasts);
-
-		modelReturnsPodcasts(secondPodcasts);
-		presenter.refreshData(true);
-		assertDisplaysPodcasts(secondPodcasts);
-	}
-
-	protected PodcastListPresenter createPresenter(IModel model) {
-		return new PodcastListPresenter(model) {
-			@Override
-			protected void forkWorkerThread() {
-				UpdateProgress progress = new UpdateProgress();
-				taskStarted();
-				retrievePodcastList(progress);
-				publishPodcastList(progress);
-				taskFinished();
-			}
-		};
+	private void modelReturnsPodcastImage(Bitmap bitmap) {
+		podcastImage = bitmap;
+		modelImageRetrievalLatch.countDown();
 	}
 
 	protected ArrayList<PodcastItem> newPodcastList() {
 		return new ArrayList<PodcastItem>();
 	}
 
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
-		presenter = createPresenter(this);
-		presenter.attach(createView());
+	private void assertPublishedPodcasts(ArrayList<PodcastItem> podcastList) {
+		assertEquals(podcastList, publishedPodcasts);
 	}
 
-	private void assertDisplaysPodcasts(ArrayList<PodcastItem> expectedList) {
-		assertTrue(expectedList == displayedPodcasts);
+	private void waitUntilPodcastListPublished() throws InterruptedException {
+		if (!podcastListPublishedLatch.await(60, TimeUnit.SECONDS)) { 
+			fail("Failed to wait until podcast list is published");
+		}
 	}
 
-	private IView createView() {
+	private void modelReturnsPodcastList(ArrayList<PodcastItem> list) throws InterruptedException {
+		podcastListToPublish = list;
+		modelPodcastRetrievalLatch.countDown();
+	}
+
+	private void startPodcastListUpdate() {
+		new Thread(new Runnable() {
+			
+			public void run() {
+				Looper.prepare();
+				presenter.refresh(false);
+				Looper.loop();
+			}
+		}).start();
+	}
+
+	private IPresenter newPresenter() {
+		PodcastListPresenter p = new PodcastListPresenter(newModel()) {
+			@Override
+			public void taskFinished() {
+				super.taskFinished();
+				updateFinishedLatch.countDown();
+			}
+		};
+		p.attach(newView());
+		return p;
+	}
+
+	private IView newView() {
 		return new IView() {
-
-			public void closeProgress() {
+			public void updatePodcasts(List<PodcastItem> podcasts) {
+				publishedPodcasts = podcasts;
+				podcastListPublishedLatch.countDown();
 			}
-
-			public void showErrorMessage(String errorMessage) {
-			}
-
+			
 			public void showProgress() {
 			}
-
-			public void updatePodcasts(List<PodcastItem> podcasts) {
-				displayedPodcasts = podcasts;
+			
+			public void showErrorMessage(String errorMessage) {
 			}
-
+			
+			public void closeProgress() {
+			}
+			
 			public void updatePodcastImage(int index) {
+				updatedPodcastImage = index;
 			}
 		};
 	}
 
-	private void modelReturnsPodcasts(ArrayList<PodcastItem> list) {
-		errorToThrow = null;
-		podcastsFromModel = list;
+	private IModel newModel() {
+		return new IModel() {
+			
+			public List<PodcastItem> retrievePodcasts() throws Exception {
+				modelPodcastRetrievalLatch.await();
+				return podcastListToPublish;
+			}
+			
+			public Bitmap loadPodcastImage(PodcastItem item) {
+				try {
+					modelImageRetrievalLatch.await();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				return podcastImage;
+			}
+		};
 	}
-
-	private void modelThrowsError() {
-		errorToThrow = new Exception();
-	}
-
-	public Bitmap loadPodcastImage(PodcastItem item) {
-		return null;
-	}
-
 }

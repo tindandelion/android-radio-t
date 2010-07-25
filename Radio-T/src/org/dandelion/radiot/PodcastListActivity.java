@@ -72,7 +72,7 @@ public class PodcastListActivity extends ListActivity implements IView {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		presenter.refreshData(false);
+		presenter.refresh(false);
 	}
 
 	@Override
@@ -102,7 +102,7 @@ public class PodcastListActivity extends ListActivity implements IView {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.refresh:
-			presenter.refreshData(true);
+			presenter.refresh(true);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
