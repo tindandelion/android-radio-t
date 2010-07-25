@@ -1,4 +1,4 @@
-package org.dandelion.radiot.test;
+package org.dandelion.radiot.accecpttest;
 
 import java.util.ArrayList;
 import java.util.List;

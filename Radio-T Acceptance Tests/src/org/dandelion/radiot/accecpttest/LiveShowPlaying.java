@@ -1,4 +1,4 @@
-package org.dandelion.radiot.test;
+package org.dandelion.radiot.accecpttest;
 
 import org.dandelion.radiot.LiveShowScreen;
 import org.dandelion.radiot.test.helpers.ApplicationDriver;

@@ -1,4 +1,4 @@
-package org.dandelion.radiot.test;
+package org.dandelion.radiot.accecpttest;
 
 import org.dandelion.radiot.test.helpers.ApplicationDriver;
 import org.dandelion.radiot.test.helpers.PodcastListAcceptanceTestCase;
