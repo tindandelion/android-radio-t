@@ -2,8 +2,7 @@
 <manifest
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	package="org.dandelion.radiot"
-	android:versionCode="1"
-	android:versionName="0.1 Beta">
+	android:versionName="0.1">
 	<supports-screens
 		android:largeScreens="true"
 		android:normalScreens="true"
@@ -22,7 +21,8 @@
 			android:label="@string/about_app_title" />
 		<activity
 			android:name="HomeScreen"
-			android:theme="@android:style/Theme.NoTitleBar">
+			android:theme="@android:style/Theme.NoTitleBar"
+			android:screenOrientation="portrait">
 			<intent-filter>
 				<action
 					android:name="android.intent.action.MAIN"></action>
