@@ -6,9 +6,9 @@ import java.util.concurrent.TimeUnit;
 import junit.framework.Assert;
 
 import org.dandelion.radiot.PodcastList.IModel;
-import org.dandelion.radiot.PodcastListPresenter;
+import org.dandelion.radiot.PodcastListEngine;
 
-public class TestPresenter extends PodcastListPresenter {
+public class TestPresenter extends PodcastListEngine {
 	private static final int WAIT_TIMEOUT = 60;
 	private CountDownLatch taskCancelLatch;
 	private CountDownLatch taskFinishLatch;

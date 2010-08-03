@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.dandelion.radiot.PodcastList.IModel;
-import org.dandelion.radiot.PodcastList.IPresenter;
+import org.dandelion.radiot.PodcastList.IPodcastListEngine;
 import org.dandelion.radiot.RssFeedModel;
 
 import android.content.res.AssetManager;
@@ -42,7 +42,7 @@ public class PodcastListAcceptanceTestCase extends BasicAcceptanceTestCase {
 	}
 
 	@Override
-	protected IPresenter createTestPresenter(IModel model) {
+	protected IPodcastListEngine createTestPresenter(IModel model) {
 		testPresenter = new TestPresenter(model);
 		return testPresenter;
 	}

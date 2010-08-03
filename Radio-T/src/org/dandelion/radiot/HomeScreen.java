@@ -17,9 +17,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class HomeScreen extends Activity implements OnItemClickListener {
-	private static final String PODCAST_URL = "http://feeds.rucast.net/radio-t";
-	private static final String PIRATES_URL = "http://feeds.feedburner.com/pirate-radio-t";
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -54,7 +51,7 @@ public class HomeScreen extends Activity implements OnItemClickListener {
 			@Override
 			public void execute() {
 				PodcastListActivity.start(HomeScreen.this, this.title,
-						PODCAST_URL);
+						"main-show");
 			}
 		});
 		items.add(new HomeScreenItem(R.string.after_show_title,
@@ -62,7 +59,7 @@ public class HomeScreen extends Activity implements OnItemClickListener {
 			@Override
 			public void execute() {
 				PodcastListActivity.start(HomeScreen.this, this.title,
-						PIRATES_URL);
+						"after-show");
 			}
 		});
 		items.add(new HomeScreenItem(R.string.live_show_title,

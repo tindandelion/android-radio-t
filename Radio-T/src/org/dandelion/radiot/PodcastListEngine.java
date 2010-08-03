@@ -7,13 +7,13 @@ import org.dandelion.radiot.PodcastList.IView;
 
 import android.os.AsyncTask;
 
-public class PodcastListPresenter implements PodcastList.IPresenter {
+public class PodcastListEngine implements PodcastList.IPodcastListEngine {
 	protected IModel model;
 	protected IView view;
 	protected UpdateTask task;
 	private List<PodcastItem> currentPodcasts;
 
-	public PodcastListPresenter(PodcastList.IModel model) {
+	public PodcastListEngine(PodcastList.IModel model) {
 		this.model = model;
 		view = new NullView();
 	}

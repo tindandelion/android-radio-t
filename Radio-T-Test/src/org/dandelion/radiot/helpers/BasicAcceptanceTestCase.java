@@ -3,7 +3,7 @@ package org.dandelion.radiot.helpers;
 import org.dandelion.radiot.HomeScreen;
 import org.dandelion.radiot.PodcastList;
 import org.dandelion.radiot.PodcastList.IModel;
-import org.dandelion.radiot.PodcastList.IPresenter;
+import org.dandelion.radiot.PodcastList.IPodcastListEngine;
 
 import android.test.ActivityInstrumentationTestCase2;
 
@@ -20,14 +20,14 @@ public class BasicAcceptanceTestCase extends
 				return createTestModel(url);
 			};
 
-			public IPresenter createPresenter(IModel model) {
+			public IPodcastListEngine createPresenter(IModel model) {
 				return createTestPresenter(model);
 			};
 		});
 		return new ApplicationDriver(getInstrumentation(), getActivity());
 	}
 
-	protected IPresenter createTestPresenter(IModel model) {
+	protected IPodcastListEngine createTestPresenter(IModel model) {
 		return null;
 	}
 

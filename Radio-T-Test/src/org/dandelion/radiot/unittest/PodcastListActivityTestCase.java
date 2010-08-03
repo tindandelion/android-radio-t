@@ -4,8 +4,9 @@ import java.util.ArrayList;
 
 import org.dandelion.radiot.PodcastItem;
 import org.dandelion.radiot.PodcastList;
+import org.dandelion.radiot.RadiotApplication;
 import org.dandelion.radiot.PodcastList.IModel;
-import org.dandelion.radiot.PodcastList.IPresenter;
+import org.dandelion.radiot.PodcastList.IPodcastListEngine;
 import org.dandelion.radiot.PodcastList.IView;
 import org.dandelion.radiot.PodcastListActivity;
 
@@ -16,7 +17,7 @@ import android.test.UiThreadTest;
 public class PodcastListActivityTestCase extends
 		ActivityUnitTestCase<PodcastListActivity> {
 
-	protected String feedSourceUrl;
+	protected String showName;
 	private PodcastListActivity activity;
 	private NullPresenter presenter;
 
@@ -49,13 +50,13 @@ public class PodcastListActivityTestCase extends
 		assertNull(activity.getPresenter());
 	}
 
-	public void testGetsFeedUrlFromBundleExtra() throws Exception {
+	public void testGetsShowNameFromBundleExtra() throws Exception {
 		Intent intent = new Intent();
-		intent.putExtra(PodcastListActivity.URL_KEY, "podcast_feed_url");
+		intent.putExtra(PodcastListActivity.SHOW_NAME_KEY, "show-name");
 
 		startActivity(intent, null, null);
 
-		assertEquals("podcast_feed_url", feedSourceUrl);
+		assertEquals("show-name", showName);
 
 	}
 
@@ -88,15 +89,16 @@ public class PodcastListActivityTestCase extends
 	protected void setUp() throws Exception {
 		super.setUp();
 		presenter = new NullPresenter();
+		setApplication(new RadiotApplication() {
+			@Override
+			public IPodcastListEngine getPodcastEngine(String feedUrl) {
+				showName = feedUrl;
+				return super.getPodcastEngine(feedUrl);
+			}
+		});
 		PodcastList.setFactory(new PodcastList.Factory() {
 			@Override
-			public IModel createModel(String url) {
-				feedSourceUrl = url;
-				return super.createModel(url);
-			};
-
-			@Override
-			public IPresenter createPresenter(IModel model) {
+			public IPodcastListEngine createPresenter(IModel model) {
 				return presenter;
 			}
 		});
@@ -108,7 +110,7 @@ public class PodcastListActivityTestCase extends
 		super.tearDown();
 	}
 
-	class NullPresenter implements IPresenter {
+	class NullPresenter implements IPodcastListEngine {
 		private Object view = new Object();
 
 		public void cancelUpdate() {

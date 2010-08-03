@@ -20,17 +20,17 @@ public class PodcastList {
 		void updatePodcastImage(int index);
 	}
 
-	public interface IPresenter {
+	public interface IPodcastListEngine {
 		void refresh(boolean resetCache);
 		void cancelUpdate();
 		void detach();
 		void attach(IView view);
 	}
 
-	public static IPresenter getPresenter(IView view, String feedUrl) {
+	public static IPodcastListEngine getPresenter(String feedUrl) {
 		Factory f = getFactory();
 		IModel model = f.createModel(feedUrl);
-		IPresenter presenter = f.createPresenter(model);
+		IPodcastListEngine presenter = f.createPresenter(model);
 		return presenter;
 	}
 
@@ -54,8 +54,8 @@ public class PodcastList {
 			return new RssFeedModel(url);
 		}
 
-		public IPresenter createPresenter(IModel model) {
-			return new PodcastListPresenter(model);
+		public IPodcastListEngine createPresenter(IModel model) {
+			return new PodcastListEngine(model);
 		}
 	}
 }

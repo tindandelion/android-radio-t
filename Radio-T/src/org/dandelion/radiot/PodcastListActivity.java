@@ -2,10 +2,11 @@ package org.dandelion.radiot;
 
 import java.util.List;
 
-import org.dandelion.radiot.PodcastList.IPresenter;
+import org.dandelion.radiot.PodcastList.IPodcastListEngine;
 import org.dandelion.radiot.PodcastList.IView;
 
 import android.app.AlertDialog;
+import android.app.Application;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -15,6 +16,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -29,11 +31,11 @@ import android.widget.TextView;
 public class PodcastListActivity extends ListActivity implements IView {
 
 	public static final String TITLE_KEY = "title";
-	public static final String URL_KEY = "podcast_url";
+	public static final String SHOW_NAME_KEY = "podcast_url";
 
 	public static void start(Context context, String title, String url) {
 		Intent intent = new Intent(context, PodcastListActivity.class);
-		intent.putExtra(URL_KEY, url);
+		intent.putExtra(SHOW_NAME_KEY, url);
 		intent.putExtra(TITLE_KEY, title);
 		context.startActivity(intent);
 	}
@@ -42,7 +44,7 @@ public class PodcastListActivity extends ListActivity implements IView {
 
 	private PodcastListAdapter listAdapter;
 	private IPodcastPlayer podcastPlayer;
-	private IPresenter presenter;
+	private IPodcastListEngine engine;
 
 	private ProgressDialog progress;
 
@@ -58,42 +60,43 @@ public class PodcastListActivity extends ListActivity implements IView {
 		setTitle(getTitleFromExtra());
 		initListAdapter();
 		setPodcastPlayer(new ExternalPlayer(this));
-		attachToPresenter();
+		attachToEngine();
 	}
 
-	protected void attachToPresenter() {
-		presenter = (IPresenter) getLastNonConfigurationInstance();
-		if (null == presenter) {
-			presenter = PodcastList.getPresenter(this, getFeedUrlFromExtra());
+	protected void attachToEngine() {
+		RadiotApplication app = (RadiotApplication) getApplication();
+		engine = (IPodcastListEngine) getLastNonConfigurationInstance();
+		if (null == engine) {
+			engine = app.getPodcastEngine(getFeedUrlFromExtra());
 		}
-		presenter.attach(this);
+		engine.attach(this);
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		presenter.refresh(false);
+		engine.refresh(false);
 	}
 	
 	@Override
 	protected void onStop() {
 		super.onStop();
-		presenter.detach();
+		engine.detach();
 	}
 
 	@Override
 	protected void onDestroy() {
-		if (null != presenter) {
-			presenter.cancelUpdate();
+		if (null != engine) {
+			engine.cancelUpdate();
 		}
 		super.onDestroy();
 	}
 
 	@Override
 	public Object onRetainNonConfigurationInstance() {
-		presenter.detach();
-		IPresenter savedPresenter = presenter;
-		presenter = null;
+		engine.detach();
+		IPodcastListEngine savedPresenter = engine;
+		engine = null;
 		return savedPresenter;
 	}
 
@@ -108,7 +111,7 @@ public class PodcastListActivity extends ListActivity implements IView {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.refresh:
-			presenter.refresh(true);
+			engine.refresh(true);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -151,7 +154,7 @@ public class PodcastListActivity extends ListActivity implements IView {
 		if (null == extras) {
 			return null;
 		}
-		return extras.getString(URL_KEY);
+		return extras.getString(SHOW_NAME_KEY);
 	}
 
 	private String getTitleFromExtra() {
@@ -218,8 +221,8 @@ public class PodcastListActivity extends ListActivity implements IView {
 		}
 	}
 
-	public IPresenter getPresenter() {
-		return presenter;
+	public IPodcastListEngine getPresenter() {
+		return engine;
 	}
 
 	public void updatePodcastImage(int index) {
