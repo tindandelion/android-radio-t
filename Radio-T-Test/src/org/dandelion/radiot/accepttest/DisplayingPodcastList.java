@@ -36,7 +36,7 @@ public class DisplayingPodcastList extends
 		super.setUp();
 		appDriver = createApplicationDriver();
 		activity = appDriver.visitMainShowPage();
-		testPresenter.assertPodcastListIsUpdated();
+		presenters.get(0).assertPodcastListIsUpdated();
 	}
 
 	private void assertTextFieldHasText(View parent, String id, String expected)

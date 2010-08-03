@@ -25,12 +25,14 @@ public class BasicAcceptanceTestCase extends
 				return createTestPresenter(model);
 			};
 		});
+		configurePodcastEngines();
 		return new ApplicationDriver(getInstrumentation(), getActivity());
 	}
 
-	private void resetApplicationState() {
+	private void configurePodcastEngines() {
 		RadiotApplication app = (RadiotApplication) getActivity().getApplication();
-		app.resetEngines();
+		app.setPodcastEngine("main-show", createTestPresenter(createTestModel("radio-t")));
+		app.setPodcastEngine("after-show", createTestPresenter(createTestModel("pirate-radio-t")));
 	}
 
 	protected IPodcastListEngine createTestPresenter(IModel model) {
@@ -43,7 +45,6 @@ public class BasicAcceptanceTestCase extends
 
 	@Override
 	protected void tearDown() throws Exception {
-		resetApplicationState();
 		PodcastList.resetFactory();
 		super.tearDown();
 	}

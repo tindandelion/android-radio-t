@@ -2,6 +2,7 @@ package org.dandelion.radiot.helpers;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import org.dandelion.radiot.PodcastList.IModel;
 import org.dandelion.radiot.PodcastList.IPodcastListEngine;
@@ -11,7 +12,7 @@ import android.content.res.AssetManager;
 import android.net.Uri;
 
 public class PodcastListAcceptanceTestCase extends BasicAcceptanceTestCase {
-	protected TestPresenter testPresenter;
+	protected ArrayList<TestPresenter> presenters;
 
 
 	@Override
@@ -43,15 +44,30 @@ public class PodcastListAcceptanceTestCase extends BasicAcceptanceTestCase {
 
 	@Override
 	protected IPodcastListEngine createTestPresenter(IModel model) {
-		testPresenter = new TestPresenter(model);
-		return testPresenter;
+		TestPresenter presenter = new TestPresenter(model);
+		presenters.add(presenter);
+		return presenter;
+	}
+	
+	public TestPresenter mainShowPresenter() { 
+		return presenters.get(0);
+	}
+	
+	public TestPresenter afterShowPresenter() {
+		return presenters.get(1);
+	}
+	
+	@Override
+	protected void setUp() throws Exception {
+		presenters = new ArrayList<TestPresenter>();
+		super.setUp();
 	}
 
 	@Override
 	protected void tearDown() throws Exception {
 		super.tearDown();
-		if (null != testPresenter) {
-			testPresenter.assertNoTasksAreActive();
+		for (TestPresenter presenter : presenters) {
+			presenter.assertNoTasksAreActive();
 		}
 	}
 

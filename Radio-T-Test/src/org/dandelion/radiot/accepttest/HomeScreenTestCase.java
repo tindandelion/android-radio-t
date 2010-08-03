@@ -17,21 +17,21 @@ public class HomeScreenTestCase extends
 
 	public void testOpenPodcastsPage() throws Exception {
 		appDriver.visitMainShowPage();
-		testPresenter.assertPodcastListIsUpdated();
+		mainShowPresenter().assertPodcastListIsUpdated();
 		assertTrue("The sample podcast record for main podcast show is not found",
 				appDriver.waitForText("#5192"));
 	}
 
 	public void testShowAfterShowPage() throws Exception {
 		appDriver.visitAfterShowPage();
-		testPresenter.assertPodcastListIsUpdated();
+		afterShowPresenter().assertPodcastListIsUpdated();
 		assertTrue("The sample podcast record for pirates is not found",
 				appDriver.waitForText("#10193"));
 	}
 	
 	public void testShowingCorrectActivityTitle() throws Exception {
 		appDriver.visitMainShowPage();
-		testPresenter.assertPodcastListIsUpdated();
+		mainShowPresenter().assertPodcastListIsUpdated();
 		assertEquals("Подкасты", appDriver.getCurrentActivity().getTitle());
 	}
 	

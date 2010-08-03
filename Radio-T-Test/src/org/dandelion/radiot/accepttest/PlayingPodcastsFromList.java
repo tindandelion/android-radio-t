@@ -22,7 +22,7 @@ public class PlayingPodcastsFromList extends PodcastListAcceptanceTestCase {
 		activity = appDriver.visitMainShowPage();
 		player = new FakePodcastPlayer();
 		activity.setPodcastPlayer(player);
-		testPresenter.assertPodcastListIsUpdated();
+		mainShowPresenter().assertPodcastListIsUpdated();
 	}
 
 	@UiThreadTest

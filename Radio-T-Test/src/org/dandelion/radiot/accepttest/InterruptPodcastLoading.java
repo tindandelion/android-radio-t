@@ -16,7 +16,7 @@ public class InterruptPodcastLoading extends PodcastListAcceptanceTestCase {
 	public void testCancelRssLoadingWhenPressingBack() throws Exception {
 		appDriver.visitMainShowPage();
 		appDriver.goBack();
-		testPresenter.assertTaskIsCancelled();
+		mainShowPresenter().assertTaskIsCancelled();
 		appDriver.assertOnHomeScreen();
 	}
 
@@ -26,7 +26,7 @@ public class InterruptPodcastLoading extends PodcastListAcceptanceTestCase {
 		activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		appDriver.waitSomeTime();
 		allowPodcastRetrievalToFinish();
-		testPresenter.assertStartedBackgroundTasksCount(1);
+		mainShowPresenter().assertStartedBackgroundTasksCount(1);
 		appDriver.assertShowingPodcastList();
 	}
 
@@ -34,7 +34,7 @@ public class InterruptPodcastLoading extends PodcastListAcceptanceTestCase {
 		PodcastListActivity activity = appDriver.visitMainShowPage();
 		activity.finish();
 		appDriver.assertOnHomeScreen();
-		testPresenter.assertTaskIsCancelled();
+		mainShowPresenter().assertTaskIsCancelled();
 	}
 
 	protected void allowPodcastRetrievalToFinish() {

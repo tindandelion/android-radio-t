@@ -19,18 +19,15 @@ public class RadiotApplication extends Application {
 	public void onCreate() {
 		super.onCreate();
 		engines = new HashMap<String, IPodcastListEngine>();
+		engines.put("main-show", PodcastList.getEngine("http://feeds.rucast.net/radio-t"));
+		engines.put("after-show", PodcastList.getEngine("http://feeds.feedburner.com/pirate-radio-t"));
 	}
 
 	public IPodcastListEngine getPodcastEngine(String name) {
-		IPodcastListEngine engine = engines.get(name);
-		if (null == engine) { 
-			engine = PodcastList.getEngine(podcastUrls.get(name));
-			engines.put(name, engine);
-		}
-		return engine;
+		return engines.get(name);
 	}
-
-	public void resetEngines() {
-		engines.clear();
+	
+	public void setPodcastEngine(String name, IPodcastListEngine engine) {
+		engines.put(name, engine);
 	}
 }
