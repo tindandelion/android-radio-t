@@ -6,7 +6,6 @@ import org.dandelion.radiot.PodcastList.IPodcastListEngine;
 import org.dandelion.radiot.PodcastList.IView;
 
 import android.app.AlertDialog;
-import android.app.Application;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -16,7 +15,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,9 +31,9 @@ public class PodcastListActivity extends ListActivity implements IView {
 	public static final String TITLE_KEY = "title";
 	public static final String SHOW_NAME_KEY = "podcast_url";
 
-	public static void start(Context context, String title, String url) {
+	public static void start(Context context, String title, String showName) {
 		Intent intent = new Intent(context, PodcastListActivity.class);
-		intent.putExtra(SHOW_NAME_KEY, url);
+		intent.putExtra(SHOW_NAME_KEY, showName);
 		intent.putExtra(TITLE_KEY, title);
 		context.startActivity(intent);
 	}

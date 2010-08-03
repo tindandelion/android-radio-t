@@ -3,12 +3,10 @@ package org.dandelion.radiot.unittest;
 import java.util.ArrayList;
 
 import org.dandelion.radiot.PodcastItem;
-import org.dandelion.radiot.PodcastList;
-import org.dandelion.radiot.RadiotApplication;
-import org.dandelion.radiot.PodcastList.IModel;
 import org.dandelion.radiot.PodcastList.IPodcastListEngine;
 import org.dandelion.radiot.PodcastList.IView;
 import org.dandelion.radiot.PodcastListActivity;
+import org.dandelion.radiot.RadiotApplication;
 
 import android.content.Intent;
 import android.test.ActivityUnitTestCase;
@@ -19,7 +17,7 @@ public class PodcastListActivityTestCase extends
 
 	protected String showName;
 	private PodcastListActivity activity;
-	private NullPresenter presenter;
+	private NullPodcastEngine engine;
 
 	public PodcastListActivityTestCase() {
 		super(PodcastListActivity.class);
@@ -28,12 +26,12 @@ public class PodcastListActivityTestCase extends
 	public void testAttachesToNewPresenterOnCreation() {
 		activity = startActivity(new Intent(), null, null);
 
-		assertEquals(presenter, activity.getPresenter());
-		assertEquals(activity, presenter.getView());
+		assertEquals(engine, activity.getPresenter());
+		assertEquals(activity, engine.getView());
 	}
 
 	public void testAttachesToSavedPresenterOnCreation() throws Exception {
-		NullPresenter savedPresenter = new NullPresenter();
+		NullPodcastEngine savedPresenter = new NullPodcastEngine();
 		activity = startActivity(new Intent(), null, savedPresenter);
 		assertEquals(savedPresenter, activity.getPresenter());
 		assertEquals(activity, savedPresenter.getView());
@@ -43,10 +41,10 @@ public class PodcastListActivityTestCase extends
 			throws Exception {
 		activity = startActivity(new Intent(), null, null);
 		
-		NullPresenter savedPresenter = (NullPresenter) activity
+		NullPodcastEngine savedPresenter = (NullPodcastEngine) activity
 				.onRetainNonConfigurationInstance();
-		assertEquals(presenter, savedPresenter);
-		assertFalse(presenter.isAttached());
+		assertEquals(engine, savedPresenter);
+		assertFalse(engine.isAttached());
 		assertNull(activity.getPresenter());
 	}
 
@@ -88,30 +86,23 @@ public class PodcastListActivityTestCase extends
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		presenter = new NullPresenter();
+		engine = new NullPodcastEngine();
 		setApplication(new RadiotApplication() {
 			@Override
 			public IPodcastListEngine getPodcastEngine(String feedUrl) {
 				showName = feedUrl;
-				return super.getPodcastEngine(feedUrl);
-			}
-		});
-		PodcastList.setFactory(new PodcastList.Factory() {
-			@Override
-			public IPodcastListEngine createPresenter(IModel model) {
-				return presenter;
+				return engine;
 			}
 		});
 	}
 
 	@Override
 	protected void tearDown() throws Exception {
-		PodcastList.resetFactory();
 		super.tearDown();
 	}
 
-	class NullPresenter implements IPodcastListEngine {
-		private Object view = new Object();
+	class NullPodcastEngine implements IPodcastListEngine {
+		private Object view;
 
 		public void cancelUpdate() {
 		}
