@@ -9,7 +9,6 @@ import org.dandelion.radiot.PodcastList.IPodcastListEngine;
 import org.dandelion.radiot.RssFeedModel;
 
 import android.content.res.AssetManager;
-import android.net.Uri;
 
 public class PodcastListAcceptanceTestCase extends BasicAcceptanceTestCase {
 	protected ArrayList<TestPresenter> presenters;
@@ -22,17 +21,7 @@ public class PodcastListAcceptanceTestCase extends BasicAcceptanceTestCase {
 		return new RssFeedModel(url) {
 			@Override
 			protected InputStream openContentStream() throws IOException {
-				return assets.open(getLocalFileName(url));
-			}
-
-			private String getLocalFileName(String url) {
-				String filename;
-				if (null == url) {
-					filename = "radio-t";
-				} else {
-					filename = Uri.parse(url).getLastPathSegment();
-				}
-				return filename + ".xml";
+				return assets.open((url + ".xml"));
 			}
 
 			@Override
@@ -43,7 +32,7 @@ public class PodcastListAcceptanceTestCase extends BasicAcceptanceTestCase {
 	}
 
 	@Override
-	protected IPodcastListEngine createTestPresenter(IModel model) {
+	protected IPodcastListEngine createTestEngine(IModel model) {
 		TestPresenter presenter = new TestPresenter(model);
 		presenters.add(presenter);
 		return presenter;
