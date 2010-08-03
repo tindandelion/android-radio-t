@@ -13,7 +13,24 @@ public class RadiotApplication extends Application {
 		podcastUrls.put("after-show", "http://feeds.feedburner.com/pirate-radio-t");
 	}
 
+	private HashMap<String, IPodcastListEngine> engines;
+	
+	@Override
+	public void onCreate() {
+		super.onCreate();
+		engines = new HashMap<String, IPodcastListEngine>();
+	}
+
 	public IPodcastListEngine getPodcastEngine(String name) {
-		return PodcastList.getPresenter(podcastUrls.get(name));
+		IPodcastListEngine engine = engines.get(name);
+		if (null == engine) { 
+			engine = PodcastList.getEngine(podcastUrls.get(name));
+			engines.put(name, engine);
+		}
+		return engine;
+	}
+
+	public void resetEngines() {
+		engines.clear();
 	}
 }

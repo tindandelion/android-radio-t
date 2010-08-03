@@ -27,7 +27,7 @@ public class PodcastList {
 		void attach(IView view);
 	}
 
-	public static IPodcastListEngine getPresenter(String feedUrl) {
+	public static IPodcastListEngine getEngine(String feedUrl) {
 		Factory f = getFactory();
 		IModel model = f.createModel(feedUrl);
 		IPodcastListEngine presenter = f.createPresenter(model);

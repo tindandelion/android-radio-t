@@ -4,6 +4,7 @@ import org.dandelion.radiot.HomeScreen;
 import org.dandelion.radiot.PodcastList;
 import org.dandelion.radiot.PodcastList.IModel;
 import org.dandelion.radiot.PodcastList.IPodcastListEngine;
+import org.dandelion.radiot.RadiotApplication;
 
 import android.test.ActivityInstrumentationTestCase2;
 
@@ -27,6 +28,11 @@ public class BasicAcceptanceTestCase extends
 		return new ApplicationDriver(getInstrumentation(), getActivity());
 	}
 
+	private void resetApplicationState() {
+		RadiotApplication app = (RadiotApplication) getActivity().getApplication();
+		app.resetEngines();
+	}
+
 	protected IPodcastListEngine createTestPresenter(IModel model) {
 		return null;
 	}
@@ -37,6 +43,7 @@ public class BasicAcceptanceTestCase extends
 
 	@Override
 	protected void tearDown() throws Exception {
+		resetApplicationState();
 		PodcastList.resetFactory();
 		super.tearDown();
 	}
