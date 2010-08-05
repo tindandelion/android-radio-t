@@ -26,14 +26,14 @@ public class PodcastListActivityTestCase extends
 	public void testAttachesToNewPresenterOnCreation() {
 		activity = startActivity(new Intent(), null, null);
 
-		assertEquals(engine, activity.getPresenter());
+		assertEquals(engine, activity.getPodcastListEngine());
 		assertEquals(activity, engine.getView());
 	}
 
 	public void testAttachesToSavedPresenterOnCreation() throws Exception {
 		NullPodcastEngine savedPresenter = new NullPodcastEngine();
 		activity = startActivity(new Intent(), null, savedPresenter);
-		assertEquals(savedPresenter, activity.getPresenter());
+		assertEquals(savedPresenter, activity.getPodcastListEngine());
 		assertEquals(activity, savedPresenter.getView());
 	}
 
@@ -45,7 +45,7 @@ public class PodcastListActivityTestCase extends
 				.onRetainNonConfigurationInstance();
 		assertEquals(engine, savedPresenter);
 		assertFalse(engine.isAttached());
-		assertNull(activity.getPresenter());
+		assertNull(activity.getPodcastListEngine());
 	}
 
 	public void testGetsShowNameFromBundleExtra() throws Exception {

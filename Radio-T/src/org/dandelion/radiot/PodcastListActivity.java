@@ -219,7 +219,7 @@ public class PodcastListActivity extends ListActivity implements IView {
 		}
 	}
 
-	public IPodcastListEngine getPresenter() {
+	public IPodcastListEngine getPodcastListEngine() {
 		return engine;
 	}
 

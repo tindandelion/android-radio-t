@@ -19,7 +19,11 @@ public class PodcastListEngine implements PodcastList.IPodcastListEngine {
 	}
 
 	public void refresh(boolean resetCache) {
-		if (null == currentPodcasts || resetCache) {
+		if (resetCache) {
+			currentPodcasts = null;
+		}
+		
+		if (null == currentPodcasts) {
 			startRefreshTask();
 		} else {
 			updateViewWithCurrentPodcasts();
