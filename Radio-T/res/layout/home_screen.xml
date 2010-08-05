@@ -3,7 +3,7 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
-	android:background="@drawable/window_background">
+	android:background="@drawable/blue_background_noise">
 	<RelativeLayout
 		android:id="@+id/home_screen_header"
 		android:layout_width="fill_parent"
@@ -32,12 +32,15 @@
 	<ListView
 		android:id="@+id/podcasts_menu"
 		style="@style/RoundBorderedBox"
+		android:divider="#46b3b3b3"
+		android:dividerHeight="1px"
 		android:layout_below="@id/home_screen_header"
 		android:layout_marginTop="20dp"
 		android:footerDividersEnabled="false" />
 	<ListView
 		android:id="@+id/info_menu"
 		style="@style/RoundBorderedBox"
+		android:divider="#8cb3b3b3"
 		android:layout_below="@id/podcasts_menu"
 		android:layout_marginTop="15dp"
 		android:footerDividersEnabled="false" />
