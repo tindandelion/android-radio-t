@@ -15,13 +15,15 @@
 			android:name="PodcastListActivity" />
 		<activity
 			android:name="LiveShowScreen"
-			android:label="@string/live_show_title" />
+			android:label="@string/live_show_title"
+			android:theme="@style/Theme.Radiot" />
 		<activity
 			android:name="AboutAppScreen"
-			android:label="@string/about_app_title" />
+			android:label="@string/about_app_title"
+			android:theme="@style/Theme.Radiot" />
 		<activity
 			android:name="HomeScreen"
-			android:theme="@android:style/Theme.NoTitleBar"
+			android:theme="@style/Theme.RadiotNoTitle"
 			android:screenOrientation="portrait">
 			<intent-filter>
 				<action

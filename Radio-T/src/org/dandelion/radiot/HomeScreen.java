@@ -3,15 +3,13 @@ package org.dandelion.radiot;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -19,21 +17,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class HomeScreen extends Activity implements OnItemClickListener {
+public class HomeScreen extends RadiotActivity implements OnItemClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home_screen);
 		initList(R.id.podcasts_menu, getPodcastMenuItems());
 		initList(R.id.info_menu, getInfoMenuItems());
-	}
-
-	@Override
-	public void onAttachedToWindow() {
-		super.onAttachedToWindow();
-		Window window = getWindow();
-		window.setFormat(PixelFormat.RGBA_8888);
-		window.addFlags(WindowManager.LayoutParams.FLAG_DITHER);
 	}
 
 	private List<HomeScreenItem> getInfoMenuItems() {

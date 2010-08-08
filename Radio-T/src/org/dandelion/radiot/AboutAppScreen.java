@@ -1,6 +1,5 @@
 package org.dandelion.radiot;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -8,9 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-public class AboutAppScreen extends Activity {
+public class AboutAppScreen extends RadiotActivity {
 	private static final String FEEDBACK_EMAIL = "apps.dandelion@gmail.com";
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

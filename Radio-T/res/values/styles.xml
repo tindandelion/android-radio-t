@@ -29,4 +29,16 @@
 		<item
 			name="android:paddingBottom">30dp</item>
 	</style>
+	<style
+		name="Theme.Radiot"
+		parent="android:Theme">
+		<item
+			name="android:windowBackground">@drawable/dark_blue_background_noise</item>
+	</style>
+	<style
+		name="Theme.RadiotNoTitle"
+		parent="Theme.Radiot">
+		<item
+			name="android:windowNoTitle">true</item>
+	</style>
 </resources>
