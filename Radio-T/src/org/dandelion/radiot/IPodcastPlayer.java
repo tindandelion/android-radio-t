@@ -5,4 +5,5 @@ import android.net.Uri;
 
 public interface IPodcastPlayer {
 	void startPlaying(Context context, Uri url);
+	void stop();
 }

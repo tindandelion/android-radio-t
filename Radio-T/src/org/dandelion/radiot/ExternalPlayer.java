@@ -10,4 +10,7 @@ class ExternalPlayer implements IPodcastPlayer {
 		intent.setDataAndType(url, "audio/mpeg");
 		context.startActivity(Intent.createChooser(intent, null));
 	}
+
+	public void stop() {
+	}
 }

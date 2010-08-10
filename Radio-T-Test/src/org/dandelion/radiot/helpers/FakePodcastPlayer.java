@@ -19,4 +19,12 @@ public class FakePodcastPlayer implements IPodcastPlayer {
 		Assert.assertEquals(url, podcastBeingPlayed);
 	}
 
+	public void assertStopped() {
+		Assert.assertNull(podcastBeingPlayed);
+	}
+
+	public void stop() {
+		podcastBeingPlayed = null;
+	}
+
 }
