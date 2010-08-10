@@ -14,12 +14,5 @@
 			android:gravity="center_horizontal"
 			android:textAppearance="@android:style/TextAppearance.Medium"
 			android:text="@string/live_show_info" />
-		<Button
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:text="@string/listen_label"
-			android:layout_marginTop="20dp"
-			android:layout_gravity="center_horizontal"
-			android:onClick="listenButtonClicked" />
 	</LinearLayout>
 </RelativeLayout>

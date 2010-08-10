@@ -1,7 +1,8 @@
 package org.dandelion.radiot;
 
+import android.content.Context;
 import android.net.Uri;
 
 public interface IPodcastPlayer {
-	void startPlaying(Uri url);
+	void startPlaying(Context context, Uri url);
 }

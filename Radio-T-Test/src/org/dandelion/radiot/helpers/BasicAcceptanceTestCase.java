@@ -20,9 +20,13 @@ public class BasicAcceptanceTestCase extends
 	}
 
 	private void configurePodcastEngines() {
-		RadiotApplication app = (RadiotApplication) getActivity().getApplication();
+		RadiotApplication app = getRadiotApplication();
 		app.setPodcastEngine("main-show", createTestEngine(createTestModel("radio-t")));
 		app.setPodcastEngine("after-show", createTestEngine(createTestModel("pirate-radio-t")));
+	}
+
+	protected RadiotApplication getRadiotApplication() {
+		return (RadiotApplication) getActivity().getApplication();
 	}
 
 	protected IPodcastListEngine createTestEngine(IModel model) {

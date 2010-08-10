@@ -57,7 +57,7 @@ public class PodcastListActivity extends ListActivity implements IView {
 		extras = getIntent().getExtras();
 		setTitle(getTitleFromExtra());
 		initListAdapter();
-		setPodcastPlayer(new ExternalPlayer(this));
+		setPodcastPlayer(new ExternalPlayer());
 		attachToEngine();
 	}
 
@@ -168,7 +168,7 @@ public class PodcastListActivity extends ListActivity implements IView {
 	}
 
 	private void playPodcast(Uri uri) {
-		podcastPlayer.startPlaying(uri);
+		podcastPlayer.startPlaying(this, uri);
 	}
 
 	class PodcastListAdapter extends ArrayAdapter<PodcastItem> {

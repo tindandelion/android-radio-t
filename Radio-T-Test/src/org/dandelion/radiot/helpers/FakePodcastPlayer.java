@@ -4,13 +4,14 @@ import junit.framework.Assert;
 
 import org.dandelion.radiot.IPodcastPlayer;
 
+import android.content.Context;
 import android.net.Uri;
 
 public class FakePodcastPlayer implements IPodcastPlayer {
 
 	private Uri podcastBeingPlayed;
 
-	public void startPlaying(Uri url) {
+	public void startPlaying(Context context, Uri url) {
 		podcastBeingPlayed = url;
 	}
 

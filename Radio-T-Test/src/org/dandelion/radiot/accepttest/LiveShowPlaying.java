@@ -17,12 +17,11 @@ public class LiveShowPlaying extends
 		super.setUp();
 		appDriver = createApplicationDriver();
 		player = new FakePodcastPlayer();
-		LiveShowScreen activity = appDriver.visitLiveShowPage();
-		activity.setPodcastPlayer(player);
+		getRadiotApplication().setMediaPlayer(player);
 	}
 	
 	public void testStartPlayingAudio() throws Exception {
-		appDriver.clickOnText("Слушать сейчас");
+		appDriver.visitLiveShowPage();
 		player.assertIsPlaying(LiveShowScreen.LIVE_SHOW_URL);
 	}
 }
