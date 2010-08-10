@@ -29,18 +29,19 @@ public final class R {
         public static final int home_screen_item_icon=0x7f07000a;
         public static final int home_screen_item_title=0x7f07000b;
         public static final int info_menu=0x7f070009;
-        public static final int live_show_info_view=0x7f07000c;
+        public static final int live_playback_control=0x7f07000c;
+        public static final int live_show_info_view=0x7f07000d;
         public static final int logo=0x7f070000;
         public static final int logo_image=0x7f070005;
         public static final int logo_text=0x7f070007;
         public static final int main_title=0x7f070004;
-        public static final int podcast_item_icon=0x7f07000d;
-        public static final int podcast_item_view_date=0x7f07000f;
-        public static final int podcast_item_view_number=0x7f07000e;
-        public static final int podcast_item_view_shownotes=0x7f070010;
-        public static final int podcast_item_view_tags=0x7f070011;
+        public static final int podcast_item_icon=0x7f07000e;
+        public static final int podcast_item_view_date=0x7f070010;
+        public static final int podcast_item_view_number=0x7f07000f;
+        public static final int podcast_item_view_shownotes=0x7f070011;
+        public static final int podcast_item_view_tags=0x7f070012;
         public static final int podcasts_menu=0x7f070008;
-        public static final int refresh=0x7f070012;
+        public static final int refresh=0x7f070013;
         public static final int version_label=0x7f070002;
     }
     public static final class layout {
@@ -49,7 +50,8 @@ public final class R {
         public static final int home_screen=0x7f030002;
         public static final int home_screen_item=0x7f030003;
         public static final int live_show_screen=0x7f030004;
-        public static final int podcast_list_item=0x7f030005;
+        public static final int playback_control=0x7f030005;
+        public static final int podcast_list_item=0x7f030006;
     }
     public static final class menu {
         public static final int podcast_list=0x7f060000;
