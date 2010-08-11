@@ -5,11 +5,11 @@ import java.util.HashMap;
 import org.dandelion.radiot.PodcastList.IPodcastListEngine;
 
 import android.app.Application;
-import android.content.Context;
+import android.media.MediaPlayer;
 
 public class RadiotApplication extends Application {
 	private HashMap<String, IPodcastListEngine> engines;
-	private IPodcastPlayer podcastPlayer;
+	private MediaPlayer mediaPlayer;
 
 	@Override
 	public void onCreate() {
@@ -20,6 +20,14 @@ public class RadiotApplication extends Application {
 		engines.put(
 				"after-show",
 				createPodcastEngine("http://feeds.feedburner.com/pirate-radio-t"));
+		
+		mediaPlayer = new MediaPlayer();
+	}
+	
+	@Override
+	public void onTerminate() {
+		super.onTerminate();
+		mediaPlayer.release();
 	}
 
 	protected IPodcastListEngine createPodcastEngine(String url) {
@@ -33,16 +41,12 @@ public class RadiotApplication extends Application {
 	public void setPodcastEngine(String name, IPodcastListEngine engine) {
 		engines.put(name, engine);
 	}
-
-	public void setMediaPlayer(IPodcastPlayer player) {
-		podcastPlayer = player;
+	
+	public MediaPlayer getMediaPlayer() {
+		return mediaPlayer;
 	}
-
-	public IPodcastPlayer getMediaPlayer(Context context) {
-		if (null != podcastPlayer) {
-			return podcastPlayer;
-		} else {
-			return new EmbeddedPlayer();
-		}
+	
+	public void setMediaPlayer(MediaPlayer instance) { 
+		mediaPlayer = instance;
 	}
 }

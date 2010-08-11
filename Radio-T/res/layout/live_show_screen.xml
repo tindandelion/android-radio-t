@@ -3,12 +3,6 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
-	<org.dandelion.radiot.PlaybackControl
-		android:id="@+id/live_playback_control"
-		android:layout_width="fill_parent"
-		android:layout_height="50dp"
-		android:background="@drawable/round_border_box_background"
-	/>
 	<TextView
 		android:id="@+id/live_show_info_view"
 		android:layout_width="fill_parent"

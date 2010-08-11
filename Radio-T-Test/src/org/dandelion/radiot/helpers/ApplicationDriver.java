@@ -1,8 +1,8 @@
 package org.dandelion.radiot.helpers;
 
 import org.dandelion.radiot.HomeScreen;
-import org.dandelion.radiot.LiveShowScreen;
 import org.dandelion.radiot.PodcastListActivity;
+import org.dandelion.radiot.live.LiveShowScreen;
 
 import android.app.Activity;
 import android.app.Instrumentation;

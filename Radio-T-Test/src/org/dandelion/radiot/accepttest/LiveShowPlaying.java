@@ -1,14 +1,14 @@
 package org.dandelion.radiot.accepttest;
 
-import org.dandelion.radiot.LiveShowScreen;
 import org.dandelion.radiot.helpers.ApplicationDriver;
 import org.dandelion.radiot.helpers.BasicAcceptanceTestCase;
-import org.dandelion.radiot.helpers.FakePodcastPlayer;
+import org.dandelion.radiot.helpers.TestMediaPlayer;
+import org.dandelion.radiot.live.LiveShowScreen;
 
 public class LiveShowPlaying extends
 		BasicAcceptanceTestCase {
 
-	private FakePodcastPlayer player;
+	private TestMediaPlayer player;
 	private ApplicationDriver appDriver;
 
 	
@@ -16,7 +16,7 @@ public class LiveShowPlaying extends
 	protected void setUp() throws Exception {
 		super.setUp();
 		appDriver = createApplicationDriver();
-		player = new FakePodcastPlayer();
+		player = new TestMediaPlayer();
 		getRadiotApplication().setMediaPlayer(player);
 	}
 	
