@@ -12,4 +12,16 @@
 		android:text="@string/live_show_info"
 		android:layout_centerInParent="true"
 		style="@style/InfoBox" />
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="48dp"
+		android:layout_alignParentBottom="true">
+		<ToggleButton
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:id="@+id/live_show_playback_button"
+			android:textOn="@string/live_show_playback_button_title"
+			android:textOff="@string/live_show_playback_button_title" 
+			android:onClick="toggleLiveShow"/>
+	</LinearLayout>
 </RelativeLayout>

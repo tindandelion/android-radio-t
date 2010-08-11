@@ -3,7 +3,7 @@ package org.dandelion.radiot.accepttest;
 import org.dandelion.radiot.helpers.ApplicationDriver;
 import org.dandelion.radiot.helpers.BasicAcceptanceTestCase;
 import org.dandelion.radiot.helpers.TestMediaPlayer;
-import org.dandelion.radiot.live.LiveShowScreen;
+import org.dandelion.radiot.live.LiveShowActivity;
 
 public class LiveShowPlaying extends
 		BasicAcceptanceTestCase {
@@ -22,7 +22,7 @@ public class LiveShowPlaying extends
 	
 	public void testStartPlayingAudio() throws Exception {
 		appDriver.visitLiveShowPage();
-		player.assertIsPlaying(LiveShowScreen.LIVE_SHOW_URL);
+		player.assertIsPlaying(LiveShowActivity.LIVE_SHOW_URL);
 	}
 	
 	public void testStopPlayingOnExit() throws Exception {

@@ -3,25 +3,22 @@ package org.dandelion.radiot.live;
 import android.media.MediaPlayer;
 import android.util.Log;
 
-public class LiveShowPlaybackController {
+public class LiveShowPlaybackController implements
+		MediaPlayer.OnPreparedListener {
 
 	private MediaPlayer mediaPlayer;
+	private String currentUrl;
 
 	public LiveShowPlaybackController(MediaPlayer mediaPlayer) {
 		this.mediaPlayer = mediaPlayer;
+		mediaPlayer.setOnPreparedListener(this);
 	}
 
 	public void start(String url) {
 		try {
+			currentUrl = url;
 			mediaPlayer.setDataSource(url);
-			mediaPlayer
-					.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-						public void onPrepared(MediaPlayer mp) {
-							mp.start();
-						}
-					});
 			mediaPlayer.prepareAsync();
-			mediaPlayer.start();
 		} catch (Exception e) {
 			Log.e("RadioT", "Playback exception", e);
 		}
@@ -29,5 +26,17 @@ public class LiveShowPlaybackController {
 
 	public void stop() {
 		mediaPlayer.reset();
+	}
+
+	public void onPrepared(MediaPlayer mp) {
+		mediaPlayer.start();
+	}
+
+	public void togglePlaying(boolean playing) {
+		if (playing) {
+			start(currentUrl);
+		} else {
+			stop();
+		}
 	}
 }

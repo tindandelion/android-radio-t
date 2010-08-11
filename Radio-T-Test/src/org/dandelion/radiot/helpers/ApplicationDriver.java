@@ -2,7 +2,7 @@ package org.dandelion.radiot.helpers;
 
 import org.dandelion.radiot.HomeScreen;
 import org.dandelion.radiot.PodcastListActivity;
-import org.dandelion.radiot.live.LiveShowScreen;
+import org.dandelion.radiot.live.LiveShowActivity;
 
 import android.app.Activity;
 import android.app.Instrumentation;
@@ -29,10 +29,10 @@ public class ApplicationDriver extends Solo {
 		assertCurrentActivity("Must be on the after show page", PodcastListActivity.class);
 	}
 
-	public LiveShowScreen visitLiveShowPage() {
+	public LiveShowActivity visitLiveShowPage() {
 		clickOnText("Прямой эфир");
-		assertCurrentActivity("Must be on the live show page", LiveShowScreen.class);
-		return (LiveShowScreen) getCurrentActivity();
+		assertCurrentActivity("Must be on the live show page", LiveShowActivity.class);
+		return (LiveShowActivity) getCurrentActivity();
 	}
 	
 	public void waitSomeTime() {

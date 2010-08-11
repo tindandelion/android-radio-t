@@ -5,8 +5,10 @@ import org.dandelion.radiot.RadiotActivity;
 import org.dandelion.radiot.RadiotApplication;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ToggleButton;
 
-public class LiveShowScreen extends RadiotActivity {
+public class LiveShowActivity extends RadiotActivity {
 	// public static final Uri LIVE_SHOW_URL = Uri
 	// .parse("http://stream3.radio-t.com:8181/stream");
 
@@ -32,5 +34,10 @@ public class LiveShowScreen extends RadiotActivity {
 	protected void onPause() {
 		super.onPause();
 		playbackController.stop();
+	}
+	
+	public void toggleLiveShow(View v) {
+		ToggleButton button = (ToggleButton)v;
+		playbackController.togglePlaying(button.isChecked());
 	}
 }

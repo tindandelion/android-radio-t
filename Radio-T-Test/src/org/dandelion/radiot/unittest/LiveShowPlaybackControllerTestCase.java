@@ -35,6 +35,18 @@ public class LiveShowPlaybackControllerTestCase extends TestCase {
 		controller.stop();
 		mockPlayer.assertIsReset();
 	}
+	
+	public void testTogglePlaying() throws Exception {
+		controller.start("url-to-play");
+		mockPlayer.bePrepared();
+		
+		controller.togglePlaying(false);
+		mockPlayer.assertIsReset();
+		
+		controller.togglePlaying(true);
+		mockPlayer.bePrepared();
+		mockPlayer.assertIsPlaying("url-to-play");
+	}
 }
 
 class MockMediaPlayer extends MediaPlayer {
@@ -74,10 +86,13 @@ class MockMediaPlayer extends MediaPlayer {
 	@Override
 	public void start() throws IllegalStateException {
 		isStarted = true;
+		isReset = false;
 	}
 	
 	@Override
 	public void reset() {
 		isReset = true;
+		isStarted = false;
+		dataSource = null;
 	}
 }

@@ -3,7 +3,7 @@ package org.dandelion.radiot;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.dandelion.radiot.live.LiveShowScreen;
+import org.dandelion.radiot.live.LiveShowActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -67,7 +67,7 @@ public class HomeScreen extends RadiotActivity implements OnItemClickListener {
 				R.drawable.live_show_icon) {
 			@Override
 			public void execute() {
-				startActivity(new Intent(HomeScreen.this, LiveShowScreen.class));
+				startActivity(new Intent(HomeScreen.this, LiveShowActivity.class));
 			}
 		});
 		return items;
