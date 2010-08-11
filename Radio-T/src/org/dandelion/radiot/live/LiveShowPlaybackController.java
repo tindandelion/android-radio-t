@@ -1,6 +1,7 @@
 package org.dandelion.radiot.live;
 
 import android.media.MediaPlayer;
+import android.util.Log;
 
 public class LiveShowPlaybackController {
 
@@ -22,10 +23,11 @@ public class LiveShowPlaybackController {
 			mediaPlayer.prepareAsync();
 			mediaPlayer.start();
 		} catch (Exception e) {
+			Log.e("RadioT", "Playback exception", e);
 		}
 	}
 
 	public void stop() {
-		mediaPlayer.stop();
+		mediaPlayer.reset();
 	}
 }
