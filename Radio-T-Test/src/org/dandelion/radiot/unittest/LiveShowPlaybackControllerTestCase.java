@@ -6,12 +6,13 @@ import junit.framework.Assert;
 import junit.framework.TestCase;
 
 import org.dandelion.radiot.live.LiveShowPlaybackController;
+import org.dandelion.radiot.unittest.MockMediaPlayer.State;
 
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnErrorListener;
 
 public class LiveShowPlaybackControllerTestCase extends TestCase {
-	
+
 	private MockMediaPlayer mockPlayer;
 	private LiveShowPlaybackController controller;
 	private TestPlaybackView view;
@@ -24,14 +25,14 @@ public class LiveShowPlaybackControllerTestCase extends TestCase {
 		controller = new LiveShowPlaybackController(mockPlayer);
 		controller.attach(view);
 	}
-	
+
 	public void testStartsPlaying() throws Exception {
 		controller.start("url-to-play");
 		mockPlayer.bePrepared();
-		
+
 		mockPlayer.assertIsPlaying("url-to-play");
 	}
-	
+
 	public void testStopsPLaying() throws Exception {
 		controller.start("url-to-play");
 		mockPlayer.bePrepared();
@@ -39,79 +40,79 @@ public class LiveShowPlaybackControllerTestCase extends TestCase {
 		controller.stop();
 		mockPlayer.assertIsReset();
 	}
-	
+
 	public void testTogglePlaying() throws Exception {
 		controller.start("url-to-play");
 		mockPlayer.bePrepared();
-		
+
 		controller.togglePlaying(false);
 		mockPlayer.assertIsReset();
-		
+
 		controller.togglePlaying(true);
 		mockPlayer.bePrepared();
 		mockPlayer.assertIsPlaying("url-to-play");
 	}
-	
+
 	public void testDisablesControlsWhilePreparing() throws Exception {
 		controller.start("");
 		view.assertControlsEnabled(false);
-		
+
 		mockPlayer.bePrepared();
 		view.assertControlsEnabled(true);
 	}
-	
+
 	public void testCallsBackToViewOnStartAndStop() throws Exception {
 		controller.start("");
 		view.assertIsPlaying(false);
 		mockPlayer.bePrepared();
-		
+
 		view.assertIsPlaying(true);
-		
+
 		controller.stop();
 		view.assertIsPlaying(false);
 	}
-	
+
 	public void testUpdatesViewWhenAttached() throws Exception {
 		TestPlaybackView newView = attachNewView();
 		newView.assertState(true, false);
-		
+
 		controller.start("");
 		newView = attachNewView();
 		newView.assertState(false, false);
-		
+
 		mockPlayer.bePrepared();
 		newView = attachNewView();
 		newView.assertState(true, true);
-		
+
 		controller.stop();
 		newView = attachNewView();
 		newView.assertState(true, false);
 	}
-	
+
 	public void testDontStartPlayingIfAlreadyDoes() throws Exception {
 		controller.start("");
 		controller.start("");
-		
+
 		mockPlayer.bePrepared();
 		controller.start("");
 	}
-	
+
 	public void testHandleErrorsWhileConnecting() throws Exception {
 		mockPlayer.throwsConnectionError();
 		controller.start("");
 		view.assertShowsError();
 		view.assertState(true, false);
 	}
-	
+
 	public void testHandleErrorsWhilePreparing() throws Exception {
 		controller.start("");
 		mockPlayer.prepareError();
-		
+
 		view.assertShowsError();
 		view.assertState(true, false);
 		mockPlayer.assertIsReset();
 	}
-	
+
 	protected TestPlaybackView attachNewView() {
 		TestPlaybackView newView = new TestPlaybackView();
 		controller.attach(newView);
@@ -153,15 +154,18 @@ class TestPlaybackView implements LiveShowPlaybackController.ILivePlaybackView {
 	public void showPlaybackError() {
 		showsError = true;
 	}
-	
+
 }
 
 class MockMediaPlayer extends MediaPlayer {
+
+	enum State {
+		Idle, Preparing, Playing, Prepared
+	}
+
 	private String dataSource;
 	private OnPreparedListener onPreparedListener;
-	private boolean isStarted = false;
-	private boolean isReset = true;
-	private boolean isPreparing = false;
+	private State currentState = State.Idle;
 	private IOException connectionError;
 	private OnErrorListener onErrorListener;
 
@@ -173,7 +177,7 @@ class MockMediaPlayer extends MediaPlayer {
 		}
 		dataSource = path;
 	}
-	
+
 	@Override
 	public void setOnErrorListener(OnErrorListener listener) {
 		onErrorListener = listener;
@@ -188,21 +192,21 @@ class MockMediaPlayer extends MediaPlayer {
 	}
 
 	public void assertIsReset() {
-		Assert.assertTrue(isReset);
+		Assert.assertEquals(State.Idle, currentState);
 	}
 
 	public void assertIsPlaying(String expectedUrl) {
-		Assert.assertTrue(isStarted);
+		Assert.assertEquals(State.Playing, currentState);
 		Assert.assertEquals(expectedUrl, dataSource);
 	}
-	
+
 	@Override
 	public boolean isPlaying() {
-		return isStarted;
+		return State.Playing == currentState;
 	}
 
 	public void bePrepared() {
-		isPreparing  = false;
+		currentState = State.Prepared;
 		onPreparedListener.onPrepared(this);
 	}
 
@@ -210,31 +214,26 @@ class MockMediaPlayer extends MediaPlayer {
 	public void setOnPreparedListener(OnPreparedListener listener) {
 		onPreparedListener = listener;
 	}
-	
+
 	@Override
 	public void prepareAsync() throws IllegalStateException {
-		checkIdle();
-		isPreparing = true;
-		isReset = false;
-	}
-	
-	@Override
-	public void start() throws IllegalStateException {
-		checkIdle();
-		isStarted = true;
-		isReset = false;
+		checkState(State.Idle);
+		currentState = State.Preparing;
 	}
 
-	protected void checkIdle() {
-		if (isStarted || isPreparing) {
-			Assert.fail("Should be in an idle state");
-		}
+	@Override
+	public void start() throws IllegalStateException {
+		checkState(State.Prepared);
+		currentState = State.Playing;
 	}
-	
+
+	private void checkState(State expected) {
+		Assert.assertEquals(expected, currentState);
+	}
+
 	@Override
 	public void reset() {
-		isReset = true;
-		isStarted = false;
+		currentState = State.Idle;
 		dataSource = null;
 	}
 }
