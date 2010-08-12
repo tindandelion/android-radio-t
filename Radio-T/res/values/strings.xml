@@ -20,4 +20,5 @@
      с <b>23:00</b> по московскому времени</string>
      <string name="listen_label">Слушать сейчас</string>
      <string name="live_show_playback_button_title">Прямой эфир</string>
+     <string name="live_show_playback_error">Ошибка при воспроизведении потока прямого эфира</string>
 </resources>
