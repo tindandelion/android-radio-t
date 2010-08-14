@@ -5,6 +5,7 @@ import org.dandelion.radiot.RadiotApplication;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -44,29 +45,45 @@ public class LiveShowActivity extends Activity implements
 
 	@Override
 	protected void onResume() {
+		Log.i("RadioT", "resuming the activity");
 		super.onResume();
 		playbackController.start(LIVE_SHOW_URL);
 	}
 
 	@Override
 	protected void onPause() {
+		Log.i("RadioT", "Pausing the activity");
 		super.onPause();
-		if (null != playbackController) {
-			playbackController.stop();
-		}
 	}
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
+		Log.i("RadioT", "Saving bundle state");
 		super.onSaveInstanceState(outState);
-		savedState = new Object[] { playbackController };
-		playbackController.detach();
-		playbackController = null;
 	}
 
 	@Override
 	public Object onRetainNonConfigurationInstance() {
-		return savedState;
+		Log.i("RadioT", "Getting activity config");
+		Object[] result = new Object[] { playbackController };
+		playbackController.detach();
+		playbackController = null;
+		return result;
+	}
+	
+	@Override
+	protected void onStop() {
+		Log.i("RadioT", "Stopping activity");
+ 		super.onStop();
+	}
+	
+	@Override
+	protected void onDestroy() {
+		Log.i("RadioT", "Destroying activity");
+		if (null != playbackController) {
+			playbackController.stop();
+		}
+		super.onDestroy();
 	}
 
 	public void toggleLiveShow(View v) {
