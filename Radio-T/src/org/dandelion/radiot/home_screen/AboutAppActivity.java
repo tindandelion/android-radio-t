@@ -1,4 +1,9 @@
-package org.dandelion.radiot;
+package org.dandelion.radiot.home_screen;
+
+import org.dandelion.radiot.R;
+import org.dandelion.radiot.R.id;
+import org.dandelion.radiot.R.layout;
+import org.dandelion.radiot.R.string;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,7 +13,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-public class AboutAppScreen extends Activity {
+public class AboutAppActivity extends Activity {
 	private static final String FEEDBACK_EMAIL = "apps.dandelion@gmail.com";
 	
 	@Override

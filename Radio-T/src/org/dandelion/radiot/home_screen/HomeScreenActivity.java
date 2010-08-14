@@ -1,6 +1,5 @@
-package home_screen;
+package org.dandelion.radiot.home_screen;
 
-import org.dandelion.radiot.AboutAppScreen;
 import org.dandelion.radiot.PodcastListActivity;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.live.LiveShowActivity;
@@ -53,7 +52,7 @@ public class HomeScreenActivity extends Activity {
 		a.addItem(R.string.about_app_title, R.drawable.about_icon, new HomeScreenItem.OnClickListener() {
 			public void onClick(HomeScreenItem item) {
 				startActivity(new Intent(HomeScreenActivity.this,
-						AboutAppScreen.class));
+						AboutAppActivity.class));
 			}
 		});
 		return a;

@@ -1,4 +1,4 @@
-package home_screen;
+package org.dandelion.radiot.home_screen;
 
 import java.util.ArrayList;
 
