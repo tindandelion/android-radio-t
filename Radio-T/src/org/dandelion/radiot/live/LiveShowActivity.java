@@ -1,15 +1,15 @@
 package org.dandelion.radiot.live;
 
 import org.dandelion.radiot.R;
-import org.dandelion.radiot.RadiotActivity;
 import org.dandelion.radiot.RadiotApplication;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-public class LiveShowActivity extends RadiotActivity implements
+public class LiveShowActivity extends Activity implements
 		LiveShowPlaybackController.ILivePlaybackView {
 	// public static final Uri LIVE_SHOW_URL = Uri
 	// .parse("http://stream3.radio-t.com:8181/stream");

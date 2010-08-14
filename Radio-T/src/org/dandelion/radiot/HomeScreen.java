@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.dandelion.radiot.live.LiveShowActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -16,7 +17,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class HomeScreen extends RadiotActivity implements OnItemClickListener {
+public class HomeScreen extends Activity implements OnItemClickListener {
 	private final HomeScreenItem separatorItem = new HomeScreenItem(0, 0);
 
 	@Override

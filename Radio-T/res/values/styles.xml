@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<style
-		name="RoundBorderedBox">
+		name="InfoBox">
 		<item
 			name="android:layout_width">fill_parent</item>
 		<item
@@ -11,17 +11,9 @@
 		<item
 			name="android:layout_marginRight">7dp</item>
 		<item
-			name="android:paddingTop">5dp</item>
-		<item
-			name="android:paddingBottom">5dp</item>
-		<item
 			name="android:paddingLeft">10dp</item>
 		<item
 			name="android:paddingRight">10dp</item>
-	</style>
-	<style
-		name="InfoBox"
-		parent="RoundBorderedBox">
 		<item
 			name="android:paddingTop">30dp</item>
 		<item
