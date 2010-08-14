@@ -1,6 +1,7 @@
 package org.dandelion.radiot.helpers;
 
-import org.dandelion.radiot.HomeScreen;
+import home_screen.HomeScreenActivity;
+
 import org.dandelion.radiot.PodcastListActivity;
 import org.dandelion.radiot.live.LiveShowActivity;
 
@@ -15,7 +16,7 @@ public class ApplicationDriver extends Solo {
 	}
 
 	public void assertOnHomeScreen() {
-		assertCurrentActivity("Must be on the home screen", HomeScreen.class);
+		assertCurrentActivity("Must be on the home screen", HomeScreenActivity.class);
 	}
 	
 	public PodcastListActivity visitMainShowPage() {

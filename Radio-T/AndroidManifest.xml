@@ -22,7 +22,7 @@
 			android:label="@string/about_app_title"
 			android:theme="@style/Theme.Radiot" />
 		<activity
-			android:name="HomeScreen"
+			android:name="home_screen.HomeScreenActivity"
 			android:theme="@style/Theme.RadiotNoTitle"
 			android:screenOrientation="portrait">
 			<intent-filter>

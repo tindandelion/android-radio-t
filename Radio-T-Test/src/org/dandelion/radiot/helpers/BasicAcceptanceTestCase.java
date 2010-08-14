@@ -1,6 +1,7 @@
 package org.dandelion.radiot.helpers;
 
-import org.dandelion.radiot.HomeScreen;
+import home_screen.HomeScreenActivity;
+
 import org.dandelion.radiot.PodcastList.IModel;
 import org.dandelion.radiot.PodcastList.IPodcastListEngine;
 import org.dandelion.radiot.RadiotApplication;
@@ -8,10 +9,10 @@ import org.dandelion.radiot.RadiotApplication;
 import android.test.ActivityInstrumentationTestCase2;
 
 public class BasicAcceptanceTestCase extends
-		ActivityInstrumentationTestCase2<HomeScreen> {
+		ActivityInstrumentationTestCase2<HomeScreenActivity> {
 
 	public BasicAcceptanceTestCase() {
-		super("org.dandelion.radiot", HomeScreen.class);
+		super("org.dandelion.radiot", HomeScreenActivity.class);
 	}
 
 	protected ApplicationDriver createApplicationDriver() {
