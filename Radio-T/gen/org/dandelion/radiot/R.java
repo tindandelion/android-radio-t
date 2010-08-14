@@ -74,7 +74,10 @@ public final class R {
     public static final class style {
         public static final int HomeScreenList=0x7f050001;
         public static final int InfoBox=0x7f050000;
-        public static final int Theme_Radiot=0x7f050002;
-        public static final int Theme_RadiotNoTitle=0x7f050003;
+        public static final int Radiot_Button=0x7f050003;
+        public static final int Radiot_TextView=0x7f050002;
+        public static final int Radiot_ToggleButton=0x7f050004;
+        public static final int Theme_Radiot=0x7f050005;
+        public static final int Theme_RadiotNoTitle=0x7f050006;
     }
 }

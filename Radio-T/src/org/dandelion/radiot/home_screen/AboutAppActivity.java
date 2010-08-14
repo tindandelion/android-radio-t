@@ -1,9 +1,6 @@
 package org.dandelion.radiot.home_screen;
 
 import org.dandelion.radiot.R;
-import org.dandelion.radiot.R.id;
-import org.dandelion.radiot.R.layout;
-import org.dandelion.radiot.R.string;
 
 import android.app.Activity;
 import android.content.Intent;

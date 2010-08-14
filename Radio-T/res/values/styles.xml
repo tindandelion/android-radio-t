@@ -27,8 +27,34 @@
 			name="android:layout_height">wrap_content</item>
 	</style>
 	<style
+		name="Radiot.TextView"
+		parent="@android:style/Widget.TextView">
+		<item
+			name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+		<item
+			name="android:textColor">?android:attr/textColorSecondary</item>
+	</style>
+	<style
+		name="Radiot.Button"
+		parent="@android:style/Widget.Button">
+		<item
+			name="android:textAppearance">?android:attr/textAppearanceMediumInverse</item>
+	</style>
+	<style
+		name="Radiot.ToggleButton"
+		parent="@android:style/Widget.Button.Toggle">
+		<item
+			name="android:textAppearance">?android:attr/textAppearanceMediumInverse</item>
+	</style>
+	<style
 		name="Theme.Radiot"
 		parent="android:Theme">
+		<item
+			name="android:textViewStyle">@style/Radiot.TextView</item>
+		<item
+			name="android:buttonStyle">@style/Radiot.Button</item>
+		<item
+			name="android:buttonStyleToggle">@style/Radiot.ToggleButton</item>
 	</style>
 	<style
 		name="Theme.RadiotNoTitle"
