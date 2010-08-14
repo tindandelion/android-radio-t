@@ -35,6 +35,15 @@ public class HomeScreen extends RadiotActivity implements OnItemClickListener {
 
 	private List<HomeScreenItem> getPodcastMenuItems() {
 		List<HomeScreenItem> items = new ArrayList<HomeScreenItem>();
+		items.add(new HomeScreenItem(R.string.live_show_title,
+				R.drawable.live_show_icon) {
+			@Override
+			public void execute() {
+				startActivity(new Intent(HomeScreen.this,
+						LiveShowActivity.class));
+			}
+		});
+		items.add(separatorItem);
 		items.add(new HomeScreenItem(R.string.main_show_title,
 				R.drawable.podcast_icon) {
 			@Override
@@ -49,14 +58,6 @@ public class HomeScreen extends RadiotActivity implements OnItemClickListener {
 			public void execute() {
 				PodcastListActivity.start(HomeScreen.this, this.title,
 						"after-show");
-			}
-		});
-		items.add(new HomeScreenItem(R.string.live_show_title,
-				R.drawable.live_show_icon) {
-			@Override
-			public void execute() {
-				startActivity(new Intent(HomeScreen.this,
-						LiveShowActivity.class));
 			}
 		});
 		items.add(separatorItem);
@@ -95,7 +96,7 @@ public class HomeScreen extends RadiotActivity implements OnItemClickListener {
 
 	class HomeScreenAdapter extends ArrayAdapter<HomeScreenItem> {
 
-		private static final float SEPARATOR_HEIGHT_DIP = 32;
+		private static final float SEPARATOR_HEIGHT_DIP = 16;
 
 		public HomeScreenAdapter(List<HomeScreenItem> items) {
 			super(HomeScreen.this, R.layout.home_screen_item, items);

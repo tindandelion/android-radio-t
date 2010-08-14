@@ -33,4 +33,14 @@
 		style="@style/HomeScreenList"
 		android:layout_below="@id/home_screen_header"
 		android:layout_marginTop="20dp" />
+	<View
+		android:layout_width="fill_parent"
+		android:layout_height="1dp"
+		android:layout_alignTop="@id/podcasts_menu"
+		android:background="@android:drawable/divider_horizontal_dark" />
+	<View
+		android:layout_width="fill_parent"
+		android:layout_height="1dp"
+		android:layout_alignBottom="@id/podcasts_menu"
+		android:background="@android:drawable/divider_horizontal_dark" />
 </RelativeLayout>
