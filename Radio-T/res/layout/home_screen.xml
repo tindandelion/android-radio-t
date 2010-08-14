@@ -30,17 +30,7 @@
 	</RelativeLayout>
 	<ListView
 		android:id="@+id/podcasts_menu"
-		style="@style/RoundBorderedBox"
-		android:divider="#46b3b3b3"
-		android:dividerHeight="1px"
+		style="@style/HomeScreenList"
 		android:layout_below="@id/home_screen_header"
-		android:layout_marginTop="20dp"
-		android:footerDividersEnabled="false" />
-	<ListView
-		android:id="@+id/info_menu"
-		style="@style/RoundBorderedBox"
-		android:divider="#8cb3b3b3"
-		android:layout_below="@id/podcasts_menu"
-		android:layout_marginTop="15dp"
-		android:footerDividersEnabled="false" />
+		android:layout_marginTop="20dp" />
 </RelativeLayout>

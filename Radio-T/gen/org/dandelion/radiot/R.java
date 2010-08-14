@@ -26,22 +26,21 @@ public final class R {
         public static final int app_name_label=0x7f070001;
         public static final int feedback_button=0x7f070003;
         public static final int home_screen_header=0x7f070006;
-        public static final int home_screen_item_icon=0x7f07000a;
-        public static final int home_screen_item_title=0x7f07000b;
-        public static final int info_menu=0x7f070009;
-        public static final int live_show_info_view=0x7f07000c;
-        public static final int live_show_playback_button=0x7f07000d;
+        public static final int home_screen_item_icon=0x7f070009;
+        public static final int home_screen_item_title=0x7f07000a;
+        public static final int live_show_info_view=0x7f07000b;
+        public static final int live_show_playback_button=0x7f07000c;
         public static final int logo=0x7f070000;
         public static final int logo_image=0x7f070005;
         public static final int logo_text=0x7f070007;
         public static final int main_title=0x7f070004;
-        public static final int podcast_item_icon=0x7f07000e;
-        public static final int podcast_item_view_date=0x7f070010;
-        public static final int podcast_item_view_number=0x7f07000f;
-        public static final int podcast_item_view_shownotes=0x7f070011;
-        public static final int podcast_item_view_tags=0x7f070012;
+        public static final int podcast_item_icon=0x7f07000d;
+        public static final int podcast_item_view_date=0x7f07000f;
+        public static final int podcast_item_view_number=0x7f07000e;
+        public static final int podcast_item_view_shownotes=0x7f070010;
+        public static final int podcast_item_view_tags=0x7f070011;
         public static final int podcasts_menu=0x7f070008;
-        public static final int refresh=0x7f070013;
+        public static final int refresh=0x7f070012;
         public static final int version_label=0x7f070002;
     }
     public static final class layout {
@@ -75,9 +74,10 @@ public final class R {
         public static final int version_label=0x7f04000a;
     }
     public static final class style {
+        public static final int HomeScreenList=0x7f050002;
         public static final int InfoBox=0x7f050001;
         public static final int RoundBorderedBox=0x7f050000;
-        public static final int Theme_Radiot=0x7f050002;
-        public static final int Theme_RadiotNoTitle=0x7f050003;
+        public static final int Theme_Radiot=0x7f050003;
+        public static final int Theme_RadiotNoTitle=0x7f050004;
     }
 }

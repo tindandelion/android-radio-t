@@ -7,7 +7,6 @@ import org.dandelion.radiot.live.LiveShowActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -18,24 +17,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class HomeScreen extends RadiotActivity implements OnItemClickListener {
+	private final HomeScreenItem separatorItem = new HomeScreenItem(0, 0);
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home_screen);
 		initList(R.id.podcasts_menu, getPodcastMenuItems());
-		initList(R.id.info_menu, getInfoMenuItems());
-	}
-
-	private List<HomeScreenItem> getInfoMenuItems() {
-		ArrayList<HomeScreenItem> items = new ArrayList<HomeScreenItem>();
-		items.add(new HomeScreenItem(R.string.about_app_title,
-				R.drawable.about_icon) {
-			@Override
-			public void execute() {
-				startActivity(new Intent(HomeScreen.this, AboutAppScreen.class));
-			}
-		});
-		return items;
 	}
 
 	private void initList(int listId, List<HomeScreenItem> items) {
@@ -67,7 +55,16 @@ public class HomeScreen extends RadiotActivity implements OnItemClickListener {
 				R.drawable.live_show_icon) {
 			@Override
 			public void execute() {
-				startActivity(new Intent(HomeScreen.this, LiveShowActivity.class));
+				startActivity(new Intent(HomeScreen.this,
+						LiveShowActivity.class));
+			}
+		});
+		items.add(separatorItem);
+		items.add(new HomeScreenItem(R.string.about_app_title,
+				R.drawable.about_icon) {
+			@Override
+			public void execute() {
+				startActivity(new Intent(HomeScreen.this, AboutAppScreen.class));
 			}
 		});
 		return items;
@@ -78,7 +75,9 @@ public class HomeScreen extends RadiotActivity implements OnItemClickListener {
 		public int iconId = 0;
 
 		public HomeScreenItem(int titleId, int iconId) {
-			this.title = getString(titleId);
+			if (titleId > 0) {
+				this.title = getString(titleId);
+			}
 			this.iconId = iconId;
 		}
 
@@ -88,9 +87,15 @@ public class HomeScreen extends RadiotActivity implements OnItemClickListener {
 		public boolean hasIcon() {
 			return iconId > 0;
 		}
+
+		public boolean isSeparator() {
+			return title == null;
+		}
 	}
 
 	class HomeScreenAdapter extends ArrayAdapter<HomeScreenItem> {
+
+		private static final float SEPARATOR_HEIGHT_DIP = 32;
 
 		public HomeScreenAdapter(List<HomeScreenItem> items) {
 			super(HomeScreen.this, R.layout.home_screen_item, items);
@@ -98,15 +103,28 @@ public class HomeScreen extends RadiotActivity implements OnItemClickListener {
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			View row = convertView;
-			if (row == null) {
-				LayoutInflater inflater = getLayoutInflater();
-				row = inflater
-						.inflate(R.layout.home_screen_item, parent, false);
-			}
-
 			HomeScreenItem item = getItem(position);
+			if (item.isSeparator()) {
+				return buildSeparatorRow();
+			} else {
+				View row = getLayoutInflater().inflate(
+						R.layout.home_screen_item, null, false);
+				return buildViewForItem(row, item);
+			}
+		}
 
+		private View buildSeparatorRow() {
+			View view = new View(HomeScreen.this);
+			view.setMinimumHeight(getSeparatorHeight());
+			return view;
+		}
+
+		private int getSeparatorHeight() {
+			float scale = getContext().getResources().getDisplayMetrics().density;
+			return (int) (scale * SEPARATOR_HEIGHT_DIP + 0.5f);
+		}
+
+		private View buildViewForItem(View row, HomeScreenItem item) {
 			TextView text = (TextView) row
 					.findViewById(R.id.home_screen_item_title);
 			text.setText(item.title);
@@ -118,6 +136,11 @@ public class HomeScreen extends RadiotActivity implements OnItemClickListener {
 			}
 
 			return row;
+		}
+
+		@Override
+		public boolean isEnabled(int position) {
+			return !this.getItem(position).isSeparator();
 		}
 
 	}
