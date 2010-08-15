@@ -17,6 +17,7 @@ public class LiveShowService extends Service {
 
 	@Override
 	public IBinder onBind(Intent intent) {
+		Log.i("RadioT", "Binding to service");
 		return binder;
 	}
 	
@@ -26,6 +27,15 @@ public class LiveShowService extends Service {
 		mediaPlayer = ((RadiotApplication)getApplication()).getMediaPlayer();
 		playbackController = new LiveShowPlaybackController(mediaPlayer);
 		Log.i("RadioT", "Playback service created");
+	}
+	
+	@Override
+	public boolean onUnbind(Intent intent) {
+		Log.i("RadioT", "Unbinding from service");
+		if (!mediaPlayer.isPlaying()) {
+			stopSelf();
+		}
+		return true;
 	}
 	
 	@Override
