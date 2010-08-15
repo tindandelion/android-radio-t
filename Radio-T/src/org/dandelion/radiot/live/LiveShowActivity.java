@@ -21,8 +21,6 @@ public class LiveShowActivity extends Activity implements
 
 	private ToggleButton playbackButton;
 
-	private Object[] savedState;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
