@@ -32,6 +32,7 @@
 					android:name="android.intent.category.LAUNCHER"></category>
 			</intent-filter>
 		</activity>
+		<service android:name=".live.LiveShowService" />
 	</application>
 	<uses-permission
 		android:name="android.permission.INTERNET"></uses-permission>
