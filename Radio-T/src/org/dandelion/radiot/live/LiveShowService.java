@@ -13,6 +13,7 @@ public class LiveShowService extends Service {
 	private final IBinder binder = new LocalBinder();
 	private MediaPlayer mediaPlayer;
 	private LiveShowPlaybackController playbackController;
+	private String currentlyPlayingUrl;
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -47,11 +48,40 @@ public class LiveShowService extends Service {
 	}
 
 	public void startPlaying(String url) {
-		playbackController.start(url);
+		if (playbackController.inProgress()) {
+			return;
+		}
+		try {
+			currentlyPlayingUrl = url;
+			mediaPlayer.setDataSource(url);
+			mediaPlayer.prepareAsync();
+			playbackController.isPreparing = true;
+		} catch (Exception e) {
+			showPlaybackError();
+		}
+		updateView();
+	}
+
+	protected void updateView() {
+		if (null == playbackController.playbackView) {
+			return;
+		}
+		playbackController.playbackView.enableControls(!playbackController.isPreparing);
+		playbackController.playbackView.setPlaying(mediaPlayer.isPlaying());
+	}
+
+	protected void showPlaybackError() {
+		if (null != playbackController.playbackView) {
+			playbackController.playbackView.showPlaybackError();
+		}
 	}
 
 	public void togglePlaying(boolean playing) {
-		playbackController.togglePlaying(playing);
+		if (playing) {
+			startPlaying(currentlyPlayingUrl);
+		} else {
+			stopPlaying();
+		}
 	}
 
 	public void attach(ILivePlaybackView view) {

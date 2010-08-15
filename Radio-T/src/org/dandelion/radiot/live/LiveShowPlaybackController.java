@@ -16,8 +16,8 @@ public class LiveShowPlaybackController implements
 
 	private MediaPlayer mediaPlayer;
 	private String currentUrl;
-	private ILivePlaybackView playbackView;
-	private boolean isPreparing = false;
+	ILivePlaybackView playbackView;
+	boolean isPreparing = false;
 
 	public LiveShowPlaybackController(MediaPlayer mediaPlayer) {
 		this.mediaPlayer = mediaPlayer;
@@ -60,7 +60,7 @@ public class LiveShowPlaybackController implements
 		}
 	}
 
-	private boolean inProgress() {
+	boolean inProgress() {
 		return isPreparing || mediaPlayer.isPlaying();
 	}
 
@@ -73,14 +73,6 @@ public class LiveShowPlaybackController implements
 		isPreparing = false;
 		mediaPlayer.start();
 		updateView();
-	}
-
-	public void togglePlaying(boolean playing) {
-		if (playing) {
-			start(currentUrl);
-		} else {
-			stop();
-		}
 	}
 
 	public void detach() {
