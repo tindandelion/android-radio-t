@@ -14,7 +14,7 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 public class LiveShowActivity extends Activity implements
-		LiveShowPlaybackController.ILivePlaybackView {
+		LiveShowService.ILivePlaybackView {
 
 	// public static final String LIVE_SHOW_URL =
 	// "http://stream3.radio-t.com:8181/stream";

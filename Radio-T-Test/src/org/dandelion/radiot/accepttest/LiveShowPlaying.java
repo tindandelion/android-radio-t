@@ -24,10 +24,4 @@ public class LiveShowPlaying extends
 		appDriver.visitLiveShowPage();
 		player.assertIsPlaying(LiveShowActivity.LIVE_SHOW_URL);
 	}
-	
-	public void testStopPlayingOnExit() throws Exception {
-		appDriver.visitLiveShowPage();
-		appDriver.goBack();
-		player.assertStopped();
-	}
 }

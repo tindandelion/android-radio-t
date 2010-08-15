@@ -4,7 +4,6 @@ import junit.framework.Assert;
 
 import org.dandelion.radiot.RadiotApplication;
 import org.dandelion.radiot.helpers.MockMediaPlayer;
-import org.dandelion.radiot.live.LiveShowPlaybackController;
 import org.dandelion.radiot.live.LiveShowService;
 
 import android.app.Application;
@@ -142,7 +141,7 @@ public class LiveShowServiceTestCase extends ServiceTestCase<LiveShowService> {
 	}
 }
 
-class TestPlaybackView implements LiveShowPlaybackController.ILivePlaybackView {
+class TestPlaybackView implements LiveShowService.ILivePlaybackView {
 
 	private boolean controlsEnabled;
 	private boolean isPlaying;

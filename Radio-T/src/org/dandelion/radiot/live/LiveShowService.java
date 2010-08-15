@@ -1,7 +1,6 @@
 package org.dandelion.radiot.live;
 
 import org.dandelion.radiot.RadiotApplication;
-import org.dandelion.radiot.live.LiveShowPlaybackController.ILivePlaybackView;
 
 import android.app.Service;
 import android.content.Intent;
@@ -13,25 +12,36 @@ import android.os.IBinder;
 
 public class LiveShowService extends Service {
 	private final IBinder binder = new LocalBinder();
-	private MediaPlayer mediaPlayer;
-	private LiveShowPlaybackController playbackController;
 	private String currentlyPlayingUrl;
-	
-	private OnPreparedListener onPrepared = new OnPreparedListener() {
-		public void onPrepared(MediaPlayer mp) {
-			playbackController.isPreparing = false;
-			mediaPlayer.start();
-			updateView();
-		}
-	};
+	private MediaPlayer mediaPlayer;
+	protected boolean isPreparing = false;
+
 	private OnErrorListener onError = new OnErrorListener() {
 		public boolean onError(MediaPlayer mp, int what, int extra) {
-			playbackController.showPlaybackError();
-			playbackController.isPreparing = false;
+			showPlaybackError();
+			isPreparing = false;
 			stopPlaying();
 			return true;
 		}
 	};
+	private OnPreparedListener onPrepared = new OnPreparedListener() {
+		public void onPrepared(MediaPlayer mp) {
+			isPreparing = false;
+			mediaPlayer.start();
+			updateView();
+		}
+	};
+
+	private ILivePlaybackView playbackView;
+
+	public void attach(ILivePlaybackView view) {
+		playbackView = view;
+		updateView();
+	}
+
+	public void detach() {
+		playbackView = null;
+	}
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -42,9 +52,16 @@ public class LiveShowService extends Service {
 	public void onCreate() {
 		super.onCreate();
 		mediaPlayer = ((RadiotApplication) getApplication()).getMediaPlayer();
-		playbackController = new LiveShowPlaybackController(mediaPlayer);
 		mediaPlayer.setOnPreparedListener(onPrepared);
 		mediaPlayer.setOnErrorListener(onError);
+	}
+
+	@Override
+	public void onDestroy() {
+		stopPlaying();
+		mediaPlayer.setOnPreparedListener(null);
+		mediaPlayer.setOnErrorListener(null);
+		super.onDestroy();
 	}
 
 	@Override
@@ -55,46 +72,23 @@ public class LiveShowService extends Service {
 		return true;
 	}
 
-	@Override
-	public void onDestroy() {
-		playbackController.stop();
-		super.onDestroy();
-	}
-
-	public class LocalBinder extends Binder {
-		LiveShowService getService() {
-			return (LiveShowService.this);
-		}
-	}
-
 	public void startPlaying(String url) {
-		if (playbackController.inProgress()) {
-			return;
+		if (isIdle()) {
+			try {
+				currentlyPlayingUrl = url;
+				mediaPlayer.setDataSource(url);
+				mediaPlayer.prepareAsync();
+				isPreparing = true;
+			} catch (Exception e) {
+				showPlaybackError();
+			}
+			updateView();
 		}
-		try {
-			currentlyPlayingUrl = url;
-			mediaPlayer.setDataSource(url);
-			mediaPlayer.prepareAsync();
-			playbackController.isPreparing = true;
-		} catch (Exception e) {
-			showPlaybackError();
-		}
+	}
+
+	public void stopPlaying() {
+		mediaPlayer.reset();
 		updateView();
-	}
-
-	protected void updateView() {
-		if (null == playbackController.playbackView) {
-			return;
-		}
-		playbackController.playbackView
-				.enableControls(!playbackController.isPreparing);
-		playbackController.playbackView.setPlaying(mediaPlayer.isPlaying());
-	}
-
-	protected void showPlaybackError() {
-		if (null != playbackController.playbackView) {
-			playbackController.playbackView.showPlaybackError();
-		}
 	}
 
 	public void togglePlaying(boolean playing) {
@@ -105,15 +99,34 @@ public class LiveShowService extends Service {
 		}
 	}
 
-	public void attach(ILivePlaybackView view) {
-		playbackController.attach(view);
+	private boolean isIdle() {
+		return !(isPreparing || mediaPlayer.isPlaying());
 	}
 
-	public void detach() {
-		playbackController.detach();
+	private void showPlaybackError() {
+		if (null != playbackView) {
+			playbackView.showPlaybackError();
+		}
 	}
 
-	public void stopPlaying() {
-		playbackController.stop();
+	private void updateView() {
+		if (null != playbackView) {
+			playbackView.enableControls(!isPreparing);
+			playbackView.setPlaying(mediaPlayer.isPlaying());
+		}
+	}
+
+	public interface ILivePlaybackView {
+		void enableControls(boolean enabled);
+
+		void setPlaying(boolean playing);
+
+		void showPlaybackError();
+	}
+
+	public class LocalBinder extends Binder {
+		LiveShowService getService() {
+			return (LiveShowService.this);
+		}
 	}
 }
