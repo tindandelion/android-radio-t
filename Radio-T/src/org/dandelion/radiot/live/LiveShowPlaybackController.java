@@ -3,8 +3,7 @@ package org.dandelion.radiot.live;
 import android.media.MediaPlayer;
 import android.util.Log;
 
-public class LiveShowPlaybackController implements
-		MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener {
+public class LiveShowPlaybackController {
 
 	public interface ILivePlaybackView {
 		void enableControls(boolean enabled);
@@ -15,14 +14,11 @@ public class LiveShowPlaybackController implements
 	}
 
 	private MediaPlayer mediaPlayer;
-	private String currentUrl;
 	ILivePlaybackView playbackView;
 	boolean isPreparing = false;
 
 	public LiveShowPlaybackController(MediaPlayer mediaPlayer) {
 		this.mediaPlayer = mediaPlayer;
-		mediaPlayer.setOnPreparedListener(this);
-		mediaPlayer.setOnErrorListener(this);
 	}
 
 	public void attach(ILivePlaybackView view) {
@@ -39,19 +35,6 @@ public class LiveShowPlaybackController implements
 	}
 
 	public void start(String url) {
-		if (inProgress()) {
-			return;
-		}
-		try {
-			currentUrl = url;
-			mediaPlayer.setDataSource(url);
-			mediaPlayer.prepareAsync();
-			isPreparing = true;
-		} catch (Exception e) {
-			showPlaybackError();
-			Log.e("RadioT", "Live error", e);
-		}
-		updateView();
 	}
 
 	protected void showPlaybackError() {
@@ -69,21 +52,7 @@ public class LiveShowPlaybackController implements
 		updateView();
 	}
 
-	public void onPrepared(MediaPlayer mp) {
-		isPreparing = false;
-		mediaPlayer.start();
-		updateView();
-	}
-
 	public void detach() {
 		playbackView = null;
-	}
-
-	public boolean onError(MediaPlayer mp, int what, int extra) {
-		showPlaybackError();
-		
-		isPreparing = false;
-		stop();
-		return true;
 	}
 }
