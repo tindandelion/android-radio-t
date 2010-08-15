@@ -1,7 +1,6 @@
 package org.dandelion.radiot.live;
 
 import org.dandelion.radiot.R;
-import org.dandelion.radiot.RadiotApplication;
 
 import android.app.Activity;
 import android.content.ComponentName;
@@ -30,10 +29,9 @@ public class LiveShowActivity extends Activity implements
 		}
 
 		public void onServiceConnected(ComponentName name, IBinder binder) {
-			Log.i("RadioT", "Attaching to service");
 			liveService = ((LiveShowService.LocalBinder) binder).getService();
 			liveService.attach(LiveShowActivity.this);
-			liveService.start(LIVE_SHOW_URL);
+			liveService.startPlaying(LIVE_SHOW_URL);
 		}
 	};
 
@@ -49,14 +47,11 @@ public class LiveShowActivity extends Activity implements
 		Log.i("RadioT", "Activity is binding to service");
 		Intent intent = new Intent(this, LiveShowService.class);
 		startService(intent);
-		if (!bindService(intent, onService, 0)) {
-			Log.e("RadioT", "Unable to bind to the service");
-		}
+		bindService(intent, onService, 0); 
 	}
 	
 	@Override
 	protected void onStop() {
-		Log.i("RadioT", "Stopping the activity");
 		liveService.detach();
 		unbindService(onService);
 		super.onStop();

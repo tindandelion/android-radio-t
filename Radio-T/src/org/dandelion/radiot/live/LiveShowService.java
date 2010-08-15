@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.IBinder;
-import android.util.Log;
 
 public class LiveShowService extends Service {
 	private final IBinder binder = new LocalBinder();
@@ -17,7 +16,6 @@ public class LiveShowService extends Service {
 
 	@Override
 	public IBinder onBind(Intent intent) {
-		Log.i("RadioT", "Binding to service");
 		return binder;
 	}
 	
@@ -26,12 +24,10 @@ public class LiveShowService extends Service {
 		super.onCreate();
 		mediaPlayer = ((RadiotApplication)getApplication()).getMediaPlayer();
 		playbackController = new LiveShowPlaybackController(mediaPlayer);
-		Log.i("RadioT", "Playback service created");
 	}
 	
 	@Override
 	public boolean onUnbind(Intent intent) {
-		Log.i("RadioT", "Unbinding from service");
 		if (!mediaPlayer.isPlaying()) {
 			stopSelf();
 		}
@@ -40,7 +36,6 @@ public class LiveShowService extends Service {
 	
 	@Override
 	public void onDestroy() {
-		Log.i("RadioT", "Playback service destroyed");
 		playbackController.stop();
 		super.onDestroy();
 	}
@@ -51,7 +46,7 @@ public class LiveShowService extends Service {
 		}
 	}
 
-	public void start(String url) {
+	public void startPlaying(String url) {
 		playbackController.start(url);
 	}
 
@@ -65,5 +60,9 @@ public class LiveShowService extends Service {
 
 	public void detach() {
 		playbackController.detach();
+	}
+
+	public void stopPlaying() {
+		playbackController.stop();
 	}
 }
