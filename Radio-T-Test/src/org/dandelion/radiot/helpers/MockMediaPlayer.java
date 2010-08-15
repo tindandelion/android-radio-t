@@ -4,8 +4,6 @@ import java.io.IOException;
 
 import junit.framework.Assert;
 import android.media.MediaPlayer;
-import android.media.MediaPlayer.OnErrorListener;
-import android.media.MediaPlayer.OnPreparedListener;
 
 public class MockMediaPlayer extends MediaPlayer {
 
