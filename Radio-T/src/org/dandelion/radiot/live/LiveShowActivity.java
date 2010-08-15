@@ -21,18 +21,19 @@ public class LiveShowActivity extends Activity implements
 	// "http://stream3.radio-t.com:8181/stream";
 	public static final String LIVE_SHOW_URL = "http://icecast.bigrradio.com/80s90s";
 
-	private LiveShowPlaybackController playbackController;
 	private ToggleButton playbackButton;
-
 	protected LiveShowService liveService;
 
 	private ServiceConnection onService = new ServiceConnection() {
 		public void onServiceDisconnected(ComponentName name) {
+			liveService.detach();
 			liveService = null;
 		}
 
 		public void onServiceConnected(ComponentName name, IBinder binder) {
 			liveService = ((LiveShowService.LocalBinder) binder).getService();
+			liveService.attach(LiveShowActivity.this);
+			liveService.start(LIVE_SHOW_URL);
 		}
 	};
 
@@ -41,7 +42,6 @@ public class LiveShowActivity extends Activity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.live_show_screen);
 		playbackButton = (ToggleButton) findViewById(R.id.live_show_playback_button);
-		createPlaybackController();
 		bindToService();
 	}
 
@@ -50,46 +50,14 @@ public class LiveShowActivity extends Activity implements
 				BIND_AUTO_CREATE);
 	}
 
-	protected void createPlaybackController() {
-		Object[] lastState = (Object[]) getLastNonConfigurationInstance();
-		if (null != lastState) {
-			playbackController = (LiveShowPlaybackController) lastState[0];
-		}
-		if (null == playbackController) {
-			playbackController = new LiveShowPlaybackController(
-					((RadiotApplication) getApplication()).getMediaPlayer());
-		}
-		playbackController.attach(this);
-	}
-
-	@Override
-	protected void onResume() {
-		Log.i("RadioT", "resuming the activity");
-		super.onResume();
-		playbackController.start(LIVE_SHOW_URL);
-	}
-
-	@Override
-	public Object onRetainNonConfigurationInstance() {
-		Log.i("RadioT", "Getting activity config");
-		Object[] result = new Object[] { playbackController };
-		playbackController.detach();
-		playbackController = null;
-		return result;
-	}
-
 	@Override
 	protected void onDestroy() {
-		Log.i("RadioT", "Destroying activity");
-		if (null != playbackController) {
-			playbackController.stop();
-		}
 		unbindService(onService);
 		super.onDestroy();
 	}
 
 	public void toggleLiveShow(View v) {
-		playbackController.togglePlaying(playbackButton.isChecked());
+		liveService.togglePlaying(playbackButton.isChecked());
 	}
 
 	public void enableControls(boolean enabled) {
