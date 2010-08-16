@@ -1,7 +1,10 @@
 package org.dandelion.radiot.live;
 
+import org.dandelion.radiot.R;
 import org.dandelion.radiot.RadiotApplication;
 
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -28,6 +31,7 @@ public class LiveShowService extends Service {
 		public void onPrepared(MediaPlayer mp) {
 			isPreparing = false;
 			mediaPlayer.start();
+			startForeground(1, createNotification());
 			updateView();
 		}
 	};
@@ -37,6 +41,17 @@ public class LiveShowService extends Service {
 	public void attach(ILivePlaybackView view) {
 		playbackView = view;
 		updateView();
+	}
+
+	private Notification createNotification() {
+		Notification note = new Notification(R.drawable.status_icon, null,
+				System.currentTimeMillis());
+		PendingIntent i = PendingIntent.getActivity(getApplication(), 0,
+				new Intent(getApplication(), LiveShowActivity.class), 0);
+		note.setLatestEventInfo(getApplication(),
+				getString(R.string.app_name),
+				getString(R.string.live_show_status_string), i);
+		return note;
 	}
 
 	public void detach() {
@@ -88,6 +103,7 @@ public class LiveShowService extends Service {
 
 	public void stopPlaying() {
 		mediaPlayer.reset();
+		stopForeground(true);
 		updateView();
 	}
 

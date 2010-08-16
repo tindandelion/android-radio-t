@@ -19,6 +19,7 @@ public final class R {
         public static final int logo=0x7f020005;
         public static final int podcast_icon=0x7f020006;
         public static final int podcast_image_background=0x7f020007;
+        public static final int status_icon=0x7f020008;
     }
     public static final class id {
         public static final int app_name_label=0x7f070001;
@@ -62,6 +63,7 @@ public final class R {
         public static final int live_show_info=0x7f04000c;
         public static final int live_show_playback_button_title=0x7f04000e;
         public static final int live_show_playback_error=0x7f04000f;
+        public static final int live_show_status_string=0x7f040010;
         public static final int live_show_title=0x7f040008;
         public static final int loading_message=0x7f040001;
         public static final int logo_text=0x7f040003;
