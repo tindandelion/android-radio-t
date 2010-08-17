@@ -14,10 +14,37 @@ import android.os.Binder;
 import android.os.IBinder;
 
 public class LiveShowService extends Service {
+	public interface IForegrounder { 
+		void startForeground();
+		void stopForeground();
+	}
+	
+	
 	private final IBinder binder = new LocalBinder();
 	private String currentlyPlayingUrl;
 	private MediaPlayer mediaPlayer;
 	protected boolean isPreparing = false;
+	
+	private IForegrounder fgnd = new IForegrounder() {
+		public void startForeground() {
+			LiveShowService.this.startForeground(1, createNotification());
+		}
+
+		public void stopForeground() {
+			LiveShowService.this.stopForeground(true);
+		}
+		
+		private Notification createNotification() {
+			Notification note = new Notification(R.drawable.status_icon, null,
+					System.currentTimeMillis());
+			PendingIntent i = PendingIntent.getActivity(getApplication(), 0,
+					new Intent(getApplication(), LiveShowActivity.class), 0);
+			note.setLatestEventInfo(getApplication(),
+					getString(R.string.app_name),
+					getString(R.string.live_show_status_string), i);
+			return note;
+		}
+	};
 
 	private OnErrorListener onError = new OnErrorListener() {
 		public boolean onError(MediaPlayer mp, int what, int extra) {
@@ -31,28 +58,22 @@ public class LiveShowService extends Service {
 		public void onPrepared(MediaPlayer mp) {
 			isPreparing = false;
 			mediaPlayer.start();
-			startForeground(1, createNotification());
+			fgnd.startForeground();
 			updateView();
 		}
 	};
 
 	private ILivePlaybackView playbackView;
+	
+	public void setForegrounder(IForegrounder value) { 
+		fgnd = value;
+	}
 
 	public void attach(ILivePlaybackView view) {
 		playbackView = view;
 		updateView();
 	}
 
-	private Notification createNotification() {
-		Notification note = new Notification(R.drawable.status_icon, null,
-				System.currentTimeMillis());
-		PendingIntent i = PendingIntent.getActivity(getApplication(), 0,
-				new Intent(getApplication(), LiveShowActivity.class), 0);
-		note.setLatestEventInfo(getApplication(),
-				getString(R.string.app_name),
-				getString(R.string.live_show_status_string), i);
-		return note;
-	}
 
 	public void detach() {
 		playbackView = null;
@@ -95,7 +116,7 @@ public class LiveShowService extends Service {
 
 	public void stopPlaying() {
 		mediaPlayer.reset();
-		stopForeground(true);
+		fgnd.stopForeground();
 		updateView();
 	}
 	

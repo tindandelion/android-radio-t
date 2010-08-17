@@ -32,6 +32,18 @@ public class LiveShowServiceTestCase extends ServiceTestCase<LiveShowService> {
 	}
 	
 	@Override
+	protected void setupService() {
+		super.setupService();
+		getService().setForegrounder(new LiveShowService.IForegrounder() {
+			public void stopForeground() {
+			}
+			
+			public void startForeground() {
+			}
+		});
+	}
+	
+	@Override
 	public void testServiceTestCaseSetUpProperly() throws Exception {
 		// Stupid test - stub it out
 	}
