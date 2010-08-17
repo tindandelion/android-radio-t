@@ -14,16 +14,11 @@ import android.os.Binder;
 import android.os.IBinder;
 
 public class LiveShowService extends Service {
-	public interface IForegrounder { 
-		void startForeground();
-		void stopForeground();
-	}
-	
-	
 	private final IBinder binder = new LocalBinder();
-	private String currentlyPlayingUrl;
 	private MediaPlayer mediaPlayer;
-	protected boolean isPreparing = false;
+
+	private boolean isPreparing = false;
+	private String currentlyPlayingUrl;
 	
 	private IForegrounder fgnd = new IForegrounder() {
 		public void startForeground() {
@@ -45,7 +40,7 @@ public class LiveShowService extends Service {
 			return note;
 		}
 	};
-
+	
 	private OnErrorListener onError = new OnErrorListener() {
 		public boolean onError(MediaPlayer mp, int what, int extra) {
 			showPlaybackError();
@@ -54,6 +49,7 @@ public class LiveShowService extends Service {
 			return true;
 		}
 	};
+
 	private OnPreparedListener onPrepared = new OnPreparedListener() {
 		public void onPrepared(MediaPlayer mp) {
 			isPreparing = false;
@@ -62,19 +58,13 @@ public class LiveShowService extends Service {
 			updateView();
 		}
 	};
-
 	private ILivePlaybackView playbackView;
-	
-	public void setForegrounder(IForegrounder value) { 
-		fgnd = value;
-	}
 
 	public void attach(ILivePlaybackView view) {
 		playbackView = view;
 		updateView();
 	}
-
-
+	
 	public void detach() {
 		playbackView = null;
 	}
@@ -83,6 +73,7 @@ public class LiveShowService extends Service {
 	public IBinder onBind(Intent intent) {
 		return binder;
 	}
+
 
 	@Override
 	public void onCreate() {
@@ -98,6 +89,18 @@ public class LiveShowService extends Service {
 		mediaPlayer.setOnPreparedListener(null);
 		mediaPlayer.setOnErrorListener(null);
 		super.onDestroy();
+	}
+
+	@Override
+	public boolean onUnbind(Intent intent) {
+		if (!mediaPlayer.isPlaying()) { 
+			stopSelf();
+		}
+		return true;
+	}
+
+	public void setForegrounder(IForegrounder value) { 
+		fgnd = value;
 	}
 
 	public void startPlaying(String url) {
@@ -120,14 +123,6 @@ public class LiveShowService extends Service {
 		updateView();
 	}
 	
-	@Override
-	public boolean onUnbind(Intent intent) {
-		if (!mediaPlayer.isPlaying()) { 
-			stopSelf();
-		}
-		return true;
-	}
-
 	public void togglePlaying(boolean playing) {
 		if (playing) {
 			startPlaying(currentlyPlayingUrl);
@@ -151,6 +146,11 @@ public class LiveShowService extends Service {
 			playbackView.enableControls(!isPreparing);
 			playbackView.setPlaying(mediaPlayer.isPlaying());
 		}
+	}
+
+	public interface IForegrounder { 
+		void startForeground();
+		void stopForeground();
 	}
 
 	public interface ILivePlaybackView {

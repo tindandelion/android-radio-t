@@ -20,6 +20,12 @@ public class LiveShowPlaying extends
 		getRadiotApplication().setMediaPlayer(player);
 	}
 	
+	@Override
+	protected void tearDown() throws Exception {
+		player.reset();
+		super.tearDown();
+	}
+	
 	public void testStartPlayingAudio() throws Exception {
 		appDriver.visitLiveShowPage();
 		player.assertIsPlaying(LiveShowActivity.LIVE_SHOW_URL);
