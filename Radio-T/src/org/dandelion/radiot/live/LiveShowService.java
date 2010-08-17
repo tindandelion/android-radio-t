@@ -12,7 +12,6 @@ import android.media.MediaPlayer.OnErrorListener;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.os.Binder;
 import android.os.IBinder;
-import android.util.Log;
 
 public class LiveShowService extends Service {
 	private final IBinder binder = new LocalBinder();
@@ -74,7 +73,6 @@ public class LiveShowService extends Service {
 
 	@Override
 	public void onDestroy() {
-		Log.i("RadioT", "Destroying service");
 		stopPlaying();
 		mediaPlayer.setOnPreparedListener(null);
 		mediaPlayer.setOnErrorListener(null);
@@ -99,6 +97,14 @@ public class LiveShowService extends Service {
 		mediaPlayer.reset();
 		stopForeground(true);
 		updateView();
+	}
+	
+	@Override
+	public boolean onUnbind(Intent intent) {
+		if (!mediaPlayer.isPlaying()) { 
+			stopSelf();
+		}
+		return true;
 	}
 
 	public void togglePlaying(boolean playing) {

@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -44,7 +43,6 @@ public class LiveShowActivity extends Activity implements
 	}
 
 	private void bindToService() {
-		Log.i("RadioT", "Activity is binding to service");
 		Intent intent = new Intent(this, LiveShowService.class);
 		startService(intent);
 		bindService(intent, onService, 0); 
@@ -53,7 +51,6 @@ public class LiveShowActivity extends Activity implements
 	@Override
 	protected void onDestroy() {
 		liveService.detach();
-		Log.i("RadioT", "Activity unbinds from service: " + onService);
 		unbindService(onService);
 		super.onStop();
 	}
