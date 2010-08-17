@@ -34,8 +34,4 @@ public class HomeScreenTestCase extends
 		mainShowPresenter().assertPodcastListIsUpdated();
 		assertEquals("Подкасты", appDriver.getCurrentActivity().getTitle());
 	}
-	
-	public void testShowingOnAirScreen() throws Exception {
-		appDriver.visitLiveShowPage();
-	}
 }

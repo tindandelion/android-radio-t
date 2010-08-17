@@ -51,8 +51,9 @@ public class LiveShowActivity extends Activity implements
 	}
 	
 	@Override
-	protected void onStop() {
+	protected void onDestroy() {
 		liveService.detach();
+		Log.i("RadioT", "Activity unbinds from service: " + onService);
 		unbindService(onService);
 		super.onStop();
 	}
