@@ -1,7 +1,5 @@
 package org.dandelion.radiot.live;
 
-import org.dandelion.radiot.RadiotApplication;
-
 import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -11,11 +9,13 @@ import android.os.IBinder;
 
 public class LiveShowService extends Service {
 	private static final String LIVE_SHOW_URL = "http://icecast.bigrradio.com/80s90s";
+	public static final String PLAYBACK_STATE_CHANGED = "org.dandelion.radiot.live.PlaybackStateChanged";
 	private final IBinder binder = new LocalBinder();
-	private MediaPlayer player;
+	private MediaPlayer player = new MediaPlayer();
 	private OnPreparedListener onPrepared = new OnPreparedListener() {
 		public void onPrepared(MediaPlayer mp) {
 			mp.start();
+			sendBroadcast(new Intent(LiveShowService.PLAYBACK_STATE_CHANGED));
 		}
 	};
 
@@ -23,12 +23,9 @@ public class LiveShowService extends Service {
 	public IBinder onBind(Intent intent) {
 		return binder;
 	}
-
-	@Override
-	public void onCreate() {
-		super.onCreate();
-		RadiotApplication application = (RadiotApplication) getApplication();
-		player = application.getMediaPlayer();
+	
+	public void setMediaPlayer(MediaPlayer player) {
+		this.player = player;
 	}
 
 	public void startPlayback() {

@@ -3,17 +3,63 @@ package org.dandelion.radiot.live;
 import org.dandelion.radiot.R;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.view.View;
+import android.widget.TextView;
 
 public class LiveShowActivity extends Activity {
 
 	// public static final String LIVE_SHOW_URL =
 	// "http://stream3.radio-t.com:8181/stream";
 	public static final String LIVE_SHOW_URL = "http://icecast.bigrradio.com/80s90s";
-	
+	private LiveShowService service;
+	protected BroadcastReceiver onPlaybackState = new BroadcastReceiver() {
+		public void onReceive(Context context, Intent intent) {
+			playbackStateChanged();
+		}
+	};
+	private ServiceConnection onService = new ServiceConnection() {
+		public void onServiceDisconnected(ComponentName name) {
+		}
+
+		public void onServiceConnected(ComponentName name, IBinder binder) {
+			service = ((LiveShowService.LocalBinder) binder).getService();
+			registerReceiver(onPlaybackState, new IntentFilter(
+					LiveShowService.PLAYBACK_STATE_CHANGED));
+		}
+	};
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.live_show_screen);
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		Intent i = new Intent(this, LiveShowService.class);
+		startService(i);
+		bindService(i, onService, 0);
+	}
+	
+	public void onStartPlayback(View v) { 
+		service.startPlayback();
+	}
+
+	public LiveShowService getService() {
+		return service;
+	}
+
+	protected void playbackStateChanged() {
+		TextView view = (TextView) findViewById(R.id.playback_state_label);
+		view.setText("Playing");
 	}
 }
