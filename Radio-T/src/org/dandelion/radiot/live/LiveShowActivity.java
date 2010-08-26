@@ -21,7 +21,7 @@ public class LiveShowActivity extends Activity {
 	protected LiveShowService service;
 	protected BroadcastReceiver onPlaybackState = new BroadcastReceiver() {
 		public void onReceive(Context context, Intent intent) {
-			receivePlaybackStateChangedBroadcast();
+			updateVisualState();
 		}
 	};
 	private ServiceConnection onService = new ServiceConnection() {
@@ -32,6 +32,7 @@ public class LiveShowActivity extends Activity {
 			service = ((LiveShowService.LocalBinder) binder).getService();
 			registerReceiver(onPlaybackState, new IntentFilter(
 					LiveShowService.PLAYBACK_STATE_CHANGED));
+			updateVisualState();
 		}
 	};
 
@@ -48,7 +49,7 @@ public class LiveShowActivity extends Activity {
 		startService(i);
 		bindService(i, onService, 0);
 	}
-	
+
 	@Override
 	protected void onStop() {
 		unregisterReceiver(onPlaybackState);
@@ -56,13 +57,21 @@ public class LiveShowActivity extends Activity {
 		service = null;
 		super.onStop();
 	}
-	
-	public void onStartPlayback(View v) { 
+
+	public void onStartPlayback(View v) {
 		service.startPlayback();
 	}
+	
+	public void onStopPlayback(View v) { 
+		service.stopPlayback();
+	}
 
-	protected void receivePlaybackStateChangedBroadcast() {
+	protected void updateVisualState() {
 		TextView view = (TextView) findViewById(R.id.playback_state_label);
-		view.setText("Playing");
+		if (service.isPlaying()) {
+			view.setText("Playing");
+		} else {
+			view.setText("Idle");
+		}
 	}
 }

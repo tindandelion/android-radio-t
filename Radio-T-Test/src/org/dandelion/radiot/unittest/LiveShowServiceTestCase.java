@@ -2,6 +2,8 @@ package org.dandelion.radiot.unittest;
 
 import java.io.IOException;
 
+import junit.framework.Assert;
+
 import org.dandelion.radiot.live.LiveShowService;
 
 import android.content.BroadcastReceiver;
@@ -15,8 +17,7 @@ public class LiveShowServiceTestCase extends ServiceTestCase<LiveShowService> {
 
 	private LiveShowService service;
 	private MediaPlayer player;
-	private boolean notificationReceived;
-
+	
 	public LiveShowServiceTestCase() {
 		super(LiveShowService.class);
 	}
@@ -24,7 +25,7 @@ public class LiveShowServiceTestCase extends ServiceTestCase<LiveShowService> {
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		player = new SyncMediaPlayer();
+		player = new TestMediaPlayer();
 		bindService(new Intent());
 		service = getService();
 		service.setMediaPlayer(player);
@@ -43,26 +44,72 @@ public class LiveShowServiceTestCase extends ServiceTestCase<LiveShowService> {
 
 	public void testSendsBrodcastNotificationWhenStartsPlaying()
 			throws Exception {
-		notificationReceived = false;
-		BroadcastReceiver onReceive = new BroadcastReceiver() {
+		(new BroadcastCatcher(getContext(),
+				LiveShowService.PLAYBACK_STATE_CHANGED) {
 			@Override
-			public void onReceive(Context context, Intent intent) {
-				notificationReceived = true;
+			public void run() {
+				service.startPlayback();
 			}
-		};
-
-		IntentFilter filter = new IntentFilter(
-				LiveShowService.PLAYBACK_STATE_CHANGED);
-
-		getContext().registerReceiver(onReceive, filter);
-
-		service.startPlayback();
-		assertTrue(notificationReceived);
+		}).assertCaught();
 	}
 
+	public void testSubsequentStartPlaybacksDoNotCrash() throws Exception {
+		try {
+			service.startPlayback();
+			service.startPlayback();
+		} catch (Exception e) {
+			fail(e.getMessage());
+		}
+	}
+
+	public void testStopPlaybackStopsPlaying() throws Exception {
+		service.startPlayback();
+		service.stopPlayback();
+		assertFalse(player.isPlaying());
+	}
+
+	public void testSendsBrodcastNotificationWhenStopsPlaying()
+			throws Exception {
+		service.startPlayback();
+		(new BroadcastCatcher(getContext(),
+				LiveShowService.PLAYBACK_STATE_CHANGED) {
+			@Override
+			public void run() {
+				service.stopPlayback();
+			}
+		}).assertCaught();
+	}
 }
 
-class SyncMediaPlayer extends MediaPlayer {
+abstract class BroadcastCatcher extends BroadcastReceiver {
+	private boolean broadcastReceived = false;
+	private IntentFilter filter;
+	private Context context;
+
+	public BroadcastCatcher(Context context, String action) {
+		filter = new IntentFilter(action);
+		this.context = context;
+	}
+
+	public void onReceive(Context context, Intent intent) {
+		broadcastReceived = true;
+	}
+
+	public abstract void run();
+
+	public void assertCaught() {
+		context.registerReceiver(this, filter);
+		try {
+			run();
+			Thread.yield();
+			Assert.assertTrue("No broadcast received", broadcastReceived);
+		} finally {
+			context.unregisterReceiver(this);
+		}
+	}
+}
+
+class TestMediaPlayer extends MediaPlayer {
 	private OnPreparedListener onPrepared;
 
 	@Override

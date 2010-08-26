@@ -17,5 +17,6 @@
 	<Button
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:text="Stop" />
+		android:text="Stop" 
+		android:onClick="onStopPlayback"/>
 </LinearLayout>

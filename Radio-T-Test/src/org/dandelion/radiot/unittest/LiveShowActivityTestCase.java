@@ -25,24 +25,33 @@ public class LiveShowActivityTestCase extends
 	public void testConnectsToServiceAtStart() throws Exception {
 		assertTrue(activity.isServiceConnected());
 	}
-	
+
+	public void testUpdatesViewAtStart() throws Exception {
+		assertTrue(activity.isVisualStateUpdated());
+	}
+
 	public void testDisconnectsFromServiceAtStop() throws Exception {
-		getInstrumentation().callActivityOnStop(activity);
+		callOnStop();
 		assertFalse(activity.isServiceConnected());
 	}
-	
-	public void testStopsReceivingBroadcastsAtStop() throws Exception {
+
+	private void callOnStop() {
 		getInstrumentation().callActivityOnStop(activity);
+	}
+
+	public void testStopsReceivingBroadcastsAtStop() throws Exception {
+		activity.resetVisualState();
+		callOnStop();
 		getInstrumentation().getContext().sendBroadcast(
 				new Intent(LiveShowService.PLAYBACK_STATE_CHANGED));
-		assertFalse(activity.playbackStateChanged());
+		assertFalse(activity.isVisualStateUpdated());
 	}
-	
 
 	public void testReceivesServiceBroadcasts() throws Exception {
+		activity.resetVisualState();
 		getInstrumentation().getContext().sendBroadcast(
 				new Intent(LiveShowService.PLAYBACK_STATE_CHANGED));
-		assertTrue(activity.playbackStateChanged());
+		assertTrue(activity.isVisualStateUpdated());
 	}
 
 }

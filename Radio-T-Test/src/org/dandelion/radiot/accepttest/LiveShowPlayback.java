@@ -27,4 +27,11 @@ public class LiveShowPlayback extends
 		solo.clickOnButton("Start");
 		assertTrue(solo.waitForText("Playing"));
 	}
+	
+	public void testStopLivePlayback() throws Exception {
+		solo.clickOnButton("Start");
+		assertTrue(solo.waitForText("Playing"));
+		solo.clickOnButton("Stop");
+		assertTrue(solo.waitForText("Idle"));
+	}
 }

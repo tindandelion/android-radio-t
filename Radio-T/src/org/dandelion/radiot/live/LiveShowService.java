@@ -10,12 +10,13 @@ import android.os.IBinder;
 public class LiveShowService extends Service {
 	private static final String LIVE_SHOW_URL = "http://icecast.bigrradio.com/80s90s";
 	public static final String PLAYBACK_STATE_CHANGED = "org.dandelion.radiot.live.PlaybackStateChanged";
+	
 	private final IBinder binder = new LocalBinder();
 	private MediaPlayer player = new MediaPlayer();
 	private OnPreparedListener onPrepared = new OnPreparedListener() {
 		public void onPrepared(MediaPlayer mp) {
 			mp.start();
-			sendBroadcast(new Intent(LiveShowService.PLAYBACK_STATE_CHANGED));
+			sendPlaybackStateChangedBroadcast();
 		}
 	};
 
@@ -23,12 +24,15 @@ public class LiveShowService extends Service {
 	public IBinder onBind(Intent intent) {
 		return binder;
 	}
-	
+
 	public void setMediaPlayer(MediaPlayer player) {
 		this.player = player;
 	}
 
 	public void startPlayback() {
+		if (player.isPlaying())
+			return;
+
 		try {
 			player.setDataSource(LIVE_SHOW_URL);
 			player.setOnPreparedListener(onPrepared);
@@ -36,7 +40,21 @@ public class LiveShowService extends Service {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-		
+
+	}
+	
+	public boolean isPlaying() {
+		return player.isPlaying();
+	}
+
+
+	public void stopPlayback() {
+		player.reset();
+		sendPlaybackStateChangedBroadcast();
+	}
+
+	private void sendPlaybackStateChangedBroadcast() {
+		sendBroadcast(new Intent(LiveShowService.PLAYBACK_STATE_CHANGED));
 	}
 
 	public class LocalBinder extends Binder {
@@ -44,5 +62,4 @@ public class LiveShowService extends Service {
 			return (LiveShowService.this);
 		}
 	}
-
 }
