@@ -1,32 +1,48 @@
 package org.dandelion.radiot.unittest;
 
-import org.dandelion.radiot.accepttest.TestLiveShowActivity;
 import org.dandelion.radiot.live.LiveShowService;
+import org.dandelion.radiot.unittest.testables.TestableLiveShowActivity;
 
 import android.content.Intent;
 import android.test.ActivityUnitTestCase;
 
 public class LiveShowActivityTestCase extends
-		ActivityUnitTestCase<TestLiveShowActivity> {
+		ActivityUnitTestCase<TestableLiveShowActivity> {
 
-	private TestLiveShowActivity activity;
+	private TestableLiveShowActivity activity;
 
 	public LiveShowActivityTestCase() {
-		super(TestLiveShowActivity.class);
+		super(TestableLiveShowActivity.class);
+	}
+
+	@Override
+	protected void setUp() throws Exception {
+		super.setUp();
+		activity = startActivity(new Intent(), null, null);
+		getInstrumentation().callActivityOnStart(activity);
 	}
 
 	public void testConnectsToServiceAtStart() throws Exception {
-		activity = startActivity(new Intent(), null, null);
-		getInstrumentation().callActivityOnStart(activity);
-		assertNotNull(activity.getService());
+		assertTrue(activity.isServiceConnected());
 	}
-
-	public void testReceivesServiceBroadcasts() throws Exception {
-		activity = startActivity(new Intent(), null, null);
-		getInstrumentation().callActivityOnStart(activity);
+	
+	public void testDisconnectsFromServiceAtStop() throws Exception {
+		getInstrumentation().callActivityOnStop(activity);
+		assertFalse(activity.isServiceConnected());
+	}
+	
+	public void testStopsReceivingBroadcastsAtStop() throws Exception {
+		getInstrumentation().callActivityOnStop(activity);
 		getInstrumentation().getContext().sendBroadcast(
 				new Intent(LiveShowService.PLAYBACK_STATE_CHANGED));
-		assertTrue(activity.isPlaybackStateChanged());
+		assertFalse(activity.playbackStateChanged());
+	}
+	
+
+	public void testReceivesServiceBroadcasts() throws Exception {
+		getInstrumentation().getContext().sendBroadcast(
+				new Intent(LiveShowService.PLAYBACK_STATE_CHANGED));
+		assertTrue(activity.playbackStateChanged());
 	}
 
 }

@@ -2,7 +2,6 @@ package org.dandelion.radiot.accepttest;
 
 import org.dandelion.radiot.live.LiveShowActivity;
 
-import android.media.MediaPlayer;
 import android.test.ActivityInstrumentationTestCase2;
 
 import com.jayway.android.robotium.solo.Solo;

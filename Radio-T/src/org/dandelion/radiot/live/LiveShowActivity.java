@@ -18,11 +18,10 @@ public class LiveShowActivity extends Activity {
 
 	// public static final String LIVE_SHOW_URL =
 	// "http://stream3.radio-t.com:8181/stream";
-	public static final String LIVE_SHOW_URL = "http://icecast.bigrradio.com/80s90s";
-	private LiveShowService service;
+	protected LiveShowService service;
 	protected BroadcastReceiver onPlaybackState = new BroadcastReceiver() {
 		public void onReceive(Context context, Intent intent) {
-			playbackStateChanged();
+			receivePlaybackStateChangedBroadcast();
 		}
 	};
 	private ServiceConnection onService = new ServiceConnection() {
@@ -50,15 +49,19 @@ public class LiveShowActivity extends Activity {
 		bindService(i, onService, 0);
 	}
 	
+	@Override
+	protected void onStop() {
+		unregisterReceiver(onPlaybackState);
+		unbindService(onService);
+		service = null;
+		super.onStop();
+	}
+	
 	public void onStartPlayback(View v) { 
 		service.startPlayback();
 	}
 
-	public LiveShowService getService() {
-		return service;
-	}
-
-	protected void playbackStateChanged() {
+	protected void receivePlaybackStateChangedBroadcast() {
 		TextView view = (TextView) findViewById(R.id.playback_state_label);
 		view.setText("Playing");
 	}

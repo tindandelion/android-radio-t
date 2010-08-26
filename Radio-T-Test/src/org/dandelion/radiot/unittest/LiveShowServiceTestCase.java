@@ -30,6 +30,12 @@ public class LiveShowServiceTestCase extends ServiceTestCase<LiveShowService> {
 		service.setMediaPlayer(player);
 	}
 
+	@Override
+	protected void tearDown() throws Exception {
+		player.release();
+		super.tearDown();
+	}
+
 	public void testStartPlaybackStartsPlaying() throws Exception {
 		service.startPlayback();
 		assertTrue(player.isPlaying());
@@ -41,10 +47,7 @@ public class LiveShowServiceTestCase extends ServiceTestCase<LiveShowService> {
 		BroadcastReceiver onReceive = new BroadcastReceiver() {
 			@Override
 			public void onReceive(Context context, Intent intent) {
-				if (intent.getAction().equals(
-						LiveShowService.PLAYBACK_STATE_CHANGED)) {
-					notificationReceived = true;
-				}
+				notificationReceived = true;
 			}
 		};
 
