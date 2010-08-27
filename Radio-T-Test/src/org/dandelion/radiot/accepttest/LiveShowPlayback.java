@@ -23,13 +23,10 @@ public class LiveShowPlayback extends
 		solo = new Solo(getInstrumentation(), activity);
 	}
 
-	public void testStartLivePlayback() throws Exception {
+	public void testGoingThroughPlaybackStateSequence() throws Exception {
+		assertTrue(solo.waitForText("Idle"));
 		solo.clickOnButton("Start");
-		assertTrue(solo.waitForText("Playing"));
-	}
-	
-	public void testStopLivePlayback() throws Exception {
-		solo.clickOnButton("Start");
+		assertTrue(solo.waitForText("Waiting"));
 		assertTrue(solo.waitForText("Playing"));
 		solo.clickOnButton("Stop");
 		assertTrue(solo.waitForText("Idle"));

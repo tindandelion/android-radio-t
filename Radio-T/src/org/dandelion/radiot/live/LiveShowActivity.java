@@ -1,6 +1,7 @@
 package org.dandelion.radiot.live;
 
 import org.dandelion.radiot.R;
+import org.dandelion.radiot.live.LiveShowService.PlaybackState;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -61,17 +62,13 @@ public class LiveShowActivity extends Activity {
 	public void onStartPlayback(View v) {
 		service.startPlayback();
 	}
-	
-	public void onStopPlayback(View v) { 
+
+	public void onStopPlayback(View v) {
 		service.stopPlayback();
 	}
 
 	protected void updateVisualState() {
 		TextView view = (TextView) findViewById(R.id.playback_state_label);
-		if (service.isPlaying()) {
-			view.setText("Playing");
-		} else {
-			view.setText("Idle");
-		}
+		view.setText(service.getState().toString());
 	}
 }

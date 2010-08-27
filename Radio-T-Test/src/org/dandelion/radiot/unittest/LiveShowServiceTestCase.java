@@ -5,6 +5,7 @@ import java.io.IOException;
 import junit.framework.Assert;
 
 import org.dandelion.radiot.live.LiveShowService;
+import org.dandelion.radiot.live.LiveShowService.PlaybackState;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -16,8 +17,8 @@ import android.test.ServiceTestCase;
 public class LiveShowServiceTestCase extends ServiceTestCase<LiveShowService> {
 
 	private LiveShowService service;
-	private MediaPlayer player;
-	
+	private TestMediaPlayer player;
+
 	public LiveShowServiceTestCase() {
 		super(LiveShowService.class);
 	}
@@ -37,9 +38,16 @@ public class LiveShowServiceTestCase extends ServiceTestCase<LiveShowService> {
 		super.tearDown();
 	}
 
-	public void testStartPlaybackStartsPlaying() throws Exception {
+	public void testStartPlaybackSwitchesToWaitingState() throws Exception {
 		service.startPlayback();
+		assertEquals(PlaybackState.Waiting, service.getState());
+	}
+
+	public void testSwitchesToPlayingStateWhenPrepared() throws Exception {
+		service.startPlayback();
+		player.bePrepared();
 		assertTrue(player.isPlaying());
+		assertEquals(PlaybackState.Playing, service.getState());
 	}
 
 	public void testSendsBrodcastNotificationWhenStartsPlaying()
@@ -64,13 +72,16 @@ public class LiveShowServiceTestCase extends ServiceTestCase<LiveShowService> {
 
 	public void testStopPlaybackStopsPlaying() throws Exception {
 		service.startPlayback();
+		player.bePrepared();
 		service.stopPlayback();
 		assertFalse(player.isPlaying());
+		assertEquals(PlaybackState.Idle, service.getState());
 	}
 
 	public void testSendsBrodcastNotificationWhenStopsPlaying()
 			throws Exception {
 		service.startPlayback();
+		player.bePrepared();
 		(new BroadcastCatcher(getContext(),
 				LiveShowService.PLAYBACK_STATE_CHANGED) {
 			@Override
@@ -125,6 +136,9 @@ class TestMediaPlayer extends MediaPlayer {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	public void bePrepared() {
 		onPrepared.onPrepared(this);
 	}
 }
