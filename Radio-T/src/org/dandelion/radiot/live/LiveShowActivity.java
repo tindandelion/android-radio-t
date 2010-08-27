@@ -1,7 +1,6 @@
 package org.dandelion.radiot.live;
 
 import org.dandelion.radiot.R;
-import org.dandelion.radiot.live.LiveShowService.PlaybackState;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
