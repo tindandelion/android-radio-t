@@ -3,15 +3,16 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
+	android:paddingTop="10dp"
 	android:paddingBottom="6dp">
 	<ImageView
 		android:id="@+id/live_show_icon"
-		android:src="@drawable/live_show_icon"
-		android:layout_width="68dp"
-		android:layout_height="68dp"
+		android:src="@drawable/live_show_caption_icon"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
 		android:layout_alignParentLeft="true"
 		android:layout_alignParentTop="true"
-		android:paddingLeft="10dp"
+		android:paddingLeft="20dp"
 		android:paddingRight="20dp" />
 	<TextView
 		android:id="@+id/live_show_title"
@@ -23,7 +24,6 @@
 		android:textSize="23dp"
 		android:textScaleX="1.1"
 		android:gravity="center_vertical"
-		android:paddingRight="10dp"
 		android:layout_toRightOf="@id/live_show_icon"
 		android:layout_alignTop="@id/live_show_icon"
 		android:layout_alignBottom="@id/live_show_icon"
