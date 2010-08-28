@@ -71,6 +71,8 @@ public class LiveShowStatesTestCase extends TestCase {
 	}
 
 	private void assertSwitchedToState(Class<?> stateClass) {
+		if (null == switchedState) 
+			fail("Not switched to any state");
 		assertEquals(stateClass, switchedState.getClass());
 	}
 	
@@ -122,5 +124,12 @@ public class LiveShowStatesTestCase extends TestCase {
 		currentState.enter();
 		player.bePrepared();
 		assertSwitchedToState(LiveShowState.Playing.class);
+	}
+	
+	public void testGoesToIdleStateOnErrorWhilePreparing() throws Exception {
+		currentState = new LiveShowState.Waiting(player, service, "");
+		currentState.enter();
+		player.signalError();
+		assertSwitchedToState(LiveShowState.Idle.class);
 	}
 }

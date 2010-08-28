@@ -46,11 +46,18 @@ public abstract class LiveShowState {
 				service.switchToNewState(new Playing(player, service));
 			}
 		};
+		private OnErrorListener onError = new OnErrorListener() {
+			public boolean onError(MediaPlayer mp, int what, int extra) {
+				service.switchToNewState(new Idle(player, service));
+				return false;
+			}
+		};
 
 		public Waiting(MediaPlayer player, ILiveShowService service, String url) {
 			super(player, service);
 			this.url = url;
 			player.setOnPreparedListener(onPrepared);
+			player.setOnErrorListener(onError);
 		}
 
 		@Override
