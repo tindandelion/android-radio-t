@@ -3,7 +3,6 @@ package org.dandelion.radiot.unittest;
 import java.io.IOException;
 
 import android.media.MediaPlayer;
-import android.media.MediaPlayer.OnPreparedListener;
 
 class TestMediaPlayer extends MediaPlayer {
 	private OnPreparedListener onPrepared;
