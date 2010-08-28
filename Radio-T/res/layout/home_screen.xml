@@ -35,12 +35,12 @@
 		android:layout_marginTop="20dp" />
 	<View
 		android:layout_width="fill_parent"
-		android:layout_height="1dp"
+		android:layout_height="1px"
 		android:layout_alignTop="@id/podcasts_menu"
 		android:background="@android:drawable/divider_horizontal_dark" />
 	<View
 		android:layout_width="fill_parent"
-		android:layout_height="1dp"
+		android:layout_height="1px"
 		android:layout_alignBottom="@id/podcasts_menu"
 		android:background="@android:drawable/divider_horizontal_dark" />
 </RelativeLayout>

@@ -25,11 +25,9 @@
 	<string
 		name="feedback_label">Обратная связь</string>
 	<string
-		name="live_show_info">
-		Передачу в прямом эфире можно послушать каждую субботу с
+		name="live_show_info">Прямая трансляция ведется по субботам с
 		<b>23:00</b>
-		по московскому времени
-	</string>
+		по московскому времени</string>
 	<string
 		name="listen_label">Слушать сейчас</string>
 	<string

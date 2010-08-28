@@ -12,10 +12,8 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.view.View;
-import android.widget.TextView;
 
 public class LiveShowActivity extends Activity {
-
 	// public static final String LIVE_SHOW_URL =
 	// "http://stream3.radio-t.com:8181/stream";
 	protected LiveShowService service;
@@ -67,7 +65,7 @@ public class LiveShowActivity extends Activity {
 	}
 
 	protected void updateVisualState() {
-		TextView view = (TextView) findViewById(R.id.playback_state_label);
-		view.setText(service.getState().toString());
+//		TextView view = (TextView) findViewById(R.id.playback_state_label);
+//		view.setText(service.getState().toString());
 	}
 }
