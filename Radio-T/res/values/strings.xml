@@ -1,25 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="refresh_menu_item">Обновить</string>
-    <string name="loading_message">Загрузка подкастов...</string>
-    <string name="rss_load_error_title">Ошибка загрузки RSS</string>
-	<string name="logo_text">Импровизации\nна Hi-Tech темы</string>
-	<string name="main_title">Радио</string>
-    <string name="app_name">Радио-Т для Android</string>
-    
-    <string name="main_show_title">Подкасты</string>
-    <string name="after_show_title">После-шоу</string>
-    <string name="live_show_title">Прямой эфир</string>
-    <string name="about_app_title">О программе</string>
-    
-    <string name="version_label">Версия %s</string>
-    <string name="feedback_label">Обратная связь</string>
-    
-    <string name="live_show_info">\
-    Передачу в прямом эфире можно послушать каждую субботу\
-     с <b>23:00</b> по московскому времени</string>
-     <string name="listen_label">Слушать сейчас</string>
-     <string name="live_show_playback_button_title">Прямой эфир</string>
-     <string name="live_show_online">Прямой эфир: идет трансляция</string>
-     <string name="live_show_waiting">Прямой эфир: ожидание</string>
+	<string
+		name="refresh_menu_item">Обновить</string>
+	<string
+		name="loading_message">Загрузка подкастов...</string>
+	<string
+		name="rss_load_error_title">Ошибка загрузки RSS</string>
+	<string
+		name="logo_text">Импровизации\nна Hi-Tech темы</string>
+	<string
+		name="main_title">Радио</string>
+	<string
+		name="app_name">Радио-Т для Android</string>
+	<string
+		name="main_show_title">Подкасты</string>
+	<string
+		name="after_show_title">После-шоу</string>
+	<string
+		name="live_show_title">Прямой эфир</string>
+	<string
+		name="about_app_title">О программе</string>
+	<string
+		name="version_label">Версия %s</string>
+	<string
+		name="feedback_label">Обратная связь</string>
+	<string
+		name="live_show_info">
+		Передачу в прямом эфире можно послушать каждую субботу с
+		<b>23:00</b>
+		по московскому времени
+	</string>
+	<string
+		name="listen_label">Слушать сейчас</string>
+	<string
+		name="live_show_playback_button_title">Прямой эфир</string>
+	<string
+		name="live_show_online">Прямой эфир: идет трансляция</string>
+	<string
+		name="live_show_waiting">Прямой эфир: ожидание</string>
 </resources>

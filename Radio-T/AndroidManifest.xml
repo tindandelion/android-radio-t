@@ -16,7 +16,7 @@
 		<activity
 			android:name=".live.LiveShowActivity"
 			android:label="@string/live_show_title"
-			android:theme="@style/Theme.Radiot" />
+			android:theme="@style/Theme.RadiotNoTitle" />
 		<activity
 			android:name=".home_screen.AboutAppActivity"
 			android:label="@string/about_app_title"

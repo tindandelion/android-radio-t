@@ -4,11 +4,29 @@
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
 	android:orientation="vertical">
+	<RelativeLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:paddingBottom="20dp">
+		<TextView
+			android:id="@+id/live_show_title"
+			android:text="@string/live_show_title"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="@android:style/TextAppearance.Large"
+			android:layout_alignParentTop="true" />
+		<TextView
+			android:text="@string/live_show_info"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="@android:style/TextAppearance.Small"
+			android:layout_below="@id/live_show_title" />
+	</RelativeLayout>
 	<TextView
 		android:id="@+id/playback_state_label"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:text="Waiting"/>
+		android:text="Waiting" />
 	<Button
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
@@ -17,6 +35,6 @@
 	<Button
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:text="Stop" 
-		android:onClick="onStopPlayback"/>
+		android:text="Stop"
+		android:onClick="onStopPlayback" />
 </LinearLayout>
