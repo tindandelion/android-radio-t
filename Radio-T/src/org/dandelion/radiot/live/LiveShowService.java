@@ -1,16 +1,21 @@
 package org.dandelion.radiot.live;
 
+import org.dandelion.radiot.R;
 import org.dandelion.radiot.RadiotApplication;
+import org.dandelion.radiot.live.LiveShowState.ILiveShowService;
 import org.dandelion.radiot.live.LiveShowState.StateNames;
 
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.IBinder;
 
-public class LiveShowService extends Service {
+public class LiveShowService extends Service implements ILiveShowService {
 	public static final String PLAYBACK_STATE_CHANGED = "org.dandelion.radiot.live.PlaybackStateChanged";
+	private static final int NOTIFICATION_ID = 1;
 
 	private final IBinder binder = new LocalBinder();
 	private LiveShowState currentState;
@@ -40,7 +45,7 @@ public class LiveShowService extends Service {
 		currentState.stopPlayback();
 	}
 
-	void switchToNewState(LiveShowState newState) {
+	public void switchToNewState(LiveShowState newState) {
 		newState.enter();
 		currentState = newState;
 		sendBroadcast(new Intent(LiveShowService.PLAYBACK_STATE_CHANGED));
@@ -51,4 +56,24 @@ public class LiveShowService extends Service {
 			return (LiveShowService.this);
 		}
 	}
+
+	public void goForeground(int stringId) {
+		startForeground(NOTIFICATION_ID,
+				createNotification(getString(stringId)));
+	}
+
+	public void goBackground() {
+		stopForeground(true);
+	}
+
+	private Notification createNotification(String statusMessage) {
+		Notification note = new Notification(R.drawable.status_icon, null,
+				System.currentTimeMillis());
+		PendingIntent i = PendingIntent.getActivity(getApplication(), 0,
+				new Intent(getApplication(), LiveShowActivity.class), 0);
+		note.setLatestEventInfo(getApplication(), getString(R.string.app_name),
+				statusMessage, i);
+		return note;
+	}
+
 }

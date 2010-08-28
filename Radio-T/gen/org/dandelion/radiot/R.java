@@ -60,10 +60,10 @@ public final class R {
         public static final int feedback_label=0x7f04000b;
         public static final int listen_label=0x7f04000d;
         public static final int live_show_info=0x7f04000c;
+        public static final int live_show_online=0x7f04000f;
         public static final int live_show_playback_button_title=0x7f04000e;
-        public static final int live_show_playback_error=0x7f04000f;
-        public static final int live_show_status_string=0x7f040010;
         public static final int live_show_title=0x7f040008;
+        public static final int live_show_waiting=0x7f040010;
         public static final int loading_message=0x7f040001;
         public static final int logo_text=0x7f040003;
         public static final int main_show_title=0x7f040006;

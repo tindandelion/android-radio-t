@@ -47,6 +47,10 @@ public class MockMediaPlayer extends MediaPlayer {
 		Assert.assertEquals(State.Playing, currentState);
 		Assert.assertEquals(expectedUrl, dataSource);
 	}
+	
+	public void assertIsPreparing() {
+		checkState(State.Preparing);
+	}
 
 	@Override
 	public boolean isPlaying() {

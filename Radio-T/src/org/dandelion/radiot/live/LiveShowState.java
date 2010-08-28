@@ -1,14 +1,22 @@
 package org.dandelion.radiot.live;
 
+import org.dandelion.radiot.R;
+
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnPreparedListener;
 
 public abstract class LiveShowState {
 	private static final String LIVE_SHOW_URL = "http://icecast.bigrradio.com/80s90s";
 	protected MediaPlayer player;
-	protected LiveShowService service;
+	protected ILiveShowService service;
+	
+	public interface ILiveShowService {
+		void switchToNewState(LiveShowState newState);
+		void goForeground(int stringId);
+		void goBackground();
+	}
 
-	public LiveShowState(MediaPlayer player, LiveShowService service) {
+	public LiveShowState(MediaPlayer player, ILiveShowService service) {
 		this.service = service;
 		this.player = player;
 	}
@@ -36,17 +44,18 @@ public abstract class LiveShowState {
 			}
 		};
 
-		public Waiting(MediaPlayer player, LiveShowService service, String url) {
+		public Waiting(MediaPlayer player, ILiveShowService service, String url) {
 			super(player, service);
 			this.url = url;
+			player.setOnPreparedListener(onPrepared);
 		}
 
 		@Override
 		public void enter() {
 			try {
 				player.setDataSource(url);
-				player.setOnPreparedListener(onPrepared);
 				player.prepareAsync();
+				service.goForeground(R.string.live_show_waiting);
 			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}
@@ -59,13 +68,14 @@ public abstract class LiveShowState {
 	}
 
 	public static class Playing extends LiveShowState {
-		public Playing(MediaPlayer player, LiveShowService service) {
+		public Playing(MediaPlayer player, ILiveShowService service) {
 			super(player, service);
 		}
 
 		@Override
 		public void enter() {
 			player.start();
+			service.goForeground(R.string.live_show_online);
 		}
 
 		@Override
@@ -75,13 +85,14 @@ public abstract class LiveShowState {
 	}
 
 	public static class Idle extends LiveShowState {
-		public Idle(MediaPlayer player, LiveShowService service) {
+		public Idle(MediaPlayer player, ILiveShowService service) {
 			super(player, service);
 		}
 
 		@Override
 		public void enter() {
 			player.reset();
+			service.goBackground();
 		}
 
 		@Override
