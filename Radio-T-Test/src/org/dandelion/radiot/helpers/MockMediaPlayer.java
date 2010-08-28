@@ -31,8 +31,9 @@ public class MockMediaPlayer extends MediaPlayer {
 		onErrorListener = listener;
 	}
 
-	public void prepareError() {
-		onErrorListener.onError(this, MEDIA_ERROR_UNKNOWN, 0);
+	public void signalError() {
+		if (null != onErrorListener)
+			onErrorListener.onError(this, MEDIA_ERROR_UNKNOWN, 0);
 	}
 
 	public void throwsConnectionError() {
@@ -47,7 +48,7 @@ public class MockMediaPlayer extends MediaPlayer {
 		Assert.assertEquals(State.Playing, currentState);
 		Assert.assertEquals(expectedUrl, dataSource);
 	}
-	
+
 	public void assertIsPreparing() {
 		checkState(State.Preparing);
 	}

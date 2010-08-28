@@ -3,16 +3,19 @@ package org.dandelion.radiot.live;
 import org.dandelion.radiot.R;
 
 import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnErrorListener;
 import android.media.MediaPlayer.OnPreparedListener;
 
 public abstract class LiveShowState {
 	private static final String LIVE_SHOW_URL = "http://icecast.bigrradio.com/80s90s";
 	protected MediaPlayer player;
 	protected ILiveShowService service;
-	
+
 	public interface ILiveShowService {
 		void switchToNewState(LiveShowState newState);
+
 		void goForeground(int stringId);
+
 		void goBackground();
 	}
 
@@ -68,8 +71,18 @@ public abstract class LiveShowState {
 	}
 
 	public static class Playing extends LiveShowState {
+		private OnErrorListener onError = new OnErrorListener() {
+			public boolean onError(MediaPlayer mp, int what, int extra) {
+				player.reset();
+				service.switchToNewState(new Waiting(player, service,
+						LIVE_SHOW_URL));
+				return false;
+			}
+		};
+
 		public Playing(MediaPlayer player, ILiveShowService service) {
 			super(player, service);
+			player.setOnErrorListener(onError);
 		}
 
 		@Override

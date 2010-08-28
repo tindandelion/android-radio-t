@@ -83,6 +83,28 @@ public class LiveShowStatesTestCase extends TestCase {
 		assertTrue(serviceIsForeground);
 	}
 	
+	public void testSwitchingToWaitingStateOnPlaybackError() throws Exception {
+		currentState = new LiveShowState.Playing(player, service);
+		
+		player.bePrepared();
+		currentState.enter();
+		player.signalError();
+		
+		assertSwitchedToState(LiveShowState.Waiting.class);
+		
+	}
+	
+	public void testResettingPlayerOnPlaybackError() throws Exception {
+		currentState = new LiveShowState.Playing(player, service);
+		
+		player.bePrepared();
+		currentState.enter();
+		player.signalError();
+		
+		player.assertIsReset();
+		
+	}
+	
 	public void testPreparingForPlayingWhenEntersWaitingState() throws Exception {
 		currentState = new LiveShowState.Waiting(player, service, "");
 		currentState.enter();
