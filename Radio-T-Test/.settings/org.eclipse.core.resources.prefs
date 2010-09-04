@@ -1,8 +1,9 @@
-#Wed Aug 25 08:44:54 MSD 2010
+#Sat Sep 04 10:51:32 MSD 2010
 eclipse.preferences.version=1
 encoding//src/org/dandelion/radiot/accepttest/DisplayingPodcastList.java=UTF-8
 encoding//src/org/dandelion/radiot/accepttest/HomeScreenTestCase.java=UTF-8
 encoding//src/org/dandelion/radiot/accepttest/InterruptPodcastLoading.java=UTF-8
+encoding//src/org/dandelion/radiot/accepttest/LiveShowPlayback.java=UTF-8
 encoding//src/org/dandelion/radiot/helpers/ApplicationDriver.java=UTF-8
 encoding//src/org/dandelion/radiot/unittest/PodcastItemTestCase.java=UTF-8
 encoding//src/org/dandelion/radiot/unittest/RssFeedModelTestCase.java=UTF-8

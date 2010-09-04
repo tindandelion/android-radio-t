@@ -1,6 +1,7 @@
 package org.dandelion.radiot.live;
 
 import org.dandelion.radiot.R;
+import org.dandelion.radiot.live.LiveShowState.StateNames;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -12,6 +13,8 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 public class LiveShowActivity extends Activity {
 	// public static final String LIVE_SHOW_URL =
@@ -31,6 +34,7 @@ public class LiveShowActivity extends Activity {
 			registerReceiver(onPlaybackState, new IntentFilter(
 					LiveShowService.PLAYBACK_STATE_CHANGED));
 			updateVisualState();
+			service.startPlayback();
 		}
 	};
 
@@ -56,16 +60,50 @@ public class LiveShowActivity extends Activity {
 		super.onStop();
 	}
 
-	public void onStartPlayback(View v) {
-		service.startPlayback();
-	}
-
-	public void onStopPlayback(View v) {
-		service.stopPlayback();
+	public void onButtonPressed(View v) {
+		if (service.getState() == StateNames.Idle) {
+			service.startPlayback();
+		} else {
+			service.stopPlayback();
+		}
 	}
 
 	protected void updateVisualState() {
-//		TextView view = (TextView) findViewById(R.id.playback_state_label);
-//		view.setText(service.getState().toString());
+		StateNames state = service.getState();
+		updateStateLabel(state);
+		updateButton(state);
+	}
+
+	private void updateButton(StateNames state) {
+		Button button = (Button) findViewById(R.id.live_show_action_button);
+		if (state == StateNames.Idle) {
+			button.setText("Подключиться");
+		} else {
+			button.setText("Остановить");
+		}
+	}
+
+	private void updateStateLabel(StateNames state) {
+		String labelText = "";
+		TextView view = (TextView) findViewById(R.id.playback_state_label);
+		switch (state) {
+		case Waiting:
+			labelText = "Ожидание";
+			break;
+
+		case Playing:
+			labelText = "Трансляция";
+			break;
+
+		case Idle:
+			labelText = "Остановлено";
+		default:
+			break;
+		}
+		view.setText(labelText);
+	}
+
+	public LiveShowService getService() {
+		return service;
 	}
 }

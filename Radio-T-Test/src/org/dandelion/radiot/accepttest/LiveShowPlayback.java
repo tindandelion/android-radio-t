@@ -22,13 +22,27 @@ public class LiveShowPlayback extends
 		activity = getActivity();
 		solo = new Solo(getInstrumentation(), activity);
 	}
-
-	public void testGoingThroughPlaybackStateSequence() throws Exception {
-		assertTrue(solo.waitForText("Idle"));
-		solo.clickOnButton("Start");
-		assertTrue(solo.waitForText("Waiting"));
-		assertTrue(solo.waitForText("Playing"));
-		solo.clickOnButton("Stop");
-		assertTrue(solo.waitForText("Idle"));
+	
+	@Override
+	protected void tearDown() throws Exception {
+		activity.getService().stopPlayback();
+		super.tearDown();
+	}
+	
+	public void testStartPlaybackWhenOpeningActivity() throws Exception {
+		assertTrue(solo.waitForText("Трансляция"));
+	}
+	
+	public void testStopPlaybackWhenPressingStop() throws Exception {
+		assertTrue(solo.waitForText("Трансляция"));
+		solo.clickOnButton("Остановить");
+		assertTrue(solo.waitForText("Остановлено"));
+	}
+	
+	public void testRestartPlaybackAfterExplicitStop() throws Exception {
+		assertTrue(solo.waitForText("Трансляция"));
+		solo.clickOnButton("Остановить");
+		solo.clickOnButton("Подключиться");
+		assertTrue(solo.waitForText("Трансляция"));
 	}
 }
