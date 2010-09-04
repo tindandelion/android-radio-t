@@ -31,10 +31,6 @@ public class LiveShowServiceTestCase extends ServiceTestCase<LiveShowService> {
 	public void testSendsBroadcastsWhenStateChanged() throws Exception {
 		final LiveShowState state = new LiveShowState(null, null) {
 			@Override
-			public StateNames getName() {
-				return null;
-			}
-			@Override
 			public void enter() {
 			}
 		};

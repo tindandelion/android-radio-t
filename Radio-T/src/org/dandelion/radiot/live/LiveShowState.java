@@ -7,9 +7,11 @@ import android.media.MediaPlayer.OnErrorListener;
 import android.media.MediaPlayer.OnPreparedListener;
 
 public abstract class LiveShowState {
+//	private static final String LIVE_SHOW_URL = "http://stream3.radio-t.com:8181/stream";
 	private static final String LIVE_SHOW_URL = "http://icecast.bigrradio.com/80s90s";
 	protected MediaPlayer player;
 	protected ILiveShowService service;
+	private long timestamp;
 
 	public interface ILiveShowService {
 		void switchToNewState(LiveShowState newState);
@@ -22,11 +24,10 @@ public abstract class LiveShowState {
 	public LiveShowState(MediaPlayer player, ILiveShowService service) {
 		this.service = service;
 		this.player = player;
+		this.timestamp = System.currentTimeMillis();
 	}
 
 	public abstract void enter();
-
-	public abstract StateNames getName();
 
 	public void stopPlayback() {
 		service.switchToNewState(new Idle(player, service));
@@ -35,8 +36,8 @@ public abstract class LiveShowState {
 	public void startPlayback() {
 	}
 
-	public enum StateNames {
-		Waiting, Playing, Idle
+	public long getTimestamp() {
+		return timestamp;
 	}
 
 	public static class Waiting extends LiveShowState {
@@ -70,11 +71,6 @@ public abstract class LiveShowState {
 				throw new RuntimeException(e);
 			}
 		}
-
-		@Override
-		public StateNames getName() {
-			return StateNames.Waiting;
-		}
 	}
 
 	public static class Playing extends LiveShowState {
@@ -97,11 +93,6 @@ public abstract class LiveShowState {
 			player.start();
 			service.goForeground(R.string.live_show_online);
 		}
-
-		@Override
-		public StateNames getName() {
-			return StateNames.Playing;
-		}
 	}
 
 	public static class Idle extends LiveShowState {
@@ -113,11 +104,6 @@ public abstract class LiveShowState {
 		public void enter() {
 			player.reset();
 			service.goBackground();
-		}
-
-		@Override
-		public StateNames getName() {
-			return StateNames.Idle;
 		}
 
 		@Override

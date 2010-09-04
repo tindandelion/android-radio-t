@@ -1,10 +1,10 @@
 package org.dandelion.radiot.live;
 
+import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import org.dandelion.radiot.R;
-import org.dandelion.radiot.live.LiveShowState.StateNames;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -20,6 +20,13 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class LiveShowActivity extends Activity {
+	public static HashMap<Class<?>, String> stateLabels = new HashMap<Class<?>, String>();
+	static {
+		stateLabels.put(LiveShowState.Idle.class, "Остановлено");
+		stateLabels.put(LiveShowState.Waiting.class, "Ожидание");
+		stateLabels.put(LiveShowState.Playing.class, "Трансляция");
+	}
+
 	class PlaybackTimer {
 		private Timer timer;
 		private long startTime;
@@ -27,11 +34,13 @@ public class LiveShowActivity extends Activity {
 		public void stop() {
 			if (null != timer) {
 				timer.cancel();
+				timer = null;
+				updateTimerLabel("0:00");
 			}
 		}
 
-		public void restart() {
-			startTime = System.currentTimeMillis();
+		public void restart(long time) {
+			startTime = time;
 			stop();
 			timer = new Timer();
 			timer.schedule(timerTask(), 0, 1000);
@@ -51,8 +60,6 @@ public class LiveShowActivity extends Activity {
 		}
 	}
 
-	// public static final String LIVE_SHOW_URL =
-	// "http://stream3.radio-t.com:8181/stream";
 	protected LiveShowService service;
 	protected BroadcastReceiver onPlaybackState = new BroadcastReceiver() {
 		public void onReceive(Context context, Intent intent) {
@@ -98,7 +105,7 @@ public class LiveShowActivity extends Activity {
 	}
 
 	public void onButtonPressed(View v) {
-		if (service.getState() == StateNames.Idle) {
+		if (service.getCurrentState() instanceof LiveShowState.Idle) {
 			service.startPlayback();
 		} else {
 			service.stopPlayback();
@@ -106,39 +113,31 @@ public class LiveShowActivity extends Activity {
 	}
 
 	protected void updateVisualState() {
-		StateNames state = service.getState();
-		updateStateLabel(state);
-		updateButton(state);
-		pbTimer.restart();
+		updateStateLabel(service.getCurrentState());
+		updateButton(service.getCurrentState());
+		restartTimer(service.getCurrentState());
 	}
 
-	private void updateButton(StateNames state) {
+	private void restartTimer(LiveShowState state) {
+		if (state instanceof LiveShowState.Idle) {
+			pbTimer.stop();
+		} else {
+			pbTimer.restart(state.getTimestamp());
+		}
+	}
+
+	private void updateButton(LiveShowState state) {
 		Button button = (Button) findViewById(R.id.live_show_action_button);
-		if (state == StateNames.Idle) {
+		if (state instanceof LiveShowState.Idle) {
 			button.setText("Подключиться");
 		} else {
 			button.setText("Остановить");
 		}
 	}
 
-	private void updateStateLabel(StateNames state) {
-		String labelText = "";
+	private void updateStateLabel(LiveShowState state) {
 		TextView view = (TextView) findViewById(R.id.playback_state_label);
-		switch (state) {
-		case Waiting:
-			labelText = "Ожидание";
-			break;
-
-		case Playing:
-			labelText = "Трансляция";
-			break;
-
-		case Idle:
-			labelText = "Остановлено";
-		default:
-			break;
-		}
-		view.setText(labelText);
+		view.setText(stateLabels.get(state.getClass()));
 	}
 
 	private void updateTimerLabel(final String value) {

@@ -3,7 +3,6 @@ package org.dandelion.radiot.live;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.RadiotApplication;
 import org.dandelion.radiot.live.LiveShowState.ILiveShowService;
-import org.dandelion.radiot.live.LiveShowState.StateNames;
 
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -37,8 +36,8 @@ public class LiveShowService extends Service implements ILiveShowService {
 		currentState.startPlayback();
 	}
 
-	public StateNames getState() {
-		return currentState.getName();
+	public LiveShowState getCurrentState() { 
+		return currentState;
 	}
 
 	public void stopPlayback() {
