@@ -1,4 +1,5 @@
-#Sat Sep 04 10:55:35 MSD 2010
+#Sat Sep 04 15:15:25 MSD 2010
 eclipse.preferences.version=1
 encoding//src/org/dandelion/radiot/home_screen/HomeScreenActivity.java=UTF-8
 encoding//src/org/dandelion/radiot/live/LiveShowActivity.java=UTF-8
+encoding//src/org/dandelion/radiot/live/LiveShowPresenter.java=UTF-8

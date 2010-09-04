@@ -1,9 +1,5 @@
 package org.dandelion.radiot.live;
 
-import java.util.HashMap;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import org.dandelion.radiot.R;
 
 import android.app.Activity;
@@ -20,47 +16,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class LiveShowActivity extends Activity {
-	public static HashMap<Class<?>, String> stateLabels = new HashMap<Class<?>, String>();
-	static {
-		stateLabels.put(LiveShowState.Idle.class, "Остановлено");
-		stateLabels.put(LiveShowState.Waiting.class, "Ожидание");
-		stateLabels.put(LiveShowState.Playing.class, "Трансляция");
-	}
-
-	class PlaybackTimer {
-		private Timer timer;
-		private long startTime;
-
-		public void stop() {
-			if (null != timer) {
-				timer.cancel();
-				timer = null;
-				updateTimerLabel("0:00");
-			}
-		}
-
-		public void restart(long time) {
-			startTime = time;
-			stop();
-			timer = new Timer();
-			timer.schedule(timerTask(), 0, 1000);
-		}
-
-		private TimerTask timerTask() {
-			return new TimerTask() {
-				@Override
-				public void run() {
-					long currentTime = System.currentTimeMillis() - startTime;
-					long seconds = currentTime / 1000;
-					long minutes = seconds / 60;
-					seconds = seconds % 60;
-					updateTimerLabel(String.format("%d:%02d", minutes, seconds));
-				}
-			};
-		}
-	}
-
 	protected LiveShowService service;
+	
 	protected BroadcastReceiver onPlaybackState = new BroadcastReceiver() {
 		public void onReceive(Context context, Intent intent) {
 			updateVisualState();
@@ -78,13 +35,13 @@ public class LiveShowActivity extends Activity {
 			service.startPlayback();
 		}
 	};
-	private PlaybackTimer pbTimer;
+	private LiveShowPresenter presenter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.live_show_screen);
-		pbTimer = new PlaybackTimer();
+		presenter = LiveShowPresenter.Null;
 	}
 
 	@Override
@@ -100,56 +57,36 @@ public class LiveShowActivity extends Activity {
 		unregisterReceiver(onPlaybackState);
 		unbindService(onService);
 		service = null;
-		pbTimer.stop();
+		presenter.stop();
 		super.onStop();
 	}
 
 	public void onButtonPressed(View v) {
-		if (service.getCurrentState() instanceof LiveShowState.Idle) {
-			service.startPlayback();
-		} else {
-			service.stopPlayback();
-		}
+		presenter.switchPlaybackState();
 	}
 
 	protected void updateVisualState() {
-		updateStateLabel(service.getCurrentState());
-		updateButton(service.getCurrentState());
-		restartTimer(service.getCurrentState());
-	}
-
-	private void restartTimer(LiveShowState state) {
-		if (state instanceof LiveShowState.Idle) {
-			pbTimer.stop();
-		} else {
-			pbTimer.restart(state.getTimestamp());
-		}
-	}
-
-	private void updateButton(LiveShowState state) {
-		Button button = (Button) findViewById(R.id.live_show_action_button);
-		if (state instanceof LiveShowState.Idle) {
-			button.setText("Подключиться");
-		} else {
-			button.setText("Остановить");
-		}
-	}
-
-	private void updateStateLabel(LiveShowState state) {
-		TextView view = (TextView) findViewById(R.id.playback_state_label);
-		view.setText(stateLabels.get(state.getClass()));
-	}
-
-	private void updateTimerLabel(final String value) {
-		this.runOnUiThread(new Runnable() {
-			public void run() {
-				TextView timerLabel = (TextView) findViewById(R.id.live_timer_label);
-				timerLabel.setText(value);
-			}
-		});
+		presenter.stop();
+		presenter = LiveShowPresenter.create(service.getCurrentState(), this);
+		presenter.updateView();
 	}
 
 	public LiveShowService getService() {
 		return service;
+	}
+
+	public void setButtonText(String text) {
+		Button button = (Button) findViewById(R.id.live_show_action_button);
+		button.setText(text);
+	}
+
+	public void setLabelText(String text) {
+		TextView view = (TextView) findViewById(R.id.playback_state_label);
+		view.setText(text);
+	}
+
+	public void setTimerLabel(String string) {
+		TextView timerLabel = (TextView) findViewById(R.id.live_timer_label);
+		timerLabel.setText(string);
 	}
 }
