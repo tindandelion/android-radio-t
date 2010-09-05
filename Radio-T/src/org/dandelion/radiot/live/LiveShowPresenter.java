@@ -65,7 +65,7 @@ public class LiveShowPresenter {
 
 		@Override
 		protected void updateStateLabel() {
-			int statusIndex = 0;
+			int statusIndex = -1;
 			if (showState instanceof LiveShowState.Connecting) {
 				statusIndex = 1;
 			} else if (showState instanceof LiveShowState.Waiting) {
