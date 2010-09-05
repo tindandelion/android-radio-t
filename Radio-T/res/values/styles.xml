@@ -20,13 +20,6 @@
 			name="android:paddingBottom">30dp</item>
 	</style>
 	<style
-		name="HomeScreenList">
-		<item
-			name="android:layout_width">fill_parent</item>
-		<item
-			name="android:layout_height">wrap_content</item>
-	</style>
-	<style
 		name="Radiot.TextView"
 		parent="@android:style/Widget.TextView">
 		<item
@@ -38,13 +31,13 @@
 		name="Radiot.Button"
 		parent="@android:style/Widget.Button">
 		<item
-			name="android:textAppearance">?android:attr/textAppearanceMediumInverse</item>
-	</style>
-	<style
-		name="Radiot.ToggleButton"
-		parent="@android:style/Widget.Button.Toggle">
+			name="android:textColor">?android:attr/textColorPrimary</item>
 		<item
-			name="android:textAppearance">?android:attr/textAppearanceMediumInverse</item>
+			name="android:textSize">25sp</item>
+		<item
+			name="android:padding">8dp</item>
+		<item
+			name="android:background">@drawable/divider_background</item>
 	</style>
 	<style
 		name="Theme.Radiot"
@@ -53,8 +46,6 @@
 			name="android:textViewStyle">@style/Radiot.TextView</item>
 		<item
 			name="android:buttonStyle">@style/Radiot.Button</item>
-		<item
-			name="android:buttonStyleToggle">@style/Radiot.ToggleButton</item>
 	</style>
 	<style
 		name="Theme.RadiotNoTitle"

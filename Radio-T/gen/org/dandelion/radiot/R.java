@@ -83,12 +83,10 @@ public final class R {
         public static final int version_label=0x7f04000a;
     }
     public static final class style {
-        public static final int HomeScreenList=0x7f060001;
         public static final int InfoBox=0x7f060000;
-        public static final int Radiot_Button=0x7f060003;
-        public static final int Radiot_TextView=0x7f060002;
-        public static final int Radiot_ToggleButton=0x7f060004;
-        public static final int Theme_Radiot=0x7f060005;
-        public static final int Theme_RadiotNoTitle=0x7f060006;
+        public static final int Radiot_Button=0x7f060002;
+        public static final int Radiot_TextView=0x7f060001;
+        public static final int Theme_Radiot=0x7f060003;
+        public static final int Theme_RadiotNoTitle=0x7f060004;
     }
 }

@@ -55,7 +55,6 @@
 			android:id="@+id/playback_state_label"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:text=""
 			android:textSize="25sp"
 			android:textStyle="bold"
 			android:typeface="sans"
@@ -66,9 +65,7 @@
 		android:id="@+id/live_show_action_button"
 		android:layout_height="wrap_content"
 		android:layout_width="fill_parent"
-		android:text="Остановить"
 		android:onClick="onButtonPressed"
-		android:textSize="25sp"
 		android:layout_alignParentBottom="true"
 		android:layout_centerHorizontal="true" />
 </RelativeLayout>
