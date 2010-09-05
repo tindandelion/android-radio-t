@@ -18,6 +18,7 @@ public class LiveShowService extends Service implements ILiveShowService {
 
 	private final IBinder binder = new LocalBinder();
 	private LiveShowState currentState;
+	private String[] statusLabels;
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -30,13 +31,15 @@ public class LiveShowService extends Service implements ILiveShowService {
 		MediaPlayer player = ((RadiotApplication) getApplication())
 				.getMediaPlayer();
 		currentState = new LiveShowState.Idle(player, this);
+		statusLabels = getResources().getStringArray(
+				R.array.live_show_notification_labels);
 	}
 
 	public void startPlayback() {
 		currentState.startPlayback();
 	}
 
-	public LiveShowState getCurrentState() { 
+	public LiveShowState getCurrentState() {
 		return currentState;
 	}
 
@@ -56,9 +59,9 @@ public class LiveShowService extends Service implements ILiveShowService {
 		}
 	}
 
-	public void goForeground(int stringId) {
+	public void goForeground(int statusLabelIndex) {
 		startForeground(NOTIFICATION_ID,
-				createNotification(getString(stringId)));
+				createNotification(statusLabels[statusLabelIndex]));
 	}
 
 	public void goBackground() {

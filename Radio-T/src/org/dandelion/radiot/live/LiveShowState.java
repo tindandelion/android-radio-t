@@ -3,8 +3,6 @@ package org.dandelion.radiot.live;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import org.dandelion.radiot.R;
-
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnErrorListener;
 import android.media.MediaPlayer.OnPreparedListener;
@@ -13,7 +11,7 @@ public abstract class LiveShowState {
 	// private static final String LIVE_SHOW_URL =
 	// "http://stream3.radio-t.com:8181/stream";
 	private static final String LIVE_SHOW_URL = "http://icecast.bigrradio.com/80s90s";
-	private static final long WAIT_TIMEOUT = 60 * 1000;
+	private static final long WAIT_TIMEOUT = 30 * 1000;
 
 	protected MediaPlayer player;
 	protected ILiveShowService service;
@@ -69,7 +67,7 @@ public abstract class LiveShowState {
 			try {
 				player.setDataSource(LIVE_SHOW_URL);
 				player.prepareAsync();
-				service.goForeground(R.string.live_show_connecting);
+				service.goForeground(1);
 			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}
@@ -93,7 +91,7 @@ public abstract class LiveShowState {
 		public void enter() {
 			player.reset();
 			timer.schedule(task, WAIT_TIMEOUT);
-			service.goForeground(R.string.live_show_waiting);
+			service.goForeground(2);
 		}
 		
 		@Override
@@ -121,7 +119,7 @@ public abstract class LiveShowState {
 		@Override
 		public void enter() {
 			player.start();
-			service.goForeground(R.string.live_show_online);
+			service.goForeground(0);
 		}
 	}
 

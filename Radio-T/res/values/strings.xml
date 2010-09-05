@@ -34,10 +34,22 @@
 		name="listen_label">Слушать сейчас</string>
 	<string
 		name="live_show_playback_button_title">Прямой эфир</string>
-	<string
-		name="live_show_online">Прямой эфир: идет трансляция</string>
-	<string
-		name="live_show_connecting">Прямой эфир: Подключение</string>
-	<string
-		name="live_show_waiting">Прямой эфир: Ожидание</string>
+	<string-array
+		name="live_show_notification_labels">
+		<item>Прямой эфир: Идет трансляция</item>
+		<item>Прямой эфир: Подключение</item>
+		<item>Прямой эфир: Ожидание</item>
+	</string-array>
+	<string-array
+		name="live_show_status_labels">
+		<item>Остановлено</item>
+		<item>Подключение</item>
+		<item>Ожидание</item>
+		<item>Трансляция</item>
+	</string-array>
+	<string-array
+		name="live_show_button_labels">
+		<item>Остановить</item>
+		<item>Подключиться</item>
+	</string-array>
 </resources>

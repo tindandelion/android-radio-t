@@ -60,20 +60,20 @@ public class LiveShowPresenter {
 
 		@Override
 		protected void updateButton() {
-			activity.setButtonText("Остановить");
+			activity.setButtonLabel(0);
 		}
 
 		@Override
 		protected void updateStateLabel() {
-			String text = "";
+			int statusIndex = 0;
 			if (showState instanceof LiveShowState.Connecting) {
-				text = "Подключение";
+				statusIndex = 1;
 			} else if (showState instanceof LiveShowState.Waiting) {
-				text = "Ожидание";
+				statusIndex = 2;
 			} else { 
-				text = "Трансляция";
+				statusIndex = 3;
 			}
-			activity.setLabelText(text);
+			activity.setStatusLabel(statusIndex);
 		}
 
 		@Override
@@ -123,12 +123,12 @@ public class LiveShowPresenter {
 
 		@Override
 		protected void updateButton() {
-			activity.setButtonText("Подключиться");
+			activity.setButtonLabel(1);
 		}
 
 		@Override
 		protected void updateStateLabel() {
-			activity.setLabelText("Остановлено");
+			activity.setStatusLabel(0);
 		}
 
 		@Override

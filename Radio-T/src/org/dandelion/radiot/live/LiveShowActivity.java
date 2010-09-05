@@ -36,12 +36,17 @@ public class LiveShowActivity extends Activity {
 		}
 	};
 	private LiveShowPresenter presenter;
+	private String[] statusLabels;
+
+	private CharSequence[] buttonLabels;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.live_show_screen);
 		presenter = LiveShowPresenter.Null;
+		statusLabels = getResources().getStringArray(R.array.live_show_status_labels);
+		buttonLabels = getResources().getStringArray(R.array.live_show_button_labels);
 	}
 
 	@Override
@@ -74,15 +79,15 @@ public class LiveShowActivity extends Activity {
 	public LiveShowService getService() {
 		return service;
 	}
-
-	public void setButtonText(String text) {
+	
+	public void setButtonLabel(int index) { 
 		Button button = (Button) findViewById(R.id.live_show_action_button);
-		button.setText(text);
+		button.setText(buttonLabels[index]);
 	}
-
-	public void setLabelText(String text) {
+	
+	public void setStatusLabel(int index) {
 		TextView view = (TextView) findViewById(R.id.playback_state_label);
-		view.setText(text);
+		view.setText(statusLabels[index]);
 	}
 
 	public void setTimerLabel(String string) {
