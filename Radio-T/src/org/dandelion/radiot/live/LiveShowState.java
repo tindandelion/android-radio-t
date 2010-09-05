@@ -65,6 +65,7 @@ public abstract class LiveShowState {
 		@Override
 		public void enter() {
 			try {
+				player.reset();
 				player.setDataSource(LIVE_SHOW_URL);
 				player.prepareAsync();
 				service.goForeground(1);
@@ -126,6 +127,7 @@ public abstract class LiveShowState {
 	public static class Idle extends LiveShowState {
 		public Idle(MediaPlayer player, ILiveShowService service) {
 			super(player, service);
+			player.setOnErrorListener(null);
 		}
 
 		@Override

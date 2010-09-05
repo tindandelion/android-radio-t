@@ -52,8 +52,10 @@ public final class R {
         public static final int podcast_item_view_number=0x7f080014;
         public static final int podcast_item_view_shownotes=0x7f080016;
         public static final int podcast_item_view_tags=0x7f080017;
+        public static final int podcast_list_icon=0x7f080018;
+        public static final int podcast_list_title=0x7f080019;
         public static final int podcasts_menu=0x7f08000a;
-        public static final int refresh=0x7f080018;
+        public static final int refresh=0x7f08001a;
         public static final int version_label=0x7f080004;
     }
     public static final class layout {
@@ -64,6 +66,7 @@ public final class R {
         public static final int live_show_screen=0x7f030004;
         public static final int playback_control=0x7f030005;
         public static final int podcast_list_item=0x7f030006;
+        public static final int podcast_list_screen=0x7f030007;
     }
     public static final class menu {
         public static final int podcast_list=0x7f070000;
