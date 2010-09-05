@@ -3,42 +3,49 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
+	<TextView
+		android:id="@+id/about_app_title"
+		style="@style/ActivityTitle"
+		android:text="@string/about_app_title" />
+	<View
+		style="@style/Divider"
+		android:layout_below="@id/about_app_title" />
 	<RelativeLayout
-		style="@style/InfoBox"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
 		android:layout_centerInParent="true">
 		<FrameLayout
 			android:id="@+id/logo"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_centerHorizontal="true"
-			android:layout_marginBottom="20dp">
+			android:layout_centerHorizontal="true">
 			<include
 				layout="@layout/app_logo" />
 		</FrameLayout>
 		<TextView
 			android:id="@+id/app_name_label"
-			android:layout_width="wrap_content"
+			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:textSize="17sp"
+			android:textSize="20sp"
 			android:textStyle="bold"
 			android:layout_below="@id/logo"
-			android:layout_centerHorizontal="true"
+			android:paddingTop="20dp"
+			android:gravity="center_horizontal"
 			android:text="@string/app_name" />
 		<TextView
 			android:id="@+id/version_label"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_below="@id/app_name_label"
-			android:layout_centerHorizontal="true"
-			android:text="@string/version_label" />
-		<Button
-			android:id="@+id/feedback_button"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:layout_below="@id/version_label"
-			android:layout_centerInParent="true"
-			android:layout_marginTop="20dp"
-			android:text="@string/feedback_label"
-			android:onClick="sendFeedback" />
+			android:layout_below="@id/app_name_label"
+			android:gravity="center_horizontal"
+			android:text="@string/version_label" />
 	</RelativeLayout>
+	<Button
+		android:id="@+id/feedback_button"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_centerInParent="true"
+		android:text="@string/feedback_label"
+		android:layout_alignParentBottom="true"
+		android:onClick="sendFeedback" />
 </RelativeLayout>
