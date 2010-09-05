@@ -11,6 +11,7 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -89,9 +90,9 @@ public class LiveShowActivity extends Activity {
 		TextView view = (TextView) findViewById(R.id.playback_state_label);
 		view.setText(statusLabels[index]);
 	}
-
-	public void setTimerLabel(String string) {
+	
+	public void setElapsedTime(long seconds) {
 		TextView timerLabel = (TextView) findViewById(R.id.live_timer_label);
-		timerLabel.setText(string);
+		timerLabel.setText(DateUtils.formatElapsedTime(seconds));
 	}
 }

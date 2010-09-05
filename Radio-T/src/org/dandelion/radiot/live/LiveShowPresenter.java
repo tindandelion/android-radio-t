@@ -87,19 +87,15 @@ public class LiveShowPresenter {
 				public void run() {
 					long currentTime = System.currentTimeMillis()
 							- showState.getTimestamp();
-					long seconds = currentTime / 1000;
-					long minutes = seconds / 60;
-					seconds = seconds % 60;
-					updateTimerLabel(minutes, seconds);
+					updateTimerLabel(currentTime / 1000);
 				}
 			};
 		}
-
-		private void updateTimerLabel(final long minutes, final long seconds) {
+		
+		private void updateTimerLabel(final long seconds) {
 			activity.runOnUiThread(new Runnable() {
 				public void run() {
-					activity.setTimerLabel(String.format("%d:%02d", minutes,
-							seconds));
+					activity.setElapsedTime(seconds);
 				}
 			});
 		}
@@ -133,7 +129,7 @@ public class LiveShowPresenter {
 
 		@Override
 		protected void updateTimer() {
-			activity.setTimerLabel("0:00");
+			activity.setElapsedTime(0);
 		}
 	}
 
