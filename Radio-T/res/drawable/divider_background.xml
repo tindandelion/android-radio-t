@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list
+	xmlns:android="http://schemas.android.com/apk/res/android">
+	<item>
+		<bitmap
+			xmlns:android="http://schemas.android.com/apk/res/android"
+			android:src="@android:drawable/divider_horizontal_dark"
+			android:gravity="fill_horizontal|top" />
+	</item>
+	<item>
+		<bitmap
+			xmlns:android="http://schemas.android.com/apk/res/android"
+			android:src="@android:drawable/divider_horizontal_dark"
+			android:gravity="fill_horizontal|bottom" />
+	</item>
+</layer-list>
