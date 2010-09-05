@@ -4,6 +4,7 @@ package org.dandelion.radiot.unittest;
 import junit.framework.Assert;
 
 import org.dandelion.radiot.RadiotApplication;
+import org.dandelion.radiot.helpers.MockMediaPlayer;
 import org.dandelion.radiot.live.LiveShowService;
 import org.dandelion.radiot.live.LiveShowState;
 
@@ -11,6 +12,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.MediaPlayer;
 import android.test.ServiceTestCase;
 
 public class LiveShowServiceTestCase extends ServiceTestCase<LiveShowService> {
@@ -23,7 +25,12 @@ public class LiveShowServiceTestCase extends ServiceTestCase<LiveShowService> {
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		setApplication(new RadiotApplication());
+		setApplication(new RadiotApplication() {
+			@Override
+			public MediaPlayer getMediaPlayer() {
+				return new MockMediaPlayer();
+			}
+		});
 		bindService(new Intent());
 		service = getService();
 	}

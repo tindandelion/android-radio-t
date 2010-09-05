@@ -29,17 +29,20 @@ public class LiveShowPlayback extends
 		super.tearDown();
 	}
 	
-	public void testStartPlaybackWhenOpeningActivity() throws Exception {
+	public void testStartPlayback() throws Exception {
+		solo.clickOnButton("Подключиться");
 		assertTrue(solo.waitForText("Трансляция"));
 	}
 	
 	public void testStopPlaybackWhenPressingStop() throws Exception {
+		solo.clickOnButton("Подключиться");
 		assertTrue(solo.waitForText("Трансляция"));
 		solo.clickOnButton("Остановить");
 		assertTrue(solo.waitForText("Остановлено"));
 	}
 	
 	public void testRestartPlaybackAfterExplicitStop() throws Exception {
+		solo.clickOnButton("Подключиться");
 		assertTrue(solo.waitForText("Трансляция"));
 		solo.clickOnButton("Остановить");
 		solo.clickOnButton("Подключиться");

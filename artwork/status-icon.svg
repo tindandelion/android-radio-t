@@ -15,9 +15,34 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.47 r22583"
-   sodipodi:docname="New document 1">
+   sodipodi:docname="status-icon.svg"
+   inkscape:export-filename="/home/sergey/Desktop/Shared/Radio-T/res/drawable-mdpi/status_icon.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
   <defs
      id="defs4">
+    <linearGradient
+       id="linearGradient3630">
+      <stop
+         style="stop-color:#696969;stop-opacity:1;"
+         offset="0"
+         id="stop3632" />
+      <stop
+         style="stop-color:#0a0a0a;stop-opacity:1;"
+         offset="1"
+         id="stop3634" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3614">
+      <stop
+         style="stop-color:#0a0a0a;stop-opacity:1;"
+         offset="0"
+         id="stop3616" />
+      <stop
+         style="stop-color:#696969;stop-opacity:1;"
+         offset="1"
+         id="stop3618" />
+    </linearGradient>
     <linearGradient
        id="linearGradient3592">
       <stop
@@ -36,15 +61,6 @@
        inkscape:vp_z="744.09448 : 526.18109 : 1"
        inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
        id="perspective10" />
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient3592"
-       id="linearGradient3598"
-       x1="13"
-       y1="23"
-       x2="13"
-       y2="2"
-       gradientUnits="userSpaceOnUse" />
     <inkscape:perspective
        id="perspective3722"
        inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
@@ -52,6 +68,24 @@
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_x="0 : 0.5 : 1"
        sodipodi:type="inkscape:persp3d" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3614"
+       id="linearGradient3620"
+       x1="13"
+       y1="24"
+       x2="13"
+       y2="1"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3630"
+       id="linearGradient3636"
+       x1="13"
+       y1="24"
+       x2="13"
+       y2="1"
+       gradientUnits="userSpaceOnUse" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -61,7 +95,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="15.48"
-     inkscape:cx="1.8410853"
+     inkscape:cx="10.123468"
      inkscape:cy="12.5"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -96,19 +130,37 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(0,-1027.3622)">
-    <rect
-       style="fill:url(#linearGradient3598);fill-opacity:1;stroke:none;stroke-linejoin:round;stroke-opacity:0.75294119000000004"
-       id="rect2818"
-       width="21"
-       height="21"
-       x="2"
-       y="2"
-       transform="translate(0,1027.3622)"
-       rx="2"
-       ry="2" />
     <path
-       style="fill:#fefefe;fill-opacity:1;stroke:none"
-       d="m 12.500001,1031.3622 c -4.6891099,0 -8.4851943,3.7961 -8.4851943,8.4853 0,4.6891 3.7960844,8.5148 8.4851943,8.5148 4.689109,0 8.485193,-3.8257 8.485193,-8.5148 0,-4.6892 -3.796084,-8.4853 -8.485193,-8.4853 z m -3.7679012,4.2723 7.5061322,0 0,2.0767 -2.699834,0 0,6.3491 -2.076795,0 0,-6.3491 -2.7295032,0 0,-2.0767 z"
-       id="path3687" />
+       sodipodi:type="arc"
+       style="fill:url(#linearGradient3620);fill-opacity:1;stroke:url(#linearGradient3636);stroke-width:1.5;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="path3604"
+       sodipodi:cx="12.5"
+       sodipodi:cy="12.5"
+       sodipodi:rx="10.5"
+       sodipodi:ry="10.5"
+       d="m 23,12.5 a 10.5,10.5 0 1 1 -21,0 10.5,10.5 0 1 1 21,0 z"
+       transform="matrix(0.99999774,0,0,0.99999774,2.8223809e-5,1027.3623)"
+       inkscape:export-filename="/home/sergey/Desktop/Shared/Radio-T/res/drawable-mdpi/status_icon.png"
+       inkscape:export-xdpi="140.62"
+       inkscape:export-ydpi="140.62" />
+    <g
+       id="g3653"
+       transform="translate(-2.6191001e-8,-0.353924)">
+      <rect
+         y="1034.7162"
+         x="7"
+         height="2.6460135"
+         width="11"
+         id="rect3645"
+         style="fill:#ffffff;fill-opacity:1;stroke:none" />
+      <rect
+         transform="matrix(0,1,-1,0,0,0)"
+         style="fill:#ffffff;fill-opacity:1;stroke:none"
+         id="rect3651"
+         width="11.000017"
+         height="2.6460135"
+         x="1035.3622"
+         y="-13.823007" />
+    </g>
   </g>
 </svg>

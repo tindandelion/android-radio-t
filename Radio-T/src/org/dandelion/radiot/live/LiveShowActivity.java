@@ -33,7 +33,6 @@ public class LiveShowActivity extends Activity {
 			registerReceiver(onPlaybackState, new IntentFilter(
 					LiveShowService.PLAYBACK_STATE_CHANGED));
 			updateVisualState();
-			service.startPlayback();
 		}
 	};
 	private LiveShowPresenter presenter;
