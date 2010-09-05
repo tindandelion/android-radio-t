@@ -62,6 +62,19 @@
 			name="android:gravity">center_vertical|right</item>
 	</style>
 	<style
+		name="ActivityIcon">
+		<item
+			name="android:layout_width">wrap_content</item>
+		<item
+			name="android:layout_height">wrap_content</item>
+		<item
+			name="android:layout_alignParentLeft">true</item>
+		<item
+			name="android:layout_alignParentTop">true</item>
+		<item
+			name="android:paddingLeft">10dp</item>
+	</style>
+	<style
 		name="Divider">
 		<item
 			name="android:layout_height">1px</item>

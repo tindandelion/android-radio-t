@@ -3,10 +3,17 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
+	<ImageView
+		android:id="@+id/about_app_icon"
+		android:src="@drawable/about_app_activity_icon"
+		style="@style/ActivityIcon"
+		android:paddingLeft="2dp" />
 	<TextView
 		android:id="@+id/about_app_title"
 		style="@style/ActivityTitle"
-		android:text="@string/about_app_title" />
+		android:text="@string/about_app_title"
+		android:layout_alignTop="@id/about_app_icon"
+		android:layout_alignBottom="@id/about_app_icon" />
 	<View
 		style="@style/Divider"
 		android:layout_below="@id/about_app_title" />
@@ -28,6 +35,7 @@
 			android:layout_height="wrap_content"
 			android:textSize="20sp"
 			android:textStyle="bold"
+			android:textScaleX="1.1"
 			android:layout_below="@id/logo"
 			android:paddingTop="20dp"
 			android:gravity="center_horizontal"
