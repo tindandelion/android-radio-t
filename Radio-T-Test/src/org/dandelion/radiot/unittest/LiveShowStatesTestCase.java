@@ -1,5 +1,8 @@
 package org.dandelion.radiot.unittest;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import junit.framework.TestCase;
 
 import org.dandelion.radiot.helpers.MockMediaPlayer;
@@ -37,7 +40,7 @@ public class LiveShowStatesTestCase extends TestCase {
 	public void testSwitchingFromIdleToWaitingState() throws Exception {
 		currentState = new LiveShowState.Idle(player, service);
 		currentState.startPlayback();
-		assertSwitchedToState(LiveShowState.Waiting.class);
+		assertCurrentState(LiveShowState.Connecting.class);
 	}
 	
 	public void testResetsPlayerWhenEntersIdleState() throws Exception {
@@ -67,10 +70,10 @@ public class LiveShowStatesTestCase extends TestCase {
 	public void testGoesToIdleStateWhenStopsPlayback() throws Exception {
 		currentState = new LiveShowState.Playing(player, service);
 		currentState.stopPlayback();
-		assertSwitchedToState(LiveShowState.Idle.class);
+		assertCurrentState(LiveShowState.Idle.class);
 	}
 
-	private void assertSwitchedToState(Class<?> stateClass) {
+	private void assertCurrentState(Class<?> stateClass) {
 		if (null == switchedState) 
 			fail("Not switched to any state");
 		assertEquals(stateClass, switchedState.getClass());
@@ -92,7 +95,7 @@ public class LiveShowStatesTestCase extends TestCase {
 		currentState.enter();
 		player.signalError();
 		
-		assertSwitchedToState(LiveShowState.Waiting.class);
+		assertCurrentState(LiveShowState.Connecting.class);
 		
 	}
 	
@@ -107,29 +110,77 @@ public class LiveShowStatesTestCase extends TestCase {
 		
 	}
 	
-	public void testPreparingForPlayingWhenEntersWaitingState() throws Exception {
-		currentState = new LiveShowState.Waiting(player, service, "");
+	public void testPreparingForPlayingWhenEntersConnectingState() throws Exception {
+		currentState = new LiveShowState.Connecting(player, service);
 		currentState.enter();
 		player.assertIsPreparing();
 	}
 	
-	public void testGoesForegroundWhenEntersWaitingState() throws Exception {
-		currentState = new LiveShowState.Waiting(player, service, "");
+	public void testGoesForegroundWhenEntersConnectingState() throws Exception {
+		currentState = new LiveShowState.Connecting(player, service);
 		currentState.enter();
 		assertTrue(serviceIsForeground);
 	}
 	
 	public void testSwitchingToPlayingStateWhenPrepared() throws Exception {
-		currentState = new LiveShowState.Waiting(player, service, "");
+		currentState = new LiveShowState.Connecting(player, service);
 		currentState.enter();
 		player.bePrepared();
-		assertSwitchedToState(LiveShowState.Playing.class);
+		assertCurrentState(LiveShowState.Playing.class);
 	}
 	
-	public void testGoesToIdleStateOnErrorWhilePreparing() throws Exception {
-		currentState = new LiveShowState.Waiting(player, service, "");
+	public void testGoesToWaitingStateOnErrorWhilePreparing() throws Exception {
+		currentState = new LiveShowState.Connecting(player, service);
 		currentState.enter();
 		player.signalError();
-		assertSwitchedToState(LiveShowState.Idle.class);
+		assertCurrentState(LiveShowState.Waiting.class);
+	}
+	
+	public void testWaitsForTimeoutAndGoesToConnectingState() throws Exception {
+		TestTimer timer = new TestTimer();
+		currentState = new LiveShowState.Waiting(player, service, timer);
+		currentState.enter();
+		timer.timeoutElapsed();
+		assertCurrentState(LiveShowState.Connecting.class);
+		
+	}
+	
+	public void testResetsPlayerWhenEntersWaitingState() throws Exception {
+		currentState = new LiveShowState.Waiting(player, service, new TestTimer());
+		player.prepareAsync();
+		currentState.enter();
+		player.assertIsReset();
+	}
+	
+	public void testCancelsTheTimerWhenStoppingPlayback() throws Exception {
+		TestTimer timer = new TestTimer();
+		currentState = new LiveShowState.Waiting(player, service, timer);
+		currentState.enter();
+		currentState.stopPlayback();
+		assertTrue(timer.isCancelled());
+		assertCurrentState(LiveShowState.Idle.class);
+	}
+	
+	class TestTimer extends Timer {
+		private TimerTask task;
+		private boolean cancelled = false;
+
+		@Override
+		public void schedule(TimerTask task, long delay) {
+			this.task = task;
+		}
+
+		public boolean isCancelled() {
+			return cancelled;
+		}
+		
+		@Override
+		public void cancel() {
+			cancelled = true;
+		}
+
+		public void timeoutElapsed() {
+			task.run();
+		}
 	}
 }

@@ -1,5 +1,8 @@
 package org.dandelion.radiot.live;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import org.dandelion.radiot.R;
 
 import android.media.MediaPlayer;
@@ -7,17 +10,18 @@ import android.media.MediaPlayer.OnErrorListener;
 import android.media.MediaPlayer.OnPreparedListener;
 
 public abstract class LiveShowState {
-//	private static final String LIVE_SHOW_URL = "http://stream3.radio-t.com:8181/stream";
+	// private static final String LIVE_SHOW_URL =
+	// "http://stream3.radio-t.com:8181/stream";
 	private static final String LIVE_SHOW_URL = "http://icecast.bigrradio.com/80s90s";
+	private static final long WAIT_TIMEOUT = 60 * 1000;
+
 	protected MediaPlayer player;
 	protected ILiveShowService service;
 	private long timestamp;
 
 	public interface ILiveShowService {
 		void switchToNewState(LiveShowState newState);
-
 		void goForeground(int stringId);
-
 		void goBackground();
 	}
 
@@ -40,8 +44,7 @@ public abstract class LiveShowState {
 		return timestamp;
 	}
 
-	public static class Waiting extends LiveShowState {
-		private String url;
+	public static class Connecting extends LiveShowState {
 		private OnPreparedListener onPrepared = new OnPreparedListener() {
 			public void onPrepared(MediaPlayer mp) {
 				service.switchToNewState(new Playing(player, service));
@@ -49,14 +52,14 @@ public abstract class LiveShowState {
 		};
 		private OnErrorListener onError = new OnErrorListener() {
 			public boolean onError(MediaPlayer mp, int what, int extra) {
-				service.switchToNewState(new Idle(player, service));
+				service.switchToNewState(new Waiting(player, service,
+						new Timer()));
 				return false;
 			}
 		};
 
-		public Waiting(MediaPlayer player, ILiveShowService service, String url) {
+		public Connecting(MediaPlayer player, ILiveShowService service) {
 			super(player, service);
-			this.url = url;
 			player.setOnPreparedListener(onPrepared);
 			player.setOnErrorListener(onError);
 		}
@@ -64,21 +67,48 @@ public abstract class LiveShowState {
 		@Override
 		public void enter() {
 			try {
-				player.setDataSource(url);
+				player.setDataSource(LIVE_SHOW_URL);
 				player.prepareAsync();
-				service.goForeground(R.string.live_show_waiting);
+				service.goForeground(R.string.live_show_connecting);
 			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}
 		}
 	}
 
+	public static class Waiting extends LiveShowState {
+		private Timer timer;
+		private TimerTask task = new TimerTask() {
+			public void run() {
+				service.switchToNewState(new Connecting(player, service));
+			}
+		};
+
+		public Waiting(MediaPlayer player, ILiveShowService service, Timer timer) {
+			super(player, service);
+			this.timer = timer;
+		}
+
+		@Override
+		public void enter() {
+			player.reset();
+			timer.schedule(task, WAIT_TIMEOUT);
+			service.goForeground(R.string.live_show_waiting);
+		}
+		
+		@Override
+		public void stopPlayback() {
+			timer.cancel();
+			super.stopPlayback();
+		}
+
+	}
+
 	public static class Playing extends LiveShowState {
 		private OnErrorListener onError = new OnErrorListener() {
 			public boolean onError(MediaPlayer mp, int what, int extra) {
 				player.reset();
-				service.switchToNewState(new Waiting(player, service,
-						LIVE_SHOW_URL));
+				service.switchToNewState(new Connecting(player, service));
 				return false;
 			}
 		};
@@ -108,7 +138,7 @@ public abstract class LiveShowState {
 
 		@Override
 		public void startPlayback() {
-			service.switchToNewState(new Waiting(player, service, LIVE_SHOW_URL));
+			service.switchToNewState(new Connecting(player, service));
 		}
 	}
 }

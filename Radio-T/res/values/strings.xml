@@ -25,9 +25,11 @@
 	<string
 		name="feedback_label">Обратная связь</string>
 	<string
-		name="live_show_info">Прямая трансляция ведется по субботам с
+		name="live_show_info">
+		Прямая трансляция ведется по субботам с
 		<b>23:00</b>
-		по московскому времени</string>
+		по московскому времени
+	</string>
 	<string
 		name="listen_label">Слушать сейчас</string>
 	<string
@@ -35,5 +37,7 @@
 	<string
 		name="live_show_online">Прямой эфир: идет трансляция</string>
 	<string
-		name="live_show_waiting">Прямой эфир: ожидание</string>
+		name="live_show_connecting">Прямой эфир: Подключение</string>
+	<string
+		name="live_show_waiting">Прямой эфир: Ожидание</string>
 </resources>

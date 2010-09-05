@@ -66,9 +66,11 @@ public class LiveShowPresenter {
 		@Override
 		protected void updateStateLabel() {
 			String text = "";
-			if (showState instanceof LiveShowState.Waiting) {
+			if (showState instanceof LiveShowState.Connecting) {
+				text = "Подключение";
+			} else if (showState instanceof LiveShowState.Waiting) {
 				text = "Ожидание";
-			} else {
+			} else { 
 				text = "Трансляция";
 			}
 			activity.setLabelText(text);
