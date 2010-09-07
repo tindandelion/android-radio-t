@@ -22,14 +22,14 @@ public final class R {
         public static final int button_background=0x7f020003;
         public static final int default_podcast_image=0x7f020004;
         public static final int divider_background=0x7f020005;
-        public static final int home_menu_icon=0x7f020006;
-        public static final int icon=0x7f020007;
-        public static final int live_show_activity_icon=0x7f020008;
-        public static final int live_show_icon=0x7f020009;
-        public static final int logo=0x7f02000a;
-        public static final int podcast_icon=0x7f02000b;
-        public static final int podcast_image_background=0x7f02000c;
-        public static final int refresh_menu_icon=0x7f02000d;
+        public static final int ic_menu_home=0x7f020006;
+        public static final int ic_menu_refresh=0x7f020007;
+        public static final int icon=0x7f020008;
+        public static final int live_show_activity_icon=0x7f020009;
+        public static final int live_show_icon=0x7f02000a;
+        public static final int logo=0x7f02000b;
+        public static final int podcast_icon=0x7f02000c;
+        public static final int podcast_image_background=0x7f02000d;
         public static final int status_icon=0x7f02000e;
     }
     public static final class id {
