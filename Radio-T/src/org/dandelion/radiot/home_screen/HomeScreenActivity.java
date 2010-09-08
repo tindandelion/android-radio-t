@@ -5,16 +5,31 @@ import org.dandelion.radiot.R;
 import org.dandelion.radiot.live.LiveShowActivity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 
 public class HomeScreenActivity extends Activity {
+	
+	public static void start(Context context) { 
+		Intent intent = new Intent(context, HomeScreenActivity.class);
+		context.startActivity(intent);
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home_screen);
 		initHomeScreenItems();
+		Log.i("RadioT", "Create new home");
+	}
+	
+	@Override
+	protected void onDestroy() {
+		Log.i("RadioT", "Destroyed home");
+		super.onDestroy();
 	}
 
 	private void initHomeScreenItems() {

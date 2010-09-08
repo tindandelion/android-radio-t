@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.dandelion.radiot.PodcastList.IPodcastListEngine;
 import org.dandelion.radiot.PodcastList.IView;
+import org.dandelion.radiot.home_screen.HomeScreenActivity;
 
 import android.app.AlertDialog;
 import android.app.ListActivity;
@@ -101,6 +102,7 @@ public class PodcastListActivity extends ListActivity implements IView {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.default_menu, menu);
 		inflater.inflate(R.menu.podcast_list, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
@@ -111,6 +113,8 @@ public class PodcastListActivity extends ListActivity implements IView {
 		case R.id.refresh:
 			engine.refresh(true);
 			return true;
+		case R.id.go_home: 
+			HomeScreenActivity.start(this);
 		default:
 			return super.onOptionsItemSelected(item);
 		}

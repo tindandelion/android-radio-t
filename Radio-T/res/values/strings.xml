@@ -3,6 +3,8 @@
 	<string
 		name="refresh_menu_item">Обновить</string>
 	<string
+		name="home_menu_item">Домой</string>
+	<string
 		name="loading_message">Загрузка подкастов...</string>
 	<string
 		name="rss_load_error_title">Ошибка загрузки RSS</string>

@@ -1,6 +1,7 @@
 package org.dandelion.radiot.live;
 
 import org.dandelion.radiot.R;
+import org.dandelion.radiot.home_screen.HomeScreenActivity;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -8,10 +9,13 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ReceiverCallNotAllowedException;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.text.format.DateUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -64,6 +68,20 @@ public class LiveShowActivity extends Activity {
 		service = null;
 		presenter.stop();
 		super.onStop();
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.default_menu, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == R.id.go_home) {
+			HomeScreenActivity.start(this);
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	public void onButtonPressed(View v) {

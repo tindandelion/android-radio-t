@@ -37,6 +37,7 @@ public final class R {
         public static final int about_app_title=0x7f080001;
         public static final int app_name_label=0x7f080003;
         public static final int feedback_button=0x7f080005;
+        public static final int go_home=0x7f08001a;
         public static final int home_screen_header=0x7f080008;
         public static final int home_screen_item_icon=0x7f08000b;
         public static final int home_screen_item_title=0x7f08000c;
@@ -58,7 +59,7 @@ public final class R {
         public static final int podcast_list_icon=0x7f080018;
         public static final int podcast_list_title=0x7f080019;
         public static final int podcasts_menu=0x7f08000a;
-        public static final int refresh=0x7f08001a;
+        public static final int refresh=0x7f08001b;
         public static final int version_label=0x7f080004;
     }
     public static final class layout {
@@ -72,24 +73,26 @@ public final class R {
         public static final int podcast_list_screen=0x7f030007;
     }
     public static final class menu {
-        public static final int podcast_list=0x7f070000;
+        public static final int default_menu=0x7f070000;
+        public static final int podcast_list=0x7f070001;
     }
     public static final class string {
-        public static final int about_app_title=0x7f040009;
-        public static final int after_show_title=0x7f040007;
-        public static final int app_name=0x7f040005;
-        public static final int feedback_label=0x7f04000b;
-        public static final int listen_label=0x7f04000d;
-        public static final int live_show_info=0x7f04000c;
-        public static final int live_show_playback_button_title=0x7f04000e;
-        public static final int live_show_title=0x7f040008;
-        public static final int loading_message=0x7f040001;
-        public static final int logo_text=0x7f040003;
-        public static final int main_show_title=0x7f040006;
-        public static final int main_title=0x7f040004;
+        public static final int about_app_title=0x7f04000a;
+        public static final int after_show_title=0x7f040008;
+        public static final int app_name=0x7f040006;
+        public static final int feedback_label=0x7f04000c;
+        public static final int home_menu_item=0x7f040001;
+        public static final int listen_label=0x7f04000e;
+        public static final int live_show_info=0x7f04000d;
+        public static final int live_show_playback_button_title=0x7f04000f;
+        public static final int live_show_title=0x7f040009;
+        public static final int loading_message=0x7f040002;
+        public static final int logo_text=0x7f040004;
+        public static final int main_show_title=0x7f040007;
+        public static final int main_title=0x7f040005;
         public static final int refresh_menu_item=0x7f040000;
-        public static final int rss_load_error_title=0x7f040002;
-        public static final int version_label=0x7f04000a;
+        public static final int rss_load_error_title=0x7f040003;
+        public static final int version_label=0x7f04000b;
     }
     public static final class style {
         public static final int ActivityIcon=0x7f060004;
