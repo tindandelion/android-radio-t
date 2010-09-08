@@ -5,7 +5,7 @@
 	android:layout_height="fill_parent">
 	<ImageView
 		android:id="@+id/live_show_icon"
-		android:src="@drawable/live_show_activity_icon"
+		android:src="@drawable/ic_title_liveshow"
 		style="@style/ActivityIcon"/>
 	<TextView
 		android:id="@+id/live_show_title"

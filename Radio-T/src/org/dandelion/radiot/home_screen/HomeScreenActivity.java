@@ -12,12 +12,12 @@ import android.util.Log;
 import android.widget.ListView;
 
 public class HomeScreenActivity extends Activity {
-	
-	public static void start(Context context) { 
+
+	public static void start(Context context) {
 		Intent intent = new Intent(context, HomeScreenActivity.class);
 		context.startActivity(intent);
 	}
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -25,7 +25,7 @@ public class HomeScreenActivity extends Activity {
 		initHomeScreenItems();
 		Log.i("RadioT", "Create new home");
 	}
-	
+
 	@Override
 	protected void onDestroy() {
 		Log.i("RadioT", "Destroyed home");
@@ -41,7 +41,7 @@ public class HomeScreenActivity extends Activity {
 
 	protected HomeScreenAdapter initAdapter() {
 		HomeScreenAdapter a = new HomeScreenAdapter(this);
-		a.addItem(R.string.live_show_title, R.drawable.live_show_icon,
+		a.addItem(R.string.live_show_title, R.drawable.ic_list_liveshow,
 				new HomeScreenItem.OnClickListener() {
 					public void onClick(HomeScreenItem item) {
 						startActivity(new Intent(HomeScreenActivity.this,
@@ -49,14 +49,14 @@ public class HomeScreenActivity extends Activity {
 					}
 				});
 		a.addSeparator();
-		a.addItem(R.string.main_show_title, R.drawable.podcast_icon,
+		a.addItem(R.string.main_show_title, R.drawable.ic_list_podcasts,
 				new HomeScreenItem.OnClickListener() {
 					public void onClick(HomeScreenItem item) {
 						PodcastListActivity.start(HomeScreenActivity.this,
 								item.title, "main-show");
 					}
 				});
-		a.addItem(R.string.after_show_title, R.drawable.after_show_icon,
+		a.addItem(R.string.after_show_title, R.drawable.ic_list_aftershow,
 				new HomeScreenItem.OnClickListener() {
 					public void onClick(HomeScreenItem item) {
 						PodcastListActivity.start(HomeScreenActivity.this,
@@ -64,12 +64,13 @@ public class HomeScreenActivity extends Activity {
 					}
 				});
 		a.addSeparator();
-		a.addItem(R.string.about_app_title, R.drawable.about_icon, new HomeScreenItem.OnClickListener() {
-			public void onClick(HomeScreenItem item) {
-				startActivity(new Intent(HomeScreenActivity.this,
-						AboutAppActivity.class));
-			}
-		});
+		a.addItem(R.string.about_app_title, R.drawable.ic_list_about,
+				new HomeScreenItem.OnClickListener() {
+					public void onClick(HomeScreenItem item) {
+						startActivity(new Intent(HomeScreenActivity.this,
+								AboutAppActivity.class));
+					}
+				});
 		return a;
 	}
 }

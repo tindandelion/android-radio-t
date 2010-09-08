@@ -69,7 +69,7 @@ public class LiveShowService extends Service implements ILiveShowService {
 	}
 
 	private Notification createNotification(String statusMessage) {
-		Notification note = new Notification(R.drawable.status_icon, null,
+		Notification note = new Notification(R.drawable.ic_notification_live, null,
 				System.currentTimeMillis());
 		PendingIntent i = PendingIntent.getActivity(getApplication(), 0,
 				new Intent(getApplication(), LiveShowActivity.class), 0);

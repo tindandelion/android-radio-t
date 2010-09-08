@@ -5,7 +5,7 @@
 	android:layout_height="fill_parent">
 	<ImageView
 		android:id="@+id/about_app_icon"
-		android:src="@drawable/about_app_activity_icon"
+		android:src="@drawable/ic_title_about"
 		style="@style/ActivityIcon"
 		android:paddingLeft="2dp" />
 	<TextView
