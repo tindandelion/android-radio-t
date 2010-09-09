@@ -23,7 +23,7 @@
 		android:layout_height="wrap_content"
 		android:textAppearance="@android:style/TextAppearance.Small"
 		android:layout_below="@id/live_show_icon"
-		android:paddingTop="20dp"
+		android:paddingTop="10dp"
 		android:paddingLeft="5dp"
 		android:paddingRight="5dp"
 		android:textScaleX="1.1"

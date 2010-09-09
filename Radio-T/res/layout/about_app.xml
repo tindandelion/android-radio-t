@@ -18,6 +18,7 @@
 		style="@style/Divider"
 		android:layout_below="@id/about_app_title" />
 	<RelativeLayout
+		android:id="@+id/app_info"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:layout_centerInParent="true">
@@ -47,6 +48,16 @@
 			android:layout_below="@id/app_name_label"
 			android:gravity="center_horizontal"
 			android:text="@string/version_label" />
+		<TextView
+			android:id="@+id/acknoledgements"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_below="@id/version_label"
+			android:layout_marginTop="20dp"
+			android:textAppearance="@android:style/TextAppearance.Small"
+			android:gravity="center_horizontal"
+			android:padding="10dp"
+			android:text="@string/acknoledgements" />
 	</RelativeLayout>
 	<Button
 		android:id="@+id/feedback_button"
