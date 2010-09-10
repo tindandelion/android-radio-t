@@ -8,10 +8,10 @@ import android.media.MediaPlayer.OnErrorListener;
 import android.media.MediaPlayer.OnPreparedListener;
 
 public abstract class LiveShowState {
+	private static final String LIVE_SHOW_URL = "http://stream3.radio-t.com:8181/stream";
 	// private static final String LIVE_SHOW_URL =
-	// "http://stream3.radio-t.com:8181/stream";
-	private static final String LIVE_SHOW_URL = "http://icecast.bigrradio.com/80s90s";
-	private static final long WAIT_TIMEOUT = 30 * 1000;
+	// "http://icecast.bigrradio.com/80s90s";
+	private static final long WAIT_TIMEOUT = 60 * 1000;
 
 	protected MediaPlayer player;
 	protected ILiveShowService service;
@@ -19,7 +19,9 @@ public abstract class LiveShowState {
 
 	public interface ILiveShowService {
 		void switchToNewState(LiveShowState newState);
+
 		void goForeground(int stringId);
+
 		void goBackground();
 	}
 
@@ -94,7 +96,7 @@ public abstract class LiveShowState {
 			timer.schedule(task, WAIT_TIMEOUT);
 			service.goForeground(2);
 		}
-		
+
 		@Override
 		public void stopPlayback() {
 			timer.cancel();
