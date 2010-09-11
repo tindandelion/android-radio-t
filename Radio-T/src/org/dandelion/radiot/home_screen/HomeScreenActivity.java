@@ -8,7 +8,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ListView;
 
 public class HomeScreenActivity extends Activity {
@@ -23,24 +22,22 @@ public class HomeScreenActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home_screen);
 		initHomeScreenItems();
-		Log.i("RadioT", "Create new home");
 	}
 
 	@Override
 	protected void onDestroy() {
-		Log.i("RadioT", "Destroyed home");
 		super.onDestroy();
 	}
 
 	private void initHomeScreenItems() {
-		HomeScreenAdapter adapter = initAdapter();
+		HomeListAdapter adapter = initAdapter();
 		ListView listView = (ListView) findViewById(R.id.podcasts_menu);
 		listView.setAdapter(adapter);
 		listView.setOnItemClickListener(adapter);
 	}
 
-	protected HomeScreenAdapter initAdapter() {
-		HomeScreenAdapter a = new HomeScreenAdapter(this);
+	protected HomeListAdapter initAdapter() {
+		HomeListAdapter a = new HomeListAdapter(this);
 		a.addItem(R.string.live_show_title, R.drawable.ic_list_liveshow,
 				new HomeScreenItem.OnClickListener() {
 					public void onClick(HomeScreenItem item) {

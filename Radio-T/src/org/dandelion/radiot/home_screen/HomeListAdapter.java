@@ -14,14 +14,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-class HomeScreenAdapter extends ArrayAdapter<HomeScreenItem> implements OnItemClickListener {
+class HomeListAdapter extends ArrayAdapter<HomeScreenItem> implements OnItemClickListener {
 
 	private static final float SEPARATOR_HEIGHT_DIP = 16;
 	private static final HomeScreenItem SEPARATOR = new HomeScreenItem(null, 0, null);
 	
 	private LayoutInflater layoutInflater;
 
-	public HomeScreenAdapter(Activity activity) {
+	public HomeListAdapter(Activity activity) {
 		super(activity, R.layout.home_screen_item, new ArrayList<HomeScreenItem>());
 		layoutInflater = activity.getLayoutInflater();
 	}
