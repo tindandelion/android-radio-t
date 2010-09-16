@@ -30,7 +30,12 @@ public class LiveShowPresenter {
 	public void updateView() {
 		updateButton();
 		updateStateLabel();
+		updateHelpText();
 		updateTimer();
+	}
+
+	protected void updateHelpText() {
+		activity.showHelpText(showState instanceof LiveShowState.Waiting);
 	}
 
 	public void stop() {

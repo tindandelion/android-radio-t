@@ -21,7 +21,7 @@ import android.widget.TextView;
 
 public class LiveShowActivity extends Activity {
 	protected LiveShowService service;
-	
+
 	protected BroadcastReceiver onPlaybackState = new BroadcastReceiver() {
 		public void onReceive(Context context, Intent intent) {
 			updateVisualState();
@@ -48,8 +48,10 @@ public class LiveShowActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.live_show_screen);
 		presenter = LiveShowPresenter.Null;
-		statusLabels = getResources().getStringArray(R.array.live_show_status_labels);
-		buttonLabels = getResources().getStringArray(R.array.live_show_button_labels);
+		statusLabels = getResources().getStringArray(
+				R.array.live_show_status_labels);
+		buttonLabels = getResources().getStringArray(
+				R.array.live_show_button_labels);
 	}
 
 	@Override
@@ -68,13 +70,13 @@ public class LiveShowActivity extends Activity {
 		presenter.stop();
 		super.onStop();
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.default_menu, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.go_home) {
@@ -96,19 +98,25 @@ public class LiveShowActivity extends Activity {
 	public LiveShowService getService() {
 		return service;
 	}
-	
-	public void setButtonLabel(int index) { 
+
+	public void setButtonLabel(int index) {
 		Button button = (Button) findViewById(R.id.live_show_action_button);
 		button.setText(buttonLabels[index]);
 	}
-	
+
 	public void setStatusLabel(int index) {
 		TextView view = (TextView) findViewById(R.id.playback_state_label);
 		view.setText(statusLabels[index]);
 	}
-	
+
 	public void setElapsedTime(long seconds) {
 		TextView timerLabel = (TextView) findViewById(R.id.live_timer_label);
 		timerLabel.setText(DateUtils.formatElapsedTime(seconds));
+	}
+
+	public void showHelpText(boolean visible) {
+		View view = findViewById(R.id.live_show_hint);
+		int visibility = (visible) ? View.VISIBLE : View.INVISIBLE;
+		view.setVisibility(visibility);
 	}
 }

@@ -33,13 +33,21 @@
 		по московскому времени
 	</string>
 	<string
+		name="live_show_waiting_hint">При подключении к прямому эфиру произошла ошибка. Приложение повторит попытку
+		через некоторое время</string>
+	<string
 		name="listen_label">Слушать сейчас</string>
 	<string
 		name="live_show_playback_button_title">Прямой эфир</string>
 	<string
-		name="acknoledgements"><b>Автор благодарен</b>\n\n<i>Бобуку, Грею, Маринке и
-		Умпутуну</i>\nза замечательное познавательное шоу\n\n<i>Оляпке</i>\nза ценные
-		советы и помощь в тестировании приложения</string>
+		name="acknoledgements">
+		<b>Автор благодарен</b>
+		\n\n
+		<i>Бобуку, Грею, Маринке и Умпутуну</i>
+		\nза замечательное познавательное шоу\n\n
+		<i>Оляпке</i>
+		\nза ценные советы и помощь в тестировании приложения
+	</string>
 	<string-array
 		name="live_show_notification_labels">
 		<item>Прямой эфир: Идет трансляция</item>
