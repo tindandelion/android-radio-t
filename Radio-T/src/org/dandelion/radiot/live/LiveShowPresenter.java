@@ -1,7 +1,5 @@
 package org.dandelion.radiot.live;
 
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class LiveShowPresenter {
 	public static final LiveShowPresenter Null = new LiveShowPresenter(null,
@@ -27,18 +25,7 @@ public class LiveShowPresenter {
 	public void switchPlaybackState() {
 	}
 
-	public void updateView() {
-		updateTimer();
-	}
-
-	public void stop() {
-	}
-
-	protected void updateTimer() {
-	}
-
 	static class ActiveStatePresenter extends LiveShowPresenter {
-		private Timer timer;
 
 		public ActiveStatePresenter(LiveShowState state,
 				LiveShowActivity activity) {
@@ -48,35 +35,6 @@ public class LiveShowPresenter {
 		@Override
 		public void switchPlaybackState() {
 			showState.stopPlayback();
-		}
-
-		@Override
-		protected void updateTimer() {
-			timer = new Timer(true);
-			timer.schedule(createTimerTask(), 0, 1000);
-		}
-
-		private TimerTask createTimerTask() {
-			return new TimerTask() {
-				public void run() {
-					long currentTime = System.currentTimeMillis()
-							- showState.getTimestamp();
-					updateTimerLabel(currentTime / 1000);
-				}
-			};
-		}
-		
-		private void updateTimerLabel(final long seconds) {
-			activity.runOnUiThread(new Runnable() {
-				public void run() {
-					activity.setElapsedTime(seconds);
-				}
-			});
-		}
-
-		@Override
-		public void stop() {
-			timer.cancel();
 		}
 	}
 
@@ -89,11 +47,6 @@ public class LiveShowPresenter {
 		@Override
 		public void switchPlaybackState() {
 			showState.startPlayback();
-		}
-
-		@Override
-		protected void updateTimer() {
-			activity.setElapsedTime(0);
 		}
 	}
 }
