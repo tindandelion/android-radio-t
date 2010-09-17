@@ -8,9 +8,9 @@ import android.media.MediaPlayer.OnErrorListener;
 import android.media.MediaPlayer.OnPreparedListener;
 
 public abstract class LiveShowState {
-	private static final String LIVE_SHOW_URL = "http://stream3.radio-t.com:8181/stream";
-	// private static final String LIVE_SHOW_URL =
-	// "http://icecast.bigrradio.com/80s90s";
+//	private static final String LIVE_SHOW_URL = "http://stream3.radio-t.com:8181/stream";
+	 private static final String LIVE_SHOW_URL =
+	 "http://icecast.bigrradio.com/80s90s";
 	private static final long WAIT_TIMEOUT = 60 * 1000;
 
 	protected MediaPlayer player;
@@ -25,6 +25,13 @@ public abstract class LiveShowState {
 		void goBackground();
 	}
 
+	public interface ILiveShowVisitor {
+		void onWaiting(LiveShowState.Waiting state);
+		void onIdle(LiveShowState.Idle state);
+		void onConnecting(Connecting connecting);
+		void onPlaying(Playing playing);
+	}
+
 	public LiveShowState(MediaPlayer player, ILiveShowService service) {
 		this.service = service;
 		this.player = player;
@@ -32,6 +39,7 @@ public abstract class LiveShowState {
 	}
 
 	public abstract void enter();
+	public abstract void acceptVisitor(ILiveShowVisitor visitor);
 
 	public void stopPlayback() {
 		service.switchToNewState(new Idle(player, service));
@@ -43,6 +51,7 @@ public abstract class LiveShowState {
 	public long getTimestamp() {
 		return timestamp;
 	}
+
 
 	public static class Connecting extends LiveShowState {
 		private OnPreparedListener onPrepared = new OnPreparedListener() {
@@ -75,6 +84,11 @@ public abstract class LiveShowState {
 				throw new RuntimeException(e);
 			}
 		}
+
+		@Override
+		public void acceptVisitor(ILiveShowVisitor visitor) {
+			visitor.onConnecting(this);
+		}
 	}
 
 	public static class Waiting extends LiveShowState {
@@ -103,6 +117,11 @@ public abstract class LiveShowState {
 			super.stopPlayback();
 		}
 
+		@Override
+		public void acceptVisitor(ILiveShowVisitor visitor) {
+			visitor.onWaiting(this);
+		}
+
 	}
 
 	public static class Playing extends LiveShowState {
@@ -124,6 +143,11 @@ public abstract class LiveShowState {
 			player.start();
 			service.goForeground(0);
 		}
+
+		@Override
+		public void acceptVisitor(ILiveShowVisitor visitor) {
+			visitor.onPlaying(this);
+		}
 	}
 
 	public static class Idle extends LiveShowState {
@@ -141,6 +165,11 @@ public abstract class LiveShowState {
 		@Override
 		public void startPlayback() {
 			service.switchToNewState(new Connecting(player, service));
+		}
+
+		@Override
+		public void acceptVisitor(ILiveShowVisitor visitor) {
+			visitor.onIdle(this);
 		}
 	}
 }

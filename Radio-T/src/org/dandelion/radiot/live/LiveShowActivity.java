@@ -93,6 +93,7 @@ public class LiveShowActivity extends Activity {
 		presenter.stop();
 		presenter = LiveShowPresenter.create(service.getCurrentState(), this);
 		presenter.updateView();
+		service.acceptVisitor(new LiveShowVisitor(this));
 	}
 
 	public LiveShowService getService() {

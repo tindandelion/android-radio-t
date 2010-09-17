@@ -34,6 +34,10 @@ public class LiveShowService extends Service implements ILiveShowService {
 		statusLabels = getResources().getStringArray(
 				R.array.live_show_notification_labels);
 	}
+	
+	public void acceptVisitor(LiveShowState.ILiveShowVisitor visitor) { 
+		currentState.acceptVisitor(visitor);
+	}
 
 	public void startPlayback() {
 		currentState.startPlayback();
@@ -69,8 +73,8 @@ public class LiveShowService extends Service implements ILiveShowService {
 	}
 
 	private Notification createNotification(String statusMessage) {
-		Notification note = new Notification(R.drawable.ic_notification_live, null,
-				System.currentTimeMillis());
+		Notification note = new Notification(R.drawable.ic_notification_live,
+				null, System.currentTimeMillis());
 		PendingIntent i = PendingIntent.getActivity(getApplication(), 0,
 				new Intent(getApplication(), LiveShowActivity.class), 0);
 		note.setLatestEventInfo(getApplication(), getString(R.string.app_name),

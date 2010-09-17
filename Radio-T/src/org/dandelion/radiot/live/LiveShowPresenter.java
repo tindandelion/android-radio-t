@@ -28,23 +28,10 @@ public class LiveShowPresenter {
 	}
 
 	public void updateView() {
-		updateButton();
-		updateStateLabel();
-		updateHelpText();
 		updateTimer();
 	}
 
-	protected void updateHelpText() {
-		activity.showHelpText(showState instanceof LiveShowState.Waiting);
-	}
-
 	public void stop() {
-	}
-
-	protected void updateButton() {
-	}
-
-	protected void updateStateLabel() {
 	}
 
 	protected void updateTimer() {
@@ -61,24 +48,6 @@ public class LiveShowPresenter {
 		@Override
 		public void switchPlaybackState() {
 			showState.stopPlayback();
-		}
-
-		@Override
-		protected void updateButton() {
-			activity.setButtonLabel(0);
-		}
-
-		@Override
-		protected void updateStateLabel() {
-			int statusIndex = -1;
-			if (showState instanceof LiveShowState.Connecting) {
-				statusIndex = 1;
-			} else if (showState instanceof LiveShowState.Waiting) {
-				statusIndex = 2;
-			} else { 
-				statusIndex = 3;
-			}
-			activity.setStatusLabel(statusIndex);
 		}
 
 		@Override
@@ -123,19 +92,8 @@ public class LiveShowPresenter {
 		}
 
 		@Override
-		protected void updateButton() {
-			activity.setButtonLabel(1);
-		}
-
-		@Override
-		protected void updateStateLabel() {
-			activity.setStatusLabel(0);
-		}
-
-		@Override
 		protected void updateTimer() {
 			activity.setElapsedTime(0);
 		}
 	}
-
 }

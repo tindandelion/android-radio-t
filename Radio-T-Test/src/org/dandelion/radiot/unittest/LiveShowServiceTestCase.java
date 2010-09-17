@@ -40,6 +40,10 @@ public class LiveShowServiceTestCase extends ServiceTestCase<LiveShowService> {
 			@Override
 			public void enter() {
 			}
+
+			@Override
+			public void acceptVisitor(ILiveShowVisitor visitor) {
+			}
 		};
 		
 		(new BroadcastCatcher(getContext(),
