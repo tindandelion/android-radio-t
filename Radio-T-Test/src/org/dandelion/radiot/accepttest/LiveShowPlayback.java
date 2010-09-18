@@ -45,7 +45,6 @@ public class LiveShowPlayback extends
 		solo.clickOnButton("Подключиться");
 		assertTrue(solo.waitForText("Трансляция"));
 		solo.clickOnButton("Остановить");
-		assertTrue(solo.waitForText("Остановлено"));
 		solo.clickOnButton("Подключиться");
 		assertTrue(solo.waitForText("Трансляция"));
 	}

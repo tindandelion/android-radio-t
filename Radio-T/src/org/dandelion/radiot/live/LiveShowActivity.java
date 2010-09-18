@@ -96,14 +96,15 @@ public class LiveShowActivity extends Activity {
 		return service;
 	}
 
-	public void setButtonLabel(int index) {
+	public void setButtonState(int labelId, boolean enabled) {
 		Button button = (Button) findViewById(R.id.live_show_action_button);
-		button.setText(buttonLabels[index]);
+		button.setText(buttonLabels[labelId]);
+		button.setEnabled(enabled);
 	}
 
-	public void setStatusLabel(int index) {
+	public void setStatusLabel(int labelId) {
 		TextView view = (TextView) findViewById(R.id.playback_state_label);
-		view.setText(statusLabels[index]);
+		view.setText(statusLabels[labelId]);
 	}
 
 	public void setElapsedTime(long seconds) {

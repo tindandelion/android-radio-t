@@ -25,19 +25,19 @@ public class LiveShowPresenter implements ILiveShowVisitor {
 	}
 
 	public void onWaiting(Waiting state) {
-		beActiveState(state, 2, true);
+		beActiveState(state, 2, true, true);
 	}
 
 	public void onConnecting(Connecting state) {
-		beActiveState(state, 1, false);
+		beActiveState(state, 1, false, true);
 	}
 
 	public void onPlaying(Playing state) {
-		beActiveState(state, 3, false);
+		beActiveState(state, 3, false, true);
 	}
 
 	public void onStopping(Stopping state) {
-		beActiveState(state, 4, false);
+		beActiveState(state, 4, false, false);
 	}
 
 	public void stopTimer() {
@@ -57,11 +57,11 @@ public class LiveShowPresenter implements ILiveShowVisitor {
 	}
 
 	private void beActiveState(LiveShowState state, int labelStringId,
-			boolean isHelpTextVisible) {
+			boolean isHelpTextVisible, boolean buttonEnabled) {
 		isActive = true;
 		activity.setStatusLabel(labelStringId);
 		activity.showHelpText(isHelpTextVisible);
-		activity.setButtonLabel(0);
+		activity.setButtonState(0, buttonEnabled);
 		restartTimer(state.getTimestamp());
 	}
 
@@ -69,7 +69,7 @@ public class LiveShowPresenter implements ILiveShowVisitor {
 		isActive = false;
 		activity.setStatusLabel(0);
 		activity.showHelpText(false);
-		activity.setButtonLabel(1);
+		activity.setButtonState(1, true);
 		stopTimer();
 	}
 
