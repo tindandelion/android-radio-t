@@ -30,6 +30,7 @@ public abstract class LiveShowState {
 		void onIdle(LiveShowState.Idle state);
 		void onConnecting(Connecting connecting);
 		void onPlaying(Playing playing);
+		void onStopping(Stopping stopping);
 	}
 
 	public LiveShowState(MediaPlayer player, ILiveShowService service) {
@@ -42,7 +43,7 @@ public abstract class LiveShowState {
 	public abstract void acceptVisitor(ILiveShowVisitor visitor);
 
 	public void stopPlayback() {
-		service.switchToNewState(new Idle(player, service));
+		service.switchToNewState(new Stopping(player, service));
 	}
 
 	public void startPlayback() {
@@ -158,7 +159,6 @@ public abstract class LiveShowState {
 
 		@Override
 		public void enter() {
-			player.reset();
 			service.goBackground();
 		}
 
@@ -171,5 +171,27 @@ public abstract class LiveShowState {
 		public void acceptVisitor(ILiveShowVisitor visitor) {
 			visitor.onIdle(this);
 		}
+	}
+	
+	public static class Stopping extends LiveShowState {
+		public Stopping(MediaPlayer player, ILiveShowService service) {
+			super(player, service);
+		}
+
+		@Override
+		public void enter() {
+			player.reset();
+			service.switchToNewState(new Idle(player, service));
+		}
+		
+		@Override
+		public void stopPlayback() {
+		}
+
+		@Override
+		public void acceptVisitor(ILiveShowVisitor visitor) {
+			visitor.onStopping(this);
+		}
+		
 	}
 }

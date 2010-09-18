@@ -7,6 +7,7 @@ import org.dandelion.radiot.live.LiveShowState.Connecting;
 import org.dandelion.radiot.live.LiveShowState.ILiveShowVisitor;
 import org.dandelion.radiot.live.LiveShowState.Idle;
 import org.dandelion.radiot.live.LiveShowState.Playing;
+import org.dandelion.radiot.live.LiveShowState.Stopping;
 import org.dandelion.radiot.live.LiveShowState.Waiting;
 
 public class LiveShowPresenter implements ILiveShowVisitor {
@@ -23,11 +24,9 @@ public class LiveShowPresenter implements ILiveShowVisitor {
 		beInactiveState();
 	}
 
-
 	public void onWaiting(Waiting state) {
 		beActiveState(state, 2, true);
 	}
-
 
 	public void onConnecting(Connecting state) {
 		beActiveState(state, 1, false);
@@ -35,6 +34,10 @@ public class LiveShowPresenter implements ILiveShowVisitor {
 
 	public void onPlaying(Playing state) {
 		beActiveState(state, 3, false);
+	}
+
+	public void onStopping(Stopping state) {
+		beActiveState(state, 4, false);
 	}
 
 	public void stopTimer() {
@@ -52,7 +55,7 @@ public class LiveShowPresenter implements ILiveShowVisitor {
 			state.startPlayback();
 		}
 	}
-	
+
 	private void beActiveState(LiveShowState state, int labelStringId,
 			boolean isHelpTextVisible) {
 		isActive = true;
@@ -61,7 +64,7 @@ public class LiveShowPresenter implements ILiveShowVisitor {
 		activity.setButtonLabel(0);
 		restartTimer(state.getTimestamp());
 	}
-	
+
 	private void beInactiveState() {
 		isActive = false;
 		activity.setStatusLabel(0);

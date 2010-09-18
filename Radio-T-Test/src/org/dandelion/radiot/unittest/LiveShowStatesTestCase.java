@@ -43,12 +43,6 @@ public class LiveShowStatesTestCase extends TestCase {
 		assertCurrentState(LiveShowState.Connecting.class);
 	}
 	
-	public void testResetsPlayerWhenEntersIdleState() throws Exception {
-		currentState = new LiveShowState.Idle(player, service);
-		currentState.enter();
-		player.assertIsReset();
-	}
-	
 	public void testGoesBackgroundWhenEntersIdleState() throws Exception {
 		currentState = new LiveShowState.Idle(player, service);
 		
@@ -67,17 +61,12 @@ public class LiveShowStatesTestCase extends TestCase {
 		player.assertIsPlaying(null);
 	}
 	
-	public void testGoesToIdleStateWhenStopsPlayback() throws Exception {
+	public void testGoesToStoppingStateWhenStopsPlayback() throws Exception {
 		currentState = new LiveShowState.Playing(player, service);
 		currentState.stopPlayback();
-		assertCurrentState(LiveShowState.Idle.class);
+		assertCurrentState(LiveShowState.Stopping.class);
 	}
 
-	private void assertCurrentState(Class<?> stateClass) {
-		if (null == switchedState) 
-			fail("Not switched to any state");
-		assertEquals(stateClass, switchedState.getClass());
-	}
 	
 	public void testGoesForegroundWhenEntersPlayingState() throws Exception {
 		currentState = new LiveShowState.Playing(player, service);
@@ -158,7 +147,23 @@ public class LiveShowStatesTestCase extends TestCase {
 		currentState.enter();
 		currentState.stopPlayback();
 		assertTrue(timer.isCancelled());
+		assertCurrentState(LiveShowState.Stopping.class);
+	}
+	
+	public void testEnteringToStoppingStateResetsPlayerAndGoesIdle() throws Exception {
+		player.bePrepared();
+		
+		currentState = new LiveShowState.Stopping(player, service);
+		currentState.enter();
+		
+		player.assertIsReset();
 		assertCurrentState(LiveShowState.Idle.class);
+	}
+	
+	private void assertCurrentState(Class<?> stateClass) {
+		if (null == switchedState) 
+			fail("Not switched to any state");
+		assertEquals(stateClass, switchedState.getClass());
 	}
 	
 	class TestTimer extends Timer {
