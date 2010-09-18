@@ -8,9 +8,8 @@ import android.media.MediaPlayer.OnErrorListener;
 import android.media.MediaPlayer.OnPreparedListener;
 
 public abstract class LiveShowState {
-	// private static final String LIVE_SHOW_URL =
-	// "http://stream3.radio-t.com:8181/stream";
-	private static final String LIVE_SHOW_URL = "http://icecast.bigrradio.com/80s90s";
+	private static final String LIVE_SHOW_URL = "http://stream3.radio-t.com:8181/stream";
+//	private static final String LIVE_SHOW_URL = "http://icecast.bigrradio.com/80s90s";
 	private static final long WAIT_TIMEOUT = 60 * 1000;
 
 	protected MediaPlayer player;
