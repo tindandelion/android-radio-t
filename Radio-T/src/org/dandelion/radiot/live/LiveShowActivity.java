@@ -33,8 +33,6 @@ public class LiveShowActivity extends Activity {
 
 		public void onServiceConnected(ComponentName name, IBinder binder) {
 			service = ((LiveShowService.LocalBinder) binder).getService();
-			registerReceiver(onPlaybackState, new IntentFilter(
-					LiveShowService.PLAYBACK_STATE_CHANGED));
 			updateVisualState();
 		}
 	};
@@ -59,6 +57,8 @@ public class LiveShowActivity extends Activity {
 		Intent i = new Intent(this, LiveShowService.class);
 		startService(i);
 		bindService(i, onService, 0);
+		registerReceiver(onPlaybackState, new IntentFilter(
+				LiveShowService.PLAYBACK_STATE_CHANGED));
 	}
 
 	@Override
@@ -89,7 +89,8 @@ public class LiveShowActivity extends Activity {
 	}
 
 	protected void updateVisualState() {
-		service.acceptVisitor(visitor);
+		if (service != null)
+			service.acceptVisitor(visitor);
 	}
 
 	public LiveShowService getService() {
