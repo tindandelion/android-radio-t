@@ -8,9 +8,9 @@ import android.media.MediaPlayer.OnErrorListener;
 import android.media.MediaPlayer.OnPreparedListener;
 
 public abstract class LiveShowState {
-//	private static final String LIVE_SHOW_URL = "http://stream3.radio-t.com:8181/stream";
-	 private static final String LIVE_SHOW_URL =
-	 "http://icecast.bigrradio.com/80s90s";
+	// private static final String LIVE_SHOW_URL =
+	// "http://stream3.radio-t.com:8181/stream";
+	private static final String LIVE_SHOW_URL = "http://icecast.bigrradio.com/80s90s";
 	private static final long WAIT_TIMEOUT = 60 * 1000;
 
 	protected MediaPlayer player;
@@ -23,13 +23,19 @@ public abstract class LiveShowState {
 		void goForeground(int stringId);
 
 		void goBackground();
+
+		void runAsynchronously(Runnable runnable);
 	}
 
 	public interface ILiveShowVisitor {
 		void onWaiting(LiveShowState.Waiting state);
+
 		void onIdle(LiveShowState.Idle state);
+
 		void onConnecting(Connecting connecting);
+
 		void onPlaying(Playing playing);
+
 		void onStopping(Stopping stopping);
 	}
 
@@ -40,6 +46,7 @@ public abstract class LiveShowState {
 	}
 
 	public abstract void enter();
+
 	public abstract void acceptVisitor(ILiveShowVisitor visitor);
 
 	public void stopPlayback() {
@@ -52,7 +59,6 @@ public abstract class LiveShowState {
 	public long getTimestamp() {
 		return timestamp;
 	}
-
 
 	public static class Connecting extends LiveShowState {
 		private OnPreparedListener onPrepared = new OnPreparedListener() {
@@ -172,7 +178,7 @@ public abstract class LiveShowState {
 			visitor.onIdle(this);
 		}
 	}
-	
+
 	public static class Stopping extends LiveShowState {
 		public Stopping(MediaPlayer player, ILiveShowService service) {
 			super(player, service);
@@ -180,10 +186,14 @@ public abstract class LiveShowState {
 
 		@Override
 		public void enter() {
-			player.reset();
-			service.switchToNewState(new Idle(player, service));
+			service.runAsynchronously(new Runnable() {
+				public void run() {
+					player.reset();
+					service.switchToNewState(new Idle(player, service));
+				}
+			});
 		}
-		
+
 		@Override
 		public void stopPlayback() {
 		}
@@ -192,6 +202,6 @@ public abstract class LiveShowState {
 		public void acceptVisitor(ILiveShowVisitor visitor) {
 			visitor.onStopping(this);
 		}
-		
+
 	}
 }

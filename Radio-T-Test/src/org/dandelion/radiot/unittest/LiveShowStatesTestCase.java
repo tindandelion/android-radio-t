@@ -33,6 +33,10 @@ public class LiveShowStatesTestCase extends TestCase {
 			public void goBackground() {
 				serviceIsForeground = false;
 			}
+
+			public void runAsynchronously(Runnable runnable) {
+				runnable.run();
+			}
 		};
 		player = new MockMediaPlayer();
 	}
