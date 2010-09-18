@@ -38,19 +38,15 @@ public class LiveShowActivity extends Activity {
 			updateVisualState();
 		}
 	};
-	private LiveShowPresenter presenter;
 	private String[] statusLabels;
-
 	private CharSequence[] buttonLabels;
-
-	private LiveShowVisitor visitor;
+	private LiveShowPresenter visitor;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.live_show_screen);
-		presenter = LiveShowPresenter.Null;
-		visitor = new LiveShowVisitor(this);
+		visitor = new LiveShowPresenter(this);
 		statusLabels = getResources().getStringArray(
 				R.array.live_show_status_labels);
 		buttonLabels = getResources().getStringArray(
@@ -89,11 +85,10 @@ public class LiveShowActivity extends Activity {
 	}
 
 	public void onButtonPressed(View v) {
-		presenter.switchPlaybackState();
+		visitor.switchPlaybackState(service.getCurrentState());
 	}
 
 	protected void updateVisualState() {
-		presenter = LiveShowPresenter.create(service.getCurrentState(), this);
 		service.acceptVisitor(visitor);
 	}
 
