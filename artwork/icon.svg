@@ -16,9 +16,9 @@
    version="1.1"
    inkscape:version="0.47 r22583"
    sodipodi:docname="launcher-icon.svg"
-   inkscape:export-filename="/Users/sergio/Projects/Eclipse/android-radio-t/Radio-T/res/drawable-mdpi/icon.png"
-   inkscape:export-xdpi="90"
-   inkscape:export-ydpi="90">
+   inkscape:export-filename="/Users/sergio/Projects/Eclipse/android-radio-t/Radio-T/res/drawable-ldpi/icon.png"
+   inkscape:export-xdpi="67.5"
+   inkscape:export-ydpi="67.5">
   <defs
      id="defs4">
     <linearGradient
@@ -232,9 +232,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="10.958333"
-     inkscape:cx="20.962956"
-     inkscape:cy="24"
+     inkscape:zoom="3.8743559"
+     inkscape:cx="20.962955"
+     inkscape:cy="23.999999"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -272,13 +272,6 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(0,-1004.3622)">
-    <image
-       y="1006.3622"
-       x="53"
-       id="image2888"
-       height="45.000019"
-       width="42"
-       xlink:href="file:///Users/sergio/Desktop/IconGraphic_Colors.png" />
     <g
        id="g3724"
        transform="matrix(0.9482387,0,0,0.9482387,1.1195302,53.290955)"
@@ -310,12 +303,5 @@
          d="m 13.480457,1017.6365 0,4.75 8.21875,0 0,16.3438 4.71875,0 0,-16.3438 8.34375,0 0,-4.75 -21.28125,0 z"
          id="path4010" />
     </g>
-    <rect
-       style="opacity:0.73000004;fill:#000000;fill-opacity:0;stroke:#2877c0;stroke-width:0.2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="rect3733"
-       width="40"
-       height="40"
-       x="-48.471481"
-       y="1008.0884" />
   </g>
 </svg>
