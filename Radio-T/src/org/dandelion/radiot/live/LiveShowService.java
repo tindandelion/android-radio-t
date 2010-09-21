@@ -5,20 +5,29 @@ import org.dandelion.radiot.RadiotApplication;
 import org.dandelion.radiot.live.LiveShowState.ILiveShowService;
 
 import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.IBinder;
 
 public class LiveShowService extends Service implements ILiveShowService {
+	public class LocalBinder extends Binder {
+		LiveShowService getService() {
+			return (LiveShowService.this);
+		}
+	}
+
 	public static final String PLAYBACK_STATE_CHANGED = "org.dandelion.radiot.live.PlaybackStateChanged";
 	private static final int NOTIFICATION_ID = 1;
 
 	private final IBinder binder = new LocalBinder();
 	private LiveShowState currentState;
 	private String[] statusLabels;
+	private Foregrounder foregrounder;
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -33,9 +42,10 @@ public class LiveShowService extends Service implements ILiveShowService {
 		currentState = new LiveShowState.Idle(player, this);
 		statusLabels = getResources().getStringArray(
 				R.array.live_show_notification_labels);
+		foregrounder = Foregrounder.create(this);
 	}
-	
-	public void acceptVisitor(LiveShowState.ILiveShowVisitor visitor) { 
+
+	public void acceptVisitor(LiveShowState.ILiveShowVisitor visitor) {
 		currentState.acceptVisitor(visitor);
 	}
 
@@ -57,19 +67,13 @@ public class LiveShowService extends Service implements ILiveShowService {
 		sendBroadcast(new Intent(LiveShowService.PLAYBACK_STATE_CHANGED));
 	}
 
-	public class LocalBinder extends Binder {
-		LiveShowService getService() {
-			return (LiveShowService.this);
-		}
-	}
-
 	public void goForeground(int statusLabelIndex) {
-		startForeground(NOTIFICATION_ID,
+		foregrounder.startForeground(NOTIFICATION_ID,
 				createNotification(statusLabels[statusLabelIndex]));
 	}
 
 	public void goBackground() {
-		stopForeground(true);
+		foregrounder.stopForeground();
 	}
 
 	private Notification createNotification(String statusMessage) {
@@ -84,5 +88,61 @@ public class LiveShowService extends Service implements ILiveShowService {
 
 	public void runAsynchronously(Runnable runnable) {
 		new Thread(runnable).start();
+	}
+}
+
+@SuppressWarnings("rawtypes")
+abstract class Foregrounder {
+	private static final Class[] signature = new Class[] { int.class,
+			Notification.class };
+
+	public abstract void stopForeground();
+	public abstract void startForeground(int id, Notification notification);
+
+	public static Foregrounder create(Service service) {
+		return isNewApi() ? foregrounder20(service) : foregrounder15(service);
+	}
+
+	private static boolean isNewApi() {
+		try {
+			Service.class.getMethod("startForeground", signature);
+			return true;
+		} catch (NoSuchMethodException e) {
+			return false;
+		}
+	}
+
+	private static Foregrounder foregrounder20(final Service service) {
+		return new Foregrounder() {
+			@Override
+			public void stopForeground() {
+				service.stopForeground(true);
+			}
+
+			@Override
+			public void startForeground(int id, Notification notification) {
+				service.startForeground(id, notification);
+			}
+		};
+	}
+
+	private static Foregrounder foregrounder15(final Service service) {
+		final NotificationManager nm = (NotificationManager) service
+				.getSystemService(Context.NOTIFICATION_SERVICE);
+		return new Foregrounder() {
+			private int notificationId;
+
+			public void stopForeground() {
+				nm.cancel(notificationId);
+				service.setForeground(false);
+			}
+
+			@Override
+			public void startForeground(int id, Notification notification) {
+				service.setForeground(true);
+				nm.notify(id, notification);
+				this.notificationId = id;
+			}
+		};
 	}
 }

@@ -1,6 +1,7 @@
 package org.dandelion.radiot.accepttest;
 
 import org.dandelion.radiot.live.LiveShowActivity;
+import org.dandelion.radiot.live.LiveShowState;
 
 import android.test.ActivityInstrumentationTestCase2;
 
@@ -19,6 +20,7 @@ public class LiveShowPlayback extends
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
+		LiveShowState.setLiveShowUrl("http://icecast.bigrradio.com/80s90s");
 		activity = getActivity();
 		solo = new Solo(getInstrumentation(), activity);
 	}
