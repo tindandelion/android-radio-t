@@ -5,7 +5,8 @@ import android.media.MediaPlayer.OnErrorListener;
 import android.media.MediaPlayer.OnPreparedListener;
 
 public class LiveShowState {
-	private static String liveShowUrl = "http://stream3.radio-t.com:8181/stream";
+//	private static String liveShowUrl = "http://stream3.radio-t.com:8181/stream";
+	private static String liveShowUrl = "http://icecast.bigrradio.com/80s90s";
 	private static int waitTimeout = 60 * 1000;
 
 	public static void setLiveShowUrl(String value) {
@@ -32,6 +33,10 @@ public class LiveShowState {
 		void unscheduleTimeout();
 
 		void scheduleTimeout(int waitTimeout);
+
+		void lockWifi();
+
+		void unlockWifi();
 	}
 
 	public interface ILiveShowVisitor {
@@ -53,6 +58,9 @@ public class LiveShowState {
 	}
 
 	public void enter() {
+	}
+
+	public void leave() {
 	}
 
 	public void acceptVisitor(ILiveShowVisitor visitor) {
@@ -121,11 +129,10 @@ public class LiveShowState {
 			service.scheduleTimeout(waitTimeout);
 			service.goForeground(WAITING_NOTIFICATION_STRING_ID);
 		}
-
+		
 		@Override
-		public void stopPlayback() {
+		public void leave() {
 			service.unscheduleTimeout();
-			super.stopPlayback();
 		}
 
 		@Override
@@ -155,8 +162,14 @@ public class LiveShowState {
 
 		@Override
 		public void enter() {
+			service.lockWifi();
 			player.start();
 			service.goForeground(0);
+		}
+		
+		@Override
+		public void leave() {
+			service.unlockWifi();
 		}
 
 		@Override
@@ -212,5 +225,4 @@ public class LiveShowState {
 		}
 
 	}
-
 }

@@ -14,8 +14,8 @@ public class LiveShowStatesTestCase extends TestCase {
 
 	private MockMediaPlayer player;
 	private boolean serviceIsForeground;
-	protected Runnable scheduledAction;
 	protected boolean timeoutScheduled;
+	private boolean wifiLocked;
 
 	@Override
 	protected void setUp() throws Exception {
@@ -38,11 +38,19 @@ public class LiveShowStatesTestCase extends TestCase {
 			}
 
 			public void unscheduleTimeout() {
-				scheduledAction = null;
+				timeoutScheduled = false;
 			}
 
 			public void scheduleTimeout(int waitTimeout) {
 				timeoutScheduled = true;
+			}
+			
+			public void lockWifi() {
+				wifiLocked = true;
+			}
+			
+			public void unlockWifi() { 
+				wifiLocked = false;
 			}
 
 		};
@@ -114,6 +122,22 @@ public class LiveShowStatesTestCase extends TestCase {
 		player.assertIsReset();
 
 	}
+	
+	public void testLocksWifiWhenEntersState() throws Exception {
+		currentState = new LiveShowState.Playing(player, service);
+		
+		player.bePrepared();
+		currentState.enter();
+		
+		assertTrue(wifiLocked);
+	}
+	
+	public void testReleasesWifiWhenLeaveState() throws Exception {
+		currentState = new LiveShowState.Playing(player, service);
+		wifiLocked = true;
+		currentState.leave();
+		assertFalse(wifiLocked);
+	}
 
 	// ------ Connecting state tests
 
@@ -162,13 +186,12 @@ public class LiveShowStatesTestCase extends TestCase {
 		player.assertIsReset();
 	}
 
-	public void testCancelsTheScheduledActionWhenStoppingPlayback()
+	public void testCancelTimeoutWhenLeave()
 			throws Exception {
 		currentState = new LiveShowState.Waiting(player, service);
-		currentState.enter();
-		currentState.stopPlayback();
-		assertNull(scheduledAction);
-		assertCurrentState(LiveShowState.Stopping.class);
+		timeoutScheduled = true;
+		currentState.leave();
+		assertFalse(timeoutScheduled);
 	}
 
 	// ------ Stopping state tests

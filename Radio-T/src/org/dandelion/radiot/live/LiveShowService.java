@@ -3,6 +3,7 @@ package org.dandelion.radiot.live;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.RadiotApplication;
 import org.dandelion.radiot.live.LiveShowState.ILiveShowService;
+import org.dandelion.radiot.live.LiveShowState.Idle;
 
 import android.app.AlarmManager;
 import android.app.Notification;
@@ -14,6 +15,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.MediaPlayer;
+import android.net.wifi.WifiManager;
+import android.net.wifi.WifiManager.WifiLock;
 import android.os.Binder;
 import android.os.IBinder;
 
@@ -40,6 +43,7 @@ public class LiveShowService extends Service implements ILiveShowService {
 	};
 	private PendingIntent timeoutIntent;
 	private AlarmManager alarmManager;
+	private WifiLock wifiLock;
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -60,12 +64,25 @@ public class LiveShowService extends Service implements ILiveShowService {
 		timeoutIntent = PendingIntent.getBroadcast(getApplicationContext(), 0,
 				new Intent(SCHEDULED_ACTION_TIMEOUT), 0);
 		registerReceiver(onAlarm, new IntentFilter(SCHEDULED_ACTION_TIMEOUT));
+		
+		WifiManager wm = (WifiManager) getSystemService(WIFI_SERVICE);
+		wifiLock = wm.createWifiLock("LiveShow");
+		wifiLock.setReferenceCounted(false);
 	}
 
 	@Override
 	public void onDestroy() {
 		unregisterReceiver(onAlarm);
+		wifiLock.release();
 		super.onDestroy();
+	}
+	
+	@Override
+	public boolean onUnbind(Intent intent) {
+		if (currentState instanceof Idle) { 
+			stopSelf();
+		}
+		return true;
 	}
 
 	public void acceptVisitor(LiveShowState.ILiveShowVisitor visitor) {
@@ -85,6 +102,7 @@ public class LiveShowService extends Service implements ILiveShowService {
 	}
 
 	public synchronized void switchToNewState(LiveShowState newState) {
+		currentState.leave();
 		newState.enter();
 		currentState = newState;
 		sendBroadcast(new Intent(LiveShowService.PLAYBACK_STATE_CHANGED));
@@ -120,6 +138,14 @@ public class LiveShowService extends Service implements ILiveShowService {
 	public void scheduleTimeout(int milliseconds) {
 		alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()
 				+ milliseconds, timeoutIntent);
+	}
+
+	public void lockWifi() {
+		wifiLock.acquire();
+	}
+
+	public void unlockWifi() {
+		wifiLock.release();
 	}
 }
 
