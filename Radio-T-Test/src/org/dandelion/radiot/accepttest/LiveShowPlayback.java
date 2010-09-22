@@ -10,6 +10,7 @@ import com.jayway.android.robotium.solo.Solo;
 public class LiveShowPlayback extends
 		ActivityInstrumentationTestCase2<LiveShowActivity> {
 
+	private static final String TEST_LIVE_URL = "http://icecast.bigrradio.com/80s90s";
 	private LiveShowActivity activity;
 	private Solo solo;
 
@@ -20,7 +21,7 @@ public class LiveShowPlayback extends
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		LiveShowState.setLiveShowUrl("http://icecast.bigrradio.com/80s90s");
+		LiveShowState.setLiveShowUrl(TEST_LIVE_URL);
 		activity = getActivity();
 		solo = new Solo(getInstrumentation(), activity);
 	}
@@ -48,6 +49,20 @@ public class LiveShowPlayback extends
 		assertTrue(solo.waitForText("Трансляция"));
 		solo.clickOnButton("Остановить");
 		solo.clickOnButton("Подключиться");
+		assertTrue(solo.waitForText("Трансляция"));
+	}
+	
+	public void testTryToReconnectInWaitingMode() throws Exception {
+		// Try to connect to non-existent url to simulate 
+		LiveShowState.setLiveShowUrl("http://non-existent");
+		// And set the wait timeout to a small value
+		LiveShowState.setWaitTimeoutSeconds(1);
+		
+		solo.clickOnButton("Подключиться");
+		assertTrue(solo.waitForText("Ожидание"));
+		
+		// Try to connect to non-existent url to simulate 
+		LiveShowState.setLiveShowUrl(TEST_LIVE_URL);
 		assertTrue(solo.waitForText("Трансляция"));
 	}
 }

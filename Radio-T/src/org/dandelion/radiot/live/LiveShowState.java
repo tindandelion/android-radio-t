@@ -6,12 +6,17 @@ import java.util.TimerTask;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnErrorListener;
 import android.media.MediaPlayer.OnPreparedListener;
+import android.util.Log;
 
 public abstract class LiveShowState {
 	private static String liveShowUrl = "http://stream3.radio-t.com:8181/stream";
+	private static int waitTimeout = 60 * 1000;
 
 	public static void setLiveShowUrl(String value) {
 		liveShowUrl = value;
+	}
+	public static void setWaitTimeoutSeconds(int value) {
+		waitTimeout = value * 1000;
 	}
 
 	protected MediaPlayer player;
@@ -100,11 +105,19 @@ public abstract class LiveShowState {
 	}
 
 	public static class Waiting extends LiveShowState {
-		private static final long WAIT_TIMEOUT = 60 * 1000;
+		private static final int WAITING_NOTIFICATION_STRING_ID = 2;
+		private static long attemptCount = 0;
 		private Timer timer;
 		private TimerTask task = new TimerTask() {
 			public void run() {
+				attemptCount++;
+				Log.i("RadioT", attemptCount + " Wait timeout elapsed after: "
+						+ getWaitInterval());
 				service.switchToNewState(new Connecting(player, service));
+			}
+
+			private long getWaitInterval() {
+				return (System.currentTimeMillis() - getTimestamp()) / 1000;
 			}
 		};
 
@@ -116,8 +129,8 @@ public abstract class LiveShowState {
 		@Override
 		public void enter() {
 			player.reset();
-			timer.schedule(task, WAIT_TIMEOUT);
-			service.goForeground(2);
+			timer.schedule(task, waitTimeout);
+			service.goForeground(WAITING_NOTIFICATION_STRING_ID);
 		}
 
 		@Override
@@ -206,4 +219,5 @@ public abstract class LiveShowState {
 		}
 
 	}
+
 }
