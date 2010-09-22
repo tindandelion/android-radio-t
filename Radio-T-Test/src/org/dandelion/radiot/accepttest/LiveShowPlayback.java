@@ -61,7 +61,7 @@ public class LiveShowPlayback extends
 		solo.clickOnButton("Подключиться");
 		assertTrue(solo.waitForText("Ожидание"));
 		
-		// Try to connect to non-existent url to simulate 
+		// Switch back to existing URL 
 		LiveShowState.setLiveShowUrl(TEST_LIVE_URL);
 		assertTrue(solo.waitForText("Трансляция"));
 	}

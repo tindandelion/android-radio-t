@@ -1,6 +1,8 @@
 package org.dandelion.radiot.unittest;
 
 
+import java.util.TimerTask;
+
 import junit.framework.Assert;
 
 import org.dandelion.radiot.RadiotApplication;
@@ -18,6 +20,7 @@ import android.test.ServiceTestCase;
 public class LiveShowServiceTestCase extends ServiceTestCase<LiveShowService> {
 
 	private LiveShowService service;
+	protected boolean taskExecuted;
 	public LiveShowServiceTestCase() {
 		super(LiveShowService.class);
 	}
@@ -53,6 +56,18 @@ public class LiveShowServiceTestCase extends ServiceTestCase<LiveShowService> {
 				service.switchToNewState(state);
 			}
 		}).assertCaught();
+	}
+	
+	public void testSchedulesAction() throws Exception {
+		TimerTask task = new TimerTask() {
+			@Override
+			public void run() {
+				taskExecuted = true;
+			}
+		};
+		service.scheduleAction(task, 1);
+		Thread.sleep(2000);
+		assertTrue(taskExecuted);
 	}
 }
 

@@ -1,5 +1,8 @@
 package org.dandelion.radiot.live;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.RadiotApplication;
 import org.dandelion.radiot.live.LiveShowState.ILiveShowService;
@@ -88,6 +91,22 @@ public class LiveShowService extends Service implements ILiveShowService {
 
 	public void runAsynchronously(Runnable runnable) {
 		new Thread(runnable).start();
+	}
+
+	public Object scheduleAction(final Runnable action, int timeoutSeconds) {
+		Timer timer = new Timer();
+		TimerTask task = new TimerTask() {
+			@Override
+			public void run() {
+				action.run();
+			}
+		};
+		timer.schedule(task, timeoutSeconds);
+		return timer;
+	}
+
+	public void cancelScheduledAction(Object scheduledAction) {
+		((Timer)scheduledAction).cancel();
 	}
 }
 
