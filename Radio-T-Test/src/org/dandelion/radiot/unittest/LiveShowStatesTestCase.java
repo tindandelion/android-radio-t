@@ -15,6 +15,7 @@ public class LiveShowStatesTestCase extends TestCase {
 	private MockMediaPlayer player;
 	private boolean serviceIsForeground;
 	protected Runnable scheduledAction;
+	protected boolean timeoutScheduled;
 
 	@Override
 	protected void setUp() throws Exception {
@@ -36,13 +37,12 @@ public class LiveShowStatesTestCase extends TestCase {
 				runnable.run();
 			}
 
-			public Object scheduleAction(Runnable action, int timeoutSeconds) {
-				scheduledAction = action;
-				return null;
+			public void unscheduleTimeout() {
+				scheduledAction = null;
 			}
 
-			public void cancelScheduledAction(Object token) {
-				scheduledAction = null;
+			public void scheduleTimeout(int waitTimeout) {
+				timeoutScheduled = true;
 			}
 
 		};
@@ -149,8 +149,8 @@ public class LiveShowStatesTestCase extends TestCase {
 	public void testWaitsForTimeoutAndGoesToConnectingState() throws Exception {
 		currentState = new LiveShowState.Waiting(player, service);
 		currentState.enter();
-		assertNotNull(scheduledAction);
-		scheduledAction.run();
+		assertTrue(timeoutScheduled);
+		currentState.onTimeout();
 		assertCurrentState(LiveShowState.Connecting.class);
 
 	}

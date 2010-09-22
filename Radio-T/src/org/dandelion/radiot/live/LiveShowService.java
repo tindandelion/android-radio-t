@@ -25,13 +25,21 @@ public class LiveShowService extends Service implements ILiveShowService {
 	}
 
 	public static final String PLAYBACK_STATE_CHANGED = "org.dandelion.radiot.live.PlaybackStateChanged";
-	private static final int NOTIFICATION_ID = 1;
 	protected static final String SCHEDULED_ACTION_TIMEOUT = "org.dandelion.radiot.live.ScheduledTimeoutExpired";
+	private static final int NOTIFICATION_ID = 1;
 
 	private final IBinder binder = new LocalBinder();
 	private LiveShowState currentState;
 	private String[] statusLabels;
 	private Foregrounder foregrounder;
+	private BroadcastReceiver onAlarm = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			currentState.onTimeout();
+		}
+	};
+	private PendingIntent timeoutIntent;
+	private AlarmManager alarmManager;
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -47,6 +55,17 @@ public class LiveShowService extends Service implements ILiveShowService {
 		statusLabels = getResources().getStringArray(
 				R.array.live_show_notification_labels);
 		foregrounder = Foregrounder.create(this);
+
+		alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+		timeoutIntent = PendingIntent.getBroadcast(getApplicationContext(), 0,
+				new Intent(SCHEDULED_ACTION_TIMEOUT), 0);
+		registerReceiver(onAlarm, new IntentFilter(SCHEDULED_ACTION_TIMEOUT));
+	}
+
+	@Override
+	public void onDestroy() {
+		unregisterReceiver(onAlarm);
+		super.onDestroy();
 	}
 
 	public void acceptVisitor(LiveShowState.ILiveShowVisitor visitor) {
@@ -94,26 +113,13 @@ public class LiveShowService extends Service implements ILiveShowService {
 		new Thread(runnable).start();
 	}
 
-	public Object scheduleAction(final Runnable action, int timeout) {
-		BroadcastReceiver receiver = new BroadcastReceiver() {
-			@Override
-			public void onReceive(Context context, Intent intent) {
-				action.run();
-			}
-		};
-		registerReceiver(receiver, new IntentFilter(SCHEDULED_ACTION_TIMEOUT));
-		AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
-		PendingIntent intent = PendingIntent.getBroadcast(
-				getApplicationContext(), 0,
-				new Intent(SCHEDULED_ACTION_TIMEOUT), 0);
-		am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + timeout,
-				intent);
-		return intent;
+	public void unscheduleTimeout() {
+		alarmManager.cancel(timeoutIntent);
 	}
 
-	public void cancelScheduledAction(Object scheduledAction) {
-		AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
-		am.cancel((PendingIntent) scheduledAction);
+	public void scheduleTimeout(int milliseconds) {
+		alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()
+				+ milliseconds, timeoutIntent);
 	}
 }
 

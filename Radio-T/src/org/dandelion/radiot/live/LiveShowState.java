@@ -3,9 +3,8 @@ package org.dandelion.radiot.live;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnErrorListener;
 import android.media.MediaPlayer.OnPreparedListener;
-import android.util.Log;
 
-public abstract class LiveShowState {
+public class LiveShowState {
 	private static String liveShowUrl = "http://stream3.radio-t.com:8181/stream";
 	private static int waitTimeout = 60 * 1000;
 
@@ -30,9 +29,9 @@ public abstract class LiveShowState {
 
 		void runAsynchronously(Runnable runnable);
 
-		Object scheduleAction(Runnable action, int timeout);
+		void unscheduleTimeout();
 
-		void cancelScheduledAction(Object scheduledAction);
+		void scheduleTimeout(int waitTimeout);
 	}
 
 	public interface ILiveShowVisitor {
@@ -53,9 +52,14 @@ public abstract class LiveShowState {
 		this.timestamp = System.currentTimeMillis();
 	}
 
-	public abstract void enter();
+	public void enter() {
+	}
 
-	public abstract void acceptVisitor(ILiveShowVisitor visitor);
+	public void acceptVisitor(ILiveShowVisitor visitor) {
+	}
+
+	public void onTimeout() {
+	}
 
 	public void stopPlayback() {
 		service.switchToNewState(new Stopping(player, service));
@@ -107,23 +111,6 @@ public abstract class LiveShowState {
 
 	public static class Waiting extends LiveShowState {
 		private static final int WAITING_NOTIFICATION_STRING_ID = 2;
-		private static long attemptCount = 0;
-		
-		private Object scheduledAction;
-		private Runnable onTimeout = new Runnable() {
-			public void run() {
-				attemptCount++;
-				Log.i("RadioT", attemptCount + " Wait timeout elapsed after: "
-						+ getWaitInterval());
-				service.switchToNewState(new Connecting(player, service));
-			}
-
-			private long getWaitInterval() {
-				return (System.currentTimeMillis() - getTimestamp()) / 1000;
-			}
-
-		};
-
 		public Waiting(MediaPlayer player, ILiveShowService service) {
 			super(player, service);
 		}
@@ -131,13 +118,13 @@ public abstract class LiveShowState {
 		@Override
 		public void enter() {
 			player.reset();
-			scheduledAction = service.scheduleAction(onTimeout, waitTimeout);
+			service.scheduleTimeout(waitTimeout);
 			service.goForeground(WAITING_NOTIFICATION_STRING_ID);
 		}
 
 		@Override
 		public void stopPlayback() {
-			service.cancelScheduledAction(scheduledAction);
+			service.unscheduleTimeout();
 			super.stopPlayback();
 		}
 
@@ -145,7 +132,11 @@ public abstract class LiveShowState {
 		public void acceptVisitor(ILiveShowVisitor visitor) {
 			visitor.onWaiting(this);
 		}
-
+		
+		@Override
+		public void onTimeout() {
+			service.switchToNewState(new Connecting(player, service));
+		}
 	}
 
 	public static class Playing extends LiveShowState {

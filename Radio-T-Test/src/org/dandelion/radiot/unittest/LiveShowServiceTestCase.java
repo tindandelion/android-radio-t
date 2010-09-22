@@ -1,8 +1,6 @@
 package org.dandelion.radiot.unittest;
 
 
-import java.util.TimerTask;
-
 import junit.framework.Assert;
 
 import org.dandelion.radiot.RadiotApplication;
@@ -20,7 +18,7 @@ import android.test.ServiceTestCase;
 public class LiveShowServiceTestCase extends ServiceTestCase<LiveShowService> {
 
 	private LiveShowService service;
-	protected boolean taskExecuted;
+	protected boolean timeoutElapsed;
 	public LiveShowServiceTestCase() {
 		super(LiveShowService.class);
 	}
@@ -39,15 +37,7 @@ public class LiveShowServiceTestCase extends ServiceTestCase<LiveShowService> {
 	}
 	
 	public void testSendsBroadcastsWhenStateChanged() throws Exception {
-		final LiveShowState state = new LiveShowState(null, null) {
-			@Override
-			public void enter() {
-			}
-
-			@Override
-			public void acceptVisitor(ILiveShowVisitor visitor) {
-			}
-		};
+		final LiveShowState state = new LiveShowState(null, null); 
 		
 		(new BroadcastCatcher(getContext(),
 				LiveShowService.PLAYBACK_STATE_CHANGED) {
@@ -59,15 +49,21 @@ public class LiveShowServiceTestCase extends ServiceTestCase<LiveShowService> {
 	}
 	
 	public void testSchedulesAction() throws Exception {
-		TimerTask task = new TimerTask() {
+		LiveShowState state = new LiveShowState(null, null) { 
 			@Override
-			public void run() {
-				taskExecuted = true;
+			public void onTimeout() { 
+				timeoutElapsed = true;
 			}
 		};
-		service.scheduleAction(task, 1);
+		service.switchToNewState(state);
+		service.scheduleTimeout(1);
 		Thread.sleep(2000);
-		assertTrue(taskExecuted);
+		assertTrue(timeoutElapsed);
+	}
+	
+	@Override
+	public void testServiceTestCaseSetUpProperly() throws Exception {
+		// Stupid method
 	}
 }
 

@@ -52,7 +52,7 @@ public class LiveShowPlayback extends
 		assertTrue(solo.waitForText("Трансляция"));
 	}
 	
-	public void testTryToReconnectInWaitingMode() throws Exception {
+	public void testTryToReconnectContinuouslyInWaitingMode() throws Exception {
 		// Try to connect to non-existent url to simulate 
 		LiveShowState.setLiveShowUrl("http://non-existent");
 		// And set the wait timeout to a small value
