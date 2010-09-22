@@ -1,18 +1,18 @@
 package org.dandelion.radiot.live;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.RadiotApplication;
 import org.dandelion.radiot.live.LiveShowState.ILiveShowService;
 
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.IBinder;
@@ -26,6 +26,7 @@ public class LiveShowService extends Service implements ILiveShowService {
 
 	public static final String PLAYBACK_STATE_CHANGED = "org.dandelion.radiot.live.PlaybackStateChanged";
 	private static final int NOTIFICATION_ID = 1;
+	protected static final String SCHEDULED_ACTION_TIMEOUT = "org.dandelion.radiot.live.ScheduledTimeoutExpired";
 
 	private final IBinder binder = new LocalBinder();
 	private LiveShowState currentState;
@@ -93,20 +94,26 @@ public class LiveShowService extends Service implements ILiveShowService {
 		new Thread(runnable).start();
 	}
 
-	public Object scheduleAction(final Runnable action, int timeoutSeconds) {
-		Timer timer = new Timer();
-		TimerTask task = new TimerTask() {
+	public Object scheduleAction(final Runnable action, int timeout) {
+		BroadcastReceiver receiver = new BroadcastReceiver() {
 			@Override
-			public void run() {
+			public void onReceive(Context context, Intent intent) {
 				action.run();
 			}
 		};
-		timer.schedule(task, timeoutSeconds);
-		return timer;
+		registerReceiver(receiver, new IntentFilter(SCHEDULED_ACTION_TIMEOUT));
+		AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
+		PendingIntent intent = PendingIntent.getBroadcast(
+				getApplicationContext(), 0,
+				new Intent(SCHEDULED_ACTION_TIMEOUT), 0);
+		am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + timeout,
+				intent);
+		return intent;
 	}
 
 	public void cancelScheduledAction(Object scheduledAction) {
-		((Timer)scheduledAction).cancel();
+		AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
+		am.cancel((PendingIntent) scheduledAction);
 	}
 }
 
@@ -116,6 +123,7 @@ abstract class Foregrounder {
 			Notification.class };
 
 	public abstract void stopForeground();
+
 	public abstract void startForeground(int id, Notification notification);
 
 	public static Foregrounder create(Service service) {
