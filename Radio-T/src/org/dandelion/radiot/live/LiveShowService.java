@@ -84,7 +84,7 @@ public class LiveShowService extends Service implements ILiveShowService {
 		currentState.stopPlayback();
 	}
 
-	public void switchToNewState(LiveShowState newState) {
+	public synchronized void switchToNewState(LiveShowState newState) {
 		newState.enter();
 		currentState = newState;
 		sendBroadcast(new Intent(LiveShowService.PLAYBACK_STATE_CHANGED));

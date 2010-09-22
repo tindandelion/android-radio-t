@@ -48,7 +48,7 @@ public class LiveShowServiceTestCase extends ServiceTestCase<LiveShowService> {
 		}).assertCaught();
 	}
 	
-	public void testSchedulesAction() throws Exception {
+	public void testSchedulesStateTimeout() throws Exception {
 		LiveShowState state = new LiveShowState(null, null) { 
 			@Override
 			public void onTimeout() { 
