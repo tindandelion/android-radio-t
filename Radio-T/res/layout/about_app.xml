@@ -26,28 +26,19 @@
 			android:id="@+id/logo"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
+			android:paddingLeft="15dp"
 			android:layout_centerHorizontal="true">
 			<include
 				layout="@layout/app_logo" />
 		</FrameLayout>
 		<TextView
-			android:id="@+id/app_name_label"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:textSize="20sp"
-			android:textStyle="bold"
-			android:textScaleX="1.1"
-			android:layout_below="@id/logo"
-			android:layout_marginTop="12dp"
-			android:gravity="center_horizontal"
-			android:text="@string/app_name" />
-		<TextView
 			android:id="@+id/version_label"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:layout_below="@id/app_name_label"
-			android:gravity="center_horizontal"
-			android:text="@string/version_label" />
+			android:textAppearance="@android:style/TextAppearance.Medium"
+			android:layout_below="@id/logo"
+			android:layout_marginTop="12dp"
+			android:gravity="center_horizontal" />
 		<TextView
 			android:id="@+id/acknoledgements"
 			android:layout_width="fill_parent"
