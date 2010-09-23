@@ -5,7 +5,7 @@
 	<string
 		name="home_menu_item">Домой</string>
 	<string
-		name="loading_message">Загрузка подкастов...</string>
+		name="loading_message">Загрузка подкастов</string>
 	<string
 		name="rss_load_error_title">Ошибка загрузки RSS</string>
 	<string
