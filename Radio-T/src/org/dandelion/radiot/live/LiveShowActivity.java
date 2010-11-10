@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class LiveShowActivity extends Activity {
 	protected LiveShowService service;
@@ -113,9 +114,8 @@ public class LiveShowActivity extends Activity {
 		timerLabel.setText(DateUtils.formatElapsedTime(seconds));
 	}
 
-	public void showHelpText(boolean visible) {
-		View view = findViewById(R.id.live_show_hint);
-		int visibility = (visible) ? View.VISIBLE : View.INVISIBLE;
-		view.setVisibility(visibility);
+	public void showWaitingHint() {
+		Toast.makeText(this, R.string.live_show_waiting_hint,
+				Toast.LENGTH_SHORT).show();
 	}
 }

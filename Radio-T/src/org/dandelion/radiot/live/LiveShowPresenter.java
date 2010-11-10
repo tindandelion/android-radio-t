@@ -57,18 +57,19 @@ public class LiveShowPresenter implements ILiveShowVisitor {
 	}
 
 	private void beActiveState(LiveShowState state, int labelStringId,
-			boolean isHelpTextVisible, boolean buttonEnabled) {
+			boolean shouldShowWaitingHint, boolean buttonEnabled) {
 		isActive = true;
 		activity.setStatusLabel(labelStringId);
-		activity.showHelpText(isHelpTextVisible);
 		activity.setButtonState(0, buttonEnabled);
+		if (shouldShowWaitingHint) {
+			activity.showWaitingHint();
+		}
 		restartTimer(state.getTimestamp());
 	}
 
 	private void beInactiveState() {
 		isActive = false;
 		activity.setStatusLabel(0);
-		activity.showHelpText(false);
 		activity.setButtonState(1, true);
 		stopTimer();
 	}

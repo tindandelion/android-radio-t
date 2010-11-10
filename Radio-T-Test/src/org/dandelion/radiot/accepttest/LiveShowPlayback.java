@@ -32,22 +32,18 @@ public class LiveShowPlayback extends
 		super.tearDown();
 	}
 	
-	public void testStartPlayback() throws Exception {
-		solo.clickOnButton("Подключиться");
-		assertTrue(solo.waitForText("Трансляция"));
-	}
-	
-	public void testStopPlaybackWhenPressingStop() throws Exception {
+	public void testStartStopPlayback() throws Exception {
 		solo.clickOnButton("Подключиться");
 		assertTrue(solo.waitForText("Трансляция"));
 		solo.clickOnButton("Остановить");
 		assertTrue(solo.waitForText("Остановлено"));
 	}
 	
-	public void testRestartPlaybackAfterExplicitStop() throws Exception {
+	public void testStartingAndStoppingPlayback() throws Exception {
 		solo.clickOnButton("Подключиться");
 		assertTrue(solo.waitForText("Трансляция"));
 		solo.clickOnButton("Остановить");
+		assertTrue(solo.waitForText("Остановлено"));
 		solo.clickOnButton("Подключиться");
 		assertTrue(solo.waitForText("Трансляция"));
 	}
@@ -77,7 +73,7 @@ public class LiveShowPlayback extends
 	private void configureForConnectError() {
 		// Try to connect to non-existent url to simulate 
 		LiveShowState.setLiveShowUrl("http://non-existent");
-		// And set the wait timeout to a small value
-		LiveShowState.setWaitTimeoutSeconds(1);
+		// And set the wait timeout to a smaller value
+		LiveShowState.setWaitTimeoutSeconds(10);
 	}
 }
