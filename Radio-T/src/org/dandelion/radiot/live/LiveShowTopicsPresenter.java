@@ -22,4 +22,6 @@ public class LiveShowTopicsPresenter {
 		return list;
 	}
 
+	public void cancelAll() {
+	}
 }

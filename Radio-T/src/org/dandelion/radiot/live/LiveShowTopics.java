@@ -6,12 +6,11 @@ import org.dandelion.radiot.R;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -25,7 +24,7 @@ public class LiveShowTopics extends LinearLayout {
 			ShowTopic topic = listAdapter.getItem(position);
 			
 			Intent intent = new Intent(Intent.ACTION_VIEW);
-			intent.setData(Uri.parse(topic.url));
+			intent.setData(topic.uri);
 			getContext().startActivity(intent);
 		}
 	};
@@ -56,6 +55,12 @@ public class LiveShowTopics extends LinearLayout {
 	protected void onAttachedToWindow() {
 		super.onAttachedToWindow();
 		presenter.refreshTopics();
+	}
+	
+	@Override
+	protected void onDetachedFromWindow() {
+		super.onDetachedFromWindow();
+		presenter.cancelAll();
 	}
 
 	public void setTopics(List<ShowTopic> topics) {
