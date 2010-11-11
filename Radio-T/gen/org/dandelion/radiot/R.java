@@ -41,7 +41,7 @@ public final class R {
         public static final int acknoledgements=0x7f090005;
         public static final int app_info=0x7f090002;
         public static final int feedback_button=0x7f090006;
-        public static final int go_home=0x7f09001b;
+        public static final int go_home=0x7f09001c;
         public static final int home_screen_header=0x7f090009;
         public static final int home_screen_item_icon=0x7f09000c;
         public static final int home_screen_item_title=0x7f09000d;
@@ -52,18 +52,19 @@ public final class R {
         public static final int live_show_title=0x7f09000f;
         public static final int live_show_topics=0x7f090015;
         public static final int live_timer_label=0x7f090013;
+        public static final int live_topics_list=0x7f090016;
         public static final int logo=0x7f090003;
         public static final int logo_image=0x7f090008;
         public static final int logo_text=0x7f09000a;
         public static final int main_title=0x7f090007;
         public static final int playback_state_label=0x7f090014;
-        public static final int podcast_item_icon=0x7f090016;
-        public static final int podcast_item_view_date=0x7f090018;
-        public static final int podcast_item_view_number=0x7f090017;
-        public static final int podcast_item_view_shownotes=0x7f090019;
-        public static final int podcast_item_view_tags=0x7f09001a;
+        public static final int podcast_item_icon=0x7f090017;
+        public static final int podcast_item_view_date=0x7f090019;
+        public static final int podcast_item_view_number=0x7f090018;
+        public static final int podcast_item_view_shownotes=0x7f09001a;
+        public static final int podcast_item_view_tags=0x7f09001b;
         public static final int podcasts_menu=0x7f09000b;
-        public static final int refresh=0x7f09001c;
+        public static final int refresh=0x7f09001d;
         public static final int version_label=0x7f090004;
     }
     public static final class layout {

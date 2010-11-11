@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge
 	xmlns:android="http://schemas.android.com/apk/res/android">
-	<TextView
+	<ListView
+		android:id="@+id/live_topics_list"
 		android:layout_width="fill_parent"
-		android:layout_height="fill_parent"
-		android:text="Here will be topics"
-		android:gravity="center" />
+		android:layout_height="fill_parent" />
 </merge>
