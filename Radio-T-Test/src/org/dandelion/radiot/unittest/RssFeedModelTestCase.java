@@ -9,6 +9,7 @@ import junit.framework.TestCase;
 
 import org.dandelion.radiot.PodcastItem;
 import org.dandelion.radiot.PodcastList.IModel;
+import org.dandelion.radiot.rss.RssFeedParser;
 import org.dandelion.radiot.RssFeedModel;
 
 import android.net.Uri;
@@ -21,6 +22,7 @@ public class RssFeedModelTestCase extends TestCase {
 	private PodcastItem firstParsedItem;
 	protected boolean streamClosed;
 	protected String requestedImageUrl;
+	protected RssFeedParser rssParser;
 
 	@Override
 	protected void setUp() throws Exception {
@@ -31,16 +33,11 @@ public class RssFeedModelTestCase extends TestCase {
 
 	protected IModel createTestModel() {
 		return new RssFeedModel(null) {
+
 			@Override
-			protected InputStream openContentStream() throws IOException {
-				return new ByteArrayInputStream(getCompleteFeed().getBytes()) {
-					@Override
-					public void close() throws IOException {
-						super.close();
-						streamClosed = true;
-					}
-				};
-			};
+			protected RssFeedParser createFeedParser() throws IOException {
+				return rssParser;
+			}
 
 			@Override
 			protected InputStream openImageStream(String url) {
@@ -133,6 +130,15 @@ public class RssFeedModelTestCase extends TestCase {
 	}
 
 	private void parseRssFeed() throws Exception {
+		rssParser = new RssFeedParser(new ByteArrayInputStream(
+				getCompleteFeed().getBytes()) {
+			@Override
+			public void close() throws IOException {
+				super.close();
+				streamClosed = true;
+			}
+		});
+
 		parsedItems = model.retrievePodcasts();
 		if (!parsedItems.isEmpty()) {
 			firstParsedItem = parsedItems.get(0);
