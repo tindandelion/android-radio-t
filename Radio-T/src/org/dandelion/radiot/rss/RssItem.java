@@ -8,6 +8,7 @@ public class RssItem {
 	public String pubDate = "";
 	public String description = "";
 	public String encodedContent = "";
+	public String link = "";
 	public ArrayList<String> categories = new ArrayList<String>();
 	public ArrayList<RssEnclosure> enclosures = new ArrayList<RssEnclosure>();
 

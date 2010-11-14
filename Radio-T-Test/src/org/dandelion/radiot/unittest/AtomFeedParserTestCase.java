@@ -22,6 +22,7 @@ public class AtomFeedParserTestCase extends TestCase {
 	private AtomFeedSource feedSource;
 	private AtomFeedParser parser;
 	private ArrayList<RssItem> items;
+	private IFeedParser.ParserListener listener;
 
 	@Override
 	protected void setUp() throws Exception {
@@ -29,29 +30,39 @@ public class AtomFeedParserTestCase extends TestCase {
 		feedSource = new AtomFeedSource();
 		parser = new AtomFeedParser(feedSource);
 		items = new ArrayList<RssItem>();
-		parser.setListener(new IFeedParser.ParserListener() {
+		listener = new IFeedParser.ParserListener() {
 			public void onItemParsed(RssItem item) {
 				items.add(item);
 			}
-		});
+		};
 	}
 
 	public void testParseEmptyFeed() throws Exception {
-		parser.parse();
+		parser.parse(listener);
 		assertEquals(0, items.size());
 	}
 
 	public void testParseFeedWithEntry() throws Exception {
 		feedSource.setFeedContent("<entry></entry>");
-		parser.parse();
+		parser.parse(listener);
 		assertEquals(1, items.size());
 	}
 
 	public void testExtractEntryTitle() throws Exception {
 		feedSource.setFeedContent("<entry><title>Entry title</title></entry>");
-		parser.parse();
+		parser.parse(listener);
 		assertEquals(1, items.size());
 		RssItem item = items.get(0);
 		assertEquals("Entry title", item.title);
+	}
+	
+	public void testExtractEntryLink() throws Exception {
+		feedSource.setFeedContent("<entry>" +
+				"<link href=\"http://entry-link\" />" + 
+				"</entry>");
+		parser.parse(listener);
+		assertEquals(1, items.size());
+		RssItem item = items.get(0);
+		assertEquals("http://entry-link", item.link);
 	}
 }

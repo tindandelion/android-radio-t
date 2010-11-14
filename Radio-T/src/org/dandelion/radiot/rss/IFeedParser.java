@@ -9,7 +9,5 @@ public interface IFeedParser {
 		void onItemParsed(RssItem item);
 	}
 
-	void setListener(ParserListener listener);
-
-	void parse() throws IOException, SAXException;
+	void parse(ParserListener listener) throws IOException, SAXException;
 }

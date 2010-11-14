@@ -21,7 +21,7 @@ class FakeRssFeed extends AbstractFeedParser {
 	}
 	
 	@Override
-	public void parse() throws IOException, SAXException {
+	public void parse(ParserListener listener) throws IOException, SAXException {
 		for (RssItem item : items) {
 			listener.onItemParsed(item);
 		}

@@ -22,7 +22,7 @@ class FakeRssParser extends RssFeedParser {
 	}
 	
 	@Override
-	public void parse() throws IOException, SAXException {
+	public void parse(ParserListener listener) throws IOException, SAXException {
 		listener.onItemParsed(sampleItem);
 	}
 	

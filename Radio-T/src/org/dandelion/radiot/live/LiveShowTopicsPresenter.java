@@ -28,12 +28,11 @@ public class LiveShowTopicsPresenter {
 
 	private List<ShowTopic> getTopics() throws IOException, SAXException {
 		final ArrayList<ShowTopic> result = new ArrayList<ShowTopic>();
-		feedParser.setListener(new IFeedParser.ParserListener() {
+		feedParser.parse(new IFeedParser.ParserListener() {
 			public void onItemParsed(RssItem item) {
 				result.add(ShowTopic.fromRss(item));
 			}
 		});
-		feedParser.parse();
 		return result;
 	}
 

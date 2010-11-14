@@ -23,17 +23,18 @@ public class RssFeedParserTestCase extends TestCase {
 	private ArrayList<RssItem> items;
 	private RssItem firstParsedItem;
 	private FakeFeedSource feedSource;
+	private ParserListener listener;
 
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
 		feedSource = new RssFeedSource();
 		parser = new RssFeedParser(feedSource);
-		parser.setListener(new ParserListener() {
+		listener = new ParserListener() {
 			public void onItemParsed(RssItem item) {
 				items.add(item);
 			}
-		});
+		};
 		items = new ArrayList<RssItem>();
 	}
 
@@ -90,7 +91,7 @@ public class RssFeedParserTestCase extends TestCase {
 	}
 
 	private void parseRssFeed() throws Exception {
-		parser.parse();
+		parser.parse(listener);
 		if (!items.isEmpty()) {
 			firstParsedItem = items.get(0);
 		}

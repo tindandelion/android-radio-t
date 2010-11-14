@@ -1,11 +1,13 @@
 package org.dandelion.radiot.rss;
 
+import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 
 import android.sax.Element;
 import android.sax.EndElementListener;
 import android.sax.EndTextElementListener;
 import android.sax.RootElement;
+import android.sax.StartElementListener;
 
 public class AtomFeedParser extends AbstractFeedParser {
 	private static final String NAMESPACE = "http://www.w3.org/2005/Atom";
@@ -30,6 +32,14 @@ public class AtomFeedParser extends AbstractFeedParser {
 				new EndTextElementListener() {
 					public void end(String body) {
 						currentItem.title = body;
+					}
+				});
+
+		entry.getChild(NAMESPACE, "link").setStartElementListener(
+				new StartElementListener() {
+
+					public void start(Attributes attributes) {
+						currentItem.link = attributes.getValue("href");
 					}
 				});
 

@@ -15,7 +15,7 @@ import android.graphics.BitmapFactory;
 public class RssFeedModel implements PodcastList.IModel {
 	private ArrayList<PodcastItem> items;
 	private IFeedParser rssParser;
-	
+
 	public RssFeedModel(final String feedUrl) {
 		this(RssFeedParser.withRemoteFeed(feedUrl));
 	}
@@ -27,13 +27,11 @@ public class RssFeedModel implements PodcastList.IModel {
 	public List<PodcastItem> retrievePodcasts() throws Exception {
 		items = new ArrayList<PodcastItem>();
 
-		rssParser.setListener(new IFeedParser.ParserListener() {
+		rssParser.parse(new IFeedParser.ParserListener() {
 			public void onItemParsed(RssItem item) {
 				items.add(PodcastItem.fromRss(item));
 			}
 		});
-
-		rssParser.parse();
 		return items;
 	}
 

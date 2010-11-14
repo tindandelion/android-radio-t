@@ -15,11 +15,8 @@ public class AbstractFeedParser implements IFeedParser {
 		feedSource = source;
 	}
 
-	public void setListener(ParserListener listener) {
+	public void parse(ParserListener listener) throws IOException, SAXException {
 		this.listener = listener;
-	}
-
-	public void parse() throws IOException, SAXException {
 		Xml.parse(feedSource.openFeedStream(), Xml.Encoding.UTF_8,
 				getContentHandler());
 	}
