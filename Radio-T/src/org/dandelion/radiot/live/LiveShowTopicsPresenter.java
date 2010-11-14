@@ -16,9 +16,9 @@ public class LiveShowTopicsPresenter {
 
 	private List<ShowTopic> getTopics() {
 		ArrayList<ShowTopic> list = new ArrayList<ShowTopic>();
-		list.add(new ShowTopic("Topic 1", "http://www.google.ru"));
-		list.add(new ShowTopic("Topic 2", "http://www.google.ru"));
-		list.add(new ShowTopic("Topic 3", "http://www.google.ru"));
+		list.add(new ShowTopic("Topic 1"));
+		list.add(new ShowTopic("Topic 2"));
+		list.add(new ShowTopic("Topic 3"));
 		return list;
 	}
 

@@ -1,15 +1,11 @@
 package org.dandelion.radiot.live;
 
-import android.net.Uri;
 
 public class ShowTopic {
-
 	public String title;
-	public Uri uri;
 
-	public ShowTopic(String title, String url) {
+	public ShowTopic(String title) {
 		this.title = title;
-		this.uri = Uri.parse(url);
 	}
 	
 	@Override

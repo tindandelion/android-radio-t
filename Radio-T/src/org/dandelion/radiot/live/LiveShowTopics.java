@@ -5,12 +5,8 @@ import java.util.List;
 import org.dandelion.radiot.R;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -18,16 +14,6 @@ import android.widget.ListView;
 public class LiveShowTopics extends LinearLayout {
 	private LiveShowTopicsPresenter presenter;
 	private ArrayAdapter<ShowTopic> listAdapter;
-	private OnItemClickListener onTopicClicked = new OnItemClickListener() {
-		public void onItemClick(AdapterView<?> parent, View view, int position,
-				long id) {
-			ShowTopic topic = listAdapter.getItem(position);
-			
-			Intent intent = new Intent(Intent.ACTION_VIEW);
-			intent.setData(topic.uri);
-			getContext().startActivity(intent);
-		}
-	};
 
 	public LiveShowTopics(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -42,7 +28,6 @@ public class LiveShowTopics extends LinearLayout {
 		listAdapter = new ArrayAdapter<ShowTopic>(getContext(),
 				android.R.layout.simple_list_item_1);
 		view.setAdapter(listAdapter);
-		view.setOnItemClickListener(onTopicClicked);
 	}
 
 	private void inflateLayout() {
