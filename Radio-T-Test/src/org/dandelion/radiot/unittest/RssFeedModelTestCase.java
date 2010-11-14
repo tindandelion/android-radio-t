@@ -96,22 +96,6 @@ public class RssFeedModelTestCase extends TestCase {
 				firstParsedItem.getAudioUri());
 	}
 
-	public void testEnsureStreamIsClosed() throws Exception {
-		streamClosed = false;
-		parseRssFeed();
-		assertTrue(streamClosed);
-	}
-
-	public void testHandleParsingErrors() throws Exception {
-		newFeedItem("<number>102");
-		try {
-			parseRssFeed();
-		} catch (Exception e) {
-			return;
-		}
-		fail("Should have raised the exception");
-	}
-
 	public void testExtractingTags() throws Exception {
 		newFeedItem("<category>Tag1</category><category>Tag2</category>");
 		parseRssFeed();

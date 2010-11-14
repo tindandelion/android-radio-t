@@ -29,4 +29,8 @@ public class RssItem {
 
 		return result;
 	}
+
+	public boolean hasCategory(String value) {
+		return categories.contains(value);
+	}
 }
