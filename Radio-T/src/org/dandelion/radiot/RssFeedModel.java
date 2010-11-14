@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.dandelion.radiot.rss.IFeedParser;
 import org.dandelion.radiot.rss.RssFeedParser;
 import org.dandelion.radiot.rss.RssItem;
 
@@ -13,20 +14,20 @@ import android.graphics.BitmapFactory;
 
 public class RssFeedModel implements PodcastList.IModel {
 	private ArrayList<PodcastItem> items;
-	private RssFeedParser rssParser;
+	private IFeedParser rssParser;
 	
 	public RssFeedModel(final String feedUrl) {
 		this(RssFeedParser.withRemoteFeed(feedUrl));
 	}
 
-	public RssFeedModel(RssFeedParser rssParser) {
+	public RssFeedModel(IFeedParser rssParser) {
 		this.rssParser = rssParser;
 	}
 
 	public List<PodcastItem> retrievePodcasts() throws Exception {
 		items = new ArrayList<PodcastItem>();
 
-		rssParser.setItemListener(new RssFeedParser.ParserListener() {
+		rssParser.setListener(new IFeedParser.ParserListener() {
 			public void onItemParsed(RssItem item) {
 				items.add(PodcastItem.fromRss(item));
 			}

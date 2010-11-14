@@ -7,10 +7,10 @@ import java.util.ArrayList;
 
 import junit.framework.TestCase;
 
+import org.dandelion.radiot.rss.IFeedParser.ParserListener;
 import org.dandelion.radiot.rss.IFeedSource;
 import org.dandelion.radiot.rss.RssEnclosure;
 import org.dandelion.radiot.rss.RssFeedParser;
-import org.dandelion.radiot.rss.RssFeedParser.ParserListener;
 import org.dandelion.radiot.rss.RssItem;
 
 public class RssFeedParserTestCase extends TestCase {
@@ -34,7 +34,7 @@ public class RssFeedParserTestCase extends TestCase {
 		super.setUp();
 		feedContent = "";
 		parser = new RssFeedParser(feedSource);
-		parser.setItemListener(new ParserListener() {
+		parser.setListener(new ParserListener() {
 			public void onItemParsed(RssItem item) {
 				items.add(item);
 			}

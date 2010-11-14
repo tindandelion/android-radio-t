@@ -3,6 +3,7 @@ package org.dandelion.radiot.live;
 import java.util.List;
 
 import org.dandelion.radiot.R;
+import org.dandelion.radiot.rss.AtomFeedParser;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -11,7 +12,8 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-public class LiveShowTopics extends LinearLayout {
+public class LiveShowTopics extends LinearLayout implements ILiveShowTopicsView {
+	private static String RSS_FEED_URL = "http://www.google.com/reader/public/atom/user%2F04446244743329501593%2Flabel%2FFor%20Radio-T";
 	private LiveShowTopicsPresenter presenter;
 	private ArrayAdapter<ShowTopic> listAdapter;
 
@@ -20,7 +22,8 @@ public class LiveShowTopics extends LinearLayout {
 		inflateLayout();
 		initListView();
 
-		presenter = new LiveShowTopicsPresenter(this);
+		presenter = new LiveShowTopicsPresenter(this,
+				AtomFeedParser.withRemoteFeed(RSS_FEED_URL));
 	}
 
 	private void initListView() {
@@ -41,7 +44,7 @@ public class LiveShowTopics extends LinearLayout {
 		super.onAttachedToWindow();
 		presenter.refreshTopics();
 	}
-	
+
 	@Override
 	protected void onDetachedFromWindow() {
 		super.onDetachedFromWindow();

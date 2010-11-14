@@ -1,25 +1,40 @@
 package org.dandelion.radiot.live;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LiveShowTopicsPresenter {
-	private LiveShowTopics view;
+import org.dandelion.radiot.rss.IFeedParser;
+import org.dandelion.radiot.rss.RssItem;
+import org.xml.sax.SAXException;
 
-	public LiveShowTopicsPresenter(LiveShowTopics view) {
+public class LiveShowTopicsPresenter {
+	private ILiveShowTopicsView view;
+	private IFeedParser feedParser;
+
+	public LiveShowTopicsPresenter(ILiveShowTopicsView view,
+			IFeedParser feedParser) {
 		this.view = view;
+		this.feedParser = feedParser;
 	}
 
 	public void refreshTopics() {
-		view.setTopics(getTopics());
+		try {
+			view.setTopics(getTopics());
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
-	private List<ShowTopic> getTopics() {
-		ArrayList<ShowTopic> list = new ArrayList<ShowTopic>();
-		list.add(new ShowTopic("Topic 1"));
-		list.add(new ShowTopic("Topic 2"));
-		list.add(new ShowTopic("Topic 3"));
-		return list;
+	private List<ShowTopic> getTopics() throws IOException, SAXException {
+		final ArrayList<ShowTopic> result = new ArrayList<ShowTopic>();
+		feedParser.setListener(new IFeedParser.ParserListener() {
+			public void onItemParsed(RssItem item) {
+				result.add(ShowTopic.fromRss(item));
+			}
+		});
+		feedParser.parse();
+		return result;
 	}
 
 	public void cancelAll() {
