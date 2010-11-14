@@ -7,9 +7,9 @@ import java.util.ArrayList;
 
 import junit.framework.TestCase;
 
+import org.dandelion.radiot.rss.IFeedSource;
 import org.dandelion.radiot.rss.RssEnclosure;
 import org.dandelion.radiot.rss.RssFeedParser;
-import org.dandelion.radiot.rss.RssFeedParser.FeedSource;
 import org.dandelion.radiot.rss.RssFeedParser.ParserListener;
 import org.dandelion.radiot.rss.RssItem;
 
@@ -18,7 +18,7 @@ public class RssFeedParserTestCase extends TestCase {
 	private RssFeedParser parser;
 	private ArrayList<RssItem> items;
 	private RssItem firstParsedItem;
-	private FeedSource feedSource = new RssFeedParser.FeedSource() {
+	private IFeedSource feedSource = new IFeedSource() {
 		public InputStream openFeedStream() throws IOException {
 			return new ByteArrayInputStream(getCompleteFeed().getBytes());
 		}

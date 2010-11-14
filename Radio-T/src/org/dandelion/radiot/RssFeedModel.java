@@ -16,7 +16,7 @@ public class RssFeedModel implements PodcastList.IModel {
 	private RssFeedParser rssParser;
 	
 	public RssFeedModel(final String feedUrl) {
-		this(RssFeedParser.newForUrl(feedUrl));
+		this(RssFeedParser.withRemoteFeed(feedUrl));
 	}
 
 	public RssFeedModel(RssFeedParser rssParser) {

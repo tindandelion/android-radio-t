@@ -1,8 +1,6 @@
 package org.dandelion.radiot.rss;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
@@ -20,24 +18,15 @@ public class RssFeedParser {
 		void onItemParsed(RssItem item);
 	}
 
-	public interface FeedSource {
-		InputStream openFeedStream() throws IOException;
-	}
-
 	protected ParserListener listener;
 	public RssItem currentItem = new RssItem();
-	private FeedSource feedSource;
+	private IFeedSource feedSource;
 
-	public static RssFeedParser newForUrl(final String feedUrl) {
-		FeedSource source = new FeedSource() {
-			public InputStream openFeedStream() throws IOException {
-				return new URL(feedUrl).openStream();
-			}
-		};
-		return new RssFeedParser(source);
+	public static RssFeedParser withRemoteFeed(final String feedUrl) {
+		return new RssFeedParser(new RemoteFeedSource(feedUrl));
 	}
 
-	public RssFeedParser(FeedSource source) {
+	public RssFeedParser(IFeedSource source) {
 		feedSource = source;
 	}
 

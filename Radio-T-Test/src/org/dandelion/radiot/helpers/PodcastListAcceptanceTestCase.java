@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import org.dandelion.radiot.PodcastList.IModel;
 import org.dandelion.radiot.PodcastList.IPodcastListEngine;
 import org.dandelion.radiot.RssFeedModel;
+import org.dandelion.radiot.rss.IFeedSource;
 import org.dandelion.radiot.rss.RssFeedParser;
 
 import android.content.res.AssetManager;
@@ -20,7 +21,7 @@ public class PodcastListAcceptanceTestCase extends BasicAcceptanceTestCase {
 		final AssetManager assets = getInstrumentation().getContext()
 				.getAssets();
 		
-		RssFeedParser rssParser = new RssFeedParser(new RssFeedParser.FeedSource() {
+		RssFeedParser rssParser = new RssFeedParser(new IFeedSource() {
 			public InputStream openFeedStream() throws IOException {
 				return assets.open((url + ".xml"));
 				}
