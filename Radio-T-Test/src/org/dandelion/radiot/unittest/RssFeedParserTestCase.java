@@ -2,29 +2,43 @@ package org.dandelion.radiot.unittest;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
-
-import org.dandelion.radiot.rss.RssEnclosure;
-import org.dandelion.radiot.rss.RssFeedParser;
-import org.dandelion.radiot.rss.RssFeedParser.FeedItemListener;
-import org.dandelion.radiot.rss.RssItem;
-
-import android.net.Uri;
 
 import junit.framework.TestCase;
 
-public class RssFeedParserTestCase extends TestCase {
+import org.dandelion.radiot.rss.RssEnclosure;
+import org.dandelion.radiot.rss.RssFeedParser;
+import org.dandelion.radiot.rss.RssFeedParser.FeedSource;
+import org.dandelion.radiot.rss.RssFeedParser.ParserListener;
+import org.dandelion.radiot.rss.RssItem;
 
+public class RssFeedParserTestCase extends TestCase {
 	private String feedContent;
-	private RssFeedParser rssParser;
+	private RssFeedParser parser;
 	private ArrayList<RssItem> items;
 	private RssItem firstParsedItem;
-	private boolean streamClosed;
+	private FeedSource feedSource = new RssFeedParser.FeedSource() {
+		public InputStream openFeedStream() throws IOException {
+			return new ByteArrayInputStream(getCompleteFeed().getBytes());
+		}
+
+		private String getCompleteFeed() {
+			return "<rss xmlns:content=\"http://purl.org/rss/1.0/modules/content/\"><channel>"
+					+ feedContent + "</channel></rss>";
+		}
+	};
 
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
 		feedContent = "";
+		parser = new RssFeedParser(feedSource);
+		parser.setItemListener(new ParserListener() {
+			public void onItemParsed(RssItem item) {
+				items.add(item);
+			}
+		});
 		items = new ArrayList<RssItem>();
 	}
 
@@ -66,12 +80,6 @@ public class RssFeedParserTestCase extends TestCase {
 		assertEquals(2, firstParsedItem.enclosures.size());
 	}
 
-	public void testEnsureStreamIsClosedAfterParsing() throws Exception {
-		streamClosed = false;
-		parseRssFeed();
-		assertTrue(streamClosed);
-	}
-
 	public void testHandleParsingErrors() throws Exception {
 		newFeedItem("<number>102");
 		try {
@@ -87,30 +95,9 @@ public class RssFeedParserTestCase extends TestCase {
 	}
 
 	private void parseRssFeed() throws Exception {
-		rssParser = new RssFeedParser(new ByteArrayInputStream(
-				getCompleteFeed().getBytes()) {
-			@Override
-			public void close() throws IOException {
-				super.close();
-				streamClosed = true;
-			}
-		});
-
-		rssParser.setItemListener(new FeedItemListener() {
-			public void item(RssItem item) {
-				items.add(item);
-			}
-		});
-
-		rssParser.parse();
-
+		parser.parse();
 		if (!items.isEmpty()) {
 			firstParsedItem = items.get(0);
 		}
-	}
-
-	private String getCompleteFeed() {
-		return "<rss xmlns:content=\"http://purl.org/rss/1.0/modules/content/\"><channel>"
-				+ feedContent + "</channel></rss>";
 	}
 }

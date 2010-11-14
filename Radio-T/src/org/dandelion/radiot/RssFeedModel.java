@@ -1,6 +1,5 @@
 package org.dandelion.radiot;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
@@ -14,33 +13,27 @@ import android.graphics.BitmapFactory;
 
 public class RssFeedModel implements PodcastList.IModel {
 	private ArrayList<PodcastItem> items;
-	private String address;
+	private RssFeedParser rssParser;
+	
+	public RssFeedModel(final String feedUrl) {
+		this(RssFeedParser.newForUrl(feedUrl));
+	}
 
-	public RssFeedModel(String url) {
-		this.address = url;
+	public RssFeedModel(RssFeedParser rssParser) {
+		this.rssParser = rssParser;
 	}
 
 	public List<PodcastItem> retrievePodcasts() throws Exception {
 		items = new ArrayList<PodcastItem>();
-		RssFeedParser parser = createFeedParser();
 
-		parser.setItemListener(new RssFeedParser.FeedItemListener() {
-			public void item(RssItem item) {
+		rssParser.setItemListener(new RssFeedParser.ParserListener() {
+			public void onItemParsed(RssItem item) {
 				items.add(PodcastItem.fromRss(item));
 			}
 		});
 
-		parser.parse();
+		rssParser.parse();
 		return items;
-	}
-
-	protected RssFeedParser createFeedParser() throws IOException {
-		return new RssFeedParser(openContentStream());
-	}
-
-	protected InputStream openContentStream() throws IOException {
-		URL url = new URL(address);
-		return url.openStream();
 	}
 
 	protected InputStream openImageStream(String address) {

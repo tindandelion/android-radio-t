@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import org.dandelion.radiot.PodcastList.IModel;
 import org.dandelion.radiot.PodcastList.IPodcastListEngine;
 import org.dandelion.radiot.RssFeedModel;
+import org.dandelion.radiot.rss.RssFeedParser;
 
 import android.content.res.AssetManager;
 
@@ -18,12 +19,14 @@ public class PodcastListAcceptanceTestCase extends BasicAcceptanceTestCase {
 	protected IModel createTestModel(final String url) {
 		final AssetManager assets = getInstrumentation().getContext()
 				.getAssets();
-		return new RssFeedModel(url) {
-			@Override
-			protected InputStream openContentStream() throws IOException {
+		
+		RssFeedParser rssParser = new RssFeedParser(new RssFeedParser.FeedSource() {
+			public InputStream openFeedStream() throws IOException {
 				return assets.open((url + ".xml"));
-			}
-
+				}
+		});
+		
+		return new RssFeedModel(rssParser) {
 			@Override
 			protected InputStream openImageStream(String address) {
 				return null;

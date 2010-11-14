@@ -2,6 +2,7 @@ package org.dandelion.radiot.rss;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
@@ -15,20 +16,34 @@ import android.sax.StartElementListener;
 import android.util.Xml;
 
 public class RssFeedParser {
-	public interface FeedItemListener {
-		void item(RssItem item);
+	public interface ParserListener {
+		void onItemParsed(RssItem item);
 	}
 
-	private InputStream contentStream;
-	private FeedItemListener itemListener;
-	public RssItem currentItem = new RssItem();
+	public interface FeedSource {
+		InputStream openFeedStream() throws IOException;
+	}
 
-	public RssFeedParser(InputStream contentStream) {
-		this.contentStream = contentStream;
+	protected ParserListener listener;
+	public RssItem currentItem = new RssItem();
+	private FeedSource feedSource;
+
+	public static RssFeedParser newForUrl(final String feedUrl) {
+		FeedSource source = new FeedSource() {
+			public InputStream openFeedStream() throws IOException {
+				return new URL(feedUrl).openStream();
+			}
+		};
+		return new RssFeedParser(source);
+	}
+
+	public RssFeedParser(FeedSource source) {
+		feedSource = source;
 	}
 
 	public void parse() throws IOException, SAXException {
-		Xml.parse(this.contentStream, Xml.Encoding.UTF_8, getContentHandler());
+		Xml.parse(feedSource.openFeedStream(), Xml.Encoding.UTF_8,
+				getContentHandler());
 	}
 
 	private ContentHandler getContentHandler() {
@@ -38,8 +53,8 @@ public class RssFeedParser {
 
 		item.setEndElementListener(new EndElementListener() {
 			public void end() {
-				if (null != itemListener) {
-					itemListener.item(currentItem);
+				if (null != listener) {
+					listener.onItemParsed(currentItem);
 				}
 				currentItem = new RssItem();
 			}
@@ -92,7 +107,7 @@ public class RssFeedParser {
 		return root.getContentHandler();
 	}
 
-	public void setItemListener(FeedItemListener listener) {
-		this.itemListener = listener;
+	public void setItemListener(ParserListener listener) {
+		this.listener = listener;
 	}
 }
