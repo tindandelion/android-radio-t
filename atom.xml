@@ -1,0 +1,597 @@
+<?xml version="1.0"?>
+<feed
+	xmlns:idx="urn:atom-extension:indexing"
+	xmlns:media="http://search.yahoo.com/mrss/"
+	xmlns:gr="http://www.google.com/schemas/reader/atom/"
+	xmlns="http://www.w3.org/2005/Atom"
+	idx:index="no"
+	gr:dir="ltr"><!-- Content-type: Preventing XSRF in IE. -->
+	<generator
+		uri="http://www.google.com/reader">Google Reader</generator>
+	<id>tag:google.com,2005:reader/user/04446244743329501593/label/For
+		Radio-T</id>
+	<link
+		rel="hub"
+		href="http://pubsubhubbub.appspot.com/" />
+	<title>"For Radio-T" via umputun in Google Reader</title>
+	<gr:continuation>CKPws_nClaUC</gr:continuation>
+	<link
+		rel="self"
+		href="http://www.google.com/reader/public/atom/user%2F04446244743329501593%2Flabel%2FFor%20Radio-T" />
+	<author>
+		<name>umputun</name>
+	</author>
+	<updated>2010-11-13T05:58:17Z</updated>
+	<entry
+		gr:crawl-timestamp-msec="1289627897577">
+		<id
+			gr:original-id="">tag:google.com,2005:reader/item/8f4c5626fd12ea30</id>
+		<title
+			type="html">An interview with James Gosling : The Setup</title>
+		<published>2010-11-13T04:03:07Z</published>
+		<updated>2010-11-13T04:03:07Z</updated>
+		<link
+			rel="alternate"
+			href="http://james.gosling.usesthis.com/"
+			type="text/html" />
+		<author
+			gr:unknown-author="true">
+			<name>(author unknown)</name>
+		</author>
+		<source
+			gr:stream-id="feed/http://www.instapaper.com/rss/94339/obmip3D4ed6h67x3zX1oNbNWCYw">
+			<id>tag:google.com,2005:reader/feed/http://www.instapaper.com/rss/94339/obmip3D4ed6h67x3zX1oNbNWCYw
+			</id>
+			<title
+				type="html">Instapaper: Unread</title>
+			<link
+				rel="alternate"
+				href="http://www.instapaper.com/u"
+				type="text/html" />
+		</source>
+	</entry>
+	<entry
+		gr:crawl-timestamp-msec="1289627897576">
+		<id
+			gr:original-id="">tag:google.com,2005:reader/item/5dc2f11f6a78cca0</id>
+		<title
+			type="html">Jeviathon: The latest and greatest JUnit features... expand your
+			toolset</title>
+		<published>2010-11-13T04:01:28Z</published>
+		<updated>2010-11-13T04:01:28Z</updated>
+		<link
+			rel="alternate"
+			href="http://www.jeviathon.com/2010/11/latest-and-greatest-junit-features.html"
+			type="text/html" />
+		<author
+			gr:unknown-author="true">
+			<name>(author unknown)</name>
+		</author>
+		<source
+			gr:stream-id="feed/http://www.instapaper.com/rss/94339/obmip3D4ed6h67x3zX1oNbNWCYw">
+			<id>tag:google.com,2005:reader/feed/http://www.instapaper.com/rss/94339/obmip3D4ed6h67x3zX1oNbNWCYw
+			</id>
+			<title
+				type="html">Instapaper: Unread</title>
+			<link
+				rel="alternate"
+				href="http://www.instapaper.com/u"
+				type="text/html" />
+		</source>
+	</entry>
+	<entry
+		gr:crawl-timestamp-msec="1289627897576">
+		<id
+			gr:original-id="">tag:google.com,2005:reader/item/82662a2248f2b661</id>
+		<title
+			type="html">No exceptions - ever!</title>
+		<published>2010-11-13T03:59:40Z</published>
+		<updated>2010-11-13T03:59:40Z</updated>
+		<link
+			rel="alternate"
+			href="http://www.i-programmer.info/professional-programmer/i-programmer/1547-no-exceptions-ever.html"
+			type="text/html" />
+		<author
+			gr:unknown-author="true">
+			<name>(author unknown)</name>
+		</author>
+		<source
+			gr:stream-id="feed/http://www.instapaper.com/rss/94339/obmip3D4ed6h67x3zX1oNbNWCYw">
+			<id>tag:google.com,2005:reader/feed/http://www.instapaper.com/rss/94339/obmip3D4ed6h67x3zX1oNbNWCYw
+			</id>
+			<title
+				type="html">Instapaper: Unread</title>
+			<link
+				rel="alternate"
+				href="http://www.instapaper.com/u"
+				type="text/html" />
+		</source>
+	</entry>
+	<entry
+		gr:crawl-timestamp-msec="1289616857156">
+		<id
+			gr:original-id="">tag:google.com,2005:reader/item/fc571a9d2a39eb5e</id>
+		<title
+			type="html">Интернетные штучки » Google ускоряет поиск за счет Instant
+			Preview</title>
+		<published>2010-11-13T02:52:39Z</published>
+		<updated>2010-11-13T02:52:39Z</updated>
+		<link
+			rel="alternate"
+			href="http://internetno.net/2010/11/10/google-uskoryaet-poisk-za-schet-instant-preview/"
+			type="text/html" />
+		<author
+			gr:unknown-author="true">
+			<name>(author unknown)</name>
+		</author>
+		<source
+			gr:stream-id="feed/http://www.instapaper.com/rss/94339/obmip3D4ed6h67x3zX1oNbNWCYw">
+			<id>tag:google.com,2005:reader/feed/http://www.instapaper.com/rss/94339/obmip3D4ed6h67x3zX1oNbNWCYw
+			</id>
+			<title
+				type="html">Instapaper: Unread</title>
+			<link
+				rel="alternate"
+				href="http://www.instapaper.com/u"
+				type="text/html" />
+		</source>
+	</entry>
+	<entry
+		gr:crawl-timestamp-msec="1289616857153">
+		<id
+			gr:original-id="">tag:google.com,2005:reader/item/e2b53e2404398884</id>
+		<title
+			type="html">OpenNews: Firefox празднует свое шестилетие</title>
+		<published>2010-11-13T02:46:31Z</published>
+		<updated>2010-11-13T02:46:31Z</updated>
+		<link
+			rel="alternate"
+			href="http://www.opennet.ru/opennews/art.shtml?num=28599"
+			type="text/html" />
+		<author
+			gr:unknown-author="true">
+			<name>(author unknown)</name>
+		</author>
+		<source
+			gr:stream-id="feed/http://www.instapaper.com/rss/94339/obmip3D4ed6h67x3zX1oNbNWCYw">
+			<id>tag:google.com,2005:reader/feed/http://www.instapaper.com/rss/94339/obmip3D4ed6h67x3zX1oNbNWCYw
+			</id>
+			<title
+				type="html">Instapaper: Unread</title>
+			<link
+				rel="alternate"
+				href="http://www.instapaper.com/u"
+				type="text/html" />
+		</source>
+	</entry>
+	<entry
+		gr:crawl-timestamp-msec="1289616857153">
+		<id
+			gr:original-id="">tag:google.com,2005:reader/item/b2489dc12d6a2087</id>
+		<title
+			type="html">Mobile-review.com - Ìîáèëüíûå òåëåôîíû, íîâîñòè 10 íîÿáðÿ 2010.
+		</title>
+		<published>2010-11-13T02:45:39Z</published>
+		<updated>2010-11-13T02:45:39Z</updated>
+		<link
+			rel="alternate"
+			href="http://www.mobile-review.com/fullnews/main/2010/November/10.shtml#31401"
+			type="text/html" />
+		<author
+			gr:unknown-author="true">
+			<name>(author unknown)</name>
+		</author>
+		<source
+			gr:stream-id="feed/http://www.instapaper.com/rss/94339/obmip3D4ed6h67x3zX1oNbNWCYw">
+			<id>tag:google.com,2005:reader/feed/http://www.instapaper.com/rss/94339/obmip3D4ed6h67x3zX1oNbNWCYw
+			</id>
+			<title
+				type="html">Instapaper: Unread</title>
+			<link
+				rel="alternate"
+				href="http://www.instapaper.com/u"
+				type="text/html" />
+		</source>
+	</entry>
+	<entry
+		gr:crawl-timestamp-msec="1289616857152">
+		<id
+			gr:original-id="">tag:google.com,2005:reader/item/7fe065140771c380</id>
+		<title
+			type="html">ICQ — платить за каждого пользователя альтернативного клиента? /
+			IM / Хабрахабр</title>
+		<published>2010-11-13T02:40:47Z</published>
+		<updated>2010-11-13T02:40:47Z</updated>
+		<link
+			rel="alternate"
+			href="http://habrahabr.ru/blogs/im/107910/"
+			type="text/html" />
+		<author
+			gr:unknown-author="true">
+			<name>(author unknown)</name>
+		</author>
+		<source
+			gr:stream-id="feed/http://www.instapaper.com/rss/94339/obmip3D4ed6h67x3zX1oNbNWCYw">
+			<id>tag:google.com,2005:reader/feed/http://www.instapaper.com/rss/94339/obmip3D4ed6h67x3zX1oNbNWCYw
+			</id>
+			<title
+				type="html">Instapaper: Unread</title>
+			<link
+				rel="alternate"
+				href="http://www.instapaper.com/u"
+				type="text/html" />
+		</source>
+	</entry>
+	<entry
+		gr:crawl-timestamp-msec="1289616857152">
+		<id
+			gr:original-id="">tag:google.com,2005:reader/item/2e1d7e60450b4236</id>
+		<title
+			type="html">Интернетные штучки » Google “забросает” своих сотрудников
+			премиями из-за “хантерства” Facebook</title>
+		<published>2010-11-13T02:33:32Z</published>
+		<updated>2010-11-13T02:33:32Z</updated>
+		<link
+			rel="alternate"
+			href="http://internetno.net/2010/11/12/google-zabrosaet-svoih-sotrudnikov-premiyami-iz-za-hanterstva-facebook/"
+			type="text/html" />
+		<author
+			gr:unknown-author="true">
+			<name>(author unknown)</name>
+		</author>
+		<source
+			gr:stream-id="feed/http://www.instapaper.com/rss/94339/obmip3D4ed6h67x3zX1oNbNWCYw">
+			<id>tag:google.com,2005:reader/feed/http://www.instapaper.com/rss/94339/obmip3D4ed6h67x3zX1oNbNWCYw
+			</id>
+			<title
+				type="html">Instapaper: Unread</title>
+			<link
+				rel="alternate"
+				href="http://www.instapaper.com/u"
+				type="text/html" />
+		</source>
+	</entry>
+	<entry
+		gr:crawl-timestamp-msec="1289616857152">
+		<id
+			gr:original-id="">tag:google.com,2005:reader/item/9ecac65dcab9a6e2</id>
+		<title
+			type="html">Facebook Launching Gmail Competitor 'Titan' on Monday?</title>
+		<published>2010-11-13T02:31:41Z</published>
+		<updated>2010-11-13T02:31:41Z</updated>
+		<link
+			rel="alternate"
+			href="http://www.switched.com/2010/11/12/facebook-email-gmail-killer-titan-launch/"
+			type="text/html" />
+		<author
+			gr:unknown-author="true">
+			<name>(author unknown)</name>
+		</author>
+		<source
+			gr:stream-id="feed/http://www.instapaper.com/rss/94339/obmip3D4ed6h67x3zX1oNbNWCYw">
+			<id>tag:google.com,2005:reader/feed/http://www.instapaper.com/rss/94339/obmip3D4ed6h67x3zX1oNbNWCYw
+			</id>
+			<title
+				type="html">Instapaper: Unread</title>
+			<link
+				rel="alternate"
+				href="http://www.instapaper.com/u"
+				type="text/html" />
+		</source>
+	</entry>
+	<entry
+		gr:crawl-timestamp-msec="1289616857151">
+		<id
+			gr:original-id="">tag:google.com,2005:reader/item/6ffe0317f1814569</id>
+		<title
+			type="html">Will Visual Programming Ever Go Mainstream?</title>
+		<published>2010-11-13T02:27:55Z</published>
+		<updated>2010-11-13T02:27:55Z</updated>
+		<link
+			rel="alternate"
+			href="http://www.readwriteweb.com/hack/2010/11/visual-programming.php"
+			type="text/html" />
+		<author
+			gr:unknown-author="true">
+			<name>(author unknown)</name>
+		</author>
+		<source
+			gr:stream-id="feed/http://www.instapaper.com/rss/94339/obmip3D4ed6h67x3zX1oNbNWCYw">
+			<id>tag:google.com,2005:reader/feed/http://www.instapaper.com/rss/94339/obmip3D4ed6h67x3zX1oNbNWCYw
+			</id>
+			<title
+				type="html">Instapaper: Unread</title>
+			<link
+				rel="alternate"
+				href="http://www.instapaper.com/u"
+				type="text/html" />
+		</source>
+	</entry>
+	<entry
+		gr:crawl-timestamp-msec="1289616857151">
+		<id
+			gr:original-id="">tag:google.com,2005:reader/item/83cb32c4a3b88323</id>
+		<title
+			type="html">Домен РФ – всероссийская истерия, ликование регистраторов /
+			Domainer / Хабрахабр</title>
+		<published>2010-11-13T02:27:04Z</published>
+		<updated>2010-11-13T02:27:04Z</updated>
+		<link
+			rel="alternate"
+			href="http://habrahabr.ru/blogs/domains/108057/"
+			type="text/html" />
+		<author
+			gr:unknown-author="true">
+			<name>(author unknown)</name>
+		</author>
+		<source
+			gr:stream-id="feed/http://www.instapaper.com/rss/94339/obmip3D4ed6h67x3zX1oNbNWCYw">
+			<id>tag:google.com,2005:reader/feed/http://www.instapaper.com/rss/94339/obmip3D4ed6h67x3zX1oNbNWCYw
+			</id>
+			<title
+				type="html">Instapaper: Unread</title>
+			<link
+				rel="alternate"
+				href="http://www.instapaper.com/u"
+				type="text/html" />
+		</source>
+	</entry>
+	<entry
+		gr:crawl-timestamp-msec="1289616857151">
+		<id
+			gr:original-id="">tag:google.com,2005:reader/item/dd64f79d31e2fe53</id>
+		<title
+			type="html">The End of NoSQL? - ReadWriteCloud</title>
+		<published>2010-11-13T02:26:28Z</published>
+		<updated>2010-11-13T02:26:28Z</updated>
+		<link
+			rel="alternate"
+			href="http://www.readwriteweb.com/cloud/2010/11/the-end-of-nosql.php"
+			type="text/html" />
+		<author
+			gr:unknown-author="true">
+			<name>(author unknown)</name>
+		</author>
+		<source
+			gr:stream-id="feed/http://www.instapaper.com/rss/94339/obmip3D4ed6h67x3zX1oNbNWCYw">
+			<id>tag:google.com,2005:reader/feed/http://www.instapaper.com/rss/94339/obmip3D4ed6h67x3zX1oNbNWCYw
+			</id>
+			<title
+				type="html">Instapaper: Unread</title>
+			<link
+				rel="alternate"
+				href="http://www.instapaper.com/u"
+				type="text/html" />
+		</source>
+	</entry>
+	<entry
+		gr:crawl-timestamp-msec="1289606185738">
+		<id
+			gr:original-id="">tag:google.com,2005:reader/item/3df4e82a9d5095cd</id>
+		<title
+			type="html">[Перевод] Разделение JVM на платную/бесплатную версии: истерия,
+			начавшаяся с поста в твиттере / JAVA / Хабрахабр</title>
+		<published>2010-11-12T23:50:43Z</published>
+		<updated>2010-11-12T23:50:43Z</updated>
+		<link
+			rel="alternate"
+			href="http://habrahabr.ru/blogs/java/108036/"
+			type="text/html" />
+		<author
+			gr:unknown-author="true">
+			<name>(author unknown)</name>
+		</author>
+		<source
+			gr:stream-id="feed/http://www.instapaper.com/rss/94339/obmip3D4ed6h67x3zX1oNbNWCYw">
+			<id>tag:google.com,2005:reader/feed/http://www.instapaper.com/rss/94339/obmip3D4ed6h67x3zX1oNbNWCYw
+			</id>
+			<title
+				type="html">Instapaper: Unread</title>
+			<link
+				rel="alternate"
+				href="http://www.instapaper.com/u"
+				type="text/html" />
+		</source>
+	</entry>
+	<entry
+		gr:crawl-timestamp-msec="1289606185738">
+		<id
+			gr:original-id="">tag:google.com,2005:reader/item/afa09a2d95051287</id>
+		<title
+			type="html">Oracle and Apple Announce OpenJDK Project for OSX (Henrik on
+			Java)</title>
+		<published>2010-11-12T23:29:10Z</published>
+		<updated>2010-11-12T23:29:10Z</updated>
+		<link
+			rel="alternate"
+			href="http://blogs.oracle.com/henrik/2010/11/oracle_and_apple_announce_openjdk_project_for_osx.html"
+			type="text/html" />
+		<author
+			gr:unknown-author="true">
+			<name>(author unknown)</name>
+		</author>
+		<source
+			gr:stream-id="feed/http://www.instapaper.com/rss/94339/obmip3D4ed6h67x3zX1oNbNWCYw">
+			<id>tag:google.com,2005:reader/feed/http://www.instapaper.com/rss/94339/obmip3D4ed6h67x3zX1oNbNWCYw
+			</id>
+			<title
+				type="html">Instapaper: Unread</title>
+			<link
+				rel="alternate"
+				href="http://www.instapaper.com/u"
+				type="text/html" />
+		</source>
+	</entry>
+	<entry
+		gr:crawl-timestamp-msec="1289530286247">
+		<id
+			gr:original-id="">tag:google.com,2005:reader/item/24b52b0d6d92b270</id>
+		<title
+			type="html">OpenNews: В состав Fedora запрещен прием программ, созданных для
+			совершения незаконных операций</title>
+		<published>2010-11-12T00:42:23Z</published>
+		<updated>2010-11-12T00:42:23Z</updated>
+		<link
+			rel="alternate"
+			href="http://www.opennet.ru/opennews/art.shtml?num=28622"
+			type="text/html" />
+		<author
+			gr:unknown-author="true">
+			<name>(author unknown)</name>
+		</author>
+		<source
+			gr:stream-id="feed/http://www.instapaper.com/rss/94339/obmip3D4ed6h67x3zX1oNbNWCYw">
+			<id>tag:google.com,2005:reader/feed/http://www.instapaper.com/rss/94339/obmip3D4ed6h67x3zX1oNbNWCYw
+			</id>
+			<title
+				type="html">Instapaper: Unread</title>
+			<link
+				rel="alternate"
+				href="http://www.instapaper.com/u"
+				type="text/html" />
+		</source>
+	</entry>
+	<entry
+		gr:crawl-timestamp-msec="1289514542479">
+		<id
+			gr:original-id="">tag:google.com,2005:reader/item/61ed6808a0f65218</id>
+		<title
+			type="html">OpenNews: Яндекс начал формирование коллекции своих открытых
+			проектов</title>
+		<published>2010-11-11T21:59:13Z</published>
+		<updated>2010-11-11T21:59:13Z</updated>
+		<link
+			rel="alternate"
+			href="http://www.opennet.ru/opennews/art.shtml?num=28625"
+			type="text/html" />
+		<author
+			gr:unknown-author="true">
+			<name>(author unknown)</name>
+		</author>
+		<source
+			gr:stream-id="feed/http://www.instapaper.com/rss/94339/obmip3D4ed6h67x3zX1oNbNWCYw">
+			<id>tag:google.com,2005:reader/feed/http://www.instapaper.com/rss/94339/obmip3D4ed6h67x3zX1oNbNWCYw
+			</id>
+			<title
+				type="html">Instapaper: Unread</title>
+			<link
+				rel="alternate"
+				href="http://www.instapaper.com/u"
+				type="text/html" />
+		</source>
+	</entry>
+	<entry
+		gr:crawl-timestamp-msec="1289514542476">
+		<id
+			gr:original-id="">tag:google.com,2005:reader/item/b9fc3cd40d30d97f</id>
+		<title
+			type="html">redhat.com | The World's Open Source Leader</title>
+		<published>2010-11-11T20:34:45Z</published>
+		<updated>2010-11-11T20:34:45Z</updated>
+		<link
+			rel="alternate"
+			href="http://www.redhat.com/about/news/prarchive/2010/new-standard.html"
+			type="text/html" />
+		<author
+			gr:unknown-author="true">
+			<name>(author unknown)</name>
+		</author>
+		<source
+			gr:stream-id="feed/http://www.instapaper.com/rss/94339/obmip3D4ed6h67x3zX1oNbNWCYw">
+			<id>tag:google.com,2005:reader/feed/http://www.instapaper.com/rss/94339/obmip3D4ed6h67x3zX1oNbNWCYw
+			</id>
+			<title
+				type="html">Instapaper: Unread</title>
+			<link
+				rel="alternate"
+				href="http://www.instapaper.com/u"
+				type="text/html" />
+		</source>
+	</entry>
+	<entry
+		gr:crawl-timestamp-msec="1289503631217">
+		<id
+			gr:original-id="">tag:google.com,2005:reader/item/43f4ba03908c8e20</id>
+		<title
+			type="html">OpenNews: Фонд Apache приступает к решительным действиям против
+			Java-монополии Oracle</title>
+		<published>2010-11-11T18:38:57Z</published>
+		<updated>2010-11-11T18:38:57Z</updated>
+		<link
+			rel="alternate"
+			href="http://www.opennet.ru/opennews/art.shtml?num=28598"
+			type="text/html" />
+		<author
+			gr:unknown-author="true">
+			<name>(author unknown)</name>
+		</author>
+		<source
+			gr:stream-id="feed/http://www.instapaper.com/rss/94339/obmip3D4ed6h67x3zX1oNbNWCYw">
+			<id>tag:google.com,2005:reader/feed/http://www.instapaper.com/rss/94339/obmip3D4ed6h67x3zX1oNbNWCYw
+			</id>
+			<title
+				type="html">Instapaper: Unread</title>
+			<link
+				rel="alternate"
+				href="http://www.instapaper.com/u"
+				type="text/html" />
+		</source>
+	</entry>
+	<entry
+		gr:crawl-timestamp-msec="1289439304040">
+		<id
+			gr:original-id="">tag:google.com,2005:reader/item/10b3d212a0cbd07b</id>
+		<title
+			type="html">Google повысит зарплату всем сотрудникам на 10 % / Google /
+			Хабрахабр</title>
+		<published>2010-11-11T00:58:06Z</published>
+		<updated>2010-11-11T00:58:06Z</updated>
+		<link
+			rel="alternate"
+			href="http://habrahabr.ru/blogs/google/107923/"
+			type="text/html" />
+		<author
+			gr:unknown-author="true">
+			<name>(author unknown)</name>
+		</author>
+		<source
+			gr:stream-id="feed/http://www.instapaper.com/rss/94339/obmip3D4ed6h67x3zX1oNbNWCYw">
+			<id>tag:google.com,2005:reader/feed/http://www.instapaper.com/rss/94339/obmip3D4ed6h67x3zX1oNbNWCYw
+			</id>
+			<title
+				type="html">Instapaper: Unread</title>
+			<link
+				rel="alternate"
+				href="http://www.instapaper.com/u"
+				type="text/html" />
+		</source>
+	</entry>
+	<entry
+		gr:crawl-timestamp-msec="1289367153607">
+		<id
+			gr:original-id="">tag:google.com,2005:reader/item/3d489293351b5375</id>
+		<title
+			type="html">Adobe Audition Comes to the Mac</title>
+		<published>2010-11-10T05:02:23Z</published>
+		<updated>2010-11-10T05:02:23Z</updated>
+		<link
+			rel="alternate"
+			href="http://mashable.com/2010/11/09/adobe-audition-mac/"
+			type="text/html" />
+		<author
+			gr:unknown-author="true">
+			<name>(author unknown)</name>
+		</author>
+		<source
+			gr:stream-id="feed/http://www.instapaper.com/rss/94339/obmip3D4ed6h67x3zX1oNbNWCYw">
+			<id>tag:google.com,2005:reader/feed/http://www.instapaper.com/rss/94339/obmip3D4ed6h67x3zX1oNbNWCYw
+			</id>
+			<title
+				type="html">Instapaper: Unread</title>
+			<link
+				rel="alternate"
+				href="http://www.instapaper.com/u"
+				type="text/html" />
+		</source>
+	</entry>
+</feed>

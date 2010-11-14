@@ -1,38 +1,33 @@
 package org.dandelion.radiot.unittest;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 import junit.framework.TestCase;
 
+import org.dandelion.radiot.helpers.FakeFeedSource;
 import org.dandelion.radiot.rss.IFeedParser.ParserListener;
-import org.dandelion.radiot.rss.IFeedSource;
 import org.dandelion.radiot.rss.RssEnclosure;
 import org.dandelion.radiot.rss.RssFeedParser;
 import org.dandelion.radiot.rss.RssItem;
 
+class RssFeedSource extends FakeFeedSource {
+	public String getCompleteFeed() {
+		return "<rss xmlns:content=\"http://purl.org/rss/1.0/modules/content/\"><channel>"
+				+ getFeedContent() + "</channel></rss>";
+	};
+
+}
+
 public class RssFeedParserTestCase extends TestCase {
-	private String feedContent;
 	private RssFeedParser parser;
 	private ArrayList<RssItem> items;
 	private RssItem firstParsedItem;
-	private IFeedSource feedSource = new IFeedSource() {
-		public InputStream openFeedStream() throws IOException {
-			return new ByteArrayInputStream(getCompleteFeed().getBytes());
-		}
-
-		private String getCompleteFeed() {
-			return "<rss xmlns:content=\"http://purl.org/rss/1.0/modules/content/\"><channel>"
-					+ feedContent + "</channel></rss>";
-		}
-	};
+	private FakeFeedSource feedSource;
 
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		feedContent = "";
+		feedSource = new RssFeedSource();
 		parser = new RssFeedParser(feedSource);
 		parser.setListener(new ParserListener() {
 			public void onItemParsed(RssItem item) {
@@ -43,7 +38,7 @@ public class RssFeedParserTestCase extends TestCase {
 	}
 
 	public void testExtractingSimpleItemFields() throws Exception {
-		newFeedItem("<title>RSS Item title</title>"
+		setFeedItem("<title>RSS Item title</title>"
 				+ "<pubDate>Sun, 13 Jun 2010 01:37:22 +0000</pubDate>"
 				+ "<description><![CDATA[Description]]></description>"
 				+ "<content:encoded><![CDATA[Encoded content]]></content:encoded>");
@@ -55,14 +50,14 @@ public class RssFeedParserTestCase extends TestCase {
 	}
 
 	public void testExtractingCategories() throws Exception {
-		newFeedItem("<category>Tag1</category><category>Tag2</category>");
+		setFeedItem("<category>Tag1</category><category>Tag2</category>");
 		parseRssFeed();
 		assertTrue(firstParsedItem.hasCategory("Tag1"));
 		assertTrue(firstParsedItem.hasCategory("Tag2"));
 	}
 
 	public void testExtractingEnclosureDetails() throws Exception {
-		newFeedItem("<enclosure url=\"http://enclosure-url\" type=\"audio/mpeg\"/>");
+		setFeedItem("<enclosure url=\"http://enclosure-url\" type=\"audio/mpeg\"/>");
 
 		parseRssFeed();
 		assertEquals(1, firstParsedItem.enclosures.size());
@@ -73,7 +68,7 @@ public class RssFeedParserTestCase extends TestCase {
 	}
 
 	public void testExtractingAllEnclosures() throws Exception {
-		newFeedItem("<enclosure url=\"http://enclosure-url\" type=\"audio/mpeg\"/>"
+		setFeedItem("<enclosure url=\"http://enclosure-url\" type=\"audio/mpeg\"/>"
 				+ "<enclosure url=\"http://enclosure-url\" type=\"audio/mpeg\"/>");
 
 		parseRssFeed();
@@ -81,7 +76,7 @@ public class RssFeedParserTestCase extends TestCase {
 	}
 
 	public void testHandleParsingErrors() throws Exception {
-		newFeedItem("<number>102");
+		setFeedItem("<number>102");
 		try {
 			parseRssFeed();
 		} catch (Exception e) {
@@ -90,8 +85,8 @@ public class RssFeedParserTestCase extends TestCase {
 		fail("Should have raised the exception");
 	}
 
-	private void newFeedItem(String itemContent) {
-		feedContent = feedContent + "<item>" + itemContent + "</item>";
+	private void setFeedItem(String itemContent) {
+		feedSource.setFeedContent("<item>" + itemContent + "</item>");
 	}
 
 	private void parseRssFeed() throws Exception {
