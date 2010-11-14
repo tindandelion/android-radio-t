@@ -8,6 +8,9 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.dandelion.radiot.rss.RssEnclosure;
+import org.dandelion.radiot.rss.RssItem;
+
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.text.Html;
@@ -55,7 +58,7 @@ public class PodcastItem implements Cloneable {
 		}
 	}
 
-	public void extractPodcastNumber(String value) {
+	private void extractPodcastNumber(String value) {
 		Matcher matcher = NUMBER_PATTERN.matcher(value);
 		if (matcher.find()) {
 			number = "#" + matcher.group();
@@ -65,7 +68,7 @@ public class PodcastItem implements Cloneable {
 
 	}
 
-	public void extractPubDate(String value) {
+	private void extractPubDate(String value) {
 		try {
 			Date date = INPUT_DATE_FORMAT.parse(value);
 			pubDate = OUTPUT_DATE_FORMAT.format(date);
@@ -74,7 +77,7 @@ public class PodcastItem implements Cloneable {
 		}
 	}
 
-	public void extractShowNotes(String value) {
+	private void extractShowNotes(String value) {
 		String noHtml = Html.fromHtml(value).toString();
 		showNotes = noHtml.replaceAll("\n", " ");
 	}
@@ -105,7 +108,7 @@ public class PodcastItem implements Cloneable {
 		return tags.contains(tag);
 	}
 
-	public void extractImageUrl(String encoded) {
+	private void extractImageUrl(String encoded) {
 		Matcher matcher = IMAGE_URL_PATTERN.matcher(encoded);
 		if (matcher.find()) {
 			imageUrl = matcher.group(1);
@@ -122,5 +125,20 @@ public class PodcastItem implements Cloneable {
 
 	public void setImage(Bitmap value) {
 		image = value;
+	}
+
+	public static PodcastItem fromRss(RssItem rssItem) {
+		PodcastItem item = new PodcastItem();
+		item.extractPodcastNumber(rssItem.title);
+		item.extractPubDate(rssItem.pubDate);
+		item.extractShowNotes(rssItem.description);
+		item.extractImageUrl(rssItem.encodedContent);
+		for (String category : rssItem.categories) {
+			item.addTag(category);
+		}
+		for (RssEnclosure enclosure : rssItem.getEnclosures("audio/mpeg")) {
+			item.extractAudioUri(enclosure.url);
+		}
+		return item;
 	}
 }

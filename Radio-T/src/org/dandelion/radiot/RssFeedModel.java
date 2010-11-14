@@ -6,7 +6,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.dandelion.radiot.rss.RssEnclosure;
 import org.dandelion.radiot.rss.RssFeedParser;
 import org.dandelion.radiot.rss.RssItem;
 
@@ -27,21 +26,7 @@ public class RssFeedModel implements PodcastList.IModel {
 
 		parser.setItemListener(new RssFeedParser.FeedItemListener() {
 			public void item(RssItem item) {
-				PodcastItem currentItem = new PodcastItem();
-				currentItem.extractPodcastNumber(item.title);
-				currentItem.extractPubDate(item.pubDate);
-				currentItem.extractShowNotes(item.description);
-				currentItem.extractImageUrl(item.encodedContent);
-
-				for (String category : item.categories) {
-					currentItem.addTag(category);
-				}
-
-				for (RssEnclosure enclosure : item.getEnclosures("audio/mpeg")) {
-					currentItem.extractAudioUri(enclosure.url);
-				}
-				items.add(currentItem);
-				currentItem = new PodcastItem();
+				items.add(PodcastItem.fromRss(item));
 			}
 		});
 

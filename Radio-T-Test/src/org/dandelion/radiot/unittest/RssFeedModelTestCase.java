@@ -20,7 +20,6 @@ public class RssFeedModelTestCase extends TestCase {
 	private String feedContent;
 	private List<PodcastItem> parsedItems;
 	private PodcastItem firstParsedItem;
-	protected boolean streamClosed;
 	protected String requestedImageUrl;
 	protected RssFeedParser rssParser;
 
@@ -115,13 +114,7 @@ public class RssFeedModelTestCase extends TestCase {
 
 	private void parseRssFeed() throws Exception {
 		rssParser = new RssFeedParser(new ByteArrayInputStream(
-				getCompleteFeed().getBytes()) {
-			@Override
-			public void close() throws IOException {
-				super.close();
-				streamClosed = true;
-			}
-		});
+				getCompleteFeed().getBytes()));
 
 		parsedItems = model.retrievePodcasts();
 		if (!parsedItems.isEmpty()) {
