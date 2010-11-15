@@ -1,9 +1,9 @@
 package org.dandelion.radiot.live;
 
-import java.util.List;
-
 import org.dandelion.radiot.R;
+import org.dandelion.radiot.rss.AsyncFeedParser;
 import org.dandelion.radiot.rss.AtomFeedParser;
+import org.dandelion.radiot.rss.IFeedParser;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,8 +18,10 @@ import android.widget.ListView;
 
 public class LiveShowTopics extends LinearLayout implements ILiveShowTopicsView {
 	private static String RSS_FEED_URL = "http://www.google.com/reader/public/atom/user%2F04446244743329501593%2Flabel%2FFor%20Radio-T";
+
 	private LiveShowTopicsPresenter presenter;
 	private ArrayAdapter<ShowTopic> listAdapter;
+
 	private OnItemClickListener onItemClicked = new OnItemClickListener() {
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
@@ -35,8 +37,12 @@ public class LiveShowTopics extends LinearLayout implements ILiveShowTopicsView 
 		inflateLayout();
 		initListView();
 
-		presenter = new LiveShowTopicsPresenter(this,
-				AtomFeedParser.withRemoteFeed(RSS_FEED_URL));
+		presenter = new LiveShowTopicsPresenter(this, createFeedParser());
+	}
+
+	private IFeedParser createFeedParser() {
+		IFeedParser realParser = AtomFeedParser.withRemoteFeed(RSS_FEED_URL);
+		return new AsyncFeedParser(realParser);
 	}
 
 	private void initListView() {
@@ -59,16 +65,11 @@ public class LiveShowTopics extends LinearLayout implements ILiveShowTopicsView 
 		presenter.refreshTopics();
 	}
 
-	@Override
-	protected void onDetachedFromWindow() {
-		super.onDetachedFromWindow();
-		presenter.cancelAll();
+	public void clearTopics() {
+		listAdapter.clear();
 	}
 
-	public void setTopics(List<ShowTopic> topics) {
-		listAdapter.clear();
-		for (ShowTopic topic : topics) {
-			listAdapter.add(topic);
-		}
+	public void addTopic(ShowTopic topic) {
+		listAdapter.add(topic);
 	}
 }

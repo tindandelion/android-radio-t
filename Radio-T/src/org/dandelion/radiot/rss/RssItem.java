@@ -11,6 +11,14 @@ public class RssItem {
 	public String link = "";
 	public ArrayList<String> categories = new ArrayList<String>();
 	public ArrayList<RssEnclosure> enclosures = new ArrayList<RssEnclosure>();
+	
+	public RssItem() { 
+		
+	}
+
+	public RssItem(String title) {
+		this.title = title;
+	}
 
 	public void addCategory(String value) {
 		categories.add(value);
