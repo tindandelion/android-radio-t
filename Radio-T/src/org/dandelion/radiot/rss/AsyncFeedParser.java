@@ -2,43 +2,70 @@ package org.dandelion.radiot.rss;
 
 import java.io.IOException;
 
+import org.dandelion.radiot.rss.AsyncFeedParser.ProgressListener;
 import org.dandelion.radiot.rss.IFeedParser.ParserListener;
 import org.xml.sax.SAXException;
 
 import android.os.AsyncTask;
 
 public class AsyncFeedParser implements IFeedParser {
+	public interface ProgressListener {
+		void onStartedReading();
 
-	private IFeedParser parser;
-
-	public AsyncFeedParser(IFeedParser realParser) {
-		this.parser = realParser;
+		void onFinishedReading();
 	}
 
-	public void parse(ParserListener listener) throws IOException, SAXException {
-		new ParseTask(parser, listener).execute();
+	private IFeedParser parser;
+	private ProgressListener progressListener;
+
+	public AsyncFeedParser(IFeedParser realParser,
+			ProgressListener progressListener) {
+		this.parser = realParser;
+		this.progressListener = progressListener;
+	}
+
+	public void parse(ParserListener parserListener) throws IOException,
+			SAXException {
+		new ParseTask(parser, parserListener, progressListener).execute();
 	}
 
 }
 
 class ParseTask extends AsyncTask<Void, RssItem, Void> {
-	private IFeedParser realParser;
-	private ParserListener realListener;
+	private IFeedParser parser;
+	private ProgressListener progressListener;
+	private ParserListener realParserListener;
 	private ParserListener listener = new ParserListener() {
 		public void onItemParsed(RssItem item) {
 			publishProgress(item);
 		}
 	};
 
-	public ParseTask(IFeedParser parser, ParserListener realListener) {
-		this.realParser = parser;
-		this.realListener = realListener;
+	public ParseTask(IFeedParser parser, ParserListener realListener,
+			ProgressListener progressListener) {
+		this.parser = parser;
+		this.realParserListener = realListener;
+		this.progressListener = progressListener;
+	}
+	
+	@Override
+	protected void onPreExecute() {
+		if (null != progressListener) {
+			progressListener.onStartedReading();
+		}
+	}
+	
+	@Override
+	protected void onPostExecute(Void result) {
+		if (null != progressListener) {
+			progressListener.onFinishedReading();
+		}
 	}
 
 	@Override
 	protected Void doInBackground(Void... params) {
 		try {
-			realParser.parse(listener);
+			parser.parse(listener);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -47,7 +74,7 @@ class ParseTask extends AsyncTask<Void, RssItem, Void> {
 
 	@Override
 	protected void onProgressUpdate(RssItem... values) {
-		realListener.onItemParsed(values[0]);
+		realParserListener.onItemParsed(values[0]);
 	}
 
 }

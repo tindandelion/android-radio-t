@@ -15,8 +15,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
-public class LiveShowTopics extends LinearLayout implements ILiveShowTopicsView {
+public class LiveShowTopics extends LinearLayout implements
+		ILiveShowTopicsView, AsyncFeedParser.ProgressListener {
 	private static String RSS_FEED_URL = "http://www.google.com/reader/public/atom/user%2F04446244743329501593%2Flabel%2FFor%20Radio-T";
 
 	private LiveShowTopicsPresenter presenter;
@@ -42,7 +44,7 @@ public class LiveShowTopics extends LinearLayout implements ILiveShowTopicsView 
 
 	private IFeedParser createFeedParser() {
 		IFeedParser realParser = AtomFeedParser.withRemoteFeed(RSS_FEED_URL);
-		return new AsyncFeedParser(realParser);
+		return new AsyncFeedParser(realParser, this);
 	}
 
 	private void initListView() {
@@ -71,5 +73,12 @@ public class LiveShowTopics extends LinearLayout implements ILiveShowTopicsView 
 
 	public void addTopic(ShowTopic topic) {
 		listAdapter.add(topic);
+	}
+
+	public void onStartedReading() {
+		Toast.makeText(getContext(), "Started reading", Toast.LENGTH_SHORT).show();
+	}
+
+	public void onFinishedReading() {
 	}
 }
