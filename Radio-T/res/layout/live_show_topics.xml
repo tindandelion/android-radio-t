@@ -5,4 +5,10 @@
 		android:id="@+id/live_topics_list"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent" />
+	<ProgressBar
+		android:id="@+id/live_topics_progress"
+		android:visibility="gone"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center" />
 </merge>

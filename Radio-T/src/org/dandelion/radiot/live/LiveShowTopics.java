@@ -13,11 +13,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 import android.widget.ListView;
-import android.widget.Toast;
 
-public class LiveShowTopics extends LinearLayout implements
+public class LiveShowTopics extends FrameLayout implements
 		ILiveShowTopicsView, AsyncFeedParser.ProgressListener {
 	private static String RSS_FEED_URL = "http://www.google.com/reader/public/atom/user%2F04446244743329501593%2Flabel%2FFor%20Radio-T";
 
@@ -34,6 +33,9 @@ public class LiveShowTopics extends LinearLayout implements
 		}
 	};
 
+	private ListView listView;
+	private View progressView;
+
 	public LiveShowTopics(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		inflateLayout();
@@ -48,17 +50,18 @@ public class LiveShowTopics extends LinearLayout implements
 	}
 
 	private void initListView() {
-		ListView view = (ListView) findViewById(R.id.live_topics_list);
 		listAdapter = new ArrayAdapter<ShowTopic>(getContext(),
 				android.R.layout.simple_list_item_1);
-		view.setAdapter(listAdapter);
-		view.setOnItemClickListener(onItemClicked);
+		listView.setAdapter(listAdapter);
+		listView.setOnItemClickListener(onItemClicked);
 	}
 
 	private void inflateLayout() {
 		LayoutInflater inflater = (LayoutInflater) this.getContext()
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		inflater.inflate(R.layout.live_show_topics, this);
+		listView = (ListView) findViewById(R.id.live_topics_list);
+		progressView = findViewById(R.id.live_topics_progress);
 	}
 
 	@Override
@@ -76,12 +79,10 @@ public class LiveShowTopics extends LinearLayout implements
 	}
 
 	public void onStartedReading() {
-		Toast.makeText(getContext(), "Started reading", Toast.LENGTH_SHORT)
-				.show();
+		progressView.setVisibility(VISIBLE);
 	}
 
 	public void onFinishedReading() {
-		Toast.makeText(getContext(), "Finished reading", Toast.LENGTH_SHORT)
-		.show();
+		progressView.setVisibility(GONE);
 	}
 }
