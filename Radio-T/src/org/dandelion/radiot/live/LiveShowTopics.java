@@ -76,9 +76,12 @@ public class LiveShowTopics extends LinearLayout implements
 	}
 
 	public void onStartedReading() {
-		Toast.makeText(getContext(), "Started reading", Toast.LENGTH_SHORT).show();
+		Toast.makeText(getContext(), "Started reading", Toast.LENGTH_SHORT)
+				.show();
 	}
 
 	public void onFinishedReading() {
+		Toast.makeText(getContext(), "Finished reading", Toast.LENGTH_SHORT)
+		.show();
 	}
 }
