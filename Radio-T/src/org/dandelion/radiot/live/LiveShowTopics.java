@@ -15,9 +15,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
-public class LiveShowTopics extends FrameLayout implements
-		ILiveShowTopicsView, AsyncFeedParser.ProgressListener {
+public class LiveShowTopics extends FrameLayout implements ILiveShowTopicsView,
+		AsyncFeedParser.ProgressListener {
 	private static String RSS_FEED_URL = "http://www.google.com/reader/public/atom/user%2F04446244743329501593%2Flabel%2FFor%20Radio-T";
 
 	private LiveShowTopicsPresenter presenter;
@@ -82,7 +83,11 @@ public class LiveShowTopics extends FrameLayout implements
 		progressView.setVisibility(VISIBLE);
 	}
 
-	public void onFinishedReading() {
+	public void onFinishedReading(Exception error) {
 		progressView.setVisibility(GONE);
+		if (null != error) {
+			Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT)
+					.show();
+		}
 	}
 }

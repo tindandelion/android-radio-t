@@ -11,8 +11,7 @@ import android.os.AsyncTask;
 public class AsyncFeedParser implements IFeedParser {
 	public interface ProgressListener {
 		void onStartedReading();
-
-		void onFinishedReading();
+		void onFinishedReading(Exception error);
 	}
 
 	private IFeedParser parser;
@@ -35,6 +34,8 @@ class ParseTask extends AsyncTask<Void, RssItem, Void> {
 	private IFeedParser parser;
 	private ProgressListener progressListener;
 	private ParserListener realParserListener;
+	private Exception error;
+
 	private ParserListener listener = new ParserListener() {
 		public void onItemParsed(RssItem item) {
 			publishProgress(item);
@@ -47,18 +48,18 @@ class ParseTask extends AsyncTask<Void, RssItem, Void> {
 		this.realParserListener = realListener;
 		this.progressListener = progressListener;
 	}
-	
+
 	@Override
 	protected void onPreExecute() {
 		if (null != progressListener) {
 			progressListener.onStartedReading();
 		}
 	}
-	
+
 	@Override
 	protected void onPostExecute(Void result) {
 		if (null != progressListener) {
-			progressListener.onFinishedReading();
+			progressListener.onFinishedReading(error);
 		}
 	}
 
@@ -67,7 +68,7 @@ class ParseTask extends AsyncTask<Void, RssItem, Void> {
 		try {
 			parser.parse(listener);
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			error = e;
 		}
 		return null;
 	}
