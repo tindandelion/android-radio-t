@@ -10,19 +10,21 @@ import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class LiveShowTopics extends FrameLayout implements ILiveShowTopicsView,
 		AsyncFeedParser.ProgressListener {
 	private static String RSS_FEED_URL = "http://www.google.com/reader/public/atom/user%2F04446244743329501593%2Flabel%2FFor%20Radio-T";
 
-	private LiveShowTopicsPresenter presenter;
-	private ArrayAdapter<ShowTopic> listAdapter;
+	private LiveTopicsPresenter presenter;
+	private LiveTopicsAdapter listAdapter;
 
 	private OnItemClickListener onItemClicked = new OnItemClickListener() {
 		public void onItemClick(AdapterView<?> parent, View view, int position,
@@ -42,7 +44,7 @@ public class LiveShowTopics extends FrameLayout implements ILiveShowTopicsView,
 		inflateLayout();
 		initListView();
 
-		presenter = new LiveShowTopicsPresenter(this, createFeedParser());
+		presenter = new LiveTopicsPresenter(this, createFeedParser());
 	}
 
 	private IFeedParser createFeedParser() {
@@ -51,14 +53,13 @@ public class LiveShowTopics extends FrameLayout implements ILiveShowTopicsView,
 	}
 
 	private void initListView() {
-		listAdapter = new ArrayAdapter<ShowTopic>(getContext(),
-				android.R.layout.simple_list_item_1);
+		listAdapter = new LiveTopicsAdapter(getContext());
 		listView.setAdapter(listAdapter);
 		listView.setOnItemClickListener(onItemClicked);
 	}
 
 	private void inflateLayout() {
-		LayoutInflater inflater = (LayoutInflater) this.getContext()
+		LayoutInflater inflater = (LayoutInflater) getContext()
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		inflater.inflate(R.layout.live_show_topics, this);
 		listView = (ListView) findViewById(R.id.live_topics_list);
@@ -89,5 +90,31 @@ public class LiveShowTopics extends FrameLayout implements ILiveShowTopicsView,
 			Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT)
 					.show();
 		}
+	}
+}
+
+class LiveTopicsAdapter extends ArrayAdapter<ShowTopic> {
+	private LayoutInflater inflater;
+
+	public LiveTopicsAdapter(Context context) {
+		super(context, android.R.layout.simple_list_item_1);
+		inflater = (LayoutInflater) getContext().getSystemService(
+				Context.LAYOUT_INFLATER_SERVICE);
+	}
+
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent) {
+		View view = convertView;
+		if (null == convertView) {
+			view = inflater.inflate(R.layout.live_topic_list_item, parent,
+					false);
+		}
+		ShowTopic item = getItem(position);
+
+		TextView titleView = (TextView) view
+				.findViewById(R.id.live_topic_item_title);
+		titleView.setText(item.title);
+
+		return view;
 	}
 }

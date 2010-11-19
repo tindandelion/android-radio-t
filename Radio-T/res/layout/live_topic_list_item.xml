@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:paddingRight="5dp"
+	android:paddingLeft="5dp">
+	<TextView
+		android:id="@+id/live_topic_item_title"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentTop="true"
+		android:textAppearance="@android:style/TextAppearance.Medium" />
+	<TextView
+		android:id="@+id/live_topic_item_source"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
+		android:layout_below="@id/live_topic_item_title"
+		android:text="www.google.ru"
+		android:textAppearance="@android:style/TextAppearance.Small" />
+	<TextView
+		android:id="@+id/live_topic_item_datetime"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentRight="true"
+		android:layout_below="@id/live_topic_item_title"
+		android:text="18.11.2010 22:00"
+		android:textAppearance="@android:style/TextAppearance.Small" />
+</RelativeLayout>

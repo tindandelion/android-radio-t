@@ -7,7 +7,7 @@ import java.util.List;
 import junit.framework.TestCase;
 
 import org.dandelion.radiot.live.ILiveShowTopicsView;
-import org.dandelion.radiot.live.LiveShowTopicsPresenter;
+import org.dandelion.radiot.live.LiveTopicsPresenter;
 import org.dandelion.radiot.live.ShowTopic;
 import org.dandelion.radiot.rss.AbstractFeedParser;
 import org.dandelion.radiot.rss.RssItem;
@@ -35,7 +35,7 @@ class FakeRssFeed extends AbstractFeedParser {
 public class LiveShowTopicsPresenterTestCase extends TestCase implements ILiveShowTopicsView {
 	
 	private List<ShowTopic> topics;
-	private LiveShowTopicsPresenter presenter;
+	private LiveTopicsPresenter presenter;
 	private FakeRssFeed rssFeed;
 	
 	@Override
@@ -43,7 +43,7 @@ public class LiveShowTopicsPresenterTestCase extends TestCase implements ILiveSh
 		super.setUp();
 		topics = new ArrayList<ShowTopic>();
 		rssFeed = new FakeRssFeed();
-		presenter = new LiveShowTopicsPresenter(this, rssFeed);
+		presenter = new LiveTopicsPresenter(this, rssFeed);
 	}
 	
 	public void testClearsTopicsListWhenAskedToRefresh() throws Exception {
