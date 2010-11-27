@@ -97,4 +97,13 @@
 		<item
 			name="android:windowNoTitle">true</item>
 	</style>
+	<style
+		name="Theme.Radiot.Light"
+		parent="android:Theme.Light">
+		<item name="android:background">#c9e2fc</item>
+		<item
+			name="android:textViewStyle">@style/Radiot.TextView</item>
+		<item
+			name="android:buttonStyle">@style/Radiot.Button</item>
+	</style>
 </resources>

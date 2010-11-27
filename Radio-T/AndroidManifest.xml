@@ -24,18 +24,19 @@
 			android:name=".home_screen.AboutAppActivity"
 			android:label="@string/about_app_title"
 			android:screenOrientation="portrait"
-			android:theme="@style/Theme.RadiotNoTitle" />
-		<activity
-			android:name=".home_screen.HomeScreenActivity"
-			android:theme="@style/Theme.RadiotNoTitle"
-			android:screenOrientation="portrait"
-			android:launchMode="singleTask">
+			android:theme="@style/Theme.Radiot.Light">
 			<intent-filter>
 				<action
 					android:name="android.intent.action.MAIN"></action>
 				<category
 					android:name="android.intent.category.LAUNCHER"></category>
 			</intent-filter>
+		</activity>
+		<activity
+			android:name=".home_screen.HomeScreenActivity"
+			android:theme="@style/Theme.RadiotNoTitle"
+			android:screenOrientation="portrait"
+			android:launchMode="singleTask">
 		</activity>
 		<service
 			android:name=".live.LiveShowService" />
