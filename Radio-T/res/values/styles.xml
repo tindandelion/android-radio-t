@@ -84,26 +84,37 @@
 			name="android:background">@android:drawable/divider_horizontal_dark</item>
 	</style>
 	<style
-		name="Theme.Radiot"
-		parent="android:Theme">
+		name="Radiot.TextAppearance.WindowTitle"
+		parent="android:TextAppearance.WindowTitle">
 		<item
-			name="android:textViewStyle">@style/Radiot.TextView</item>
+			name="android:textSize">20dip</item>
 		<item
-			name="android:buttonStyle">@style/Radiot.Button</item>
+			name="android:textColor">#ffffff</item>
+		<item
+			name="android:textStyle">bold</item>
 	</style>
 	<style
-		name="Theme.RadiotNoTitle"
-		parent="Theme.Radiot">
+		name="Radiot.WindowTitleBackground"
+		parent="android:WindowTitleBackground">
 		<item
-			name="android:windowNoTitle">true</item>
+			name="android:background">#5692d4</item>
 	</style>
 	<style
-		name="Theme.Radiot.Light"
-		parent="android:Theme.Light">
-		<item name="android:background">#c9e2fc</item>
+		name="Radiot.WindowTitle"
+		parent="android:WindowTitle">
 		<item
-			name="android:textViewStyle">@style/Radiot.TextView</item>
+			name="android:textAppearance">@style/Radiot.TextAppearance.WindowTitle</item>
 		<item
-			name="android:buttonStyle">@style/Radiot.Button</item>
+			name="android:shadowDx">0</item>
+		<item
+			name="android:shadowDy">0</item>
+		<item
+			name="android:shadowRadius">3</item>
+		<item
+			name="android:shadowColor">#c0c0c0</item>
+		<item
+			name="android:textScaleX">1.1</item>
+		<item
+			name="android:gravity">right|center_vertical</item>
 	</style>
 </resources>

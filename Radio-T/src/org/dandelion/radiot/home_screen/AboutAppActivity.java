@@ -8,18 +8,28 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.TextView;
 
 public class AboutAppActivity extends Activity {
 	private static final String FEEDBACK_EMAIL = "apps.dandelion@gmail.com";
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		setContentView(R.layout.about_app);
+		setCustomTitle(getString(R.string.about_app_title));
 		updateVerionLabel();
 	}
 
+	private void setCustomTitle(String title) {
+		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,
+				R.layout.window_title);
+		TextView windowTitle = (TextView) findViewById(R.id.window_title_text);
+		windowTitle.setText(title);
+	}
+	
 	private void updateVerionLabel() {
 		TextView versionView = (TextView) findViewById(R.id.version_label);
 		String template = getString(R.string.version_label);
@@ -39,7 +49,7 @@ public class AboutAppActivity extends Activity {
 
 	public void sendFeedback(View view) {
 		Intent intent = new Intent(Intent.ACTION_SEND);
-		intent.putExtra(Intent.EXTRA_EMAIL, new String[] { FEEDBACK_EMAIL } );
+		intent.putExtra(Intent.EXTRA_EMAIL, new String[] { FEEDBACK_EMAIL });
 		intent.putExtra(Intent.EXTRA_SUBJECT, composeFeedbackEmailSubject());
 		intent.setType("message/rfc822");
 		startActivity(Intent.createChooser(intent, null));
