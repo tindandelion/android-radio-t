@@ -8,12 +8,16 @@
 		android:id="@+id/main_title"
 		android:layout_width="wrap_content"
 		android:layout_height="fill_parent"
-		android:textColor="@android:color/white"
+		android:textColor="#606060"
 		android:gravity="bottom"
 		android:paddingBottom="7dp"
 		android:textStyle="bold"
 		android:textSize="23dp"
 		android:textScaleX="1.1"
+		android:shadowColor="#с9с9с9"
+		android:shadowDx="0"
+		android:shadowDy="0"
+		android:shadowRadius="2"
 		android:text="@string/main_title" />
 	<ImageView
 		android:id="@+id/logo_image"
