@@ -97,7 +97,7 @@
 		name="Radiot.WindowTitleBackground"
 		parent="android:WindowTitleBackground">
 		<item
-			name="android:background">#5692d4</item>
+			name="android:background">@drawable/window_title_background</item>
 	</style>
 	<style
 		name="Radiot.WindowTitle"
