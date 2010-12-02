@@ -26,4 +26,10 @@
 		<item
 			name="android:windowTitleBackgroundStyle">@style/Radiot.WindowTitleBackground</item>
 	</style>
+	<style
+		name="Theme.Radiot.Light.NoTitle"
+		parent="Theme.Radiot.Light">
+		<item
+			name="android:windowNoTitle">true</item>
+	</style>
 </resources>

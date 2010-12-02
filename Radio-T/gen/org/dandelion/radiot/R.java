@@ -120,6 +120,7 @@ public final class R {
         public static final int Radiot_WindowTitleBackground=0x7f060007;
         public static final int Theme_Radiot=0x7f060009;
         public static final int Theme_Radiot_Light=0x7f06000b;
+        public static final int Theme_Radiot_Light_NoTitle=0x7f06000c;
         public static final int Theme_RadiotNoTitle=0x7f06000a;
     }
 }
