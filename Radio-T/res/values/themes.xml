@@ -18,7 +18,7 @@
 		name="Theme.Radiot.Light"
 		parent="android:Theme.Light">
 		<item
-			name="android:background">#c9e2fc</item>
+			name="android:windowBackground">@drawable/window_background</item>
 		<item
 			name="android:buttonStyle">@style/Radiot.Button</item>
 		<item

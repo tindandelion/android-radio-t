@@ -34,6 +34,7 @@ public final class R {
         public static final int icon=0x7f02000c;
         public static final int logo=0x7f02000d;
         public static final int podcast_image_background=0x7f02000e;
+        public static final int window_background=0x7f02000f;
     }
     public static final class id {
         public static final int acknoledgements=0x7f090003;
