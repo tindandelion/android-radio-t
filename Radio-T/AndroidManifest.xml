@@ -17,9 +17,9 @@
 			android:name="PodcastListActivity" />
 		<activity
 			android:name=".live.LiveShowActivity"
-			android:label="@string/live_show_title"
+			android:label=""
 			android:screenOrientation="portrait"
-			android:theme="@style/Theme.RadiotNoTitle" />
+			android:theme="@style/Theme.Radiot.Light" />
 		<activity
 			android:name=".home_screen.AboutAppActivity"
 			android:label=""

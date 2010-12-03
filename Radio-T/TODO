@@ -1,3 +1,2 @@
-* Remove black line at the bottom of the title
-* Play with gradient title background
 * Add title icon
+* For lists, consider using cacheColorHint
