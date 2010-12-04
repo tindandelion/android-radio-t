@@ -19,23 +19,26 @@ public final class R {
         public static final int button_text_color=0x7f070000;
     }
     public static final class drawable {
-        public static final int button_background=0x7f020000;
-        public static final int default_podcast_image=0x7f020001;
-        public static final int divider_background=0x7f020002;
-        public static final int ic_list_about=0x7f020003;
-        public static final int ic_list_aftershow=0x7f020004;
-        public static final int ic_list_liveshow=0x7f020005;
-        public static final int ic_list_podcasts=0x7f020006;
-        public static final int ic_menu_home=0x7f020007;
-        public static final int ic_menu_refresh=0x7f020008;
-        public static final int ic_notification_live=0x7f020009;
-        public static final int ic_title_about=0x7f02000a;
-        public static final int ic_title_liveshow=0x7f02000b;
-        public static final int icon=0x7f02000c;
-        public static final int logo=0x7f02000d;
-        public static final int podcast_image_background=0x7f02000e;
-        public static final int window_background=0x7f02000f;
-        public static final int window_title_background=0x7f020010;
+        public static final int btn_focused=0x7f020000;
+        public static final int btn_normal=0x7f020001;
+        public static final int btn_pressed=0x7f020002;
+        public static final int button_background=0x7f020003;
+        public static final int default_podcast_image=0x7f020004;
+        public static final int divider_background=0x7f020005;
+        public static final int ic_list_about=0x7f020006;
+        public static final int ic_list_aftershow=0x7f020007;
+        public static final int ic_list_liveshow=0x7f020008;
+        public static final int ic_list_podcasts=0x7f020009;
+        public static final int ic_menu_home=0x7f02000a;
+        public static final int ic_menu_refresh=0x7f02000b;
+        public static final int ic_notification_live=0x7f02000c;
+        public static final int ic_title_about=0x7f02000d;
+        public static final int ic_title_liveshow=0x7f02000e;
+        public static final int icon=0x7f02000f;
+        public static final int logo=0x7f020010;
+        public static final int podcast_image_background=0x7f020011;
+        public static final int window_background=0x7f020012;
+        public static final int window_title_background=0x7f020013;
     }
     public static final class id {
         public static final int acknoledgements=0x7f090003;

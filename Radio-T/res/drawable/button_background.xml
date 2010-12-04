@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list
+<selector
 	xmlns:android="http://schemas.android.com/apk/res/android">
 	<item
-		android:drawable="@drawable/divider_background" />
+		android:state_pressed="true"
+		android:drawable="@drawable/btn_pressed" />
 	<item
-		android:drawable="@android:drawable/list_selector_background" />
-</layer-list>
+		android:state_focused="true"
+		android:drawable="@drawable/btn_focused" />
+	<item
+		android:drawable="@drawable/btn_normal" />
+</selector>
