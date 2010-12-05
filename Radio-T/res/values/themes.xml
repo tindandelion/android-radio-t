@@ -23,6 +23,8 @@
 			name="android:buttonStyle">@style/Radiot.Button</item>
 		<item
 			name="android:windowTitleBackgroundStyle">@style/Radiot.WindowTitleBackground</item>
+		<item
+			name="android:listDivider">@android:drawable/divider_horizontal_bright</item>
 	</style>
 	<style
 		name="Theme.Radiot.Light.NoTitle"

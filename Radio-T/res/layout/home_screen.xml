@@ -34,5 +34,6 @@
 		android:layout_height="wrap_content"
 		android:layout_below="@id/home_screen_header"
 		android:layout_marginTop="20dp"
+		android:divider="@android:drawable/divider_horizontal_bright"
 		android:background="@drawable/divider_background" />
 </RelativeLayout>

@@ -5,7 +5,7 @@
 		android:id="@+id/live_topics_list"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
-		android:cacheColorHint="#00000000" />
+		android:cacheColorHint="@color/theme_background" />
 	<ProgressBar
 		android:id="@+id/live_topics_progress"
 		android:visibility="gone"

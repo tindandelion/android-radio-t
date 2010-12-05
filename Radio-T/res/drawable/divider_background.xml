@@ -3,12 +3,12 @@
 	xmlns:android="http://schemas.android.com/apk/res/android">
 	<item>
 		<bitmap
-			android:src="@android:drawable/divider_horizontal_dark"
+			android:src="@android:drawable/divider_horizontal_bright"
 			android:gravity="fill_horizontal|top" />
 	</item>
 	<item>
 		<bitmap
-			android:src="@android:drawable/divider_horizontal_dark"
+			android:src="@android:drawable/divider_horizontal_bright"
 			android:gravity="fill_horizontal|bottom" />
 	</item>
 </layer-list>
