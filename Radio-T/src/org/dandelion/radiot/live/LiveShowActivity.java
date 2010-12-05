@@ -1,7 +1,6 @@
 package org.dandelion.radiot.live;
 
 import org.dandelion.radiot.R;
-import org.dandelion.radiot.RadiotActivity;
 import org.dandelion.radiot.home_screen.HomeScreenActivity;
 
 import android.app.Activity;
@@ -21,7 +20,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class LiveShowActivity extends RadiotActivity {
+public class LiveShowActivity extends Activity {
 	protected LiveShowService service;
 
 	protected BroadcastReceiver onPlaybackState = new BroadcastReceiver() {
@@ -43,18 +42,9 @@ public class LiveShowActivity extends RadiotActivity {
 	private LiveShowPresenter visitor;
 	
 	@Override
-	protected int getContentViewId() {
-		return R.layout.live_show_screen;
-	}
-	
-	@Override
-	protected int getTitleId() {
-		return R.string.live_show_title;
-	}
-
-	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.live_show_screen);
 		visitor = new LiveShowPresenter(this);
 		statusLabels = getResources().getStringArray(
 				R.array.live_show_status_labels);

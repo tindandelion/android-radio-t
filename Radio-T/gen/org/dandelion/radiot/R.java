@@ -44,7 +44,7 @@ public final class R {
         public static final int acknoledgements=0x7f090003;
         public static final int app_info=0x7f090000;
         public static final int feedback_button=0x7f090004;
-        public static final int go_home=0x7f09001d;
+        public static final int go_home=0x7f09001c;
         public static final int home_screen_header=0x7f090007;
         public static final int home_screen_item_icon=0x7f09000a;
         public static final int home_screen_item_title=0x7f09000b;
@@ -69,9 +69,8 @@ public final class R {
         public static final int podcast_item_view_shownotes=0x7f09001a;
         public static final int podcast_item_view_tags=0x7f09001b;
         public static final int podcasts_menu=0x7f090009;
-        public static final int refresh=0x7f09001e;
+        public static final int refresh=0x7f09001d;
         public static final int version_label=0x7f090002;
-        public static final int window_title_text=0x7f09001c;
     }
     public static final class layout {
         public static final int about_app=0x7f030000;
@@ -83,7 +82,6 @@ public final class R {
         public static final int live_topic_list_item=0x7f030006;
         public static final int playback_control=0x7f030007;
         public static final int podcast_list_item=0x7f030008;
-        public static final int window_title=0x7f030009;
     }
     public static final class menu {
         public static final int default_menu=0x7f080000;
@@ -110,18 +108,13 @@ public final class R {
         public static final int version_label=0x7f04000b;
     }
     public static final class style {
-        public static final int ActivityIcon=0x7f060004;
-        public static final int ActivityTitle=0x7f060003;
-        public static final int Divider=0x7f060005;
         public static final int InfoBox=0x7f060000;
         public static final int Radiot_Button=0x7f060002;
-        public static final int Radiot_TextAppearance_WindowTitle=0x7f060006;
         public static final int Radiot_TextView=0x7f060001;
-        public static final int Radiot_WindowTitle=0x7f060008;
-        public static final int Radiot_WindowTitleBackground=0x7f060007;
-        public static final int Theme_Radiot=0x7f060009;
-        public static final int Theme_Radiot_Light=0x7f06000b;
-        public static final int Theme_Radiot_Light_NoTitle=0x7f06000c;
-        public static final int Theme_RadiotNoTitle=0x7f06000a;
+        public static final int Radiot_WindowTitleBackground=0x7f060003;
+        public static final int Theme_Radiot=0x7f060004;
+        public static final int Theme_Radiot_Light=0x7f060006;
+        public static final int Theme_Radiot_Light_NoTitle=0x7f060007;
+        public static final int Theme_RadiotNoTitle=0x7f060005;
     }
 }

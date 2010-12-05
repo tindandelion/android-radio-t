@@ -1,8 +1,8 @@
 package org.dandelion.radiot.home_screen;
 
 import org.dandelion.radiot.R;
-import org.dandelion.radiot.RadiotActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -10,25 +10,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-public class AboutAppActivity extends RadiotActivity {
+public class AboutAppActivity extends Activity {
 	private static final String FEEDBACK_EMAIL = "apps.dandelion@gmail.com";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.about_app);
 		updateVerionLabel();
 	}
-
-	@Override
-	protected int getContentViewId() {
-		return R.layout.about_app;
-	}
-	
-	@Override
-	protected int getTitleId() {
-		return R.string.about_app_title;
-	}
-
 	
 	private void updateVerionLabel() {
 		TextView versionView = (TextView) findViewById(R.id.version_label);
