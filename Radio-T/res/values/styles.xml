@@ -33,9 +33,7 @@
 		<item
 			name="android:textColor">@color/button_text_color</item>
 		<item
-			name="android:textSize">25sp</item>
-		<item
-			name="android:padding">8dp</item>
+			name="android:textAppearance">?android:attr/textAppearanceMedium</item>
 		<item
 			name="android:background">@drawable/button_background</item>
 	</style>
