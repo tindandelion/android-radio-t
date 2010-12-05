@@ -37,8 +37,8 @@ public final class R {
         public static final int icon=0x7f02000f;
         public static final int logo=0x7f020010;
         public static final int podcast_image_background=0x7f020011;
-        public static final int window_background=0x7f020012;
-        public static final int window_title_background=0x7f020013;
+        public static final int title_bar=0x7f020012;
+        public static final int window_background=0x7f020013;
     }
     public static final class id {
         public static final int acknoledgements=0x7f090003;
