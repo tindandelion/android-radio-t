@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<color
+		name="theme_background">#c9e2fc</color>
+	<color
+		name="theme_foreground">#5692d4</color>
+	<color
+		name="theme_foreground_dark">#1f5085</color>
+</resources>
