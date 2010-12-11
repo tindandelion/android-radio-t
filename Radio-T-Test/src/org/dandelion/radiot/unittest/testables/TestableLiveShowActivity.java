@@ -15,7 +15,7 @@ public class TestableLiveShowActivity extends LiveShowActivity {
 	}
 
 	public boolean isServiceConnected() {
-		return service != null;
+		return getService() != null;
 	}
 
 	public void resetVisualState() {

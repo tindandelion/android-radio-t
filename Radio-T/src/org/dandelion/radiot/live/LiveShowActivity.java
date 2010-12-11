@@ -5,67 +5,37 @@ import org.dandelion.radiot.home_screen.HomeScreenActivity;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
 public class LiveShowActivity extends Activity {
-	protected LiveShowService service;
-
 	protected BroadcastReceiver onPlaybackState = new BroadcastReceiver() {
 		public void onReceive(Context context, Intent intent) {
 			updateVisualState();
 		}
 	};
-	private ServiceConnection onService = new ServiceConnection() {
-		public void onServiceDisconnected(ComponentName name) {
-		}
-
-		public void onServiceConnected(ComponentName name, IBinder binder) {
-			service = ((LiveShowService.LocalBinder) binder).getService();
-			updateVisualState();
-		}
-	};
-	private LiveShowPresenter visitor;
+	
 	private LiveShowPlaybackControl playbackControl;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.live_show_screen);
-		visitor = new LiveShowPresenter(this);
 		playbackControl = (LiveShowPlaybackControl) findViewById(R.id.live_show_playback_control);
-		playbackControl.onButtonClick(new View.OnClickListener() {
-			public void onClick(View v) {
-				visitor.switchPlaybackState(service.getCurrentState());
-			}
-		});
 	}
 
 	@Override
 	protected void onStart() {
 		super.onStart();
-		Intent i = new Intent(this, LiveShowService.class);
-		startService(i);
-		bindService(i, onService, 0);
-		registerReceiver(onPlaybackState, new IntentFilter(
-				LiveShowService.PLAYBACK_STATE_CHANGED));
+		playbackControl.onStart(onPlaybackState);
 	}
 
 	@Override
 	protected void onStop() {
-		unregisterReceiver(onPlaybackState);
-		unbindService(onService);
-		service = null;
-		visitor.stopTimer();
+		playbackControl.onStop(onPlaybackState);
 		super.onStop();
 	}
 
@@ -84,28 +54,11 @@ public class LiveShowActivity extends Activity {
 	}
 
 	protected void updateVisualState() {
-		if (service != null)
-			service.acceptVisitor(visitor);
+		playbackControl.updateVisualState();
+	}
+	
+	public LiveShowService getService() { 
+		return playbackControl.getService();
 	}
 
-	public LiveShowService getService() {
-		return service;
-	}
-
-	public void setButtonState(int labelId, boolean enabled) {
-		playbackControl.setButtonState(labelId, enabled);
-	}
-
-	public void setStatusLabel(int labelId) {
-		playbackControl.setStatusLabel(labelId);
-	}
-
-	public void setElapsedTime(long seconds) {
-		playbackControl.setElapsedTime(seconds);
-	}
-
-	public void showWaitingHint() {
-		Toast.makeText(this, R.string.live_show_waiting_hint,
-				Toast.LENGTH_SHORT).show();
-	}
 }
