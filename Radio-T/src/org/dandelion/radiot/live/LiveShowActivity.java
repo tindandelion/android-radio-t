@@ -4,20 +4,11 @@ import org.dandelion.radiot.R;
 import org.dandelion.radiot.home_screen.HomeScreenActivity;
 
 import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 public class LiveShowActivity extends Activity {
-	protected BroadcastReceiver onPlaybackState = new BroadcastReceiver() {
-		public void onReceive(Context context, Intent intent) {
-			updateVisualState();
-		}
-	};
-	
 	private LiveShowPlaybackControl playbackControl;
 
 	@Override
@@ -30,12 +21,12 @@ public class LiveShowActivity extends Activity {
 	@Override
 	protected void onStart() {
 		super.onStart();
-		playbackControl.onStart(onPlaybackState);
+		playbackControl.onStart();
 	}
 
 	@Override
 	protected void onStop() {
-		playbackControl.onStop(onPlaybackState);
+		playbackControl.onStop();
 		super.onStop();
 	}
 
@@ -52,13 +43,9 @@ public class LiveShowActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-
-	protected void updateVisualState() {
-		playbackControl.updateVisualState();
-	}
 	
-	public LiveShowService getService() { 
-		return playbackControl.getService();
+	public void stopPlayback() {
+		playbackControl.stopPlayback();
 	}
 
 }

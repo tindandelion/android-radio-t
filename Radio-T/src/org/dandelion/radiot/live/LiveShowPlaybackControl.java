@@ -29,6 +29,12 @@ public class LiveShowPlaybackControl extends RelativeLayout implements
 	private LiveShowPresenter presenter;
 	private LiveShowService service;
 	
+	protected BroadcastReceiver onPlaybackState = new BroadcastReceiver() {
+		public void onReceive(Context context, Intent intent) {
+			updateVisualState();
+		}
+	};
+	
 	private ServiceConnection onService = new ServiceConnection() {
 		public void onServiceDisconnected(ComponentName name) {
 		}
@@ -70,8 +76,6 @@ public class LiveShowPlaybackControl extends RelativeLayout implements
 		button.setOnClickListener(onButtonClick);
 	}
 
-	// Called externally from the activity, until the logic is moved here
-
 	public void setStatusLabel(int labelId) {
 		statusLabel.setText(statusLabels[labelId]);
 	}
@@ -96,29 +100,25 @@ public class LiveShowPlaybackControl extends RelativeLayout implements
 				Toast.LENGTH_SHORT).show();
 	}
 
-	public void onStart(BroadcastReceiver onPlaybackState) {
+	public void onStart() {
 		Context context = getContext();
 		Intent i = new Intent(context, LiveShowService.class);
 		context.startService(i);
 		context.bindService(i, onService, 0);
-		context.registerReceiver(onPlaybackState, new IntentFilter(
+		context.registerReceiver(this.onPlaybackState, new IntentFilter(
 				LiveShowService.PLAYBACK_STATE_CHANGED));
 	}
 
-	public void onStop(BroadcastReceiver onPlaybackState) {
+	public void onStop() {
 		Context context = getContext();
-		context.unregisterReceiver(onPlaybackState);
+		context.unregisterReceiver(this.onPlaybackState);
 		context.unbindService(onService);
 		service = null;
 		presenter.stopTimer();
 	}
-
-	public LiveShowService getService() {
-		return service;
-	}
-
-	public void setService(LiveShowService service) {
-		this.service = service;
+	
+	public void stopPlayback() {
+		service.stopPlayback();
 	}
 
 	public void updateVisualState() {
