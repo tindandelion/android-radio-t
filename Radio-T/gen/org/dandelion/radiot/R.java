@@ -115,11 +115,12 @@ public final class R {
     public static final class style {
         public static final int InfoBox=0x7f070000;
         public static final int Radiot_Button=0x7f070002;
+        public static final int Radiot_ListView=0x7f070003;
         public static final int Radiot_TextView=0x7f070001;
-        public static final int Radiot_WindowTitleBackground=0x7f070003;
-        public static final int Theme_Radiot=0x7f070004;
-        public static final int Theme_Radiot_Light=0x7f070006;
-        public static final int Theme_Radiot_Light_NoTitle=0x7f070007;
-        public static final int Theme_RadiotNoTitle=0x7f070005;
+        public static final int Radiot_WindowTitleBackground=0x7f070004;
+        public static final int Theme_Radiot=0x7f070005;
+        public static final int Theme_Radiot_Light=0x7f070007;
+        public static final int Theme_Radiot_Light_NoTitle=0x7f070008;
+        public static final int Theme_RadiotNoTitle=0x7f070006;
     }
 }

@@ -46,6 +46,14 @@
 			name="android:shadowRadius">0.5</item>
 	</style>
 	<style
+		name="Radiot.ListView"
+		parent="@android:style/Widget.ListView.White">
+		<item
+			name="android:background">@android:color/transparent</item>
+		<item
+			name="android:cacheColorHint">@color/theme_background</item>
+	</style>
+	<style
 		name="Radiot.WindowTitleBackground"
 		parent="android:WindowTitleBackground">
 		<item
