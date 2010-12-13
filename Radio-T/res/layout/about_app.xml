@@ -26,7 +26,7 @@
 			android:layout_marginTop="12dp"
 			android:gravity="center_horizontal" />
 		<TextView
-			android:id="@+id/acknoledgements"
+			android:id="@+id/acknowledgements"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:layout_below="@id/version_label"
@@ -45,7 +45,5 @@
 		android:layout_centerInParent="true"
 		android:text="@string/feedback_label"
 		android:layout_alignParentBottom="true"
-		android:layout_marginLeft="5dp"
-		android:layout_marginRight="5dp"
 		android:onClick="sendFeedback" />
 </RelativeLayout>

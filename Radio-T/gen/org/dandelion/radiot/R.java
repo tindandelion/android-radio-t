@@ -45,7 +45,7 @@ public final class R {
         public static final int window_background=0x7f020014;
     }
     public static final class id {
-        public static final int acknoledgements=0x7f090003;
+        public static final int acknowledgements=0x7f090003;
         public static final int app_info=0x7f090000;
         public static final int feedback_button=0x7f090004;
         public static final int go_home=0x7f09001c;
