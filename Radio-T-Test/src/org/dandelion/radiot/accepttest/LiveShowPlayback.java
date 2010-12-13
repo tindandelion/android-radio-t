@@ -33,25 +33,25 @@ public class LiveShowPlayback extends
 	}
 	
 	public void testStartStopPlayback() throws Exception {
-		solo.clickOnButton("Подключиться");
+		togglePlayback();
 		assertTrue(solo.waitForText("Трансляция"));
-		solo.clickOnButton("Остановить");
+		togglePlayback();
 		assertTrue(solo.waitForText("Остановлено"));
 	}
 	
 	public void testStartingAndStoppingPlayback() throws Exception {
-		solo.clickOnButton("Подключиться");
+		togglePlayback();
 		assertTrue(solo.waitForText("Трансляция"));
-		solo.clickOnButton("Остановить");
+		togglePlayback();
 		assertTrue(solo.waitForText("Остановлено"));
-		solo.clickOnButton("Подключиться");
+		togglePlayback();
 		assertTrue(solo.waitForText("Трансляция"));
 	}
 	
 	public void testTryToReconnectContinuouslyInWaitingMode() throws Exception {
 		configureForConnectError();
 		
-		solo.clickOnButton("Подключиться");
+		togglePlayback();
 		assertTrue(solo.waitForText("Ожидание"));
 		
 		// Switch back to existing URL 
@@ -63,11 +63,15 @@ public class LiveShowPlayback extends
 	public void testStopWaiting() throws Exception {
 		configureForConnectError();
 		
-		solo.clickOnButton("Подключиться");
+		togglePlayback();
 		assertTrue(solo.waitForText("Ожидание"));
-		solo.clickOnButton("Остановить");
+		togglePlayback();
 		
 		assertTrue(solo.waitForText("Остановлено"));
+	}
+	
+	private void togglePlayback() {
+		solo.clickOnButton(0);
 	}
 	
 	private void configureForConnectError() {
