@@ -22,6 +22,8 @@
 		<item
 			name="android:buttonStyle">@style/Radiot.Button</item>
 		<item
+			name="android:imageButtonStyle">@style/Radiot.Button</item>
+		<item
 			name="android:windowTitleBackgroundStyle">@style/Radiot.WindowTitleBackground</item>
 		<item
 			name="android:listViewStyle">@style/Radiot.ListView</item>

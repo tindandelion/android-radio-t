@@ -71,7 +71,7 @@ public class LiveShowPlayback extends
 	}
 	
 	private void togglePlayback() {
-		solo.clickOnButton(0);
+		solo.clickOnImageButton(0);
 	}
 	
 	private void configureForConnectError() {

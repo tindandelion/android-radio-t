@@ -2,30 +2,23 @@
 <merge
 	xmlns:android="http://schemas.android.com/apk/res/android">
 	<TextView
-		android:id="@+id/playback_state_label"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:textStyle="bold"
-		android:typeface="sans"
-		android:textScaleX="1.1"
-		android:layout_alignParentTop="true"
-		android:layout_alignParentRight="true"
-		android:gravity="right" />
-	<TextView
 		android:id="@+id/live_timer_label"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:textStyle="bold"
-		android:textScaleX="1.1"
-		android:gravity="center_horizontal"
-		android:layout_alignParentTop="true"
-		android:layout_alignParentLeft="true"
-		android:typeface="sans" />
-	<Button
+		android:layout_alignParentRight="true"
+		android:layout_centerVertical="true" />
+	<ImageButton
 		android:id="@+id/live_show_action_button"
 		android:layout_height="wrap_content"
-		android:layout_width="fill_parent"
-		android:layout_below="@id/live_timer_label"
-		android:layout_centerHorizontal="true"
+		android:layout_width="100dp"
+		android:layout_alignParentLeft="true"
 		android:onClick="onButtonClicked" />
+	<TextView
+		android:id="@+id/playback_state_label"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_toRightOf="@id/live_show_action_button"
+		android:layout_toLeftOf="@id/live_timer_label"
+		android:layout_centerVertical="true"
+		android:gravity="center" />
 </merge>

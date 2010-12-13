@@ -14,27 +14,30 @@ import android.text.format.DateUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class LiveShowPlaybackControl extends RelativeLayout implements
 		ILiveShowPlaybackView {
+	private static int[] buttonLabels = { 
+		android.R.drawable.ic_media_pause,
+		android.R.drawable.ic_media_play
+	};
 	private TextView statusLabel;
 	private String[] statusLabels;
 	private TextView timerLabel;
-	private Button button;
-	private String[] buttonLabels;
+	private ImageButton button;
 	private LiveShowPresenter presenter;
 	private LiveShowService service;
-	
+
 	protected BroadcastReceiver onPlaybackState = new BroadcastReceiver() {
 		public void onReceive(Context context, Intent intent) {
 			updateVisualState();
 		}
 	};
-	
+
 	private ServiceConnection onService = new ServiceConnection() {
 		public void onServiceDisconnected(ComponentName name) {
 		}
@@ -44,7 +47,7 @@ public class LiveShowPlaybackControl extends RelativeLayout implements
 			updateVisualState();
 		}
 	};
-	
+
 	private OnClickListener onButtonClick = new OnClickListener() {
 		public void onClick(View v) {
 			presenter.switchPlaybackState(service.getCurrentState());
@@ -61,8 +64,6 @@ public class LiveShowPlaybackControl extends RelativeLayout implements
 	private void initResources() {
 		statusLabels = getResources().getStringArray(
 				R.array.live_show_status_labels);
-		buttonLabels = getResources().getStringArray(
-				R.array.live_show_button_labels);
 	}
 
 	private void inflateLayout() {
@@ -72,7 +73,7 @@ public class LiveShowPlaybackControl extends RelativeLayout implements
 
 		statusLabel = (TextView) findViewById(R.id.playback_state_label);
 		timerLabel = (TextView) findViewById(R.id.live_timer_label);
-		button = (Button) findViewById(R.id.live_show_action_button);
+		button = (ImageButton) findViewById(R.id.live_show_action_button);
 		button.setOnClickListener(onButtonClick);
 	}
 
@@ -91,7 +92,7 @@ public class LiveShowPlaybackControl extends RelativeLayout implements
 	}
 
 	public void setButtonState(int labelId, boolean enabled) {
-		button.setText(buttonLabels[labelId]);
+		button.setImageResource(buttonLabels[labelId]);
 		button.setEnabled(enabled);
 	}
 
@@ -116,7 +117,7 @@ public class LiveShowPlaybackControl extends RelativeLayout implements
 		service = null;
 		presenter.stopTimer();
 	}
-	
+
 	public void stopPlayback() {
 		service.stopPlayback();
 	}
