@@ -2,7 +2,6 @@ package org.dandelion.radiot.live;
 
 import org.dandelion.radiot.R;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -10,7 +9,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.IBinder;
-import android.text.format.DateUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +25,6 @@ public class LiveShowPlaybackControl extends RelativeLayout implements
 	};
 	private TextView statusLabel;
 	private String[] statusLabels;
-	private TextView timerLabel;
 	private ImageButton button;
 	private LiveShowPresenter presenter;
 	private LiveShowService service;
@@ -72,7 +69,6 @@ public class LiveShowPlaybackControl extends RelativeLayout implements
 		inflater.inflate(R.layout.live_show_playback_control, this);
 
 		statusLabel = (TextView) findViewById(R.id.playback_state_label);
-		timerLabel = (TextView) findViewById(R.id.live_timer_label);
 		button = (ImageButton) findViewById(R.id.live_show_action_button);
 		button.setOnClickListener(onButtonClick);
 	}
@@ -82,13 +78,6 @@ public class LiveShowPlaybackControl extends RelativeLayout implements
 	}
 
 	public void setElapsedTime(final long seconds) {
-		// TODO: Get rid of dependency to activity
-		Activity activity = (Activity) getContext();
-		activity.runOnUiThread(new Runnable() {
-			public void run() {
-				timerLabel.setText(DateUtils.formatElapsedTime(seconds));
-			}
-		});
 	}
 
 	public void setButtonState(int labelId, boolean enabled) {

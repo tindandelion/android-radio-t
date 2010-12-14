@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge
 	xmlns:android="http://schemas.android.com/apk/res/android">
-	<TextView
-		android:id="@+id/live_timer_label"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_alignParentRight="true"
-		android:layout_centerVertical="true" />
 	<ImageButton
 		android:id="@+id/live_show_action_button"
 		android:layout_height="wrap_content"
@@ -18,7 +12,12 @@
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:layout_toRightOf="@id/live_show_action_button"
-		android:layout_toLeftOf="@id/live_timer_label"
+		android:layout_alignParentRight="true"
 		android:layout_centerVertical="true"
+		android:textAppearance="@android:style/TextAppearance.Large.Inverse"
+		android:shadowColor="#ff000000"
+		android:shadowRadius="0.7"
+		android:shadowDx="-1"
+		android:shadowDy="-1"
 		android:gravity="center" />
 </merge>
