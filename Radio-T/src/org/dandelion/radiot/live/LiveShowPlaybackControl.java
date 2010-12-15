@@ -20,8 +20,8 @@ import android.widget.Toast;
 public class LiveShowPlaybackControl extends RelativeLayout implements
 		ILiveShowPlaybackView {
 	private static int[] buttonLabels = { 
-		android.R.drawable.ic_media_pause,
-		android.R.drawable.ic_media_play
+		R.drawable.ic_stop,
+		R.drawable.ic_play
 	};
 	private TextView statusLabel;
 	private String[] statusLabels;
