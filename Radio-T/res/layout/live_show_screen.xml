@@ -13,12 +13,13 @@
 		android:paddingTop="10dp"
 		android:paddingLeft="5dp"
 		android:paddingRight="5dp"
-		android:gravity="center" />
+		android:gravity="center"
+		android:visibility="gone" />
 	<org.dandelion.radiot.live.LiveShowPlaybackControl
 		android:id="@+id/live_show_playback_control"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:background="@color/theme_foreground_dark"
+		android:background="@drawable/panel_bgnd"
 		android:layout_alignParentBottom="true" />
 	<org.dandelion.radiot.live.LiveShowTopics
 		android:id="@+id/live_show_topics"
