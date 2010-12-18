@@ -19,7 +19,7 @@
 		android:id="@+id/live_show_playback_control"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:background="@drawable/panel_bgnd"
+		android:background="@drawable/panel_bar"
 		android:layout_alignParentBottom="true" />
 	<org.dandelion.radiot.live.LiveShowTopics
 		android:id="@+id/live_show_topics"

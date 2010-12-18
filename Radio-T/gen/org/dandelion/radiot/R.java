@@ -16,8 +16,9 @@ public final class R {
     public static final class attr {
     }
     public static final class color {
-        public static final int button_text_color=0x7f040003;
+        public static final int button_text_color=0x7f040004;
         public static final int theme_background=0x7f040000;
+        public static final int theme_border=0x7f040003;
         public static final int theme_foreground=0x7f040001;
         public static final int theme_foreground_dark=0x7f040002;
     }
@@ -42,10 +43,9 @@ public final class R {
         public static final int ic_title_liveshow=0x7f020011;
         public static final int icon=0x7f020012;
         public static final int logo=0x7f020013;
-        public static final int panel_bgnd=0x7f020014;
+        public static final int panel_bar=0x7f020014;
         public static final int podcast_image_background=0x7f020015;
-        public static final int title_bar=0x7f020016;
-        public static final int window_background=0x7f020017;
+        public static final int window_background=0x7f020016;
     }
     public static final class id {
         public static final int acknowledgements=0x7f090003;

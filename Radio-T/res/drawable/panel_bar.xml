@@ -7,4 +7,6 @@
 		android:angle="270" />
 	<padding
 		android:left="5dp" />
+	<padding
+		android:right="5dp" />
 </shape>

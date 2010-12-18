@@ -57,6 +57,6 @@
 		name="Radiot.WindowTitleBackground"
 		parent="android:WindowTitleBackground">
 		<item
-			name="android:background">@drawable/title_bar</item>
+			name="android:background">@drawable/panel_bar</item>
 	</style>
 </resources>

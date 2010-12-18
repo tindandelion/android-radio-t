@@ -6,4 +6,6 @@
 		name="theme_foreground">#5692d4</color>
 	<color
 		name="theme_foreground_dark">#1f5085</color>
+	<color
+		name="theme_border">#a2c7ef</color>
 </resources>
