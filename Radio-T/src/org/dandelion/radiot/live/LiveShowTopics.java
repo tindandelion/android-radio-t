@@ -112,8 +112,16 @@ class LiveTopicsAdapter extends ArrayAdapter<ShowTopic> {
 		ShowTopic item = getItem(position);
 
 		TextView titleView = (TextView) view
-				.findViewById(R.id.live_topic_item_title);
+				.findViewById(R.id.live_topic_item_content);
 		titleView.setText(item.title);
+
+		TextView dateView = (TextView) view
+				.findViewById(R.id.live_topic_item_datetime);
+		dateView.setText("18.12.2010");
+
+		TextView sourceView = (TextView) view
+				.findViewById(R.id.live_topic_item_source);
+		sourceView.setText("www.google.com");
 
 		return view;
 	}

@@ -59,9 +59,9 @@ public final class R {
         public static final int live_show_info=0x7f09000e;
         public static final int live_show_playback_control=0x7f09000f;
         public static final int live_show_topics=0x7f090010;
+        public static final int live_topic_item_content=0x7f090014;
         public static final int live_topic_item_datetime=0x7f090015;
-        public static final int live_topic_item_source=0x7f090014;
-        public static final int live_topic_item_title=0x7f090013;
+        public static final int live_topic_item_source=0x7f090013;
         public static final int live_topics_list=0x7f090011;
         public static final int live_topics_progress=0x7f090012;
         public static final int logo=0x7f090001;
