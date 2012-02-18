@@ -58,15 +58,8 @@ public class PodcastListActivity extends ListActivity implements IView {
 		extras = getIntent().getExtras();
 		setTitle(getTitleFromExtra());
 		initListAdapter();
-		initList();
 		setPodcastPlayer(new ExternalPlayer());
 		attachToEngine();
-	}
-
-	private void initList() {
-		ListView listView = (ListView) findViewById(android.R.id.list);
-		int colorHint = getResources().getColor(R.color.theme_background);
-		listView.setCacheColorHint(colorHint);
 	}
 
 	protected void attachToEngine() {
@@ -83,7 +76,7 @@ public class PodcastListActivity extends ListActivity implements IView {
 		super.onResume();
 		engine.refresh(false);
 	}
-
+	
 	@Override
 	protected void onStop() {
 		super.onStop();
@@ -120,7 +113,7 @@ public class PodcastListActivity extends ListActivity implements IView {
 		case R.id.refresh:
 			engine.refresh(true);
 			return true;
-		case R.id.go_home:
+		case R.id.go_home: 
 			HomeScreenActivity.start(this);
 		default:
 			return super.onOptionsItemSelected(item);

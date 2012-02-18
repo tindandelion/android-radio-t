@@ -28,30 +28,34 @@ public class LiveShowPlayback extends
 	
 	@Override
 	protected void tearDown() throws Exception {
-		activity.stopPlayback();
+		activity.getService().stopPlayback();
 		super.tearDown();
 	}
 	
-	public void testStartStopPlayback() throws Exception {
-		togglePlayback();
+	public void testStartPlayback() throws Exception {
+		solo.clickOnButton("Подключиться");
 		assertTrue(solo.waitForText("Трансляция"));
-		togglePlayback();
+	}
+	
+	public void testStopPlaybackWhenPressingStop() throws Exception {
+		solo.clickOnButton("Подключиться");
+		assertTrue(solo.waitForText("Трансляция"));
+		solo.clickOnButton("Остановить");
 		assertTrue(solo.waitForText("Остановлено"));
 	}
 	
-	public void testStartingAndStoppingPlayback() throws Exception {
-		togglePlayback();
+	public void testRestartPlaybackAfterExplicitStop() throws Exception {
+		solo.clickOnButton("Подключиться");
 		assertTrue(solo.waitForText("Трансляция"));
-		togglePlayback();
-		assertTrue(solo.waitForText("Остановлено"));
-		togglePlayback();
+		solo.clickOnButton("Остановить");
+		solo.clickOnButton("Подключиться");
 		assertTrue(solo.waitForText("Трансляция"));
 	}
 	
 	public void testTryToReconnectContinuouslyInWaitingMode() throws Exception {
 		configureForConnectError();
 		
-		togglePlayback();
+		solo.clickOnButton("Подключиться");
 		assertTrue(solo.waitForText("Ожидание"));
 		
 		// Switch back to existing URL 
@@ -63,21 +67,17 @@ public class LiveShowPlayback extends
 	public void testStopWaiting() throws Exception {
 		configureForConnectError();
 		
-		togglePlayback();
+		solo.clickOnButton("Подключиться");
 		assertTrue(solo.waitForText("Ожидание"));
-		togglePlayback();
+		solo.clickOnButton("Остановить");
 		
 		assertTrue(solo.waitForText("Остановлено"));
-	}
-	
-	private void togglePlayback() {
-		solo.clickOnImageButton(0);
 	}
 	
 	private void configureForConnectError() {
 		// Try to connect to non-existent url to simulate 
 		LiveShowState.setLiveShowUrl("http://non-existent");
-		// And set the wait timeout to a smaller value
-		LiveShowState.setWaitTimeoutSeconds(10);
+		// And set the wait timeout to a small value
+		LiveShowState.setWaitTimeoutSeconds(1);
 	}
 }

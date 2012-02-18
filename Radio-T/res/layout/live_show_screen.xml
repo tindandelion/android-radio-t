@@ -3,28 +3,72 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
+	<ImageView
+		android:id="@+id/live_show_icon"
+		android:src="@drawable/ic_title_liveshow"
+		style="@style/ActivityIcon" />
+	<TextView
+		android:id="@+id/live_show_title"
+		android:text="@string/live_show_title"
+		style="@style/ActivityTitle"
+		android:layout_alignTop="@id/live_show_icon"
+		android:layout_alignBottom="@id/live_show_icon" />
+	<View
+		style="@style/Divider"
+		android:layout_below="@id/live_show_title" />
 	<TextView
 		android:id="@+id/live_show_info"
 		android:text="@string/live_show_info"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:textAppearance="@android:style/TextAppearance.Small"
-		android:layout_alignParentTop="true"
+		android:layout_below="@id/live_show_icon"
 		android:paddingTop="10dp"
 		android:paddingLeft="5dp"
 		android:paddingRight="5dp"
-		android:gravity="center"
-		android:visibility="gone" />
-	<org.dandelion.radiot.live.LiveShowPlaybackControl
-		android:id="@+id/live_show_playback_control"
+		android:gravity="center" />
+	<LinearLayout
+		android:id="@+id/live_show_status"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:background="@drawable/panel_bar"
-		android:layout_alignParentBottom="true" />
-	<org.dandelion.radiot.live.LiveShowTopics
-		android:id="@+id/live_show_topics"
+		android:orientation="vertical"
+		android:layout_centerInParent="true">
+		<TextView
+			android:id="@+id/live_timer_label"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:textStyle="bold"
+			android:textSize="72dp"
+			android:textScaleX="1.1"
+			android:gravity="center_horizontal"
+			android:typeface="sans" />
+		<TextView
+			android:id="@+id/playback_state_label"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:textSize="20sp"
+			android:textStyle="bold"
+			android:typeface="sans"
+			android:textScaleX="1.1"
+			android:gravity="center_horizontal" />
+	</LinearLayout>
+	<TextView
+		android:id="@+id/live_show_hint"
+		android:text="@string/live_show_waiting_hint"
 		android:layout_width="fill_parent"
-		android:layout_height="fill_parent"
-		android:layout_below="@id/live_show_info"
-		android:layout_above="@id/live_show_playback_control" />
+		android:layout_height="wrap_content"
+		android:layout_below="@id/live_show_status"
+		android:paddingTop="10dp"
+		android:paddingLeft="5dp"
+		android:paddingRight="5dp"
+		android:textSize="12sp"
+		android:textColor="#606060"
+		android:gravity="center" />
+	<Button
+		android:id="@+id/live_show_action_button"
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:onClick="onButtonPressed"
+		android:layout_alignParentBottom="true"
+		android:layout_centerHorizontal="true" />
 </RelativeLayout>

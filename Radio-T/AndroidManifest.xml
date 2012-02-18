@@ -14,22 +14,20 @@
 		android:label="@string/app_name"
 		android:name="RadiotApplication">
 		<activity
-			android:name="PodcastListActivity"
-			android:theme="@style/Theme.Radiot.Light" />
+			android:name="PodcastListActivity" />
 		<activity
 			android:name=".live.LiveShowActivity"
 			android:label="@string/live_show_title"
 			android:screenOrientation="portrait"
-			android:theme="@style/Theme.Radiot.Light" />
+			android:theme="@style/Theme.RadiotNoTitle" />
 		<activity
 			android:name=".home_screen.AboutAppActivity"
 			android:label="@string/about_app_title"
 			android:screenOrientation="portrait"
-			android:theme="@style/Theme.Radiot.Light">
-		</activity>
+			android:theme="@style/Theme.RadiotNoTitle" />
 		<activity
 			android:name=".home_screen.HomeScreenActivity"
-			android:theme="@style/Theme.Radiot.Light.NoTitle"
+			android:theme="@style/Theme.RadiotNoTitle"
 			android:screenOrientation="portrait"
 			android:launchMode="singleTask">
 			<intent-filter>

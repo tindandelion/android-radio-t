@@ -3,6 +3,20 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
+	<ImageView
+		android:id="@+id/about_app_icon"
+		android:src="@drawable/ic_title_about"
+		style="@style/ActivityIcon"
+		android:paddingLeft="2dp" />
+	<TextView
+		android:id="@+id/about_app_title"
+		style="@style/ActivityTitle"
+		android:text="@string/about_app_title"
+		android:layout_alignTop="@id/about_app_icon"
+		android:layout_alignBottom="@id/about_app_icon" />
+	<View
+		style="@style/Divider"
+		android:layout_below="@id/about_app_title" />
 	<RelativeLayout
 		android:id="@+id/app_info"
 		android:layout_width="fill_parent"
@@ -26,7 +40,7 @@
 			android:layout_marginTop="12dp"
 			android:gravity="center_horizontal" />
 		<TextView
-			android:id="@+id/acknowledgements"
+			android:id="@+id/acknoledgements"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:layout_below="@id/version_label"
@@ -41,7 +55,7 @@
 	<Button
 		android:id="@+id/feedback_button"
 		android:layout_width="fill_parent"
-		android:layout_height="62dp"
+		android:layout_height="wrap_content"
 		android:layout_centerInParent="true"
 		android:text="@string/feedback_label"
 		android:layout_alignParentBottom="true"

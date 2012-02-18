@@ -33,30 +33,68 @@
 		<item
 			name="android:textColor">@color/button_text_color</item>
 		<item
-			name="android:textAppearance">@android:style/TextAppearance.Large</item>
+			name="android:textSize">25sp</item>
+		<item
+			name="android:padding">8dp</item>
 		<item
 			name="android:background">@drawable/button_background</item>
-		<item
-			name="android:shadowDx">1</item>
-		<item
-			name="android:shadowDy">1</item>
-		<item
-			name="android:shadowColor">#90000000</item>
-		<item
-			name="android:shadowRadius">0.5</item>
 	</style>
 	<style
-		name="Radiot.ListView"
-		parent="@android:style/Widget.ListView.White">
+		name="ActivityTitle"
+		parent="@android:style/Widget.TextView">
 		<item
-			name="android:background">@android:color/transparent</item>
+			name="android:layout_width">wrap_content</item>
 		<item
-			name="android:cacheColorHint">@color/theme_background</item>
+			name="android:layout_height">wrap_content</item>
+		<item
+			name="android:textColor">@android:color/white</item>
+		<item
+			name="android:textStyle">bold</item>
+		<item
+			name="android:textSize">23sp</item>
+		<item
+			name="android:textScaleX">1.1</item>
+		<item
+			name="android:paddingRight">10dp</item>
+		<item
+			name="android:layout_alignParentRight">true</item>
+		<item
+			name="android:gravity">center_vertical|right</item>
 	</style>
 	<style
-		name="Radiot.WindowTitleBackground"
-		parent="android:WindowTitleBackground">
+		name="ActivityIcon">
 		<item
-			name="android:background">@drawable/panel_bar</item>
+			name="android:layout_width">wrap_content</item>
+		<item
+			name="android:layout_height">wrap_content</item>
+		<item
+			name="android:layout_alignParentLeft">true</item>
+		<item
+			name="android:layout_alignParentTop">true</item>
+		<item
+			name="android:paddingLeft">10dp</item>
+	</style>
+	<style
+		name="Divider">
+		<item
+			name="android:layout_height">1px</item>
+		<item
+			name="android:layout_width">fill_parent</item>
+		<item
+			name="android:background">@android:drawable/divider_horizontal_dark</item>
+	</style>
+	<style
+		name="Theme.Radiot"
+		parent="android:Theme">
+		<item
+			name="android:textViewStyle">@style/Radiot.TextView</item>
+		<item
+			name="android:buttonStyle">@style/Radiot.Button</item>
+	</style>
+	<style
+		name="Theme.RadiotNoTitle"
+		parent="Theme.Radiot">
+		<item
+			name="android:windowNoTitle">true</item>
 	</style>
 </resources>

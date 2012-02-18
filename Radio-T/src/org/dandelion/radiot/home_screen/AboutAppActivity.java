@@ -12,14 +12,14 @@ import android.widget.TextView;
 
 public class AboutAppActivity extends Activity {
 	private static final String FEEDBACK_EMAIL = "apps.dandelion@gmail.com";
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.about_app);
 		updateVerionLabel();
 	}
-	
+
 	private void updateVerionLabel() {
 		TextView versionView = (TextView) findViewById(R.id.version_label);
 		String template = getString(R.string.version_label);
@@ -39,7 +39,7 @@ public class AboutAppActivity extends Activity {
 
 	public void sendFeedback(View view) {
 		Intent intent = new Intent(Intent.ACTION_SEND);
-		intent.putExtra(Intent.EXTRA_EMAIL, new String[] { FEEDBACK_EMAIL });
+		intent.putExtra(Intent.EXTRA_EMAIL, new String[] { FEEDBACK_EMAIL } );
 		intent.putExtra(Intent.EXTRA_SUBJECT, composeFeedbackEmailSubject());
 		intent.setType("message/rfc822");
 		startActivity(Intent.createChooser(intent, null));

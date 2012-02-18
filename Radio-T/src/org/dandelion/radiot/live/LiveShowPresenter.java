@@ -10,26 +10,14 @@ import org.dandelion.radiot.live.LiveShowState.Playing;
 import org.dandelion.radiot.live.LiveShowState.Stopping;
 import org.dandelion.radiot.live.LiveShowState.Waiting;
 
-interface ILiveShowPlaybackView {
-
-	void setStatusLabel(int labelStringId);
-
-	void setButtonState(int i, boolean buttonEnabled);
-
-	void showWaitingHint();
-
-	void setElapsedTime(long seconds);
-	
-}
-
 public class LiveShowPresenter implements ILiveShowVisitor {
 
+	private LiveShowActivity activity;
 	private Timer timer;
 	private boolean isActive;
-	private ILiveShowPlaybackView view;
 
-	public LiveShowPresenter(ILiveShowPlaybackView view) {
-		this.view = view;
+	public LiveShowPresenter(LiveShowActivity activity) {
+		this.activity = activity;
 	}
 
 	public void onIdle(Idle state) {
@@ -57,7 +45,7 @@ public class LiveShowPresenter implements ILiveShowVisitor {
 			timer.cancel();
 			timer = null;
 		}
-		view.setElapsedTime(0);
+		activity.setElapsedTime(0);
 	}
 
 	public void switchPlaybackState(LiveShowState state) {
@@ -69,20 +57,19 @@ public class LiveShowPresenter implements ILiveShowVisitor {
 	}
 
 	private void beActiveState(LiveShowState state, int labelStringId,
-			boolean shouldShowWaitingHint, boolean buttonEnabled) {
+			boolean isHelpTextVisible, boolean buttonEnabled) {
 		isActive = true;
-		view.setStatusLabel(labelStringId);
-		view.setButtonState(0, buttonEnabled);
-		if (shouldShowWaitingHint) {
-			view.showWaitingHint();
-		}
+		activity.setStatusLabel(labelStringId);
+		activity.showHelpText(isHelpTextVisible);
+		activity.setButtonState(0, buttonEnabled);
 		restartTimer(state.getTimestamp());
 	}
 
 	private void beInactiveState() {
 		isActive = false;
-		view.setStatusLabel(0);
-		view.setButtonState(1, true);
+		activity.setStatusLabel(0);
+		activity.showHelpText(false);
+		activity.setButtonState(1, true);
 		stopTimer();
 	}
 
@@ -96,7 +83,15 @@ public class LiveShowPresenter implements ILiveShowVisitor {
 		return new TimerTask() {
 			public void run() {
 				long currentTime = System.currentTimeMillis() - timestamp;
-				view.setElapsedTime((currentTime / 1000));
+				updateTimerLabel(currentTime / 1000);
+			}
+
+			private void updateTimerLabel(final long seconds) {
+				activity.runOnUiThread(new Runnable() {
+					public void run() {
+						activity.setElapsedTime(seconds);
+					}
+				});
 			}
 		};
 	}

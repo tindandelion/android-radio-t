@@ -23,7 +23,7 @@
 			android:gravity="center_vertical|right"
 			android:text="@string/logo_text"
 			android:textScaleX="1.1"
-			android:textColor="#606060"
+			android:textColor="#A0A0A0"
 			android:textStyle="bold"
 			android:textSize="15dp"
 			android:paddingTop="8dp" />
@@ -34,6 +34,5 @@
 		android:layout_height="wrap_content"
 		android:layout_below="@id/home_screen_header"
 		android:layout_marginTop="20dp"
-		android:divider="@android:drawable/divider_horizontal_bright"
 		android:background="@drawable/divider_background" />
 </RelativeLayout>
