@@ -20,15 +20,14 @@ public class DisplayingPodcastList extends
 		View itemView = getItemView(0);
 
 		assertTextFieldHasText(itemView, "podcast_item_view_number", "#5192");
-		assertTextFieldHasText(itemView, "podcast_item_view_date", "20.06.2010");
-		assertTextFieldHasText(itemView, "podcast_item_view_tags",
-				"Подкасты, .me, ipad, Linux, LOR");
+		assertTextFieldHasText(itemView, "podcast_item_view_date", "12.02.2012");
+		assertTextFieldHasText(itemView, "podcast_item_view_tags", "podcast");
 
 	}
 
 	public void testDisplayPodcastList() throws Exception {
 		ListView list = activity.getListView();
-		assertEquals(17, list.getCount());
+		assertEquals(25, list.getCount());
 	}
 
 	@Override
