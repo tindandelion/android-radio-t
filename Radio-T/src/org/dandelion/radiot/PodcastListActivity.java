@@ -2,6 +2,8 @@ package org.dandelion.radiot;
 
 import java.util.List;
 
+import org.dandelion.radiot.R;
+
 import org.dandelion.radiot.PodcastList.IPodcastListEngine;
 import org.dandelion.radiot.PodcastList.IView;
 import org.dandelion.radiot.home_screen.HomeScreenActivity;

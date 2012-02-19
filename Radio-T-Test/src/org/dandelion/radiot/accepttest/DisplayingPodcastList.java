@@ -2,6 +2,8 @@ package org.dandelion.radiot.accepttest;
 
 import java.lang.reflect.Field;
 
+import org.dandelion.radiot.R;
+
 import org.dandelion.radiot.PodcastListActivity;
 import org.dandelion.radiot.helpers.ApplicationDriver;
 import org.dandelion.radiot.helpers.PodcastListAcceptanceTestCase;
@@ -43,7 +45,7 @@ public class DisplayingPodcastList extends
 	}
 
 	private int getIdByName(String id) throws Exception {
-		Class<org.dandelion.radiot.R.id> cls = org.dandelion.radiot.R.id.class;
+		Class<R.id> cls = R.id.class;
 		Field field = cls.getDeclaredField(id);
 		int i = field.getInt(cls);
 		return i;
