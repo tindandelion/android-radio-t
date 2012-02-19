@@ -21,8 +21,6 @@ public class DisplayingPodcastList extends
 
 		assertTextFieldHasText(itemView, "podcast_item_view_number", "#5192");
 		assertTextFieldHasText(itemView, "podcast_item_view_date", "12.02.2012");
-		assertTextFieldHasText(itemView, "podcast_item_view_tags", "podcast");
-
 	}
 
 	public void testDisplayPodcastList() throws Exception {

@@ -95,13 +95,6 @@ public class RssFeedModel implements PodcastList.IModel {
                     }
                 });
 
-		item.getChild("category").setEndTextElementListener(
-				new EndTextElementListener() {
-					public void end(String body) {
-						currentItem.addTag(body);
-					}
-				});
-
 		return root.getContentHandler();
 	}
 

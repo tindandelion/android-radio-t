@@ -201,8 +201,6 @@ public class PodcastListActivity extends ListActivity implements IView {
 			setElementText(row, R.id.podcast_item_view_date, item.getPubDate());
 			setElementText(row, R.id.podcast_item_view_shownotes,
 					item.getShowNotes());
-			setElementText(row, R.id.podcast_item_view_tags,
-					item.getTagString());
 			setPodcastIcon(row, item);
 			return row;
 		}

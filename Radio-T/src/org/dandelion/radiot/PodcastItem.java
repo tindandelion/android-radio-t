@@ -5,7 +5,6 @@ import android.net.Uri;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -22,7 +21,6 @@ public class PodcastItem implements Cloneable {
 	private String pubDate;
 	private String showNotes;
 	private Uri audioUri;
-	private ArrayList<String> tags = new ArrayList<String>();
 	private String thumbnailUrl;
 	private Bitmap thumbnail;
 
@@ -78,28 +76,6 @@ public class PodcastItem implements Cloneable {
 
 	public void extractAudioUri(String value) {
 		audioUri = Uri.parse(value);
-	}
-
-	public String getTagString() {
-		if (tags.isEmpty()) {
-			return "";
-		}
-		StringBuilder builder = new StringBuilder();
-		builder.append(tags.get(0));
-		for (int i = 1; i < tags.size(); i++) {
-			builder
-				.append(", ")
-				.append(tags.get(i));
-		}
-		return builder.toString();
-	}
-
-	public void addTag(String tag) {
-		tags.add(tag);
-	}
-
-	public boolean hasTag(String tag) {
-		return tags.contains(tag);
 	}
 
 	public String getThumbnailUrl() {

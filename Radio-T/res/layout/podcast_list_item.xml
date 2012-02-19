@@ -38,16 +38,4 @@
 		android:gravity="fill_horizontal"
 		android:maxLines="4"
 		android:textSize="11sp" />
-	<TextView
-		android:id="@+id/podcast_item_view_tags"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_toRightOf="@id/podcast_item_icon"
-		android:layout_alignParentRight="true"
-		android:layout_below="@id/podcast_item_view_shownotes"
-		android:gravity="right"
-		android:textSize="9sp"
-		android:paddingLeft="10dp"
-		android:paddingTop="2dp"
-		android:singleLine="true" />
 </RelativeLayout>

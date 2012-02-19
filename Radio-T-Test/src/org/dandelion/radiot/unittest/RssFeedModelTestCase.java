@@ -115,13 +115,6 @@ public class RssFeedModelTestCase extends TestCase {
 		fail("Should have raised the exception");
 	}
 
-	public void testExtractingTags() throws Exception {
-		newFeedItem("<category>Tag1</category><category>Tag2</category>");
-		parseRssFeed();
-		assertTrue(firstParsedItem.hasTag("Tag1"));
-		assertTrue(firstParsedItem.hasTag("Tag2"));
-	}
-
 	public void testExtractingImageUrl() throws Exception {
 		newFeedItem("<media:thumbnail url=\"http://image-url\"/>");
 		parseRssFeed();
