@@ -77,7 +77,7 @@ public class RssFeedModelTestCase extends TestCase {
 	}
 
 	public void testExtractShowNotes() throws Exception {
-		newFeedItem("<description><![CDATA[Show notes]]></description>");
+		newFeedItem("<itunes:summary>Show notes</itunes:summary>");
 		parseRssFeed();
 		assertEquals("Show notes", firstParsedItem.getShowNotes());
 	}
@@ -123,9 +123,9 @@ public class RssFeedModelTestCase extends TestCase {
 	}
 
 	public void testExtractingImageUrl() throws Exception {
-		newFeedItem("<content:encoded><![CDATA[<img src=\"http://image-url\" />]]></content:encoded>");
+		newFeedItem("<media:thumbnail url=\"http://image-url\"/>");
 		parseRssFeed();
-		assertEquals("http://image-url", firstParsedItem.getImageUrl());
+		assertEquals("http://image-url", firstParsedItem.getThumbnailUrl());
 	}
 
 	private void newFeedItem(String itemContent) {
@@ -140,7 +140,8 @@ public class RssFeedModelTestCase extends TestCase {
 	}
 
 	private String getCompleteFeed() {
-		return "<rss xmlns:content=\"http://purl.org/rss/1.0/modules/content/\"><channel>"
+		return "<rss xmlns:media=\"http://search.yahoo.com/mrss/\" " +
+                "xmlns:itunes=\"http://www.itunes.com/dtds/podcast-1.0.dtd\"><channel>"
 				+ feedContent + "</channel></rss>";
 	}
 }

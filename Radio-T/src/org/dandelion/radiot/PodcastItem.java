@@ -1,5 +1,8 @@
 package org.dandelion.radiot;
 
+import android.graphics.Bitmap;
+import android.net.Uri;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -8,12 +11,7 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.text.Html;
-
 public class PodcastItem implements Cloneable {
-	private static final Pattern IMAGE_URL_PATTERN = Pattern.compile("<img.+src=\"(\\S+)\".*/>");
 	private static final Pattern NUMBER_PATTERN = Pattern.compile("\\d+");
 	private static SimpleDateFormat INPUT_DATE_FORMAT = new SimpleDateFormat(
 			"EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);
@@ -25,8 +23,8 @@ public class PodcastItem implements Cloneable {
 	private String showNotes;
 	private Uri audioUri;
 	private ArrayList<String> tags = new ArrayList<String>();
-	private String imageUrl;
-	private Bitmap image;
+	private String thumbnailUrl;
+	private Bitmap thumbnail;
 
 	public Uri getAudioUri() {
 		return audioUri;
@@ -75,8 +73,7 @@ public class PodcastItem implements Cloneable {
 	}
 
 	public void extractShowNotes(String value) {
-		String noHtml = Html.fromHtml(value).toString();
-		showNotes = noHtml.replaceAll("\n", " ");
+		showNotes = value.trim();
 	}
 
 	public void extractAudioUri(String value) {
@@ -105,22 +102,19 @@ public class PodcastItem implements Cloneable {
 		return tags.contains(tag);
 	}
 
-	public void extractImageUrl(String encoded) {
-		Matcher matcher = IMAGE_URL_PATTERN.matcher(encoded);
-		if (matcher.find()) {
-			imageUrl = matcher.group(1);
-		}
-	}
-	
-	public String getImageUrl() {
-		return imageUrl;
+	public String getThumbnailUrl() {
+		return thumbnailUrl;
 	}
 
-	public Bitmap getImage() {
-		return image;
+	public Bitmap getThumbnail() {
+		return thumbnail;
 	}
 
-	public void setImage(Bitmap value) {
-		image = value;
+	public void setThumbnail(Bitmap value) {
+		thumbnail = value;
 	}
+
+    public void setThumbnailUrl(String value) {
+        thumbnailUrl = value;
+    }
 }

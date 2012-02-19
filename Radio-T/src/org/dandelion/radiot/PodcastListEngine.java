@@ -140,7 +140,7 @@ public class PodcastListEngine implements PodcastList.IPodcastListEngine {
 				PodcastItem item = list.get(i);
 				final int index = i;
 
-				item.setImage(model.loadPodcastImage(item));
+				item.setThumbnail(model.loadPodcastImage(item));
 				publishProgress(new Runnable() {
 					public void run() {
 						view.updatePodcastImage(index);

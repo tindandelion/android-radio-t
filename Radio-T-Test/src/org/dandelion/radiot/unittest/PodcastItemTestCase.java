@@ -43,16 +43,10 @@ public class PodcastItemTestCase extends TestCase {
 		assertEquals("", item.getPubDate());
 	}
 
-	public void testRemoveLineBreaksFromShowNotes() throws Exception {
-		String notes = "Line1\nLine2";
+	public void testTrimmingShowNotes() throws Exception {
+		String notes = "   Note 1 - Note 2   \n\n";
 		item.extractShowNotes(notes);
-		assertEquals("Line1 Line2", item.getShowNotes());
-	}
-
-	public void testRemoveHtmlMarkupFromShowNotes() throws Exception {
-		String notes = "<p>Line1 <b>bold text</b>";
-		item.extractShowNotes(notes);
-		assertTrue(item.getShowNotes().contains("Line1 bold text"));
+		assertEquals("Note 1 - Note 2", item.getShowNotes());
 	}
 
 	public void testOneTag() throws Exception {
@@ -68,15 +62,5 @@ public class PodcastItemTestCase extends TestCase {
 
 	public void testNoTags() throws Exception {
 		assertEquals("", item.getTagString());
-	}
-
-	public void testPodcastImageUri() throws Exception {
-		item.extractImageUrl("<img src=\"http://www.image-url.com\" alt=\"\"/>");
-		assertEquals("http://www.image-url.com", item.getImageUrl());
-	}
-
-	public void testNoImageUrl() throws Exception {
-		item.extractImageUrl("bla-bla");
-		assertNull(item.getImageUrl());
 	}
 }

@@ -39,12 +39,12 @@ public class PodcastListEngineTestCase extends TestCase {
 		model.returnsPodcasts(podcastList);
 		startPodcastListUpdate();
 		view.waitUntilPodcastListUpdated();
-		assertNull(item.getImage());
+		assertNull(item.getThumbnail());
 
 		Bitmap image = Bitmap.createBitmap(1, 1, Bitmap.Config.RGB_565);
 		model.returnsPodcastImage(image);
 		view.assertPodcastImageUpdated(0);
-		assertEquals(image, item.getImage());
+		assertEquals(image, item.getThumbnail());
 	}
 
 	protected ArrayList<PodcastItem> newPodcastList() {

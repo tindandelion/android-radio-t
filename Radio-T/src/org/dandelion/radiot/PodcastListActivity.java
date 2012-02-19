@@ -210,7 +210,7 @@ public class PodcastListActivity extends ListActivity implements IView {
 		private void setPodcastIcon(View row, PodcastItem item) {
 			ImageView image = (ImageView) row
 					.findViewById(R.id.podcast_item_icon);
-			Bitmap bitmap = item.getImage();
+			Bitmap bitmap = item.getThumbnail();
 			if (null == bitmap) {
 				bitmap = defaultPodcastImage;
 			}

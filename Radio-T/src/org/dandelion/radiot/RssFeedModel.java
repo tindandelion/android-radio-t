@@ -65,13 +65,6 @@ public class RssFeedModel implements PodcastList.IModel {
 					}
 				});
 
-		item.getChild("description").setEndTextElementListener(
-				new EndTextElementListener() {
-					public void end(String body) {
-						currentItem.extractShowNotes(body);
-					}
-				});
-
 		item.getChild("enclosure").setStartElementListener(
 				new StartElementListener() {
 					public void start(Attributes attributes) {
@@ -85,18 +78,27 @@ public class RssFeedModel implements PodcastList.IModel {
 						return attributes.getValue("type").equals("audio/mpeg");
 					}
 				});
+        
+        item.getChild("http://search.yahoo.com/mrss/", "thumbnail")
+                .setStartElementListener(new StartElementListener() {
+                    @Override
+                    public void start(Attributes attributes) {
+                        currentItem.setThumbnailUrl(attributes.getValue("url"));
+                    }
+                });
+        
+        item.getChild("http://www.itunes.com/dtds/podcast-1.0.dtd", "summary")
+                .setEndTextElementListener(new EndTextElementListener() {
+                    @Override
+                    public void end(String s) {
+                        currentItem.extractShowNotes(s);
+                    }
+                });
 
 		item.getChild("category").setEndTextElementListener(
 				new EndTextElementListener() {
 					public void end(String body) {
 						currentItem.addTag(body);
-					}
-				});
-
-		item.getChild("http://purl.org/rss/1.0/modules/content/", "encoded")
-				.setEndTextElementListener(new EndTextElementListener() {
-					public void end(String body) {
-						currentItem.extractImageUrl(body);
 					}
 				});
 
@@ -113,6 +115,6 @@ public class RssFeedModel implements PodcastList.IModel {
 	}
 
 	public Bitmap loadPodcastImage(PodcastItem item) {
-		return BitmapFactory.decodeStream(openImageStream(item.getImageUrl()));
+		return BitmapFactory.decodeStream(openImageStream(item.getThumbnailUrl()));
 	}
 }
