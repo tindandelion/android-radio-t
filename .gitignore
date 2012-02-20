@@ -1,5 +1,6 @@
 out
 */bin
+*.iws
 .metadata
 .DS_Store
 
