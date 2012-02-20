@@ -1,16 +1,14 @@
-package org.dandelion.radiot.live;
+package org.dandelion.radiot.live.ui;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-import org.dandelion.radiot.live.LiveShowState.Connecting;
-import org.dandelion.radiot.live.LiveShowState.ILiveShowVisitor;
-import org.dandelion.radiot.live.LiveShowState.Idle;
-import org.dandelion.radiot.live.LiveShowState.Playing;
-import org.dandelion.radiot.live.LiveShowState.Stopping;
-import org.dandelion.radiot.live.LiveShowState.Waiting;
+import org.dandelion.radiot.live.states.*;
+import org.dandelion.radiot.live.states.PlaybackStateVisitor;
+import org.dandelion.radiot.live.states.Idle;
+import org.dandelion.radiot.live.states.Stopping;
 
-public class LiveShowPresenter implements ILiveShowVisitor {
+public class LiveShowPresenter implements PlaybackStateVisitor {
 
 	private LiveShowActivity activity;
 	private Timer timer;
@@ -48,7 +46,7 @@ public class LiveShowPresenter implements ILiveShowVisitor {
 		activity.setElapsedTime(0);
 	}
 
-	public void switchPlaybackState(LiveShowState state) {
+	public void switchPlaybackState(PlaybackState state) {
 		if (isActive) {
 			state.stopPlayback();
 		} else {
@@ -56,7 +54,7 @@ public class LiveShowPresenter implements ILiveShowVisitor {
 		}
 	}
 
-	private void beActiveState(LiveShowState state, int labelStringId,
+	private void beActiveState(PlaybackState state, int labelStringId,
 			boolean isHelpTextVisible, boolean buttonEnabled) {
 		isActive = true;
 		activity.setStatusLabel(labelStringId);

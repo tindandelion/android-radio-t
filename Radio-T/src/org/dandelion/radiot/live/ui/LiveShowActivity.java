@@ -1,4 +1,4 @@
-package org.dandelion.radiot.live;
+package org.dandelion.radiot.live.ui;
 
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.home_screen.HomeScreenActivity;
@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import org.dandelion.radiot.live.service.LiveShowService;
 
 public class LiveShowActivity extends Activity {
 	protected LiveShowService service;
@@ -84,7 +85,8 @@ public class LiveShowActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	public void onButtonPressed(View v) {
+	@SuppressWarnings("UnusedParameters")
+    public void onButtonPressed(View view) {
 		visitor.switchPlaybackState(service.getCurrentState());
 	}
 

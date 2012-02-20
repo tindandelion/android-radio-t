@@ -16,7 +16,7 @@
 		<activity
 			android:name="PodcastListActivity" />
 		<activity
-			android:name=".live.LiveShowActivity"
+			android:name=".live.ui.LiveShowActivity"
 			android:label="@string/live_show_title"
 			android:screenOrientation="portrait"
 			android:theme="@style/Theme.RadiotNoTitle" />
@@ -32,18 +32,18 @@
 			android:launchMode="singleTask">
 			<intent-filter>
 				<action
-					android:name="android.intent.action.MAIN"></action>
+					android:name="android.intent.action.MAIN" />
 				<category
-					android:name="android.intent.category.LAUNCHER"></category>
+					android:name="android.intent.category.LAUNCHER"/>
 			</intent-filter>
 		</activity>
 		<service
-			android:name=".live.LiveShowService" />
+			android:name=".live.service.LiveShowService" />
 	</application>
 	<uses-permission
-		android:name="android.permission.INTERNET"></uses-permission>
+		android:name="android.permission.INTERNET"/>
 	<uses-permission
-		android:name="android.permission.WAKE_LOCK"></uses-permission>
+		android:name="android.permission.WAKE_LOCK"/>
 	<uses-sdk
-		android:minSdkVersion="4"></uses-sdk>
+		android:minSdkVersion="4"/>
 </manifest>

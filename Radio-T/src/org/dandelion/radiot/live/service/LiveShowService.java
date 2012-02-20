@@ -1,13 +1,13 @@
-package org.dandelion.radiot.live;
+package org.dandelion.radiot.live.service;
 
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.RadiotApplication;
-import org.dandelion.radiot.live.LiveShowState.ILiveShowService;
-import org.dandelion.radiot.live.LiveShowState.Idle;
+import org.dandelion.radiot.live.states.PlaybackService;
+import org.dandelion.radiot.live.states.PlaybackState;
+import org.dandelion.radiot.live.states.Idle;
 
 import android.app.AlarmManager;
 import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -19,10 +19,12 @@ import android.net.wifi.WifiManager;
 import android.net.wifi.WifiManager.WifiLock;
 import android.os.Binder;
 import android.os.IBinder;
+import org.dandelion.radiot.live.states.PlaybackStateVisitor;
+import org.dandelion.radiot.live.ui.LiveShowActivity;
 
-public class LiveShowService extends Service implements ILiveShowService {
+public class LiveShowService extends Service implements PlaybackService {
 	public class LocalBinder extends Binder {
-		LiveShowService getService() {
+		public LiveShowService getService() {
 			return (LiveShowService.this);
 		}
 	}
@@ -32,7 +34,7 @@ public class LiveShowService extends Service implements ILiveShowService {
 	private static final int NOTIFICATION_ID = 1;
 
 	private final IBinder binder = new LocalBinder();
-	private LiveShowState currentState;
+	private PlaybackState currentState;
 	private String[] statusLabels;
 	private Foregrounder foregrounder;
 	private BroadcastReceiver onAlarm = new BroadcastReceiver() {
@@ -55,7 +57,7 @@ public class LiveShowService extends Service implements ILiveShowService {
 		super.onCreate();
 		MediaPlayer player = ((RadiotApplication) getApplication())
 				.getMediaPlayer();
-		currentState = new LiveShowState.Idle(player, this);
+		currentState = new Idle(player, this);
 		statusLabels = getResources().getStringArray(
 				R.array.live_show_notification_labels);
 		foregrounder = Foregrounder.create(this);
@@ -79,21 +81,17 @@ public class LiveShowService extends Service implements ILiveShowService {
 	
 	@Override
 	public boolean onUnbind(Intent intent) {
-		if (currentState instanceof Idle) { 
+		if (currentState instanceof Idle) {
 			stopSelf();
 		}
 		return true;
 	}
 
-	public void acceptVisitor(LiveShowState.ILiveShowVisitor visitor) {
+	public void acceptVisitor(PlaybackStateVisitor visitor) {
 		currentState.acceptVisitor(visitor);
 	}
 
-	public void startPlayback() {
-		currentState.startPlayback();
-	}
-
-	public LiveShowState getCurrentState() {
+	public PlaybackState getCurrentState() {
 		return currentState;
 	}
 
@@ -101,7 +99,7 @@ public class LiveShowService extends Service implements ILiveShowService {
 		currentState.stopPlayback();
 	}
 
-	public synchronized void switchToNewState(LiveShowState newState) {
+	public synchronized void switchToNewState(PlaybackState newState) {
 		currentState.leave();
 		newState.enter();
 		currentState = newState;
@@ -149,59 +147,3 @@ public class LiveShowService extends Service implements ILiveShowService {
 	}
 }
 
-@SuppressWarnings("rawtypes")
-abstract class Foregrounder {
-	private static final Class[] signature = new Class[] { int.class,
-			Notification.class };
-
-	public abstract void stopForeground();
-
-	public abstract void startForeground(int id, Notification notification);
-
-	public static Foregrounder create(Service service) {
-		return isNewApi() ? foregrounder20(service) : foregrounder15(service);
-	}
-
-	private static boolean isNewApi() {
-		try {
-			Service.class.getMethod("startForeground", signature);
-			return true;
-		} catch (NoSuchMethodException e) {
-			return false;
-		}
-	}
-
-	private static Foregrounder foregrounder20(final Service service) {
-		return new Foregrounder() {
-			@Override
-			public void stopForeground() {
-				service.stopForeground(true);
-			}
-
-			@Override
-			public void startForeground(int id, Notification notification) {
-				service.startForeground(id, notification);
-			}
-		};
-	}
-
-	private static Foregrounder foregrounder15(final Service service) {
-		final NotificationManager nm = (NotificationManager) service
-				.getSystemService(Context.NOTIFICATION_SERVICE);
-		return new Foregrounder() {
-			private int notificationId;
-
-			public void stopForeground() {
-				nm.cancel(notificationId);
-				service.setForeground(false);
-			}
-
-			@Override
-			public void startForeground(int id, Notification notification) {
-				service.setForeground(true);
-				nm.notify(id, notification);
-				this.notificationId = id;
-			}
-		};
-	}
-}

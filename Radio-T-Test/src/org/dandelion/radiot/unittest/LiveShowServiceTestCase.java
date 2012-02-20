@@ -5,8 +5,8 @@ import junit.framework.Assert;
 
 import org.dandelion.radiot.RadiotApplication;
 import org.dandelion.radiot.helpers.MockMediaPlayer;
-import org.dandelion.radiot.live.LiveShowService;
-import org.dandelion.radiot.live.LiveShowState;
+import org.dandelion.radiot.live.service.LiveShowService;
+import org.dandelion.radiot.live.states.PlaybackState;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -37,7 +37,7 @@ public class LiveShowServiceTestCase extends ServiceTestCase<LiveShowService> {
 	}
 	
 	public void testSendsBroadcastsWhenStateChanged() throws Exception {
-		final LiveShowState state = new LiveShowState(null, null); 
+		final PlaybackState state = new PlaybackState(null, null);
 		
 		(new BroadcastCatcher(getContext(),
 				LiveShowService.PLAYBACK_STATE_CHANGED) {
@@ -49,7 +49,7 @@ public class LiveShowServiceTestCase extends ServiceTestCase<LiveShowService> {
 	}
 	
 	public void testSchedulesStateTimeout() throws Exception {
-		LiveShowState state = new LiveShowState(null, null) { 
+		PlaybackState state = new PlaybackState(null, null) {
 			@Override
 			public void onTimeout() { 
 				timeoutElapsed = true;

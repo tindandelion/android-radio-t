@@ -1,6 +1,6 @@
 package org.dandelion.radiot.unittest;
 
-import org.dandelion.radiot.live.LiveShowService;
+import org.dandelion.radiot.live.service.LiveShowService;
 import org.dandelion.radiot.unittest.testables.TestableLiveShowActivity;
 
 import android.content.Intent;
