@@ -3,8 +3,8 @@ package org.dandelion.radiot.unittest;
 import junit.framework.TestCase;
 
 import org.dandelion.radiot.helpers.MockMediaPlayer;
-import org.dandelion.radiot.live.LiveShowState;
-import org.dandelion.radiot.live.LiveShowState.ILiveShowService;
+import org.dandelion.radiot.live.core.LiveShowState;
+import org.dandelion.radiot.live.core.LiveShowState.ILiveShowService;
 
 public class LiveShowStatesTestCase extends TestCase {
 	protected LiveShowState switchedState;

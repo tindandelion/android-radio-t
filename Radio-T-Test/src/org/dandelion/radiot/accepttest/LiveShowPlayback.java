@@ -1,7 +1,7 @@
 package org.dandelion.radiot.accepttest;
 
-import org.dandelion.radiot.live.LiveShowActivity;
-import org.dandelion.radiot.live.LiveShowState;
+import org.dandelion.radiot.live.core.LiveShowState;
+import org.dandelion.radiot.live.ui.LiveShowActivity;
 
 import android.test.ActivityInstrumentationTestCase2;
 

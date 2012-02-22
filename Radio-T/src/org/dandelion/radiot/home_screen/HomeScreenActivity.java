@@ -2,7 +2,7 @@ package org.dandelion.radiot.home_screen;
 
 import org.dandelion.radiot.PodcastListActivity;
 import org.dandelion.radiot.R;
-import org.dandelion.radiot.live.LiveShowActivity;
+import org.dandelion.radiot.live.ui.LiveShowActivity;
 
 import android.app.Activity;
 import android.content.Context;

@@ -1,6 +1,6 @@
 package org.dandelion.radiot.unittest.testables;
 
-import org.dandelion.radiot.live.LiveShowActivity;
+import org.dandelion.radiot.live.ui.LiveShowActivity;
 
 public class TestableLiveShowActivity extends LiveShowActivity {
 	private boolean isVisualStateUpdated = false;

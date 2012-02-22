@@ -1,14 +1,15 @@
-package org.dandelion.radiot.live;
+package org.dandelion.radiot.live.ui;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-import org.dandelion.radiot.live.LiveShowState.Connecting;
-import org.dandelion.radiot.live.LiveShowState.ILiveShowVisitor;
-import org.dandelion.radiot.live.LiveShowState.Idle;
-import org.dandelion.radiot.live.LiveShowState.Playing;
-import org.dandelion.radiot.live.LiveShowState.Stopping;
-import org.dandelion.radiot.live.LiveShowState.Waiting;
+import org.dandelion.radiot.live.core.LiveShowState;
+import org.dandelion.radiot.live.core.LiveShowState.Connecting;
+import org.dandelion.radiot.live.core.LiveShowState.ILiveShowVisitor;
+import org.dandelion.radiot.live.core.LiveShowState.Idle;
+import org.dandelion.radiot.live.core.LiveShowState.Playing;
+import org.dandelion.radiot.live.core.LiveShowState.Stopping;
+import org.dandelion.radiot.live.core.LiveShowState.Waiting;
 
 public class LiveShowPresenter implements ILiveShowVisitor {
 

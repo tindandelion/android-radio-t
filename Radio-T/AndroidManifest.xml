@@ -16,7 +16,7 @@
 		<activity
 			android:name="PodcastListActivity" />
 		<activity
-			android:name=".live.LiveShowActivity"
+			android:name=".live.ui.LiveShowActivity"
 			android:label="@string/live_show_title"
 			android:screenOrientation="portrait"
 			android:theme="@style/Theme.RadiotNoTitle" />
@@ -38,7 +38,7 @@
 			</intent-filter>
 		</activity>
 		<service
-			android:name=".live.LiveShowService" />
+			android:name=".live.service.LiveShowService" />
 	</application>
 	<uses-permission
 		android:name="android.permission.INTERNET"></uses-permission>
