@@ -13,8 +13,6 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
-import android.net.wifi.WifiManager;
-import android.net.wifi.WifiManager.WifiLock;
 import android.os.Binder;
 import android.os.IBinder;
 
@@ -35,7 +33,7 @@ public class LiveShowService extends Service implements ILiveShowService {
 	private String[] statusLabels;
 	private Foregrounder foregrounder;
     private Timeout waitTimeout;
-	private WifiLock wifiLock;
+    private NetworkLock networkLock;
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -51,17 +49,14 @@ public class LiveShowService extends Service implements ILiveShowService {
 		statusLabels = getResources().getStringArray(
 				R.array.live_show_notification_labels);
 		foregrounder = Foregrounder.create(this);
-
         waitTimeout = new AlarmTimeout(this, TIMEOUT_ELAPSED);
-        WifiManager wm = (WifiManager) getSystemService(WIFI_SERVICE);
-		wifiLock = wm.createWifiLock("LiveShow");
-		wifiLock.setReferenceCounted(false);
-	}
+        networkLock = new NetworkLock(this);
+    }
 
     @Override
 	public void onDestroy() {
         waitTimeout.release();
-		wifiLock.release();
+		networkLock.release();
 		super.onDestroy();
 	}
 	
@@ -124,11 +119,11 @@ public class LiveShowService extends Service implements ILiveShowService {
     }
 
     public void lockWifi() {
-		wifiLock.acquire();
+		networkLock.acquire();
 	}
 
 	public void unlockWifi() {
-		wifiLock.release();
+		networkLock.release();
 	}
 }
 
