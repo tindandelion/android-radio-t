@@ -1,68 +1,14 @@
-package org.dandelion.radiot.unittest;
+package org.dandelion.radiot.unittest.live;
 
-import junit.framework.TestCase;
-
-import org.dandelion.radiot.helpers.MockMediaPlayer;
 import org.dandelion.radiot.live.core.LiveShowState;
-import org.dandelion.radiot.live.core.LiveShowState.ILiveShowService;
 
-public class LiveShowStatesTestCase extends TestCase {
-	protected LiveShowState switchedState;
-	private LiveShowState currentState;
-
-	private ILiveShowService service;
-
-	private MockMediaPlayer player;
-	private boolean serviceIsForeground;
-	protected boolean timeoutScheduled;
-	private boolean wifiLocked;
-
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
-		service = new LiveShowState.ILiveShowService() {
-			public void switchToNewState(LiveShowState newState) {
-				switchedState = newState;
-			}
-
-			public void goForeground(int stringId) {
-				serviceIsForeground = true;
-			}
-
-			public void goBackground() {
-				serviceIsForeground = false;
-			}
-
-			public void runAsynchronously(Runnable runnable) {
-				runnable.run();
-			}
-
-			public void unscheduleTimeout() {
-				timeoutScheduled = false;
-			}
-
-			public void scheduleTimeout(int waitTimeout) {
-				timeoutScheduled = true;
-			}
-			
-			public void lockWifi() {
-				wifiLocked = true;
-			}
-			
-			public void unlockWifi() { 
-				wifiLocked = false;
-			}
-
-		};
-		player = new MockMediaPlayer();
-	}
-
-	// ------ Idle state tests
+public class LiveShowStatesTestCase extends BasicLiveShowStateTestCase {
+    // ------ Idle state tests
 
 	public void testSwitchingFromIdleToWaitingState() throws Exception {
 		currentState = new LiveShowState.Idle(player, service);
 		currentState.startPlayback();
-		assertCurrentState(LiveShowState.Connecting.class);
+		assertSwitchedToState(LiveShowState.Connecting.class);
 	}
 
 	public void testGoesBackgroundWhenEntersIdleState() throws Exception {
@@ -88,7 +34,7 @@ public class LiveShowStatesTestCase extends TestCase {
 	public void testGoesToStoppingStateWhenStopsPlayback() throws Exception {
 		currentState = new LiveShowState.Playing(player, service);
 		currentState.stopPlayback();
-		assertCurrentState(LiveShowState.Stopping.class);
+		assertSwitchedToState(LiveShowState.Stopping.class);
 	}
 
 	public void testGoesForegroundWhenEntersPlayingState() throws Exception {
@@ -108,7 +54,7 @@ public class LiveShowStatesTestCase extends TestCase {
 		currentState.enter();
 		player.signalError();
 
-		assertCurrentState(LiveShowState.Connecting.class);
+		assertSwitchedToState(LiveShowState.Connecting.class);
 
 	}
 
@@ -158,41 +104,16 @@ public class LiveShowStatesTestCase extends TestCase {
 		currentState = new LiveShowState.Connecting(player, service);
 		currentState.enter();
 		player.bePrepared();
-		assertCurrentState(LiveShowState.Playing.class);
+		assertSwitchedToState(LiveShowState.Playing.class);
 	}
 
 	public void testGoesToWaitingStateOnErrorWhilePreparing() throws Exception {
 		currentState = new LiveShowState.Connecting(player, service);
 		currentState.enter();
 		player.signalError();
-		assertCurrentState(LiveShowState.Waiting.class);
+		assertSwitchedToState(LiveShowState.Waiting.class);
 	}
 
-	// ------ Waiting state tests
-
-	public void testWaitsForTimeoutAndGoesToConnectingState() throws Exception {
-		currentState = new LiveShowState.Waiting(player, service);
-		currentState.enter();
-		assertTrue(timeoutScheduled);
-		currentState.onTimeout();
-		assertCurrentState(LiveShowState.Connecting.class);
-
-	}
-
-	public void testResetsPlayerWhenEntersWaitingState() throws Exception {
-		currentState = new LiveShowState.Waiting(player, service);
-		player.prepareAsync();
-		currentState.enter();
-		player.assertIsReset();
-	}
-
-	public void testCancelTimeoutWhenLeave()
-			throws Exception {
-		currentState = new LiveShowState.Waiting(player, service);
-		timeoutScheduled = true;
-		currentState.leave();
-		assertFalse(timeoutScheduled);
-	}
 
 	// ------ Stopping state tests
 
@@ -204,14 +125,6 @@ public class LiveShowStatesTestCase extends TestCase {
 		currentState.enter();
 
 		player.assertIsReset();
-		assertCurrentState(LiveShowState.Idle.class);
-	}
-
-	// ------ Helpers
-
-	private void assertCurrentState(Class<?> stateClass) {
-		if (null == switchedState)
-			fail("Not switched to any state");
-		assertEquals(stateClass, switchedState.getClass());
+		assertSwitchedToState(LiveShowState.Idle.class);
 	}
 }

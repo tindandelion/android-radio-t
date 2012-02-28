@@ -30,9 +30,9 @@ public class LiveShowState {
 
 		void runAsynchronously(Runnable runnable);
 
-		void unscheduleTimeout();
+		void resetTimeout();
 
-		void scheduleTimeout(int waitTimeout);
+		void setTimeout(int waitTimeout, Runnable action);
 
 		void lockWifi();
 
@@ -57,16 +57,13 @@ public class LiveShowState {
 		this.timestamp = System.currentTimeMillis();
 	}
 
-	public void enter() {
+    public void enter() {
 	}
 
 	public void leave() {
 	}
 
 	public void acceptVisitor(ILiveShowVisitor visitor) {
-	}
-
-	public void onTimeout() {
 	}
 
 	public void stopPlayback() {
@@ -95,11 +92,11 @@ public class LiveShowState {
 
 		public Connecting(MediaPlayer player, ILiveShowService service) {
 			super(player, service);
-			player.setOnPreparedListener(onPrepared);
-			player.setOnErrorListener(onError);
-		}
+			this.player.setOnPreparedListener(onPrepared);
+			this.player.setOnErrorListener(onError);
+        }
 
-		@Override
+        @Override
 		public void enter() {
 			try {
 				player.reset();
@@ -119,20 +116,28 @@ public class LiveShowState {
 
 	public static class Waiting extends LiveShowState {
 		private static final int WAITING_NOTIFICATION_STRING_ID = 2;
-		public Waiting(MediaPlayer player, ILiveShowService service) {
+        private Runnable onTimeout;
+
+        public Waiting(MediaPlayer player, ILiveShowService service) {
 			super(player, service);
+            onTimeout = new Runnable() {
+                @Override
+                public void run() {
+                    timeoutElapsed();
+                }
+            };
 		}
 
 		@Override
 		public void enter() {
 			player.reset();
-			service.scheduleTimeout(waitTimeout);
+			service.setTimeout(waitTimeout, onTimeout);
 			service.goForeground(WAITING_NOTIFICATION_STRING_ID);
 		}
 		
 		@Override
 		public void leave() {
-			service.unscheduleTimeout();
+			service.resetTimeout();
 		}
 
 		@Override
@@ -140,8 +145,7 @@ public class LiveShowState {
 			visitor.onWaiting(this);
 		}
 		
-		@Override
-		public void onTimeout() {
+		public void timeoutElapsed() {
 			service.switchToNewState(new Connecting(player, service));
 		}
 	}

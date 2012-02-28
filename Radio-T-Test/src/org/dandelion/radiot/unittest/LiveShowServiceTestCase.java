@@ -49,14 +49,13 @@ public class LiveShowServiceTestCase extends ServiceTestCase<LiveShowService> {
 	}
 	
 	public void testSchedulesStateTimeout() throws Exception {
-		LiveShowState state = new LiveShowState(null, null) {
-			@Override
-			public void onTimeout() { 
-				timeoutElapsed = true;
-			}
-		};
-		service.switchToNewState(state);
-		service.scheduleTimeout(1);
+        Runnable action = new Runnable() {
+            @Override
+            public void run() {
+                timeoutElapsed = true;
+            }
+        };
+		service.setTimeout(1, action);
 		Thread.sleep(2000);
 		assertTrue(timeoutElapsed);
 	}

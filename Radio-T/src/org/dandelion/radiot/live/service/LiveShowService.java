@@ -3,6 +3,7 @@ package org.dandelion.radiot.live.service;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.RadiotApplication;
 import org.dandelion.radiot.live.core.LiveShowState;
+import org.dandelion.radiot.live.core.Timeout;
 import org.dandelion.radiot.live.ui.LiveShowActivity;
 import org.dandelion.radiot.live.core.LiveShowState.ILiveShowService;
 import org.dandelion.radiot.live.core.LiveShowState.Idle;
@@ -26,19 +27,14 @@ public class LiveShowService extends Service implements ILiveShowService {
 	}
 
 	public static final String PLAYBACK_STATE_CHANGED = "org.dandelion.radiot.live.PlaybackStateChanged";
+    private static final String TIMEOUT_ELAPSED = "org.dandelion.radiot.live.TimeoutElapsed";
     private static final int NOTIFICATION_ID = 1;
 
 	private final IBinder binder = new LocalBinder();
 	private LiveShowState currentState;
 	private String[] statusLabels;
 	private Foregrounder foregrounder;
-    private Runnable onAlarm = new Runnable() {
-        @Override
-        public void run() {
-            currentState.onTimeout();
-        }
-    };
-    private Alarm alarm;
+    private Timeout waitTimeout;
 	private WifiLock wifiLock;
 
 	@Override
@@ -56,7 +52,7 @@ public class LiveShowService extends Service implements ILiveShowService {
 				R.array.live_show_notification_labels);
 		foregrounder = Foregrounder.create(this);
 
-        alarm = new Alarm(this);
+        waitTimeout = new AlarmTimeout(this, TIMEOUT_ELAPSED);
         WifiManager wm = (WifiManager) getSystemService(WIFI_SERVICE);
 		wifiLock = wm.createWifiLock("LiveShow");
 		wifiLock.setReferenceCounted(false);
@@ -64,7 +60,7 @@ public class LiveShowService extends Service implements ILiveShowService {
 
     @Override
 	public void onDestroy() {
-		alarm.release();
+        waitTimeout.release();
 		wifiLock.release();
 		super.onDestroy();
 	}
@@ -119,12 +115,12 @@ public class LiveShowService extends Service implements ILiveShowService {
 		new Thread(runnable).start();
 	}
 
-	public void unscheduleTimeout() {
-        alarm.reset();
+	public void resetTimeout() {
+        waitTimeout.reset();
     }
 
-    public void scheduleTimeout(int milliseconds) {
-        alarm.set(milliseconds, onAlarm);
+    public void setTimeout(int milliseconds, Runnable action) {
+        waitTimeout.set(milliseconds, action);
     }
 
     public void lockWifi() {
