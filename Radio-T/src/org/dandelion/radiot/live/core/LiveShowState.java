@@ -77,15 +77,31 @@ public class LiveShowState {
 		return timestamp;
 	}
 
+    protected Waiting newWaiting() {
+        return new Waiting(player, service);
+    }
+
+    protected Playing newPlaying() {
+        return new Playing(player, service);
+    }
+
+    protected Connecting newConnecting() {
+        return new Connecting(player, service);
+    }
+
+    protected Idle newIdle() {
+        return new Idle(player, service);
+    }
+
 	public static class Connecting extends LiveShowState {
 		private OnPreparedListener onPrepared = new OnPreparedListener() {
 			public void onPrepared(MediaPlayer mp) {
-				service.switchToNewState(new Playing(player, service));
+				service.switchToNewState(newPlaying());
 			}
 		};
 		private OnErrorListener onError = new OnErrorListener() {
 			public boolean onError(MediaPlayer mp, int what, int extra) {
-				service.switchToNewState(new Waiting(player, service));
+				service.switchToNewState(newWaiting());
 				return false;
 			}
 		};
@@ -114,7 +130,8 @@ public class LiveShowState {
 		}
 	}
 
-	public static class Waiting extends LiveShowState {
+
+    public static class Waiting extends LiveShowState {
 		private static final int WAITING_NOTIFICATION_STRING_ID = 2;
         private Runnable onTimeout;
 
@@ -146,15 +163,15 @@ public class LiveShowState {
 		}
 		
 		public void timeoutElapsed() {
-			service.switchToNewState(new Connecting(player, service));
+			service.switchToNewState(newConnecting());
 		}
 	}
 
-	public static class Playing extends LiveShowState {
+    public static class Playing extends LiveShowState {
 		private OnErrorListener onError = new OnErrorListener() {
 			public boolean onError(MediaPlayer mp, int what, int extra) {
 				player.reset();
-				service.switchToNewState(new Connecting(player, service));
+				service.switchToNewState(newConnecting());
 				return false;
 			}
 		};
@@ -195,7 +212,7 @@ public class LiveShowState {
 
 		@Override
 		public void startPlayback() {
-			service.switchToNewState(new Connecting(player, service));
+			service.switchToNewState(newConnecting());
 		}
 
 		@Override
@@ -225,8 +242,9 @@ public class LiveShowState {
 
 		public void run() {
 			player.reset();
-			service.switchToNewState(new Idle(player, service));
+			service.switchToNewState(newIdle());
 		}
 
 	}
+
 }
