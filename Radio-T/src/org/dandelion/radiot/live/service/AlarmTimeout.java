@@ -3,10 +3,9 @@ package org.dandelion.radiot.live.service;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.*;
+import org.dandelion.radiot.live.core.Timeout;
 
-public class Alarm {
-    private static final String TIMEOUT_ELAPSED = "org.dandelion.radiot.live.TimeoutElapsed";
-
+public class AlarmTimeout implements Timeout {
     public Context context;
     private AlarmManager manager;
     private PendingIntent intent;
@@ -20,26 +19,28 @@ public class Alarm {
         }
     };
 
-
-    public Alarm(Context context) {
+    public AlarmTimeout(Context context, String actionName) {
         this.context = context;
         this.manager = (AlarmManager) this.context.getSystemService(Context.ALARM_SERVICE);
         this.intent = PendingIntent.getBroadcast(this.context.getApplicationContext(), 0,
-                new Intent(TIMEOUT_ELAPSED), 0);
-        this.context.registerReceiver(alarmReceiver, new IntentFilter(TIMEOUT_ELAPSED));
+                new Intent(actionName), 0);
+        this.context.registerReceiver(alarmReceiver, new IntentFilter(actionName));
     }
 
-    void reset() {
+    @Override
+    public void reset() {
         manager.cancel(intent);
         onAlarm = null;
     }
 
-    void set(int milliseconds, Runnable onAlarm) {
-        this.onAlarm = onAlarm;
+    @Override
+    public void set(int milliseconds, Runnable action) {
+        this.onAlarm = action;
         manager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()
                 + milliseconds, intent);
     }
 
+    @Override
     public void release() {
         context.unregisterReceiver(alarmReceiver);
     }
