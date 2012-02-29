@@ -7,12 +7,12 @@ import org.dandelion.radiot.live.core.PlaybackContext;
 public class Connecting extends BasicState {
     private MediaPlayer.OnPreparedListener onPrepared = new MediaPlayer.OnPreparedListener() {
         public void onPrepared(MediaPlayer mp) {
-            getService().switchToNewState(newPlaying());
+            context.serviceSwitchToNewState(newPlaying());
         }
     };
     private MediaPlayer.OnErrorListener onError = new MediaPlayer.OnErrorListener() {
         public boolean onError(MediaPlayer mp, int what, int extra) {
-            getService().switchToNewState(newWaiting());
+            context.serviceSwitchToNewState(newWaiting());
             return false;
         }
     };
@@ -25,14 +25,7 @@ public class Connecting extends BasicState {
 
 @Override
     public void enter() {
-        try {
-            context.playerReset();
-            context.playerSetDataSource(liveShowUrl);
-            context.playerPrepareAsync();
-            getService().goForeground(1);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        context.serviceGoForeground(1);
     }
 
     @Override

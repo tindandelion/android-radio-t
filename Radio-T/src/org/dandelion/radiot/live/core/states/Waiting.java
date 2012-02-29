@@ -35,6 +35,6 @@ public class Waiting extends BasicState {
     }
 
     public void timeoutElapsed() {
-        getService().switchToNewState(newConnecting());
+        context.connect();
     }
 }

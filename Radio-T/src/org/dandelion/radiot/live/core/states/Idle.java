@@ -16,7 +16,7 @@ public class Idle extends BasicState {
 
     @Override
     public void startPlayback() {
-        getService().switchToNewState(newConnecting());
+        context.connect();
     }
 
     @Override

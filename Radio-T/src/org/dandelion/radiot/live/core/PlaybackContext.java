@@ -2,8 +2,8 @@ package org.dandelion.radiot.live.core;
 
 import android.media.MediaPlayer;
 import org.dandelion.radiot.live.core.states.BasicState;
-
-import java.io.IOException;
+import org.dandelion.radiot.live.core.states.Connecting;
+import org.dandelion.radiot.live.core.states.Stopping;
 
 public class PlaybackContext {
     public BasicState.ILiveShowService service;
@@ -26,15 +26,30 @@ public class PlaybackContext {
         player.reset();
     }
 
-    public void playerSetDataSource(String url) throws IOException {
-        player.setDataSource(url);
-    }
-
-    public void playerPrepareAsync() {
-        player.prepareAsync();
-    }
 
     public void playerStart() {
         player.start();
+    }
+
+    public void serviceSwitchToNewState(BasicState state) {
+        service.switchToNewState(state);
+    }
+
+    public void serviceGoForeground(int i) {
+        service.goForeground(i);
+    }
+
+    public void connect() {
+        try {
+            player.setDataSource(BasicState.liveShowUrl);
+            player.prepareAsync();
+            service.switchToNewState(new Connecting(this));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void interrupt() {
+        service.switchToNewState(new Stopping(this));
     }
 }

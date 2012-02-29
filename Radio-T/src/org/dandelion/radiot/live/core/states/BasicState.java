@@ -56,7 +56,7 @@ public class BasicState {
 	}
 
 	public void stopPlayback() {
-		getService().switchToNewState(newStopping());
+        context.interrupt();
 	}
 
 
@@ -66,10 +66,6 @@ public class BasicState {
 	public long getTimestamp() {
 		return timestamp;
 	}
-
-    private Stopping newStopping() {
-        return new Stopping(context);
-    }
 
     protected Waiting newWaiting() {
         return new Waiting(context);

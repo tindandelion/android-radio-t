@@ -14,12 +14,6 @@ public class ConnectingStateTestCase extends BasicLiveShowStateTestCase {
         state = new Connecting(context);
     }
 
-    public void testPreparingForPlayingWhenEntersConnectingState()
-            throws Exception {
-        state.enter();
-        player.assertIsPreparing();
-    }
-
     public void testGoesForegroundWhenEntersConnectingState() throws Exception {
         state.enter();
         assertTrue(serviceIsForeground);
