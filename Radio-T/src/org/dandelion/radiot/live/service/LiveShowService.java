@@ -2,11 +2,13 @@ package org.dandelion.radiot.live.service;
 
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.RadiotApplication;
-import org.dandelion.radiot.live.core.LiveShowState;
+import org.dandelion.radiot.live.core.LiveShowQuery;
+import org.dandelion.radiot.live.core.PlaybackContext;
+import org.dandelion.radiot.live.core.states.Idle;
+import org.dandelion.radiot.live.core.states.BasicState;
 import org.dandelion.radiot.live.core.Timeout;
 import org.dandelion.radiot.live.ui.LiveShowActivity;
-import org.dandelion.radiot.live.core.LiveShowState.ILiveShowService;
-import org.dandelion.radiot.live.core.LiveShowState.Idle;
+import org.dandelion.radiot.live.core.states.BasicState.ILiveShowService;
 
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -29,7 +31,7 @@ public class LiveShowService extends Service implements ILiveShowService {
     private static final int NOTIFICATION_ID = 1;
 
 	private final IBinder binder = new LocalBinder();
-	private LiveShowState currentState;
+	private BasicState currentState;
 	private String[] statusLabels;
 	private Foregrounder foregrounder;
     private Timeout waitTimeout;
@@ -45,7 +47,7 @@ public class LiveShowService extends Service implements ILiveShowService {
 		super.onCreate();
 		MediaPlayer player = ((RadiotApplication) getApplication())
 				.getMediaPlayer();
-		currentState = new LiveShowState.Idle(player, this);
+		currentState = new Idle(new PlaybackContext(this, player));
 		statusLabels = getResources().getStringArray(
 				R.array.live_show_notification_labels);
 		foregrounder = Foregrounder.create(this);
@@ -62,17 +64,17 @@ public class LiveShowService extends Service implements ILiveShowService {
 	
 	@Override
 	public boolean onUnbind(Intent intent) {
-		if (currentState instanceof Idle) { 
+		if (currentState instanceof Idle) {
 			stopSelf();
 		}
 		return true;
 	}
 
-	public void acceptVisitor(LiveShowState.ILiveShowVisitor visitor) {
+	public void acceptVisitor(LiveShowQuery visitor) {
 		currentState.acceptVisitor(visitor);
 	}
 
-    public LiveShowState getCurrentState() {
+    public BasicState getCurrentState() {
 		return currentState;
 	}
 
@@ -80,7 +82,7 @@ public class LiveShowService extends Service implements ILiveShowService {
 		currentState.stopPlayback();
 	}
 
-	public synchronized void switchToNewState(LiveShowState newState) {
+	public synchronized void switchToNewState(BasicState newState) {
 		currentState.leave();
 		newState.enter();
 		currentState = newState;

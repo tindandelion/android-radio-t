@@ -2,13 +2,14 @@ package org.dandelion.radiot.unittest.live;
 
 import junit.framework.TestCase;
 import org.dandelion.radiot.helpers.MockMediaPlayer;
-import org.dandelion.radiot.live.core.LiveShowState;
+import org.dandelion.radiot.live.core.PlaybackContext;
+import org.dandelion.radiot.live.core.states.BasicState;
 
 public class BasicLiveShowStateTestCase extends TestCase {
-    protected LiveShowState switchedState;
-    protected LiveShowState currentState;
-    protected LiveShowState.ILiveShowService service;
+    protected BasicState switchedState;
+    protected BasicState.ILiveShowService service;
     protected MockMediaPlayer player;
+    protected PlaybackContext context;
     protected boolean serviceIsForeground;
     protected boolean timeoutScheduled;
     protected boolean wifiLocked;
@@ -16,8 +17,8 @@ public class BasicLiveShowStateTestCase extends TestCase {
     @Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		service = new LiveShowState.ILiveShowService() {
-			public void switchToNewState(LiveShowState newState) {
+		service = new BasicState.ILiveShowService() {
+			public void switchToNewState(BasicState newState) {
 				switchedState = newState;
 			}
 
@@ -51,13 +52,14 @@ public class BasicLiveShowStateTestCase extends TestCase {
 
 		};
 		player = new MockMediaPlayer();
+        context = new PlaybackContext(service, player);
 	}
 
     protected void assertSwitchedToState(Class<?> stateClass) {
         assertStateClass(switchedState, stateClass);
     }
 
-    protected void assertStateClass(LiveShowState newState, Class<?> stateClass) {
+    protected void assertStateClass(BasicState newState, Class<?> stateClass) {
         if (null == newState)
             fail("Not switched to any state");
         assertEquals(stateClass, newState.getClass());
