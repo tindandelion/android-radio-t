@@ -29,7 +29,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar:///Applications/Android/platforms/android-10/android.jar!/" />
+          <root url="jar://$MODULE_DIR$/android.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
