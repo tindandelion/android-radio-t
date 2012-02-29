@@ -1,7 +1,7 @@
 package org.dandelion.radiot.live;
 
 import org.dandelion.radiot.live.core.PlaybackContext;
-import org.dandelion.radiot.live.core.states.Idle;
+import org.dandelion.radiot.live.core.states.Playing;
 import org.junit.Test;
 
 import static org.mockito.Mockito.mock;
@@ -9,11 +9,17 @@ import static org.mockito.Mockito.verify;
 
 public class PlayingStateTests {
     private PlaybackContext context = mock(PlaybackContext.class);
-    private Idle state = new Idle(context);
+    private Playing state = new Playing(context);
 
     @Test
     public void stopPlaybackGoesStopping() {
         state.stopPlayback();
         verify(context).interrupt();
+    }
+
+    @Test
+    public void reconnectOnError() throws Exception {
+        state.onError(null, 0, 0);
+        verify(context).connect();
     }
 }

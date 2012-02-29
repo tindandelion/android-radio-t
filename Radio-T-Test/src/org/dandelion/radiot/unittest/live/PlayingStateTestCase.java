@@ -42,15 +42,6 @@ public class PlayingStateTestCase extends BasicLiveShowStateTestCase {
 
     }
 
-    public void testResettingPlayerOnPlaybackError() throws Exception {
-        player.bePrepared();
-        state.enter();
-        player.signalError();
-
-        player.assertIsReset();
-
-    }
-
     public void testLocksWifiWhenEntersState() throws Exception {
         player.bePrepared();
         state.enter();

@@ -26,6 +26,7 @@ public class PlaybackContextTests {
     @Test
     public void connectInitializesMediaPlayer() throws Exception {
         context.connect();
+        verify(player).reset();
         verify(player).setDataSource(BasicState.liveShowUrl);
         verify(player).prepareAsync();
     }

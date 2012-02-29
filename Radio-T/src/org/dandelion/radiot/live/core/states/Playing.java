@@ -4,18 +4,10 @@ import android.media.MediaPlayer;
 import org.dandelion.radiot.live.core.LiveShowQuery;
 import org.dandelion.radiot.live.core.PlaybackContext;
 
-public class Playing extends BasicState {
-    private MediaPlayer.OnErrorListener onError = new MediaPlayer.OnErrorListener() {
-        public boolean onError(MediaPlayer mp, int what, int extra) {
-            context.playerReset();
-            getService().switchToNewState(newConnecting());
-            return false;
-        }
-    };
-
+public class Playing extends BasicState implements MediaPlayer.OnErrorListener {
     public Playing(PlaybackContext context) {
         super(context);
-        this.context.playerSetOnErrorListener(onError);
+        this.context.playerSetOnErrorListener(this);
     }
 
     @Override
@@ -33,5 +25,11 @@ public class Playing extends BasicState {
     @Override
     public void acceptVisitor(LiveShowQuery visitor) {
         visitor.onPlaying(this);
+    }
+
+    @Override
+    public boolean onError(MediaPlayer mediaPlayer, int i, int i1) {
+        context.connect();
+        return false;
     }
 }

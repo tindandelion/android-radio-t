@@ -75,10 +75,6 @@ public class BasicState {
         return new Playing(context);
     }
 
-    protected Connecting newConnecting() {
-        return new Connecting(context);
-    }
-
     protected Idle newIdle() {
         return new Idle(context);
     }

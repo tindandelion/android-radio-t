@@ -41,6 +41,7 @@ public class PlaybackContext {
 
     public void connect() {
         try {
+            player.reset();
             player.setDataSource(BasicState.liveShowUrl);
             player.prepareAsync();
             service.switchToNewState(new Connecting(this));
