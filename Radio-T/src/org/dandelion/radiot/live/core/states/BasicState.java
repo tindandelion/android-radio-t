@@ -1,6 +1,5 @@
 package org.dandelion.radiot.live.core.states;
 
-import android.media.MediaPlayer;
 import org.dandelion.radiot.live.core.LiveShowQuery;
 import org.dandelion.radiot.live.core.PlaybackContext;
 
@@ -22,10 +21,6 @@ public class BasicState {
 
     public ILiveShowService getService() {
         return context.service;
-    }
-
-    public MediaPlayer getPlayer() {
-        return context.player;
     }
 
     public interface ILiveShowService {

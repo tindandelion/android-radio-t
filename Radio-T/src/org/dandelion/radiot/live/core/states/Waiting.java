@@ -19,7 +19,7 @@ public class Waiting extends BasicState {
 
     @Override
     public void enter() {
-        getPlayer().reset();
+        context.playerReset();
         getService().setTimeout(waitTimeout, onTimeout);
         getService().goForeground(WAITING_NOTIFICATION_STRING_ID);
     }

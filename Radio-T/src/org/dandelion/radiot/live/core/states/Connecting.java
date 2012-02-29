@@ -19,16 +19,16 @@ public class Connecting extends BasicState {
 
     public Connecting(PlaybackContext context) {
         super(context);
-        this.getPlayer().setOnPreparedListener(onPrepared);
-        this.getPlayer().setOnErrorListener(onError);
+        this.context.playerSetOnPreparedListener(onPrepared);
+        this.context.playerSetOnErrorListener(onError);
 }
 
 @Override
     public void enter() {
         try {
-            getPlayer().reset();
-            getPlayer().setDataSource(liveShowUrl);
-            getPlayer().prepareAsync();
+            context.playerReset();
+            context.playerSetDataSource(liveShowUrl);
+            context.playerPrepareAsync();
             getService().goForeground(1);
         } catch (Exception e) {
             throw new RuntimeException(e);

@@ -6,7 +6,7 @@ import org.dandelion.radiot.live.core.PlaybackContext;
 public class Idle extends BasicState {
     public Idle(PlaybackContext context) {
         super(context);
-        getPlayer().setOnErrorListener(null);
+        context.playerSetOnErrorListener(null);
     }
 
     @Override

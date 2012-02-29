@@ -23,7 +23,7 @@ public class Stopping extends BasicState implements Runnable {
     }
 
     public void run() {
-        getPlayer().reset();
+        context.playerReset();
         getService().switchToNewState(newIdle());
     }
 

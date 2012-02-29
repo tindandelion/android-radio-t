@@ -7,7 +7,7 @@ import org.dandelion.radiot.live.core.PlaybackContext;
 public class Playing extends BasicState {
     private MediaPlayer.OnErrorListener onError = new MediaPlayer.OnErrorListener() {
         public boolean onError(MediaPlayer mp, int what, int extra) {
-            getPlayer().reset();
+            context.playerReset();
             getService().switchToNewState(newConnecting());
             return false;
         }
@@ -15,13 +15,13 @@ public class Playing extends BasicState {
 
     public Playing(PlaybackContext context) {
         super(context);
-        getPlayer().setOnErrorListener(onError);
+        this.context.playerSetOnErrorListener(onError);
     }
 
     @Override
     public void enter() {
         getService().lockWifi();
-        getPlayer().start();
+        context.playerStart();
         getService().goForeground(0);
     }
 
