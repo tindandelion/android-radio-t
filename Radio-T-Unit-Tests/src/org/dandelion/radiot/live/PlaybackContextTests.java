@@ -80,7 +80,7 @@ public class PlaybackContextTests {
     }
 
     @Test
-    public void goesConnectingOnPlayError() throws Exception {
+    public void goesConnectingOnPlayingError() throws Exception {
         context.play();
         errorListener.onError(player, 0, 0);
 
