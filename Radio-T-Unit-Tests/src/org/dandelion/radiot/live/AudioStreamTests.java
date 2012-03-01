@@ -31,50 +31,29 @@ public class AudioStreamTests {
             }
         }).when(player).setOnPreparedListener(any(MediaPlayer.OnPreparedListener.class));
 
-        stream = new AudioStream(player, TEST_STREAM_URL);
+        stream = new AudioStream(player);
         stateListener = mock(AudioStream.StateListener.class);
         stream.setStateListener(stateListener);
     }
 
     @Test
-    public void startPlayingPreparesPlayer() throws IOException {
-        stream.play();
+    public void initializePlayerWhenStartPlaying() throws IOException {
+        stream.play(TEST_STREAM_URL);
+        verify(player).reset();
         verify(player).setDataSource(TEST_STREAM_URL);
         verify(player).prepareAsync();
     }
 
     @Test
-    public void resetsPlayerBeforePreparing() throws Exception {
-        stream.play();
-        verify(player).reset();
-    }
-
-    @Test
-    public void startsPlayingWhenPrepared() throws Exception {
-        stream.play();
+    public void startsPlaybackWhenPrepared() throws Exception {
+        stream.play(TEST_STREAM_URL);
         preparedListener.onPrepared(player);
         verify(player).start();
     }
 
     @Test
-    public void stopPlaying() throws Exception {
-        stream.stop();
-        verify(player).stop();
-    }
-
-    @Test
-    public void startPlayingCallback() throws Exception {
-        stream.play();
+    public void informsListenerThatStartedPlaying() throws Exception {
         preparedListener.onPrepared(player);
-
         verify(stateListener).onStarted();
     }
-
-    @Test
-    public void stopPlayingCallback() throws Exception {
-        stream.stop();
-        verify(stateListener).onStopped();
-    }
-
-    //TODO: Error callback
 }

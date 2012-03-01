@@ -2,6 +2,7 @@ package org.dandelion.radiot.live.service;
 
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.RadiotApplication;
+import org.dandelion.radiot.live.core.AudioStream;
 import org.dandelion.radiot.live.core.LiveShowQuery;
 import org.dandelion.radiot.live.core.PlaybackContext;
 import org.dandelion.radiot.live.core.states.Idle;
@@ -47,7 +48,8 @@ public class LiveShowService extends Service implements ILiveShowService {
 		super.onCreate();
 		MediaPlayer player = ((RadiotApplication) getApplication())
 				.getMediaPlayer();
-		currentState = new Idle(new PlaybackContext(this, player));
+        AudioStream liveStream = new AudioStream(player);
+		currentState = new Idle(new PlaybackContext(this, player, liveStream));
 		statusLabels = getResources().getStringArray(
 				R.array.live_show_notification_labels);
 		foregrounder = Foregrounder.create(this);

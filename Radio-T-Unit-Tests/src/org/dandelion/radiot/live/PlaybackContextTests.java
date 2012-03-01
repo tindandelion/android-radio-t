@@ -1,6 +1,7 @@
 package org.dandelion.radiot.live;
 
 import android.media.MediaPlayer;
+import org.dandelion.radiot.live.core.AudioStream;
 import org.dandelion.radiot.live.core.PlaybackContext;
 import org.dandelion.radiot.live.core.states.*;
 import org.junit.Before;
@@ -19,19 +20,12 @@ public class PlaybackContextTests {
     private MediaPlayer player = mock(MediaPlayer.class);
     private PlaybackState.ILiveShowService service = mock(PlaybackState.ILiveShowService.class);
     private PlaybackContext context;
-    private MediaPlayer.OnPreparedListener preparedListener;
     private MediaPlayer.OnErrorListener errorListener;
+    private AudioStream audioStream = mock(AudioStream.class);
+    private AudioStream.StateListener audioStateListener;
 
     @Before
     public void setUp() throws Exception {
-        doAnswer(new Answer<Object>() {
-            @Override
-            public Object answer(InvocationOnMock invocation) throws Throwable {
-                preparedListener = (MediaPlayer.OnPreparedListener) invocation.getArguments()[0];
-                return null;
-            }
-        }).when(player).setOnPreparedListener(any(MediaPlayer.OnPreparedListener.class));
-
         doAnswer(new Answer<Object>() {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
@@ -40,7 +34,15 @@ public class PlaybackContextTests {
             }
         }).when(player).setOnErrorListener(any(MediaPlayer.OnErrorListener.class));
 
-        context = new PlaybackContext(service, player);
+        doAnswer(new Answer<Object>() {
+            @Override
+            public Object answer(InvocationOnMock invocation) throws Throwable {
+                audioStateListener = (AudioStream.StateListener) invocation.getArguments()[0];
+                return null;
+            }
+        }).when(audioStream).setStateListener(any(AudioStream.StateListener.class));
+
+        context = new PlaybackContext(service, player, audioStream);
     }
 
     @Test
@@ -50,11 +52,10 @@ public class PlaybackContextTests {
     }
 
     @Test
-    public void connectInitializesMediaPlayer() throws Exception {
+    public void connectStartsPlaying() throws Exception {
+        // TODO: Rename method connect()
         context.connect();
-        verify(player).reset();
-        verify(player).setDataSource(PlaybackState.liveShowUrl);
-        verify(player).prepareAsync();
+        verify(audioStream).play(PlaybackState.liveShowUrl);
     }
 
     @Test
@@ -66,9 +67,8 @@ public class PlaybackContextTests {
     @Test
     public void goesPlayingWhenPrepared() throws Exception {
         context.connect();
-        preparedListener.onPrepared(player);
+        audioStateListener.onStarted();
         
-        verify(player).start();
         verify(service).switchToNewState(isA(Playing.class));
     }
 
@@ -84,8 +84,7 @@ public class PlaybackContextTests {
         context.play();
         errorListener.onError(player, 0, 0);
 
-        // TODO: Stupid check that we actually connect, not simply changing state
         verify(service).switchToNewState(isA(Connecting.class));
-        verify(player).prepareAsync();
+        verify(audioStream).play(PlaybackState.liveShowUrl);
     }
 }

@@ -2,6 +2,7 @@ package org.dandelion.radiot.unittest.live;
 
 import junit.framework.TestCase;
 import org.dandelion.radiot.helpers.MockMediaPlayer;
+import org.dandelion.radiot.live.core.AudioStream;
 import org.dandelion.radiot.live.core.PlaybackContext;
 import org.dandelion.radiot.live.core.states.PlaybackState;
 
@@ -52,7 +53,8 @@ public class PlaybackStateTestCase extends TestCase {
 
 		};
 		player = new MockMediaPlayer();
-        context = new PlaybackContext(service, player);
+        AudioStream stream = new AudioStream(player);
+        context = new PlaybackContext(service, player, stream);
 	}
 
     protected void assertSwitchedToState(Class<?> stateClass) {

@@ -4,15 +4,17 @@ import android.media.MediaPlayer;
 import org.dandelion.radiot.live.core.states.*;
 
 // TODO: Get rid of service.switchToNewState
-public class PlaybackContext implements MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener {
+public class PlaybackContext implements MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, AudioStream.StateListener {
     public PlaybackState.ILiveShowService service;
     private MediaPlayer player;
     private PlaybackState currentState;
+    private AudioStream showStream;
 
-    public PlaybackContext(PlaybackState.ILiveShowService service, MediaPlayer player) {
+    public PlaybackContext(PlaybackState.ILiveShowService service, MediaPlayer player, AudioStream showStream) {
+        this.showStream = showStream;
+        this.showStream.setStateListener(this);
         this.service = service;
         this.player = player;
-        this.player.setOnPreparedListener(this);
         this.player.setOnErrorListener(this);
         currentState = new Idle(this);
     }
@@ -32,9 +34,7 @@ public class PlaybackContext implements MediaPlayer.OnPreparedListener, MediaPla
 
     public void connect() {
         try {
-            player.reset();
-            player.setDataSource(PlaybackState.liveShowUrl);
-            player.prepareAsync();
+            showStream.play(PlaybackState.liveShowUrl);
             setState(new Connecting(this));
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -47,7 +47,6 @@ public class PlaybackContext implements MediaPlayer.OnPreparedListener, MediaPla
 
     @Override
     public void onPrepared(MediaPlayer mediaPlayer) {
-        play();
     }
 
     public void play() {
@@ -73,5 +72,10 @@ public class PlaybackContext implements MediaPlayer.OnPreparedListener, MediaPla
     private void setState(PlaybackState state) {
         currentState = state;
         service.switchToNewState(currentState);
+    }
+
+    @Override
+    public void onStarted() {
+        setState(new Playing(this));
     }
 }
