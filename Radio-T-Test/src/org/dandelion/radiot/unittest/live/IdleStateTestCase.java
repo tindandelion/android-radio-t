@@ -3,7 +3,7 @@ package org.dandelion.radiot.unittest.live;
 import org.dandelion.radiot.live.core.states.Connecting;
 import org.dandelion.radiot.live.core.states.Idle;
 
-public class IdleStateTestCase extends BasicLiveShowStateTestCase {
+public class IdleStateTestCase extends PlaybackStateTestCase {
     private Idle state;
 
     @Override

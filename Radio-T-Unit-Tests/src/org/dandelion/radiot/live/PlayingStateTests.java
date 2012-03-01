@@ -16,10 +16,4 @@ public class PlayingStateTests {
         state.stopPlayback();
         verify(context).interrupt();
     }
-
-    @Test
-    public void reconnectOnError() throws Exception {
-        state.onError(null, 0, 0);
-        verify(context).connect();
-    }
 }

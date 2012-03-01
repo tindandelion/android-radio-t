@@ -3,7 +3,7 @@ package org.dandelion.radiot.live.core.states;
 import org.dandelion.radiot.live.core.LiveShowQuery;
 import org.dandelion.radiot.live.core.PlaybackContext;
 
-public class Stopping extends BasicState implements Runnable {
+public class Stopping extends PlaybackState implements Runnable {
     public Stopping(PlaybackContext context) {
         super(context);
     }
@@ -24,7 +24,7 @@ public class Stopping extends BasicState implements Runnable {
 
     public void run() {
         context.playerReset();
-        getService().switchToNewState(newIdle());
+        context.serviceSwitchToNewState(newIdle());
     }
 
 }

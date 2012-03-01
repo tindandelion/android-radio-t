@@ -3,7 +3,7 @@ package org.dandelion.radiot.live.core.states;
 import org.dandelion.radiot.live.core.LiveShowQuery;
 import org.dandelion.radiot.live.core.PlaybackContext;
 
-public class BasicState {
+public class PlaybackState {
 //	private static String liveShowUrl = "http://radio10.promodeejay.net:8181/stream";
 	public static String liveShowUrl = "http://icecast.bigrradio.com/80s90s";
 	public static int waitTimeout = 60 * 1000;
@@ -24,7 +24,7 @@ public class BasicState {
     }
 
     public interface ILiveShowService {
-		void switchToNewState(BasicState newState);
+		void switchToNewState(PlaybackState newState);
 
 		void goForeground(int stringId);
 
@@ -39,9 +39,9 @@ public class BasicState {
 		void lockWifi();
 
 		void unlockWifi();
-	}
+    }
 
-    public BasicState(PlaybackContext context) {
+    public PlaybackState(PlaybackContext context) {
         this.context = context;
         this.timestamp = System.currentTimeMillis();
     }
@@ -66,14 +66,6 @@ public class BasicState {
 	public long getTimestamp() {
 		return timestamp;
 	}
-
-    protected Waiting newWaiting() {
-        return new Waiting(context);
-    }
-
-    protected Playing newPlaying() {
-        return new Playing(context);
-    }
 
     protected Idle newIdle() {
         return new Idle(context);

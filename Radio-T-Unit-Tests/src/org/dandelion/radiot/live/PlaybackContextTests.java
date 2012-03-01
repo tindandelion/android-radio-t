@@ -2,10 +2,7 @@ package org.dandelion.radiot.live;
 
 import android.media.MediaPlayer;
 import org.dandelion.radiot.live.core.PlaybackContext;
-import org.dandelion.radiot.live.core.states.BasicState;
-import org.dandelion.radiot.live.core.states.Connecting;
-import org.dandelion.radiot.live.core.states.Playing;
-import org.dandelion.radiot.live.core.states.Stopping;
+import org.dandelion.radiot.live.core.states.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
@@ -20,9 +17,10 @@ import static org.mockito.Mockito.verify;
 public class PlaybackContextTests {
 
     private MediaPlayer player = mock(MediaPlayer.class);
-    private BasicState.ILiveShowService service = mock(BasicState.ILiveShowService.class);
+    private PlaybackState.ILiveShowService service = mock(PlaybackState.ILiveShowService.class);
     private PlaybackContext context;
     private MediaPlayer.OnPreparedListener preparedListener;
+    private MediaPlayer.OnErrorListener errorListener;
 
     @Before
     public void setUp() throws Exception {
@@ -33,6 +31,15 @@ public class PlaybackContextTests {
                 return null;
             }
         }).when(player).setOnPreparedListener(any(MediaPlayer.OnPreparedListener.class));
+
+        doAnswer(new Answer<Object>() {
+            @Override
+            public Object answer(InvocationOnMock invocation) throws Throwable {
+                errorListener = (MediaPlayer.OnErrorListener) invocation.getArguments()[0];
+                return null;
+            }
+        }).when(player).setOnErrorListener(any(MediaPlayer.OnErrorListener.class));
+
         context = new PlaybackContext(service, player);
     }
 
@@ -46,7 +53,7 @@ public class PlaybackContextTests {
     public void connectInitializesMediaPlayer() throws Exception {
         context.connect();
         verify(player).reset();
-        verify(player).setDataSource(BasicState.liveShowUrl);
+        verify(player).setDataSource(PlaybackState.liveShowUrl);
         verify(player).prepareAsync();
     }
 
@@ -65,5 +72,20 @@ public class PlaybackContextTests {
         verify(service).switchToNewState(isA(Playing.class));
     }
 
-    // TODO: Error handling for connecting and playing states
+    @Test
+    public void goesWaitingOnPrepareError() throws Exception {
+        context.connect();
+        errorListener.onError(player, 0, 0);
+        verify(service).switchToNewState(isA(Waiting.class));
+    }
+
+    @Test
+    public void goesConnectingOnPlayError() throws Exception {
+        context.play();
+        errorListener.onError(player, 0, 0);
+
+        // TODO: Stupid check that we actually connect, not simply changing state
+        verify(service).switchToNewState(isA(Connecting.class));
+        verify(player).prepareAsync();
+    }
 }

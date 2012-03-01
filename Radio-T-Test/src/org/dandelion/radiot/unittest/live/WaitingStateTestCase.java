@@ -3,7 +3,7 @@ package org.dandelion.radiot.unittest.live;
 import org.dandelion.radiot.live.core.states.Connecting;
 import org.dandelion.radiot.live.core.states.Waiting;
 
-public class WaitingStateTestCase extends BasicLiveShowStateTestCase {
+public class WaitingStateTestCase extends PlaybackStateTestCase {
     private Waiting state;
 
     @Override

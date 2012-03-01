@@ -5,10 +5,10 @@ import org.dandelion.radiot.RadiotApplication;
 import org.dandelion.radiot.live.core.LiveShowQuery;
 import org.dandelion.radiot.live.core.PlaybackContext;
 import org.dandelion.radiot.live.core.states.Idle;
-import org.dandelion.radiot.live.core.states.BasicState;
+import org.dandelion.radiot.live.core.states.PlaybackState;
 import org.dandelion.radiot.live.core.Timeout;
 import org.dandelion.radiot.live.ui.LiveShowActivity;
-import org.dandelion.radiot.live.core.states.BasicState.ILiveShowService;
+import org.dandelion.radiot.live.core.states.PlaybackState.ILiveShowService;
 
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -31,7 +31,7 @@ public class LiveShowService extends Service implements ILiveShowService {
     private static final int NOTIFICATION_ID = 1;
 
 	private final IBinder binder = new LocalBinder();
-	private BasicState currentState;
+	private PlaybackState currentState;
 	private String[] statusLabels;
 	private Foregrounder foregrounder;
     private Timeout waitTimeout;
@@ -74,7 +74,7 @@ public class LiveShowService extends Service implements ILiveShowService {
 		currentState.acceptVisitor(visitor);
 	}
 
-    public BasicState getCurrentState() {
+    public PlaybackState getCurrentState() {
 		return currentState;
 	}
 
@@ -82,7 +82,7 @@ public class LiveShowService extends Service implements ILiveShowService {
 		currentState.stopPlayback();
 	}
 
-	public synchronized void switchToNewState(BasicState newState) {
+	public synchronized void switchToNewState(PlaybackState newState) {
 		currentState.leave();
 		newState.enter();
 		currentState = newState;

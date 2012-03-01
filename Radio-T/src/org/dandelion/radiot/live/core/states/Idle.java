@@ -3,10 +3,9 @@ package org.dandelion.radiot.live.core.states;
 import org.dandelion.radiot.live.core.LiveShowQuery;
 import org.dandelion.radiot.live.core.PlaybackContext;
 
-public class Idle extends BasicState {
+public class Idle extends PlaybackState {
     public Idle(PlaybackContext context) {
         super(context);
-        context.playerSetOnErrorListener(null);
     }
 
     @Override

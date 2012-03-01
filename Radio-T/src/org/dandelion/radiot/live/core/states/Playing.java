@@ -1,13 +1,11 @@
 package org.dandelion.radiot.live.core.states;
 
-import android.media.MediaPlayer;
 import org.dandelion.radiot.live.core.LiveShowQuery;
 import org.dandelion.radiot.live.core.PlaybackContext;
 
-public class Playing extends BasicState implements MediaPlayer.OnErrorListener {
+public class Playing extends PlaybackState {
     public Playing(PlaybackContext context) {
         super(context);
-        this.context.playerSetOnErrorListener(this);
     }
 
     @Override
@@ -24,11 +22,5 @@ public class Playing extends BasicState implements MediaPlayer.OnErrorListener {
     @Override
     public void acceptVisitor(LiveShowQuery visitor) {
         visitor.onPlaying(this);
-    }
-
-    @Override
-    public boolean onError(MediaPlayer mediaPlayer, int i, int i1) {
-        context.connect();
-        return false;
     }
 }

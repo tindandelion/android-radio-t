@@ -3,11 +3,11 @@ package org.dandelion.radiot.unittest.live;
 import junit.framework.TestCase;
 import org.dandelion.radiot.helpers.MockMediaPlayer;
 import org.dandelion.radiot.live.core.PlaybackContext;
-import org.dandelion.radiot.live.core.states.BasicState;
+import org.dandelion.radiot.live.core.states.PlaybackState;
 
-public class BasicLiveShowStateTestCase extends TestCase {
-    protected BasicState switchedState;
-    protected BasicState.ILiveShowService service;
+public class PlaybackStateTestCase extends TestCase {
+    protected PlaybackState switchedState;
+    protected PlaybackState.ILiveShowService service;
     protected MockMediaPlayer player;
     protected PlaybackContext context;
     protected boolean serviceIsForeground;
@@ -17,8 +17,8 @@ public class BasicLiveShowStateTestCase extends TestCase {
     @Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		service = new BasicState.ILiveShowService() {
-			public void switchToNewState(BasicState newState) {
+		service = new PlaybackState.ILiveShowService() {
+			public void switchToNewState(PlaybackState newState) {
 				switchedState = newState;
 			}
 
@@ -59,7 +59,7 @@ public class BasicLiveShowStateTestCase extends TestCase {
         assertStateClass(switchedState, stateClass);
     }
 
-    protected void assertStateClass(BasicState newState, Class<?> stateClass) {
+    protected void assertStateClass(PlaybackState newState, Class<?> stateClass) {
         if (null == newState)
             fail("Not switched to any state");
         assertEquals(stateClass, newState.getClass());

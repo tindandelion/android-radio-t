@@ -46,7 +46,7 @@ public class LiveShowPresenter implements LiveShowQuery {
 		activity.setElapsedTime(0);
 	}
 
-	public void switchPlaybackState(BasicState state) {
+	public void switchPlaybackState(PlaybackState state) {
 		if (isActive) {
 			state.stopPlayback();
 		} else {
@@ -54,7 +54,7 @@ public class LiveShowPresenter implements LiveShowQuery {
 		}
 	}
 
-	private void beActiveState(BasicState state, int labelStringId,
+	private void beActiveState(PlaybackState state, int labelStringId,
 			boolean isHelpTextVisible, boolean buttonEnabled) {
 		isActive = true;
 		activity.setStatusLabel(labelStringId);

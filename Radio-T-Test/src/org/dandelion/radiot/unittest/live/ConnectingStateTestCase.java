@@ -4,7 +4,7 @@ import org.dandelion.radiot.live.core.states.Connecting;
 import org.dandelion.radiot.live.core.states.Playing;
 import org.dandelion.radiot.live.core.states.Waiting;
 
-public class ConnectingStateTestCase extends BasicLiveShowStateTestCase {
+public class ConnectingStateTestCase extends PlaybackStateTestCase {
 
     private Connecting state;
 
