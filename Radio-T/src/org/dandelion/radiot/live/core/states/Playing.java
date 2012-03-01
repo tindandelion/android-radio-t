@@ -13,7 +13,6 @@ public class Playing extends BasicState implements MediaPlayer.OnErrorListener {
     @Override
     public void enter() {
         getService().lockWifi();
-        context.playerStart();
         getService().goForeground(0);
     }
 

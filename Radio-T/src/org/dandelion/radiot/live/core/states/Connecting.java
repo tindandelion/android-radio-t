@@ -5,11 +5,6 @@ import org.dandelion.radiot.live.core.LiveShowQuery;
 import org.dandelion.radiot.live.core.PlaybackContext;
 
 public class Connecting extends BasicState {
-    private MediaPlayer.OnPreparedListener onPrepared = new MediaPlayer.OnPreparedListener() {
-        public void onPrepared(MediaPlayer mp) {
-            context.serviceSwitchToNewState(newPlaying());
-        }
-    };
     private MediaPlayer.OnErrorListener onError = new MediaPlayer.OnErrorListener() {
         public boolean onError(MediaPlayer mp, int what, int extra) {
             context.serviceSwitchToNewState(newWaiting());
@@ -19,7 +14,6 @@ public class Connecting extends BasicState {
 
     public Connecting(PlaybackContext context) {
         super(context);
-        this.context.playerSetOnPreparedListener(onPrepared);
         this.context.playerSetOnErrorListener(onError);
 }
 

@@ -3,19 +3,17 @@ package org.dandelion.radiot.live.core;
 import android.media.MediaPlayer;
 import org.dandelion.radiot.live.core.states.BasicState;
 import org.dandelion.radiot.live.core.states.Connecting;
+import org.dandelion.radiot.live.core.states.Playing;
 import org.dandelion.radiot.live.core.states.Stopping;
 
-public class PlaybackContext {
+public class PlaybackContext implements MediaPlayer.OnPreparedListener {
     public BasicState.ILiveShowService service;
     private MediaPlayer player;
 
     public PlaybackContext(BasicState.ILiveShowService service, MediaPlayer player) {
         this.service = service;
         this.player = player;
-    }
-
-    public void playerSetOnPreparedListener(MediaPlayer.OnPreparedListener onPrepared) {
-        player.setOnPreparedListener(onPrepared);
+        this.player.setOnPreparedListener(this);
     }
 
     public void playerSetOnErrorListener(MediaPlayer.OnErrorListener onError) {
@@ -26,10 +24,6 @@ public class PlaybackContext {
         player.reset();
     }
 
-
-    public void playerStart() {
-        player.start();
-    }
 
     public void serviceSwitchToNewState(BasicState state) {
         service.switchToNewState(state);
@@ -52,5 +46,15 @@ public class PlaybackContext {
 
     public void interrupt() {
         service.switchToNewState(new Stopping(this));
+    }
+
+    @Override
+    public void onPrepared(MediaPlayer mediaPlayer) {
+        play();
+    }
+
+    private void play() {
+        player.start();
+        service.switchToNewState(new Playing(this));
     }
 }
