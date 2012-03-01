@@ -1,6 +1,5 @@
 package org.dandelion.radiot.live;
 
-import android.media.MediaPlayer;
 import org.dandelion.radiot.live.core.AudioStream;
 import org.dandelion.radiot.live.core.PlaybackContext;
 import org.dandelion.radiot.live.core.states.*;
@@ -17,10 +16,8 @@ import static org.mockito.Mockito.verify;
 
 public class PlaybackContextTests {
 
-    private MediaPlayer player = mock(MediaPlayer.class);
     private PlaybackState.ILiveShowService service = mock(PlaybackState.ILiveShowService.class);
     private PlaybackContext context;
-    private MediaPlayer.OnErrorListener errorListener;
     private AudioStream audioStream = mock(AudioStream.class);
     private AudioStream.StateListener audioStateListener;
 
@@ -29,20 +26,12 @@ public class PlaybackContextTests {
         doAnswer(new Answer<Object>() {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
-                errorListener = (MediaPlayer.OnErrorListener) invocation.getArguments()[0];
-                return null;
-            }
-        }).when(player).setOnErrorListener(any(MediaPlayer.OnErrorListener.class));
-
-        doAnswer(new Answer<Object>() {
-            @Override
-            public Object answer(InvocationOnMock invocation) throws Throwable {
                 audioStateListener = (AudioStream.StateListener) invocation.getArguments()[0];
                 return null;
             }
         }).when(audioStream).setStateListener(any(AudioStream.StateListener.class));
 
-        context = new PlaybackContext(service, player, audioStream);
+        context = new PlaybackContext(service, audioStream);
     }
 
     @Test
@@ -75,15 +64,14 @@ public class PlaybackContextTests {
     @Test
     public void goesWaitingOnPrepareError() throws Exception {
         context.connect();
-        errorListener.onError(player, 0, 0);
+        audioStateListener.onError();
         verify(service).switchToNewState(isA(Waiting.class));
     }
 
     @Test
     public void goesConnectingOnPlayingError() throws Exception {
-        context.play();
-        errorListener.onError(player, 0, 0);
-
+        context.onStarted();
+        audioStateListener.onError();
         verify(service).switchToNewState(isA(Connecting.class));
         verify(audioStream).play(PlaybackState.liveShowUrl);
     }

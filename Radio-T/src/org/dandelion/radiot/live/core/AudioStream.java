@@ -4,7 +4,7 @@ import android.media.MediaPlayer;
 
 import java.io.IOException;
 
-public class AudioStream implements MediaPlayer.OnPreparedListener {
+public class AudioStream implements MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener {
 
     public void play(String url) throws IOException {
         player.reset();
@@ -18,13 +18,29 @@ public class AudioStream implements MediaPlayer.OnPreparedListener {
         listener.onStarted();
     }
 
+    @Override
+    public boolean onError(MediaPlayer mediaPlayer, int i, int i1) {
+        listener.onError();
+        return false;
+    }
+
+    // TODO: Review usages
+    public void reset() {
+        player.reset();
+    }
+
     public interface StateListener {
         void onStarted();
+        void onError();
     }
 
     class NullStateListener implements StateListener {
         @Override
         public void onStarted() {
+        }
+
+        @Override
+        public void onError() {
         }
     }
 
@@ -39,6 +55,7 @@ public class AudioStream implements MediaPlayer.OnPreparedListener {
 
     private void listenForPlayerEvents() {
         player.setOnPreparedListener(this);
+        player.setOnErrorListener(this);
     }
 
     public void setStateListener(StateListener listener) {

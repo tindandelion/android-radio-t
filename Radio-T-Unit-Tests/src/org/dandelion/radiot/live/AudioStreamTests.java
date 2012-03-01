@@ -19,7 +19,8 @@ public class AudioStreamTests {
     private MediaPlayer.OnPreparedListener preparedListener;
     private MediaPlayer player = mock(MediaPlayer.class);
     private AudioStream stream;
-    private AudioStream.StateListener stateListener;
+    private AudioStream.StateListener stateListener = mock(AudioStream.StateListener.class);
+    private MediaPlayer.OnErrorListener errorListener;
 
     @Before
     public void setUp() throws Exception {
@@ -31,8 +32,15 @@ public class AudioStreamTests {
             }
         }).when(player).setOnPreparedListener(any(MediaPlayer.OnPreparedListener.class));
 
+        doAnswer(new Answer<Object>() {
+            @Override
+            public Object answer(InvocationOnMock invocation) throws Throwable {
+                errorListener = (MediaPlayer.OnErrorListener) invocation.getArguments()[0];
+                return null;
+            }
+        }).when(player).setOnErrorListener(any(MediaPlayer.OnErrorListener.class));
+
         stream = new AudioStream(player);
-        stateListener = mock(AudioStream.StateListener.class);
         stream.setStateListener(stateListener);
     }
 
@@ -55,5 +63,17 @@ public class AudioStreamTests {
     public void informsListenerThatStartedPlaying() throws Exception {
         preparedListener.onPrepared(player);
         verify(stateListener).onStarted();
+    }
+
+    @Test
+    public void informsListenerOfPlaybackErrors() throws Exception {
+        errorListener.onError(player, 0, 0);
+        verify(stateListener).onError();
+    }
+
+    @Test
+    public void resetPlayer() throws Exception {
+        stream.reset();
+        verify(player).reset();
     }
 }

@@ -49,7 +49,7 @@ public class LiveShowService extends Service implements ILiveShowService {
 		MediaPlayer player = ((RadiotApplication) getApplication())
 				.getMediaPlayer();
         AudioStream liveStream = new AudioStream(player);
-		currentState = new Idle(new PlaybackContext(this, player, liveStream));
+		currentState = new Idle(new PlaybackContext(this, liveStream));
 		statusLabels = getResources().getStringArray(
 				R.array.live_show_notification_labels);
 		foregrounder = Foregrounder.create(this);

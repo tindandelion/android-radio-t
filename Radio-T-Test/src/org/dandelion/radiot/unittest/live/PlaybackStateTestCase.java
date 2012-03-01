@@ -54,7 +54,7 @@ public class PlaybackStateTestCase extends TestCase {
 		};
 		player = new MockMediaPlayer();
         AudioStream stream = new AudioStream(player);
-        context = new PlaybackContext(service, player, stream);
+        context = new PlaybackContext(service, stream);
 	}
 
     protected void assertSwitchedToState(Class<?> stateClass) {
