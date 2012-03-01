@@ -64,4 +64,6 @@ public class PlaybackContextTests {
         verify(player).start();
         verify(service).switchToNewState(isA(Playing.class));
     }
+
+    // TODO: Error handling for connecting and playing states
 }
