@@ -44,7 +44,7 @@ public class PlaybackContextTests {
     public void connectStartsPlaying() throws Exception {
         // TODO: Rename method connect()
         context.connect();
-        verify(audioStream).play(PlaybackState.liveShowUrl);
+        verify(audioStream).play(PlaybackContext.liveShowUrl);
     }
 
     @Test
@@ -73,6 +73,6 @@ public class PlaybackContextTests {
         context.onStarted();
         audioStateListener.onError();
         verify(service).switchToNewState(isA(Connecting.class));
-        verify(audioStream).play(PlaybackState.liveShowUrl);
+        verify(audioStream).play(PlaybackContext.liveShowUrl);
     }
 }

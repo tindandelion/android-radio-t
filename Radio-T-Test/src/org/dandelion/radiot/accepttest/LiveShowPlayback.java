@@ -1,5 +1,6 @@
 package org.dandelion.radiot.accepttest;
 
+import org.dandelion.radiot.live.core.PlaybackContext;
 import org.dandelion.radiot.live.core.states.PlaybackState;
 import org.dandelion.radiot.live.ui.LiveShowActivity;
 
@@ -21,7 +22,7 @@ public class LiveShowPlayback extends
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		PlaybackState.setLiveShowUrl(TEST_LIVE_URL);
+		PlaybackContext.setLiveShowUrl(TEST_LIVE_URL);
 		activity = getActivity();
 		solo = new Solo(getInstrumentation(), activity);
 	}
@@ -59,7 +60,7 @@ public class LiveShowPlayback extends
 		assertTrue(solo.waitForText("Ожидание"));
 		
 		// Switch back to existing URL 
-		PlaybackState.setLiveShowUrl(TEST_LIVE_URL);
+		PlaybackContext.setLiveShowUrl(TEST_LIVE_URL);
 		assertTrue(solo.waitForText("Трансляция"));
 	}
 
@@ -76,7 +77,7 @@ public class LiveShowPlayback extends
 	
 	private void configureForConnectError() {
 		// Try to connect to non-existent url to simulate 
-		PlaybackState.setLiveShowUrl("http://non-existent");
+		PlaybackContext.setLiveShowUrl("http://non-existent");
 		// And set the wait timeout to a small value
 		PlaybackState.setWaitTimeoutSeconds(1);
 	}

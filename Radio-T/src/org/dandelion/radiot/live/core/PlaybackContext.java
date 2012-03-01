@@ -4,6 +4,9 @@ import org.dandelion.radiot.live.core.states.*;
 
 // TODO: Get rid of service.switchToNewState
 public class PlaybackContext implements AudioStream.StateListener {
+//	private static String liveShowUrl = "http://radio10.promodeejay.net:8181/stream";
+    public static String liveShowUrl = "http://icecast.bigrradio.com/80s90s";
+
     public PlaybackState.ILiveShowService service;
     private PlaybackState currentState;
     private AudioStream showStream;
@@ -14,6 +17,10 @@ public class PlaybackContext implements AudioStream.StateListener {
         this.service = service;
         currentState = new Idle(this);
     }
+
+    public static void setLiveShowUrl(String value) {
+		liveShowUrl = value;
+	}
 
     public void playerReset() {
         showStream.reset();
@@ -30,7 +37,7 @@ public class PlaybackContext implements AudioStream.StateListener {
 
     public void connect() {
         try {
-            showStream.play(PlaybackState.liveShowUrl);
+            showStream.play(liveShowUrl);
             setState(new Connecting(this));
         } catch (Exception e) {
             throw new RuntimeException(e);

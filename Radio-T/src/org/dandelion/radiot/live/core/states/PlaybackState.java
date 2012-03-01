@@ -4,15 +4,9 @@ import org.dandelion.radiot.live.core.LiveShowQuery;
 import org.dandelion.radiot.live.core.PlaybackContext;
 
 public class PlaybackState {
-//	private static String liveShowUrl = "http://radio10.promodeejay.net:8181/stream";
-	public static String liveShowUrl = "http://icecast.bigrradio.com/80s90s";
-	public static int waitTimeout = 60 * 1000;
+    public static int waitTimeout = 60 * 1000;
 
-    public static void setLiveShowUrl(String value) {
-		liveShowUrl = value;
-	}
-
-	public static void setWaitTimeoutSeconds(int value) {
+    public static void setWaitTimeoutSeconds(int value) {
 		waitTimeout = value * 1000;
 	}
 
