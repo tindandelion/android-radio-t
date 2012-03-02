@@ -1,6 +1,5 @@
 package org.dandelion.radiot.unittest.live;
 
-import org.dandelion.radiot.live.core.states.Connecting;
 import org.dandelion.radiot.live.core.states.Idle;
 
 public class IdleStateTestCase extends PlaybackStateTestCase {
@@ -10,11 +9,6 @@ public class IdleStateTestCase extends PlaybackStateTestCase {
     protected void setUp() throws Exception {
         super.setUp();
         state = new Idle(context);
-    }
-
-    public void testSwitchingFromIdleToWaitingState() throws Exception {
-        state.startPlayback();
-        assertSwitchedToState(Connecting.class);
     }
 
     public void testGoesBackgroundWhenEntersIdleState() throws Exception {

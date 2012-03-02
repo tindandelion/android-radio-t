@@ -1,6 +1,5 @@
 package org.dandelion.radiot.live.core.states;
 
-import org.dandelion.radiot.live.core.LiveShowQuery;
 import org.dandelion.radiot.live.core.PlaybackContext;
 
 public class Connecting extends PlaybackState {
@@ -10,11 +9,11 @@ public class Connecting extends PlaybackState {
 
     @Override
     public void enter() {
-        context.serviceGoForeground(1);
+        context.service.goForeground(1);
     }
 
     @Override
-    public void acceptVisitor(LiveShowQuery visitor) {
+    public void acceptVisitor(PlaybackContext.PlaybackStateVisitor visitor) {
         visitor.onConnecting(this);
     }
 }

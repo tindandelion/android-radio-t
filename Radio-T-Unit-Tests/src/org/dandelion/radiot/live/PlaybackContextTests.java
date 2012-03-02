@@ -10,18 +10,15 @@ import org.mockito.stubbing.Answer;
 
 import java.io.IOException;
 
+import static junit.framework.Assert.assertEquals;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.isA;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
-public class PlaybackContextTests {
-
-    private PlaybackState.ILiveShowService service = mock(PlaybackState.ILiveShowService.class);
+public class PlaybackContextTests implements PlaybackContext.PlaybackStateListener {
     private PlaybackContext context;
     private AudioStream audioStream = mock(AudioStream.class);
     private AudioStream.StateListener audioStateListener;
+    private PlaybackState switchedState = new PlaybackState(null);
 
     @Before
     public void setUp() throws Exception {
@@ -33,7 +30,9 @@ public class PlaybackContextTests {
             }
         }).when(audioStream).setStateListener(any(AudioStream.StateListener.class));
 
+        PlaybackState.ILiveShowService service = mock(PlaybackState.ILiveShowService.class);
         context = new PlaybackContext(service, audioStream);
+        context.setListener(this);
     }
 
     @Test
@@ -60,7 +59,7 @@ public class PlaybackContextTests {
     public void goesWaitingOnPrepareError() throws Exception {
         context.connect();
         audioStateListener.onError();
-        verify(service).switchToNewState(isA(Waiting.class));
+        verifySwitchedToState(Waiting.class);
     }
 
     @Test
@@ -83,21 +82,32 @@ public class PlaybackContextTests {
         verifyIsIdle();
     }
 
+    //TODO: Implement waiting flow
+
     private void verifyIsIdle() {
-        verify(service).switchToNewState(isA(Idle.class));
+        verifySwitchedToState(Idle.class);
     }
 
     private void verifyIsConnecting() throws IOException {
         verify(audioStream).play(PlaybackContext.liveShowUrl);
-        verify(service).switchToNewState(isA(Connecting.class));
+        verifySwitchedToState(Connecting.class);
+    }
+
+    private void verifySwitchedToState(Class<?> expected) {
+        assertEquals(expected, switchedState.getClass());
     }
 
     private void verifyIsStopping() {
         verify(audioStream).stop();
-        verify(service).switchToNewState(isA(Stopping.class));
+        verifySwitchedToState(Stopping.class);
     }
 
     private void verifyIsPlaying() {
-        verify(service).switchToNewState(isA(Playing.class));
+        verifySwitchedToState(Playing.class);
+    }
+
+    @Override
+    public void onChangedState(PlaybackState oldState, PlaybackState newState) {
+        switchedState = newState;
     }
 }

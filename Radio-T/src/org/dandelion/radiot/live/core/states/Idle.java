@@ -1,6 +1,5 @@
 package org.dandelion.radiot.live.core.states;
 
-import org.dandelion.radiot.live.core.LiveShowQuery;
 import org.dandelion.radiot.live.core.PlaybackContext;
 
 public class Idle extends PlaybackState {
@@ -24,7 +23,7 @@ public class Idle extends PlaybackState {
     }
 
     @Override
-    public void acceptVisitor(LiveShowQuery visitor) {
+    public void acceptVisitor(PlaybackContext.PlaybackStateVisitor visitor) {
         visitor.onIdle(this);
     }
 }

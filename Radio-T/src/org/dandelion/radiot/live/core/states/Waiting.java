@@ -1,6 +1,5 @@
 package org.dandelion.radiot.live.core.states;
 
-import org.dandelion.radiot.live.core.LiveShowQuery;
 import org.dandelion.radiot.live.core.PlaybackContext;
 
 public class Waiting extends PlaybackState {
@@ -19,7 +18,6 @@ public class Waiting extends PlaybackState {
 
     @Override
     public void enter() {
-        context.playerReset();
         getService().setTimeout(waitTimeout, onTimeout);
         getService().goForeground(WAITING_NOTIFICATION_STRING_ID);
     }
@@ -30,7 +28,7 @@ public class Waiting extends PlaybackState {
     }
 
     @Override
-    public void acceptVisitor(LiveShowQuery visitor) {
+    public void acceptVisitor(PlaybackContext.PlaybackStateVisitor visitor) {
         visitor.onWaiting(this);
     }
 

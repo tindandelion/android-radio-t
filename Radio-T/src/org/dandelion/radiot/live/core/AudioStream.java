@@ -39,10 +39,6 @@ public class AudioStream implements MediaPlayer.OnPreparedListener, MediaPlayer.
         new StopTask().execute();
     }
 
-    // TODO: Review usages
-    public void reset() {
-        player.reset();
-    }
     @Override
     public void onPrepared(MediaPlayer mediaPlayer) {
         player.start();

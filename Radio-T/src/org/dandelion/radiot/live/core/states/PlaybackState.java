@@ -1,6 +1,5 @@
 package org.dandelion.radiot.live.core.states;
 
-import org.dandelion.radiot.live.core.LiveShowQuery;
 import org.dandelion.radiot.live.core.PlaybackContext;
 
 public class PlaybackState {
@@ -18,8 +17,6 @@ public class PlaybackState {
     }
 
     public interface ILiveShowService {
-		void switchToNewState(PlaybackState newState);
-
 		void goForeground(int stringId);
 
 		void goBackground();
@@ -44,7 +41,7 @@ public class PlaybackState {
 	public void leave() {
 	}
 
-	public void acceptVisitor(LiveShowQuery visitor) {
+	public void acceptVisitor(PlaybackContext.PlaybackStateVisitor visitor) {
 	}
 
 	public void stopPlayback() {

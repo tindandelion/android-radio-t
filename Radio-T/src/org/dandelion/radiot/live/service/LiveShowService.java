@@ -1,16 +1,5 @@
 package org.dandelion.radiot.live.service;
 
-import org.dandelion.radiot.R;
-import org.dandelion.radiot.RadiotApplication;
-import org.dandelion.radiot.live.core.AudioStream;
-import org.dandelion.radiot.live.core.LiveShowQuery;
-import org.dandelion.radiot.live.core.PlaybackContext;
-import org.dandelion.radiot.live.core.states.Idle;
-import org.dandelion.radiot.live.core.states.PlaybackState;
-import org.dandelion.radiot.live.core.Timeout;
-import org.dandelion.radiot.live.ui.LiveShowActivity;
-import org.dandelion.radiot.live.core.states.PlaybackState.ILiveShowService;
-
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -18,26 +7,35 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.IBinder;
+import org.dandelion.radiot.R;
+import org.dandelion.radiot.RadiotApplication;
+import org.dandelion.radiot.live.core.AudioStream;
+import org.dandelion.radiot.live.core.PlaybackContext;
+import org.dandelion.radiot.live.core.Timeout;
+import org.dandelion.radiot.live.core.states.PlaybackState;
+import org.dandelion.radiot.live.core.states.PlaybackState.ILiveShowService;
+import org.dandelion.radiot.live.ui.LiveShowActivity;
 
-public class LiveShowService extends Service implements ILiveShowService {
+public class LiveShowService extends Service implements ILiveShowService, PlaybackContext.PlaybackStateListener {
+
+    private PlaybackContext playbackContext;
 
     public class LocalBinder extends Binder {
-		public LiveShowService getService() {
+
+        public LiveShowService getService() {
 			return (LiveShowService.this);
 		}
-	}
-
+    }
 	public static final String PLAYBACK_STATE_CHANGED = "org.dandelion.radiot.live.PlaybackStateChanged";
+
     private static final String TIMEOUT_ELAPSED = "org.dandelion.radiot.live.TimeoutElapsed";
     private static final int NOTIFICATION_ID = 1;
-
 	private final IBinder binder = new LocalBinder();
-	private PlaybackState currentState;
-	private String[] statusLabels;
-	private Foregrounder foregrounder;
+
+    private String[] statusLabels;
+    private Foregrounder foregrounder;
     private Timeout waitTimeout;
     private NetworkLock networkLock;
-
 	@Override
 	public IBinder onBind(Intent intent) {
 		return binder;
@@ -49,7 +47,9 @@ public class LiveShowService extends Service implements ILiveShowService {
 		MediaPlayer player = ((RadiotApplication) getApplication())
 				.getMediaPlayer();
         AudioStream liveStream = new AudioStream(player);
-		currentState = new Idle(new PlaybackContext(this, liveStream));
+        playbackContext = new PlaybackContext(this, liveStream);
+        playbackContext.setListener(this);
+
 		statusLabels = getResources().getStringArray(
 				R.array.live_show_notification_labels);
 		foregrounder = Foregrounder.create(this);
@@ -63,36 +63,35 @@ public class LiveShowService extends Service implements ILiveShowService {
 		networkLock.release();
 		super.onDestroy();
 	}
-	
+
 	@Override
 	public boolean onUnbind(Intent intent) {
-		if (currentState instanceof Idle) {
+		if (playbackContext.isIdle()) {
 			stopSelf();
 		}
 		return true;
 	}
 
-	public void acceptVisitor(LiveShowQuery visitor) {
-		currentState.acceptVisitor(visitor);
+    @Override
+    public void onChangedState(PlaybackState oldState, PlaybackState newState) {
+        oldState.leave();
+        newState.enter();
+        sendBroadcast(new Intent(LiveShowService.PLAYBACK_STATE_CHANGED));
+    }
+
+	public void acceptVisitor(PlaybackContext.PlaybackStateVisitor visitor) {
+        playbackContext.queryState(visitor);
 	}
 
     public PlaybackState getCurrentState() {
-		return currentState;
+		return playbackContext.getState();
 	}
 
 	public void stopPlayback() {
-		currentState.stopPlayback();
+        playbackContext.stopPlayback();
 	}
 
-    // TODO: Get rid of saving current state
-	public synchronized void switchToNewState(PlaybackState newState) {
-		currentState.leave();
-		newState.enter();
-		currentState = newState;
-		sendBroadcast(new Intent(LiveShowService.PLAYBACK_STATE_CHANGED));
-	}
-
-	public void goForeground(int statusLabelIndex) {
+    public void goForeground(int statusLabelIndex) {
 		foregrounder.startForeground(NOTIFICATION_ID,
 				createNotification(statusLabels[statusLabelIndex]));
 	}

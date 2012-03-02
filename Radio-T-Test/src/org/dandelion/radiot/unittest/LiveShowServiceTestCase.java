@@ -43,7 +43,7 @@ public class LiveShowServiceTestCase extends ServiceTestCase<LiveShowService> {
 				LiveShowService.PLAYBACK_STATE_CHANGED) {
 			@Override
 			public void run() {
-				service.switchToNewState(state);
+				service.onChangedState(state, state);
 			}
 		}).assertCaught();
 	}

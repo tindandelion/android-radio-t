@@ -70,10 +70,4 @@ public class AudioStreamTests {
         errorListener.onError(player, 0, 0);
         verify(stateListener).onError();
     }
-
-    @Test
-    public void resetPlayer() throws Exception {
-        stream.reset();
-        verify(player).reset();
-    }
 }
