@@ -75,10 +75,10 @@ public class PlaybackContext implements AudioStream.StateListener {
     }
 
     public void startPlayback() {
-        connect();
+        currentState.startPlayback();
     }
 
     public void stopPlayback() {
-        interrupt();
+        currentState.stopPlayback();
     }
 }

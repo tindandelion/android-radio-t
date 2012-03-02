@@ -84,6 +84,7 @@ public class LiveShowService extends Service implements ILiveShowService {
 		currentState.stopPlayback();
 	}
 
+    // TODO: Get rid of saving current state
 	public synchronized void switchToNewState(PlaybackState newState) {
 		currentState.leave();
 		newState.enter();
