@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
 
 public class PlayingStateTests {
     private PlaybackContext context = mock(PlaybackContext.class);
@@ -15,5 +16,11 @@ public class PlayingStateTests {
     public void stopPlaybackGoesStopping() {
         state.stopPlayback();
         verify(context).interrupt();
+    }
+
+    @Test
+    public void startPlaybackDoesNothing() throws Exception {
+        state.startPlayback();
+        verifyZeroInteractions(context);
     }
 }

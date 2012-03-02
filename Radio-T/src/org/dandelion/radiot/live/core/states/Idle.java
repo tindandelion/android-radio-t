@@ -19,6 +19,11 @@ public class Idle extends PlaybackState {
     }
 
     @Override
+    public void stopPlayback() {
+        // Do nothing
+    }
+
+    @Override
     public void acceptVisitor(LiveShowQuery visitor) {
         visitor.onIdle(this);
     }

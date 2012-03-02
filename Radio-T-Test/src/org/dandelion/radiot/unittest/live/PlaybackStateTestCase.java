@@ -31,11 +31,7 @@ public class PlaybackStateTestCase extends TestCase {
 				serviceIsForeground = false;
 			}
 
-			public void runAsynchronously(Runnable runnable) {
-				runnable.run();
-			}
-
-			public void resetTimeout() {
+            public void resetTimeout() {
 				timeoutScheduled = false;
 			}
 

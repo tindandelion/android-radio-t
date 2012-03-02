@@ -24,9 +24,7 @@ public class PlaybackState {
 
 		void goBackground();
 
-		void runAsynchronously(Runnable runnable);
-
-		void resetTimeout();
+        void resetTimeout();
 
 		void setTimeout(int waitTimeout, Runnable action);
 
@@ -61,7 +59,4 @@ public class PlaybackState {
 		return timestamp;
 	}
 
-    protected Idle newIdle() {
-        return new Idle(context);
-    }
 }

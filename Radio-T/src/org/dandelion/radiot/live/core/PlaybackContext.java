@@ -9,11 +9,11 @@ public class PlaybackContext implements AudioStream.StateListener {
 
     public PlaybackState.ILiveShowService service;
     private PlaybackState currentState;
-    private AudioStream showStream;
+    private AudioStream audioStream;
 
-    public PlaybackContext(PlaybackState.ILiveShowService service, AudioStream showStream) {
-        this.showStream = showStream;
-        this.showStream.setStateListener(this);
+    public PlaybackContext(PlaybackState.ILiveShowService service, AudioStream audioStream) {
+        this.audioStream = audioStream;
+        this.audioStream.setStateListener(this);
         this.service = service;
         currentState = new Idle(this);
     }
@@ -23,13 +23,9 @@ public class PlaybackContext implements AudioStream.StateListener {
 	}
 
     public void playerReset() {
-        showStream.reset();
+        audioStream.reset();
     }
 
-
-    public void serviceSwitchToNewState(PlaybackState state) {
-        setState(state);
-    }
 
     public void serviceGoForeground(int i) {
         service.goForeground(i);
@@ -37,7 +33,7 @@ public class PlaybackContext implements AudioStream.StateListener {
 
     public void connect() {
         try {
-            showStream.play(liveShowUrl);
+            audioStream.play(liveShowUrl);
             setState(new Connecting(this));
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -45,6 +41,7 @@ public class PlaybackContext implements AudioStream.StateListener {
     }
 
     public void interrupt() {
+        audioStream.stop();
         setState(new Stopping(this));
     }
 
@@ -70,5 +67,18 @@ public class PlaybackContext implements AudioStream.StateListener {
         } else {
             waitForNextAttempt();
         }
+    }
+
+    @Override
+    public void onStopped() {
+        setState(new Idle(this));
+    }
+
+    public void startPlayback() {
+        connect();
+    }
+
+    public void stopPlayback() {
+        interrupt();
     }
 }

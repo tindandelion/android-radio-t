@@ -110,11 +110,7 @@ public class LiveShowService extends Service implements ILiveShowService {
 		return note;
 	}
 
-	public void runAsynchronously(Runnable runnable) {
-		new Thread(runnable).start();
-	}
-
-	public void resetTimeout() {
+    public void resetTimeout() {
         waitTimeout.reset();
     }
 

@@ -8,6 +8,8 @@ import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
+import java.io.IOException;
+
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.doAnswer;
@@ -35,30 +37,23 @@ public class PlaybackContextTests {
     }
 
     @Test
-    public void connectSwitchesToConnectingState() throws Exception {
-        context.connect();
-        verify(service).switchToNewState(isA(Connecting.class));
-    }
-
-    @Test
-    public void connectStartsPlaying() throws Exception {
+    public void connectInitiatesPlaying() throws Exception {
         // TODO: Rename method connect()
         context.connect();
-        verify(audioStream).play(PlaybackContext.liveShowUrl);
+        verifyIsConnecting();
     }
 
     @Test
-    public void interruptSwitchesToStoppingState() throws Exception {
+    public void interruptInitiatesStopping() throws Exception {
         context.interrupt();
-        verify(service).switchToNewState(isA(Stopping.class));
+        verifyIsStopping();
     }
 
     @Test
     public void goesPlayingWhenPrepared() throws Exception {
         context.connect();
         audioStateListener.onStarted();
-        
-        verify(service).switchToNewState(isA(Playing.class));
+        verifyIsPlaying();
     }
 
     @Test
@@ -72,7 +67,37 @@ public class PlaybackContextTests {
     public void goesConnectingOnPlayingError() throws Exception {
         context.onStarted();
         audioStateListener.onError();
-        verify(service).switchToNewState(isA(Connecting.class));
+        verifyIsConnecting();
+    }
+
+    @Test
+    public void normalPlaybackWorkflow() throws Exception {
+        context.startPlayback();
+        verifyIsConnecting();
+        audioStateListener.onStarted();
+        verifyIsPlaying();
+
+        context.stopPlayback();
+        verifyIsStopping();
+        audioStateListener.onStopped();
+        verifyIsIdle();
+    }
+
+    private void verifyIsIdle() {
+        verify(service).switchToNewState(isA(Idle.class));
+    }
+
+    private void verifyIsConnecting() throws IOException {
         verify(audioStream).play(PlaybackContext.liveShowUrl);
+        verify(service).switchToNewState(isA(Connecting.class));
+    }
+
+    private void verifyIsStopping() {
+        verify(audioStream).stop();
+        verify(service).switchToNewState(isA(Stopping.class));
+    }
+
+    private void verifyIsPlaying() {
+        verify(service).switchToNewState(isA(Playing.class));
     }
 }
