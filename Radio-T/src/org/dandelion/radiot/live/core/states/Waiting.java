@@ -1,30 +1,30 @@
 package org.dandelion.radiot.live.core.states;
 
-import org.dandelion.radiot.live.core.PlaybackContext;
+import org.dandelion.radiot.live.core.LiveShowPlayer;
 
 public class Waiting extends PlaybackState {
     private static final int WAITING_NOTIFICATION_STRING_ID = 2;
 
-    public Waiting(PlaybackContext context) {
+    public Waiting(LiveShowPlayer context) {
         super(context);
     }
 
     @Override
-    public void enter() {
-        getService().goForeground(WAITING_NOTIFICATION_STRING_ID);
+    public void enter(ILiveShowService service) {
+        service.goForeground(WAITING_NOTIFICATION_STRING_ID);
     }
 
     @Override
-    public void leave() {
+    public void leave(ILiveShowService service) {
     }
 
     @Override
     public void stopPlayback() {
-        context.beIdle();
+        player.beIdle();
     }
 
     @Override
-    public void acceptVisitor(PlaybackContext.PlaybackStateVisitor visitor) {
+    public void acceptVisitor(LiveShowPlayer.PlaybackStateVisitor visitor) {
         visitor.onWaiting(this);
     }
 }

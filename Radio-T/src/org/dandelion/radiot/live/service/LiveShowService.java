@@ -10,15 +10,15 @@ import android.os.IBinder;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.RadiotApplication;
 import org.dandelion.radiot.live.core.AudioStream;
-import org.dandelion.radiot.live.core.PlaybackContext;
+import org.dandelion.radiot.live.core.LiveShowPlayer;
 import org.dandelion.radiot.live.core.Timeout;
 import org.dandelion.radiot.live.core.states.PlaybackState;
 import org.dandelion.radiot.live.core.states.PlaybackState.ILiveShowService;
 import org.dandelion.radiot.live.ui.LiveShowActivity;
 
-public class LiveShowService extends Service implements ILiveShowService, PlaybackContext.PlaybackStateListener {
+public class LiveShowService extends Service implements ILiveShowService, LiveShowPlayer.PlaybackStateListener {
 
-    private PlaybackContext playbackContext;
+    private LiveShowPlayer playbackContext;
 
     public class LocalBinder extends Binder {
 
@@ -49,7 +49,7 @@ public class LiveShowService extends Service implements ILiveShowService, Playba
         AudioStream liveStream = new AudioStream(player);
         waitTimeout = new AlarmTimeout(this, TIMEOUT_ELAPSED);
 
-        playbackContext = new PlaybackContext(this, liveStream, waitTimeout);
+        playbackContext = new LiveShowPlayer(liveStream, waitTimeout);
         playbackContext.setListener(this);
 
 		statusLabels = getResources().getStringArray(
@@ -75,12 +75,12 @@ public class LiveShowService extends Service implements ILiveShowService, Playba
 
     @Override
     public void onChangedState(PlaybackState oldState, PlaybackState newState) {
-        oldState.leave();
-        newState.enter();
+        oldState.leave(this);
+        newState.enter(this);
         sendBroadcast(new Intent(LiveShowService.PLAYBACK_STATE_CHANGED));
     }
 
-	public void acceptVisitor(PlaybackContext.PlaybackStateVisitor visitor) {
+	public void acceptVisitor(LiveShowPlayer.PlaybackStateVisitor visitor) {
         playbackContext.queryState(visitor);
 	}
 
@@ -110,10 +110,6 @@ public class LiveShowService extends Service implements ILiveShowService, Playba
 				statusMessage, i);
 		return note;
 	}
-
-    public void setTimeout(int milliseconds, Runnable action) {
-        waitTimeout.set(milliseconds, action);
-    }
 
     public void lockWifi() {
 		networkLock.acquire();

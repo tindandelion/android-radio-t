@@ -1,20 +1,20 @@
 package org.dandelion.radiot.live.core.states;
 
-import org.dandelion.radiot.live.core.PlaybackContext;
+import org.dandelion.radiot.live.core.LiveShowPlayer;
 
 public class Idle extends PlaybackState {
-    public Idle(PlaybackContext context) {
+    public Idle(LiveShowPlayer context) {
         super(context);
     }
 
     @Override
-    public void enter() {
-        getService().goBackground();
+    public void enter(ILiveShowService service) {
+        service.goBackground();
     }
 
     @Override
     public void startPlayback() {
-        context.beConnecting();
+        player.beConnecting();
     }
 
     @Override
@@ -23,7 +23,7 @@ public class Idle extends PlaybackState {
     }
 
     @Override
-    public void acceptVisitor(PlaybackContext.PlaybackStateVisitor visitor) {
+    public void acceptVisitor(LiveShowPlayer.PlaybackStateVisitor visitor) {
         visitor.onIdle(this);
     }
 }

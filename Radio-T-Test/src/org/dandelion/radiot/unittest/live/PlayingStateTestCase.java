@@ -9,26 +9,24 @@ public class PlayingStateTestCase extends PlaybackStateTestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        state = new Playing(context);
+        state = new Playing(null);
     }
 
     public void testGoesForegroundWhenEntersPlayingState() throws Exception {
-        player.bePrepared();
-        state.enter();
+        state.enter(service);
 
         assertTrue(serviceIsForeground);
     }
 
     public void testLocksWifiWhenEntersState() throws Exception {
-        player.bePrepared();
-        state.enter();
+        state.enter(service);
 
         assertTrue(wifiLocked);
     }
 
     public void testReleasesWifiWhenLeaveState() throws Exception {
         wifiLocked = true;
-        state.leave();
+        state.leave(service);
         assertFalse(wifiLocked);
     }
 }

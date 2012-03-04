@@ -16,9 +16,8 @@ import android.media.MediaPlayer;
 import android.test.ServiceTestCase;
 
 public class LiveShowServiceTestCase extends ServiceTestCase<LiveShowService> {
-
 	private LiveShowService service;
-	protected boolean timeoutElapsed;
+
 	public LiveShowServiceTestCase() {
 		super(LiveShowService.class);
 	}
@@ -47,19 +46,7 @@ public class LiveShowServiceTestCase extends ServiceTestCase<LiveShowService> {
 			}
 		}).assertCaught();
 	}
-	
-	public void testSchedulesStateTimeout() throws Exception {
-        Runnable action = new Runnable() {
-            @Override
-            public void run() {
-                timeoutElapsed = true;
-            }
-        };
-		service.setTimeout(1, action);
-		Thread.sleep(2000);
-		assertTrue(timeoutElapsed);
-	}
-	
+
 	@Override
 	public void testServiceTestCaseSetUpProperly() throws Exception {
 		// Stupid method

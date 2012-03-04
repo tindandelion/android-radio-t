@@ -1,25 +1,25 @@
 package org.dandelion.radiot.live.core.states;
 
-import org.dandelion.radiot.live.core.PlaybackContext;
+import org.dandelion.radiot.live.core.LiveShowPlayer;
 
 public class Playing extends PlaybackState {
-    public Playing(PlaybackContext context) {
+    public Playing(LiveShowPlayer context) {
         super(context);
     }
 
     @Override
-    public void enter() {
-        getService().lockWifi();
-        getService().goForeground(0);
+    public void enter(ILiveShowService service) {
+        service.lockWifi();
+        service.goForeground(0);
     }
 
     @Override
-    public void leave() {
-        getService().unlockWifi();
+    public void leave(ILiveShowService service) {
+        service.unlockWifi();
     }
 
     @Override
-    public void acceptVisitor(PlaybackContext.PlaybackStateVisitor visitor) {
+    public void acceptVisitor(LiveShowPlayer.PlaybackStateVisitor visitor) {
         visitor.onPlaying(this);
     }
 }

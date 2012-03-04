@@ -1,7 +1,7 @@
 package org.dandelion.radiot.live;
 
 import org.dandelion.radiot.live.core.AudioStream;
-import org.dandelion.radiot.live.core.PlaybackContext;
+import org.dandelion.radiot.live.core.LiveShowPlayer;
 import org.dandelion.radiot.live.core.Timeout;
 import org.dandelion.radiot.live.core.states.*;
 import org.junit.Before;
@@ -15,8 +15,8 @@ import static junit.framework.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
-public class PlaybackContextTests implements PlaybackContext.PlaybackStateListener {
-    private PlaybackContext context;
+public class LiveShowPlayerTests implements LiveShowPlayer.PlaybackStateListener {
+    private LiveShowPlayer player;
     private AudioStream audioStream = mock(AudioStream.class);
     private AudioStream.StateListener audioStateListener;
     private PlaybackState switchedState = new PlaybackState(null);
@@ -41,54 +41,53 @@ public class PlaybackContextTests implements PlaybackContext.PlaybackStateListen
             }
         }).when(timeout).set(anyInt(), any(Runnable.class));
 
-        PlaybackState.ILiveShowService service = mock(PlaybackState.ILiveShowService.class);
-        context = new PlaybackContext(service, audioStream, timeout);
-        context.setListener(this);
+        player = new LiveShowPlayer(audioStream, timeout);
+        player.setListener(this);
     }
 
     @Test
     public void goesConnecting() throws Exception {
-        context.beConnecting();
+        player.beConnecting();
         verifyIsConnecting();
     }
 
     @Test
     public void goesStopping() throws Exception {
-        context.beStopping();
+        player.beStopping();
         verifyIsStopping();
     }
 
     @Test
     public void goesPlayingWhenPrepared() throws Exception {
-        context.beConnecting();
+        player.beConnecting();
         audioStateListener.onStarted();
         verifyIsPlaying();
     }
 
     @Test
     public void goesWaitingOnPrepareError() throws Exception {
-        context.beConnecting();
+        player.beConnecting();
         audioStateListener.onError();
         verifySwitchedToState(Waiting.class);
     }
 
     @Test
     public void goesConnectingOnPlayingError() throws Exception {
-        context.onStarted();
+        player.onStarted();
         audioStateListener.onError();
         verifyIsConnecting();
     }
 
     @Test
     public void goesIdleOnStopped() throws Exception {
-        context.beStopping();
+        player.beStopping();
         audioStateListener.onStopped();
         verifyIsIdle();
     }
 
     @Test
     public void reconnectWhenWaitTimeoutElapses() throws Exception {
-        context.beWaiting();
+        player.beWaiting();
         verifyIsWaiting();
         timeoutCallback.run();
         verifyIsConnecting();
@@ -96,18 +95,18 @@ public class PlaybackContextTests implements PlaybackContext.PlaybackStateListen
 
     @Test
     public void resetsTimeoutWhenGoesIdle() throws Exception {
-        context.beIdle();
+        player.beIdle();
         verify(timeout).reset();
     }
 
     @Test
     public void normalPlaybackWorkflow() throws Exception {
-        context.startPlayback();
+        player.startPlayback();
         verifyIsConnecting();
         audioStateListener.onStarted();
         verifyIsPlaying();
 
-        context.stopPlayback();
+        player.stopPlayback();
         verifyIsStopping();
         audioStateListener.onStopped();
         verifyIsIdle();
@@ -115,14 +114,14 @@ public class PlaybackContextTests implements PlaybackContext.PlaybackStateListen
 
     @Test
     public void waitingForShowWorkflow() throws Exception {
-        context.startPlayback();
+        player.startPlayback();
         verifyIsConnecting();
         audioStateListener.onError();
         verifyIsWaiting();
     }
 
     private void verifyIsWaiting() {
-        verify(timeout).set(eq(PlaybackState.waitTimeout), any(Runnable.class));
+        verify(timeout).set(eq(LiveShowPlayer.waitTimeoutMillis), any(Runnable.class));
         verifySwitchedToState(Waiting.class);
     }
 
@@ -131,7 +130,7 @@ public class PlaybackContextTests implements PlaybackContext.PlaybackStateListen
     }
 
     private void verifyIsConnecting() throws IOException {
-        verify(audioStream).play(PlaybackContext.liveShowUrl);
+        verify(audioStream).play(LiveShowPlayer.liveShowUrl);
         verifySwitchedToState(Connecting.class);
     }
 

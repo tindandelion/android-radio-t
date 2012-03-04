@@ -1,6 +1,6 @@
 package org.dandelion.radiot.live.states;
 
-import org.dandelion.radiot.live.core.PlaybackContext;
+import org.dandelion.radiot.live.core.LiveShowPlayer;
 import org.dandelion.radiot.live.core.states.Waiting;
 import org.junit.Test;
 
@@ -9,7 +9,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 
 public class WaitingStateTestCase {
-    PlaybackContext context = mock(PlaybackContext.class);
+    LiveShowPlayer context = mock(LiveShowPlayer.class);
     Waiting state = new Waiting(context);
 
     @Test

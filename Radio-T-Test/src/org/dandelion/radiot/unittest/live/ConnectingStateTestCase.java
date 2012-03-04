@@ -9,11 +9,11 @@ public class ConnectingStateTestCase extends PlaybackStateTestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        state = new Connecting(context);
+        state = new Connecting(null);
     }
 
     public void testGoesForegroundWhenEntersConnectingState() throws Exception {
-        state.enter();
+        state.enter(service);
         assertTrue(serviceIsForeground);
     }
 }

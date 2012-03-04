@@ -2,12 +2,12 @@ package org.dandelion.radiot.live.core;
 
 import org.dandelion.radiot.live.core.states.*;
 
-// TODO: Get rid of service.switchToNewState
-public class PlaybackContext implements AudioStream.StateListener {
-    private PlaybackStateListener listener;
-    //	private static String liveShowUrl = "http://radio10.promodeejay.net:8181/stream";
+public class LiveShowPlayer implements AudioStream.StateListener {
+    public static int waitTimeoutMillis = 60 * 1000;
+    //	public static String liveShowUrl = "http://radio10.promodeejay.net:8181/stream";
     public static String liveShowUrl = "http://icecast.bigrradio.com/80s90s";
-    public PlaybackState.ILiveShowService service;
+
+    private PlaybackStateListener listener;
     private PlaybackState state;
     private AudioStream audioStream;
     private Timeout waitTimeout;
@@ -17,6 +17,10 @@ public class PlaybackContext implements AudioStream.StateListener {
             beConnecting();
         }
     };
+
+    public static void setWaitTimeoutSeconds(int value) {
+		waitTimeoutMillis = value * 1000;
+	}
 
     public void beIdle() {
         waitTimeout.reset();
@@ -34,9 +38,8 @@ public class PlaybackContext implements AudioStream.StateListener {
         void onStopping(Stopping stopping);
     }
 
-    public PlaybackContext(PlaybackState.ILiveShowService service, AudioStream audioStream, Timeout waitTimeout) {
+    public LiveShowPlayer(AudioStream audioStream, Timeout waitTimeout) {
         this.audioStream = audioStream;
-        this.service = service;
         this.waitTimeout = waitTimeout;
         this.state = new Idle(this);
         this.audioStream.setStateListener(this);
@@ -78,7 +81,7 @@ public class PlaybackContext implements AudioStream.StateListener {
     }
 
     public void beWaiting() {
-        waitTimeout.set(PlaybackState.waitTimeout, onWaitTimeout);
+        waitTimeout.set(waitTimeoutMillis, onWaitTimeout);
         setState(new Waiting(this));
     }
 

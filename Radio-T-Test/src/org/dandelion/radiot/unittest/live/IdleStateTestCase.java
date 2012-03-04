@@ -8,12 +8,12 @@ public class IdleStateTestCase extends PlaybackStateTestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        state = new Idle(context);
+        state = new Idle(null);
     }
 
     public void testGoesBackgroundWhenEntersIdleState() throws Exception {
         serviceIsForeground = true;
-        state.enter();
+        state.enter(service);
 
         assertFalse(serviceIsForeground);
     }

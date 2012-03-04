@@ -3,12 +3,12 @@ package org.dandelion.radiot.live.ui;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import org.dandelion.radiot.live.core.PlaybackContext;
+import org.dandelion.radiot.live.core.LiveShowPlayer;
 import org.dandelion.radiot.live.core.states.*;
 import org.dandelion.radiot.live.core.states.Idle;
 import org.dandelion.radiot.live.core.states.Stopping;
 
-public class LiveShowPresenter implements PlaybackContext.PlaybackStateVisitor {
+public class LiveShowPresenter implements LiveShowPlayer.PlaybackStateVisitor {
 
 	private LiveShowActivity activity;
 	private Timer timer;

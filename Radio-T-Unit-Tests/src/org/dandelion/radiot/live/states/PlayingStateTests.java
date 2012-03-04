@@ -1,6 +1,6 @@
 package org.dandelion.radiot.live.states;
 
-import org.dandelion.radiot.live.core.PlaybackContext;
+import org.dandelion.radiot.live.core.LiveShowPlayer;
 import org.dandelion.radiot.live.core.states.Playing;
 import org.junit.Test;
 
@@ -9,7 +9,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 
 public class PlayingStateTests {
-    private PlaybackContext context = mock(PlaybackContext.class);
+    private LiveShowPlayer context = mock(LiveShowPlayer.class);
     private Playing state = new Playing(context);
 
     @Test

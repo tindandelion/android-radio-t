@@ -8,13 +8,14 @@ import java.io.IOException;
 public class AudioStream implements MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener {
     private MediaPlayer player;
     private StateListener listener;
+    private AudioStream.StopTask stopTask;
 
     public interface StateListener {
-
         void onStarted();
         void onError();
         void onStopped();
     }
+
     public AudioStream(MediaPlayer player) {
         this.player = player;
         this.listener = new NullStateListener();
@@ -35,8 +36,15 @@ public class AudioStream implements MediaPlayer.OnPreparedListener, MediaPlayer.
     }
 
     public void stop() {
-        // TODO: Ensure we have only one task executing
-        new StopTask().execute();
+        ensureNoStopTasksExecuting();
+        stopTask = new StopTask();
+        stopTask.execute();
+    }
+
+    private void ensureNoStopTasksExecuting() {
+        if (stopTask != null) {
+            throw new RuntimeException("Previous stop task hasn't finished yet");
+        }
     }
 
     @Override
@@ -66,6 +74,7 @@ public class AudioStream implements MediaPlayer.OnPreparedListener, MediaPlayer.
         @Override
         protected void onPostExecute(Void aVoid) {
             listener.onStopped();
+            stopTask = null;
         }
     }
 }

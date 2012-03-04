@@ -1,50 +1,39 @@
 package org.dandelion.radiot.live.core.states;
 
-import org.dandelion.radiot.live.core.PlaybackContext;
+import org.dandelion.radiot.live.core.LiveShowPlayer;
 
+// TODO: Get rid of permanent reference to LiveShowPlayer
+// TODO: Move functionality from enter() and leave()
 public class PlaybackState {
-    public static int waitTimeout = 60 * 1000;
-
-    public static void setWaitTimeoutSeconds(int value) {
-		waitTimeout = value * 1000;
-	}
-
-    protected PlaybackContext context;
+    protected LiveShowPlayer player;
 	private long timestamp;
-
-    public ILiveShowService getService() {
-        return context.service;
-    }
 
     public interface ILiveShowService {
 		void goForeground(int stringId);
 
 		void goBackground();
 
-        // TODO: Get rid of this method
-        void setTimeout(int waitTimeout, Runnable action);
-
 		void lockWifi();
 
 		void unlockWifi();
     }
 
-    public PlaybackState(PlaybackContext context) {
-        this.context = context;
+    public PlaybackState(LiveShowPlayer player) {
+        this.player = player;
         this.timestamp = System.currentTimeMillis();
     }
 
-    public void enter() {
+    public void enter(ILiveShowService service) {
 	}
 
-	public void leave() {
+	public void leave(ILiveShowService service) {
 	}
 
-	public void acceptVisitor(PlaybackContext.PlaybackStateVisitor visitor) {
+	public void acceptVisitor(LiveShowPlayer.PlaybackStateVisitor visitor) {
 	}
 
 	public void stopPlayback() {
-        context.beStopping();
+        player.beStopping();
 	}
 
 

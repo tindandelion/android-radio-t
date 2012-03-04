@@ -1,9 +1,9 @@
 package org.dandelion.radiot.live.core.states;
 
-import org.dandelion.radiot.live.core.PlaybackContext;
+import org.dandelion.radiot.live.core.LiveShowPlayer;
 
 public class Stopping extends PlaybackState {
-    public Stopping(PlaybackContext context) {
+    public Stopping(LiveShowPlayer context) {
         super(context);
     }
 
@@ -16,7 +16,7 @@ public class Stopping extends PlaybackState {
     }
 
     @Override
-    public void acceptVisitor(PlaybackContext.PlaybackStateVisitor visitor) {
+    public void acceptVisitor(LiveShowPlayer.PlaybackStateVisitor visitor) {
         visitor.onStopping(this);
     }
 }
