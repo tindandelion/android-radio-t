@@ -21,6 +21,7 @@ public class PlaybackState {
 
 		void goBackground();
 
+        // TODO: Get rid of this method
         void setTimeout(int waitTimeout, Runnable action);
 
 		void lockWifi();
