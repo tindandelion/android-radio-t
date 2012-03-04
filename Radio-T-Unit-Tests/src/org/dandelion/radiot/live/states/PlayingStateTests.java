@@ -1,4 +1,4 @@
-package org.dandelion.radiot.live;
+package org.dandelion.radiot.live.states;
 
 import org.dandelion.radiot.live.core.PlaybackContext;
 import org.dandelion.radiot.live.core.states.Playing;
@@ -15,7 +15,7 @@ public class PlayingStateTests {
     @Test
     public void stopPlaybackGoesStopping() {
         state.stopPlayback();
-        verify(context).interrupt();
+        verify(context).beStopping();
     }
 
     @Test

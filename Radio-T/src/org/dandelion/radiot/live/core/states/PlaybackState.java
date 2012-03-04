@@ -21,9 +21,7 @@ public class PlaybackState {
 
 		void goBackground();
 
-        void resetTimeout();
-
-		void setTimeout(int waitTimeout, Runnable action);
+        void setTimeout(int waitTimeout, Runnable action);
 
 		void lockWifi();
 
@@ -45,7 +43,7 @@ public class PlaybackState {
 	}
 
 	public void stopPlayback() {
-        context.interrupt();
+        context.beStopping();
 	}
 
 

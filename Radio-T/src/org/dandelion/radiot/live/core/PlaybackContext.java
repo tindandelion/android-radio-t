@@ -10,26 +10,38 @@ public class PlaybackContext implements AudioStream.StateListener {
     public PlaybackState.ILiveShowService service;
     private PlaybackState state;
     private AudioStream audioStream;
+    private Timeout waitTimeout;
+    private Runnable onWaitTimeout = new Runnable() {
+        @Override
+        public void run() {
+            beConnecting();
+        }
+    };
+
+    public void beIdle() {
+        waitTimeout.reset();
+        setState(new Idle(this));
+    }
 
     public interface PlaybackStateListener {
-
         void onChangedState(PlaybackState oldState, PlaybackState newState);
-
     }
     public static interface PlaybackStateVisitor {
         void onWaiting(Waiting state);
-
         void onIdle(Idle state);
         void onConnecting(Connecting connecting);
         void onPlaying(Playing playing);
         void onStopping(Stopping stopping);
     }
-    public PlaybackContext(PlaybackState.ILiveShowService service, AudioStream audioStream) {
+
+    public PlaybackContext(PlaybackState.ILiveShowService service, AudioStream audioStream, Timeout waitTimeout) {
         this.audioStream = audioStream;
-        this.audioStream.setStateListener(this);
         this.service = service;
-        state = new Idle(this);
+        this.waitTimeout = waitTimeout;
+        this.state = new Idle(this);
+        this.audioStream.setStateListener(this);
     }
+
     public void setListener(PlaybackStateListener listener) {
         this.listener = listener;
     }
@@ -51,7 +63,7 @@ public class PlaybackContext implements AudioStream.StateListener {
     }
 
 
-    public void connect() {
+    public void beConnecting() {
         try {
             audioStream.play(liveShowUrl);
             setState(new Connecting(this));
@@ -60,12 +72,13 @@ public class PlaybackContext implements AudioStream.StateListener {
         }
     }
 
-    public void interrupt() {
+    public void beStopping() {
         audioStream.stop();
         setState(new Stopping(this));
     }
 
-    private void waitForNextAttempt() {
+    public void beWaiting() {
+        waitTimeout.set(PlaybackState.waitTimeout, onWaitTimeout);
         setState(new Waiting(this));
     }
 
@@ -86,15 +99,15 @@ public class PlaybackContext implements AudioStream.StateListener {
     public void onError() {
         // TODO: That's a hack, but I want to see how far I can go
         if (state instanceof Playing) {
-            connect();
+            beConnecting();
         } else {
-            waitForNextAttempt();
+            beWaiting();
         }
     }
 
     @Override
     public void onStopped() {
-        setState(new Idle(this));
+        beIdle();
     }
 
     public void startPlayback() {

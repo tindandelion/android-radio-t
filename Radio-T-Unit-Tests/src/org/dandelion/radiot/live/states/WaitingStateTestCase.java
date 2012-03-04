@@ -1,4 +1,4 @@
-package org.dandelion.radiot.live;
+package org.dandelion.radiot.live.states;
 
 import org.dandelion.radiot.live.core.PlaybackContext;
 import org.dandelion.radiot.live.core.states.Waiting;
@@ -6,14 +6,21 @@ import org.junit.Test;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
 
 public class WaitingStateTestCase {
     PlaybackContext context = mock(PlaybackContext.class);
     Waiting state = new Waiting(context);
 
     @Test
-    public void initiateConnectionAfterTimeout() {
-        state.timeoutElapsed();
-        verify(context).connect();
+    public void startPlaybackDoesNothing() throws Exception {
+        state.startPlayback();
+        verifyZeroInteractions(context);
+    }
+
+    @Test
+    public void stopPlaybackGoesIdle() throws Exception {
+        state.stopPlayback();
+        verify(context).beIdle();
     }
 }

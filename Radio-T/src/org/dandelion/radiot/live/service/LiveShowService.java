@@ -47,13 +47,14 @@ public class LiveShowService extends Service implements ILiveShowService, Playba
 		MediaPlayer player = ((RadiotApplication) getApplication())
 				.getMediaPlayer();
         AudioStream liveStream = new AudioStream(player);
-        playbackContext = new PlaybackContext(this, liveStream);
+        waitTimeout = new AlarmTimeout(this, TIMEOUT_ELAPSED);
+
+        playbackContext = new PlaybackContext(this, liveStream, waitTimeout);
         playbackContext.setListener(this);
 
 		statusLabels = getResources().getStringArray(
 				R.array.live_show_notification_labels);
 		foregrounder = Foregrounder.create(this);
-        waitTimeout = new AlarmTimeout(this, TIMEOUT_ELAPSED);
         networkLock = new NetworkLock(this);
     }
 
@@ -109,10 +110,6 @@ public class LiveShowService extends Service implements ILiveShowService, Playba
 				statusMessage, i);
 		return note;
 	}
-
-    public void resetTimeout() {
-        waitTimeout.reset();
-    }
 
     public void setTimeout(int milliseconds, Runnable action) {
         waitTimeout.set(milliseconds, action);

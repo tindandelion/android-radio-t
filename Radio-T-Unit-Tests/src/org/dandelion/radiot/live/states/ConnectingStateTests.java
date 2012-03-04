@@ -1,4 +1,4 @@
-package org.dandelion.radiot.live;
+package org.dandelion.radiot.live.states;
 
 import org.dandelion.radiot.live.core.PlaybackContext;
 import org.dandelion.radiot.live.core.states.Connecting;
@@ -14,6 +14,6 @@ public class ConnectingStateTests {
     @Test
     public void stopPlaybackGoesIdle() throws Exception {
         state.stopPlayback();
-        verify(context).interrupt();
+        verify(context).beStopping();
     }
 }

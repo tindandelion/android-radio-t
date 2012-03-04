@@ -14,7 +14,7 @@ public class Idle extends PlaybackState {
 
     @Override
     public void startPlayback() {
-        context.connect();
+        context.beConnecting();
     }
 
     @Override

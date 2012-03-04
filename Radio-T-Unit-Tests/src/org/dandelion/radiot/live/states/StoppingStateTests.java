@@ -1,21 +1,20 @@
-package org.dandelion.radiot.live;
+package org.dandelion.radiot.live.states;
 
 import org.dandelion.radiot.live.core.PlaybackContext;
-import org.dandelion.radiot.live.core.states.Idle;
+import org.dandelion.radiot.live.core.states.Stopping;
 import org.junit.Test;
 
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 
-public class IdleStateTests {
+public class StoppingStateTests {
     private PlaybackContext context = mock(PlaybackContext.class);
-    private Idle state = new Idle(context);
+    private Stopping state = new Stopping(context);
 
     @Test
-    public void startPlaybackInitiatesConnection() throws Exception {
+    public void startPlaybackDoesNothing() throws Exception {
         state.startPlayback();
-        verify(context).connect();
+        verifyZeroInteractions(context);
     }
 
     @Test

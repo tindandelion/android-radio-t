@@ -31,11 +31,7 @@ public class PlaybackStateTestCase extends TestCase {
 				serviceIsForeground = false;
 			}
 
-            public void resetTimeout() {
-				timeoutScheduled = false;
-			}
-
-			public void setTimeout(int waitTimeout, Runnable action) {
+            public void setTimeout(int waitTimeout, Runnable action) {
 				timeoutScheduled = true;
 			}
 
@@ -50,16 +46,7 @@ public class PlaybackStateTestCase extends TestCase {
 		};
 		player = new MockMediaPlayer();
         AudioStream stream = new AudioStream(player);
-        context = new PlaybackContext(service, stream);
+        context = new PlaybackContext(service, stream, null);
 	}
 
-    protected void assertSwitchedToState(Class<?> stateClass) {
-        assertStateClass(switchedState, stateClass);
-    }
-
-    protected void assertStateClass(PlaybackState newState, Class<?> stateClass) {
-        if (null == newState)
-            fail("Not switched to any state");
-        assertEquals(stateClass, newState.getClass());
-    }
 }

@@ -76,7 +76,7 @@ public class LiveShowPlayback extends
 	}
 	
 	private void configureForConnectError() {
-		// Try to connect to non-existent url to simulate 
+		// Try to beConnecting to non-existent url to simulate
 		PlaybackContext.setLiveShowUrl("http://non-existent");
 		// And set the wait timeout to a small value
 		PlaybackState.setWaitTimeoutSeconds(1);
