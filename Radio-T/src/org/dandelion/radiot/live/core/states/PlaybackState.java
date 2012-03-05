@@ -29,7 +29,7 @@ public class PlaybackState {
 	public void leave(ILiveShowService service) {
 	}
 
-	public void acceptVisitor(LiveShowPlayer.PlaybackStateVisitor visitor) {
+	public void acceptVisitor(LiveShowPlayer.StateVisitor visitor) {
 	}
 
 	public void stopPlayback() {

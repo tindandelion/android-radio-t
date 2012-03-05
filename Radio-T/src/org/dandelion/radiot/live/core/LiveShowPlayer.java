@@ -3,11 +3,11 @@ package org.dandelion.radiot.live.core;
 import org.dandelion.radiot.live.core.states.*;
 
 public class LiveShowPlayer implements AudioStream.StateListener {
-    public static int waitTimeoutMillis = 60 * 1000;
+    public static int waitTimeoutMilliseconds = 60 * 1000;
     //	public static String liveShowUrl = "http://radio10.promodeejay.net:8181/stream";
     public static String liveShowUrl = "http://icecast.bigrradio.com/80s90s";
 
-    private PlaybackStateListener listener;
+    private StateChangeListener listener;
     private PlaybackState state;
     private AudioStream audioStream;
     private Timeout waitTimeout;
@@ -18,24 +18,24 @@ public class LiveShowPlayer implements AudioStream.StateListener {
         }
     };
 
-    public static void setWaitTimeoutSeconds(int value) {
-		waitTimeoutMillis = value * 1000;
-	}
-
-    public void beIdle() {
-        waitTimeout.reset();
-        setState(new Idle(this));
-    }
-
-    public interface PlaybackStateListener {
+    public interface StateChangeListener {
         void onChangedState(PlaybackState oldState, PlaybackState newState);
     }
-    public static interface PlaybackStateVisitor {
+
+    public static interface StateVisitor {
         void onWaiting(Waiting state);
         void onIdle(Idle state);
         void onConnecting(Connecting connecting);
         void onPlaying(Playing playing);
         void onStopping(Stopping stopping);
+    }
+
+    public static void setWaitTimeoutSeconds(int value) {
+		waitTimeoutMilliseconds = value * 1000;
+	}
+
+    public static void setLiveShowUrl(String value) {
+        liveShowUrl = value;
     }
 
     public LiveShowPlayer(AudioStream audioStream, Timeout waitTimeout) {
@@ -45,7 +45,7 @@ public class LiveShowPlayer implements AudioStream.StateListener {
         this.audioStream.setStateListener(this);
     }
 
-    public void setListener(PlaybackStateListener listener) {
+    public void setListener(StateChangeListener listener) {
         this.listener = listener;
     }
 
@@ -57,14 +57,15 @@ public class LiveShowPlayer implements AudioStream.StateListener {
         return (state instanceof Idle);
     }
 
-    public static void setLiveShowUrl(String value) {
-		liveShowUrl = value;
-	}
 
-    public void queryState(PlaybackStateVisitor visitor) {
+    public void queryState(StateVisitor visitor) {
         state.acceptVisitor(visitor);
     }
 
+    public void beIdle() {
+        waitTimeout.reset();
+        setState(new Idle(this));
+    }
 
     public void beConnecting() {
         try {
@@ -81,7 +82,7 @@ public class LiveShowPlayer implements AudioStream.StateListener {
     }
 
     public void beWaiting() {
-        waitTimeout.set(waitTimeoutMillis, onWaitTimeout);
+        waitTimeout.set(waitTimeoutMilliseconds, onWaitTimeout);
         setState(new Waiting(this));
     }
 

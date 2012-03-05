@@ -15,7 +15,7 @@ import static junit.framework.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
-public class LiveShowPlayerTests implements LiveShowPlayer.PlaybackStateListener {
+public class LiveShowPlayerTests implements LiveShowPlayer.StateChangeListener {
     private LiveShowPlayer player;
     private AudioStream audioStream = mock(AudioStream.class);
     private AudioStream.StateListener audioStateListener;
@@ -121,7 +121,7 @@ public class LiveShowPlayerTests implements LiveShowPlayer.PlaybackStateListener
     }
 
     private void verifyIsWaiting() {
-        verify(timeout).set(eq(LiveShowPlayer.waitTimeoutMillis), any(Runnable.class));
+        verify(timeout).set(eq(LiveShowPlayer.waitTimeoutMilliseconds), any(Runnable.class));
         verifySwitchedToState(Waiting.class);
     }
 

@@ -13,7 +13,7 @@ public class Connecting extends PlaybackState {
     }
 
     @Override
-    public void acceptVisitor(LiveShowPlayer.PlaybackStateVisitor visitor) {
+    public void acceptVisitor(LiveShowPlayer.StateVisitor visitor) {
         visitor.onConnecting(this);
     }
 }

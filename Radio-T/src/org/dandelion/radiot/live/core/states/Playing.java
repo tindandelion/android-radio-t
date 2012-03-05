@@ -19,7 +19,7 @@ public class Playing extends PlaybackState {
     }
 
     @Override
-    public void acceptVisitor(LiveShowPlayer.PlaybackStateVisitor visitor) {
+    public void acceptVisitor(LiveShowPlayer.StateVisitor visitor) {
         visitor.onPlaying(this);
     }
 }

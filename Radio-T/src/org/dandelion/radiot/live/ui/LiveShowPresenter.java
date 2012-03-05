@@ -8,7 +8,7 @@ import org.dandelion.radiot.live.core.states.*;
 import org.dandelion.radiot.live.core.states.Idle;
 import org.dandelion.radiot.live.core.states.Stopping;
 
-public class LiveShowPresenter implements LiveShowPlayer.PlaybackStateVisitor {
+public class LiveShowPresenter implements LiveShowPlayer.StateVisitor {
 
 	private LiveShowActivity activity;
 	private Timer timer;

@@ -23,7 +23,7 @@ public class Idle extends PlaybackState {
     }
 
     @Override
-    public void acceptVisitor(LiveShowPlayer.PlaybackStateVisitor visitor) {
+    public void acceptVisitor(LiveShowPlayer.StateVisitor visitor) {
         visitor.onIdle(this);
     }
 }

@@ -16,7 +16,7 @@ import org.dandelion.radiot.live.core.states.PlaybackState;
 import org.dandelion.radiot.live.core.states.PlaybackState.ILiveShowService;
 import org.dandelion.radiot.live.ui.LiveShowActivity;
 
-public class LiveShowService extends Service implements ILiveShowService, LiveShowPlayer.PlaybackStateListener {
+public class LiveShowService extends Service implements ILiveShowService, LiveShowPlayer.StateChangeListener {
 
     private LiveShowPlayer playbackContext;
 
@@ -80,7 +80,7 @@ public class LiveShowService extends Service implements ILiveShowService, LiveSh
         sendBroadcast(new Intent(LiveShowService.PLAYBACK_STATE_CHANGED));
     }
 
-	public void acceptVisitor(LiveShowPlayer.PlaybackStateVisitor visitor) {
+	public void acceptVisitor(LiveShowPlayer.StateVisitor visitor) {
         playbackContext.queryState(visitor);
 	}
 
