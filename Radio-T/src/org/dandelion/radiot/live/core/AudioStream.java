@@ -77,18 +77,18 @@ public class AudioStream implements MediaPlayer.OnPreparedListener, MediaPlayer.
             stopTask = null;
         }
     }
+    private static class NullStateListener implements AudioStream.StateListener {
+        @Override
+        public void onStarted() {
+        }
+
+        @Override
+        public void onError() {
+        }
+
+        @Override
+        public void onStopped() {
+        }
+    }
 }
 
-class NullStateListener implements AudioStream.StateListener {
-    @Override
-    public void onStarted() {
-    }
-
-    @Override
-    public void onError() {
-    }
-
-    @Override
-    public void onStopped() {
-    }
-}
