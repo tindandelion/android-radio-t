@@ -2,7 +2,7 @@ package org.dandelion.radiot.live.core.states;
 
 import org.dandelion.radiot.live.core.LiveShowPlayer;
 
-public class Stopping extends PlaybackState {
+public class Stopping extends LiveShowState {
     public Stopping(LiveShowPlayer context) {
         super(context);
     }

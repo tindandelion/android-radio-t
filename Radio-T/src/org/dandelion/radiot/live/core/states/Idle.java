@@ -2,7 +2,7 @@ package org.dandelion.radiot.live.core.states;
 
 import org.dandelion.radiot.live.core.LiveShowPlayer;
 
-public class Idle extends PlaybackState {
+public class Idle extends LiveShowState {
     public Idle(LiveShowPlayer context) {
         super(context);
     }

@@ -8,7 +8,7 @@ public class LiveShowPlayer implements AudioStream.StateListener {
     public static String liveShowUrl = "http://icecast.bigrradio.com/80s90s";
 
     private StateChangeListener listener;
-    private PlaybackState state;
+    private LiveShowState state;
     private AudioStream audioStream;
     private Timeout waitTimeout;
     private Runnable onWaitTimeout = new Runnable() {
@@ -19,7 +19,7 @@ public class LiveShowPlayer implements AudioStream.StateListener {
     };
 
     public interface StateChangeListener {
-        void onChangedState(PlaybackState oldState, PlaybackState newState);
+        void onChangedState(LiveShowState oldState, LiveShowState newState);
     }
 
     public static interface StateVisitor {
@@ -49,7 +49,7 @@ public class LiveShowPlayer implements AudioStream.StateListener {
         this.listener = listener;
     }
 
-    public PlaybackState getState() {
+    public LiveShowState getState() {
         return state;
     }
     public boolean isIdle() {
@@ -86,8 +86,8 @@ public class LiveShowPlayer implements AudioStream.StateListener {
         setState(new Waiting(this));
     }
 
-    private void setState(PlaybackState state) {
-        PlaybackState oldState = this.state;
+    private void setState(LiveShowState state) {
+        LiveShowState oldState = this.state;
         this.state = state;
         if (listener != null) {
             listener.onChangedState(oldState, this.state);

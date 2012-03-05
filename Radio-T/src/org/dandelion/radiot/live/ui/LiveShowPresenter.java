@@ -46,7 +46,7 @@ public class LiveShowPresenter implements LiveShowPlayer.StateVisitor {
 		activity.setElapsedTime(0);
 	}
 
-	public void switchPlaybackState(PlaybackState state) {
+	public void switchPlaybackState(LiveShowState state) {
 		if (isActive) {
 			state.stopPlayback();
 		} else {
@@ -54,7 +54,7 @@ public class LiveShowPresenter implements LiveShowPlayer.StateVisitor {
 		}
 	}
 
-	private void beActiveState(PlaybackState state, int labelStringId,
+	private void beActiveState(LiveShowState state, int labelStringId,
 			boolean isHelpTextVisible, boolean buttonEnabled) {
 		isActive = true;
 		activity.setStatusLabel(labelStringId);

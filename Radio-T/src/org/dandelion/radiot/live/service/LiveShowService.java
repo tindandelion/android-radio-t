@@ -12,13 +12,22 @@ import org.dandelion.radiot.RadiotApplication;
 import org.dandelion.radiot.live.core.AudioStream;
 import org.dandelion.radiot.live.core.LiveShowPlayer;
 import org.dandelion.radiot.live.core.Timeout;
-import org.dandelion.radiot.live.core.states.PlaybackState;
-import org.dandelion.radiot.live.core.states.PlaybackState.ILiveShowService;
+import org.dandelion.radiot.live.core.states.LiveShowState;
+import org.dandelion.radiot.live.core.states.LiveShowState.ILiveShowService;
 import org.dandelion.radiot.live.ui.LiveShowActivity;
 
 public class LiveShowService extends Service implements ILiveShowService, LiveShowPlayer.StateChangeListener {
 
-    private LiveShowPlayer playbackContext;
+    public static final String PLAYBACK_STATE_CHANGED = "org.dandelion.radiot.live.PlaybackStateChanged";
+    private static final String TIMEOUT_ELAPSED = "org.dandelion.radiot.live.TimeoutElapsed";
+    private static final int NOTIFICATION_ID = 1;
+
+    private LiveShowPlayer player;
+    private final IBinder binder = new LocalBinder();
+    private String[] statusLabels;
+    private Foregrounder foregrounder;
+    private Timeout waitTimeout;
+    private WifiLocker wifiLocker;
 
     public class LocalBinder extends Binder {
 
@@ -26,20 +35,19 @@ public class LiveShowService extends Service implements ILiveShowService, LiveSh
 			return (LiveShowService.this);
 		}
     }
-	public static final String PLAYBACK_STATE_CHANGED = "org.dandelion.radiot.live.PlaybackStateChanged";
 
-    private static final String TIMEOUT_ELAPSED = "org.dandelion.radiot.live.TimeoutElapsed";
-    private static final int NOTIFICATION_ID = 1;
-	private final IBinder binder = new LocalBinder();
-
-    private String[] statusLabels;
-    private Foregrounder foregrounder;
-    private Timeout waitTimeout;
-    private NetworkLock networkLock;
 	@Override
 	public IBinder onBind(Intent intent) {
 		return binder;
 	}
+
+    @Override
+    public boolean onUnbind(Intent intent) {
+        if (player.isIdle()) {
+            stopSelf();
+        }
+        return true;
+    }
 
 	@Override
 	public void onCreate() {
@@ -49,47 +57,40 @@ public class LiveShowService extends Service implements ILiveShowService, LiveSh
         AudioStream liveStream = new AudioStream(player);
         waitTimeout = new AlarmTimeout(this, TIMEOUT_ELAPSED);
 
-        playbackContext = new LiveShowPlayer(liveStream, waitTimeout);
-        playbackContext.setListener(this);
+        this.player = new LiveShowPlayer(liveStream, waitTimeout);
+        this.player.setListener(this);
 
 		statusLabels = getResources().getStringArray(
 				R.array.live_show_notification_labels);
 		foregrounder = Foregrounder.create(this);
-        networkLock = new NetworkLock(this);
+        wifiLocker = WifiLocker.create(this);
     }
 
     @Override
 	public void onDestroy() {
         waitTimeout.release();
-		networkLock.release();
+		wifiLocker.release();
 		super.onDestroy();
 	}
 
-	@Override
-	public boolean onUnbind(Intent intent) {
-		if (playbackContext.isIdle()) {
-			stopSelf();
-		}
-		return true;
-	}
-
     @Override
-    public void onChangedState(PlaybackState oldState, PlaybackState newState) {
+    public void onChangedState(LiveShowState oldState, LiveShowState newState) {
+        player.queryState(wifiLocker);
         oldState.leave(this);
         newState.enter(this);
         sendBroadcast(new Intent(LiveShowService.PLAYBACK_STATE_CHANGED));
     }
 
 	public void acceptVisitor(LiveShowPlayer.StateVisitor visitor) {
-        playbackContext.queryState(visitor);
+        player.queryState(visitor);
 	}
 
-    public PlaybackState getCurrentState() {
-		return playbackContext.getState();
+    public LiveShowState getCurrentState() {
+        return player.getState();
 	}
 
 	public void stopPlayback() {
-        playbackContext.stopPlayback();
+        player.stopPlayback();
 	}
 
     public void goForeground(int statusLabelIndex) {
@@ -109,14 +110,6 @@ public class LiveShowService extends Service implements ILiveShowService, LiveSh
 		note.setLatestEventInfo(getApplication(), getString(R.string.app_name),
 				statusMessage, i);
 		return note;
-	}
-
-    public void lockWifi() {
-		networkLock.acquire();
-	}
-
-	public void unlockWifi() {
-		networkLock.release();
 	}
 }
 

@@ -4,21 +4,16 @@ import org.dandelion.radiot.live.core.LiveShowPlayer;
 
 // TODO: Get rid of permanent reference to LiveShowPlayer
 // TODO: Move functionality from enter() and leave()
-public class PlaybackState {
+public class LiveShowState {
     protected LiveShowPlayer player;
 	private long timestamp;
 
     public interface ILiveShowService {
 		void goForeground(int stringId);
-
 		void goBackground();
-
-		void lockWifi();
-
-		void unlockWifi();
     }
 
-    public PlaybackState(LiveShowPlayer player) {
+    public LiveShowState(LiveShowPlayer player) {
         this.player = player;
         this.timestamp = System.currentTimeMillis();
     }

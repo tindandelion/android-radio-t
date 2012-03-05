@@ -2,7 +2,7 @@ package org.dandelion.radiot.live.core.states;
 
 import org.dandelion.radiot.live.core.LiveShowPlayer;
 
-public class Waiting extends PlaybackState {
+public class Waiting extends LiveShowState {
     private static final int WAITING_NOTIFICATION_STRING_ID = 2;
 
     public Waiting(LiveShowPlayer context) {

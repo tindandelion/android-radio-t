@@ -1,17 +1,17 @@
 package org.dandelion.radiot.unittest.live;
 
 import junit.framework.TestCase;
-import org.dandelion.radiot.live.core.states.PlaybackState;
+import org.dandelion.radiot.live.core.states.LiveShowState;
 
 public class PlaybackStateTestCase extends TestCase {
-    protected PlaybackState.ILiveShowService service;
+    protected LiveShowState.ILiveShowService service;
     protected boolean serviceIsForeground;
     protected boolean wifiLocked;
 
     @Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		service = new PlaybackState.ILiveShowService() {
+		service = new LiveShowState.ILiveShowService() {
 			public void goForeground(int stringId) {
 				serviceIsForeground = true;
 			}
