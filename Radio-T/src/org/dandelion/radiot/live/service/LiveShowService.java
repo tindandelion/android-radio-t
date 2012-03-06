@@ -26,6 +26,7 @@ public class LiveShowService extends Service implements ILiveShowService, LiveSh
     private Timeout waitTimeout;
     private WifiLocker wifiLocker;
     private NotificationBuilder notificationBuilder;
+    private NotificationController notificationController;
 
     public class LocalBinder extends Binder {
 
@@ -64,6 +65,7 @@ public class LiveShowService extends Service implements ILiveShowService, LiveSh
         wifiLocker = WifiLocker.create(this);
         notificationBuilder = new NotificationBuilder(getApplication(), R.drawable.ic_notification_live,
                 getString(R.string.app_name));
+        notificationController = new NotificationController(NOTIFICATION_ID, foregrounder, notificationBuilder, statusLabels);
     }
 
     @Override
@@ -76,6 +78,7 @@ public class LiveShowService extends Service implements ILiveShowService, LiveSh
     @Override
     public void onChangedState(LiveShowState oldState, LiveShowState newState) {
         player.queryState(wifiLocker);
+        player.queryState(notificationController);
         oldState.leave(this);
         newState.enter(this);
         sendBroadcast(new Intent(LiveShowService.PLAYBACK_STATE_CHANGED));

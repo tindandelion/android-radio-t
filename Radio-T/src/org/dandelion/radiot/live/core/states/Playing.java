@@ -8,11 +8,6 @@ public class Playing extends LiveShowState {
     }
 
     @Override
-    public void enter(ILiveShowService service) {
-        service.goForeground(0);
-    }
-
-    @Override
     public void acceptVisitor(LiveShowPlayer.StateVisitor visitor) {
         visitor.onPlaying(this);
     }

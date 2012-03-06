@@ -8,11 +8,6 @@ public class Idle extends LiveShowState {
     }
 
     @Override
-    public void enter(ILiveShowService service) {
-        service.goBackground();
-    }
-
-    @Override
     public void startPlayback() {
         player.beConnecting();
     }
