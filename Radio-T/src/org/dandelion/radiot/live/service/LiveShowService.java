@@ -1,7 +1,5 @@
 package org.dandelion.radiot.live.service;
 
-import android.app.Notification;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -14,7 +12,6 @@ import org.dandelion.radiot.live.core.LiveShowPlayer;
 import org.dandelion.radiot.live.core.Timeout;
 import org.dandelion.radiot.live.core.states.LiveShowState;
 import org.dandelion.radiot.live.core.states.LiveShowState.ILiveShowService;
-import org.dandelion.radiot.live.ui.LiveShowActivity;
 
 public class LiveShowService extends Service implements ILiveShowService, LiveShowPlayer.StateChangeListener {
 
@@ -28,6 +25,7 @@ public class LiveShowService extends Service implements ILiveShowService, LiveSh
     private Foregrounder foregrounder;
     private Timeout waitTimeout;
     private WifiLocker wifiLocker;
+    private NotificationBuilder notificationBuilder;
 
     public class LocalBinder extends Binder {
 
@@ -64,6 +62,8 @@ public class LiveShowService extends Service implements ILiveShowService, LiveSh
 				R.array.live_show_notification_labels);
 		foregrounder = Foregrounder.create(this);
         wifiLocker = WifiLocker.create(this);
+        notificationBuilder = new NotificationBuilder(getApplication(), R.drawable.ic_notification_live,
+                getString(R.string.app_name));
     }
 
     @Override
@@ -94,22 +94,13 @@ public class LiveShowService extends Service implements ILiveShowService, LiveSh
 	}
 
     public void goForeground(int statusLabelIndex) {
-		foregrounder.startForeground(NOTIFICATION_ID,
-				createNotification(statusLabels[statusLabelIndex]));
+        foregrounder.startForeground(NOTIFICATION_ID,
+                notificationBuilder.createNotification(statusLabels[statusLabelIndex]));
 	}
 
 	public void goBackground() {
 		foregrounder.stopForeground();
 	}
 
-	private Notification createNotification(String statusMessage) {
-		Notification note = new Notification(R.drawable.ic_notification_live,
-				null, System.currentTimeMillis());
-		PendingIntent i = PendingIntent.getActivity(getApplication(), 0,
-				new Intent(getApplication(), LiveShowActivity.class), 0);
-		note.setLatestEventInfo(getApplication(), getString(R.string.app_name),
-				statusMessage, i);
-		return note;
-	}
 }
 
