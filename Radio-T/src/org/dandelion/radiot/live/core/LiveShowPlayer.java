@@ -49,14 +49,21 @@ public class LiveShowPlayer implements AudioStream.StateListener {
         this.listener = listener;
     }
 
-    public boolean isIdle() {
-        // TODO: One more instanceof
-        return (state instanceof Idle);
-    }
-
-
     public void queryState(StateVisitor visitor) {
         state.acceptVisitor(visitor);
+    }
+
+    public void startPlayback() {
+        state.startPlayback(this);
+    }
+
+    public void stopPlayback() {
+        state.stopPlayback(this);
+    }
+
+    public boolean isIdle() {
+        // TODO: instanceof
+        return (state instanceof Idle);
     }
 
     public void beIdle() {
@@ -83,14 +90,6 @@ public class LiveShowPlayer implements AudioStream.StateListener {
         setState(new Waiting());
     }
 
-    private void setState(LiveShowState state) {
-        LiveShowState oldState = this.state;
-        this.state = state;
-        if (listener != null) {
-            listener.onChangedState(oldState, this.state);
-        }
-    }
-
     @Override
     public void onStarted() {
         setState(new Playing());
@@ -98,12 +97,7 @@ public class LiveShowPlayer implements AudioStream.StateListener {
 
     @Override
     public void onError() {
-        // TODO: That's a hack, but I want to see how far I can go
-        if (state instanceof Playing) {
-            beConnecting();
-        } else {
-            beWaiting();
-        }
+        state.handleError(this);
     }
 
     @Override
@@ -111,11 +105,11 @@ public class LiveShowPlayer implements AudioStream.StateListener {
         beIdle();
     }
 
-    public void startPlayback() {
-        state.startPlayback(this);
-    }
-
-    public void stopPlayback() {
-        state.stopPlayback(this);
+    private void setState(LiveShowState state) {
+        LiveShowState oldState = this.state;
+        this.state = state;
+        if (listener != null) {
+            listener.onChangedState(oldState, this.state);
+        }
     }
 }

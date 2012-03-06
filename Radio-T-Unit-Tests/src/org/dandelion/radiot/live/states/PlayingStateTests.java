@@ -23,4 +23,10 @@ public class PlayingStateTests {
         state.startPlayback(player);
         verifyZeroInteractions(player);
     }
+
+    @Test
+    public void onErrorSwitchesToConnecting() throws Exception {
+        state.handleError(player);
+        verify(player).beConnecting();
+    }
 }

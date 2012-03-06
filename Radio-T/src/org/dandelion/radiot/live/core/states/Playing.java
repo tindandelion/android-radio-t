@@ -12,4 +12,8 @@ public class Playing extends LiveShowState {
     public void acceptVisitor(LiveShowPlayer.StateVisitor visitor) {
         visitor.onPlaying(this);
     }
+
+    public void handleError(LiveShowPlayer player) {
+        player.beConnecting();
+    }
 }

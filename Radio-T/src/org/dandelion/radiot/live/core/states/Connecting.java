@@ -12,4 +12,9 @@ public class Connecting extends LiveShowState {
     public void acceptVisitor(LiveShowPlayer.StateVisitor visitor) {
         visitor.onConnecting(this);
     }
+
+    @Override
+    public void handleError(LiveShowPlayer player) {
+        player.beWaiting();
+    }
 }

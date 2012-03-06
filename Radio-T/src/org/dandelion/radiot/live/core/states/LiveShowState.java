@@ -22,4 +22,6 @@ public class LiveShowState {
 		return timestamp;
 	}
 
+    public void handleError(LiveShowPlayer player) {
+    }
 }
