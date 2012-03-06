@@ -6,14 +6,21 @@ import org.junit.Test;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
 
 public class ConnectingStateTests {
-    private LiveShowPlayer context = mock(LiveShowPlayer.class);
-    private Connecting state = new Connecting(context);
+    private LiveShowPlayer player = mock(LiveShowPlayer.class);
+    private Connecting state = new Connecting();
 
     @Test
-    public void stopPlaybackGoesIdle() throws Exception {
-        state.stopPlayback();
-        verify(context).beStopping();
+    public void stopPlaybackGoesStopping() throws Exception {
+        state.stopPlayback(player);
+        verify(player).beStopping();
+    }
+
+    @Test
+    public void startPlaybackDoesNothing() throws Exception {
+        state.startPlayback(player);
+        verifyZeroInteractions(player);
     }
 }

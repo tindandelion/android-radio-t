@@ -14,19 +14,19 @@ public class WifiLockerTests {
 
     @Test
     public void locksWifiOnConnecting() throws Exception {
-        locker.onConnecting(new Connecting(null));
+        locker.onConnecting(new Connecting());
         verify(lock).acquire();
     }
 
     @Test
     public void unlocksWifiOnIdle() throws Exception {
-        locker.onIdle(new Idle(null));
+        locker.onIdle(new Idle());
         verify(lock).release();
     }
 
     @Test
     public void unlocksWifiOnWaiting() throws Exception {
-        locker.onWaiting(new Waiting(null));
+        locker.onWaiting(new Waiting());
         verify(lock).release();
     }
 }

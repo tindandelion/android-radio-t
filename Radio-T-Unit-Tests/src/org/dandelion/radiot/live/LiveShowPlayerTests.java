@@ -19,7 +19,7 @@ public class LiveShowPlayerTests implements LiveShowPlayer.StateChangeListener {
     private LiveShowPlayer player;
     private AudioStream audioStream = mock(AudioStream.class);
     private AudioStream.StateListener audioStateListener;
-    private LiveShowState switchedState = new LiveShowState(null);
+    private LiveShowState switchedState = new LiveShowState();
     private Timeout timeout = mock(Timeout.class);
     private Runnable timeoutCallback;
 

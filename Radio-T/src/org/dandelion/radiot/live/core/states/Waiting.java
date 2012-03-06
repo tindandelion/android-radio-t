@@ -3,12 +3,8 @@ package org.dandelion.radiot.live.core.states;
 import org.dandelion.radiot.live.core.LiveShowPlayer;
 
 public class Waiting extends LiveShowState {
-    public Waiting(LiveShowPlayer context) {
-        super(context);
-    }
-
     @Override
-    public void stopPlayback() {
+    public void stopPlayback(LiveShowPlayer player) {
         player.beIdle();
     }
 

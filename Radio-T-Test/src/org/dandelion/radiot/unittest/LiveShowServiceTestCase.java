@@ -36,7 +36,7 @@ public class LiveShowServiceTestCase extends ServiceTestCase<LiveShowService> {
 	}
 	
 	public void testSendsBroadcastsWhenStateChanged() throws Exception {
-		final LiveShowState state = new LiveShowState(null);
+		final LiveShowState state = new LiveShowState();
 		
 		(new BroadcastCatcher(getContext(),
 				LiveShowService.PLAYBACK_STATE_CHANGED) {

@@ -84,15 +84,16 @@ public class LiveShowService extends Service implements LiveShowPlayer.StateChan
         sendBroadcast(new Intent(LiveShowService.PLAYBACK_STATE_CHANGED));
     }
 
-	public void acceptVisitor(LiveShowPlayer.StateVisitor visitor) {
+    // TODO: Stupid delegation to player, just return the player?
+	public void queryState(LiveShowPlayer.StateVisitor visitor) {
         player.queryState(visitor);
 	}
 
-    public LiveShowState getCurrentState() {
-        return player.getState();
-	}
-
-	public void stopPlayback() {
+    public void stopPlayback() {
         player.stopPlayback();
 	}
+
+    public void startPlayback() {
+        player.startPlayback();
+    }
 }

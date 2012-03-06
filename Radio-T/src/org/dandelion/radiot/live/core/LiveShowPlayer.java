@@ -41,7 +41,7 @@ public class LiveShowPlayer implements AudioStream.StateListener {
     public LiveShowPlayer(AudioStream audioStream, Timeout waitTimeout) {
         this.audioStream = audioStream;
         this.waitTimeout = waitTimeout;
-        this.state = new Idle(this);
+        this.state = new Idle();
         this.audioStream.setStateListener(this);
     }
 
@@ -49,9 +49,6 @@ public class LiveShowPlayer implements AudioStream.StateListener {
         this.listener = listener;
     }
 
-    public LiveShowState getState() {
-        return state;
-    }
     public boolean isIdle() {
         // TODO: One more instanceof
         return (state instanceof Idle);
@@ -64,13 +61,13 @@ public class LiveShowPlayer implements AudioStream.StateListener {
 
     public void beIdle() {
         waitTimeout.reset();
-        setState(new Idle(this));
+        setState(new Idle());
     }
 
     public void beConnecting() {
         try {
             audioStream.play(liveShowUrl);
-            setState(new Connecting(this));
+            setState(new Connecting());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -78,12 +75,12 @@ public class LiveShowPlayer implements AudioStream.StateListener {
 
     public void beStopping() {
         audioStream.stop();
-        setState(new Stopping(this));
+        setState(new Stopping());
     }
 
     public void beWaiting() {
         waitTimeout.set(waitTimeoutMilliseconds, onWaitTimeout);
-        setState(new Waiting(this));
+        setState(new Waiting());
     }
 
     private void setState(LiveShowState state) {
@@ -96,7 +93,7 @@ public class LiveShowPlayer implements AudioStream.StateListener {
 
     @Override
     public void onStarted() {
-        setState(new Playing(this));
+        setState(new Playing());
     }
 
     @Override
@@ -115,10 +112,10 @@ public class LiveShowPlayer implements AudioStream.StateListener {
     }
 
     public void startPlayback() {
-        state.startPlayback();
+        state.startPlayback(this);
     }
 
     public void stopPlayback() {
-        state.stopPlayback();
+        state.stopPlayback(this);
     }
 }

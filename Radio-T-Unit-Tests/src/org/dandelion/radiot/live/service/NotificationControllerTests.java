@@ -22,27 +22,31 @@ public class NotificationControllerTests {
     @Test
     public void goesForegroundWhenConnecting() throws Exception {
         when(builder.createNotification("TestConnecting")).thenReturn(note);
-        controller.onConnecting(new Connecting(null));
+        controller.onConnecting(new Connecting());
         verify(foregrounder).startForeground(NOTIFICATION_ID, note);
     }
 
     @Test
     public void goesForegroundWhenPlaying() throws Exception {
         when(builder.createNotification("TestPlaying")).thenReturn(note);
-        controller.onPlaying(new Playing(null));
+        controller.onPlaying(new Playing());
         verify(foregrounder).startForeground(NOTIFICATION_ID, note);
     }
 
     @Test
     public void goesForegroundWhenWaiting() throws Exception {
         when(builder.createNotification("TestWaiting")).thenReturn(note);
-        controller.onWaiting(new Waiting(null));
+        controller.onWaiting(new Waiting());
         verify(foregrounder).startForeground(NOTIFICATION_ID, note);
     }
 
     @Test
     public void goesBackroundWhenIdle() throws Exception {
-        controller.onIdle(new Idle(null));
+        // TODO: These lines are redundant if isForeground is moved to Foregrounder
+        controller.onPlaying(new Playing());
+        reset(foregrounder);
+
+        controller.onIdle(new Idle());
         verify(foregrounder).stopForeground();
     }
 }

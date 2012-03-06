@@ -7,6 +7,7 @@ import org.dandelion.radiot.live.core.LiveShowPlayer;
 import org.dandelion.radiot.live.core.states.*;
 import org.dandelion.radiot.live.core.states.Idle;
 import org.dandelion.radiot.live.core.states.Stopping;
+import org.dandelion.radiot.live.service.LiveShowService;
 
 public class LiveShowPresenter implements LiveShowPlayer.StateVisitor {
 
@@ -46,11 +47,11 @@ public class LiveShowPresenter implements LiveShowPlayer.StateVisitor {
 		activity.setElapsedTime(0);
 	}
 
-	public void switchPlaybackState(LiveShowState state) {
+	public void togglePlaybackState(LiveShowService service) {
 		if (isActive) {
-			state.stopPlayback();
+			service.stopPlayback();
 		} else {
-			state.startPlayback();
+			service.startPlayback();
 		}
 	}
 

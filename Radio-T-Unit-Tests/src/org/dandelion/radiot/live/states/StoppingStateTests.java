@@ -8,18 +8,18 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verifyZeroInteractions;
 
 public class StoppingStateTests {
-    private LiveShowPlayer context = mock(LiveShowPlayer.class);
-    private Stopping state = new Stopping(context);
+    private LiveShowPlayer player = mock(LiveShowPlayer.class);
+    private Stopping state = new Stopping();
 
     @Test
     public void startPlaybackDoesNothing() throws Exception {
-        state.startPlayback();
-        verifyZeroInteractions(context);
+        state.startPlayback(player);
+        verifyZeroInteractions(player);
     }
 
     @Test
     public void stopPlaybackDoesNothing() throws Exception {
-        state.stopPlayback();
-        verifyZeroInteractions(context);
+        state.stopPlayback(player);
+        verifyZeroInteractions(player);
     }
 }
