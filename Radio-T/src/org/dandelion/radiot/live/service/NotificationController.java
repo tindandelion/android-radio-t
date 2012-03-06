@@ -4,7 +4,6 @@ import android.app.Notification;
 import org.dandelion.radiot.live.core.LiveShowPlayer;
 import org.dandelion.radiot.live.core.states.*;
 
-// TODO: Notification ID must be moved to Foregrounder?
 // TODO: isForeground logic into the Foregrounder?
 public class NotificationController implements LiveShowPlayer.StateVisitor {
     private static final int PLAYING_ID = 0;
@@ -14,14 +13,12 @@ public class NotificationController implements LiveShowPlayer.StateVisitor {
     private boolean isForeground = false;
     private Foregrounder foregrounder;
     private NotificationBuilder notificationBuilder;
-    private int notificationId;
-    private String[] statusLabels;
+    private String[] stateLabels;
 
-    public NotificationController(int notificationId, Foregrounder foregrounder, NotificationBuilder notificationBuilder, String[] statusLabels) {
+    public NotificationController(Foregrounder foregrounder, NotificationBuilder notificationBuilder, String[] stateLabels) {
         this.foregrounder = foregrounder;
         this.notificationBuilder = notificationBuilder;
-        this.notificationId = notificationId;
-        this.statusLabels = statusLabels;
+        this.stateLabels = stateLabels;
     }
 
     @Override
@@ -50,12 +47,13 @@ public class NotificationController implements LiveShowPlayer.StateVisitor {
     }
 
     private String getStatusLabel(int id) {
-        return statusLabels[id];
+        return stateLabels[id];
     }
+
 
     private void startForeground(String label) {
         Notification notification = notificationBuilder.createNotification(label);
-        foregrounder.startForeground(notificationId, notification);
+        foregrounder.startForeground(notification);
         isForeground = true;
     }
 

@@ -7,57 +7,70 @@ import android.content.Context;
 
 @SuppressWarnings("rawtypes")
 abstract class Foregrounder {
-	private static final Class[] signature = new Class[] { int.class,
-			Notification.class };
+	private static final Class[] SIGNATURE = new Class[] { int.class, Notification.class };
+    protected Service service;
+    protected int notificationId;
+
+    public static Foregrounder create(Service service, int notificationId) {
+        if (isNewApi()) {
+            return new Foregrounder20(service, notificationId);
+        } else {
+            return new Foregrounder15(service, notificationId);
+        }
+    }
 
 	public abstract void stopForeground();
-
-	public abstract void startForeground(int id, Notification notification);
-
-	public static Foregrounder create(Service service) {
-		return isNewApi() ? foregrounder20(service) : foregrounder15(service);
-	}
+	public abstract void startForeground(Notification notification);
+    
+    private Foregrounder(Service service, int notificationId) {
+        this.service = service;
+        this.notificationId = notificationId;
+    }
 
 	private static boolean isNewApi() {
 		try {
-			Service.class.getMethod("startForeground", signature);
+			Service.class.getMethod("startForeground", SIGNATURE);
 			return true;
 		} catch (NoSuchMethodException e) {
 			return false;
 		}
 	}
 
-	private static Foregrounder foregrounder20(final Service service) {
-		return new Foregrounder() {
-			@Override
-			public void stopForeground() {
-				service.stopForeground(true);
-			}
+    private static class Foregrounder20 extends Foregrounder {
+        private Foregrounder20(Service service, int notificationId) {
+            super(service, notificationId);
+        }
 
-			@Override
-			public void startForeground(int id, Notification notification) {
-				service.startForeground(id, notification);
-			}
-		};
-	}
+        @Override
+        public void stopForeground() {
+            service.stopForeground(true);
+        }
 
-	private static Foregrounder foregrounder15(final Service service) {
-		final NotificationManager nm = (NotificationManager) service
-				.getSystemService(Context.NOTIFICATION_SERVICE);
-		return new Foregrounder() {
-			private int notificationId;
+        @Override
+        public void startForeground(Notification notification) {
+            service.startForeground(notificationId, notification);
+        }
+    }
 
-			public void stopForeground() {
-				nm.cancel(notificationId);
-				service.setForeground(false);
-			}
+    private static class Foregrounder15 extends Foregrounder {
+        private NotificationManager nm;
 
-			@Override
-			public void startForeground(int id, Notification notification) {
-				service.setForeground(true);
-				nm.notify(id, notification);
-				this.notificationId = id;
-			}
-		};
-	}
+        private Foregrounder15(Service service, int notificationId) {
+            super(service, notificationId);
+            nm = (NotificationManager)service.getSystemService(Context.NOTIFICATION_SERVICE);
+        }
+
+        @Override
+        public void stopForeground() {
+            nm.cancel(notificationId);
+            service.setForeground(false);
+        }
+
+        @Override
+        public void startForeground(Notification notification) {
+            service.setForeground(true);
+            nm.notify(notificationId, notification);
+        }
+    }
+
 }

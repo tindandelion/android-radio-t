@@ -70,10 +70,10 @@ public class LiveShowService extends Service implements LiveShowPlayer.StateChan
 
     private NotificationController createNotificationController() {
         String[] labels = getResources().getStringArray(R.array.live_show_notification_labels);
-        Foregrounder foregrounder = Foregrounder.create(this);
+        Foregrounder foregrounder = Foregrounder.create(this, NOTIFICATION_ID);
         NotificationBuilder nb = new NotificationBuilder(getApplication(), R.drawable.ic_notification_live,
                 getString(R.string.app_name));
-        return new NotificationController(NOTIFICATION_ID, foregrounder, nb, labels);
+        return new NotificationController(foregrounder, nb, labels);
     }
 
 
