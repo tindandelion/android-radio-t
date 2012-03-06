@@ -8,21 +8,10 @@ public class LiveShowState {
     protected LiveShowPlayer player;
 	private long timestamp;
 
-    public interface ILiveShowService {
-		void goForeground(int stringId);
-		void goBackground();
-    }
-
     public LiveShowState(LiveShowPlayer player) {
         this.player = player;
         this.timestamp = System.currentTimeMillis();
     }
-
-    public void enter(ILiveShowService service) {
-	}
-
-	public void leave(ILiveShowService service) {
-	}
 
 	public void acceptVisitor(LiveShowPlayer.StateVisitor visitor) {
 	}

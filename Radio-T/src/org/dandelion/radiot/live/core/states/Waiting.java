@@ -8,10 +8,6 @@ public class Waiting extends LiveShowState {
     }
 
     @Override
-    public void leave(ILiveShowService service) {
-    }
-
-    @Override
     public void stopPlayback() {
         player.beIdle();
     }
