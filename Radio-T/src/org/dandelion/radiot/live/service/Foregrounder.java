@@ -10,6 +10,7 @@ abstract class Foregrounder {
 	private static final Class[] SIGNATURE = new Class[] { int.class, Notification.class };
     protected Service service;
     protected int notificationId;
+    private boolean isForeground;
 
     public static Foregrounder create(Service service, int notificationId) {
         if (isNewApi()) {
@@ -19,22 +20,36 @@ abstract class Foregrounder {
         }
     }
 
-	public abstract void stopForeground();
-	public abstract void startForeground(Notification notification);
-    
+    private static boolean isNewApi() {
+        try {
+            Service.class.getMethod("startForeground", SIGNATURE);
+            return true;
+        } catch (NoSuchMethodException e) {
+            return false;
+        }
+    }
+
     private Foregrounder(Service service, int notificationId) {
         this.service = service;
         this.notificationId = notificationId;
+        this.isForeground = false;
     }
 
-	private static boolean isNewApi() {
-		try {
-			Service.class.getMethod("startForeground", SIGNATURE);
-			return true;
-		} catch (NoSuchMethodException e) {
-			return false;
-		}
-	}
+    public void startForeground(Notification n) {
+        if (!isForeground) {
+            _startForeground(n);
+            isForeground = true;
+        }
+    }
+    
+    public void stopForeground() {
+        if (isForeground) {
+            _stopForeground();
+        }
+    }
+
+    protected abstract void _stopForeground();
+    protected abstract void _startForeground(Notification notification);
 
     private static class Foregrounder20 extends Foregrounder {
         private Foregrounder20(Service service, int notificationId) {
@@ -42,12 +57,12 @@ abstract class Foregrounder {
         }
 
         @Override
-        public void stopForeground() {
+        protected void _stopForeground() {
             service.stopForeground(true);
         }
 
         @Override
-        public void startForeground(Notification notification) {
+        protected void _startForeground(Notification notification) {
             service.startForeground(notificationId, notification);
         }
     }
@@ -61,16 +76,15 @@ abstract class Foregrounder {
         }
 
         @Override
-        public void stopForeground() {
+        protected void _stopForeground() {
             nm.cancel(notificationId);
             service.setForeground(false);
         }
 
         @Override
-        public void startForeground(Notification notification) {
+        protected void _startForeground(Notification notification) {
             service.setForeground(true);
             nm.notify(notificationId, notification);
         }
     }
-
 }

@@ -62,7 +62,6 @@ public class LiveShowPlayer implements AudioStream.StateListener {
     }
 
     public boolean isIdle() {
-        // TODO: instanceof
         return (state instanceof Idle);
     }
 

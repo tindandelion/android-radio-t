@@ -41,10 +41,6 @@ public class NotificationControllerTests {
 
     @Test
     public void goesBackroundWhenIdle() throws Exception {
-        // TODO: These lines are redundant if isForeground is moved to Foregrounder
-        controller.onPlaying(new Playing());
-        reset(foregrounder);
-
         controller.onIdle(new Idle());
         verify(foregrounder).stopForeground();
     }
