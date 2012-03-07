@@ -1,4 +1,4 @@
-package org.dandelion.radiot.unittest;
+package org.dandelion.radiot.unittest.live;
 
 
 import junit.framework.Assert;

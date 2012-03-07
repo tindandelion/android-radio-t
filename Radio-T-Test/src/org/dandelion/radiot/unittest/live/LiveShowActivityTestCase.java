@@ -1,4 +1,4 @@
-package org.dandelion.radiot.unittest;
+package org.dandelion.radiot.unittest.live;
 
 import org.dandelion.radiot.live.service.LiveShowService;
 import org.dandelion.radiot.unittest.testables.TestableLiveShowActivity;
