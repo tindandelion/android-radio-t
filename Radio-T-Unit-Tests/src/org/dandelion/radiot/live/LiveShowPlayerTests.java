@@ -148,7 +148,7 @@ public class LiveShowPlayerTests implements LiveShowPlayer.StateChangeListener {
     }
 
     @Override
-    public void onChangedState(LiveShowState oldState, LiveShowState newState) {
+    public void onChangedState(LiveShowState newState) {
         switchedState = newState;
     }
 }

@@ -78,7 +78,7 @@ public class LiveShowService extends Service implements LiveShowPlayer.StateChan
 
 
     @Override
-    public void onChangedState(LiveShowState oldState, LiveShowState newState) {
+    public void onChangedState(LiveShowState newState) {
         player.queryState(wifiLocker);
         player.queryState(notificationController);
         sendBroadcast(new Intent(LiveShowService.PLAYBACK_STATE_CHANGED));

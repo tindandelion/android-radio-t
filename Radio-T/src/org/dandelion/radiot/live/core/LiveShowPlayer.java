@@ -19,7 +19,7 @@ public class LiveShowPlayer implements AudioStream.StateListener {
     };
 
     public interface StateChangeListener {
-        void onChangedState(LiveShowState oldState, LiveShowState newState);
+        void onChangedState(LiveShowState newState);
     }
 
     public static interface StateVisitor {
@@ -105,10 +105,9 @@ public class LiveShowPlayer implements AudioStream.StateListener {
     }
 
     private void setState(LiveShowState state) {
-        LiveShowState oldState = this.state;
         this.state = state;
         if (listener != null) {
-            listener.onChangedState(oldState, this.state);
+            listener.onChangedState(state);
         }
     }
 }
