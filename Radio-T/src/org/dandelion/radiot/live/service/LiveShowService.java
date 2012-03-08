@@ -6,7 +6,7 @@ import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.IBinder;
 import org.dandelion.radiot.R;
-import org.dandelion.radiot.RadiotApplication;
+import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.live.core.AudioStream;
 import org.dandelion.radiot.live.core.LiveShowPlayer;
 import org.dandelion.radiot.live.core.Timeout;
@@ -60,8 +60,7 @@ public class LiveShowService extends Service implements LiveShowPlayer.StateChan
     }
 
     private LiveShowPlayer createPlayer(Timeout timeout) {
-        MediaPlayer player = ((RadiotApplication) getApplication())
-                .getMediaPlayer();
+        MediaPlayer player = LiveShowApp.getInstance().getMediaPlayer();
         AudioStream liveStream = new AudioStream(player);
         LiveShowPlayer p = new LiveShowPlayer(liveStream, timeout);
         p.setListener(this);
