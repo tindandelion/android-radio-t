@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.test.ServiceTestCase;
 import junit.framework.Assert;
+import org.dandelion.radiot.live.core.PlaybackStateChangedEvent;
 import org.dandelion.radiot.live.service.LiveShowService;
 
 public class LiveShowServiceTestCase extends ServiceTestCase<LiveShowService> {
@@ -22,10 +23,10 @@ public class LiveShowServiceTestCase extends ServiceTestCase<LiveShowService> {
 		bindService(new Intent());
 		service = getService();
 	}
-	
+
 	public void testSendsBroadcastsWhenStateChanged() throws Exception {
 		(new BroadcastCatcher(getContext(),
-				LiveShowService.PLAYBACK_STATE_CHANGED) {
+                PlaybackStateChangedEvent.TAG) {
 			@Override
 			public void run() {
 				service.onChangedState(null);

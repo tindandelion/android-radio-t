@@ -1,20 +1,22 @@
 package org.dandelion.radiot.unittest.testables;
 
+import org.dandelion.radiot.live.core.states.LiveShowState;
 import org.dandelion.radiot.live.ui.LiveShowActivity;
 
 public class TestableLiveShowActivity extends LiveShowActivity {
-	private boolean isVisualStateUpdated = false;
+	public boolean isVisualStateUpdated = false;
 
 	@Override
-	protected void updateVisualState() {
+	protected void updateVisualState(LiveShowState newState) {
 		isVisualStateUpdated = true;
 	}
 
-	public boolean isVisualStateUpdated() {
-		return isVisualStateUpdated;
-	}
+    @Override
+    protected void initVisualState() {
+        isVisualStateUpdated = true;
+    }
 
-	public boolean isServiceConnected() {
+    public boolean isServiceConnected() {
 		return service != null;
 	}
 

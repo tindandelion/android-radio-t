@@ -1,10 +1,10 @@
 package org.dandelion.radiot.unittest.live;
 
-import org.dandelion.radiot.live.service.LiveShowService;
-import org.dandelion.radiot.unittest.testables.TestableLiveShowActivity;
-
 import android.content.Intent;
 import android.test.ActivityUnitTestCase;
+import org.dandelion.radiot.live.core.PlaybackStateChangedEvent;
+import org.dandelion.radiot.live.core.states.LiveShowState;
+import org.dandelion.radiot.unittest.testables.TestableLiveShowActivity;
 
 public class LiveShowActivityTestCase extends
 		ActivityUnitTestCase<TestableLiveShowActivity> {
@@ -28,7 +28,7 @@ public class LiveShowActivityTestCase extends
 	}
 
 	public void testUpdatesViewAtStart() throws Exception {
-		assertTrue(activity.isVisualStateUpdated());
+		assertTrue(activity.isVisualStateUpdated);
 	}
 
 	public void testDisconnectsFromServiceAtStop() throws Exception {
@@ -43,16 +43,14 @@ public class LiveShowActivityTestCase extends
 	public void testStopsReceivingBroadcastsAtStop() throws Exception {
 		activity.resetVisualState();
 		callOnStop();
-		getInstrumentation().getContext().sendBroadcast(
-				new Intent(LiveShowService.PLAYBACK_STATE_CHANGED));
-		assertFalse(activity.isVisualStateUpdated());
+        PlaybackStateChangedEvent.send(getInstrumentation().getContext(), new LiveShowState());
+		assertFalse(activity.isVisualStateUpdated);
 	}
 
 	public void testReceivesServiceBroadcasts() throws Exception {
 		activity.resetVisualState();
-		getInstrumentation().getContext().sendBroadcast(
-				new Intent(LiveShowService.PLAYBACK_STATE_CHANGED));
-		assertTrue(activity.isVisualStateUpdated());
+        PlaybackStateChangedEvent.send(getInstrumentation().getContext(), new LiveShowState());
+		assertTrue(activity.isVisualStateUpdated);
 	}
 
 }

@@ -9,11 +9,11 @@ import org.dandelion.radiot.R;
 import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.live.core.AudioStream;
 import org.dandelion.radiot.live.core.LiveShowPlayer;
+import org.dandelion.radiot.live.core.PlaybackStateChangedEvent;
 import org.dandelion.radiot.live.core.Timeout;
 import org.dandelion.radiot.live.core.states.LiveShowState;
 
 public class LiveShowService extends Service implements LiveShowPlayer.StateChangeListener {
-    public static final String PLAYBACK_STATE_CHANGED = "org.dandelion.radiot.live.PlaybackStateChanged";
     private static final String TIMEOUT_ELAPSED = "org.dandelion.radiot.live.TimeoutElapsed";
     private static final int NOTIFICATION_ID = 1;
 
@@ -24,7 +24,6 @@ public class LiveShowService extends Service implements LiveShowPlayer.StateChan
     private NotificationController notificationController;
 
     public class LocalBinder extends Binder {
-
         public LiveShowService getService() {
 			return (LiveShowService.this);
 		}
@@ -43,7 +42,7 @@ public class LiveShowService extends Service implements LiveShowPlayer.StateChan
         return true;
     }
 
-	@Override
+    @Override
 	public void onCreate() {
 		super.onCreate();
         waitTimeout = new AlarmTimeout(this, TIMEOUT_ELAPSED);
@@ -80,7 +79,7 @@ public class LiveShowService extends Service implements LiveShowPlayer.StateChan
     public void onChangedState(LiveShowState newState) {
         player.queryState(wifiLocker);
         player.queryState(notificationController);
-        sendBroadcast(new Intent(LiveShowService.PLAYBACK_STATE_CHANGED));
+        PlaybackStateChangedEvent.send(this, newState);
     }
 
     // TODO: Stupid delegation to player, just return the player?

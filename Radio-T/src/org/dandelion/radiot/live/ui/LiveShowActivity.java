@@ -4,11 +4,8 @@ import org.dandelion.radiot.R;
 import org.dandelion.radiot.home_screen.HomeScreenActivity;
 
 import android.app.Activity;
-import android.content.BroadcastReceiver;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -18,30 +15,35 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import org.dandelion.radiot.live.core.PlaybackStateChangedEvent;
+import org.dandelion.radiot.live.core.states.LiveShowState;
 import org.dandelion.radiot.live.service.LiveShowService;
 
 public class LiveShowActivity extends Activity {
-	protected LiveShowService service;
+    private PlaybackStateChangedEvent.Listener onStateChanged = new PlaybackStateChangedEvent.Listener() {
+        @Override
+        public void onPlaybackStateChanged(LiveShowState newState) {
+            updateVisualState(newState);
+        }
+    };
 
-	protected BroadcastReceiver onPlaybackState = new BroadcastReceiver() {
-		public void onReceive(Context context, Intent intent) {
-			updateVisualState();
-		}
-	};
 	private ServiceConnection onService = new ServiceConnection() {
 		public void onServiceDisconnected(ComponentName name) {
 		}
 
 		public void onServiceConnected(ComponentName name, IBinder binder) {
 			service = ((LiveShowService.LocalBinder) binder).getService();
-			updateVisualState();
-		}
+            initVisualState();
+        }
 	};
+
+    protected LiveShowService service;
 	private String[] statusLabels;
 	private CharSequence[] buttonLabels;
 	private LiveShowPresenter presenter;
+    private PlaybackStateChangedEvent.Receiver eventReceiver;
 
-	@Override
+    @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.live_show_screen);
@@ -58,13 +60,12 @@ public class LiveShowActivity extends Activity {
 		Intent i = new Intent(this, LiveShowService.class);
 		startService(i);
 		bindService(i, onService, 0);
-		registerReceiver(onPlaybackState, new IntentFilter(
-				LiveShowService.PLAYBACK_STATE_CHANGED));
+        eventReceiver = PlaybackStateChangedEvent.createReceiver(this, onStateChanged);
 	}
 
 	@Override
 	protected void onStop() {
-		unregisterReceiver(onPlaybackState);
+        eventReceiver.release();
 		unbindService(onService);
 		service = null;
         presenter.stopTimer();
@@ -89,12 +90,16 @@ public class LiveShowActivity extends Activity {
         presenter.togglePlaybackState(service);
 	}
 
-	protected void updateVisualState() {
-		if (service != null)
-			service.queryState(presenter);
-	}
+	protected void updateVisualState(LiveShowState newState) {
+        newState.acceptVisitor(presenter);
+    }
 
-	public LiveShowService getService() {
+    protected void initVisualState() {
+        if (service != null)
+            service.queryState(presenter);
+    }
+
+    public LiveShowService getService() {
 		return service;
 	}
 
