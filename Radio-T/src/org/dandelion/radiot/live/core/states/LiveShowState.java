@@ -2,7 +2,9 @@ package org.dandelion.radiot.live.core.states;
 
 import org.dandelion.radiot.live.core.LiveShowPlayer;
 
-public class LiveShowState {
+import java.io.Serializable;
+
+public class LiveShowState implements Serializable {
 	private long timestamp;
 
     public LiveShowState() {
