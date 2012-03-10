@@ -40,6 +40,7 @@ public class LiveShowActivity extends Activity {
 	private CharSequence[] buttonLabels;
 	private LiveShowPresenter presenter;
     private PlaybackStateChangedEvent.Receiver eventReceiver;
+    private TimerView timerLabel;
 
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +51,7 @@ public class LiveShowActivity extends Activity {
 				R.array.live_show_status_labels);
 		buttonLabels = getResources().getStringArray(
 				R.array.live_show_button_labels);
+        timerLabel = (TimerView) findViewById(R.id.live_timer_label);
 	}
 
 	@Override
@@ -66,7 +68,7 @@ public class LiveShowActivity extends Activity {
         eventReceiver.release();
 		unbindService(onService);
 		service = null;
-        presenter.stopTimer();
+        timerLabel.stop();
 		super.onStop();
 	}
 
@@ -112,14 +114,18 @@ public class LiveShowActivity extends Activity {
 		view.setText(statusLabels[labelId]);
 	}
 
-	public void setElapsedTime(long seconds) {
-		TimerView timerLabel = (TimerView) findViewById(R.id.live_timer_label);
-        timerLabel.setTime(seconds);
-	}
+    public void stopTimer() {
+        timerLabel.stop();
+    }
+
+    public void startTimer(long timestamp) {
+        timerLabel.start(timestamp);
+    }
 
 	public void showHelpText(boolean visible) {
 		View view = findViewById(R.id.live_show_hint);
 		int visibility = (visible) ? View.VISIBLE : View.INVISIBLE;
 		view.setVisibility(visibility);
 	}
+
 }

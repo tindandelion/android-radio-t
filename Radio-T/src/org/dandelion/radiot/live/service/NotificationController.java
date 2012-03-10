@@ -39,7 +39,6 @@ public class NotificationController implements LiveShowPlayer.StateVisitor {
         startForeground(getStatusLabel(PLAYING_ID));
     }
 
-
     @Override
     public void onStopping(Stopping stopping) {
     }

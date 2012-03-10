@@ -36,10 +36,8 @@ abstract class Foregrounder {
     }
 
     public void startForeground(Notification n) {
-        if (!isForeground) {
-            _startForeground(n);
-            isForeground = true;
-        }
+        _startForeground(n);
+        isForeground = true;
     }
     
     public void stopForeground() {

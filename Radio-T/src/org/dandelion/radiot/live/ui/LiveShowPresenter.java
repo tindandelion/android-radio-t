@@ -1,18 +1,12 @@
 package org.dandelion.radiot.live.ui;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 import org.dandelion.radiot.live.core.LiveShowPlayer;
 import org.dandelion.radiot.live.core.states.*;
-import org.dandelion.radiot.live.core.states.Idle;
-import org.dandelion.radiot.live.core.states.Stopping;
 import org.dandelion.radiot.live.service.LiveShowService;
 
 public class LiveShowPresenter implements LiveShowPlayer.StateVisitor {
 
 	private LiveShowActivity activity;
-	private Timer timer;
 	private boolean isActive;
 
 	public LiveShowPresenter(LiveShowActivity activity) {
@@ -39,15 +33,7 @@ public class LiveShowPresenter implements LiveShowPlayer.StateVisitor {
 		beActiveState(state, 4, false, false);
 	}
 
-	public void stopTimer() {
-		if (timer != null) {
-			timer.cancel();
-			timer = null;
-		}
-		activity.setElapsedTime(0);
-	}
-
-	public void togglePlaybackState(LiveShowService service) {
+    public void togglePlaybackState(LiveShowService service) {
 		if (isActive) {
 			service.stopPlayback();
 		} else {
@@ -61,7 +47,7 @@ public class LiveShowPresenter implements LiveShowPlayer.StateVisitor {
 		activity.setStatusLabel(labelStringId);
 		activity.showHelpText(isHelpTextVisible);
 		activity.setButtonState(0, buttonEnabled);
-		restartTimer(state.getTimestamp());
+        activity.startTimer(state.getTimestamp());
 	}
 
 	private void beInactiveState() {
@@ -69,29 +55,6 @@ public class LiveShowPresenter implements LiveShowPlayer.StateVisitor {
 		activity.setStatusLabel(0);
 		activity.showHelpText(false);
 		activity.setButtonState(1, true);
-		stopTimer();
-	}
-
-	private void restartTimer(long timestamp) {
-		stopTimer();
-		timer = new Timer();
-		timer.schedule(createTimerTask(timestamp), 0, 1000);
-	}
-
-	private TimerTask createTimerTask(final long timestamp) {
-		return new TimerTask() {
-			public void run() {
-				long currentTime = System.currentTimeMillis() - timestamp;
-				updateTimerLabel(currentTime / 1000);
-			}
-
-			private void updateTimerLabel(final long seconds) {
-				activity.runOnUiThread(new Runnable() {
-					public void run() {
-						activity.setElapsedTime(seconds);
-					}
-				});
-			}
-		};
+		activity.stopTimer();
 	}
 }
