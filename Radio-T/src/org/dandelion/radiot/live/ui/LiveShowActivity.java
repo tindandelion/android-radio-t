@@ -1,20 +1,18 @@
 package org.dandelion.radiot.live.ui;
 
-import org.dandelion.radiot.R;
-import org.dandelion.radiot.home_screen.HomeScreenActivity;
-
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.text.format.DateUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import org.dandelion.radiot.R;
+import org.dandelion.radiot.home_screen.HomeScreenActivity;
 import org.dandelion.radiot.live.core.PlaybackStateChangedEvent;
 import org.dandelion.radiot.live.core.states.LiveShowState;
 import org.dandelion.radiot.live.service.LiveShowService;
@@ -115,8 +113,8 @@ public class LiveShowActivity extends Activity {
 	}
 
 	public void setElapsedTime(long seconds) {
-		TextView timerLabel = (TextView) findViewById(R.id.live_timer_label);
-		timerLabel.setText(DateUtils.formatElapsedTime(seconds));
+		TimerView timerLabel = (TimerView) findViewById(R.id.live_timer_label);
+        timerLabel.setTime(seconds);
 	}
 
 	public void showHelpText(boolean visible) {
