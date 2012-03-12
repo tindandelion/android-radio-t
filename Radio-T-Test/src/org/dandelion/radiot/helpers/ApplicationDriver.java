@@ -40,6 +40,8 @@ public class ApplicationDriver extends Solo {
 	public void assertShowingPodcastList() {
 		assertCurrentActivity("Must show podcast list", PodcastListActivity.class);
 	}
-	
 
+    public void finish() {
+        getCurrentActivity().finish();
+    }
 }

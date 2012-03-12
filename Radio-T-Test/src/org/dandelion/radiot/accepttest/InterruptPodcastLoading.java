@@ -47,7 +47,13 @@ public class InterruptPodcastLoading extends PodcastListAcceptanceTestCase {
 		appDriver = createApplicationDriver();
 	}
 
-	protected IModel createTestModel(String url) {
+    @Override
+    protected void tearDown() throws Exception {
+        appDriver.finish();
+        super.tearDown();
+    }
+
+    protected IModel createTestModel(String url) {
 		model = new TestModel();
 		return model;
 	}
