@@ -1,11 +1,12 @@
-package org.dandelion.radiot;
+package org.dandelion.radiot.podcasts.ui;
 
 import java.util.List;
 
-import org.dandelion.radiot.R;
+import org.dandelion.radiot.*;
 
-import org.dandelion.radiot.PodcastList.IPodcastListEngine;
-import org.dandelion.radiot.PodcastList.IView;
+import org.dandelion.radiot.podcasts.core.PodcastList.IPodcastListEngine;
+import org.dandelion.radiot.podcasts.core.PodcastList.IView;
+import org.dandelion.radiot.R;
 import org.dandelion.radiot.home_screen.HomeScreenActivity;
 
 import android.app.AlertDialog;
@@ -28,6 +29,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import org.dandelion.radiot.podcasts.core.PodcastItem;
+import org.dandelion.radiot.podcasts.core.PodcastPlayer;
 
 public class PodcastListActivity extends ListActivity implements IView {
 
@@ -44,7 +47,7 @@ public class PodcastListActivity extends ListActivity implements IView {
 	private Bundle extras;
 
 	private PodcastListAdapter listAdapter;
-	private IPodcastPlayer podcastPlayer;
+	private PodcastPlayer podcastPlayer;
 	private IPodcastListEngine engine;
 
 	private ProgressDialog progress;
@@ -122,7 +125,7 @@ public class PodcastListActivity extends ListActivity implements IView {
 		}
 	}
 
-	public void setPodcastPlayer(IPodcastPlayer player) {
+	public void setPodcastPlayer(PodcastPlayer player) {
 		podcastPlayer = player;
 	}
 

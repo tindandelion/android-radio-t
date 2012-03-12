@@ -7,10 +7,10 @@ import java.util.concurrent.LinkedBlockingQueue;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
-import org.dandelion.radiot.PodcastItem;
-import org.dandelion.radiot.PodcastList.IPodcastListEngine;
-import org.dandelion.radiot.PodcastList.IView;
-import org.dandelion.radiot.PodcastListEngine;
+import org.dandelion.radiot.podcasts.core.PodcastItem;
+import org.dandelion.radiot.podcasts.core.PodcastList.IPodcastListEngine;
+import org.dandelion.radiot.podcasts.core.PodcastList.IView;
+import org.dandelion.radiot.podcasts.core.PodcastListEngine;
 import org.dandelion.radiot.helpers.TestModel;
 
 import android.graphics.Bitmap;
@@ -109,8 +109,8 @@ class TestView implements IView {
 
 	public void updatePodcastImage(int index) {
 		try {
-			updatedImages.put(new Integer(index));
-		} catch (InterruptedException e) {
+			updatedImages.put(index);
+		} catch (InterruptedException ignored) {
 		}
 	}
 

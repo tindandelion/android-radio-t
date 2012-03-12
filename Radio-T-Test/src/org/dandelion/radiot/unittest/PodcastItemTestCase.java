@@ -2,7 +2,7 @@ package org.dandelion.radiot.unittest;
 
 import junit.framework.TestCase;
 
-import org.dandelion.radiot.PodcastItem;
+import org.dandelion.radiot.podcasts.core.PodcastItem;
 
 public class PodcastItemTestCase extends TestCase {
 	private PodcastItem item;

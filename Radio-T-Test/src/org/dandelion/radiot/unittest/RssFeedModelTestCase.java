@@ -7,9 +7,9 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
-import org.dandelion.radiot.PodcastItem;
-import org.dandelion.radiot.PodcastList.IModel;
-import org.dandelion.radiot.RssFeedModel;
+import org.dandelion.radiot.podcasts.core.PodcastItem;
+import org.dandelion.radiot.podcasts.core.PodcastList.IModel;
+import org.dandelion.radiot.podcasts.core.RssFeedModel;
 
 import android.net.Uri;
 
@@ -40,7 +40,7 @@ public class RssFeedModelTestCase extends TestCase {
 						streamClosed = true;
 					}
 				};
-			};
+			}
 
 			@Override
 			protected InputStream openImageStream(String url) {

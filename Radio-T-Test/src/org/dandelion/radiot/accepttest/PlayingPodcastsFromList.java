@@ -1,8 +1,8 @@
 package org.dandelion.radiot.accepttest;
 
 
-import org.dandelion.radiot.PodcastItem;
-import org.dandelion.radiot.PodcastListActivity;
+import org.dandelion.radiot.podcasts.core.PodcastItem;
+import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
 import org.dandelion.radiot.helpers.ApplicationDriver;
 import org.dandelion.radiot.helpers.FakePodcastPlayer;
 import org.dandelion.radiot.helpers.PodcastListAcceptanceTestCase;

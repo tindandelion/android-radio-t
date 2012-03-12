@@ -2,10 +2,10 @@ package org.dandelion.radiot.unittest;
 
 import java.util.ArrayList;
 
-import org.dandelion.radiot.PodcastItem;
-import org.dandelion.radiot.PodcastList.IPodcastListEngine;
-import org.dandelion.radiot.PodcastList.IView;
-import org.dandelion.radiot.PodcastListActivity;
+import org.dandelion.radiot.podcasts.core.PodcastItem;
+import org.dandelion.radiot.podcasts.core.PodcastList.IPodcastListEngine;
+import org.dandelion.radiot.podcasts.core.PodcastList.IView;
+import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
 import org.dandelion.radiot.RadiotApplication;
 
 import android.content.Intent;

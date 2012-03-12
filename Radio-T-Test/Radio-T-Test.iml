@@ -44,12 +44,10 @@
     <orderEntry type="module-library">
       <library name="robotium-solo-1.6.0.jar">
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/robotium-solo-1.6.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/robotium-solo-1.6.0.jar!/" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES>
-          <root url="file:///Users/sergio/Projects/Eclipse/robotium/robotium-solo" />
-        </SOURCES>
+        <SOURCES />
       </library>
     </orderEntry>
   </component>

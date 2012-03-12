@@ -1,6 +1,6 @@
 package org.dandelion.radiot.home_screen;
 
-import org.dandelion.radiot.PodcastListActivity;
+import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.live.ui.LiveShowActivity;
 
@@ -57,7 +57,7 @@ public class HomeScreenActivity extends Activity {
 				new HomeScreenItem.OnClickListener() {
 					public void onClick(HomeScreenItem item) {
 						PodcastListActivity.start(HomeScreenActivity.this,
-								item.title, "after-show");
+                                item.title, "after-show");
 					}
 				});
 		a.addSeparator();

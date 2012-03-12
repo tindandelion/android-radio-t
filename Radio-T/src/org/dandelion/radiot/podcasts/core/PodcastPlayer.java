@@ -1,9 +1,8 @@
-package org.dandelion.radiot;
+package org.dandelion.radiot.podcasts.core;
 
 import android.content.Context;
 import android.net.Uri;
 
-public interface IPodcastPlayer {
+public interface PodcastPlayer {
 	void startPlaying(Context context, Uri url);
-	void stop();
 }

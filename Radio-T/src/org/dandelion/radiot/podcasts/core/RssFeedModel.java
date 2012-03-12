@@ -1,4 +1,4 @@
-package org.dandelion.radiot;
+package org.dandelion.radiot.podcasts.core;
 
 import java.io.IOException;
 import java.io.InputStream;

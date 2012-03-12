@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-import org.dandelion.radiot.PodcastList.IModel;
-import org.dandelion.radiot.PodcastList.IPodcastListEngine;
-import org.dandelion.radiot.RssFeedModel;
+import org.dandelion.radiot.podcasts.core.PodcastList.IModel;
+import org.dandelion.radiot.podcasts.core.PodcastList.IPodcastListEngine;
+import org.dandelion.radiot.podcasts.core.RssFeedModel;
 
 import android.content.res.AssetManager;
 

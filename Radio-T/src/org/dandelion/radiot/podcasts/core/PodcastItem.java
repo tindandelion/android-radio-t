@@ -1,4 +1,4 @@
-package org.dandelion.radiot;
+package org.dandelion.radiot.podcasts.core;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -43,15 +43,7 @@ public class PodcastItem implements Cloneable {
 		return number;
 	}
 
-	public PodcastItem copy() {
-		try {
-			return (PodcastItem) clone();
-		} catch (CloneNotSupportedException e) {
-			return null;
-		}
-	}
-
-	public void extractPodcastNumber(String value) {
+    public void extractPodcastNumber(String value) {
 		Matcher matcher = NUMBER_PATTERN.matcher(value);
 		if (matcher.find()) {
 			number = "#" + matcher.group();

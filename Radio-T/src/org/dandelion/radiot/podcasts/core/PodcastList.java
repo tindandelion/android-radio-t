@@ -1,8 +1,7 @@
-package org.dandelion.radiot;
-
-import java.util.List;
+package org.dandelion.radiot.podcasts.core;
 
 import android.graphics.Bitmap;
+import java.util.List;
 
 public class PodcastList {
 

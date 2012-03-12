@@ -1,8 +1,10 @@
 package org.dandelion.radiot;
 
 import android.app.Application;
-import org.dandelion.radiot.PodcastList.IPodcastListEngine;
+import org.dandelion.radiot.podcasts.core.PodcastList.IPodcastListEngine;
 import org.dandelion.radiot.live.LiveShowApp;
+import org.dandelion.radiot.podcasts.core.PodcastListEngine;
+import org.dandelion.radiot.podcasts.core.RssFeedModel;
 
 import java.util.HashMap;
 

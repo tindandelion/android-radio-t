@@ -1,12 +1,13 @@
-package org.dandelion.radiot;
+package org.dandelion.radiot.podcasts.core;
 
 import java.util.List;
 
-import org.dandelion.radiot.PodcastList.IModel;
-import org.dandelion.radiot.PodcastList.IView;
+import org.dandelion.radiot.podcasts.core.PodcastList.IModel;
+import org.dandelion.radiot.podcasts.core.PodcastList.IView;
 
 import android.os.AsyncTask;
 
+@SuppressWarnings("unchecked")
 public class PodcastListEngine implements PodcastList.IPodcastListEngine {
 	protected IModel model;
 	protected IView view;
@@ -69,7 +70,7 @@ public class PodcastListEngine implements PodcastList.IPodcastListEngine {
 		view.showProgress();
 		if (!isInProgress()) {
 			task = new UpdateTask();
-			task.execute();
+            task.execute();
 		}
 	}
 

@@ -1,8 +1,8 @@
 package org.dandelion.radiot.helpers;
 
 
-import org.dandelion.radiot.PodcastList.IModel;
-import org.dandelion.radiot.PodcastList.IPodcastListEngine;
+import org.dandelion.radiot.podcasts.core.PodcastList.IModel;
+import org.dandelion.radiot.podcasts.core.PodcastList.IPodcastListEngine;
 import org.dandelion.radiot.home_screen.HomeScreenActivity;
 import org.dandelion.radiot.RadiotApplication;
 

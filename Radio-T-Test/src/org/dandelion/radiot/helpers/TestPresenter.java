@@ -5,8 +5,8 @@ import java.util.concurrent.TimeUnit;
 
 import junit.framework.Assert;
 
-import org.dandelion.radiot.PodcastList.IModel;
-import org.dandelion.radiot.PodcastListEngine;
+import org.dandelion.radiot.podcasts.core.PodcastList.IModel;
+import org.dandelion.radiot.podcasts.core.PodcastListEngine;
 
 public class TestPresenter extends PodcastListEngine {
 	private static final int WAIT_TIMEOUT = 60;

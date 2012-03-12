@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import org.dandelion.radiot.PodcastItem;
-import org.dandelion.radiot.PodcastList.IModel;
+import org.dandelion.radiot.podcasts.core.PodcastItem;
+import org.dandelion.radiot.podcasts.core.PodcastList.IModel;
 
 import android.graphics.Bitmap;
 

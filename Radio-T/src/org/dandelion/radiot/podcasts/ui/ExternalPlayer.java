@@ -1,16 +1,15 @@
-package org.dandelion.radiot;
+package org.dandelion.radiot.podcasts.ui;
 
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import org.dandelion.radiot.podcasts.core.PodcastPlayer;
 
-class ExternalPlayer implements IPodcastPlayer {
+class ExternalPlayer implements PodcastPlayer {
 	public void startPlaying(Context context, Uri url) {
 		Intent intent = new Intent(Intent.ACTION_VIEW);
 		intent.setDataAndType(url, "audio/mpeg");
 		context.startActivity(Intent.createChooser(intent, null));
 	}
 
-	public void stop() {
-	}
 }
