@@ -1,4 +1,4 @@
-package org.dandelion.radiot.live.core;
+package org.dandelion.radiot.live.service;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

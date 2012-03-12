@@ -7,7 +7,6 @@ import android.os.IBinder;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.live.core.LiveShowPlayer;
-import org.dandelion.radiot.live.core.PlaybackStateChangedEvent;
 import org.dandelion.radiot.live.core.states.LiveShowState;
 
 public class LiveShowService extends Service implements LiveShowPlayer.StateChangeListener {

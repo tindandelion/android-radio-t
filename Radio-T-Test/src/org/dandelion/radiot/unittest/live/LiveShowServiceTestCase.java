@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.test.ServiceTestCase;
 import junit.framework.Assert;
-import org.dandelion.radiot.live.core.PlaybackStateChangedEvent;
+import org.dandelion.radiot.live.service.PlaybackStateChangedEvent;
 import org.dandelion.radiot.live.service.LiveShowService;
 
 public class LiveShowServiceTestCase extends ServiceTestCase<LiveShowService> {

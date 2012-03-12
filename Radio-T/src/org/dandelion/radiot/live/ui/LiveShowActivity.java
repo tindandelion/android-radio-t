@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.home_screen.HomeScreenActivity;
-import org.dandelion.radiot.live.core.PlaybackStateChangedEvent;
+import org.dandelion.radiot.live.service.PlaybackStateChangedEvent;
 import org.dandelion.radiot.live.core.states.LiveShowState;
 import org.dandelion.radiot.live.service.LiveShowService;
 

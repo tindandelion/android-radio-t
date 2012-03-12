@@ -2,7 +2,7 @@ package org.dandelion.radiot.unittest.live;
 
 import android.content.Intent;
 import android.test.ActivityUnitTestCase;
-import org.dandelion.radiot.live.core.PlaybackStateChangedEvent;
+import org.dandelion.radiot.live.service.PlaybackStateChangedEvent;
 import org.dandelion.radiot.live.core.states.LiveShowState;
 import org.dandelion.radiot.unittest.testables.TestableLiveShowActivity;
 
