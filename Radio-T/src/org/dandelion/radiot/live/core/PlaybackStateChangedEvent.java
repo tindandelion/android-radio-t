@@ -8,6 +8,7 @@ import org.dandelion.radiot.live.core.states.LiveShowState;
 
 public class PlaybackStateChangedEvent {
     public static final String TAG = PlaybackStateChangedEvent.class.getName();
+    public static final String STATE_EXTRA = TAG + ".State";
 
     public interface Listener {
         void onPlaybackStateChanged(LiveShowState newState);
@@ -15,7 +16,7 @@ public class PlaybackStateChangedEvent {
 
     public static void send(Context context, LiveShowState state) {
         Intent intent = new Intent(TAG);
-        intent.putExtra(TAG, state);
+        intent.putExtra(STATE_EXTRA, state);
         context.sendBroadcast(intent);
     }
     
@@ -39,7 +40,7 @@ public class PlaybackStateChangedEvent {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            LiveShowState state = (LiveShowState) intent.getSerializableExtra(TAG);
+            LiveShowState state = (LiveShowState) intent.getSerializableExtra(STATE_EXTRA);
             listener.onPlaybackStateChanged(state);
         }
     }

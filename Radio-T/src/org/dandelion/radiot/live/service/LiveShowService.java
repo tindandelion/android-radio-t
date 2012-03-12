@@ -2,24 +2,19 @@ package org.dandelion.radiot.live.service;
 
 import android.app.Service;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.IBinder;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.live.LiveShowApp;
-import org.dandelion.radiot.live.core.AudioStream;
 import org.dandelion.radiot.live.core.LiveShowPlayer;
 import org.dandelion.radiot.live.core.PlaybackStateChangedEvent;
-import org.dandelion.radiot.live.core.Timeout;
 import org.dandelion.radiot.live.core.states.LiveShowState;
 
 public class LiveShowService extends Service implements LiveShowPlayer.StateChangeListener {
-    private static final String TIMEOUT_ELAPSED = "org.dandelion.radiot.live.TimeoutElapsed";
     private static final int NOTIFICATION_ID = 1;
 
     private LiveShowPlayer player;
     private final IBinder binder = new LocalBinder();
-    private Timeout waitTimeout;
     private WifiLocker wifiLocker;
     private NotificationController notificationController;
 
@@ -45,25 +40,17 @@ public class LiveShowService extends Service implements LiveShowPlayer.StateChan
     @Override
 	public void onCreate() {
 		super.onCreate();
-        waitTimeout = new AlarmTimeout(this, TIMEOUT_ELAPSED);
         wifiLocker = WifiLocker.create(this);
         notificationController = createNotificationController();
-        player = createPlayer(waitTimeout);
+        player = LiveShowApp.getInstance().getLiveShowPlayer();
+        player.setListener(this);
     }
 
     @Override
     public void onDestroy() {
-        waitTimeout.release();
         wifiLocker.release();
+        player.setListener(null);
         super.onDestroy();
-    }
-
-    private LiveShowPlayer createPlayer(Timeout timeout) {
-        MediaPlayer player = LiveShowApp.getInstance().getMediaPlayer();
-        AudioStream liveStream = new AudioStream(player);
-        LiveShowPlayer p = new LiveShowPlayer(liveStream, timeout);
-        p.setListener(this);
-        return p;
     }
 
     private NotificationController createNotificationController() {

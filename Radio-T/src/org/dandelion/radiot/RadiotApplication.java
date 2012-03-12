@@ -18,7 +18,7 @@ public class RadiotApplication extends Application {
 		engines.put(
 				"after-show",
 				createPodcastEngine("http://feeds.feedburner.com/pirate-radio-t"));
-        LiveShowApp.initialize();
+        LiveShowApp.initialize(this);
 	}
 	
 	@Override
