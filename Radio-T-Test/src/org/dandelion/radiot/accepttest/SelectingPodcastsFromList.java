@@ -17,7 +17,7 @@ class TestingPodcastsApp extends PodcastsApp {
     private PodcastPlayer player;
 
     TestingPodcastsApp(PodcastPlayer player) {
-        super(null);
+        super();
         this.player = player;
     }
 

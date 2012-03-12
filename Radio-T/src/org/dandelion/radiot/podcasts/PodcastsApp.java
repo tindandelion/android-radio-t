@@ -1,6 +1,5 @@
 package org.dandelion.radiot.podcasts;
 
-import android.content.Context;
 import org.dandelion.radiot.podcasts.core.PodcastPlayer;
 import org.dandelion.radiot.podcasts.ui.ExternalPlayer;
 
@@ -8,8 +7,8 @@ public class PodcastsApp {
     private static PodcastsApp instance;
     private PodcastPlayer podcastPlayer;
     
-    public static void initialize(Context context) {
-        instance = new PodcastsApp(context);
+    public static void initialize() {
+        instance = new PodcastsApp();
     }
     
     public static void release() {
@@ -29,8 +28,8 @@ public class PodcastsApp {
         return podcastPlayer;
     }
 
-    protected PodcastsApp(Context context) {
-        podcastPlayer = new ExternalPlayer(context);
+    protected PodcastsApp() {
+        podcastPlayer = new ExternalPlayer();
     }
 
     private void releaseInstance() {

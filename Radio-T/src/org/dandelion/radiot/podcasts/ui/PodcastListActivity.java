@@ -153,7 +153,7 @@ public class PodcastListActivity extends ListActivity implements IView {
 
     private void handlePodcastSelection(PodcastItem item) {
         PodcastPlayer player = PodcastsApp.getInstance().getPodcastPlayer();
-        player.startPlaying(item.getAudioUri());
+        player.startPlaying(this, item.getAudioUri());
     }
 
     private String getFeedUrlFromExtra() {
