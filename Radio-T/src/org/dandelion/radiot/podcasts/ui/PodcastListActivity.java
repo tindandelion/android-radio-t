@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.dandelion.radiot.*;
 
+import org.dandelion.radiot.podcasts.PodcastsApp;
 import org.dandelion.radiot.podcasts.core.PodcastList.IPodcastListEngine;
 import org.dandelion.radiot.podcasts.core.PodcastList.IView;
 import org.dandelion.radiot.R;
@@ -17,7 +18,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -47,8 +47,7 @@ public class PodcastListActivity extends ListActivity implements IView {
 	private Bundle extras;
 
 	private PodcastListAdapter listAdapter;
-	private PodcastPlayer podcastPlayer;
-	private IPodcastListEngine engine;
+    private IPodcastListEngine engine;
 
 	private ProgressDialog progress;
 
@@ -56,14 +55,12 @@ public class PodcastListActivity extends ListActivity implements IView {
 		progress.dismiss();
 	}
 
-	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		extras = getIntent().getExtras();
 		setTitle(getTitleFromExtra());
 		initListAdapter();
-		setPodcastPlayer(new ExternalPlayer());
 		attachToEngine();
 	}
 
@@ -125,11 +122,7 @@ public class PodcastListActivity extends ListActivity implements IView {
 		}
 	}
 
-	public void setPodcastPlayer(PodcastPlayer player) {
-		podcastPlayer = player;
-	}
-
-	public void showErrorMessage(String errorMessage) {
+    public void showErrorMessage(String errorMessage) {
 		new AlertDialog.Builder(this).setTitle(R.string.rss_load_error_title)
 				.setMessage(errorMessage).show();
 	}
@@ -154,10 +147,16 @@ public class PodcastListActivity extends ListActivity implements IView {
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
-		playPodcast(listAdapter.getItem(position).getAudioUri());
+        PodcastItem selectedItem = listAdapter.getItem(position);
+        handlePodcastSelection(selectedItem);
 	}
 
-	private String getFeedUrlFromExtra() {
+    private void handlePodcastSelection(PodcastItem item) {
+        PodcastPlayer player = PodcastsApp.getInstance().getPodcastPlayer();
+        player.startPlaying(item.getAudioUri());
+    }
+
+    private String getFeedUrlFromExtra() {
 		if (null == extras) {
 			return null;
 		}
@@ -176,11 +175,7 @@ public class PodcastListActivity extends ListActivity implements IView {
 		setListAdapter(listAdapter);
 	}
 
-	private void playPodcast(Uri uri) {
-		podcastPlayer.startPlaying(this, uri);
-	}
-
-	class PodcastListAdapter extends ArrayAdapter<PodcastItem> {
+    class PodcastListAdapter extends ArrayAdapter<PodcastItem> {
 		private final Bitmap defaultPodcastImage = BitmapFactory
 				.decodeResource(PodcastListActivity.this.getResources(),
 						R.drawable.default_podcast_image);
