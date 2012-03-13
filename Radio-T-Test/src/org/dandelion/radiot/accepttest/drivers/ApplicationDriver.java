@@ -1,0 +1,56 @@
+package org.dandelion.radiot.accepttest.drivers;
+
+
+import org.dandelion.radiot.podcasts.ui.ListActivity;
+import org.dandelion.radiot.home_screen.HomeScreenActivity;
+
+import android.app.Activity;
+import android.app.Instrumentation;
+
+import com.jayway.android.robotium.solo.Solo;
+
+public class ApplicationDriver extends Solo {
+    private Instrumentation instrumentation;
+
+    public ApplicationDriver(Instrumentation inst, Activity activity) {
+		super(inst, activity);
+        this.instrumentation = inst;
+	}
+
+	public void assertOnHomeScreen() {
+		assertCurrentActivity("Must be on the home screen", HomeScreenActivity.class);
+	}
+
+    // TODO: Get rid of visitMainShowPage()
+	public ListActivity visitMainShowPage() {
+		clickOnText("Подкасты");
+		assertCurrentActivity("Must be on the main show page", ListActivity.class);
+		return (ListActivity) getCurrentActivity();
+	}
+
+	public void visitAfterShowPage() {
+		clickOnText("После-шоу");
+		assertCurrentActivity("Must be on the after show page", ListActivity.class);
+	}
+
+	public void waitSomeTime() {
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void assertShowingPodcastList() {
+		assertCurrentActivity("Must show podcast list", ListActivity.class);
+	}
+
+    public void finish() {
+        getCurrentActivity().finish();
+    }
+
+    public PodcastListDriver visitMainShowPage2() {
+        ListActivity activity = visitMainShowPage();
+        return new PodcastListDriver(instrumentation, activity);
+    }
+}

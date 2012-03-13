@@ -11,7 +11,6 @@ import org.dandelion.radiot.R;
 import org.dandelion.radiot.home_screen.HomeScreenActivity;
 
 import android.app.AlertDialog;
-import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -32,13 +31,13 @@ import android.widget.TextView;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastPlayer;
 
-public class PodcastListActivity extends ListActivity implements IView {
+public class ListActivity extends android.app.ListActivity implements IView {
 
 	public static final String TITLE_KEY = "title";
 	public static final String SHOW_NAME_KEY = "podcast_url";
 
 	public static void start(Context context, String title, String showName) {
-		Intent intent = new Intent(context, PodcastListActivity.class);
+		Intent intent = new Intent(context, ListActivity.class);
 		intent.putExtra(SHOW_NAME_KEY, showName);
 		intent.putExtra(TITLE_KEY, title);
 		context.startActivity(intent);
@@ -177,11 +176,11 @@ public class PodcastListActivity extends ListActivity implements IView {
 
     class PodcastListAdapter extends ArrayAdapter<PodcastItem> {
 		private final Bitmap defaultPodcastImage = BitmapFactory
-				.decodeResource(PodcastListActivity.this.getResources(),
+				.decodeResource(ListActivity.this.getResources(),
 						R.drawable.default_podcast_image);
 
 		public PodcastListAdapter() {
-			super(PodcastListActivity.this, 0);
+			super(ListActivity.this, 0);
 		}
 
 		@Override

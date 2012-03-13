@@ -14,7 +14,7 @@
 		android:label="@string/app_name"
 		android:name="RadiotApplication">
 		<activity
-			android:name=".podcasts.ui.PodcastListActivity" />
+			android:name=".podcasts.ui.ListActivity" />
 		<activity
 			android:name=".live.ui.LiveShowActivity"
 			android:label="@string/live_show_title"

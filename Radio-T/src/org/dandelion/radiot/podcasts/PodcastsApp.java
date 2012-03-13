@@ -8,7 +8,9 @@ public class PodcastsApp {
     private PodcastPlayer podcastPlayer;
     
     public static void initialize() {
-        instance = new PodcastsApp();
+        if (null == instance) {
+            instance = new PodcastsApp();
+        }
     }
     
     public static void release() {

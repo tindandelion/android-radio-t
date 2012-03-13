@@ -1,17 +1,13 @@
 package org.dandelion.radiot.accepttest;
 
 
-import android.widget.ListAdapter;
+import org.dandelion.radiot.accepttest.drivers.ApplicationDriver;
+import org.dandelion.radiot.accepttest.drivers.PodcastListDriver;
+import org.dandelion.radiot.helpers.FakePodcastPlayer;
+import org.dandelion.radiot.helpers.PodcastListAcceptanceTestCase;
 import org.dandelion.radiot.podcasts.PodcastsApp;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastPlayer;
-import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
-import org.dandelion.radiot.helpers.ApplicationDriver;
-import org.dandelion.radiot.helpers.FakePodcastPlayer;
-import org.dandelion.radiot.helpers.PodcastListAcceptanceTestCase;
-
-import android.test.UiThreadTest;
-import android.view.View;
 
 class TestingPodcastsApp extends PodcastsApp {
     private PodcastPlayer player;
@@ -28,31 +24,25 @@ class TestingPodcastsApp extends PodcastsApp {
 }
 
 public class SelectingPodcastsFromList extends PodcastListAcceptanceTestCase {
-	private PodcastListActivity activity;
-	private ApplicationDriver appDriver;
-	private FakePodcastPlayer player;
+    private FakePodcastPlayer player;
+    private PodcastListDriver listDriver;
 
-	@Override
+    @Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		appDriver = createApplicationDriver();
-		activity = appDriver.visitMainShowPage();
-		player = new FakePodcastPlayer();
-        PodcastsApp.setTestingInstance(new TestingPodcastsApp(player));
+        setupEnvironment();
+        ApplicationDriver appDriver = createApplicationDriver();
+		listDriver = appDriver.visitMainShowPage2();
 		mainShowPresenter().assertPodcastListIsUpdated();
 	}
 
-	@UiThreadTest
-	public void testStartPlayingPodcastOnClick() throws Exception {
-        PodcastItem item = clickOnPodcastItem(0);
+    public void testStartPlayingPodcastOnClick() throws Exception {
+        PodcastItem item = listDriver.selectItemForPlaying(0);
 		player.assertIsPlaying(item.getAudioUri());
 	}
 
-    private PodcastItem clickOnPodcastItem(int index) {
-        ListAdapter adapter = activity.getListAdapter();
-        View view = adapter.getView(index, null, null);
-        PodcastItem item = (PodcastItem) adapter.getItem(index);
-        activity.getListView().performItemClick(view, 0, 0);
-        return item;
+    private void setupEnvironment() {
+        player = new FakePodcastPlayer();
+        PodcastsApp.setTestingInstance(new TestingPodcastsApp(player));
     }
 }
