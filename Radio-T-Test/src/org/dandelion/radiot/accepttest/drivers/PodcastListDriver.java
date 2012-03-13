@@ -22,10 +22,14 @@ public class PodcastListDriver extends Solo {
     }
     
     public PodcastItem selectItemForPlaying(int index) {
-        return clickOnPodcastItem(index);
+        PodcastItem item = clickOnPodcastItem(index);
+        clickOnText("Играть");
+        return item;
     }
 
     public PodcastItem selectItemForDownloading(int index) {
-        return clickOnPodcastItem(index);
+        PodcastItem item = clickOnPodcastItem(index);
+        clickOnText("Загрузить");
+        return item;
     }
 }

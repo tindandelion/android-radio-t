@@ -12,6 +12,7 @@ public final class R {
         public static final int live_show_button_labels=0x7f050002;
         public static final int live_show_notification_labels=0x7f050000;
         public static final int live_show_status_labels=0x7f050001;
+        public static final int podcast_actions=0x7f050003;
     }
     public static final class attr {
     }
