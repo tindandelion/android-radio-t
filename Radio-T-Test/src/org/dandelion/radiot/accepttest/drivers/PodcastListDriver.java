@@ -24,4 +24,8 @@ public class PodcastListDriver extends Solo {
     public PodcastItem selectItemForPlaying(int index) {
         return clickOnPodcastItem(index);
     }
+
+    public PodcastItem selectItemForDownloading(int index) {
+        return clickOnPodcastItem(index);
+    }
 }
