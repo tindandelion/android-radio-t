@@ -5,15 +5,15 @@ import org.dandelion.radiot.podcasts.core.PodcastDownloader;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 
 public class FakePodcastDownloader implements PodcastDownloader {
-    private PodcastItem itemToDownload;
+    private SyncValueHolder<PodcastItem> itemToDownload = new SyncValueHolder<PodcastItem>();
 
-    public void assertIsDownloading(PodcastItem expected) {
+    public void assertIsDownloading(PodcastItem expected) throws InterruptedException {
         Assert.assertEquals("Incorrect podcast scheduled for downloading",
-                expected, itemToDownload);
+                expected, itemToDownload.getValue());
     }
 
     @Override
     public void downloadPodcast(PodcastItem item) {
-        itemToDownload = item;
+        itemToDownload.setValue(item);
     }
 }
