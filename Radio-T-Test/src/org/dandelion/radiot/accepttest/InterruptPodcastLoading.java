@@ -2,7 +2,7 @@ package org.dandelion.radiot.accepttest;
 
 import org.dandelion.radiot.accepttest.drivers.ApplicationDriver;
 import org.dandelion.radiot.podcasts.core.PodcastList.IModel;
-import org.dandelion.radiot.podcasts.ui.ListActivity;
+import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
 import org.dandelion.radiot.helpers.PodcastListAcceptanceTestCase;
 import org.dandelion.radiot.helpers.TestModel;
 
@@ -22,7 +22,7 @@ public class InterruptPodcastLoading extends PodcastListAcceptanceTestCase {
 
 	public void testChangeOrientationContinuesBackgroundLoading()
 			throws Exception {
-		ListActivity activity = appDriver.visitMainShowPage();
+		PodcastListActivity activity = appDriver.visitMainShowPage();
 		activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		appDriver.waitSomeTime();
 		allowPodcastRetrievalToFinish();
@@ -31,7 +31,7 @@ public class InterruptPodcastLoading extends PodcastListAcceptanceTestCase {
 	}
 
 	public void testDestroyingActivityWhileLoading() throws Exception {
-		ListActivity activity = appDriver.visitMainShowPage();
+		PodcastListActivity activity = appDriver.visitMainShowPage();
 		activity.finish();
 		appDriver.assertOnHomeScreen();
 		mainShowPresenter().assertTaskIsCancelled();

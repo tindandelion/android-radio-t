@@ -31,23 +31,21 @@ import android.widget.TextView;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastPlayer;
 
-public class ListActivity extends android.app.ListActivity implements IView {
+public class PodcastListActivity extends android.app.ListActivity implements IView {
 
 	public static final String TITLE_KEY = "title";
 	public static final String SHOW_NAME_KEY = "podcast_url";
 
 	public static void start(Context context, String title, String showName) {
-		Intent intent = new Intent(context, ListActivity.class);
+		Intent intent = new Intent(context, PodcastListActivity.class);
 		intent.putExtra(SHOW_NAME_KEY, showName);
 		intent.putExtra(TITLE_KEY, title);
 		context.startActivity(intent);
 	}
 
 	private Bundle extras;
-
 	private PodcastListAdapter listAdapter;
     private IPodcastListEngine engine;
-
 	private ProgressDialog progress;
 
 	public void closeProgress() {
@@ -176,11 +174,11 @@ public class ListActivity extends android.app.ListActivity implements IView {
 
     class PodcastListAdapter extends ArrayAdapter<PodcastItem> {
 		private final Bitmap defaultPodcastImage = BitmapFactory
-				.decodeResource(ListActivity.this.getResources(),
+				.decodeResource(PodcastListActivity.this.getResources(),
 						R.drawable.default_podcast_image);
 
 		public PodcastListAdapter() {
-			super(ListActivity.this, 0);
+			super(PodcastListActivity.this, 0);
 		}
 
 		@Override

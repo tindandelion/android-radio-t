@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastList.IPodcastListEngine;
 import org.dandelion.radiot.podcasts.core.PodcastList.IView;
-import org.dandelion.radiot.podcasts.ui.ListActivity;
+import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
 import org.dandelion.radiot.RadiotApplication;
 
 import android.content.Intent;
@@ -13,14 +13,14 @@ import android.test.ActivityUnitTestCase;
 import android.test.UiThreadTest;
 
 public class PodcastListActivityTestCase extends
-		ActivityUnitTestCase<ListActivity> {
+		ActivityUnitTestCase<PodcastListActivity> {
 
 	protected String showName;
-	private ListActivity activity;
+	private PodcastListActivity activity;
 	private NullPodcastEngine engine;
 
 	public PodcastListActivityTestCase() {
-		super(ListActivity.class);
+		super(PodcastListActivity.class);
 	}
 
 	public void testAttachesToNewPresenterOnCreation() {
@@ -50,7 +50,7 @@ public class PodcastListActivityTestCase extends
 
 	public void testGetsShowNameFromBundleExtra() throws Exception {
 		Intent intent = new Intent();
-		intent.putExtra(ListActivity.SHOW_NAME_KEY, "show-name");
+		intent.putExtra(PodcastListActivity.SHOW_NAME_KEY, "show-name");
 
 		startActivity(intent, null, null);
 
@@ -60,7 +60,7 @@ public class PodcastListActivityTestCase extends
 
 	public void testGetsTitleFromExtra() throws Exception {
 		Intent intent = new Intent();
-		intent.putExtra(ListActivity.TITLE_KEY, "Custom title");
+		intent.putExtra(PodcastListActivity.TITLE_KEY, "Custom title");
 
 		activity = startActivity(intent, null, null);
 

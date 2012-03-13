@@ -1,7 +1,7 @@
 package org.dandelion.radiot.accepttest.drivers;
 
 
-import org.dandelion.radiot.podcasts.ui.ListActivity;
+import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
 import org.dandelion.radiot.home_screen.HomeScreenActivity;
 
 import android.app.Activity;
@@ -22,15 +22,15 @@ public class ApplicationDriver extends Solo {
 	}
 
     // TODO: Get rid of visitMainShowPage()
-	public ListActivity visitMainShowPage() {
+	public PodcastListActivity visitMainShowPage() {
 		clickOnText("Подкасты");
-		assertCurrentActivity("Must be on the main show page", ListActivity.class);
-		return (ListActivity) getCurrentActivity();
+		assertCurrentActivity("Must be on the main show page", PodcastListActivity.class);
+		return (PodcastListActivity) getCurrentActivity();
 	}
 
 	public void visitAfterShowPage() {
 		clickOnText("После-шоу");
-		assertCurrentActivity("Must be on the after show page", ListActivity.class);
+		assertCurrentActivity("Must be on the after show page", PodcastListActivity.class);
 	}
 
 	public void waitSomeTime() {
@@ -42,7 +42,7 @@ public class ApplicationDriver extends Solo {
 	}
 
 	public void assertShowingPodcastList() {
-		assertCurrentActivity("Must show podcast list", ListActivity.class);
+		assertCurrentActivity("Must show podcast list", PodcastListActivity.class);
 	}
 
     public void finish() {
@@ -50,7 +50,7 @@ public class ApplicationDriver extends Solo {
     }
 
     public PodcastListDriver visitMainShowPage2() {
-        ListActivity activity = visitMainShowPage();
+        PodcastListActivity activity = visitMainShowPage();
         return new PodcastListDriver(instrumentation, activity);
     }
 }

@@ -5,7 +5,7 @@ import java.lang.reflect.Field;
 import org.dandelion.radiot.R;
 
 import org.dandelion.radiot.accepttest.drivers.ApplicationDriver;
-import org.dandelion.radiot.podcasts.ui.ListActivity;
+import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
 import org.dandelion.radiot.helpers.PodcastListAcceptanceTestCase;
 
 import android.view.View;
@@ -15,7 +15,7 @@ import android.widget.TextView;
 public class DisplayingPodcastList extends
 		PodcastListAcceptanceTestCase {
 
-	private ListActivity activity;
+	private PodcastListActivity activity;
 	private ApplicationDriver appDriver;
 	
 	public void testDisplayPodcastItemInfo() throws Exception {
