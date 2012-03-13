@@ -29,7 +29,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
-import org.dandelion.radiot.podcasts.core.PodcastPlayer;
 
 public class PodcastListActivity extends android.app.ListActivity implements IView {
 
@@ -47,6 +46,7 @@ public class PodcastListActivity extends android.app.ListActivity implements IVi
 	private PodcastListAdapter listAdapter;
     private IPodcastListEngine engine;
 	private ProgressDialog progress;
+    private PodcastSelectionHandler selectionHandler;
 
 	public void closeProgress() {
 		progress.dismiss();
@@ -58,10 +58,16 @@ public class PodcastListActivity extends android.app.ListActivity implements IVi
 		extras = getIntent().getExtras();
 		setTitle(getTitleFromExtra());
 		initListAdapter();
+        initSelectionHandler();
 		attachToEngine();
 	}
 
-	protected void attachToEngine() {
+    private void initSelectionHandler() {
+        selectionHandler = new PodcastSelectionHandler(this,
+                PodcastsApp.getInstance().getPodcastPlayer());
+    }
+
+    protected void attachToEngine() {
 		RadiotApplication app = (RadiotApplication) getApplication();
 		engine = (IPodcastListEngine) getLastNonConfigurationInstance();
 		if (null == engine) {
@@ -145,12 +151,7 @@ public class PodcastListActivity extends android.app.ListActivity implements IVi
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
         PodcastItem selectedItem = listAdapter.getItem(position);
-        handlePodcastSelection(selectedItem);
-	}
-
-    private void handlePodcastSelection(PodcastItem item) {
-        PodcastPlayer player = PodcastsApp.getInstance().getPodcastPlayer();
-        player.startPlaying(this, item.getAudioUri());
+        selectionHandler.podcastSelected(selectedItem);
     }
 
     private String getFeedUrlFromExtra() {

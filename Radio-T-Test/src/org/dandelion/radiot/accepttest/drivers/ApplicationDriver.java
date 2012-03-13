@@ -46,7 +46,7 @@ public class ApplicationDriver extends Solo {
 	}
 
     public void finish() {
-        getCurrentActivity().finish();
+        finishOpenedActivities();
     }
 
     public PodcastListDriver visitMainShowPage2() {
