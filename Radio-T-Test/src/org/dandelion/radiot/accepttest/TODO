@@ -1,0 +1,5 @@
+Downloading:
+ * Handle Android < 2.3.3
+ * Provide nice podcast title and description
+ * Handle download completion with notification
+ * Invoke media scanner on downloaded file

@@ -39,19 +39,19 @@ public class PodcastDownloaderTests {
 
     @Test
     public void providesPodcastUri() throws Exception {
-        downloader.downloadPodcast(item);
+        downloader.downloadPodcast(SOURCE_URL);
         verify(manager).submitRequest(eq(SOURCE_URL), anyString());
     }
 
     @Test
     public void constructsDestinationPathUsingFolderAndSourceFileName() throws Exception {
-        downloader.downloadPodcast(item);
+        downloader.downloadPodcast(SOURCE_URL);
         verify(manager).submitRequest(anyString(), eq(DEST_FOLDER + SOURCE_FILENAME));
     }
 
     @Test
     public void ensureDestinationFolderExists() throws Exception {
-        downloader.downloadPodcast(item);
+        downloader.downloadPodcast(SOURCE_URL);
         verify(destFolder).mkdirs();
     }
 }

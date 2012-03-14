@@ -9,6 +9,9 @@ import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastPlayer;
 
 public class PodcastSelectionHandler {
+    private static final int DOWNLOAD_ACTION = 0;
+    private static final int PLAY_ACTION = 1;
+
     private Context context;
     private PodcastPlayer player;
     private PodcastDownloader downloader;
@@ -30,10 +33,12 @@ public class PodcastSelectionHandler {
             @Override
             public void onClick(DialogInterface dialogInterface, int index) {
                 switch(index) {
-                    case 0:
-                        downloader.downloadPodcast(item);
-                    case 1:
+                    case DOWNLOAD_ACTION:
+                        downloader.downloadPodcast(item.getAudioUri());
+                        break;
+                    case PLAY_ACTION:
                         player.startPlaying(context, item.getAudioUri());
+                        break;
                 }
             }
         };

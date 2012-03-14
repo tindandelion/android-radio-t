@@ -13,12 +13,10 @@ public class PodcastDownloader {
         this.destFolder = destFolder;
     }
 
-    public void downloadPodcast(PodcastItem item) {
-        String source = item.getAudioUri();
-        String destPath = createDestPath(source);
-
+    public void downloadPodcast(String url) {
         ensureDestFolderExists();
-        downloadManager.submitRequest(source, destPath);
+        String destPath = createDestPath(url);
+        downloadManager.submitRequest(url, destPath);
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")

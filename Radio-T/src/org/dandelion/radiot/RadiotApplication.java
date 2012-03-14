@@ -22,7 +22,7 @@ public class RadiotApplication extends Application {
                 "after-show",
                 createPodcastEngine("http://feeds.feedburner.com/pirate-radio-t"));
         LiveShowApp.initialize(this);
-        PodcastsApp.initialize();
+        PodcastsApp.initialize(this);
 	}
 	
 	@Override

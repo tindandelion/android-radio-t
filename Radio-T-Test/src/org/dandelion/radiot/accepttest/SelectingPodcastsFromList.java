@@ -20,7 +20,7 @@ class TestingPodcastsApp extends PodcastsApp {
     public static final File PODCAST_DOWNLOAD_FOLDER = new File("/mnt/downloads");
 
     TestingPodcastsApp(PodcastPlayer player, FakeDownloadManager downloadManager) {
-        super();
+        super(null);
         this.player = player;
         this.downloadManager = downloadManager;
     }
@@ -33,6 +33,11 @@ class TestingPodcastsApp extends PodcastsApp {
     @Override
     protected PodcastDownloadManager createDownloadManager() {
         return downloadManager;
+    }
+
+    @Override
+    protected File getPodcastDownloadFolder() {
+        return PODCAST_DOWNLOAD_FOLDER;
     }
 }
 
@@ -50,13 +55,13 @@ public class SelectingPodcastsFromList extends PodcastListAcceptanceTestCase {
 		mainShowPresenter().assertPodcastListIsUpdated();
 	}
 
-    public void testSelectPodcastForPlaying() throws Exception {
+    public void testPlayPodcastFromInternet() throws Exception {
         PodcastItem item = listDriver.selectItemForPlaying(0);
 		player.assertIsPlaying(item.getAudioUri());
 	}
 
-    // TODO: Thing may be more expressive if using predefined podcast item
-    public void testStartDownloadingPodcast() throws Exception {
+    // TODO: Things may be more expressive if using predefined podcast item
+    public void testDownloadPodcastLocally() throws Exception {
         PodcastItem item = listDriver.selectItemForDownloading(0);
         String src = item.getAudioUri();
         String basename = Uri.parse(src).getLastPathSegment();
