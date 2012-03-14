@@ -22,10 +22,15 @@ public class SyncValueHolder<T> {
 
     private void waitForValueToBeSet() {
         try {
-            latch.await(WAIT_TIMEOUT_SECONDS, TimeUnit.SECONDS);
+            Assert.assertTrue(waitTimeoutExpiredMessage(WAIT_TIMEOUT_SECONDS),
+                    latch.await(WAIT_TIMEOUT_SECONDS, TimeUnit.SECONDS));
         } catch (InterruptedException e) {
-            Assert.fail(String.format("Failed to wait for value in %d seconds", WAIT_TIMEOUT_SECONDS));
+            throw new RuntimeException(e);
         }
+    }
+
+    private String waitTimeoutExpiredMessage(long seconds) {
+        return String.format("Value was not set in %d seconds", seconds);
     }
 
     private void signalValueSet() {

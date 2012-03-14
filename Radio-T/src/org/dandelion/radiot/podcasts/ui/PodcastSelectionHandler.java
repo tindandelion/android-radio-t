@@ -20,22 +20,22 @@ public class PodcastSelectionHandler {
     }
 
     public void podcastSelected(PodcastItem item) {
-        selectAction(item);
+        (new AlertDialog.Builder(context))
+                .setItems(R.array.podcast_actions, onClickListener(item))
+                .show();
     }
 
-    private void selectAction(final PodcastItem item) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setItems(R.array.podcast_actions, new DialogInterface.OnClickListener() {
+    private DialogInterface.OnClickListener onClickListener(final PodcastItem item) {
+        return new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int index) {
                 switch(index) {
-                    case 0: 
+                    case 0:
                         downloader.downloadPodcast(item);
                     case 1:
                         player.startPlaying(context, item.getAudioUri());
                 }
             }
-        });
-        builder.show();
+        };
     }
 }

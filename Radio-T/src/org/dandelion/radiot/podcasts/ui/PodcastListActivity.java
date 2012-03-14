@@ -65,7 +65,7 @@ public class PodcastListActivity extends android.app.ListActivity implements IVi
     private void initSelectionHandler() {
         selectionHandler = new PodcastSelectionHandler(this,
                 PodcastsApp.getInstance().getPlayer(),
-                PodcastsApp.getInstance().getDownloader());
+                PodcastsApp.getInstance().createDownloader());
     }
 
     protected void attachToEngine() {

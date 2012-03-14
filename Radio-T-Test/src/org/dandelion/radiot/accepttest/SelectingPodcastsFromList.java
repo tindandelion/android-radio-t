@@ -1,24 +1,28 @@
 package org.dandelion.radiot.accepttest;
 
 
+import android.net.Uri;
 import org.dandelion.radiot.accepttest.drivers.ApplicationDriver;
 import org.dandelion.radiot.accepttest.drivers.PodcastListDriver;
-import org.dandelion.radiot.helpers.FakePodcastDownloader;
+import org.dandelion.radiot.helpers.FakeDownloadManager;
 import org.dandelion.radiot.helpers.FakePodcastPlayer;
 import org.dandelion.radiot.helpers.PodcastListAcceptanceTestCase;
 import org.dandelion.radiot.podcasts.PodcastsApp;
-import org.dandelion.radiot.podcasts.core.PodcastDownloader;
+import org.dandelion.radiot.podcasts.core.PodcastDownloadManager;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastPlayer;
 
+import java.io.File;
+
 class TestingPodcastsApp extends PodcastsApp {
     private PodcastPlayer player;
-    private FakePodcastDownloader downloader;
+    private FakeDownloadManager downloadManager;
+    public static final File PODCAST_DOWNLOAD_FOLDER = new File("/mnt/downloads");
 
-    TestingPodcastsApp(PodcastPlayer player, FakePodcastDownloader downloader) {
+    TestingPodcastsApp(PodcastPlayer player, FakeDownloadManager downloadManager) {
         super();
         this.player = player;
-        this.downloader = downloader;
+        this.downloadManager = downloadManager;
     }
 
     @Override
@@ -27,15 +31,15 @@ class TestingPodcastsApp extends PodcastsApp {
     }
 
     @Override
-    public PodcastDownloader getDownloader() {
-        return downloader;
+    protected PodcastDownloadManager createDownloadManager() {
+        return downloadManager;
     }
 }
 
 public class SelectingPodcastsFromList extends PodcastListAcceptanceTestCase {
     private FakePodcastPlayer player;
     private PodcastListDriver listDriver;
-    private FakePodcastDownloader downloader;
+    private FakeDownloadManager downloadManager;
 
     @Override
 	protected void setUp() throws Exception {
@@ -53,12 +57,19 @@ public class SelectingPodcastsFromList extends PodcastListAcceptanceTestCase {
 
     public void testStartDownloadingPodcast() throws Exception {
         PodcastItem item = listDriver.selectItemForDownloading(0);
-        downloader.assertIsDownloading(item);
+        Uri uri = item.getAudioUri();
+        String basename = uri.getLastPathSegment();
+        downloadManager.assertSubmittedRequest(uri,
+                toDestinationUrl(TestingPodcastsApp.PODCAST_DOWNLOAD_FOLDER, basename));
+    }
+
+    private Uri toDestinationUrl(File folder, String basename) {
+        return Uri.fromFile(new File(folder, basename));
     }
 
     private void setupEnvironment() {
         player = new FakePodcastPlayer();
-        downloader = new FakePodcastDownloader();
-        PodcastsApp.setTestingInstance(new TestingPodcastsApp(player, downloader));
+        downloadManager = new FakeDownloadManager();
+        PodcastsApp.setTestingInstance(new TestingPodcastsApp(player, downloadManager));
     }
 }

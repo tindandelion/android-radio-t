@@ -1,14 +1,14 @@
 package org.dandelion.radiot.podcasts;
 
-import org.dandelion.radiot.podcasts.core.SystemPodcastDownloader;
+import org.dandelion.radiot.podcasts.core.PodcastDownloadManager;
 import org.dandelion.radiot.podcasts.core.PodcastDownloader;
 import org.dandelion.radiot.podcasts.core.PodcastPlayer;
+import org.dandelion.radiot.podcasts.core.SystemDownloadManager;
 import org.dandelion.radiot.podcasts.ui.ExternalPlayer;
 
 public class PodcastsApp {
     private static PodcastsApp instance;
     private PodcastPlayer player;
-    private PodcastDownloader downloader;
 
     public static void initialize() {
         if (null == instance) {
@@ -35,14 +35,17 @@ public class PodcastsApp {
 
     protected PodcastsApp() {
         player = new ExternalPlayer();
-        downloader = new SystemPodcastDownloader();
     }
 
     private void releaseInstance() {
 
     }
 
-    public PodcastDownloader getDownloader() {
-        return downloader;
+    public PodcastDownloader createDownloader() {
+        return new PodcastDownloader(createDownloadManager());
+    }
+
+    protected PodcastDownloadManager createDownloadManager() {
+        return new SystemDownloadManager();
     }
 }
