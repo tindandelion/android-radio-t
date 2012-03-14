@@ -8,7 +8,7 @@ import org.dandelion.radiot.helpers.FakeDownloadManager;
 import org.dandelion.radiot.helpers.FakePodcastPlayer;
 import org.dandelion.radiot.helpers.PodcastListAcceptanceTestCase;
 import org.dandelion.radiot.podcasts.PodcastsApp;
-import org.dandelion.radiot.podcasts.core.PodcastDownloadManager;
+import org.dandelion.radiot.podcasts.download.PodcastDownloadManager;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastPlayer;
 

@@ -1,4 +1,4 @@
-package org.dandelion.radiot.podcasts.core;
+package org.dandelion.radiot.podcasts.download;
 
 import java.io.File;
 import java.net.MalformedURLException;

@@ -1,7 +1,7 @@
 package org.dandelion.radiot.helpers;
 
 import junit.framework.Assert;
-import org.dandelion.radiot.podcasts.core.PodcastDownloadManager;
+import org.dandelion.radiot.podcasts.download.PodcastDownloadManager;
 
 public class FakeDownloadManager implements PodcastDownloadManager {
     private SyncValueHolder<SubmitRequest> submitted = new SyncValueHolder<SubmitRequest>();

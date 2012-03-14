@@ -4,7 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import org.dandelion.radiot.R;
-import org.dandelion.radiot.podcasts.core.PodcastDownloader;
+import org.dandelion.radiot.podcasts.download.PodcastDownloader;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastPlayer;
 

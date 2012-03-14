@@ -3,10 +3,10 @@ package org.dandelion.radiot.podcasts;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.os.Environment;
-import org.dandelion.radiot.podcasts.core.PodcastDownloadManager;
-import org.dandelion.radiot.podcasts.core.PodcastDownloader;
+import org.dandelion.radiot.podcasts.download.PodcastDownloader;
 import org.dandelion.radiot.podcasts.core.PodcastPlayer;
-import org.dandelion.radiot.podcasts.core.SystemDownloadManager;
+import org.dandelion.radiot.podcasts.download.PodcastDownloadManager;
+import org.dandelion.radiot.podcasts.download.SystemDownloadManager;
 import org.dandelion.radiot.podcasts.ui.ExternalPlayer;
 
 import java.io.File;
