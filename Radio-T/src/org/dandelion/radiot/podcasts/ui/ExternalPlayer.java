@@ -9,9 +9,9 @@ public class ExternalPlayer implements PodcastPlayer {
     public ExternalPlayer() {
     }
 
-    public void startPlaying(Context context, Uri url) {
+    public void startPlaying(Context context, String url) {
 		Intent intent = new Intent(Intent.ACTION_VIEW);
-		intent.setDataAndType(url, "audio/mpeg");
+		intent.setDataAndType(Uri.parse(url), "audio/mpeg");
 		context.startActivity(Intent.createChooser(intent, null));
 	}
 }

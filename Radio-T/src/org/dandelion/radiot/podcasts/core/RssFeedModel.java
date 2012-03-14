@@ -69,9 +69,9 @@ public class RssFeedModel implements PodcastList.IModel {
 				new StartElementListener() {
 					public void start(Attributes attributes) {
 						if (isAudioEnclosure(attributes)) {
-							currentItem.extractAudioUri(attributes
-									.getValue("url"));
-						}
+                            currentItem.setAudioUri(attributes
+                                    .getValue("url"));
+                        }
 					}
 
 					private boolean isAudioEnclosure(Attributes attributes) {

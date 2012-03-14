@@ -1,7 +1,6 @@
 package org.dandelion.radiot.podcasts.core;
 
 import android.graphics.Bitmap;
-import android.net.Uri;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,11 +19,11 @@ public class PodcastItem implements Cloneable {
 	private String number;
 	private String pubDate;
 	private String showNotes;
-	private Uri audioUri;
+	private String audioUri;
 	private String thumbnailUrl;
 	private Bitmap thumbnail;
 
-	public Uri getAudioUri() {
+	public String getAudioUri() {
 		return audioUri;
 	}
 
@@ -66,11 +65,7 @@ public class PodcastItem implements Cloneable {
 		showNotes = value.trim();
 	}
 
-	public void extractAudioUri(String value) {
-        setAudiUri(Uri.parse(value));
-	}
-
-	public String getThumbnailUrl() {
+    public String getThumbnailUrl() {
 		return thumbnailUrl;
 	}
 
@@ -86,7 +81,7 @@ public class PodcastItem implements Cloneable {
         thumbnailUrl = value;
     }
 
-    public void setAudiUri(Uri value) {
+    public void setAudioUri(String value) {
         audioUri = value;
     }
 }

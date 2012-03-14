@@ -55,16 +55,17 @@ public class SelectingPodcastsFromList extends PodcastListAcceptanceTestCase {
 		player.assertIsPlaying(item.getAudioUri());
 	}
 
+    // TODO: Thing may be more expressive if using predefined podcast item
     public void testStartDownloadingPodcast() throws Exception {
         PodcastItem item = listDriver.selectItemForDownloading(0);
-        Uri uri = item.getAudioUri();
-        String basename = uri.getLastPathSegment();
-        downloadManager.assertSubmittedRequest(uri,
-                toDestinationUrl(TestingPodcastsApp.PODCAST_DOWNLOAD_FOLDER, basename));
+        String src = item.getAudioUri();
+        String basename = Uri.parse(src).getLastPathSegment();
+        downloadManager.assertSubmittedRequest(src,
+                toDestination(TestingPodcastsApp.PODCAST_DOWNLOAD_FOLDER, basename));
     }
 
-    private Uri toDestinationUrl(File folder, String basename) {
-        return Uri.fromFile(new File(folder, basename));
+    private String toDestination(File folder, String basename) {
+        return new File(folder, basename).toString();
     }
 
     private void setupEnvironment() {

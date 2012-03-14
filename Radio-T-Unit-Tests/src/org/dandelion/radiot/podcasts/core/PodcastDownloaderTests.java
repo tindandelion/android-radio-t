@@ -1,6 +1,5 @@
 package org.dandelion.radiot.podcasts.core;
 
-import android.net.Uri;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,10 +20,9 @@ public class PodcastDownloaderTests {
 
     @Test
     public void submitDownloadRequest() throws Exception {
-
-        Uri source = Uri.parse("http://radio-t.com/rt_podcast_1.mp3");
+        String source = "http://radio-t.com/rt_podcast_1.mp3";
         item = new PodcastItem();
-        item.setAudiUri(source);
+        item.setAudioUri(source);
         downloader.downloadPodcast(item);
         verify(manager).submitRequest(source, null);
     }
