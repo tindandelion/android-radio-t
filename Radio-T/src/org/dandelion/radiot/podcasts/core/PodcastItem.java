@@ -67,7 +67,7 @@ public class PodcastItem implements Cloneable {
 	}
 
 	public void extractAudioUri(String value) {
-		audioUri = Uri.parse(value);
+        setAudiUri(Uri.parse(value));
 	}
 
 	public String getThumbnailUrl() {
@@ -84,5 +84,9 @@ public class PodcastItem implements Cloneable {
 
     public void setThumbnailUrl(String value) {
         thumbnailUrl = value;
+    }
+
+    public void setAudiUri(Uri value) {
+        audioUri = value;
     }
 }
