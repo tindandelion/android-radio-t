@@ -42,7 +42,7 @@ public class PodcastsApp {
     }
 
     public PodcastDownloader createDownloader() {
-        return new PodcastDownloader(createDownloadManager());
+        return new PodcastDownloader(createDownloadManager(), null);
     }
 
     protected PodcastDownloadManager createDownloadManager() {

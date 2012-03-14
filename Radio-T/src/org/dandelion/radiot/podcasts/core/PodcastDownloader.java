@@ -1,13 +1,37 @@
 package org.dandelion.radiot.podcasts.core;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 public class PodcastDownloader {
     private PodcastDownloadManager downloadManager;
+    private File destFolder;
 
-    public PodcastDownloader(PodcastDownloadManager downloadManager) {
+    public PodcastDownloader(PodcastDownloadManager downloadManager, File destFolder) {
         this.downloadManager = downloadManager;
+        this.destFolder = destFolder;
     }
 
     public void downloadPodcast(PodcastItem item) {
-        downloadManager.submitRequest(null, null);
+        String source = item.getAudioUri();
+        String destPath = createDestPath(source);
+
+        ensureDestFolderExists();
+        downloadManager.submitRequest(source, destPath);
+    }
+
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    private void ensureDestFolderExists() {
+        destFolder.mkdirs();
+    }
+
+    private String createDestPath(String source) {
+        try {
+            String destFilename = new URL(source).getFile();
+            return new File(destFolder.toString(), destFilename).toString();
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
