@@ -2,12 +2,12 @@ package org.dandelion.radiot.helpers;
 
 import android.content.Context;
 import junit.framework.Assert;
-import org.dandelion.radiot.podcasts.core.PodcastPlayer;
+import org.dandelion.radiot.podcasts.core.PodcastProcessor;
 
-public class FakePodcastPlayer implements PodcastPlayer {
+public class FakePodcastPlayer implements PodcastProcessor {
     private SyncValueHolder<String> podcastToPlay = new SyncValueHolder<String>();
 
-	public void startPlaying(Context context, String url) {
+	public void process(Context context, String url) {
         podcastToPlay.setValue(url);
 	}
 

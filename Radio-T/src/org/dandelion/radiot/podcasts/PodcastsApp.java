@@ -5,14 +5,14 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Environment;
 import org.dandelion.radiot.podcasts.download.*;
-import org.dandelion.radiot.podcasts.core.PodcastPlayer;
+import org.dandelion.radiot.podcasts.core.PodcastProcessor;
 import org.dandelion.radiot.podcasts.ui.ExternalPlayer;
 
 import java.io.File;
 
 public class PodcastsApp {
     private static PodcastsApp instance;
-    private PodcastPlayer player;
+    private PodcastProcessor player;
     private Context context;
 
     public static void initialize(Context context) {
@@ -34,7 +34,7 @@ public class PodcastsApp {
         instance = newInstance;
     }
 
-    public PodcastPlayer getPlayer() {
+    public PodcastProcessor getPlayer() {
         return player;
     }
 
@@ -47,7 +47,7 @@ public class PodcastsApp {
         context = null;
     }
 
-    public PodcastDownloader createDownloader() {
+    public PodcastProcessor createDownloader() {
         if (supportsDownload()) {
             return createRealDownloader();
         } else {
@@ -59,11 +59,11 @@ public class PodcastsApp {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD;
     }
 
-    private PodcastDownloader fakeDownloader() {
+    private PodcastProcessor fakeDownloader() {
         return new FakePodcastDownloader();
     }
 
-    private PodcastDownloader createRealDownloader() {
+    private PodcastProcessor createRealDownloader() {
         return new RealPodcastDownloader(createDownloadManager(),
                 getPodcastDownloadFolder());
     }

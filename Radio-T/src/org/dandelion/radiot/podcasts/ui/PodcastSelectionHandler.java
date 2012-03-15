@@ -4,19 +4,18 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import org.dandelion.radiot.R;
-import org.dandelion.radiot.podcasts.download.PodcastDownloader;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
-import org.dandelion.radiot.podcasts.core.PodcastPlayer;
+import org.dandelion.radiot.podcasts.core.PodcastProcessor;
 
 public class PodcastSelectionHandler {
     private static final int DOWNLOAD_ACTION = 0;
     private static final int PLAY_ACTION = 1;
 
     private Context context;
-    private PodcastPlayer player;
-    private PodcastDownloader downloader;
+    private PodcastProcessor player;
+    private PodcastProcessor downloader;
 
-    public PodcastSelectionHandler(Context context, PodcastPlayer player, PodcastDownloader downloader) {
+    public PodcastSelectionHandler(Context context, PodcastProcessor player, PodcastProcessor downloader) {
         this.context = context;
         this.player = player;
         this.downloader = downloader;
@@ -34,10 +33,10 @@ public class PodcastSelectionHandler {
             public void onClick(DialogInterface dialogInterface, int index) {
                 switch(index) {
                     case DOWNLOAD_ACTION:
-                        downloader.downloadPodcast(context, item.getAudioUri());
+                        downloader.process(context, item.getAudioUri());
                         break;
                     case PLAY_ACTION:
-                        player.startPlaying(context, item.getAudioUri());
+                        player.process(context, item.getAudioUri());
                         break;
                 }
             }

@@ -11,7 +11,7 @@ import org.dandelion.radiot.helpers.PodcastListAcceptanceTestCase;
 import org.dandelion.radiot.podcasts.PodcastsApp;
 import org.dandelion.radiot.podcasts.download.PodcastDownloadManager;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
-import org.dandelion.radiot.podcasts.core.PodcastPlayer;
+import org.dandelion.radiot.podcasts.core.PodcastProcessor;
 import org.dandelion.radiot.podcasts.download.FakeDownloaderActivity;
 
 import java.io.File;
@@ -76,19 +76,19 @@ public class SelectingPodcastsFromList extends PodcastListAcceptanceTestCase {
 }
 
 class TestingPodcastsApp extends PodcastsApp {
-    private PodcastPlayer player;
+    private PodcastProcessor player;
     private FakeDownloadManager downloadManager;
     public static final File PODCAST_DOWNLOAD_FOLDER = new File("/mnt/downloads");
     private boolean downloadSupported = true;
 
-    TestingPodcastsApp(Context context, PodcastPlayer player, FakeDownloadManager downloadManager) {
+    TestingPodcastsApp(Context context, PodcastProcessor player, FakeDownloadManager downloadManager) {
         super(context);
         this.player = player;
         this.downloadManager = downloadManager;
     }
 
     @Override
-    public PodcastPlayer getPlayer() {
+    public PodcastProcessor getPlayer() {
         return player;
     }
 

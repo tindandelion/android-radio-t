@@ -31,7 +31,7 @@ public class PodcastDownloaderTests {
 
     @Test
     public void providesPodcastUri() throws Exception {
-        downloader.downloadPodcast(null, SOURCE_URL);
+        downloader.process(null, SOURCE_URL);
         verify(manager).submitRequest(eq(SOURCE_URL), any(File.class));
     }
 
@@ -40,13 +40,13 @@ public class PodcastDownloaderTests {
         File destPath = new File("/mnt/download/filename.mp3");
         when(downloadFolder.makePathForUrl(SOURCE_URL))
                 .thenReturn(destPath);
-        downloader.downloadPodcast(null, SOURCE_URL);
+        downloader.process(null, SOURCE_URL);
         verify(manager).submitRequest(anyString(), eq(destPath));
     }
 
     @Test
     public void ensureDestinationFolderExists() throws Exception {
-        downloader.downloadPodcast(null, SOURCE_URL);
+        downloader.process(null, SOURCE_URL);
         verify(downloadFolder).ensureExists();
     }
 }
