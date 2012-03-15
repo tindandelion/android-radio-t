@@ -4,10 +4,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import org.dandelion.radiot.R;
-import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastProcessor;
 
-public class PodcastSelectionHandler {
+public class PodcastSelectionHandler implements PodcastProcessor {
     private static final int DOWNLOAD_ACTION = 0;
     private static final int PLAY_ACTION = 1;
 
@@ -15,31 +14,39 @@ public class PodcastSelectionHandler {
     private PodcastProcessor player;
     private PodcastProcessor downloader;
 
-    public PodcastSelectionHandler(Context context, PodcastProcessor player, PodcastProcessor downloader) {
-        this.context = context;
+    public PodcastSelectionHandler(PodcastProcessor player, PodcastProcessor downloader) {
         this.player = player;
         this.downloader = downloader;
     }
 
-    public void podcastSelected(PodcastItem item) {
+    @Override
+    public void process(Context context, String url) {
+        this.context = context;
+        showActionSelector(onClickListener(url));
+    }
+
+    private void showActionSelector(DialogInterface.OnClickListener listener) {
         (new AlertDialog.Builder(context))
-                .setItems(R.array.podcast_actions, onClickListener(item))
+                .setItems(R.array.podcast_actions, listener)
                 .show();
     }
 
-    private DialogInterface.OnClickListener onClickListener(final PodcastItem item) {
+    private DialogInterface.OnClickListener onClickListener(final String url) {
         return new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int index) {
-                switch(index) {
-                    case DOWNLOAD_ACTION:
-                        downloader.process(context, item.getAudioUri());
-                        break;
-                    case PLAY_ACTION:
-                        player.process(context, item.getAudioUri());
-                        break;
-                }
+                PodcastProcessor processor = selectProcessor(index);
+                processor.process(context, url);
             }
         };
     }
+
+    private PodcastProcessor selectProcessor(int index) {
+        switch(index) {
+            case DOWNLOAD_ACTION: return downloader;
+            case PLAY_ACTION: return player;
+        }
+        throw new RuntimeException("Unexpected action");
+    }
+
 }

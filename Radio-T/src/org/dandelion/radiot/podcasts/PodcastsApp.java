@@ -12,7 +12,6 @@ import java.io.File;
 
 public class PodcastsApp {
     private static PodcastsApp instance;
-    private PodcastProcessor player;
     private Context context;
 
     public static void initialize(Context context) {
@@ -34,17 +33,15 @@ public class PodcastsApp {
         instance = newInstance;
     }
 
-    public PodcastProcessor getPlayer() {
-        return player;
-    }
-
     protected PodcastsApp(Context context) {
         this.context = context;
-        player = new ExternalPlayer();
     }
 
     private void releaseInstance() {
-        context = null;
+    }
+
+    public PodcastProcessor createPlayer() {
+        return new ExternalPlayer();
     }
 
     public PodcastProcessor createDownloader() {

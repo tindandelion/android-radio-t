@@ -63,8 +63,7 @@ public class PodcastListActivity extends android.app.ListActivity implements IVi
 	}
 
     private void initSelectionHandler() {
-        selectionHandler = new PodcastSelectionHandler(this,
-                PodcastsApp.getInstance().getPlayer(),
+        selectionHandler = new PodcastSelectionHandler(PodcastsApp.getInstance().createPlayer(),
                 PodcastsApp.getInstance().createDownloader());
     }
 
@@ -152,7 +151,7 @@ public class PodcastListActivity extends android.app.ListActivity implements IVi
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
         PodcastItem selectedItem = listAdapter.getItem(position);
-        selectionHandler.podcastSelected(selectedItem);
+        selectionHandler.process(this, selectedItem.getAudioUri());
     }
 
     private String getFeedUrlFromExtra() {
