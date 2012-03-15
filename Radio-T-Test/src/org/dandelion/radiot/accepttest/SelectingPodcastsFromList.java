@@ -11,6 +11,7 @@ import org.dandelion.radiot.podcasts.PodcastsApp;
 import org.dandelion.radiot.podcasts.download.PodcastDownloadManager;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastPlayer;
+import org.dandelion.radiot.podcasts.download.UnsupportedPlatformActivity;
 
 import java.io.File;
 
@@ -18,6 +19,7 @@ class TestingPodcastsApp extends PodcastsApp {
     private PodcastPlayer player;
     private FakeDownloadManager downloadManager;
     public static final File PODCAST_DOWNLOAD_FOLDER = new File("/mnt/downloads");
+    private boolean downloadSupported = true;
 
     TestingPodcastsApp(PodcastPlayer player, FakeDownloadManager downloadManager) {
         super(null);
@@ -39,21 +41,27 @@ class TestingPodcastsApp extends PodcastsApp {
     protected File getSystemDownloadFolder() {
         return PODCAST_DOWNLOAD_FOLDER;
     }
+
+    public void setDownloadSupported(boolean value) {
+        downloadSupported = value;
+    }
 }
 
 public class SelectingPodcastsFromList extends PodcastListAcceptanceTestCase {
     private FakePodcastPlayer player;
     private PodcastListDriver listDriver;
     private FakeDownloadManager downloadManager;
+    private TestingPodcastsApp application;
+    private ApplicationDriver appDriver;
 
     @Override
 	protected void setUp() throws Exception {
 		super.setUp();
         setupEnvironment();
-        ApplicationDriver appDriver = createApplicationDriver();
-		listDriver = appDriver.visitMainShowPage2();
+        appDriver = createApplicationDriver();
+        listDriver = appDriver.visitMainShowPage2();
 		mainShowPresenter().assertPodcastListIsUpdated();
-	}
+    }
 
     public void testPlayPodcastFromInternet() throws Exception {
         PodcastItem item = listDriver.selectItemForPlaying(0);
@@ -69,6 +77,14 @@ public class SelectingPodcastsFromList extends PodcastListAcceptanceTestCase {
                 toLocalFile(TestingPodcastsApp.PODCAST_DOWNLOAD_FOLDER, basename));
     }
 
+    public void testInformsUserOnUnsupportedPlatforms() throws Exception {
+        application.setDownloadSupported(false);
+        listDriver.selectItemForDownloading(0);
+        appDriver.assertCurrentActivity("Should inform user of unsupported platform",
+                UnsupportedPlatformActivity.class);
+
+    }
+
     private File toLocalFile(File folder, String basename) {
         return new File(folder, basename);
     }
@@ -76,6 +92,7 @@ public class SelectingPodcastsFromList extends PodcastListAcceptanceTestCase {
     private void setupEnvironment() {
         player = new FakePodcastPlayer();
         downloadManager = new FakeDownloadManager();
-        PodcastsApp.setTestingInstance(new TestingPodcastsApp(player, downloadManager));
+        application = new TestingPodcastsApp(player, downloadManager);
+        PodcastsApp.setTestingInstance(application);
     }
 }

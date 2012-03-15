@@ -37,7 +37,8 @@
 					android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-		<service
+        <activity android:name=".podcasts.download.UnsupportedPlatformActivity"/>
+        <service
 			android:name=".live.service.LiveShowService" />
 	</application>
 	<uses-permission
