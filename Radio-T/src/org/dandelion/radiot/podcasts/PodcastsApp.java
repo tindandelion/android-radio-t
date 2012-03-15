@@ -60,7 +60,7 @@ public class PodcastsApp {
     }
 
     private PodcastDownloader fakeDownloader() {
-        return new FakePodcastDownloader(context);
+        return new FakePodcastDownloader();
     }
 
     private PodcastDownloader createRealDownloader() {

@@ -34,7 +34,7 @@ public class PodcastSelectionHandler {
             public void onClick(DialogInterface dialogInterface, int index) {
                 switch(index) {
                     case DOWNLOAD_ACTION:
-                        downloader.downloadPodcast(item.getAudioUri());
+                        downloader.downloadPodcast(context, item.getAudioUri());
                         break;
                     case PLAY_ACTION:
                         player.startPlaying(context, item.getAudioUri());

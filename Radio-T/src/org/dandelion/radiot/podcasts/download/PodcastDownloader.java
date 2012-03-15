@@ -1,5 +1,8 @@
 package org.dandelion.radiot.podcasts.download;
 
+import android.content.Context;
+
 public interface PodcastDownloader {
-    void downloadPodcast(String url);
+    // TODO: Having context here is ugly
+    void downloadPodcast(Context context, String url);
 }
