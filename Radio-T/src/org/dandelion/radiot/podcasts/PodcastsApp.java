@@ -2,12 +2,10 @@ package org.dandelion.radiot.podcasts;
 
 import android.app.DownloadManager;
 import android.content.Context;
+import android.os.Build;
 import android.os.Environment;
-import org.dandelion.radiot.podcasts.download.DownloadFolder;
-import org.dandelion.radiot.podcasts.download.PodcastDownloader;
+import org.dandelion.radiot.podcasts.download.*;
 import org.dandelion.radiot.podcasts.core.PodcastPlayer;
-import org.dandelion.radiot.podcasts.download.PodcastDownloadManager;
-import org.dandelion.radiot.podcasts.download.SystemDownloadManager;
 import org.dandelion.radiot.podcasts.ui.ExternalPlayer;
 
 import java.io.File;
@@ -50,7 +48,23 @@ public class PodcastsApp {
     }
 
     public PodcastDownloader createDownloader() {
-        return new PodcastDownloader(createDownloadManager(),
+        if (supportsDownload()) {
+            return createRealDownloader();
+        } else {
+            return fakeDownloader();
+        }
+    }
+
+    protected boolean supportsDownload() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD;
+    }
+
+    private PodcastDownloader fakeDownloader() {
+        return new FakePodcastDownloader(context);
+    }
+
+    private PodcastDownloader createRealDownloader() {
+        return new RealPodcastDownloader(createDownloadManager(),
                 getPodcastDownloadFolder());
     }
 
