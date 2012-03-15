@@ -3,3 +3,11 @@ Downloading:
  * Provide nice podcast title and description
  * Handle download completion with notification
  * Invoke media scanner on downloaded file
+
+ UI:
+ * New notification icon for 2.3
+
+ General:
+ * Explore AndroidMock
+ * Try merging unit tests and a main app
+ * Build and test all in one click

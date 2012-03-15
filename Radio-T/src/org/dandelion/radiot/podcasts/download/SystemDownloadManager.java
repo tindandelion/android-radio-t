@@ -13,9 +13,9 @@ public class SystemDownloadManager implements PodcastDownloadManager {
     }
 
     @Override
-    public void submitRequest(String src, String dest) {
+    public void submitRequest(String src, File dest) {
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(src));
-        request.setDestinationUri(Uri.fromFile(new File(dest)));
+        request.setDestinationUri(Uri.fromFile(dest));
         manager.enqueue(request);
     }
 }

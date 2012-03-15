@@ -36,7 +36,7 @@ class TestingPodcastsApp extends PodcastsApp {
     }
 
     @Override
-    protected File getPodcastDownloadFolder() {
+    protected File getSystemDownloadFolder() {
         return PODCAST_DOWNLOAD_FOLDER;
     }
 }
@@ -66,11 +66,11 @@ public class SelectingPodcastsFromList extends PodcastListAcceptanceTestCase {
         String src = item.getAudioUri();
         String basename = Uri.parse(src).getLastPathSegment();
         downloadManager.assertSubmittedRequest(src,
-                toDestination(TestingPodcastsApp.PODCAST_DOWNLOAD_FOLDER, basename));
+                toLocalFile(TestingPodcastsApp.PODCAST_DOWNLOAD_FOLDER, basename));
     }
 
-    private String toDestination(File folder, String basename) {
-        return new File(folder, basename).toString();
+    private File toLocalFile(File folder, String basename) {
+        return new File(folder, basename);
     }
 
     private void setupEnvironment() {

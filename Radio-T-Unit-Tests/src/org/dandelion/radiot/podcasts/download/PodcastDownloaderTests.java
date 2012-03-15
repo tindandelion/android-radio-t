@@ -14,43 +14,39 @@ import static org.mockito.Mockito.*;
 public class PodcastDownloaderTests {
     public static final String SOURCE_FILENAME = "rt_podcast_1.mp3";
     public static final String SOURCE_URL = "http://radio-t.com/" + SOURCE_FILENAME;
-    public static final String DEST_FOLDER = "/mnt/downloads/";
 
     private PodcastDownloadManager manager;
     private PodcastDownloader downloader;
     private PodcastItem item;
-    private File destFolder;
+    private DownloadFolder downloadFolder;
 
     @Before
     public void setUp() throws Exception {
-        destFolder = mockDestFolder();
+        downloadFolder = mock(DownloadFolder.class);
         manager = mock(PodcastDownloadManager.class);
-        downloader = new PodcastDownloader(manager, destFolder);
+        downloader = new PodcastDownloader(manager, downloadFolder);
         item = new PodcastItem();
         item.setAudioUri(SOURCE_URL);
-    }
-
-    private File mockDestFolder() {
-        File f = mock(File.class);
-        when(f.toString()).thenReturn(DEST_FOLDER);
-        return f;
     }
 
     @Test
     public void providesPodcastUri() throws Exception {
         downloader.downloadPodcast(SOURCE_URL);
-        verify(manager).submitRequest(eq(SOURCE_URL), anyString());
+        verify(manager).submitRequest(eq(SOURCE_URL), any(File.class));
     }
 
     @Test
-    public void constructsDestinationPathUsingFolderAndSourceFileName() throws Exception {
+    public void downloadsPodcastIntoDownloadFolder() throws Exception {
+        File destPath = new File("/mnt/download/filename.mp3");
+        when(downloadFolder.makePathForUrl(SOURCE_URL))
+                .thenReturn(destPath);
         downloader.downloadPodcast(SOURCE_URL);
-        verify(manager).submitRequest(anyString(), eq(DEST_FOLDER + SOURCE_FILENAME));
+        verify(manager).submitRequest(anyString(), eq(destPath));
     }
 
     @Test
     public void ensureDestinationFolderExists() throws Exception {
         downloader.downloadPodcast(SOURCE_URL);
-        verify(destFolder).mkdirs();
+        verify(downloadFolder).ensureExists();
     }
 }
