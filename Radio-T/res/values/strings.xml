@@ -56,8 +56,7 @@
             name="live_show_playback_button_title">Прямой эфир
     </string>
     <string name="podcast_actions_title">Радио-Т %s</string>
-    <string
-            name="acknoledgements">
+    <string name="acknoledgements">
         <b>Автор благодарен</b>
         \n\n
         <i>Бобуку, Грею, Маринке и Умпутуну</i>
@@ -65,8 +64,11 @@
         <i>Оляпке</i>
         \nза ценные советы и помощь в тестировании приложения
     </string>
-    <string name="download_unsupported_message">Данная версия Android не поддерживается</string>
-    <string name="implement_download_request">Please implement podcast downloaing for Android %s</string>
+    <string name="download_unsupported_title">Не поддерживается</string>
+    <string name="implement_download_request">Пожалуйста, реализуй закачку подкастов для Android %s</string>
+    <string name="download_unsupported_message">
+        Закачка подкастов реализована для <b>Android 2.3</b> и старше. Вы можете попросить автора сделать эту функцию и для Вашей версии Android.
+    </string>
     <string-array
             name="live_show_notification_labels">
         <item>Прямой эфир: Идет трансляция</item>
