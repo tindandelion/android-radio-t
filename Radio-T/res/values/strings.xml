@@ -65,6 +65,7 @@
         <i>Оляпке</i>
         \nза ценные советы и помощь в тестировании приложения
     </string>
+    <string name="download_unsupported_message">Данная версия Android не поддерживается</string>
     <string-array
             name="live_show_notification_labels">
         <item>Прямой эфир: Идет трансляция</item>

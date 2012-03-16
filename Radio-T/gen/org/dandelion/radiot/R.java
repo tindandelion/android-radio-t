@@ -69,11 +69,12 @@ public final class R {
     public static final class layout {
         public static final int about_app=0x7f030000;
         public static final int app_logo=0x7f030001;
-        public static final int home_screen=0x7f030002;
-        public static final int home_screen_item=0x7f030003;
-        public static final int live_show_screen=0x7f030004;
-        public static final int playback_control=0x7f030005;
-        public static final int podcast_list_item=0x7f030006;
+        public static final int download_unsupported_screen=0x7f030002;
+        public static final int home_screen=0x7f030003;
+        public static final int home_screen_item=0x7f030004;
+        public static final int live_show_screen=0x7f030005;
+        public static final int playback_control=0x7f030006;
+        public static final int podcast_list_item=0x7f030007;
     }
     public static final class menu {
         public static final int default_menu=0x7f080000;
@@ -84,6 +85,7 @@ public final class R {
         public static final int acknoledgements=0x7f040012;
         public static final int after_show_title=0x7f040008;
         public static final int app_name=0x7f040006;
+        public static final int download_unsupported_message=0x7f040013;
         public static final int feedback_label=0x7f04000c;
         public static final int home_menu_item=0x7f040001;
         public static final int listen_label=0x7f04000f;
