@@ -1,5 +1,6 @@
 Downloading:
  * Handle Android < 2.3.3
+ * Podcast number already goes with # sign, not pretty for other usages
  * Provide nice podcast title and description
  * Handle download completion with notification
  * Invoke media scanner on downloaded file

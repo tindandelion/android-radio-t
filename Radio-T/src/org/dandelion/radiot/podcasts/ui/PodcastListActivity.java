@@ -151,7 +151,7 @@ public class PodcastListActivity extends android.app.ListActivity implements IVi
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
         PodcastItem selectedItem = listAdapter.getItem(position);
-        selectionHandler.process(this, selectedItem.getAudioUri());
+        selectionHandler.process(this, selectedItem);
     }
 
     private String getFeedUrlFromExtra() {

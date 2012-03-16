@@ -55,6 +55,7 @@
     <string
             name="live_show_playback_button_title">Прямой эфир
     </string>
+    <string name="podcast_actions_title">Радио-Т %s</string>
     <string
             name="acknoledgements">
         <b>Автор благодарен</b>
