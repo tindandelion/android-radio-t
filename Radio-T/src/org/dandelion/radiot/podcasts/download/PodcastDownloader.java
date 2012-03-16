@@ -5,11 +5,11 @@ import org.dandelion.radiot.podcasts.core.PodcastProcessor;
 
 import java.io.File;
 
-public class RealPodcastDownloader implements PodcastProcessor {
+public class PodcastDownloader implements PodcastProcessor {
     private PodcastDownloadManager downloadManager;
     private DownloadFolder destination;
 
-    public RealPodcastDownloader(PodcastDownloadManager downloadManager, DownloadFolder destination) {
+    public PodcastDownloader(PodcastDownloadManager downloadManager, DownloadFolder destination) {
         this.downloadManager = downloadManager;
         this.destination = destination;
     }
@@ -19,5 +19,9 @@ public class RealPodcastDownloader implements PodcastProcessor {
         destination.ensureExists();
         File dest = destination.makePathForUrl(url);
         downloadManager.submitRequest(url, dest);
+    }
+
+    public void downloadCompleted(long id) {
+
     }
 }

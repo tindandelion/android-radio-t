@@ -16,7 +16,7 @@ public class PodcastDownloaderTests {
     public static final String SOURCE_URL = "http://radio-t.com/" + SOURCE_FILENAME;
 
     private PodcastDownloadManager manager;
-    private RealPodcastDownloader downloader;
+    private PodcastDownloader downloader;
     private PodcastItem item;
     private DownloadFolder downloadFolder;
 
@@ -24,7 +24,7 @@ public class PodcastDownloaderTests {
     public void setUp() throws Exception {
         downloadFolder = mock(DownloadFolder.class);
         manager = mock(PodcastDownloadManager.class);
-        downloader = new RealPodcastDownloader(manager, downloadFolder);
+        downloader = new PodcastDownloader(manager, downloadFolder);
         item = new PodcastItem();
         item.setAudioUri(SOURCE_URL);
     }
