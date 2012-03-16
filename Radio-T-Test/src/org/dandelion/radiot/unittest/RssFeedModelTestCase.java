@@ -1,17 +1,14 @@
 package org.dandelion.radiot.unittest;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
-
 import junit.framework.TestCase;
-
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastList.IModel;
 import org.dandelion.radiot.podcasts.core.RssFeedModel;
 
-import android.net.Uri;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
 
 public class RssFeedModelTestCase extends TestCase {
 
@@ -85,8 +82,7 @@ public class RssFeedModelTestCase extends TestCase {
 	public void testExtractPodcastLink() throws Exception {
 		newFeedItem("<enclosure url=\"http://podcast-link\" type=\"audio/mpeg\"/>");
 		parseRssFeed();
-		assertEquals(Uri.parse("http://podcast-link"),
-				firstParsedItem.getAudioUri());
+		assertEquals("http://podcast-link",	firstParsedItem.getAudioUri());
 	}
 
 	public void testSkipNonAudioEnsclosures() throws Exception {
@@ -95,8 +91,7 @@ public class RssFeedModelTestCase extends TestCase {
 
 		parseRssFeed();
 
-		assertEquals(Uri.parse("http://podcast-link"),
-				firstParsedItem.getAudioUri());
+		assertEquals("http://podcast-link",	firstParsedItem.getAudioUri());
 	}
 
 	public void testEnsureStreamIsClosed() throws Exception {

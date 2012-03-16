@@ -4,8 +4,8 @@ import java.lang.reflect.Field;
 
 import org.dandelion.radiot.R;
 
+import org.dandelion.radiot.accepttest.drivers.ApplicationDriver;
 import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
-import org.dandelion.radiot.helpers.ApplicationDriver;
 import org.dandelion.radiot.helpers.PodcastListAcceptanceTestCase;
 
 import android.view.View;

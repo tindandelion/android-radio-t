@@ -1,8 +1,7 @@
 package org.dandelion.radiot.accepttest;
 
-import org.dandelion.radiot.helpers.ApplicationDriver;
+import org.dandelion.radiot.accepttest.drivers.ApplicationDriver;
 import org.dandelion.radiot.helpers.PodcastListAcceptanceTestCase;
-
 
 public class HomeScreenTestCase extends
 		PodcastListAcceptanceTestCase {

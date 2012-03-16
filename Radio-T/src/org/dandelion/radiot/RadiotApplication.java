@@ -1,10 +1,12 @@
 package org.dandelion.radiot;
 
 import android.app.Application;
+import org.dandelion.radiot.podcasts.PodcastsApp;
 import org.dandelion.radiot.podcasts.core.PodcastList.IPodcastListEngine;
 import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.podcasts.core.PodcastListEngine;
 import org.dandelion.radiot.podcasts.core.RssFeedModel;
+import org.dandelion.radiot.util.AppInfo;
 
 import java.util.HashMap;
 
@@ -18,15 +20,18 @@ public class RadiotApplication extends Application {
 		engines.put("main-show",
 				createPodcastEngine("http://feeds.rucast.net/radio-t"));
 		engines.put(
-				"after-show",
-				createPodcastEngine("http://feeds.feedburner.com/pirate-radio-t"));
+                "after-show",
+                createPodcastEngine("http://feeds.feedburner.com/pirate-radio-t"));
         LiveShowApp.initialize(this);
+        PodcastsApp.initialize(this);
+        AppInfo.initialize(this);
 	}
 	
 	@Override
 	public void onTerminate() {
 		super.onTerminate();
         LiveShowApp.release();
+        PodcastsApp.release();
 	}
 
 	protected IPodcastListEngine createPodcastEngine(String url) {

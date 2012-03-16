@@ -155,7 +155,10 @@
     <dictionary name="serg_mo">
       <words>
         <w>attrs</w>
+        <w>basename</w>
+        <w>dest</w>
         <w>podcast</w>
+        <w>podcasts</w>
       </words>
     </dictionary>
   </component>

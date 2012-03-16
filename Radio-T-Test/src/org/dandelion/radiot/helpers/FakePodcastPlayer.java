@@ -1,22 +1,17 @@
 package org.dandelion.radiot.helpers;
 
-import junit.framework.Assert;
-
-import org.dandelion.radiot.podcasts.core.PodcastPlayer;
-
 import android.content.Context;
-import android.net.Uri;
+import junit.framework.Assert;
+import org.dandelion.radiot.podcasts.core.PodcastProcessor;
 
-public class FakePodcastPlayer implements PodcastPlayer {
+public class FakePodcastPlayer implements PodcastProcessor {
+    private SyncValueHolder<String> podcastToPlay = new SyncValueHolder<String>();
 
-	private Uri podcastBeingPlayed;
-
-	public void startPlaying(Context context, Uri url) {
-		podcastBeingPlayed = url;
+	public void process(Context context, String url) {
+        podcastToPlay.setValue(url);
 	}
 
-	public void assertIsPlaying(Uri url) throws Exception {
-		Assert.assertEquals(url, podcastBeingPlayed);
+	public void assertIsPlaying(String url) throws Exception {
+		Assert.assertEquals(url, podcastToPlay.getValue());
 	}
-
 }

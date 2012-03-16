@@ -1,8 +1,8 @@
 package org.dandelion.radiot.accepttest;
 
+import org.dandelion.radiot.accepttest.drivers.ApplicationDriver;
 import org.dandelion.radiot.podcasts.core.PodcastList.IModel;
 import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
-import org.dandelion.radiot.helpers.ApplicationDriver;
 import org.dandelion.radiot.helpers.PodcastListAcceptanceTestCase;
 import org.dandelion.radiot.helpers.TestModel;
 
@@ -47,7 +47,13 @@ public class InterruptPodcastLoading extends PodcastListAcceptanceTestCase {
 		appDriver = createApplicationDriver();
 	}
 
-	protected IModel createTestModel(String url) {
+    @Override
+    protected void tearDown() throws Exception {
+        appDriver.finish();
+        super.tearDown();
+    }
+
+    protected IModel createTestModel(String url) {
 		model = new TestModel();
 		return model;
 	}

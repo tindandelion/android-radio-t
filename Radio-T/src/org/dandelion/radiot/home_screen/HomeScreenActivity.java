@@ -50,7 +50,7 @@ public class HomeScreenActivity extends Activity {
 				new HomeScreenItem.OnClickListener() {
 					public void onClick(HomeScreenItem item) {
 						PodcastListActivity.start(HomeScreenActivity.this,
-								item.title, "main-show");
+                                item.title, "main-show");
 					}
 				});
 		a.addItem(R.string.after_show_title, R.drawable.ic_list_aftershow,

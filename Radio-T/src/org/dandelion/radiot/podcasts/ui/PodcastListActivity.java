@@ -4,20 +4,19 @@ import java.util.List;
 
 import org.dandelion.radiot.*;
 
+import org.dandelion.radiot.podcasts.PodcastsApp;
 import org.dandelion.radiot.podcasts.core.PodcastList.IPodcastListEngine;
 import org.dandelion.radiot.podcasts.core.PodcastList.IView;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.home_screen.HomeScreenActivity;
 
 import android.app.AlertDialog;
-import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -30,9 +29,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
-import org.dandelion.radiot.podcasts.core.PodcastPlayer;
 
-public class PodcastListActivity extends ListActivity implements IView {
+public class PodcastListActivity extends android.app.ListActivity implements IView {
 
 	public static final String TITLE_KEY = "title";
 	public static final String SHOW_NAME_KEY = "podcast_url";
@@ -45,29 +43,31 @@ public class PodcastListActivity extends ListActivity implements IView {
 	}
 
 	private Bundle extras;
-
 	private PodcastListAdapter listAdapter;
-	private PodcastPlayer podcastPlayer;
-	private IPodcastListEngine engine;
-
+    private IPodcastListEngine engine;
 	private ProgressDialog progress;
+    private PodcastSelectionHandler selectionHandler;
 
 	public void closeProgress() {
 		progress.dismiss();
 	}
 
-	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		extras = getIntent().getExtras();
 		setTitle(getTitleFromExtra());
 		initListAdapter();
-		setPodcastPlayer(new ExternalPlayer());
+        initSelectionHandler();
 		attachToEngine();
 	}
 
-	protected void attachToEngine() {
+    private void initSelectionHandler() {
+        selectionHandler = new PodcastSelectionHandler(PodcastsApp.getInstance().createPlayer(),
+                PodcastsApp.getInstance().createDownloader());
+    }
+
+    protected void attachToEngine() {
 		RadiotApplication app = (RadiotApplication) getApplication();
 		engine = (IPodcastListEngine) getLastNonConfigurationInstance();
 		if (null == engine) {
@@ -125,11 +125,7 @@ public class PodcastListActivity extends ListActivity implements IView {
 		}
 	}
 
-	public void setPodcastPlayer(PodcastPlayer player) {
-		podcastPlayer = player;
-	}
-
-	public void showErrorMessage(String errorMessage) {
+    public void showErrorMessage(String errorMessage) {
 		new AlertDialog.Builder(this).setTitle(R.string.rss_load_error_title)
 				.setMessage(errorMessage).show();
 	}
@@ -154,10 +150,11 @@ public class PodcastListActivity extends ListActivity implements IView {
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
-		playPodcast(listAdapter.getItem(position).getAudioUri());
-	}
+        PodcastItem selectedItem = listAdapter.getItem(position);
+        selectionHandler.process(this, selectedItem);
+    }
 
-	private String getFeedUrlFromExtra() {
+    private String getFeedUrlFromExtra() {
 		if (null == extras) {
 			return null;
 		}
@@ -176,11 +173,7 @@ public class PodcastListActivity extends ListActivity implements IView {
 		setListAdapter(listAdapter);
 	}
 
-	private void playPodcast(Uri uri) {
-		podcastPlayer.startPlaying(this, uri);
-	}
-
-	class PodcastListAdapter extends ArrayAdapter<PodcastItem> {
+    class PodcastListAdapter extends ArrayAdapter<PodcastItem> {
 		private final Bitmap defaultPodcastImage = BitmapFactory
 				.decodeResource(PodcastListActivity.this.getResources(),
 						R.drawable.default_podcast_image);

@@ -3,53 +3,33 @@ package org.dandelion.radiot.home_screen;
 import org.dandelion.radiot.R;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import org.dandelion.radiot.util.AppInfo;
+import org.dandelion.radiot.util.FeedbackEmail;
 
 public class AboutAppActivity extends Activity {
-	private static final String FEEDBACK_EMAIL = "apps.dandelion@gmail.com";
-	
-	@Override
+
+    @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.about_app);
-		updateVerionLabel();
+		setVersionLabel(applicationInfo().getVersion());
 	}
 
-	private void updateVerionLabel() {
-		TextView versionView = (TextView) findViewById(R.id.version_label);
-		String template = getString(R.string.version_label);
-		String version = String.format(template, getAppVersion());
-		versionView.setText(version);
+    public void sendFeedback(View view) {
+        new FeedbackEmail(this, applicationInfo()).openInEditor();
 	}
 
-	private String getAppVersion() {
-		try {
-			PackageInfo packageInfo = getPackageManager().getPackageInfo(
-					getPackageName(), 0);
-			return packageInfo.versionName;
-		} catch (NameNotFoundException e) {
-			return "";
-		}
-	}
+    private void setVersionLabel(String value) {
+        TextView versionView = (TextView) findViewById(R.id.version_label);
+        String template = getString(R.string.version_label);
+        String version = String.format(template, value);
+        versionView.setText(version);
+    }
 
-	public void sendFeedback(View view) {
-		Intent intent = new Intent(Intent.ACTION_SEND);
-		intent.putExtra(Intent.EXTRA_EMAIL, new String[] { FEEDBACK_EMAIL } );
-		intent.putExtra(Intent.EXTRA_SUBJECT, composeFeedbackEmailSubject());
-		intent.setType("message/rfc822");
-		startActivity(Intent.createChooser(intent, null));
-	}
-
-	private CharSequence getAppLabel() {
-		return getPackageManager().getApplicationLabel(getApplicationInfo());
-	}
-
-	private String composeFeedbackEmailSubject() {
-		return String.format("%s %s: Feedback", getAppLabel(), getAppVersion());
-	}
+    private AppInfo applicationInfo() {
+        return AppInfo.getInstance();
+    }
 }
