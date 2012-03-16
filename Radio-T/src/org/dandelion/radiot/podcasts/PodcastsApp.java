@@ -46,7 +46,7 @@ public class PodcastsApp {
 
     public PodcastProcessor createDownloader() {
         if (supportsDownload()) {
-            return createRealDownloader();
+            return createDownloaderClient();
         } else {
             return fakeDownloader();
         }
@@ -60,16 +60,15 @@ public class PodcastsApp {
         return new FakePodcastDownloader();
     }
 
-    private PodcastProcessor createRealDownloader() {
-        return new RealPodcastDownloader(createDownloadManager(),
-                getPodcastDownloadFolder());
+    private PodcastProcessor createDownloaderClient() {
+        return new DownloadServiceClient();
     }
 
     protected File getSystemDownloadFolder() {
         return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
     }
 
-    protected PodcastDownloadManager createDownloadManager() {
+    public PodcastDownloadManager createDownloadManager() {
         return new SystemDownloadManager((DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE));
     }
 

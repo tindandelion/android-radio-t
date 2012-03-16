@@ -93,7 +93,7 @@ class TestingPodcastsApp extends PodcastsApp {
     }
 
     @Override
-    protected PodcastDownloadManager createDownloadManager() {
+    public PodcastDownloadManager createDownloadManager() {
         return downloadManager;
     }
 

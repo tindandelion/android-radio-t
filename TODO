@@ -9,6 +9,7 @@ PROGRESS Handle download completion with notification
  * Invoke media scanner on downloaded file
 
  UI:
+ * Portrait lock for podcasts activity
  * New notification icon for 2.3
 
  General:

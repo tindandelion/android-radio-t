@@ -43,6 +43,7 @@
         </activity>
         <service
                 android:name=".live.service.LiveShowService"/>
+        <service android:name=".podcasts.download.DownloadService"/>
     </application>
     <uses-permission
             android:name="android.permission.INTERNET"/>
