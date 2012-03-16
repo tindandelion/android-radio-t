@@ -66,6 +66,7 @@
         \nза ценные советы и помощь в тестировании приложения
     </string>
     <string name="download_unsupported_message">Данная версия Android не поддерживается</string>
+    <string name="implement_download_request">Please implement podcast downloaing for Android %s</string>
     <string-array
             name="live_show_notification_labels">
         <item>Прямой эфир: Идет трансляция</item>

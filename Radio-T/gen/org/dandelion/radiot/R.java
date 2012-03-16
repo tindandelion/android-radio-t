@@ -88,6 +88,7 @@ public final class R {
         public static final int download_unsupported_message=0x7f040013;
         public static final int feedback_label=0x7f04000c;
         public static final int home_menu_item=0x7f040001;
+        public static final int implement_download_request=0x7f040014;
         public static final int listen_label=0x7f04000f;
         public static final int live_show_info=0x7f04000d;
         public static final int live_show_playback_button_title=0x7f040010;

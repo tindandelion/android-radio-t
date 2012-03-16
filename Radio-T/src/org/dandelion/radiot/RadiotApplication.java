@@ -6,6 +6,7 @@ import org.dandelion.radiot.podcasts.core.PodcastList.IPodcastListEngine;
 import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.podcasts.core.PodcastListEngine;
 import org.dandelion.radiot.podcasts.core.RssFeedModel;
+import org.dandelion.radiot.util.AppInfo;
 
 import java.util.HashMap;
 
@@ -23,6 +24,7 @@ public class RadiotApplication extends Application {
                 createPodcastEngine("http://feeds.feedburner.com/pirate-radio-t"));
         LiveShowApp.initialize(this);
         PodcastsApp.initialize(this);
+        AppInfo.initialize(this);
 	}
 	
 	@Override
