@@ -35,7 +35,7 @@ public class DownloadService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         handleCommand(intent);
-        return START_NOT_STICKY;
+        return START_STICKY;
     }
 
     @Override
