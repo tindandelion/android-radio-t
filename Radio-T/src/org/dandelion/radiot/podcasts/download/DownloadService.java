@@ -16,16 +16,17 @@ public class DownloadService extends Service {
     public static final String TITLE_EXTRA = TAG + ".Title";
 
     private DownloadStarter downloader;
+    private DownloadTracker tracker;
     private BroadcastReceiver onDownloadCompleted = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, 0);
-            downloader.downloadCompleted(id);
+            tracker.taskCompleted(id);
         }
     };
-    private DownloadStarter.Listener onFinished = new DownloadStarter.Listener() {
+    private DownloadTracker.Listener onFinished = new DownloadTracker.Listener() {
         @Override
-        public void onFinishedAllDownloads() {
+        public void onAllTasksCompleted() {
             stopSelf();
         }
     };
@@ -60,9 +61,10 @@ public class DownloadService extends Service {
 
     private void createCore() {
         PodcastsApp app = PodcastsApp.getInstance();
+        tracker = new DownloadTracker();
+        tracker.setListener(onFinished);
         downloader = new DownloadStarter(app.createDownloadManager(),
-                app.getPodcastDownloadFolder());
-        downloader.setListener(onFinished);
+                app.getPodcastDownloadFolder(), tracker);
     }
 
     private void unregisterReceivers() {
@@ -71,7 +73,8 @@ public class DownloadService extends Service {
 
     private void handleCommand(Intent intent) {
         String url = intent.getStringExtra(URL_EXTRA);
-        downloader.downloadPodcast(url);
+        String title = intent.getStringExtra(TITLE_EXTRA);
+        downloader.downloadPodcast(url, title);
     }
     
     private void log(String message) {
