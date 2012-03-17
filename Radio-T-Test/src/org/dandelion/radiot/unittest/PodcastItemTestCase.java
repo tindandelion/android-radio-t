@@ -14,22 +14,22 @@ public class PodcastItemTestCase extends TestCase {
 	}
 
 	public void testSimplePodcastNumber() throws Exception {
-		item.extractPodcastNumber("100");
+		item.setTitle("100");
 		assertEquals("#100", item.getNumber());
 	}
 
 	public void testPodcastNumberInString() throws Exception {
-		item.extractPodcastNumber("Radio 100");
+		item.setTitle("Radio 100");
 		assertEquals("#100", item.getNumber());
 	}
 
 	public void testPodcastNumberInLocalizedString() throws Exception {
-		item.extractPodcastNumber("Радио-Т 192");
+		item.setTitle("Радио-Т 192");
 		assertEquals("#192", item.getNumber());
 	}
 
 	public void testNumberIsIncorrect() throws Exception {
-		item.extractPodcastNumber("Blah");
+		item.setTitle("Blah");
 		assertEquals("Blah", item.getNumber());
 	}
 

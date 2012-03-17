@@ -13,6 +13,8 @@ import org.dandelion.radiot.podcasts.PodcastsApp;
 public class DownloadService extends Service {
     private static String TAG = DownloadService.class.getName();
     public static String URL_EXTRA = TAG + ".Url";
+    public static final String TITLE_EXTRA = TAG + ".Title";
+
     private DownloadStarter downloader;
     private BroadcastReceiver onDownloadCompleted = new BroadcastReceiver() {
         @Override

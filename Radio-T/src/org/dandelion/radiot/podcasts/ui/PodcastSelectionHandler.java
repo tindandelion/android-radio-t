@@ -22,13 +22,8 @@ public class PodcastSelectionHandler {
 
     public void process(Context context, PodcastItem podcast) {
         this.context = context;
-        showActionSelector(dialogTitleFrom(podcast.getNumber()),
-                onClickListener(podcast.getAudioUri()));
-    }
-
-    private String dialogTitleFrom(String number) {
-        String template = context.getString(R.string.podcast_actions_title);
-        return String.format(template, number);
+        showActionSelector(podcast.getTitle(),
+                onClickListener(podcast));
     }
 
     private void showActionSelector(String title, DialogInterface.OnClickListener listener) {
@@ -38,12 +33,12 @@ public class PodcastSelectionHandler {
                 .show();
     }
 
-    private DialogInterface.OnClickListener onClickListener(final String url) {
+    private DialogInterface.OnClickListener onClickListener(final PodcastItem podcast) {
         return new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int index) {
                 PodcastProcessor processor = selectProcessor(index);
-                processor.process(context, url);
+                processor.process(context, podcast);
             }
         };
     }

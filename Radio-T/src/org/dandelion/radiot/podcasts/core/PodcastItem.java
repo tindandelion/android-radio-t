@@ -22,8 +22,9 @@ public class PodcastItem implements Cloneable {
 	private String audioUri;
 	private String thumbnailUrl;
 	private Bitmap thumbnail;
+    private String title;
 
-	public String getAudioUri() {
+    public String getAudioUri() {
 		return audioUri;
 	}
 
@@ -41,18 +42,26 @@ public class PodcastItem implements Cloneable {
 	public String getNumber() {
 		return number;
 	}
+    
+    public String getTitle() {
+        return title;
+    }
 
-    public void extractPodcastNumber(String value) {
-		Matcher matcher = NUMBER_PATTERN.matcher(value);
-		if (matcher.find()) {
-			number = "#" + matcher.group();
-		} else {
-			number = value;
-		}
-
+    public void setTitle(String value) {
+        title = value;
+        number = extractPodcastNumber(value);
 	}
 
-	public void extractPubDate(String value) {
+    private String extractPodcastNumber(String value) {
+        Matcher matcher = NUMBER_PATTERN.matcher(value);
+        if (matcher.find()) {
+            return "#" + matcher.group();
+        } else {
+            return value;
+        }
+    }
+
+    public void extractPubDate(String value) {
 		try {
 			Date date = INPUT_DATE_FORMAT.parse(value);
 			pubDate = OUTPUT_DATE_FORMAT.format(date);

@@ -54,7 +54,7 @@ public class RssFeedModel implements PodcastList.IModel {
 		item.getChild("title").setEndTextElementListener(
 				new EndTextElementListener() {
 					public void end(String body) {
-						currentItem.extractPodcastNumber(body);
+						currentItem.setTitle(body);
 					}
 				});
 
