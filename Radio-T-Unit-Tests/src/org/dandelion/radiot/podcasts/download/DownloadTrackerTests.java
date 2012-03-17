@@ -3,8 +3,6 @@ package org.dandelion.radiot.podcasts.download;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.File;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
@@ -12,51 +10,52 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 
 public class DownloadTrackerTests {
-
     private DownloadTracker tracker;
     private DownloadTask task;
-    private DownloadTracker.PostProcessor postProcessor;
+    private DownloadProcessor nextProcessor;
 
     @Before
     public void setUp() throws Exception {
-        postProcessor = mock(DownloadTracker.PostProcessor.class);
-        tracker = new DownloadTracker(postProcessor);
-        task = new DownloadTask("", new File(""));
+        nextProcessor = mock(DownloadProcessor.class);
+        tracker = new DownloadTracker(nextProcessor);
+        task = new DownloadTask().setId(1);
     }
 
     @Test
     public void testAddingTask() throws Exception {
-        tracker.taskScheduled(1, task);
+        tracker.acceptTask(task);
         assertTrue(tracker.hasScheduledTasks());
     }
 
     @Test
     public void testRemovingTask() throws Exception {
-        tracker.taskScheduled(1, task);
+        tracker.acceptTask(task);
         tracker.taskCompleted(1);
         assertFalse(tracker.hasScheduledTasks());
     }
 
     @Test
     public void ignoreUntrackedTasks() throws Exception {
-        tracker.taskScheduled(1, task);
+        tracker.acceptTask(task);
         tracker.taskCompleted(2);
         assertTrue(tracker.hasScheduledTasks());
     }
 
     @Test
-    public void passesTaskToPostProcessor() throws Exception {
-        tracker.taskScheduled(1, task);
+    public void passesTaskFurtherWhenItIsCompleted() throws Exception {
+        tracker.acceptTask(task);
         tracker.taskCompleted(1);
-        verify(postProcessor).downloadComplete(task);
+        verify(nextProcessor).acceptTask(task);
     }
 
     @Test
     public void testNotifiesListenerWhenAllTasksFinished() throws Exception {
         DownloadTracker.Listener listener = mock(DownloadTracker.Listener.class);
+        DownloadTask otherTask = new DownloadTask().setId(2);
+
         tracker.setListener(listener);
-        tracker.taskScheduled(1, task);
-        tracker.taskScheduled(2, task);
+        tracker.acceptTask(task);
+        tracker.acceptTask(otherTask);
 
         tracker.taskCompleted(1);
         verifyZeroInteractions(listener);

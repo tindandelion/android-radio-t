@@ -17,7 +17,7 @@ public class DownloadService extends Service {
 
     private DownloadStarter downloader;
     private DownloadTracker tracker;
-    private DownloadTracker.PostProcessor localFileProcessor;
+    private DownloadProcessor localFileProcessor;
 
     private BroadcastReceiver onDownloadCompleted = new BroadcastReceiver() {
         @Override
@@ -62,11 +62,11 @@ public class DownloadService extends Service {
 
     private void createCore() {
         PodcastsApp app = PodcastsApp.getInstance();
-        localFileProcessor = new LocalPodcastProcessor(app.createMediaScanner());
+        localFileProcessor = new MediaScannerProcessor(app.createMediaScanner());
         tracker = new DownloadTracker(localFileProcessor);
         tracker.setListener(onFinished);
-        downloader = new DownloadStarter(app.createDownloadManager(),
-                app.getPodcastDownloadFolder(), tracker);
+        downloader = new DownloadStarter(tracker, app.createDownloadManager(),
+                app.getPodcastDownloadFolder());
     }
 
     private void unregisterReceivers() {
@@ -74,9 +74,10 @@ public class DownloadService extends Service {
     }
 
     private void handleCommand(Intent intent) {
-        String url = intent.getStringExtra(URL_EXTRA);
-        String title = intent.getStringExtra(TITLE_EXTRA);
-        downloader.downloadPodcast(url, title);
+        DownloadTask task = new DownloadTask()
+                .setUrl(intent.getStringExtra(URL_EXTRA))
+                .setTitle(intent.getStringExtra(TITLE_EXTRA));
+        downloader.acceptTask(task);
     }
     
     private void log(String message) {

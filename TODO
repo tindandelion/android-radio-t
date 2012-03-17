@@ -7,6 +7,7 @@ PROGRESS Handle download completion with notification
     * Implement podcast download tracking
     * Persist tracking info
  * Invoke media scanner on downloaded file
+ * Cancel post-processing if download is aborted
 
  UI:
  * Portrait lock for podcasts activity

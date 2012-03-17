@@ -11,11 +11,11 @@ public class LocalPodcastProcessorTests {
     @Test
     public void invokesMediaScanner() {
         MediaScanner scanner = mock(MediaScanner.class);
-        LocalPodcastProcessor processor = new LocalPodcastProcessor(scanner);
+        MediaScannerProcessor processor = new MediaScannerProcessor(scanner);
         DownloadTask task = new DownloadTask("Title", new File("/mnt/downloads/local.mp3"));
 
-        processor.downloadComplete(task);
+        processor.acceptTask(task);
 
-        verify(scanner).scanFile(task.localPath);
+        verify(scanner).scanPodcastFile(task.localPath);
     }
 }

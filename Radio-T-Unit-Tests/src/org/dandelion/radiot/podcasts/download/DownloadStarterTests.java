@@ -5,8 +5,7 @@ import org.junit.Test;
 
 import java.io.File;
 
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
@@ -17,51 +16,45 @@ public class DownloadStarterTests {
     private Downloader manager;
     private DownloadStarter downloader;
     private DownloadFolder downloadFolder;
-    private DownloadTracker tracker;
+    private DownloadProcessor nextProcessor;
+    private DownloadTask task;
 
     @Before
     public void setUp() throws Exception {
         downloadFolder = mock(DownloadFolder.class);
         manager = mock(Downloader.class);
-        tracker = mock(DownloadTracker.class);
-        downloader = new DownloadStarter(manager, downloadFolder, tracker);
+        nextProcessor = mock(DownloadProcessor.class);
+        downloader = new DownloadStarter(nextProcessor, manager, downloadFolder);
+        task = new DownloadTask(SOURCE_URL);
     }
 
     @Test
-    public void providesPodcastUri() throws Exception {
-        downloader.downloadPodcast(SOURCE_URL, "");
-        verify(manager).submitTask(eq(SOURCE_URL), anyDownloadTask());
+    public void submitsTaskToDownloader() throws Exception {
+        downloader.acceptTask(task);
+        verify(manager).submit(task);
     }
 
     @Test
-    public void constructsDownloadTask() throws Exception {
+    public void fillsLocalPathForTask() throws Exception {
         File destPath = new File("/mnt/download/filename.mp3");
         when(downloadFolder.makePathForUrl(SOURCE_URL))
                 .thenReturn(destPath);
-        downloader.downloadPodcast(SOURCE_URL, "title");
-        verify(manager).submitTask(anyString(), eq(new DownloadTask("title", destPath)));
+        downloader.acceptTask(task);
+        assertEquals(task.localPath, destPath);
     }
 
     @Test
-    public void placesTaskIntoTracker() throws Exception {
+    public void passesTaskToTrackerWithAnAssignedId() throws Exception {
         long taskId = 1;
-        File destPath = new File("/mnt/download/filename.mp3");
-        when(downloadFolder.makePathForUrl(SOURCE_URL))
-                .thenReturn(destPath);
-        when(manager.submitTask(anyString(), anyDownloadTask()))
-                .thenReturn(taskId);
-        downloader.downloadPodcast(SOURCE_URL, "title");
-        verify(tracker).taskScheduled(taskId, new DownloadTask("title", destPath));
+        when(manager.submit(task)).thenReturn(taskId);
+        downloader.acceptTask(task);
+        assertEquals(taskId, task.id);
+        verify(nextProcessor).acceptTask(task);
     }
-
 
     @Test
-    public void ensureDestinationFolderExists() throws Exception {
-        downloader.downloadPodcast(SOURCE_URL, "");
-        verify(downloadFolder).ensureExists();
-    }
-
-    private static DownloadTask anyDownloadTask() {
-        return any(DownloadTask.class);
+    public void ensuresDownloadFolderExists() throws Exception {
+        downloader.acceptTask(task);
+        verify(downloadFolder).mkdirs();
     }
 }

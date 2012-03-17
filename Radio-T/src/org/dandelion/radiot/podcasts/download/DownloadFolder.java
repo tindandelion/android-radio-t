@@ -21,7 +21,7 @@ public class DownloadFolder {
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    public void ensureExists() {
+    public void mkdirs() {
         path.mkdirs();
     }
 }
