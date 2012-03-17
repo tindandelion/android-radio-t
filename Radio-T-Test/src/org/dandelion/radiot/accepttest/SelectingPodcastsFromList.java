@@ -17,6 +17,9 @@ import org.dandelion.radiot.podcasts.download.PodcastDownloadManager;
 import java.io.File;
 
 public class SelectingPodcastsFromList extends PodcastListAcceptanceTestCase {
+    public static final String SAMPLE_URL = "http://example.com/podcast_file.mp3";
+    private static final File DOWNLOAD_FOLDER = new File("/mnt/downloads");
+
     private FakePodcastPlayer player;
     private FakeDownloadManager downloadManager;
     private TestingPodcastsApp application;
@@ -35,23 +38,25 @@ public class SelectingPodcastsFromList extends PodcastListAcceptanceTestCase {
 		player.assertIsPlaying(item.getAudioUri());
 	}
 
-    // TODO: Things may be more expressive if using predefined podcast item
     public void testDownloadPodcastLocally() throws Exception {
         PodcastListDriver driver = gotoPodcastListPage();
-        PodcastItem item = driver.selectItemForDownloading(0);
+        driver.makeSamplePodcastWithUrl(SAMPLE_URL);
 
-        String src = item.getAudioUri();
-        String basename = Uri.parse(src).getLastPathSegment();
-        downloadManager.assertSubmittedRequest(src,
-                toLocalFile(TestingPodcastsApp.PODCAST_DOWNLOAD_FOLDER, basename));
+        driver.selectItemForDownloading(0);
+
+        downloadManager.assertSubmittedRequest(
+                "http://example.com/podcast_file.mp3",
+                new File(DOWNLOAD_FOLDER, "podcast_file.mp3"));
     }
 
     public void testInformsUserOnUnsupportedPlatforms() throws Exception {
         application.setDownloadSupported(false);
         PodcastListDriver driver = gotoPodcastListPage();
+
         driver.selectItemForDownloading(0);
 
-        appDriver.assertCurrentActivity("Should inform user of unsupported platform",
+        appDriver.assertCurrentActivity(
+                "Should inform user of unsupported platform",
                 FakeDownloaderActivity.class);
 
     }
@@ -62,15 +67,12 @@ public class SelectingPodcastsFromList extends PodcastListAcceptanceTestCase {
         return driver;
     }
 
-    private File toLocalFile(File folder, String basename) {
-        return new File(folder, basename);
-    }
-
     private void setupEnvironment() {
         player = new FakePodcastPlayer();
         downloadManager = new FakeDownloadManager();
         application = new TestingPodcastsApp(getInstrumentation().getTargetContext(),
                 player, downloadManager);
+        application.setDownloadFolder(DOWNLOAD_FOLDER);
         PodcastsApp.setTestingInstance(application);
     }
 }
@@ -78,8 +80,8 @@ public class SelectingPodcastsFromList extends PodcastListAcceptanceTestCase {
 class TestingPodcastsApp extends PodcastsApp {
     private PodcastProcessor player;
     private PodcastDownloadManager downloadManager;
-    public static final File PODCAST_DOWNLOAD_FOLDER = new File("/mnt/downloads");
     private boolean downloadSupported = true;
+    private File downloadFolder;
 
     TestingPodcastsApp(Context context, PodcastProcessor player, PodcastDownloadManager downloadManager) {
         super(context);
@@ -99,7 +101,7 @@ class TestingPodcastsApp extends PodcastsApp {
 
     @Override
     protected File getSystemDownloadFolder() {
-        return PODCAST_DOWNLOAD_FOLDER;
+        return downloadFolder;
     }
 
     @Override
@@ -109,5 +111,9 @@ class TestingPodcastsApp extends PodcastsApp {
 
     public void setDownloadSupported(boolean value) {
         downloadSupported = value;
+    }
+
+    public void setDownloadFolder(File value) {
+        downloadFolder = value;
     }
 }

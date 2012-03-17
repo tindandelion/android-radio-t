@@ -32,4 +32,10 @@ public class PodcastListDriver extends Solo {
         clickOnText("Загрузить");
         return item;
     }
+
+    public void makeSamplePodcastWithUrl(String url) {
+        ListAdapter adapter = listActivity.getListAdapter();
+        PodcastItem item = (PodcastItem) adapter.getItem(0);
+        item.setAudioUri(url);
+    }
 }
