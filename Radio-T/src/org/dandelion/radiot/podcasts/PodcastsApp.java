@@ -68,7 +68,7 @@ public class PodcastsApp {
         return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
     }
 
-    public PodcastDownloadManager createDownloadManager() {
+    public Downloader createDownloadManager() {
         return new SystemDownloadManager((DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE));
     }
 

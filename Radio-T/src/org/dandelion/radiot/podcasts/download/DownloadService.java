@@ -13,7 +13,7 @@ import org.dandelion.radiot.podcasts.PodcastsApp;
 public class DownloadService extends Service {
     private static String TAG = DownloadService.class.getName();
     public static String URL_EXTRA = TAG + ".Url";
-    private PodcastDownloader downloader;
+    private DownloadStarter downloader;
     private BroadcastReceiver onDownloadCompleted = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -21,6 +21,13 @@ public class DownloadService extends Service {
             downloader.downloadCompleted(id);
         }
     };
+    private DownloadStarter.Listener onFinished = new DownloadStarter.Listener() {
+        @Override
+        public void onFinishedAllDownloads() {
+            stopSelf();
+        }
+    };
+
 
     public IBinder onBind(Intent intent) {
         return null;
@@ -51,8 +58,9 @@ public class DownloadService extends Service {
 
     private void createCore() {
         PodcastsApp app = PodcastsApp.getInstance();
-        downloader = new PodcastDownloader(app.createDownloadManager(),
+        downloader = new DownloadStarter(app.createDownloadManager(),
                 app.getPodcastDownloadFolder());
+        downloader.setListener(onFinished);
     }
 
     private void unregisterReceivers() {
@@ -61,7 +69,7 @@ public class DownloadService extends Service {
 
     private void handleCommand(Intent intent) {
         String url = intent.getStringExtra(URL_EXTRA);
-        downloader.process(this, url);
+        downloader.downloadPodcast(url);
     }
     
     private void log(String message) {

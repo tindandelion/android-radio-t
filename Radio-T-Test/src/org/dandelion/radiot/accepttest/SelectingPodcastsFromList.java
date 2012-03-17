@@ -2,7 +2,6 @@ package org.dandelion.radiot.accepttest;
 
 
 import android.content.Context;
-import android.net.Uri;
 import org.dandelion.radiot.accepttest.drivers.ApplicationDriver;
 import org.dandelion.radiot.accepttest.drivers.PodcastListDriver;
 import org.dandelion.radiot.helpers.FakeDownloadManager;
@@ -12,7 +11,7 @@ import org.dandelion.radiot.podcasts.PodcastsApp;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastProcessor;
 import org.dandelion.radiot.podcasts.download.FakeDownloaderActivity;
-import org.dandelion.radiot.podcasts.download.PodcastDownloadManager;
+import org.dandelion.radiot.podcasts.download.Downloader;
 
 import java.io.File;
 
@@ -79,11 +78,11 @@ public class SelectingPodcastsFromList extends PodcastListAcceptanceTestCase {
 
 class TestingPodcastsApp extends PodcastsApp {
     private PodcastProcessor player;
-    private PodcastDownloadManager downloadManager;
+    private Downloader downloadManager;
     private boolean downloadSupported = true;
     private File downloadFolder;
 
-    TestingPodcastsApp(Context context, PodcastProcessor player, PodcastDownloadManager downloadManager) {
+    TestingPodcastsApp(Context context, PodcastProcessor player, Downloader downloadManager) {
         super(context);
         this.player = player;
         this.downloadManager = downloadManager;
@@ -95,7 +94,7 @@ class TestingPodcastsApp extends PodcastsApp {
     }
 
     @Override
-    public PodcastDownloadManager createDownloadManager() {
+    public Downloader createDownloadManager() {
         return downloadManager;
     }
 

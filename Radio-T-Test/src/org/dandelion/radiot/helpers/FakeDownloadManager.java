@@ -1,16 +1,18 @@
 package org.dandelion.radiot.helpers;
 
 import junit.framework.Assert;
-import org.dandelion.radiot.podcasts.download.PodcastDownloadManager;
+import org.dandelion.radiot.podcasts.download.Downloader;
 
 import java.io.File;
 
-public class FakeDownloadManager implements PodcastDownloadManager {
+public class FakeDownloadManager implements Downloader {
+    private static final long DOWNLOAD_ID = 1;
     private SyncValueHolder<SubmitRequest> submitted = new SyncValueHolder<SubmitRequest>();
 
     @Override
-    public void submitRequest(String src, File dest) {
+    public long submitRequest(String src, File dest) {
         submitted.setValue(new SubmitRequest(src, dest));
+        return DOWNLOAD_ID;
     }
 
     public void assertSubmittedRequest(String src, File dest) {
