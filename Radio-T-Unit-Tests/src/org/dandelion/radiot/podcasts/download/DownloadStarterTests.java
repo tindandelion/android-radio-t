@@ -30,26 +30,30 @@ public class DownloadStarterTests {
     @Test
     public void providesPodcastUri() throws Exception {
         downloader.downloadPodcast(SOURCE_URL, "");
-        verify(manager).submitRequest(eq(SOURCE_URL), anyFile());
+        verify(manager).submitTask(eq(SOURCE_URL), anyDownloadTask());
+    }
+
+    @Test
+    public void constructsDownloadTask() throws Exception {
+        File destPath = new File("/mnt/download/filename.mp3");
+        when(downloadFolder.makePathForUrl(SOURCE_URL))
+                .thenReturn(destPath);
+        downloader.downloadPodcast(SOURCE_URL, "title");
+        verify(manager).submitTask(anyString(), eq(new DownloadTask("title", destPath)));
     }
 
     @Test
     public void placesTaskIntoTracker() throws Exception {
         long taskId = 1;
-        when(manager.submitRequest(anyString(), anyFile()))
-                .thenReturn(taskId);
-        downloader.downloadPodcast(SOURCE_URL, "");
-        verify(tracker).taskScheduled(taskId);
-    }
-
-    @Test
-    public void downloadsPodcastIntoDownloadFolder() throws Exception {
         File destPath = new File("/mnt/download/filename.mp3");
         when(downloadFolder.makePathForUrl(SOURCE_URL))
                 .thenReturn(destPath);
-        downloader.downloadPodcast(SOURCE_URL, "");
-        verify(manager).submitRequest(anyString(), eq(destPath));
+        when(manager.submitTask(anyString(), anyDownloadTask()))
+                .thenReturn(taskId);
+        downloader.downloadPodcast(SOURCE_URL, "title");
+        verify(tracker).taskScheduled(taskId, new DownloadTask("title", destPath));
     }
+
 
     @Test
     public void ensureDestinationFolderExists() throws Exception {
@@ -57,7 +61,7 @@ public class DownloadStarterTests {
         verify(downloadFolder).ensureExists();
     }
 
-    private static File anyFile() {
-        return any(File.class);
+    private static DownloadTask anyDownloadTask() {
+        return any(DownloadTask.class);
     }
 }

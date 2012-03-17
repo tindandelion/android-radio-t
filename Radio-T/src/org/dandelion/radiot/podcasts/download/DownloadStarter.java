@@ -16,7 +16,8 @@ public class DownloadStarter {
     public void downloadPodcast(String url, String title) {
         destination.ensureExists();
         File dest = destination.makePathForUrl(url);
-        long taskId = downloader.submitRequest(url, dest);
-        tracker.taskScheduled(taskId);
+        DownloadTask task = new DownloadTask(title, dest);
+        long taskId = downloader.submitTask(url, task);
+        tracker.taskScheduled(taskId, task);
     }
 }

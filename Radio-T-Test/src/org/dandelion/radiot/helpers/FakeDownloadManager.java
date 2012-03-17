@@ -1,6 +1,7 @@
 package org.dandelion.radiot.helpers;
 
 import junit.framework.Assert;
+import org.dandelion.radiot.podcasts.download.DownloadTask;
 import org.dandelion.radiot.podcasts.download.Downloader;
 
 import java.io.File;
@@ -10,8 +11,8 @@ public class FakeDownloadManager implements Downloader {
     private SyncValueHolder<SubmitRequest> submitted = new SyncValueHolder<SubmitRequest>();
 
     @Override
-    public long submitRequest(String src, File dest) {
-        submitted.setValue(new SubmitRequest(src, dest));
+    public long submitTask(String url, DownloadTask task) {
+        submitted.setValue(new SubmitRequest(url, task.localPath));
         return DOWNLOAD_ID;
     }
 

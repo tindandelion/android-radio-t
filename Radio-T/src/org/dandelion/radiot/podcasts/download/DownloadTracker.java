@@ -1,29 +1,43 @@
 package org.dandelion.radiot.podcasts.download;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class DownloadTracker {
+
     public interface Listener {
         void onAllTasksCompleted();
     }
 
-    private Listener listener;
-    private ArrayList<Long> tasksInProgress;
+    public interface PostProcessor {
+        void downloadComplete(DownloadTask task);
+    }
 
-    public DownloadTracker() {
-        tasksInProgress = new ArrayList<Long>();
+    private Listener listener;
+    private PostProcessor postProcessor;
+    
+    private HashMap<Long, DownloadTask> tasksInProgress;
+
+    public DownloadTracker(PostProcessor post) {
+        this.postProcessor = post;
+        tasksInProgress = new HashMap<Long, DownloadTask>();
     }
 
     public void setListener(Listener listener) {
         this.listener = listener;
     }
 
-    public void taskScheduled(long id) {
-        tasksInProgress.add(id);
+    public void taskScheduled(long id, DownloadTask task) {
+        tasksInProgress.put(id, task);
     }
 
     public void taskCompleted(long id) {
-        tasksInProgress.remove(new Long(id));
+        if (!tasksInProgress.containsKey(id)) {
+            return;
+        }
+
+        DownloadTask completedTask = tasksInProgress.remove(id);
+        postProcessor.downloadComplete(completedTask);
+
         if (!hasScheduledTasks()) {
             notifyListener();
         }

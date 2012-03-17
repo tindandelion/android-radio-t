@@ -30,7 +30,12 @@ public class DownloadService extends Service {
             stopSelf();
         }
     };
+    private DownloadTracker.PostProcessor onFileDownloaded = new DownloadTracker.PostProcessor() {
+        @Override
+        public void downloadComplete(DownloadTask task) {
 
+        }
+    };
 
     public IBinder onBind(Intent intent) {
         return null;
@@ -61,7 +66,7 @@ public class DownloadService extends Service {
 
     private void createCore() {
         PodcastsApp app = PodcastsApp.getInstance();
-        tracker = new DownloadTracker();
+        tracker = new DownloadTracker(onFileDownloaded);
         tracker.setListener(onFinished);
         downloader = new DownloadStarter(app.createDownloadManager(),
                 app.getPodcastDownloadFolder(), tracker);
