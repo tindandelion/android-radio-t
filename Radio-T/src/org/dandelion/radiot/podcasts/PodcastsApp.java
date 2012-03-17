@@ -75,4 +75,8 @@ public class PodcastsApp {
     public DownloadFolder getPodcastDownloadFolder() {
         return new DownloadFolder(getSystemDownloadFolder());
     }
+
+    public MediaScanner createMediaScanner() {
+        return new SystemMediaScanner(context);
+    }
 }

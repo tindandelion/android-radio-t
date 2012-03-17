@@ -17,6 +17,8 @@ public class DownloadService extends Service {
 
     private DownloadStarter downloader;
     private DownloadTracker tracker;
+    private DownloadTracker.PostProcessor localFileProcessor;
+
     private BroadcastReceiver onDownloadCompleted = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -28,12 +30,6 @@ public class DownloadService extends Service {
         @Override
         public void onAllTasksCompleted() {
             stopSelf();
-        }
-    };
-    private DownloadTracker.PostProcessor onFileDownloaded = new DownloadTracker.PostProcessor() {
-        @Override
-        public void downloadComplete(DownloadTask task) {
-
         }
     };
 
@@ -66,7 +62,8 @@ public class DownloadService extends Service {
 
     private void createCore() {
         PodcastsApp app = PodcastsApp.getInstance();
-        tracker = new DownloadTracker(onFileDownloaded);
+        localFileProcessor = new LocalPodcastProcessor(app.createMediaScanner());
+        tracker = new DownloadTracker(localFileProcessor);
         tracker.setListener(onFinished);
         downloader = new DownloadStarter(app.createDownloadManager(),
                 app.getPodcastDownloadFolder(), tracker);
