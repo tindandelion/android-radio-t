@@ -1,19 +1,16 @@
-Downloading:
-DONE Handle Android < 2.3.3
- * Podcast number already goes with # sign, not pretty for other usages
- * Provide nice podcast title and description
-PROGRESS Handle download completion with notification
-    * Extract downloader service
-    * Implement podcast download tracking
-    * Persist tracking info
- * Invoke media scanner on downloaded file
- * Cancel post-processing if download is aborted
+ Downloading:
+ * Open downloads activity when clicking on progress notification
+ * Notification on download completion
+ * Download service should survive restarts
 
  UI:
  * Portrait lock for podcasts activity
  * New notification icon for 2.3
 
- General:
+* General:
+ * Remove 1.6 legacy completely
+
+ Development:
  * Explore AndroidMock
  * Try merging unit tests and a main app
  * Build and test all in one click
