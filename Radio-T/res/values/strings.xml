@@ -65,7 +65,7 @@
         \nза ценные советы и помощь в тестировании приложения
     </string>
     <string name="download_unsupported_title">Загрузка не поддерживается</string>
-    <string name="implement_download_request">Пожалуйста, реализуй загрузку подкастов для Android %s</string>
+    <string name="implement_download_request">Пожалуйста, реализуй загрузку подкастов для Android младших версий!</string>
     <string name="download_unsupported_message">
         Загрузка подкастов реализована для <b>Android 2.3</b> и старше. Вы можете попросить автора сделать эту функцию и для Вашей версии Android.
     </string>

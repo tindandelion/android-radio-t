@@ -24,8 +24,16 @@ public class FeedbackEmail {
         intent.setType("message/rfc822");
         intent.putExtra(Intent.EXTRA_EMAIL, new String[] {address} );
         intent.putExtra(Intent.EXTRA_SUBJECT, subject);
-        intent.putExtra(Intent.EXTRA_TEXT, messageText);
+        intent.putExtra(Intent.EXTRA_TEXT, composeMessageText());
         return intent;
+    }
+
+    private String composeMessageText() {
+        return messageText + messageFooter();
+    }
+
+    private String messageFooter() {
+        return String.format("\n\n---------------------\nAndroid version: %s", appInfo.getAndroidVersion());
     }
 
     private String composeSubject() {

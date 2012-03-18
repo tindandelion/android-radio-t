@@ -1,7 +1,6 @@
 package org.dandelion.radiot.podcasts.download;
 
 import android.app.Activity;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import org.dandelion.radiot.R;
@@ -16,7 +15,7 @@ public class FakeDownloaderActivity extends Activity {
     
     public void sendFeedback(View v) {
         new FeedbackEmail(this, AppInfo.getInstance())
-                .setText(getString(R.string.implement_download_request, Build.VERSION.RELEASE))
+                .setText(getString(R.string.implement_download_request))
                 .openInEditor();
     }
 }
