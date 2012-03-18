@@ -23,6 +23,15 @@ public class SystemDownloadMonitor {
         }
     };
 
+    private BroadcastReceiver onNotificationClicked = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            intent = new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+        }
+    };
+
     public SystemDownloadMonitor(Context context) {
         this.context = context;
     }
@@ -34,9 +43,12 @@ public class SystemDownloadMonitor {
     public void start() {
         context.registerReceiver(onDownloadCompleted,
                 new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+        context.registerReceiver(onNotificationClicked,
+                new IntentFilter(DownloadManager.ACTION_NOTIFICATION_CLICKED));
     }
 
     public void stop() {
         context.unregisterReceiver(onDownloadCompleted);
+        context.unregisterReceiver(onNotificationClicked);
     }
 }

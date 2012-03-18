@@ -1,9 +1,10 @@
  Downloading:
- * Open downloads activity when clicking on progress notification
+ DONE Open downloads activity when clicking on progress notification
  * Notification on download completion
  * Download service should survive restarts
+ * No need to filter download completion events?
 
- UI:
+UI:
  * Portrait lock for podcasts activity
  * New notification icon for 2.3
 
