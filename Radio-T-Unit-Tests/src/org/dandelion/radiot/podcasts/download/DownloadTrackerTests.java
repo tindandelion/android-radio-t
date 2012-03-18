@@ -30,21 +30,21 @@ public class DownloadTrackerTests {
     @Test
     public void testRemovingTask() throws Exception {
         tracker.acceptTask(task);
-        tracker.taskCompleted(1);
+        tracker.onDownloadComplete(1);
         assertFalse(tracker.hasScheduledTasks());
     }
 
     @Test
     public void ignoreUntrackedTasks() throws Exception {
         tracker.acceptTask(task);
-        tracker.taskCompleted(2);
+        tracker.onDownloadComplete(2);
         assertTrue(tracker.hasScheduledTasks());
     }
 
     @Test
     public void passesTaskFurtherWhenItIsCompleted() throws Exception {
         tracker.acceptTask(task);
-        tracker.taskCompleted(1);
+        tracker.onDownloadComplete(1);
         verify(nextProcessor).acceptTask(task);
     }
 
@@ -57,10 +57,10 @@ public class DownloadTrackerTests {
         tracker.acceptTask(task);
         tracker.acceptTask(otherTask);
 
-        tracker.taskCompleted(1);
+        tracker.onDownloadComplete(1);
         verifyZeroInteractions(listener);
 
-        tracker.taskCompleted(2);
+        tracker.onDownloadComplete(2);
         verify(listener).onAllTasksCompleted();
     }
 }

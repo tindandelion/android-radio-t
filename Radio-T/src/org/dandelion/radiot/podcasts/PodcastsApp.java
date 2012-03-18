@@ -12,7 +12,7 @@ import java.io.File;
 
 public class PodcastsApp {
     private static PodcastsApp instance;
-    private Context context;
+    protected Context context;
 
     public static void initialize(Context context) {
         if (null == instance) {

@@ -1,11 +1,7 @@
 package org.dandelion.radiot.podcasts.download;
 
-import android.app.DownloadManager;
 import android.app.Service;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.IBinder;
 import android.util.Log;
 import org.dandelion.radiot.podcasts.PodcastsApp;
@@ -17,15 +13,9 @@ public class DownloadService extends Service {
 
     private DownloadStarter downloader;
     private DownloadTracker tracker;
+    private SystemDownloadMonitor monitor;
     private DownloadProcessor localFileProcessor;
 
-    private BroadcastReceiver onDownloadCompleted = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, 0);
-            tracker.taskCompleted(id);
-        }
-    };
     private DownloadTracker.Listener onFinished = new DownloadTracker.Listener() {
         @Override
         public void onAllTasksCompleted() {
@@ -40,7 +30,13 @@ public class DownloadService extends Service {
     @Override
     public void onCreate() {
         createCore();
-        registerReceivers();
+        createMonitor();
+    }
+
+    private void createMonitor() {
+        monitor = new SystemDownloadMonitor(this);
+        monitor.setDownloadListener(tracker);
+        monitor.start();
     }
 
     @Override
@@ -51,13 +47,8 @@ public class DownloadService extends Service {
 
     @Override
     public void onDestroy() {
-        unregisterReceivers();
+        monitor.stop();
         log("Service destroyed");
-    }
-
-    private void registerReceivers() {
-        registerReceiver(onDownloadCompleted,
-                new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
     }
 
     private void createCore() {
@@ -67,10 +58,6 @@ public class DownloadService extends Service {
         tracker.setListener(onFinished);
         downloader = new DownloadStarter(tracker, app.createDownloadManager(),
                 app.getPodcastDownloadFolder());
-    }
-
-    private void unregisterReceivers() {
-        unregisterReceiver(onDownloadCompleted);
     }
 
     private void handleCommand(Intent intent) {

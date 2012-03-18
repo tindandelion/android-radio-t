@@ -7,13 +7,13 @@ import org.dandelion.radiot.podcasts.download.Downloader;
 import java.io.File;
 
 public class FakeDownloadManager implements Downloader {
-    private static final long DOWNLOAD_ID = 1;
+    public static final long TASK_ID = 1;
     private SyncValueHolder<DownloadTask> submitted = new SyncValueHolder<DownloadTask>();
 
     @Override
     public long submit(DownloadTask task) {
         submitted.setValue(task);
-        return DOWNLOAD_ID;
+        return TASK_ID;
     }
 
     public void assertSubmittedRequest(String src, File dest) {

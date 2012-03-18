@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import org.dandelion.radiot.RadiotApplication;
+import android.os.Build;
 
 public class AppInfo {
     private static AppInfo instance;
@@ -32,6 +32,10 @@ public class AppInfo {
 
     public CharSequence getLabel() {
         return packageManager.getApplicationLabel(applicationInfo);
+    }
+    
+    public String getAndroidVersion() {
+        return Build.VERSION.RELEASE;
     }
 
     private AppInfo(Context context) {
