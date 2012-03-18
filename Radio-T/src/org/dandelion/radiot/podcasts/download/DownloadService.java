@@ -8,12 +8,15 @@ import org.dandelion.radiot.podcasts.PodcastsApp;
 
 public class DownloadService extends Service {
     private static String TAG = DownloadService.class.getName();
-    public static String URL_EXTRA = TAG + ".Url";
-    public static final String TITLE_EXTRA = TAG + ".Title";
+    public static String START_DOWNLOAD_ACTION = TAG + ".START_DOWNLOAD";
+    public static final String DOWNLOAD_COMPLETE_ACTION = TAG + ".DOWNLOAD_COMPLETE";
+
+    public static String URL_EXTRA = TAG + ".URL";
+    public static final String TITLE_EXTRA = TAG + ".TITLE";
+    public static final String TASK_ID_EXTRA = TAG + ".TASK_ID";
 
     private DownloadStarter downloader;
     private DownloadTracker tracker;
-    private SystemDownloadMonitor monitor;
     private DownloadProcessor localFileProcessor;
 
     private DownloadTracker.Listener onFinished = new DownloadTracker.Listener() {
@@ -30,24 +33,27 @@ public class DownloadService extends Service {
     @Override
     public void onCreate() {
         createCore();
-        createMonitor();
-    }
-
-    private void createMonitor() {
-        monitor = new SystemDownloadMonitor(this);
-        monitor.setDownloadListener(tracker);
-        monitor.start();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        handleCommand(intent);
+        String action = intent.getAction();
+        if (START_DOWNLOAD_ACTION.equals(action)) {
+            startDownloading(intent);
+        }
+        if (DOWNLOAD_COMPLETE_ACTION.equals(action)) {
+            processCompletedDownload(intent);
+        }
         return START_STICKY;
+    }
+
+    private void processCompletedDownload(Intent intent) {
+        long taskId = intent.getLongExtra(TASK_ID_EXTRA, 0);
+        tracker.onDownloadComplete(taskId);
     }
 
     @Override
     public void onDestroy() {
-        monitor.stop();
         log("Service destroyed");
     }
 
@@ -60,7 +66,7 @@ public class DownloadService extends Service {
                 app.getPodcastDownloadFolder());
     }
 
-    private void handleCommand(Intent intent) {
+    private void startDownloading(Intent intent) {
         DownloadTask task = new DownloadTask()
                 .setUrl(intent.getStringExtra(URL_EXTRA))
                 .setTitle(intent.getStringExtra(TITLE_EXTRA));

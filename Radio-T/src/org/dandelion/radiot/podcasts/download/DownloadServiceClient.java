@@ -21,6 +21,7 @@ public class DownloadServiceClient implements PodcastProcessor {
         private DownloadCommand(Context context) {
             this.context = context;
             this.intent = new Intent(context, DownloadService.class);
+            intent.setAction(DownloadService.START_DOWNLOAD_ACTION);
         }
 
         public void submit() {

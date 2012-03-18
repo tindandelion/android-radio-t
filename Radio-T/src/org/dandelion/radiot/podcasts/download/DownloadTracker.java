@@ -2,7 +2,7 @@ package org.dandelion.radiot.podcasts.download;
 
 import java.util.HashMap;
 
-public class DownloadTracker extends DownloadProcessor implements SystemDownloadMonitor.DownloadListener {
+public class DownloadTracker extends DownloadProcessor {
     public interface Listener {
         void onAllTasksCompleted();
     }
@@ -23,7 +23,6 @@ public class DownloadTracker extends DownloadProcessor implements SystemDownload
         tasksInProgress.put(task.id, task);
     }
 
-    @Override
     public void onDownloadComplete(long id) {
         if (!isTrackingTask(id)) return;
 

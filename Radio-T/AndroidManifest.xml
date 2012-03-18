@@ -41,9 +41,14 @@
                         android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <service
-                android:name=".live.service.LiveShowService"/>
+        <service android:name=".live.service.LiveShowService"/>
         <service android:name=".podcasts.download.DownloadService"/>
+        <receiver android:name=".podcasts.download.DownloadNotificationReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.DOWNLOAD_NOTIFICATION_CLICKED" />
+                <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
+            </intent-filter>
+        </receiver>
     </application>
     <uses-permission
             android:name="android.permission.INTERNET"/>
