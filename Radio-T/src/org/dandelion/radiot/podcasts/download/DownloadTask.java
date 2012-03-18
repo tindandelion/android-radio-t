@@ -34,4 +34,9 @@ public class DownloadTask {
         id = value;
         return this;
     }
+
+    public DownloadTask setLocalPath(File value) {
+        localPath = value;
+        return this;
+    }
 }

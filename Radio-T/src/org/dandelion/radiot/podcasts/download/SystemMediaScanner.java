@@ -13,7 +13,7 @@ public class SystemMediaScanner implements MediaScanner {
     }
 
     @Override
-    public void scanPodcastFile(File path) {
+    public void scanAudioFile(File path) {
         MediaScannerConnection.scanFile(context, 
                 new String[] {path.toString()},
                 new String[] {"audio/mpeg"},
