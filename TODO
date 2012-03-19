@@ -1,15 +1,11 @@
  Downloading:
- DONE Open downloads activity when clicking on progress notification
  * Notification on download completion
- * Download service should survive restarts
-DONE No need to filter download completion events?
 
 UI:
  * Portrait lock for podcasts activity
-DONE New notification icon for 2.3
 
 * General:
- * Remove 1.6 legacy completely
+ * Restore 1.6 compatibility
 
  Development:
  * Explore AndroidMock

@@ -3,33 +3,37 @@ package org.dandelion.radiot.podcasts.download;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
+
 import static org.mockito.Mockito.*;
 
-public class DownloadTrackerTests {
-    private DownloadTracker tracker;
+public class DownloadFinisherTests {
+    private MediaScanner scanner;
+    private DownloadFinisher finisher;
     private DownloadTask task;
-    private DownloadProcessor nextProcessor;
     private Downloader downloader;
 
     @Before
     public void setUp() throws Exception {
-        nextProcessor = mock(DownloadProcessor.class);
+        scanner = mock(MediaScanner.class);
         downloader = mock(Downloader.class);
-        tracker = new DownloadTracker(nextProcessor, downloader);
-        task = new DownloadTask().setId(1);
+        finisher = new DownloadFinisher(downloader, scanner);
+        task = new DownloadTask()
+                .setId(1)
+                .setLocalPath(new File("/mnt/downloads"));
     }
 
     @Test
     public void queriesTaskFromDownloadManagerAndPassesItFurther() throws Exception {
         when(downloader.query(1)).thenReturn(task);
-        tracker.onDownloadComplete(1);
-        verify(nextProcessor).acceptTask(task);
+        finisher.finishDownload(1);
+        verify(scanner).scanAudioFile(task.localPath);
     }
 
     @Test
     public void skipsCancelledTasks() throws Exception {
         when(downloader.query(1)).thenReturn(null);
-        tracker.onDownloadComplete(1);
-        verifyZeroInteractions(nextProcessor);
+        finisher.finishDownload(1);
+        verifyZeroInteractions(scanner);
     }
 }

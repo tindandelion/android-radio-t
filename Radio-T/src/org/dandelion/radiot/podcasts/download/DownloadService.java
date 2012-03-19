@@ -14,8 +14,7 @@ public class DownloadService extends IntentService {
     public static final String TASK_ID_EXTRA = TAG + ".TASK_ID";
 
     private DownloadStarter downloader;
-    private DownloadTracker tracker;
-    private DownloadProcessor localFileProcessor;
+    private DownloadFinisher finisher;
 
     public DownloadService() {
         super(TAG);
@@ -40,22 +39,22 @@ public class DownloadService extends IntentService {
 
     private void processCompletedDownload(Intent intent) {
         long taskId = intent.getLongExtra(TASK_ID_EXTRA, 0);
-        tracker.onDownloadComplete(taskId);
+        finisher.finishDownload(taskId);
     }
 
     private void createCore() {
         PodcastsApp app = PodcastsApp.getInstance();
         Downloader downloadManager = app.createDownloadManager();
         DownloadFolder downloadFolder = app.getPodcastDownloadFolder();
-        localFileProcessor = new MediaScannerProcessor(app.createMediaScanner());
-        tracker = new DownloadTracker(localFileProcessor, downloadManager);
-        downloader = new DownloadStarter(tracker, downloadManager, downloadFolder);
+        MediaScanner mediaScanner = app.createMediaScanner();
+        downloader = new DownloadStarter(downloadManager, downloadFolder);
+        finisher = new DownloadFinisher(downloadManager, mediaScanner);
     }
 
     private void startDownloading(Intent intent) {
         DownloadTask task = new DownloadTask()
                 .setUrl(intent.getStringExtra(URL_EXTRA))
                 .setTitle(intent.getStringExtra(TITLE_EXTRA));
-        downloader.acceptTask(task);
+        downloader.startDownloading(task);
     }
 }

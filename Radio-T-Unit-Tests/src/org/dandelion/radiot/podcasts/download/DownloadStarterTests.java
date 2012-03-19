@@ -16,21 +16,19 @@ public class DownloadStarterTests {
     private Downloader manager;
     private DownloadStarter downloader;
     private DownloadFolder downloadFolder;
-    private DownloadProcessor nextProcessor;
     private DownloadTask task;
 
     @Before
     public void setUp() throws Exception {
         downloadFolder = mock(DownloadFolder.class);
         manager = mock(Downloader.class);
-        nextProcessor = mock(DownloadProcessor.class);
-        downloader = new DownloadStarter(nextProcessor, manager, downloadFolder);
+        downloader = new DownloadStarter(manager, downloadFolder);
         task = new DownloadTask(SOURCE_URL);
     }
 
     @Test
     public void submitsTaskToDownloader() throws Exception {
-        downloader.acceptTask(task);
+        downloader.startDownloading(task);
         verify(manager).submit(task);
     }
 
@@ -39,22 +37,13 @@ public class DownloadStarterTests {
         File destPath = new File("/mnt/download/filename.mp3");
         when(downloadFolder.makePathForUrl(SOURCE_URL))
                 .thenReturn(destPath);
-        downloader.acceptTask(task);
+        downloader.startDownloading(task);
         assertEquals(task.localPath, destPath);
     }
 
     @Test
-    public void passesTaskToTrackerWithAnAssignedId() throws Exception {
-        long taskId = 1;
-        when(manager.submit(task)).thenReturn(taskId);
-        downloader.acceptTask(task);
-        assertEquals(taskId, task.id);
-        verify(nextProcessor).acceptTask(task);
-    }
-
-    @Test
     public void ensuresDownloadFolderExists() throws Exception {
-        downloader.acceptTask(task);
+        downloader.startDownloading(task);
         verify(downloadFolder).mkdirs();
     }
 }
