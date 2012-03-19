@@ -3,64 +3,33 @@ package org.dandelion.radiot.podcasts.download;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.*;
 
 public class DownloadTrackerTests {
     private DownloadTracker tracker;
     private DownloadTask task;
     private DownloadProcessor nextProcessor;
+    private Downloader downloader;
 
     @Before
     public void setUp() throws Exception {
         nextProcessor = mock(DownloadProcessor.class);
-        tracker = new DownloadTracker(nextProcessor);
+        downloader = mock(Downloader.class);
+        tracker = new DownloadTracker(nextProcessor, downloader);
         task = new DownloadTask().setId(1);
     }
 
     @Test
-    public void testAddingTask() throws Exception {
-        tracker.acceptTask(task);
-        assertTrue(tracker.hasScheduledTasks());
-    }
-
-    @Test
-    public void testRemovingTask() throws Exception {
-        tracker.acceptTask(task);
-        tracker.onDownloadComplete(1);
-        assertFalse(tracker.hasScheduledTasks());
-    }
-
-    @Test
-    public void ignoreUntrackedTasks() throws Exception {
-        tracker.acceptTask(task);
-        tracker.onDownloadComplete(2);
-        assertTrue(tracker.hasScheduledTasks());
-    }
-
-    @Test
-    public void passesTaskFurtherWhenItIsCompleted() throws Exception {
-        tracker.acceptTask(task);
+    public void queriesTaskFromDownloadManagerAndPassesItFurther() throws Exception {
+        when(downloader.query(1)).thenReturn(task);
         tracker.onDownloadComplete(1);
         verify(nextProcessor).acceptTask(task);
     }
 
     @Test
-    public void testNotifiesListenerWhenAllTasksFinished() throws Exception {
-        DownloadTracker.Listener listener = mock(DownloadTracker.Listener.class);
-        DownloadTask otherTask = new DownloadTask().setId(2);
-
-        tracker.setListener(listener);
-        tracker.acceptTask(task);
-        tracker.acceptTask(otherTask);
-
+    public void skipsCancelledTasks() throws Exception {
+        when(downloader.query(1)).thenReturn(null);
         tracker.onDownloadComplete(1);
-        verifyZeroInteractions(listener);
-
-        tracker.onDownloadComplete(2);
-        verify(listener).onAllTasksCompleted();
+        verifyZeroInteractions(nextProcessor);
     }
 }

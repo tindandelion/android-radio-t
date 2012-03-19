@@ -16,17 +16,21 @@ public class SyncValueHolder<T> {
     }
 
     public T getValue() {
-        waitForValueToBeSet();
+        waitForValue();
         return value;
     }
 
-    private void waitForValueToBeSet() {
+    public boolean await() {
         try {
-            Assert.assertTrue(waitTimeoutExpiredMessage(WAIT_TIMEOUT_SECONDS),
-                    latch.await(WAIT_TIMEOUT_SECONDS, TimeUnit.SECONDS));
+            return latch.await(WAIT_TIMEOUT_SECONDS, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void waitForValue() {
+        Assert.assertTrue(waitTimeoutExpiredMessage(WAIT_TIMEOUT_SECONDS),
+                await());
     }
 
     private String waitTimeoutExpiredMessage(long seconds) {

@@ -16,4 +16,8 @@ public class FakeMediaScanner implements MediaScanner {
     public void assertScannedFile(File path) {
         Assert.assertEquals("Scanned file", path, scannedFile.getValue());
     }
+
+    public void assertNoInteractions() {
+        Assert.assertFalse("Unexpected file scan", scannedFile.await());
+    }
 }

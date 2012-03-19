@@ -1,9 +1,7 @@
 package org.dandelion.radiot.accepttest;
 
 
-import android.app.DownloadManager;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Environment;
 import org.dandelion.radiot.accepttest.drivers.ApplicationDriver;
 import org.dandelion.radiot.accepttest.drivers.PodcastListDriver;
@@ -14,12 +12,11 @@ import org.dandelion.radiot.helpers.PodcastListAcceptanceTestCase;
 import org.dandelion.radiot.podcasts.PodcastsApp;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastProcessor;
-import org.dandelion.radiot.podcasts.download.FakeDownloaderActivity;
 import org.dandelion.radiot.podcasts.download.Downloader;
+import org.dandelion.radiot.podcasts.download.FakeDownloaderActivity;
 import org.dandelion.radiot.podcasts.download.MediaScanner;
 
 import java.io.File;
-import java.io.IOException;
 
 public class SelectingPodcastsFromList extends PodcastListAcceptanceTestCase {
 
@@ -28,8 +25,6 @@ public class SelectingPodcastsFromList extends PodcastListAcceptanceTestCase {
     }
 
     public static final String SAMPLE_URL = "http://example.com/podcast_file.mp3";
-    private static final File DOWNLOAD_FOLDER = getDownloadFolder();
-
     private FakePodcastPlayer player;
     private FakeDownloadManager downloadManager;
     private TestingPodcastsApp application;
@@ -52,15 +47,24 @@ public class SelectingPodcastsFromList extends PodcastListAcceptanceTestCase {
     public void testDownloadPodcastFileLocally() throws Exception {
         PodcastListDriver driver = gotoPodcastListPage();
         driver.makeSamplePodcastWithUrl(SAMPLE_URL);
-        File localPath = new File(DOWNLOAD_FOLDER, "podcast_file.mp3");
+        File localPath = new File(getDownloadFolder(), "podcast_file.mp3");
 
         driver.selectItemForDownloading(0);
         downloadManager.assertSubmittedRequest(SAMPLE_URL, localPath);
-
-        application.signalDownloadComplete(localPath);
+        downloadManager.downloadComplete();
         mediaScanner.assertScannedFile(localPath);
     }
 
+    public void testCancelDownloadInProgress() throws Exception {
+        PodcastListDriver driver = gotoPodcastListPage();
+        driver.makeSamplePodcastWithUrl(SAMPLE_URL);
+        File localPath = new File(getDownloadFolder(), "podcast_file.mp3");
+
+        driver.selectItemForDownloading(0);
+        downloadManager.assertSubmittedRequest(SAMPLE_URL, localPath);
+        downloadManager.cancelDownload();
+        mediaScanner.assertNoInteractions();
+    }
 
     public void testInformsUserOnUnsupportedPlatforms() throws Exception {
         application.setDownloadSupported(false);
@@ -82,11 +86,11 @@ public class SelectingPodcastsFromList extends PodcastListAcceptanceTestCase {
 
     private void setupEnvironment() {
         player = new FakePodcastPlayer();
-        downloadManager = new FakeDownloadManager();
+        downloadManager = new FakeDownloadManager(getInstrumentation().getTargetContext());
         mediaScanner = new FakeMediaScanner();
         application = new TestingPodcastsApp(getInstrumentation().getTargetContext(),
                 player, downloadManager, mediaScanner);
-        application.setDownloadFolder(DOWNLOAD_FOLDER);
+        application.setDownloadFolder(getDownloadFolder());
         PodcastsApp.setTestingInstance(application);
     }
 }
@@ -136,24 +140,5 @@ class TestingPodcastsApp extends PodcastsApp {
 
     public void setDownloadFolder(File value) {
         downloadFolder = value;
-    }
-
-    public void signalDownloadComplete(File localPath) {
-        createLocalFile(localPath);
-        sendCompletionBroadcast();
-    }
-
-    private void createLocalFile(File localPath) {
-        try {
-            localPath.createNewFile();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private void sendCompletionBroadcast() {
-        Intent intent = new Intent(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
-        intent.putExtra(DownloadManager.EXTRA_DOWNLOAD_ID, FakeDownloadManager.TASK_ID);
-        context.sendBroadcast(intent);
     }
 }

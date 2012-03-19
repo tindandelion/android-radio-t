@@ -1,12 +1,10 @@
 package org.dandelion.radiot.podcasts.download;
 
-import android.app.Service;
+import android.app.IntentService;
 import android.content.Intent;
-import android.os.IBinder;
-import android.util.Log;
 import org.dandelion.radiot.podcasts.PodcastsApp;
 
-public class DownloadService extends Service {
+public class DownloadService extends IntentService {
     private static String TAG = DownloadService.class.getName();
     public static String START_DOWNLOAD_ACTION = TAG + ".START_DOWNLOAD";
     public static final String DOWNLOAD_COMPLETE_ACTION = TAG + ".DOWNLOAD_COMPLETE";
@@ -19,24 +17,12 @@ public class DownloadService extends Service {
     private DownloadTracker tracker;
     private DownloadProcessor localFileProcessor;
 
-    private DownloadTracker.Listener onFinished = new DownloadTracker.Listener() {
-        @Override
-        public void onAllTasksCompleted() {
-            stopSelf();
-        }
-    };
-
-    public IBinder onBind(Intent intent) {
-        return null;
+    public DownloadService() {
+        super(TAG);
     }
 
     @Override
-    public void onCreate() {
-        createCore();
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
+    protected void onHandleIntent(Intent intent) {
         String action = intent.getAction();
         if (START_DOWNLOAD_ACTION.equals(action)) {
             startDownloading(intent);
@@ -44,7 +30,12 @@ public class DownloadService extends Service {
         if (DOWNLOAD_COMPLETE_ACTION.equals(action)) {
             processCompletedDownload(intent);
         }
-        return START_STICKY;
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        createCore();
     }
 
     private void processCompletedDownload(Intent intent) {
@@ -52,18 +43,13 @@ public class DownloadService extends Service {
         tracker.onDownloadComplete(taskId);
     }
 
-    @Override
-    public void onDestroy() {
-        log("Service destroyed");
-    }
-
     private void createCore() {
         PodcastsApp app = PodcastsApp.getInstance();
+        Downloader downloadManager = app.createDownloadManager();
+        DownloadFolder downloadFolder = app.getPodcastDownloadFolder();
         localFileProcessor = new MediaScannerProcessor(app.createMediaScanner());
-        tracker = new DownloadTracker(localFileProcessor);
-        tracker.setListener(onFinished);
-        downloader = new DownloadStarter(tracker, app.createDownloadManager(),
-                app.getPodcastDownloadFolder());
+        tracker = new DownloadTracker(localFileProcessor, downloadManager);
+        downloader = new DownloadStarter(tracker, downloadManager, downloadFolder);
     }
 
     private void startDownloading(Intent intent) {
@@ -71,9 +57,5 @@ public class DownloadService extends Service {
                 .setUrl(intent.getStringExtra(URL_EXTRA))
                 .setTitle(intent.getStringExtra(TITLE_EXTRA));
         downloader.acceptTask(task);
-    }
-    
-    private void log(String message) {
-        Log.v("DOWNLOAD", message);
     }
 }
