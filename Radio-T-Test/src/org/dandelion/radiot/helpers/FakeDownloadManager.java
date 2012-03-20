@@ -40,12 +40,18 @@ public class FakeDownloadManager implements Downloader {
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public void downloadComplete() {
         DownloadTask value = submitted.getValue();
+        value.setSuccessful(true);
+        createEmptyFile(value);
+        sendCompletionBroadcast();
+    }
+
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    private void createEmptyFile(DownloadTask value) {
         try {
             value.localPath.createNewFile();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        sendCompletionBroadcast();
     }
 
     private void sendCompletionBroadcast() {

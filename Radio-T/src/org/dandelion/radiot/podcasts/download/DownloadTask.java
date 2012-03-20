@@ -7,13 +7,9 @@ public class DownloadTask {
     public String title;
     public File localPath;
     public String url;
+    public boolean isSuccessful;
 
     public DownloadTask() {
-    }
-
-    public DownloadTask(String title, File localPath) {
-        this.title = title;
-        this.localPath = localPath;
     }
 
     public DownloadTask(String url) {
@@ -37,6 +33,11 @@ public class DownloadTask {
 
     public DownloadTask setLocalPath(File value) {
         localPath = value;
+        return this;
+    }
+
+    public DownloadTask setSuccessful(boolean value) {
+        this.isSuccessful = value;
         return this;
     }
 }

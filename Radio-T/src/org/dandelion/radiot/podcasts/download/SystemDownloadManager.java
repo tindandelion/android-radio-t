@@ -32,12 +32,19 @@ public class SystemDownloadManager implements Downloader {
     }
 
     private DownloadTask constructTask(Cursor cursor) {
+        DownloadTask task = new DownloadTask();
         cursor.moveToFirst();
-        return new DownloadTask()
-                .setId(cursor.getLong(cursor.getColumnIndex(DownloadManager.COLUMN_ID)))
-                .setLocalPath(new File(cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI))))
-                .setTitle(cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_TITLE)))
-                .setUrl(cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_URI)));
+        task.id = cursor.getLong(cursor.getColumnIndex(DownloadManager.COLUMN_ID));
+        task.title = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_TITLE));
+        task.url = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_URI));
+
+        long status = cursor.getLong(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS));
+        task.isSuccessful = (status == DownloadManager.STATUS_SUCCESSFUL);
+
+        String localPathUri = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI));
+        task.localPath = new File(Uri.parse(localPathUri).getPath());
+
+        return task;
     }
 
     private Cursor requestCursor(long id) {

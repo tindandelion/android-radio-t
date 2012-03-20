@@ -20,7 +20,8 @@ public class DownloadFinisherTests {
         finisher = new DownloadFinisher(downloader, scanner);
         task = new DownloadTask()
                 .setId(1)
-                .setLocalPath(new File("/mnt/downloads"));
+                .setLocalPath(new File("/mnt/downloads"))
+                .setSuccessful(true);
     }
 
     @Test
@@ -33,6 +34,14 @@ public class DownloadFinisherTests {
     @Test
     public void skipsCancelledTasks() throws Exception {
         when(downloader.query(1)).thenReturn(null);
+        finisher.finishDownload(1);
+        verifyZeroInteractions(scanner);
+    }
+
+    @Test
+    public void skipsFailedTasks() throws Exception {
+        task.setSuccessful(false);
+        when(downloader.query(1)).thenReturn(task);
         finisher.finishDownload(1);
         verifyZeroInteractions(scanner);
     }

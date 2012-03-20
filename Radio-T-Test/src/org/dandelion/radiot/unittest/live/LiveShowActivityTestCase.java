@@ -28,7 +28,7 @@ public class LiveShowActivityTestCase extends
 	}
 
 	public void testUpdatesViewAtStart() throws Exception {
-		assertTrue(activity.isVisualStateUpdated);
+		assertTrue(activity.isVisualStateUpdated());
 	}
 
 	public void testDisconnectsFromServiceAtStop() throws Exception {
@@ -44,13 +44,13 @@ public class LiveShowActivityTestCase extends
 		activity.resetVisualState();
 		callOnStop();
         PlaybackStateChangedEvent.send(getInstrumentation().getContext(), new LiveShowState());
-		assertFalse(activity.isVisualStateUpdated);
+		assertFalse(activity.isVisualStateUpdated());
 	}
 
 	public void testReceivesServiceBroadcasts() throws Exception {
 		activity.resetVisualState();
         PlaybackStateChangedEvent.send(getInstrumentation().getContext(), new LiveShowState());
-		assertTrue(activity.isVisualStateUpdated);
+		assertTrue(activity.isVisualStateUpdated());
 	}
 
 }

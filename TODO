@@ -1,6 +1,7 @@
 Downloading:
  * Test on Android 2.0!
  * Notification on download completion
+ * Respect background data loading settings
 
 UI:
  * Portrait lock for podcasts activity

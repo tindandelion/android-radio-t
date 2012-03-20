@@ -11,9 +11,13 @@ public class DownloadFinisher {
 
     public void finishDownload(long id) {
         DownloadTask completedTask = downloader.query(id);
-        if (completedTask != null) {
+        if (taskSuccessful(completedTask)) {
             mediaScanner.scanAudioFile(completedTask.localPath);
         }
+    }
+
+    private boolean taskSuccessful(DownloadTask task) {
+        return (task != null) && (task.isSuccessful);
     }
 
 }
