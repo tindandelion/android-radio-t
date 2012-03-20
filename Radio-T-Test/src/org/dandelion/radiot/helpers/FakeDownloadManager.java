@@ -1,16 +1,14 @@
 package org.dandelion.radiot.helpers;
 
-import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import junit.framework.Assert;
-import org.dandelion.radiot.podcasts.download.DownloadTask;
-import org.dandelion.radiot.podcasts.download.Downloader;
+import org.dandelion.radiot.podcasts.download.DownloadManager;
 
 import java.io.File;
 import java.io.IOException;
 
-public class FakeDownloadManager implements Downloader {
+public class FakeDownloadManager implements DownloadManager {
     public static final long TASK_ID = 1;
     private SyncValueHolder<DownloadTask> submitted = new SyncValueHolder<DownloadTask>();
     private Context context;
@@ -40,7 +38,7 @@ public class FakeDownloadManager implements Downloader {
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public void downloadComplete() {
         DownloadTask value = submitted.getValue();
-        value.setSuccessful(true);
+        value.isSuccessful = true;
         createEmptyFile(value);
         sendCompletionBroadcast();
     }
@@ -55,8 +53,8 @@ public class FakeDownloadManager implements Downloader {
     }
 
     private void sendCompletionBroadcast() {
-        Intent intent = new Intent(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
-        intent.putExtra(DownloadManager.EXTRA_DOWNLOAD_ID, FakeDownloadManager.TASK_ID);
+        Intent intent = new Intent(android.app.DownloadManager.ACTION_DOWNLOAD_COMPLETE);
+        intent.putExtra(android.app.DownloadManager.EXTRA_DOWNLOAD_ID, FakeDownloadManager.TASK_ID);
         context.sendBroadcast(intent);
     }
 

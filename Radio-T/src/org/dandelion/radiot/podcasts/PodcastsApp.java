@@ -1,6 +1,5 @@
 package org.dandelion.radiot.podcasts;
 
-import android.app.DownloadManager;
 import android.content.Context;
 import android.os.Build;
 import android.os.Environment;
@@ -68,8 +67,8 @@ public class PodcastsApp {
         return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
     }
 
-    public Downloader createDownloadManager() {
-        return new SystemDownloadManager((DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE));
+    public DownloadManager createDownloadManager() {
+        return new SystemDownloadManager((android.app.DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE));
     }
 
     public DownloadFolder getPodcastDownloadFolder() {

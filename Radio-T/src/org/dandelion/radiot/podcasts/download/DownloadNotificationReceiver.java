@@ -20,10 +20,7 @@ public class DownloadNotificationReceiver extends BroadcastReceiver {
     }
 
     private void sendNotificationToDownloadService(Context context, long taskId) {
-        Intent intent = new Intent(context, DownloadService.class);
-        intent.setAction(DownloadService.DOWNLOAD_COMPLETE_ACTION);
-        intent.putExtra(DownloadService.TASK_ID_EXTRA, taskId);
-        context.startService(intent);
+        new DownloadServiceClient().downloadCompleted(context, taskId);
     }
 
     private void openDownloadsActivity(Context context) {

@@ -8,17 +8,44 @@ import org.dandelion.radiot.podcasts.core.PodcastProcessor;
 public class DownloadServiceClient implements PodcastProcessor {
     @Override
     public void process(Context context, PodcastItem podcast) {
-        new DownloadCommand(context)
+        new StartCommand(context)
                 .setTitle(podcast.getTitle())
                 .setUrl(podcast.getAudioUri())
                 .submit();
     }
 
-    private static class DownloadCommand {
+    public void downloadCompleted(Context context, long id) {
+        new CompletionCommand(context)
+                .setId(id)
+                .submit();
+    }
+
+    // TODO: Duplication between commands
+    private static class CompletionCommand {
         private Context context;
         private Intent intent;
 
-        private DownloadCommand(Context context) {
+        public CompletionCommand(Context context) {
+            this.context = context;
+            this.intent = new Intent(context, DownloadService.class);
+            intent.setAction(DownloadService.DOWNLOAD_COMPLETE_ACTION);
+        }
+
+        public CompletionCommand setId(long id) {
+            intent.putExtra(DownloadService.TASK_ID_EXTRA, id);
+            return this;
+        }
+
+        public void submit() {
+            context.startService(intent);
+        }
+    }
+
+    private static class StartCommand {
+        private Context context;
+        private Intent intent;
+
+        private StartCommand(Context context) {
             this.context = context;
             this.intent = new Intent(context, DownloadService.class);
             intent.setAction(DownloadService.START_DOWNLOAD_ACTION);
@@ -28,14 +55,15 @@ public class DownloadServiceClient implements PodcastProcessor {
             context.startService(intent);
         }
 
-        public DownloadCommand setUrl(String url) {
+        public StartCommand setUrl(String url) {
             intent.putExtra(DownloadService.URL_EXTRA, url);
             return this;
         }
 
-        public DownloadCommand setTitle(String title) {
+        public StartCommand setTitle(String title) {
             intent.putExtra(DownloadService.TITLE_EXTRA, title);
             return this;
         }
     }
+
 }

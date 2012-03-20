@@ -12,7 +12,7 @@ import org.dandelion.radiot.helpers.PodcastListAcceptanceTestCase;
 import org.dandelion.radiot.podcasts.PodcastsApp;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastProcessor;
-import org.dandelion.radiot.podcasts.download.Downloader;
+import org.dandelion.radiot.podcasts.download.DownloadManager;
 import org.dandelion.radiot.podcasts.download.FakeDownloaderActivity;
 import org.dandelion.radiot.podcasts.download.MediaScanner;
 
@@ -97,12 +97,12 @@ public class SelectingPodcastsFromList extends PodcastListAcceptanceTestCase {
 
 class TestingPodcastsApp extends PodcastsApp {
     private PodcastProcessor player;
-    private Downloader downloadManager;
+    private DownloadManager downloadManager;
     private boolean downloadSupported = true;
     private File downloadFolder;
     private MediaScanner mediaScanner;
 
-    TestingPodcastsApp(Context context, PodcastProcessor player, Downloader downloadManager, MediaScanner scanner) {
+    TestingPodcastsApp(Context context, PodcastProcessor player, DownloadManager downloadManager, MediaScanner scanner) {
         super(context);
         this.player = player;
         this.downloadManager = downloadManager;
@@ -115,7 +115,7 @@ class TestingPodcastsApp extends PodcastsApp {
     }
 
     @Override
-    public Downloader createDownloadManager() {
+    public DownloadManager createDownloadManager() {
         return downloadManager;
     }
 
