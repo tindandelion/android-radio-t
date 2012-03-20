@@ -19,40 +19,37 @@ public class DownloadServiceClient implements PodcastProcessor {
                 .setId(id)
                 .submit();
     }
+    
+    private static abstract class Command {
+        protected Context context;
+        protected Intent intent;
 
-    // TODO: Duplication between commands
-    private static class CompletionCommand {
-        private Context context;
-        private Intent intent;
-
-        public CompletionCommand(Context context) {
+        private Command(Context context, String action) {
             this.context = context;
             this.intent = new Intent(context, DownloadService.class);
-            intent.setAction(DownloadService.DOWNLOAD_COMPLETE_ACTION);
+            this.intent.setAction(action);
+        }
+        
+        public void submit() {
+            context.startService(intent);
+        }
+    }
+
+    private static class CompletionCommand extends Command {
+
+        public CompletionCommand(Context context) {
+            super(context, DownloadService.DOWNLOAD_COMPLETE_ACTION);
         }
 
         public CompletionCommand setId(long id) {
             intent.putExtra(DownloadService.TASK_ID_EXTRA, id);
             return this;
         }
-
-        public void submit() {
-            context.startService(intent);
-        }
     }
 
-    private static class StartCommand {
-        private Context context;
-        private Intent intent;
-
+    private static class StartCommand extends Command {
         private StartCommand(Context context) {
-            this.context = context;
-            this.intent = new Intent(context, DownloadService.class);
-            intent.setAction(DownloadService.START_DOWNLOAD_ACTION);
-        }
-
-        public void submit() {
-            context.startService(intent);
+            super(context, DownloadService.START_DOWNLOAD_ACTION);
         }
 
         public StartCommand setUrl(String url) {
