@@ -41,8 +41,9 @@ public class SystemDownloadManager implements DownloadManager {
         task.isSuccessful = (status == android.app.DownloadManager.STATUS_SUCCESSFUL);
 
         String localPathUri = cursor.getString(cursor.getColumnIndex(android.app.DownloadManager.COLUMN_LOCAL_URI));
-        task.localPath = new File(Uri.parse(localPathUri).getPath());
-
+        if (localPathUri != null) {
+            task.localPath = new File(Uri.parse(localPathUri).getPath());
+        }
         return task;
     }
 
