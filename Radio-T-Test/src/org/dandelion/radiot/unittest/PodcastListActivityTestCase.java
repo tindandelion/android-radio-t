@@ -30,27 +30,9 @@ public class PodcastListActivityTestCase extends
 		assertEquals(activity, engine.getView());
 	}
 
-	public void testAttachesToSavedPresenterOnCreation() throws Exception {
-		NullPodcastEngine savedPresenter = new NullPodcastEngine();
-		activity = startActivity(new Intent(), null, savedPresenter);
-		assertEquals(savedPresenter, activity.getPodcastListEngine());
-		assertEquals(activity, savedPresenter.getView());
-	}
-
-	public void testDetachesPresenterWhenReturningNonConfiurationInstance()
-			throws Exception {
-		activity = startActivity(new Intent(), null, null);
-		
-		NullPodcastEngine savedPresenter = (NullPodcastEngine) activity
-				.onRetainNonConfigurationInstance();
-		assertEquals(engine, savedPresenter);
-		assertFalse(engine.isAttached());
-		assertNull(activity.getPodcastListEngine());
-	}
-
 	public void testGetsShowNameFromBundleExtra() throws Exception {
 		Intent intent = new Intent();
-		intent.putExtra(PodcastListActivity.SHOW_NAME_KEY, "show-name");
+		intent.putExtra(PodcastListActivity.SHOW_NAME_EXTRA, "show-name");
 
 		startActivity(intent, null, null);
 
@@ -60,7 +42,7 @@ public class PodcastListActivityTestCase extends
 
 	public void testGetsTitleFromExtra() throws Exception {
 		Intent intent = new Intent();
-		intent.putExtra(PodcastListActivity.TITLE_KEY, "Custom title");
+		intent.putExtra(PodcastListActivity.TITLE_EXTRA, "Custom title");
 
 		activity = startActivity(intent, null, null);
 
@@ -113,10 +95,6 @@ public class PodcastListActivityTestCase extends
 
 		public Object getView() {
 			return view;
-		}
-
-		public boolean isAttached() {
-			return null != view;
 		}
 
 		public void refresh(boolean resetCache) {

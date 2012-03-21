@@ -32,13 +32,13 @@ import org.dandelion.radiot.podcasts.core.PodcastItem;
 
 public class PodcastListActivity extends android.app.ListActivity implements IView {
 
-	public static final String TITLE_KEY = "title";
-	public static final String SHOW_NAME_KEY = "podcast_url";
+	public static final String TITLE_EXTRA = "title";
+	public static final String SHOW_NAME_EXTRA = "podcast_url";
 
 	public static void start(Context context, String title, String showName) {
 		Intent intent = new Intent(context, PodcastListActivity.class);
-		intent.putExtra(SHOW_NAME_KEY, showName);
-		intent.putExtra(TITLE_KEY, title);
+		intent.putExtra(SHOW_NAME_EXTRA, showName);
+		intent.putExtra(TITLE_EXTRA, title);
 		context.startActivity(intent);
 	}
 
@@ -69,10 +69,7 @@ public class PodcastListActivity extends android.app.ListActivity implements IVi
 
     protected void attachToEngine() {
 		RadiotApplication app = (RadiotApplication) getApplication();
-		engine = (IPodcastListEngine) getLastNonConfigurationInstance();
-		if (null == engine) {
-			engine = app.getPodcastEngine(getFeedUrlFromExtra());
-		}
+		engine = app.getPodcastEngine(getFeedUrlFromExtra());
 		engine.attach(this);
 	}
 
@@ -94,14 +91,6 @@ public class PodcastListActivity extends android.app.ListActivity implements IVi
 			engine.cancelUpdate();
 		}
 		super.onDestroy();
-	}
-
-	@Override
-	public Object onRetainNonConfigurationInstance() {
-		engine.detach();
-		IPodcastListEngine savedPresenter = engine;
-		engine = null;
-		return savedPresenter;
 	}
 
 	@Override
@@ -158,14 +147,14 @@ public class PodcastListActivity extends android.app.ListActivity implements IVi
 		if (null == extras) {
 			return null;
 		}
-		return extras.getString(SHOW_NAME_KEY);
+		return extras.getString(SHOW_NAME_EXTRA);
 	}
 
 	private String getTitleFromExtra() {
 		if (null == extras) {
 			return "";
 		}
-		return extras.getString(TITLE_KEY);
+		return extras.getString(TITLE_EXTRA);
 	}
 
 	private void initListAdapter() {
