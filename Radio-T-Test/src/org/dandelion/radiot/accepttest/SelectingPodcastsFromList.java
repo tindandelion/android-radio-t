@@ -55,6 +55,14 @@ public class SelectingPodcastsFromList extends PodcastListAcceptanceTestCase {
         mediaScanner.assertScannedFile(localPath);
     }
 
+    public void testMissingPodcastUrl() throws Exception {
+        PodcastListDriver driver = gotoPodcastListPage();
+        driver.makeSamplePodcastWithUrl(null);
+        
+        driver.selectItemForDownloading(0);
+        driver.waitForText("Неверная ссылка на аудио-файл подкаста");
+    }
+
     public void testCancelDownloadInProgress() throws Exception {
         PodcastListDriver driver = gotoPodcastListPage();
         driver.makeSamplePodcastWithUrl(SAMPLE_URL);
