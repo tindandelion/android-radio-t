@@ -92,9 +92,11 @@ public final class R {
         public static final int app_name=0x7f040006;
         public static final int download_unsupported_message=0x7f040015;
         public static final int download_unsupported_title=0x7f040013;
+        public static final int error_title=0x7f040003;
         public static final int feedback_label=0x7f04000c;
         public static final int home_menu_item=0x7f040001;
         public static final int implement_download_request=0x7f040014;
+        public static final int incorrect_audio_url=0x7f040016;
         public static final int listen_label=0x7f04000f;
         public static final int live_show_info=0x7f04000d;
         public static final int live_show_playback_button_title=0x7f040010;
@@ -106,7 +108,6 @@ public final class R {
         public static final int main_title=0x7f040005;
         public static final int podcast_actions_title=0x7f040011;
         public static final int refresh_menu_item=0x7f040000;
-        public static final int rss_load_error_title=0x7f040003;
         public static final int version_label=0x7f04000b;
     }
     public static final class style {

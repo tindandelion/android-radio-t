@@ -9,9 +9,7 @@
     <string
             name="loading_message">Загрузка подкастов
     </string>
-    <string
-            name="rss_load_error_title">Ошибка загрузки RSS
-    </string>
+    <string name="error_title">Ошибка</string>
     <string
             name="logo_text">Импровизации\nна Hi-Tech темы
     </string>
@@ -69,6 +67,7 @@
     <string name="download_unsupported_message">
         Загрузка подкастов реализована для <b>Android 2.3</b> и старше. Вы можете попросить автора сделать эту функцию и для Вашей версии Android.
     </string>
+    <string name="incorrect_audio_url">Неверная ссылка на аудио-файл подкаста</string>
     <string-array
             name="live_show_notification_labels">
         <item>Прямой эфир: Идет трансляция</item>

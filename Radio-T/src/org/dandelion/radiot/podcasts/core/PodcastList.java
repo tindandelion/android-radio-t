@@ -10,11 +10,10 @@ public class PodcastList {
 		Bitmap loadPodcastImage(PodcastItem item);
 	}
 
-	public interface IView {
+    public interface IView extends ErrorDisplay {
 		void updatePodcasts(List<PodcastItem> podcasts);
 		void showProgress();
 		void closeProgress();
-		void showErrorMessage(String errorMessage);
 		void updatePodcastImage(int index);
 	}
 

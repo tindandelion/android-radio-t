@@ -64,7 +64,7 @@ public class PodcastListActivity extends android.app.ListActivity implements IVi
 
     private void initSelectionHandler() {
         selectionHandler = new PodcastSelectionHandler(PodcastsApp.getInstance().createPlayer(),
-                PodcastsApp.getInstance().createDownloader());
+                PodcastsApp.getInstance().createDownloader(), this);
     }
 
     protected void attachToEngine() {
@@ -115,7 +115,7 @@ public class PodcastListActivity extends android.app.ListActivity implements IVi
 	}
 
     public void showErrorMessage(String errorMessage) {
-		new AlertDialog.Builder(this).setTitle(R.string.rss_load_error_title)
+		new AlertDialog.Builder(this).setTitle(R.string.error_title)
 				.setMessage(errorMessage).show();
 	}
 

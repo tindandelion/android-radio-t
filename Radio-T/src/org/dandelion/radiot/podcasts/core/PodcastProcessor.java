@@ -1,7 +1,11 @@
 package org.dandelion.radiot.podcasts.core;
 
 import android.content.Context;
+import org.dandelion.radiot.podcasts.download.DownloadServiceClient;
 
 public interface PodcastProcessor {
-	void process(Context context, PodcastItem podcast);
+    public static class IncorrectPodcastAudioUrl extends Exception {
+    }
+
+	void process(Context context, PodcastItem podcast) throws IncorrectPodcastAudioUrl;
 }
