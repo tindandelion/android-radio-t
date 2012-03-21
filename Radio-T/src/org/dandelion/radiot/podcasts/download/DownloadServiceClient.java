@@ -5,26 +5,14 @@ import android.content.Intent;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastProcessor;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-
 public class DownloadServiceClient implements PodcastProcessor {
 
     @Override
-    public void process(Context context, PodcastItem podcast) throws IncorrectPodcastAudioUrl {
+    public void process(Context context, PodcastItem podcast) {
         new StartCommand(context)
                 .setTitle(podcast.getTitle())
-                .setUrl(checkUrl(podcast))
+                .setUrl(podcast.getAudioUri())
                 .submit();
-    }
-
-    private String checkUrl(PodcastItem podcast) throws IncorrectPodcastAudioUrl {
-        try {
-            URL url = new URL(podcast.getAudioUri());
-            return url.toString();
-        } catch (MalformedURLException e) {
-            throw new IncorrectPodcastAudioUrl();
-        }
     }
 
     public void downloadCompleted(Context context, long id) {

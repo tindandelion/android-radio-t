@@ -8,6 +8,9 @@ import org.dandelion.radiot.podcasts.core.ErrorDisplay;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastProcessor;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 public class PodcastSelectionHandler implements DialogInterface.OnClickListener {
     private static final int DOWNLOAD_ACTION = 0;
     private static final int PLAY_ACTION = 1;
@@ -48,10 +51,15 @@ public class PodcastSelectionHandler implements DialogInterface.OnClickListener 
     @Override
     public void onClick(DialogInterface dialogInterface, int index) {
         try {
+            checkPodcastUrl();
             PodcastProcessor processor = selectProcessor(index);
             processor.process(context, podcast);
-        } catch (PodcastProcessor.IncorrectPodcastAudioUrl ex) {
+        } catch (MalformedURLException ex) {
             errorDisplay.showErrorMessage(context.getString(R.string.incorrect_audio_url));
         }
+    }
+
+    private void checkPodcastUrl() throws MalformedURLException {
+        new URL(podcast.getAudioUri());
     }
 }
