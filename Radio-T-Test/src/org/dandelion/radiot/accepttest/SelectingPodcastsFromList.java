@@ -50,7 +50,7 @@ public class SelectingPodcastsFromList extends PodcastListAcceptanceTestCase {
         downloadManager.downloadComplete();
 
         mediaScanner.assertScannedFile(localPath);
-        notificationManager.assertShowsNotificationIconFor(TITLE);
+        notificationManager.assertShowsNotificationIconFor(TITLE, localPath);
     }
 
     public void testMissingPodcastUrl() throws Exception {

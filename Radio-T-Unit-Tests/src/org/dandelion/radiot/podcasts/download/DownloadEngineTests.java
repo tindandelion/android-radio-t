@@ -19,6 +19,7 @@ public class DownloadEngineTests {
     private DownloadManager.DownloadTask task;
     private MediaScanner scanner;
     private NotificationManager notificationManager;
+    public static final File LOCAL_PATH = new File("/mnt/download/filename.mp3");
 
     @Before
     public void setUp() throws Exception {
@@ -38,14 +39,13 @@ public class DownloadEngineTests {
 
     @Test
     public void constructsLocalPathForTaskFromSourceUrl() throws Exception {
-        File destPath = new File("/mnt/download/filename.mp3");
         when(downloadFolder.makePathForUrl(SOURCE_URL))
-                .thenReturn(destPath);
+                .thenReturn(LOCAL_PATH);
 
         task.url = SOURCE_URL;
         downloader.startDownloading(task);
 
-        assertEquals(task.localPath, destPath);
+        assertEquals(task.localPath, LOCAL_PATH);
     }
 
     @Test
@@ -57,18 +57,20 @@ public class DownloadEngineTests {
     @Test
     public void scansAudioFileWhenDownloadComplete() throws Exception {
         task.isSuccessful = true;
+        task.localPath = LOCAL_PATH;
         when(downloadManager.query(1)).thenReturn(task);
         downloader.finishDownload(1);
-        verify(scanner).scanAudioFile(task.localPath);
+        verify(scanner).scanAudioFile(LOCAL_PATH);
     }
 
     @Test
     public void showsNotificationIconOnCompletion() throws Exception {
         task.isSuccessful = true;
         task.title = "Podcast 1";
+        task.localPath = LOCAL_PATH;
         when(downloadManager.query(1)).thenReturn(task);
         downloader.finishDownload(1);
-        verify(notificationManager).showNotification(task.title);
+        verify(notificationManager).showNotification(task.title, LOCAL_PATH);
     }
 
     @Test

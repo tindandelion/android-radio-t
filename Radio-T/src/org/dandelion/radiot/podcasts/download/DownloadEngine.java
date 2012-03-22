@@ -24,7 +24,7 @@ public class DownloadEngine {
         DownloadManager.DownloadTask completedTask = downloadManager.query(id);
         if (taskSuccessful(completedTask)) {
             mediaScanner.scanAudioFile(completedTask.localPath);
-            notificationManager.showNotification(completedTask.title);
+            notificationManager.showNotification(completedTask.title, completedTask.localPath);
         }
     }
 
