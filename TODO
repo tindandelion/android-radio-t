@@ -1,10 +1,13 @@
 Downloading:
- * Incorrect download URL
  * Notification on download completion
  * Respect background data loading settings
 
 * General:
  * Remove 1.6 compatibility
+ * Podcast type "audo/mpeg" appears in lots of places
+ *
+
+
 
  Development:
  * Explore AndroidMock

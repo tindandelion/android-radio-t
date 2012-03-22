@@ -1,6 +1,6 @@
 package org.dandelion.radiot.podcasts.download;
 
-import android.R;
+import org.dandelion.radiot.R;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -27,11 +27,19 @@ public class SystemNotificationManager implements NotificationManager {
     }
 
     private Notification createNote(String title, File path) {
-        Notification note = new Notification(R.drawable.stat_sys_download_done,
+        Notification note = new Notification(completionIcon(),
                 title, System.currentTimeMillis());
-        note.setLatestEventInfo(context, title, "", createIntent(path));
+        note.setLatestEventInfo(context, title, getContextText(), createIntent(path));
         note.flags |= Notification.FLAG_AUTO_CANCEL;
         return note;
+    }
+
+    private int completionIcon() {
+        return android.R.drawable.stat_sys_download_done;
+    }
+
+    private CharSequence getContextText() {
+        return context.getString(R.string.download_complete_message);
     }
 
     private PendingIntent createIntent(File path) {

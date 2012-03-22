@@ -68,7 +68,7 @@ public class PodcastsApp {
     }
 
     public DownloadManager createDownloadManager() {
-        return new SystemDownloadManager((android.app.DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE));
+        return new SystemDownloadManager(context);
     }
 
     public DownloadFolder getPodcastDownloadFolder() {
