@@ -13,8 +13,8 @@ public class DownloadFolder {
 
     public File makePathForUrl(String srcUrl) {
         try {
-            String destFilename = new URL(srcUrl).getFile();
-            return new File(path, destFilename);
+            File pathFragment = new File(new URL(srcUrl).getPath());
+            return new File(path, pathFragment.getName());
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }

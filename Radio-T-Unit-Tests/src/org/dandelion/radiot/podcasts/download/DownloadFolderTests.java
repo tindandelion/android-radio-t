@@ -18,7 +18,7 @@ public class DownloadFolderTests {
 
     @Test
     public void constructsDestPathForUrlUsingItsBasename() throws Exception {
-        String url = "http://example.com/my_file.mp3";
+        String url = "http://example.com/subdir/my_file.mp3";
         File localPath = folder.makePathForUrl(url);
         assertEquals(new File(LOCAL_DIR, "my_file.mp3"), localPath);
     }
