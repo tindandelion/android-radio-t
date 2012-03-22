@@ -6,7 +6,7 @@ import android.content.DialogInterface;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.podcasts.core.ErrorDisplay;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
-import org.dandelion.radiot.podcasts.core.PodcastProcessor;
+import org.dandelion.radiot.podcasts.core.PodcastAction;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -16,12 +16,12 @@ public class PodcastSelectionHandler implements DialogInterface.OnClickListener 
     private static final int PLAY_ACTION = 1;
 
     private Context context;
-    private PodcastProcessor player;
-    private PodcastProcessor downloader;
+    private PodcastAction player;
+    private PodcastAction downloader;
     private ErrorDisplay errorDisplay;
     private PodcastItem podcast;
 
-    public PodcastSelectionHandler(PodcastProcessor player, PodcastProcessor downloader, ErrorDisplay errorDisplay) {
+    public PodcastSelectionHandler(PodcastAction player, PodcastAction downloader, ErrorDisplay errorDisplay) {
         this.player = player;
         this.downloader = downloader;
         this.errorDisplay = errorDisplay;
@@ -40,7 +40,7 @@ public class PodcastSelectionHandler implements DialogInterface.OnClickListener 
                 .show();
     }
 
-    private PodcastProcessor selectProcessor(int index) {
+    private PodcastAction selectProcessor(int index) {
         switch(index) {
             case DOWNLOAD_ACTION: return downloader;
             case PLAY_ACTION: return player;
@@ -52,8 +52,8 @@ public class PodcastSelectionHandler implements DialogInterface.OnClickListener 
     public void onClick(DialogInterface dialogInterface, int index) {
         try {
             checkPodcastUrl();
-            PodcastProcessor processor = selectProcessor(index);
-            processor.process(context, podcast);
+            PodcastAction action = selectProcessor(index);
+            action.perform(context, podcast);
         } catch (MalformedURLException ex) {
             errorDisplay.showErrorMessage(context.getString(R.string.incorrect_audio_url));
         }

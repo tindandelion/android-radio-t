@@ -5,31 +5,27 @@ import android.content.Context;
 import android.os.Environment;
 import org.dandelion.radiot.accepttest.drivers.ApplicationDriver;
 import org.dandelion.radiot.accepttest.drivers.PodcastListDriver;
-import org.dandelion.radiot.helpers.FakeDownloadManager;
-import org.dandelion.radiot.helpers.FakeMediaScanner;
-import org.dandelion.radiot.helpers.FakePodcastPlayer;
-import org.dandelion.radiot.helpers.PodcastListAcceptanceTestCase;
+import org.dandelion.radiot.helpers.*;
 import org.dandelion.radiot.podcasts.PodcastsApp;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
-import org.dandelion.radiot.podcasts.core.PodcastProcessor;
+import org.dandelion.radiot.podcasts.core.PodcastAction;
 import org.dandelion.radiot.podcasts.download.DownloadManager;
 import org.dandelion.radiot.podcasts.download.FakeDownloaderActivity;
 import org.dandelion.radiot.podcasts.download.MediaScanner;
+import org.dandelion.radiot.podcasts.download.NotificationManager;
 
 import java.io.File;
 
 public class SelectingPodcastsFromList extends PodcastListAcceptanceTestCase {
-
-    private static File getDownloadFolder() {
-        return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-    }
-
     public static final String SAMPLE_URL = "http://example.com/podcast_file.mp3";
+    private static final String TITLE = "Радио-Т 001";
+
     private FakePodcastPlayer player;
     private FakeDownloadManager downloadManager;
     private TestingPodcastsApp application;
     private ApplicationDriver appDriver;
     private FakeMediaScanner mediaScanner;
+    private FakeNotificationManager notificationManager;
 
     @Override
 	protected void setUp() throws Exception {
@@ -46,26 +42,28 @@ public class SelectingPodcastsFromList extends PodcastListAcceptanceTestCase {
 
     public void testDownloadPodcastFileLocally() throws Exception {
         PodcastListDriver driver = gotoPodcastListPage();
-        driver.makeSamplePodcastWithUrl(SAMPLE_URL);
+        driver.makeSamplePodcastWithUrl(TITLE, SAMPLE_URL);
         File localPath = new File(getDownloadFolder(), "podcast_file.mp3");
 
         driver.selectItemForDownloading(0);
         downloadManager.assertSubmittedRequest(SAMPLE_URL, localPath);
         downloadManager.downloadComplete();
+
         mediaScanner.assertScannedFile(localPath);
+        notificationManager.assertShowsNotificationIconFor(TITLE);
     }
 
     public void testMissingPodcastUrl() throws Exception {
         PodcastListDriver driver = gotoPodcastListPage();
-        driver.makeSamplePodcastWithUrl(null);
+        driver.makeSamplePodcastWithUrl(TITLE, null);
         
         driver.selectItemForDownloading(0);
-        driver.waitForText("Неверная ссылка на аудио-файл подкаста");
+        assertTrue(driver.waitForText("Неверная ссылка на аудио-файл подкаста"));
     }
 
     public void testCancelDownloadInProgress() throws Exception {
         PodcastListDriver driver = gotoPodcastListPage();
-        driver.makeSamplePodcastWithUrl(SAMPLE_URL);
+        driver.makeSamplePodcastWithUrl(TITLE, SAMPLE_URL);
         File localPath = new File(getDownloadFolder(), "podcast_file.mp3");
 
         driver.selectItemForDownloading(0);
@@ -96,29 +94,37 @@ public class SelectingPodcastsFromList extends PodcastListAcceptanceTestCase {
         player = new FakePodcastPlayer();
         downloadManager = new FakeDownloadManager(getInstrumentation().getTargetContext());
         mediaScanner = new FakeMediaScanner();
+        notificationManager = new FakeNotificationManager();
         application = new TestingPodcastsApp(getInstrumentation().getTargetContext(),
-                player, downloadManager, mediaScanner);
+                player, downloadManager, mediaScanner, notificationManager);
         application.setDownloadFolder(getDownloadFolder());
         PodcastsApp.setTestingInstance(application);
+    }
+
+    private static File getDownloadFolder() {
+        return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
     }
 }
 
 class TestingPodcastsApp extends PodcastsApp {
-    private PodcastProcessor player;
+    private PodcastAction player;
     private DownloadManager downloadManager;
     private boolean downloadSupported = true;
     private File downloadFolder;
     private MediaScanner mediaScanner;
+    private NotificationManager notificationManager;
 
-    TestingPodcastsApp(Context context, PodcastProcessor player, DownloadManager downloadManager, MediaScanner scanner) {
+    TestingPodcastsApp(Context context, PodcastAction player, DownloadManager downloadManager,
+                       MediaScanner scanner, NotificationManager notificationManager) {
         super(context);
         this.player = player;
         this.downloadManager = downloadManager;
         this.mediaScanner = scanner;
+        this.notificationManager = notificationManager;
     }
 
     @Override
-    public PodcastProcessor createPlayer() {
+    public PodcastAction createPlayer() {
         return player;
     }
 
@@ -135,6 +141,11 @@ class TestingPodcastsApp extends PodcastsApp {
     @Override
     public MediaScanner createMediaScanner() {
         return mediaScanner;
+    }
+
+    @Override
+    public NotificationManager createNotificationManager() {
+        return notificationManager;
     }
 
     @Override

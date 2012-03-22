@@ -9,29 +9,31 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
-public class DownloadStarterTests {
+public class DownloadEngineTests {
     public static final String SOURCE_FILENAME = "rt_podcast_1.mp3";
     public static final String SOURCE_URL = "http://radio-t.com/" + SOURCE_FILENAME;
 
-    private DownloadManager manager;
+    private DownloadManager downloadManager;
     private DownloadEngine downloader;
     private DownloadFolder downloadFolder;
     private DownloadManager.DownloadTask task;
     private MediaScanner scanner;
+    private NotificationManager notificationManager;
 
     @Before
     public void setUp() throws Exception {
         downloadFolder = mock(DownloadFolder.class);
-        manager = mock(DownloadManager.class);
+        downloadManager = mock(DownloadManager.class);
         scanner = mock(MediaScanner.class);
-        downloader = new DownloadEngine(manager, downloadFolder, scanner);
+        notificationManager = mock(NotificationManager.class);
+        downloader = new DownloadEngine(downloadManager, downloadFolder, scanner, notificationManager);
         task = new DownloadManager.DownloadTask();
     }
 
     @Test
     public void submitsTaskToDownloader() throws Exception {
         downloader.startDownloading(task);
-        verify(manager).submit(task);
+        verify(downloadManager).submit(task);
     }
 
     @Test
@@ -55,14 +57,23 @@ public class DownloadStarterTests {
     @Test
     public void scansAudioFileWhenDownloadComplete() throws Exception {
         task.isSuccessful = true;
-        when(manager.query(1)).thenReturn(task);
+        when(downloadManager.query(1)).thenReturn(task);
         downloader.finishDownload(1);
         verify(scanner).scanAudioFile(task.localPath);
     }
 
     @Test
+    public void showsNotificationIconOnCompletion() throws Exception {
+        task.isSuccessful = true;
+        task.title = "Podcast 1";
+        when(downloadManager.query(1)).thenReturn(task);
+        downloader.finishDownload(1);
+        verify(notificationManager).showNotification(task.title);
+    }
+
+    @Test
     public void skipsCancelledTasks() throws Exception {
-        when(manager.query(1)).thenReturn(null);
+        when(downloadManager.query(1)).thenReturn(null);
         downloader.finishDownload(1);
         verifyZeroInteractions(scanner);
     }
@@ -70,7 +81,7 @@ public class DownloadStarterTests {
     @Test
     public void skipsFailedTasks() throws Exception {
         task.isSuccessful = false;
-        when(manager.query(1)).thenReturn(task);
+        when(downloadManager.query(1)).thenReturn(task);
         downloader.finishDownload(1);
         verifyZeroInteractions(scanner);
     }
