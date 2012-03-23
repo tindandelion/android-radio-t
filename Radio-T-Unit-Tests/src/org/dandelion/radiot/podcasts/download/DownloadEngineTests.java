@@ -9,41 +9,41 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
-public class DownloadStarterTests {
+public class DownloadEngineTests {
     public static final String SOURCE_FILENAME = "rt_podcast_1.mp3";
     public static final String SOURCE_URL = "http://radio-t.com/" + SOURCE_FILENAME;
+    public static final File LOCAL_PATH = new File("/mnt/download/filename.mp3");
 
-    private DownloadManager manager;
+    private DownloadManager downloadManager;
     private DownloadEngine downloader;
     private DownloadFolder downloadFolder;
     private DownloadManager.DownloadTask task;
-    private MediaScanner scanner;
+    private DownloadProcessor processor;
 
     @Before
     public void setUp() throws Exception {
         downloadFolder = mock(DownloadFolder.class);
-        manager = mock(DownloadManager.class);
-        scanner = mock(MediaScanner.class);
-        downloader = new DownloadEngine(manager, downloadFolder, scanner);
+        downloadManager = mock(DownloadManager.class);
+        processor = mock(DownloadProcessor.class);
+        downloader = new DownloadEngine(downloadManager, downloadFolder, processor);
         task = new DownloadManager.DownloadTask();
     }
 
     @Test
     public void submitsTaskToDownloader() throws Exception {
         downloader.startDownloading(task);
-        verify(manager).submit(task);
+        verify(downloadManager).submit(task);
     }
 
     @Test
     public void constructsLocalPathForTaskFromSourceUrl() throws Exception {
-        File destPath = new File("/mnt/download/filename.mp3");
         when(downloadFolder.makePathForUrl(SOURCE_URL))
-                .thenReturn(destPath);
+                .thenReturn(LOCAL_PATH);
 
         task.url = SOURCE_URL;
         downloader.startDownloading(task);
 
-        assertEquals(task.localPath, destPath);
+        assertEquals(task.localPath, LOCAL_PATH);
     }
 
     @Test
@@ -53,25 +53,27 @@ public class DownloadStarterTests {
     }
 
     @Test
-    public void scansAudioFileWhenDownloadComplete() throws Exception {
+    public void signalsCompletionToPostProcessor() throws Exception {
         task.isSuccessful = true;
-        when(manager.query(1)).thenReturn(task);
+        task.localPath = LOCAL_PATH;
+        when(downloadManager.query(1)).thenReturn(task);
         downloader.finishDownload(1);
-        verify(scanner).scanAudioFile(task.localPath);
+        verify(processor).downloadComplete(task.title, LOCAL_PATH);
+    }
+    
+    @Test
+    public void signalsErrorToPostProcessor() throws Exception {
+        task.isSuccessful = false;
+        task.title = "Podcast 1";
+        when(downloadManager.query(1)).thenReturn(task);
+        downloader.finishDownload(1);
+        verify(processor).downloadError(task.title);
     }
 
     @Test
     public void skipsCancelledTasks() throws Exception {
-        when(manager.query(1)).thenReturn(null);
+        when(downloadManager.query(1)).thenReturn(null);
         downloader.finishDownload(1);
-        verifyZeroInteractions(scanner);
-    }
-
-    @Test
-    public void skipsFailedTasks() throws Exception {
-        task.isSuccessful = false;
-        when(manager.query(1)).thenReturn(task);
-        downloader.finishDownload(1);
-        verifyZeroInteractions(scanner);
+        verifyZeroInteractions(processor);
     }
 }

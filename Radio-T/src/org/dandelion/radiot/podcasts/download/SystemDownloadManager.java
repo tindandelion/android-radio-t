@@ -1,15 +1,16 @@
 package org.dandelion.radiot.podcasts.download;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 
 import java.io.File;
 
 public class SystemDownloadManager implements DownloadManager {
-    private android.app.DownloadManager manager;
+    private android.app.DownloadManager service;
 
-    public SystemDownloadManager(android.app.DownloadManager manager) {
-        this.manager = manager;
+    public SystemDownloadManager(Context context) {
+        this.service = (android.app.DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
     }
 
     @Override
@@ -18,7 +19,7 @@ public class SystemDownloadManager implements DownloadManager {
         request
                 .setDestinationUri(Uri.fromFile(task.localPath))
                 .setTitle(task.title);
-        return manager.enqueue(request);
+        return service.enqueue(request);
     }
 
     @Override
@@ -50,6 +51,6 @@ public class SystemDownloadManager implements DownloadManager {
     private Cursor requestCursor(long id) {
         android.app.DownloadManager.Query query = new android.app.DownloadManager.Query();
         query.setFilterById(id);
-        return manager.query(query);
+        return service.query(query);
     }
 }

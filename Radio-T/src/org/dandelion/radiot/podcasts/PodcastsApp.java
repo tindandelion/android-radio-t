@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Environment;
 import org.dandelion.radiot.podcasts.download.*;
-import org.dandelion.radiot.podcasts.core.PodcastProcessor;
+import org.dandelion.radiot.podcasts.core.PodcastAction;
 import org.dandelion.radiot.podcasts.ui.ExternalPlayer;
 
 import java.io.File;
@@ -39,11 +39,11 @@ public class PodcastsApp {
     private void releaseInstance() {
     }
 
-    public PodcastProcessor createPlayer() {
+    public PodcastAction createPlayer() {
         return new ExternalPlayer();
     }
 
-    public PodcastProcessor createDownloader() {
+    public PodcastAction createDownloader() {
         if (supportsDownload()) {
             return createDownloaderClient();
         } else {
@@ -55,11 +55,11 @@ public class PodcastsApp {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD;
     }
 
-    private PodcastProcessor fakeDownloader() {
-        return new FakePodcastDownloader();
+    private PodcastAction fakeDownloader() {
+        return new FakeDownloader();
     }
 
-    private PodcastProcessor createDownloaderClient() {
+    private PodcastAction createDownloaderClient() {
         return new DownloadServiceClient();
     }
 
@@ -68,7 +68,7 @@ public class PodcastsApp {
     }
 
     public DownloadManager createDownloadManager() {
-        return new SystemDownloadManager((android.app.DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE));
+        return new SystemDownloadManager(context);
     }
 
     public DownloadFolder getPodcastDownloadFolder() {
@@ -77,5 +77,9 @@ public class PodcastsApp {
 
     public MediaScanner createMediaScanner() {
         return new SystemMediaScanner(context);
+    }
+
+    public NotificationManager createNotificationManager() {
+        return new SystemNotificationManager(context);
     }
 }
