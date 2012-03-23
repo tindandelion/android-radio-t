@@ -19,64 +19,91 @@ public class SystemNotificationManager implements NotificationManager {
 
     @Override
     public void showSuccess(String title, File audioFile) {
-        Notification note = createSuccessNote(title, audioFile);
-        showNotification(title, note);
+        Note note = new SuccessNote(context, title, audioFile);
+        note.show(title, DOWNLOAD_COMPLETE_NOTE_ID);
     }
 
     @Override
     public void showError(String title) {
-        Notification note = createErrorNote(title);
-        showNotification(title, note);
+        Note note = new ErrorNote(context, title);
+        note.show(title, DOWNLOAD_COMPLETE_NOTE_ID);
+    }
+}
+
+abstract class Note {
+    protected Context context;
+    private String title;
+
+    public Note(Context context, String title) {
+        this.context = context;
+        this.title = title;
     }
 
-    private void showNotification(String tag, Notification note) {
+    public void show(String tag, int id) {
         android.app.NotificationManager manager = (android.app.NotificationManager)
                 context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        manager.notify(tag, DOWNLOAD_COMPLETE_NOTE_ID, note);
+        manager.notify(tag, id, build());
     }
 
-    private Notification createErrorNote(String title) {
-        Notification note = new Notification(errorIcon(),
+    private Notification build() {
+        Notification note = new Notification(icon(),
                 title, System.currentTimeMillis());
-        note.setLatestEventInfo(context, title, errorText(), intentForShowingDownloads());
+        note.setLatestEventInfo(context, title, text(), intent());
         note.flags |= Notification.FLAG_AUTO_CANCEL;
         return note;
     }
 
-    private CharSequence errorText() {
+    public abstract CharSequence text();
+    public abstract int icon();
+    public abstract PendingIntent intent();
+}
+
+class ErrorNote extends Note {
+    ErrorNote(Context context, String title) {
+        super(context, title);
+    }
+
+    @Override
+    public CharSequence text() {
         return context.getString(R.string.download_error_message);
     }
 
-    private int errorIcon() {
+    @Override
+    public int icon() {
         return android.R.drawable.stat_sys_warning;
     }
 
-
-    private Notification createSuccessNote(String title, File path) {
-        Notification note = new Notification(completionIcon(),
-                title, System.currentTimeMillis());
-        note.setLatestEventInfo(context, title, completionText(), intentForPlayingFile(path));
-        note.flags |= Notification.FLAG_AUTO_CANCEL;
-        return note;
-    }
-
-    private int completionIcon() {
-        return android.R.drawable.stat_sys_download_done;
-    }
-
-    private PendingIntent intentForShowingDownloads() {
+    @Override
+    public PendingIntent intent() {
         Intent intent = new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS);
         return PendingIntent.getActivity(context, 0, intent, 0);
     }
+}
 
-    private CharSequence completionText() {
+class SuccessNote extends Note {
+    private File path;
+
+    SuccessNote(Context context, String title, File path) {
+        super(context, title);
+        this.path = path;
+    }
+
+    @Override
+    public int icon() {
+        return android.R.drawable.stat_sys_download_done;
+    }
+
+    @Override
+    public CharSequence text() {
         return context.getString(R.string.download_complete_message);
     }
 
-    private PendingIntent intentForPlayingFile(File path) {
+    @Override
+    public PendingIntent intent() {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setDataAndType(Uri.fromFile(path), "audio/mpeg");
         return PendingIntent.getActivity(context, 0, intent, 0);
     }
 }
+
