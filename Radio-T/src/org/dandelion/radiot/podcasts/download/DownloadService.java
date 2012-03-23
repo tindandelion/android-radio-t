@@ -47,7 +47,8 @@ public class DownloadService extends IntentService {
         DownloadFolder downloadFolder = app.getPodcastDownloadFolder();
         MediaScanner mediaScanner = app.createMediaScanner();
         NotificationManager notificationManager = app.createNotificationManager();
-        downloader = new DownloadEngine(downloadManager, downloadFolder, mediaScanner, notificationManager);
+        DownloadProcessor processor = new DownloadProcessor(mediaScanner, notificationManager);
+        downloader = new DownloadEngine(downloadManager, downloadFolder, processor);
     }
 
     private void startDownloading(Intent intent) {

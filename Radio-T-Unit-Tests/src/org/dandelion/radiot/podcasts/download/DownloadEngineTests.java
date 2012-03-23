@@ -12,22 +12,20 @@ import static org.mockito.Mockito.*;
 public class DownloadEngineTests {
     public static final String SOURCE_FILENAME = "rt_podcast_1.mp3";
     public static final String SOURCE_URL = "http://radio-t.com/" + SOURCE_FILENAME;
+    public static final File LOCAL_PATH = new File("/mnt/download/filename.mp3");
 
     private DownloadManager downloadManager;
     private DownloadEngine downloader;
     private DownloadFolder downloadFolder;
     private DownloadManager.DownloadTask task;
-    private MediaScanner scanner;
-    private NotificationManager notificationManager;
-    public static final File LOCAL_PATH = new File("/mnt/download/filename.mp3");
+    private DownloadProcessor processor;
 
     @Before
     public void setUp() throws Exception {
         downloadFolder = mock(DownloadFolder.class);
         downloadManager = mock(DownloadManager.class);
-        scanner = mock(MediaScanner.class);
-        notificationManager = mock(NotificationManager.class);
-        downloader = new DownloadEngine(downloadManager, downloadFolder, scanner, notificationManager);
+        processor = mock(DownloadProcessor.class);
+        downloader = new DownloadEngine(downloadManager, downloadFolder, processor);
         task = new DownloadManager.DownloadTask();
     }
 
@@ -55,45 +53,27 @@ public class DownloadEngineTests {
     }
 
     @Test
-    public void scansAudioFileWhenDownloadComplete() throws Exception {
+    public void signalsCompletionToPostProcessor() throws Exception {
         task.isSuccessful = true;
         task.localPath = LOCAL_PATH;
         when(downloadManager.query(1)).thenReturn(task);
         downloader.finishDownload(1);
-        verify(scanner).scanAudioFile(LOCAL_PATH);
+        verify(processor).downloadComplete(task.title, LOCAL_PATH);
     }
-
+    
     @Test
-    public void showsSuccessOnCompletion() throws Exception {
-        task.isSuccessful = true;
-        task.title = "Podcast 1";
-        task.localPath = LOCAL_PATH;
-        when(downloadManager.query(1)).thenReturn(task);
-        downloader.finishDownload(1);
-        verify(notificationManager).showSuccess(task.title, LOCAL_PATH);
-    }
-
-    @Test
-    public void showsErrorOnCompletion() throws Exception {
+    public void signalsErrorToPostProcessor() throws Exception {
         task.isSuccessful = false;
         task.title = "Podcast 1";
         when(downloadManager.query(1)).thenReturn(task);
         downloader.finishDownload(1);
-        verify(notificationManager).showError(task.title);
+        verify(processor).downloadError(task.title);
     }
 
     @Test
     public void skipsCancelledTasks() throws Exception {
         when(downloadManager.query(1)).thenReturn(null);
         downloader.finishDownload(1);
-        verifyZeroInteractions(scanner);
-    }
-
-    @Test
-    public void skipsFailedTasks() throws Exception {
-        task.isSuccessful = false;
-        when(downloadManager.query(1)).thenReturn(task);
-        downloader.finishDownload(1);
-        verifyZeroInteractions(scanner);
+        verifyZeroInteractions(processor);
     }
 }
