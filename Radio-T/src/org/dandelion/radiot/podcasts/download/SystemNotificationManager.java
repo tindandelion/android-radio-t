@@ -91,7 +91,7 @@ class SuccessNote extends Note {
 
     @Override
     public int icon() {
-        return android.R.drawable.stat_sys_download_done;
+        return R.drawable.stat_download_complete;
     }
 
     @Override
