@@ -1,12 +1,10 @@
 Downloading:
- * Notification on download completion
  * Respect background data loading settings
 
 * General:
  * Remove 1.6 compatibility
  * Podcast type "audo/mpeg" appears in lots of places
- *
-
+ * Duplication between playback start from podcast list and from download notification
 
 
  Development:
