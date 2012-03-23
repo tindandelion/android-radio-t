@@ -22,13 +22,23 @@ public class DownloadEngine {
 
     public void finishDownload(long id) {
         DownloadManager.DownloadTask completedTask = downloadManager.query(id);
-        if (taskSuccessful(completedTask)) {
-            mediaScanner.scanAudioFile(completedTask.localPath);
-            notificationManager.showNotification(completedTask.title, completedTask.localPath);
+        if (!taskCancelled(completedTask)) {
+            processCompletedTask(completedTask);
         }
     }
 
-    private boolean taskSuccessful(DownloadManager.DownloadTask task) {
-        return (task != null) && (task.isSuccessful);
+    private void processCompletedTask(DownloadManager.DownloadTask task) {
+        if (task.isSuccessful) {
+            mediaScanner.scanAudioFile(task.localPath);
+            notificationManager.showSuccess(task.title, task.localPath);
+        } else {
+            notificationManager.showError(task.title);
+        }
+
     }
+
+    private boolean taskCancelled(DownloadManager.DownloadTask task) {
+        return task == null;
+    }
+
 }

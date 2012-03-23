@@ -18,12 +18,17 @@ public class SystemNotificationManager implements NotificationManager {
     }
 
     @Override
-    public void showNotification(String title, File audioFile) {
+    public void showSuccess(String title, File audioFile) {
         android.app.NotificationManager manager = (android.app.NotificationManager)
                 context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         Notification note = createNote(title, audioFile);
         manager.notify(DOWNLOAD_COMPLETE_NOTE_ID, note);
+    }
+
+    @Override
+    public void showError(String title) {
+
     }
 
     private Notification createNote(String title, File path) {

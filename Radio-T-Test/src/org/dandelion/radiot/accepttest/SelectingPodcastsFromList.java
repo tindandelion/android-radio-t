@@ -50,7 +50,20 @@ public class SelectingPodcastsFromList extends PodcastListAcceptanceTestCase {
         downloadManager.downloadComplete();
 
         mediaScanner.assertScannedFile(localPath);
-        notificationManager.assertShowsNotificationIconFor(TITLE, localPath);
+        notificationManager.assertShowsSuccess(TITLE, localPath);
+    }
+
+    public void testDownloadFinishedWithError() throws Exception {
+        PodcastListDriver driver = gotoPodcastListPage();
+        driver.makeSamplePodcastWithUrl(TITLE, SAMPLE_URL);
+        File localPath = new File(getDownloadFolder(), "podcast_file.mp3");
+
+        driver.selectItemForDownloading(0);
+        downloadManager.assertSubmittedRequest(SAMPLE_URL, localPath);
+        downloadManager.downloadAborted();
+
+        mediaScanner.assertNoInteractions();
+        notificationManager.assertShowsError(TITLE);
     }
 
     public void testMissingPodcastUrl() throws Exception {

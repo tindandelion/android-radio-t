@@ -64,13 +64,22 @@ public class DownloadEngineTests {
     }
 
     @Test
-    public void showsNotificationIconOnCompletion() throws Exception {
+    public void showsSuccessOnCompletion() throws Exception {
         task.isSuccessful = true;
         task.title = "Podcast 1";
         task.localPath = LOCAL_PATH;
         when(downloadManager.query(1)).thenReturn(task);
         downloader.finishDownload(1);
-        verify(notificationManager).showNotification(task.title, LOCAL_PATH);
+        verify(notificationManager).showSuccess(task.title, LOCAL_PATH);
+    }
+
+    @Test
+    public void showsErrorOnCompletion() throws Exception {
+        task.isSuccessful = false;
+        task.title = "Podcast 1";
+        when(downloadManager.query(1)).thenReturn(task);
+        downloader.finishDownload(1);
+        verify(notificationManager).showError(task.title);
     }
 
     @Test
