@@ -3,15 +3,12 @@ package org.dandelion.radiot.podcasts.download;
 public class DownloadEngine {
     private DownloadManager downloadManager;
     private DownloadFolder destination;
-    private MediaScanner mediaScanner;
-    private NotificationManager notificationManager;
+    private DownloadProcessor postProcessor;
 
-    public DownloadEngine(DownloadManager downloadManager, DownloadFolder destination, MediaScanner mediaScanner,
-                          NotificationManager notificationManager) {
+    public DownloadEngine(DownloadManager downloadManager, DownloadFolder destination, DownloadProcessor processor) {
         this.downloadManager = downloadManager;
         this.destination = destination;
-        this.mediaScanner = mediaScanner;
-        this.notificationManager = notificationManager;
+        this.postProcessor = processor;
     }
 
     public void startDownloading(DownloadManager.DownloadTask task) {
@@ -29,10 +26,9 @@ public class DownloadEngine {
 
     private void processCompletedTask(DownloadManager.DownloadTask task) {
         if (task.isSuccessful) {
-            mediaScanner.scanAudioFile(task.localPath);
-            notificationManager.showSuccess(task.title, task.localPath);
+            postProcessor.downloadComplete(task.title, task.localPath);
         } else {
-            notificationManager.showError(task.title);
+            postProcessor.downloadError(task.title);
         }
 
     }
@@ -40,5 +36,5 @@ public class DownloadEngine {
     private boolean taskCancelled(DownloadManager.DownloadTask task) {
         return task == null;
     }
-
 }
+
