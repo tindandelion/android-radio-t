@@ -1,8 +1,8 @@
 package org.dandelion.radiot.podcasts.download;
 
+import android.app.*;
+import android.app.DownloadManager;
 import org.dandelion.radiot.R;
-import android.app.Notification;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -19,22 +19,44 @@ public class SystemNotificationManager implements NotificationManager {
 
     @Override
     public void showSuccess(String title, File audioFile) {
-        android.app.NotificationManager manager = (android.app.NotificationManager)
-                context.getSystemService(Context.NOTIFICATION_SERVICE);
-
-        Notification note = createNote(title, audioFile);
-        manager.notify(DOWNLOAD_COMPLETE_NOTE_ID, note);
+        Notification note = createSuccessNote(title, audioFile);
+        showNotification(title, note);
     }
 
     @Override
     public void showError(String title) {
-
+        Notification note = createErrorNote(title);
+        showNotification(title, note);
     }
 
-    private Notification createNote(String title, File path) {
+    private void showNotification(String tag, Notification note) {
+        android.app.NotificationManager manager = (android.app.NotificationManager)
+                context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        manager.notify(tag, DOWNLOAD_COMPLETE_NOTE_ID, note);
+    }
+
+    private Notification createErrorNote(String title) {
+        Notification note = new Notification(errorIcon(),
+                title, System.currentTimeMillis());
+        note.setLatestEventInfo(context, title, errorText(), intentForShowingDownloads());
+        note.flags |= Notification.FLAG_AUTO_CANCEL;
+        return note;
+    }
+
+    private CharSequence errorText() {
+        return context.getString(R.string.download_error_message);
+    }
+
+    private int errorIcon() {
+        return android.R.drawable.stat_sys_warning;
+    }
+
+
+    private Notification createSuccessNote(String title, File path) {
         Notification note = new Notification(completionIcon(),
                 title, System.currentTimeMillis());
-        note.setLatestEventInfo(context, title, getContextText(), createIntent(path));
+        note.setLatestEventInfo(context, title, completionText(), intentForPlayingFile(path));
         note.flags |= Notification.FLAG_AUTO_CANCEL;
         return note;
     }
@@ -43,11 +65,16 @@ public class SystemNotificationManager implements NotificationManager {
         return android.R.drawable.stat_sys_download_done;
     }
 
-    private CharSequence getContextText() {
+    private PendingIntent intentForShowingDownloads() {
+        Intent intent = new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS);
+        return PendingIntent.getActivity(context, 0, intent, 0);
+    }
+
+    private CharSequence completionText() {
         return context.getString(R.string.download_complete_message);
     }
 
-    private PendingIntent createIntent(File path) {
+    private PendingIntent intentForPlayingFile(File path) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setDataAndType(Uri.fromFile(path), "audio/mpeg");
         return PendingIntent.getActivity(context, 0, intent, 0);
