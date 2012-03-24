@@ -64,10 +64,11 @@ public class DownloadEngineTests {
     @Test
     public void signalsErrorToPostProcessor() throws Exception {
         task.isSuccessful = false;
+        task.errorCode = 1006;
         task.title = "Podcast 1";
         when(downloadManager.query(1)).thenReturn(task);
         downloader.finishDownload(1);
-        verify(processor).downloadError(task.title);
+        verify(processor).downloadError(task.title, task.errorCode);
     }
 
     @Test

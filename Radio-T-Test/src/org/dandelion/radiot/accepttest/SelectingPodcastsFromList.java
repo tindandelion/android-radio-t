@@ -57,13 +57,14 @@ public class SelectingPodcastsFromList extends PodcastListAcceptanceTestCase {
         PodcastListDriver driver = gotoPodcastListPage();
         driver.makeSamplePodcastWithUrl(TITLE, SAMPLE_URL);
         File localPath = new File(getDownloadFolder(), "podcast_file.mp3");
+        final int errorCode = 1000;
 
         driver.selectItemForDownloading(0);
         downloadManager.assertSubmittedRequest(SAMPLE_URL, localPath);
-        downloadManager.downloadAborted();
+        downloadManager.downloadAborted(errorCode);
 
         mediaScanner.assertNoInteractions();
-        notificationManager.assertShowsError(TITLE);
+        notificationManager.assertShowsError(TITLE, errorCode);
     }
 
     public void testMissingPodcastUrl() throws Exception {

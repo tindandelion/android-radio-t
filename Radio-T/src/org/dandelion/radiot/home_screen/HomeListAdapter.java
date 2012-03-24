@@ -102,7 +102,9 @@ class HomeScreenItem {
 	}
 
 	public void execute() {
-		listener.onClick(this);
+        if (listener != null) {
+		    listener.onClick(this);
+        }
 	}
 
 	public boolean hasIcon() {

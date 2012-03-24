@@ -12,5 +12,6 @@ public interface DownloadManager {
         public File localPath;
         public String url;
         public boolean isSuccessful;
+        public int errorCode;
     }
 }

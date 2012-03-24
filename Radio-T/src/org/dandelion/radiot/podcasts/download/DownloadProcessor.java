@@ -17,7 +17,7 @@ class DownloadProcessor {
         notificationManager.showSuccess(title, path);
     }
 
-    public void downloadError(String title) {
-        notificationManager.showError(title);
+    public void downloadError(String title, int errorCode) {
+        notificationManager.showError(title, errorCode);
     }
 }

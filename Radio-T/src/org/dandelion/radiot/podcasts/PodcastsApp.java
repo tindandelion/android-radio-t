@@ -1,10 +1,14 @@
 package org.dandelion.radiot.podcasts;
 
+import android.app.*;
 import android.content.Context;
 import android.os.Build;
 import android.os.Environment;
+import org.dandelion.radiot.R;
 import org.dandelion.radiot.podcasts.download.*;
 import org.dandelion.radiot.podcasts.core.PodcastAction;
+import org.dandelion.radiot.podcasts.download.DownloadManager;
+import org.dandelion.radiot.podcasts.download.NotificationManager;
 import org.dandelion.radiot.podcasts.ui.ExternalPlayer;
 
 import java.io.File;
@@ -80,6 +84,14 @@ public class PodcastsApp {
     }
 
     public NotificationManager createNotificationManager() {
-        return new SystemNotificationManager(context);
+        return new DownloadNotificationManager(context, createDownloadErrorMessages());
+    }
+
+    private DownloadErrorMessages createDownloadErrorMessages() {
+        return new DownloadErrorMessages(
+                context.getResources().getStringArray(R.array.download_error_messages),
+                android.app.DownloadManager.ERROR_UNKNOWN,
+                context.getString(R.string.download_default_message)
+        );
     }
 }

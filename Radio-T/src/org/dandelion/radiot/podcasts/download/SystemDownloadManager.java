@@ -40,6 +40,9 @@ public class SystemDownloadManager implements DownloadManager {
 
         long status = cursor.getLong(cursor.getColumnIndex(android.app.DownloadManager.COLUMN_STATUS));
         task.isSuccessful = (status == android.app.DownloadManager.STATUS_SUCCESSFUL);
+        if (!task.isSuccessful) {
+            task.errorCode = cursor.getInt(cursor.getColumnIndex(android.app.DownloadManager.COLUMN_REASON));
+        }
 
         String localPathUri = cursor.getString(cursor.getColumnIndex(android.app.DownloadManager.COLUMN_LOCAL_URI));
         if (localPathUri != null) {

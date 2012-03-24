@@ -25,8 +25,9 @@ public class DownloadProcessorTests {
 
     @Test
     public void showError() {
-        processor.downloadError(TITLE);
-        verify(notificationManager).showError(TITLE);
+        final int errorCode = 1006;
+        processor.downloadError(TITLE, errorCode);
+        verify(notificationManager).showError(TITLE, errorCode);
     }
 
     @Test

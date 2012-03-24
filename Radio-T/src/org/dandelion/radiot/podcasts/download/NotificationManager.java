@@ -4,5 +4,5 @@ import java.io.File;
 
 public interface NotificationManager {
     void showSuccess(String title, File audioFile);
-    void showError(String title);
+    void showError(String title, int errorCode);
 }

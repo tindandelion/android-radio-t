@@ -36,16 +36,17 @@ public class FakeDownloadManager implements DownloadManager {
     }
 
     public void downloadComplete() {
-        finishDownload(true);
+        finishDownload(true, 0);
     }
 
-    public void downloadAborted() {
-        finishDownload(false);
+    public void downloadAborted(int errorCode) {
+        finishDownload(false, errorCode);
     }
 
-    private void finishDownload(boolean success) {
+    private void finishDownload(boolean success, int errorCode) {
         DownloadTask value = submitted.getValue();
         value.isSuccessful = success;
+        value.errorCode = errorCode;
         if (success) {
             createEmptyFile(value);
         }

@@ -9,12 +9,14 @@ import android.net.Uri;
 
 import java.io.File;
 
-public class SystemNotificationManager implements NotificationManager {
+public class DownloadNotificationManager implements NotificationManager {
     private int DOWNLOAD_COMPLETE_NOTE_ID = 2;
     private Context context;
+    private DownloadErrorMessages errorMessages;
 
-    public SystemNotificationManager(Context context) {
+    public DownloadNotificationManager(Context context, DownloadErrorMessages messages) {
         this.context = context;
+        this.errorMessages = messages;
     }
 
     @Override
@@ -24,8 +26,9 @@ public class SystemNotificationManager implements NotificationManager {
     }
 
     @Override
-    public void showError(String title) {
-        Note note = new ErrorNote(context, title);
+    public void showError(String title, int errorCode) {
+        String message = errorMessages.getMessageForCode(errorCode);
+        Note note = new ErrorNote(context, title, message);
         note.show(title, DOWNLOAD_COMPLETE_NOTE_ID);
     }
 }
@@ -60,13 +63,16 @@ abstract class Note {
 }
 
 class ErrorNote extends Note {
-    ErrorNote(Context context, String title) {
+    private String message;
+
+    ErrorNote(Context context, String title, String message) {
         super(context, title);
+        this.message = message;
     }
 
     @Override
     public CharSequence text() {
-        return context.getString(R.string.download_error_message);
+        return message;
     }
 
     @Override

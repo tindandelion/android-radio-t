@@ -65,7 +65,7 @@
     <string name="download_unsupported_title">Загрузка не поддерживается</string>
     <string name="implement_download_request">Пожалуйста, реализуй загрузку подкастов для Android младших версий!</string>
     <string name="download_complete_message">Загрузка завершена</string>
-    <string name="download_error_message">Ошибка при загрузке</string>
+    <string name="download_default_message">Ошибка: %s</string>
     <string name="download_unsupported_message">
         Загрузка подкастов реализована для <b>Android 2.3</b> и старше. Вы можете попросить автора сделать эту функцию и для Вашей версии Android.
     </string>
@@ -93,5 +93,17 @@
             name="podcast_actions">
         <item>Загрузить</item>
         <item>Играть</item>
+    </string-array>
+    <string-array name="download_error_messages">
+        <item>Неизвестная ошибка</item>
+        <item>Ошибка при записи файла</item>
+        <item>Ошибка протокола HTTP</item>
+        <item>Неизвестная ошибка</item>
+        <item>Ошибка при передаче данных</item>
+        <item>Слишком много перенаправлений</item>
+        <item>Недостаточно места на носителе</item>
+        <item>Носитель данных не найден</item>
+        <item>Невозможно продолжить загрузку</item>
+        <item>Файл уже существует</item>
     </string-array>
 </resources>

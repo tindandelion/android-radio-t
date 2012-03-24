@@ -28,7 +28,7 @@ public class DownloadEngine {
         if (task.isSuccessful) {
             postProcessor.downloadComplete(task.title, task.localPath);
         } else {
-            postProcessor.downloadError(task.title);
+            postProcessor.downloadError(task.title, task.errorCode);
         }
 
     }

@@ -9,6 +9,7 @@ package org.dandelion.radiot;
 
 public final class R {
     public static final class array {
+        public static final int download_error_messages=0x7f050004;
         public static final int live_show_button_labels=0x7f050002;
         public static final int live_show_notification_labels=0x7f050000;
         public static final int live_show_status_labels=0x7f050001;
@@ -92,7 +93,7 @@ public final class R {
         public static final int after_show_title=0x7f040008;
         public static final int app_name=0x7f040006;
         public static final int download_complete_message=0x7f040015;
-        public static final int download_error_message=0x7f040016;
+        public static final int download_default_message=0x7f040016;
         public static final int download_unsupported_message=0x7f040017;
         public static final int download_unsupported_title=0x7f040013;
         public static final int error_title=0x7f040003;
