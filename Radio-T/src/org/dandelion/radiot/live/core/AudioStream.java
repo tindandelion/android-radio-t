@@ -5,7 +5,7 @@ import android.os.AsyncTask;
 
 import java.io.IOException;
 
-public class AudioStream implements MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener {
+public class AudioStream implements MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener {
     private MediaPlayer player;
     private StateListener listener;
     private AudioStream.StopTask stopTask;
@@ -35,6 +35,7 @@ public class AudioStream implements MediaPlayer.OnPreparedListener, MediaPlayer.
         player.prepareAsync();
     }
 
+    @SuppressWarnings("unchecked")
     public void stop() {
         ensureNoStopTasksExecuting();
         stopTask = new StopTask();
@@ -59,9 +60,15 @@ public class AudioStream implements MediaPlayer.OnPreparedListener, MediaPlayer.
         return false;
     }
 
+    @Override
+    public void onCompletion(MediaPlayer mediaPlayer) {
+        listener.onError();
+    }
+
     private void listenForPlayerEvents() {
         player.setOnPreparedListener(this);
         player.setOnErrorListener(this);
+        player.setOnCompletionListener(this);
     }
 
     private class StopTask extends AsyncTask<Void, Void, Void> {
