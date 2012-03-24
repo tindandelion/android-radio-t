@@ -4,8 +4,8 @@ import org.dandelion.radiot.live.core.states.*;
 
 public class LiveShowPlayer implements AudioStream.StateListener {
     public static int waitTimeoutMilliseconds = 60 * 1000;
-    //	public static String liveShowUrl = "http://radio10.promodeejay.net:8181/stream";
-    public static String liveShowUrl = "http://icecast.bigrradio.com/80s90s";
+    public static String liveShowUrl = "http://radio10.promodeejay.net:8181/stream";
+    // public static String liveShowUrl = "http://icecast.bigrradio.com/80s90s";
 
     private StateChangeListener listener;
     private LiveShowState state;
