@@ -7,7 +7,7 @@ import java.io.File;
 
 import static org.junit.Assert.assertEquals;
 
-public class DownloadFolderTests {
+public class DownloadFolderTest {
     public static final File LOCAL_DIR = new File("/mnt/downloads");
     private DownloadFolder folder;
 

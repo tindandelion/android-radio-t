@@ -8,8 +8,7 @@ import java.io.File;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
-@SuppressWarnings("ResultOfMethodCallIgnored")
-public class DownloadEngineTests {
+public class DownloadEngineTest {
     public static final String SOURCE_FILENAME = "rt_podcast_1.mp3";
     public static final String SOURCE_URL = "http://radio-t.com/" + SOURCE_FILENAME;
     public static final File LOCAL_PATH = new File("/mnt/download/filename.mp3");
@@ -60,7 +59,7 @@ public class DownloadEngineTests {
         downloader.finishDownload(1);
         verify(processor).downloadComplete(task.title, LOCAL_PATH);
     }
-    
+
     @Test
     public void signalsErrorToPostProcessor() throws Exception {
         task.isSuccessful = false;

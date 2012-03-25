@@ -8,7 +8,7 @@ import java.io.File;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-public class DownloadProcessorTests {
+public class DownloadProcessorTest {
     public static final String TITLE = "Podcast";
     private static final File PATH = new File("/mnt/download/filename.mp3");
 

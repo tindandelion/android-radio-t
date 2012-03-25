@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class DownloadErrorMessagesTests {
+public class DownloadErrorMessagesTest {
     public static final String MESSAGE = "Error message";
     public static final String[] ALL_MESSAGES = new String[]{MESSAGE};
     public static final int STARTING_CODE = 1000;
