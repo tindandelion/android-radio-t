@@ -1,7 +1,18 @@
+Backlog:
+ * Google Analytics
+ * Sync podcast list with SyncAdaptor
+ * Live show service should only be alive while playing music
+ * User topics
+
+Version 1.4:
+ * New dashboard widget
+ * Sync podcast list with SyncAdaptor
+ * Live show service should only be alive while playing music
+
 Downloading:
  * Respect background data loading settings
 
-* General:
+* Debt:
  * Remove 1.6 compatibility
  * Podcast type "audo/mpeg" appears in lots of places
  * Duplication between playback start from podcast list and from download notification
