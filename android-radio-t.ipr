@@ -166,7 +166,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Radio-T/Radio-T.iml" filepath="$PROJECT_DIR$/Radio-T/Radio-T.iml" />
       <module fileurl="file://$PROJECT_DIR$/Radio-T-Test/Radio-T-Test.iml" filepath="$PROJECT_DIR$/Radio-T-Test/Radio-T-Test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Radio-T-Unit-Tests/Radio-T-Unit-Tests.iml" filepath="$PROJECT_DIR$/Radio-T-Unit-Tests/Radio-T-Unit-Tests.iml" />
     </modules>
   </component>
   <component name="ProjectResources">
