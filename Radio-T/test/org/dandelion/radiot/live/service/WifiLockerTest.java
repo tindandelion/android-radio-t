@@ -1,14 +1,15 @@
-package org.dandelion.radiot.live;
+package org.dandelion.radiot.live.service;
 
 import android.net.wifi.WifiManager;
-import org.dandelion.radiot.live.core.states.*;
-import org.dandelion.radiot.live.service.WifiLocker;
+import org.dandelion.radiot.live.core.states.Connecting;
+import org.dandelion.radiot.live.core.states.Idle;
+import org.dandelion.radiot.live.core.states.Waiting;
 import org.junit.Test;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-public class WifiLockerTests {
+public class WifiLockerTest {
     private WifiManager.WifiLock lock = mock(WifiManager.WifiLock.class);
     private WifiLocker locker = new WifiLocker(lock);
 

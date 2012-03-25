@@ -1,8 +1,5 @@
-package org.dandelion.radiot.live;
+package org.dandelion.radiot.live.core;
 
-import org.dandelion.radiot.live.core.AudioStream;
-import org.dandelion.radiot.live.core.LiveShowPlayer;
-import org.dandelion.radiot.live.core.Timeout;
 import org.dandelion.radiot.live.core.states.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,9 +10,13 @@ import java.io.IOException;
 
 import static junit.framework.Assert.assertEquals;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
-public class LiveShowPlayerTests implements LiveShowPlayer.StateChangeListener {
+public class LiveShowPlayerTest implements LiveShowPlayer.StateChangeListener {
     private LiveShowPlayer player;
     private AudioStream audioStream = mock(AudioStream.class);
     private AudioStream.StateListener audioStateListener;

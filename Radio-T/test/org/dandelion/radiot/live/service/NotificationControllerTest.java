@@ -7,9 +7,11 @@ import org.dandelion.radiot.live.core.states.Playing;
 import org.dandelion.radiot.live.core.states.Waiting;
 import org.junit.Test;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-public class NotificationControllerTests {
+public class NotificationControllerTest {
     private Foregrounder foregrounder = mock(Foregrounder.class);
     private Notification note = mock(Notification.class);
     private NotificationBuilder builder = mock(NotificationBuilder.class);

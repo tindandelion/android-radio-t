@@ -1,7 +1,6 @@
-package org.dandelion.radiot.live;
+package org.dandelion.radiot.live.core;
 
 import android.media.MediaPlayer;
-import org.dandelion.radiot.live.core.AudioStream;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
@@ -14,7 +13,7 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-public class AudioStreamTests {
+public class AudioStreamTest {
     private static final String TEST_STREAM_URL = "http://audio-stream";
     private MediaPlayer.OnPreparedListener preparedListener;
     private MediaPlayer player = mock(MediaPlayer.class);
