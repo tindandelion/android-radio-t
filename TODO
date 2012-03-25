@@ -1,12 +1,12 @@
 Backlog:
- * Google Analytics
  * Sync podcast list with SyncAdaptor
  * Live show service should only be alive while playing music
  * User topics
 
 Version 1.4:
- * New dashboard widget
  * Sync podcast list with SyncAdaptor
+ * Google Analytics
+ * New dashboard widget
  * Live show service should only be alive while playing music
 
 Downloading:
@@ -18,7 +18,6 @@ Downloading:
  * Duplication between playback start from podcast list and from download notification
 
 
- Development:
+Development:
  * Explore AndroidMock
- * Try merging unit tests and a main app
  * Build and test all in one click
