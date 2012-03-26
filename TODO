@@ -13,7 +13,6 @@ Downloading:
  * Respect background data loading settings
 
 * Debt:
- * Remove 1.6 compatibility
  * Podcast type "audo/mpeg" appears in lots of places
  * Duplication between playback start from podcast list and from download notification
 
