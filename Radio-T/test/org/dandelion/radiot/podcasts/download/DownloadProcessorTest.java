@@ -1,6 +1,5 @@
 package org.dandelion.radiot.podcasts.download;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
@@ -12,16 +11,9 @@ public class DownloadProcessorTest {
     public static final String TITLE = "Podcast";
     private static final File PATH = new File("/mnt/download/filename.mp3");
 
-    private MediaScanner scanner;
-    private NotificationManager notificationManager;
-    private DownloadProcessor processor;
-
-    @Before
-    public void setUp() throws Exception {
-        scanner = mock(MediaScanner.class);
-        notificationManager = mock(NotificationManager.class);
-        processor = new DownloadProcessor(scanner, notificationManager);
-    }
+    private final MediaScanner scanner = mock(MediaScanner.class);
+    private final NotificationManager notificationManager = mock(NotificationManager.class);
+    private final DownloadProcessor processor = new DownloadProcessor(scanner, notificationManager);
 
     @Test
     public void showError() {

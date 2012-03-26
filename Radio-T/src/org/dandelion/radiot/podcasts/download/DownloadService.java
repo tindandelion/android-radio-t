@@ -52,9 +52,8 @@ public class DownloadService extends IntentService {
     }
 
     private void startDownloading(Intent intent) {
-        DownloadManager.DownloadTask task = new DownloadManager.DownloadTask();
-        task.url = intent.getStringExtra(URL_EXTRA);
-        task.title = intent.getStringExtra(TITLE_EXTRA);
-        downloader.startDownloading(task);
+        String url = intent.getStringExtra(URL_EXTRA);
+        String title = intent.getStringExtra(TITLE_EXTRA);
+        downloader.startDownloading(new DownloadManager.Request(url, title));
     }
 }

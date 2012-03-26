@@ -14,41 +14,53 @@ public class SystemDownloadManager implements DownloadManager {
     }
 
     @Override
-    public long submit(DownloadTask task) {
-        android.app.DownloadManager.Request request = new android.app.DownloadManager.Request(Uri.parse(task.url));
-        request
-                .setDestinationUri(Uri.fromFile(task.localPath))
-                .setTitle(task.title);
-        return service.enqueue(request);
+    public void submit(Request request) {
+        android.app.DownloadManager.Request sysRequest = constructSysRequest(request);
+        service.enqueue(sysRequest);
+    }
+
+    private android.app.DownloadManager.Request constructSysRequest(Request request) {
+        android.app.DownloadManager.Request sysRequest = new android.app.DownloadManager.Request(Uri.parse(request.url));
+        sysRequest
+                .setDestinationUri(Uri.fromFile(request.localPath))
+                .setTitle(request.title);
+        return sysRequest;
     }
 
     @Override
-    public DownloadTask query(long id) {
+    public CompletionInfo query(long id) {
         Cursor cursor = requestCursor(id);
         if (cursor.getCount() == 0) {
             return null;
         }
-        return constructTask(cursor);
+        return constructInfo(cursor);
     }
 
-    private DownloadTask constructTask(Cursor cursor) {
-        DownloadTask task = new DownloadTask();
+    private CompletionInfo constructInfo(Cursor cursor) {
         cursor.moveToFirst();
-        task.id = cursor.getLong(cursor.getColumnIndex(android.app.DownloadManager.COLUMN_ID));
-        task.title = cursor.getString(cursor.getColumnIndex(android.app.DownloadManager.COLUMN_TITLE));
-        task.url = cursor.getString(cursor.getColumnIndex(android.app.DownloadManager.COLUMN_URI));
-
+        String title = cursor.getString(cursor.getColumnIndex(android.app.DownloadManager.COLUMN_TITLE));
         long status = cursor.getLong(cursor.getColumnIndex(android.app.DownloadManager.COLUMN_STATUS));
-        task.isSuccessful = (status == android.app.DownloadManager.STATUS_SUCCESSFUL);
-        if (!task.isSuccessful) {
-            task.errorCode = cursor.getInt(cursor.getColumnIndex(android.app.DownloadManager.COLUMN_REASON));
-        }
 
-        String localPathUri = cursor.getString(cursor.getColumnIndex(android.app.DownloadManager.COLUMN_LOCAL_URI));
-        if (localPathUri != null) {
-            task.localPath = new File(Uri.parse(localPathUri).getPath());
+        if (isSuccessful(status)) {
+            return constructSuccessfulInfo(cursor, title);
+        } else {
+            return constructFailureInfo(cursor, title);
         }
-        return task;
+    }
+
+    private CompletionInfo constructFailureInfo(Cursor cursor, String title) {
+        int errorCode = cursor.getInt(cursor.getColumnIndex(android.app.DownloadManager.COLUMN_REASON));
+        return CompletionInfo.failure(title, errorCode);
+    }
+
+    private CompletionInfo constructSuccessfulInfo(Cursor cursor, String title) {
+        String localPathUri = cursor.getString(cursor.getColumnIndex(android.app.DownloadManager.COLUMN_LOCAL_URI));
+        File localPath = new File(Uri.parse(localPathUri).getPath());
+        return CompletionInfo.success(title, localPath);
+    }
+
+    private boolean isSuccessful(long status) {
+        return status == android.app.DownloadManager.STATUS_SUCCESSFUL;
     }
 
     private Cursor requestCursor(long id) {

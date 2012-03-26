@@ -10,7 +10,8 @@ import java.io.IOException;
 
 public class FakeDownloadManager implements DownloadManager {
     public static final long TASK_ID = 1;
-    private SyncValueHolder<DownloadTask> submitted = new SyncValueHolder<DownloadTask>();
+    private SyncValueHolder<Request> requestHolder = new SyncValueHolder<Request>();
+    private CompletionInfo completionInfo;
     private Context context;
 
     public FakeDownloadManager(Context context) {
@@ -18,20 +19,18 @@ public class FakeDownloadManager implements DownloadManager {
     }
 
     @Override
-    public long submit(DownloadTask task) {
-        task.id = TASK_ID;
-        submitted.setValue(task);
-        return TASK_ID;
+    public void submit(Request request) {
+        requestHolder.setValue(request);
     }
 
     @Override
-    public DownloadTask query(long id) {
-        return submitted.getValue();
+    public CompletionInfo query(long id) {
+        return completionInfo;
     }
 
     public void cancelDownload() {
-        submitted.waitForValue();
-        submitted.setValue(null);
+        requestHolder.waitForValue();
+        completionInfo = null;
         sendCompletionBroadcast();
     }
 
@@ -44,19 +43,20 @@ public class FakeDownloadManager implements DownloadManager {
     }
 
     private void finishDownload(boolean success, int errorCode) {
-        DownloadTask value = submitted.getValue();
-        value.isSuccessful = success;
-        value.errorCode = errorCode;
+        Request request = requestHolder.getValue();
         if (success) {
-            createEmptyFile(value);
+            completionInfo = CompletionInfo.success(request.title, request.localPath);
+            createEmptyFile(completionInfo.localPath);
+        } else {
+            completionInfo = CompletionInfo.failure(request.title, errorCode);
         }
         sendCompletionBroadcast();
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    private void createEmptyFile(DownloadTask value) {
+    private void createEmptyFile(File path) {
         try {
-            value.localPath.createNewFile();
+            path.createNewFile();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -69,7 +69,7 @@ public class FakeDownloadManager implements DownloadManager {
     }
 
     public void assertSubmittedRequest(String src, File dest) {
-        DownloadTask request = submitted.getValue();
+        Request request = this.requestHolder.getValue();
         Assert.assertEquals("Source URL", src, request.url);
         Assert.assertEquals("Destination URL", dest, request.localPath);
     }

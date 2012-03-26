@@ -1,6 +1,5 @@
 package org.dandelion.radiot.podcasts.download;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
@@ -9,12 +8,7 @@ import static org.junit.Assert.assertEquals;
 
 public class DownloadFolderTest {
     public static final File LOCAL_DIR = new File("/mnt/downloads");
-    private DownloadFolder folder;
-
-    @Before
-    public void setUp() throws Exception {
-        folder = new DownloadFolder(LOCAL_DIR);
-    }
+    private final DownloadFolder folder = new DownloadFolder(LOCAL_DIR);
 
     @Test
     public void constructsDestPathForUrlUsingItsBasename() throws Exception {

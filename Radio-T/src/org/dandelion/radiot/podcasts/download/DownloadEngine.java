@@ -11,30 +11,30 @@ public class DownloadEngine {
         this.postProcessor = processor;
     }
 
-    public void startDownloading(DownloadManager.DownloadTask task) {
+    public void startDownloading(DownloadManager.Request request) {
         destination.mkdirs();
-        task.localPath = destination.makePathForUrl(task.url);
-        downloadManager.submit(task);
+        request.localPath = destination.makePathForUrl(request.url);
+        downloadManager.submit(request);
     }
 
     public void finishDownload(long id) {
-        DownloadManager.DownloadTask completedTask = downloadManager.query(id);
-        if (!taskCancelled(completedTask)) {
-            processCompletedTask(completedTask);
+        DownloadManager.CompletionInfo info = downloadManager.query(id);
+        if (!taskCancelled(info)) {
+            processCompletedTask(info);
         }
     }
 
-    private void processCompletedTask(DownloadManager.DownloadTask task) {
-        if (task.isSuccessful) {
-            postProcessor.downloadComplete(task.title, task.localPath);
+    private void processCompletedTask(DownloadManager.CompletionInfo info) {
+        if (info.isSuccessful) {
+            postProcessor.downloadComplete(info.title, info.localPath);
         } else {
-            postProcessor.downloadError(task.title, task.errorCode);
+            postProcessor.downloadError(info.title, info.errorCode);
         }
 
     }
 
-    private boolean taskCancelled(DownloadManager.DownloadTask task) {
-        return task == null;
+    private boolean taskCancelled(Object info) {
+        return info == null;
     }
 }
 

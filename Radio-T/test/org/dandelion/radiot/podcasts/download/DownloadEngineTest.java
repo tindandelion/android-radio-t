@@ -1,6 +1,5 @@
 package org.dandelion.radiot.podcasts.download;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
@@ -9,65 +8,52 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class DownloadEngineTest {
+    private static final String TITLE = "Podcast";
     public static final String SOURCE_FILENAME = "rt_podcast_1.mp3";
     public static final String SOURCE_URL = "http://radio-t.com/" + SOURCE_FILENAME;
     public static final File LOCAL_PATH = new File("/mnt/download/filename.mp3");
 
-    private DownloadManager downloadManager;
-    private DownloadEngine downloader;
-    private DownloadFolder downloadFolder;
-    private DownloadManager.DownloadTask task;
-    private DownloadProcessor processor;
-
-    @Before
-    public void setUp() throws Exception {
-        downloadFolder = mock(DownloadFolder.class);
-        downloadManager = mock(DownloadManager.class);
-        processor = mock(DownloadProcessor.class);
-        downloader = new DownloadEngine(downloadManager, downloadFolder, processor);
-        task = new DownloadManager.DownloadTask();
-    }
+    private final DownloadFolder downloadFolder = mock(DownloadFolder.class);
+    private final DownloadManager downloadManager = mock(DownloadManager.class);
+    private final DownloadProcessor processor = mock(DownloadProcessor.class);
+    private final DownloadManager.Request request = new DownloadManager.Request(SOURCE_URL, TITLE);
+    private final DownloadEngine downloader = new DownloadEngine(downloadManager, downloadFolder, processor);
 
     @Test
     public void submitsTaskToDownloader() throws Exception {
-        downloader.startDownloading(task);
-        verify(downloadManager).submit(task);
+        downloader.startDownloading(request);
+        verify(downloadManager).submit(request);
     }
 
     @Test
     public void constructsLocalPathForTaskFromSourceUrl() throws Exception {
         when(downloadFolder.makePathForUrl(SOURCE_URL))
                 .thenReturn(LOCAL_PATH);
-
-        task.url = SOURCE_URL;
-        downloader.startDownloading(task);
-
-        assertEquals(task.localPath, LOCAL_PATH);
+        downloader.startDownloading(request);
+        assertEquals(request.localPath, LOCAL_PATH);
     }
 
     @Test
     public void ensuresDownloadFolderExists() throws Exception {
-        downloader.startDownloading(task);
+        downloader.startDownloading(request);
         verify(downloadFolder).mkdirs();
     }
 
     @Test
     public void signalsCompletionToPostProcessor() throws Exception {
-        task.isSuccessful = true;
-        task.localPath = LOCAL_PATH;
-        when(downloadManager.query(1)).thenReturn(task);
+        DownloadManager.CompletionInfo info = DownloadManager.CompletionInfo.success(TITLE, LOCAL_PATH);
+        when(downloadManager.query(1)).thenReturn(info);
         downloader.finishDownload(1);
-        verify(processor).downloadComplete(task.title, LOCAL_PATH);
+        verify(processor).downloadComplete(TITLE, LOCAL_PATH);
     }
 
     @Test
     public void signalsErrorToPostProcessor() throws Exception {
-        task.isSuccessful = false;
-        task.errorCode = 1006;
-        task.title = "Podcast 1";
-        when(downloadManager.query(1)).thenReturn(task);
+        final int errorCode = 1006;
+        DownloadManager.CompletionInfo info = DownloadManager.CompletionInfo.failure(TITLE, errorCode);
+        when(downloadManager.query(1)).thenReturn(info);
         downloader.finishDownload(1);
-        verify(processor).downloadError(task.title, task.errorCode);
+        verify(processor).downloadError(TITLE, errorCode);
     }
 
     @Test
