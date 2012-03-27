@@ -49,7 +49,7 @@
                 style="@style/DashboardButton" />
         <Button android:id="@+id/home_btn_about"
                 android:text="@string/about_app_title"
-                android:drawableTop="@drawable/home_btn_main_show"
+                android:drawableTop="@drawable/home_btn_about"
                 style="@style/DashboardButton" />
     </org.dandelion.radiot.home_screen.DashboardLayout>
 </RelativeLayout>

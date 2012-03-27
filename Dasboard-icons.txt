@@ -1,0 +1,2 @@
+Main image: 80 px
+Outer image: 90 px
