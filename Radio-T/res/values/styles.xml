@@ -1,100 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<style
-		name="InfoBox">
-		<item
-			name="android:layout_width">fill_parent</item>
-		<item
-			name="android:layout_height">wrap_content</item>
-		<item
-			name="android:layout_marginLeft">7dp</item>
-		<item
-			name="android:layout_marginRight">7dp</item>
-		<item
-			name="android:paddingLeft">10dp</item>
-		<item
-			name="android:paddingRight">10dp</item>
-		<item
-			name="android:paddingTop">30dp</item>
-		<item
-			name="android:paddingBottom">30dp</item>
+	<style name="InfoBox">
+		<item name="android:layout_width">fill_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_marginLeft">7dp</item>
+		<item name="android:layout_marginRight">7dp</item>
+		<item name="android:paddingLeft">10dp</item>
+		<item name="android:paddingRight">10dp</item>
+		<item name="android:paddingTop">30dp</item>
+		<item name="android:paddingBottom">30dp</item>
 	</style>
-	<style
-		name="Radiot.TextView"
+	<style name="Radiot.TextView"
 		parent="@android:style/Widget.TextView">
-		<item
-			name="android:textAppearance">?android:attr/textAppearanceMedium</item>
-		<item
-			name="android:textColor">?android:attr/textColorSecondary</item>
+		<item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+		<item name="android:textColor">?android:attr/textColorSecondary</item>
 	</style>
-	<style
-		name="Radiot.Button"
+	<style name="Radiot.Button"
 		parent="@android:style/Widget.Button">
-		<item
-			name="android:textColor">@color/button_text_color</item>
-		<item
-			name="android:textSize">25sp</item>
-		<item
-			name="android:padding">8dp</item>
-		<item
-			name="android:background">@drawable/button_background</item>
+		<item name="android:textColor">@color/button_text_color</item>
+		<item name="android:textSize">25sp</item>
+		<item name="android:padding">8dp</item>
+		<item name="android:background">@drawable/button_background</item>
 	</style>
-	<style
-		name="ActivityTitle"
+	<style name="ActivityTitle"
 		parent="@android:style/Widget.TextView">
-		<item
-			name="android:layout_width">wrap_content</item>
-		<item
-			name="android:layout_height">wrap_content</item>
-		<item
-			name="android:textColor">@android:color/white</item>
-		<item
-			name="android:textStyle">bold</item>
-		<item
-			name="android:textSize">23sp</item>
-		<item
-			name="android:textScaleX">1.1</item>
-		<item
-			name="android:paddingRight">10dp</item>
-		<item
-			name="android:layout_alignParentRight">true</item>
-		<item
-			name="android:gravity">center_vertical|right</item>
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:textColor">@android:color/white</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:textSize">23sp</item>
+		<item name="android:textScaleX">1.1</item>
+		<item name="android:paddingRight">10dp</item>
+		<item name="android:layout_alignParentRight">true</item>
+		<item name="android:gravity">center_vertical|right</item>
 	</style>
-	<style
-		name="ActivityIcon">
-		<item
-			name="android:layout_width">wrap_content</item>
-		<item
-			name="android:layout_height">wrap_content</item>
-		<item
-			name="android:layout_alignParentLeft">true</item>
-		<item
-			name="android:layout_alignParentTop">true</item>
-		<item
-			name="android:paddingLeft">10dp</item>
+	<style name="ActivityIcon">
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_alignParentLeft">true</item>
+		<item name="android:layout_alignParentTop">true</item>
+		<item name="android:paddingLeft">10dp</item>
 	</style>
-	<style
-		name="Divider">
-		<item
-			name="android:layout_height">1px</item>
-		<item
-			name="android:layout_width">fill_parent</item>
-		<item
-			name="android:background">@android:drawable/divider_horizontal_dark</item>
+	<style name="Divider">
+		<item name="android:layout_height">1px</item>
+		<item name="android:layout_width">fill_parent</item>
+		<item name="android:background">@android:drawable/divider_horizontal_dark</item>
 	</style>
-	<style
-		name="Theme.Radiot"
+	<style name="Theme.Radiot"
 		parent="android:Theme">
-		<item
-			name="android:textViewStyle">@style/Radiot.TextView</item>
-		<item
-			name="android:buttonStyle">@style/Radiot.Button</item>
+		<item name="android:textViewStyle">@style/Radiot.TextView</item>
+		<item name="android:buttonStyle">@style/Radiot.Button</item>
 	</style>
-	<style
-		name="Theme.RadiotNoTitle"
+	<style name="Theme.RadiotNoTitle"
 		parent="Theme.Radiot">
-		<item
-			name="android:windowNoTitle">true</item>
+		<item name="android:windowNoTitle">true</item>
 	</style>
+    <style name="DashboardButton">
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:drawablePadding">2dp</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/button_text_color</item>
+        <item name="android:background">#ff0000</item>
+    </style>
 </resources>
