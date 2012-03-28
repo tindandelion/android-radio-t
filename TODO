@@ -7,7 +7,10 @@ Version 1.4:
  * Sync podcast list with SyncAdaptor
  * Google Analytics
  * New dashboard widget
- * Live show service should only be alive while playing music
+PROGRESS Live show service should only be alive while playing music
+ * Live show state must be accessible without asking the service
+ * Use intent API for live show commands
+ * Implement proper service lifecycle
 
 Downloading:
  * Respect background data loading settings
