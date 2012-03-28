@@ -11,7 +11,7 @@ public class Playing extends LiveShowState {
 
     @Override
     public void acceptVisitor(LiveShowPlayer.StateVisitor visitor) {
-        visitor.onPlaying(this);
+        visitor.onPlaying(this.getTimestamp());
     }
 
     public void handleError(LiveShowPlayer player) {

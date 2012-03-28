@@ -6,6 +6,6 @@ public class Stopping extends LiveShowState {
 
     @Override
     public void acceptVisitor(LiveShowPlayer.StateVisitor visitor) {
-        visitor.onStopping(this);
+        visitor.onStopping(this.getTimestamp());
     }
 }

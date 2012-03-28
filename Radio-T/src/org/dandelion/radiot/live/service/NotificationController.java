@@ -2,7 +2,6 @@ package org.dandelion.radiot.live.service;
 
 import android.app.Notification;
 import org.dandelion.radiot.live.core.LiveShowPlayer;
-import org.dandelion.radiot.live.core.states.*;
 
 public class NotificationController implements LiveShowPlayer.StateVisitor {
     private static final int PLAYING_ID = 0;
@@ -20,27 +19,27 @@ public class NotificationController implements LiveShowPlayer.StateVisitor {
     }
 
     @Override
-    public void onWaiting(LiveShowState state) {
+    public void onWaiting(long timestamp) {
         startForeground(getStatusLabel(WAITING_ID));
     }
 
     @Override
-    public void onIdle(LiveShowState state) {
+    public void onIdle() {
         stopForeground();
     }
 
     @Override
-    public void onConnecting(LiveShowState connecting) {
+    public void onConnecting(long timestamp) {
         startForeground(getStatusLabel(CONNECTING_ID));
     }
 
     @Override
-    public void onPlaying(LiveShowState playing) {
+    public void onPlaying(long timestamp) {
         startForeground(getStatusLabel(PLAYING_ID));
     }
 
     @Override
-    public void onStopping(LiveShowState stopping) {
+    public void onStopping(long timestamp) {
     }
 
     private String getStatusLabel(int id) {
