@@ -12,23 +12,23 @@ public class LiveShowPresenter implements LiveShowPlayer.StateVisitor {
 		this.activity = activity;
 	}
 
-	public void onIdle(Idle state) {
+	public void onIdle(LiveShowState state) {
 		beInactiveState();
 	}
 
-	public void onWaiting(Waiting state) {
+	public void onWaiting(LiveShowState state) {
 		beActiveState(state, 2, true, true);
 	}
 
-	public void onConnecting(Connecting state) {
+	public void onConnecting(LiveShowState state) {
 		beActiveState(state, 1, false, true);
 	}
 
-	public void onPlaying(Playing state) {
+	public void onPlaying(LiveShowState state) {
 		beActiveState(state, 3, false, true);
 	}
 
-	public void onStopping(Stopping state) {
+	public void onStopping(LiveShowState state) {
 		beActiveState(state, 4, false, false);
 	}
 

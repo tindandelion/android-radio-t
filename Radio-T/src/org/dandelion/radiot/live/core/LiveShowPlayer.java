@@ -24,11 +24,11 @@ public class LiveShowPlayer implements AudioStream.StateListener {
     }
 
     public static interface StateVisitor {
-        void onWaiting(Waiting state);
-        void onIdle(Idle state);
-        void onConnecting(Connecting connecting);
-        void onPlaying(Playing playing);
-        void onStopping(Stopping stopping);
+        void onWaiting(LiveShowState state);
+        void onIdle(LiveShowState state);
+        void onConnecting(LiveShowState state);
+        void onPlaying(LiveShowState state);
+        void onStopping(LiveShowState state);
     }
 
     public static void setWaitTimeoutSeconds(int value) {

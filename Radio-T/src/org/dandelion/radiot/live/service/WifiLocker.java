@@ -25,25 +25,25 @@ public class WifiLocker implements LiveShowPlayer.StateVisitor {
     }
 
     @Override
-    public void onWaiting(Waiting state) {
+    public void onWaiting(LiveShowState state) {
         lock.release();
     }
 
     @Override
-    public void onIdle(Idle state) {
+    public void onIdle(LiveShowState state) {
         lock.release();
     }
 
     @Override
-    public void onConnecting(Connecting connecting) {
+    public void onConnecting(LiveShowState connecting) {
         lock.acquire();
     }
 
     @Override
-    public void onPlaying(Playing playing) {
+    public void onPlaying(LiveShowState playing) {
     }
 
     @Override
-    public void onStopping(Stopping stopping) {
+    public void onStopping(LiveShowState stopping) {
     }
 }

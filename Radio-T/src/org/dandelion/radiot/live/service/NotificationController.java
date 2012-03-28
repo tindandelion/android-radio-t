@@ -20,27 +20,27 @@ public class NotificationController implements LiveShowPlayer.StateVisitor {
     }
 
     @Override
-    public void onWaiting(Waiting state) {
+    public void onWaiting(LiveShowState state) {
         startForeground(getStatusLabel(WAITING_ID));
     }
 
     @Override
-    public void onIdle(Idle state) {
+    public void onIdle(LiveShowState state) {
         stopForeground();
     }
 
     @Override
-    public void onConnecting(Connecting connecting) {
+    public void onConnecting(LiveShowState connecting) {
         startForeground(getStatusLabel(CONNECTING_ID));
     }
 
     @Override
-    public void onPlaying(Playing playing) {
+    public void onPlaying(LiveShowState playing) {
         startForeground(getStatusLabel(PLAYING_ID));
     }
 
     @Override
-    public void onStopping(Stopping stopping) {
+    public void onStopping(LiveShowState stopping) {
     }
 
     private String getStatusLabel(int id) {
