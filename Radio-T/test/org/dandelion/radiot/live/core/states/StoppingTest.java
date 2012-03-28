@@ -11,14 +11,8 @@ public class StoppingTest {
     private Stopping state = new Stopping();
 
     @Test
-    public void startPlaybackDoesNothing() throws Exception {
-        state.startPlayback(player);
-        verifyZeroInteractions(player);
-    }
-
-    @Test
-    public void stopPlaybackDoesNothing() throws Exception {
-        state.stopPlayback(player);
+    public void togglePlaybackDoesNothing() throws Exception {
+        state.togglePlayback(player);
         verifyZeroInteractions(player);
     }
 }

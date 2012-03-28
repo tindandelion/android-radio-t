@@ -28,7 +28,7 @@ public class LiveShowPlayback extends
 	
 	@Override
 	protected void tearDown() throws Exception {
-		activity.getService().stopPlayback();
+		activity.getService().reset();
 		super.tearDown();
 	}
 	

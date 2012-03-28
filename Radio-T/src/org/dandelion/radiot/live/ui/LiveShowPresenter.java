@@ -7,7 +7,6 @@ import org.dandelion.radiot.live.service.LiveShowService;
 public class LiveShowPresenter implements LiveShowPlayer.StateVisitor {
 
 	private LiveShowActivity activity;
-	private boolean isActive;
 
 	public LiveShowPresenter(LiveShowActivity activity) {
 		this.activity = activity;
@@ -34,16 +33,11 @@ public class LiveShowPresenter implements LiveShowPlayer.StateVisitor {
 	}
 
     public void togglePlaybackState(LiveShowService service) {
-		if (isActive) {
-			service.stopPlayback();
-		} else {
-			service.startPlayback();
-		}
+        service.togglePlayback();
 	}
 
 	private void beActiveState(LiveShowState state, int labelStringId,
 			boolean isHelpTextVisible, boolean buttonEnabled) {
-		isActive = true;
 		activity.setStatusLabel(labelStringId);
 		activity.showHelpText(isHelpTextVisible);
 		activity.setButtonState(0, buttonEnabled);
@@ -51,7 +45,6 @@ public class LiveShowPresenter implements LiveShowPlayer.StateVisitor {
 	}
 
 	private void beInactiveState() {
-		isActive = false;
 		activity.setStatusLabel(0);
 		activity.showHelpText(false);
 		activity.setButtonState(1, true);

@@ -14,16 +14,13 @@ public class LiveShowState implements Serializable {
 	public void acceptVisitor(LiveShowPlayer.StateVisitor visitor) {
 	}
 
-	public void stopPlayback(LiveShowPlayer player) {
-	}
-
-    public void startPlayback(LiveShowPlayer player) {
-	}
-
-	public long getTimestamp() {
-		return timestamp;
-	}
+    public void togglePlayback(LiveShowPlayer player) {
+    }
 
     public void handleError(LiveShowPlayer player) {
     }
+
+    public long getTimestamp() {
+		return timestamp;
+	}
 }

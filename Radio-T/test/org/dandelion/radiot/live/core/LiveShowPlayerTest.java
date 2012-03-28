@@ -102,12 +102,12 @@ public class LiveShowPlayerTest implements LiveShowPlayer.StateChangeListener {
 
     @Test
     public void normalPlaybackWorkflow() throws Exception {
-        player.startPlayback();
+        player.togglePlayback();
         verifyIsConnecting();
         audioStateListener.onStarted();
         verifyIsPlaying();
 
-        player.stopPlayback();
+        player.togglePlayback();
         verifyIsStopping();
         audioStateListener.onStopped();
         verifyIsIdle();
@@ -115,7 +115,7 @@ public class LiveShowPlayerTest implements LiveShowPlayer.StateChangeListener {
 
     @Test
     public void waitingForShowWorkflow() throws Exception {
-        player.startPlayback();
+        player.togglePlayback();
         verifyIsConnecting();
         audioStateListener.onError();
         verifyIsWaiting();

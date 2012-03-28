@@ -73,11 +73,11 @@ public class LiveShowService extends Service implements LiveShowPlayer.StateChan
         player.queryState(visitor);
 	}
 
-    public void stopPlayback() {
-        player.stopPlayback();
+    public void reset() {
+        player.reset();
 	}
 
-    public void startPlayback() {
-        player.startPlayback();
+    public void togglePlayback() {
+        player.togglePlayback();
     }
 }

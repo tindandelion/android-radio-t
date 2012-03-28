@@ -10,6 +10,7 @@ public class AudioStream implements MediaPlayer.OnPreparedListener, MediaPlayer.
     private StateListener listener;
     private AudioStream.StopTask stopTask;
 
+
     public interface StateListener {
         void onStarted();
         void onError();
@@ -33,6 +34,10 @@ public class AudioStream implements MediaPlayer.OnPreparedListener, MediaPlayer.
         player.reset();
         player.setDataSource(url);
         player.prepareAsync();
+    }
+
+    public void reset() {
+        player.reset();
     }
 
     @SuppressWarnings("unchecked")

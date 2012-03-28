@@ -18,6 +18,7 @@ public class LiveShowPlayer implements AudioStream.StateListener {
         }
     };
 
+
     public interface StateChangeListener {
         void onChangedState(LiveShowState newState);
     }
@@ -53,12 +54,13 @@ public class LiveShowPlayer implements AudioStream.StateListener {
         state.acceptVisitor(visitor);
     }
 
-    public void startPlayback() {
-        state.startPlayback(this);
+    public void reset() {
+        audioStream.reset();
+        beIdle();
     }
 
-    public void stopPlayback() {
-        state.stopPlayback(this);
+    public void togglePlayback() {
+        state.togglePlayback(this);
     }
 
     public boolean isIdle() {
