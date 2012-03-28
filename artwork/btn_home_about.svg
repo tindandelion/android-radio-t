@@ -140,11 +140,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="4.1354167"
-     inkscape:cx="-5.2852228"
+     inkscape:zoom="5.8483624"
+     inkscape:cx="27.218253"
      inkscape:cy="43.163728"
      inkscape:document-units="px"
-     inkscape:current-layer="g3880"
+     inkscape:current-layer="layer4"
      showgrid="false"
      inkscape:window-width="1680"
      inkscape:window-height="1026"
@@ -159,7 +159,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -285,5 +285,24 @@
        inkscape:original="M 46.90625 9.15625 C 37.015208 9.15625 28.96875 17.202708 28.96875 27.09375 L 28.96875 63.34375 C 28.96875 73.234793 37.015208 81.28125 46.90625 81.28125 L 57.15625 81.28125 C 58.955652 83.015307 63.418865 87.121414 70.28125 90.53125 C 74.824377 92.78928 80.854609 94.221659 86.25 94.90625 C 88.947696 95.248545 91.453359 95.37302 93.59375 95.28125 C 95.734141 95.18948 97.43624 95.283363 99.25 93.71875 C 99.947173 93.117363 100.50103 91.380826 100.15625 90.375 C 99.811468 89.369174 99.352881 89.021313 99 88.71875 C 98.294237 88.113624 97.641317 87.770421 96.90625 87.3125 C 95.436115 86.396657 93.753499 85.263104 92.71875 83.96875 C 91.961655 83.021707 91.60893 82.155866 91.1875 81.28125 L 97.09375 81.28125 C 106.98479 81.28125 115.03125 73.234792 115.03125 63.34375 L 115.03125 27.09375 C 115.03125 17.202708 106.98479 9.15625 97.09375 9.15625 L 46.90625 9.15625 z "
        inkscape:radius="1.6926953"
        sodipodi:type="inkscape:offset" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer4"
+     inkscape:label="Guides">
+    <rect
+       style="opacity:0.6;fill:none;stroke:#ff0000;stroke-width:0.1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:0.3, 0.3;stroke-dashoffset:0"
+       id="rect3240"
+       width="80"
+       height="80"
+       x="32"
+       y="8" />
+    <rect
+       y="3.0640297"
+       x="27.063698"
+       height="89.871941"
+       width="89.872604"
+       id="rect4010"
+       style="opacity:0.6;fill:none;stroke:#ff0000;stroke-width:0.11234034;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:0.33702102, 0.33702102;stroke-dashoffset:0" />
   </g>
 </svg>
