@@ -1,20 +1,18 @@
 package org.dandelion.radiot.accepttest;
 
+import android.test.ActivityInstrumentationTestCase2;
+import org.dandelion.radiot.accepttest.drivers.LiveShowDriver;
 import org.dandelion.radiot.live.core.LiveShowPlayer;
 import org.dandelion.radiot.live.ui.LiveShowActivity;
 
-import android.test.ActivityInstrumentationTestCase2;
-
-import com.jayway.android.robotium.solo.Solo;
-
-public class LiveShowPlayback extends
+public class LiveShowPlaybackTest extends
 		ActivityInstrumentationTestCase2<LiveShowActivity> {
 
 	private static final String TEST_LIVE_URL = "http://icecast.bigrradio.com/80s90s";
 	private LiveShowActivity activity;
-	private Solo solo;
+	private LiveShowDriver driver;
 
-	public LiveShowPlayback() {
+	public LiveShowPlaybackTest() {
 		super("org.dandelion.radiot", LiveShowActivity.class);
 	}
 
@@ -23,7 +21,7 @@ public class LiveShowPlayback extends
 		super.setUp();
 		LiveShowPlayer.setLiveShowUrl(TEST_LIVE_URL);
 		activity = getActivity();
-		solo = new Solo(getInstrumentation(), activity);
+		driver = new LiveShowDriver(getInstrumentation(), activity);
 	}
 	
 	@Override
@@ -33,45 +31,49 @@ public class LiveShowPlayback extends
 	}
 	
 	public void testStartPlayback() throws Exception {
-		solo.clickOnButton("Подключиться");
-		assertTrue(solo.waitForText("Трансляция"));
+        driver.startTranslation();
+        driver.assertIsTranslating();
 	}
 	
 	public void testStopPlaybackWhenPressingStop() throws Exception {
-		solo.clickOnButton("Подключиться");
-		assertTrue(solo.waitForText("Трансляция"));
-		solo.clickOnButton("Остановить");
-		assertTrue(solo.waitForText("Остановлено"));
+        driver.startTranslation();
+        driver.assertIsTranslating();
+
+        driver.stopTranslation();
+        driver.assertIsStopped();
 	}
 	
 	public void testRestartPlaybackAfterExplicitStop() throws Exception {
-		solo.clickOnButton("Подключиться");
-		assertTrue(solo.waitForText("Трансляция"));
-		solo.clickOnButton("Остановить");
-		solo.clickOnButton("Подключиться");
-		assertTrue(solo.waitForText("Трансляция"));
+        driver.startTranslation();
+        driver.assertIsTranslating();
+
+        driver.stopTranslation();
+        driver.assertIsStopped();
+
+        driver.startTranslation();
+        driver.assertIsTranslating();
 	}
 	
 	public void testTryToReconnectContinuouslyInWaitingMode() throws Exception {
-		configureForConnectError();
-		
-		solo.clickOnButton("Подключиться");
-		assertTrue(solo.waitForText("Ожидание"));
-		
+        configureForConnectError();
+
+        driver.startTranslation();
+        driver.assertIsWaiting();
+
 		// Switch back to existing URL 
 		LiveShowPlayer.setLiveShowUrl(TEST_LIVE_URL);
-		assertTrue(solo.waitForText("Трансляция"));
+        driver.assertIsTranslating();
 	}
 
 	
 	public void testStopWaiting() throws Exception {
-		configureForConnectError();
-		
-		solo.clickOnButton("Подключиться");
-		assertTrue(solo.waitForText("Ожидание"));
-		solo.clickOnButton("Остановить");
-		
-		assertTrue(solo.waitForText("Остановлено"));
+        configureForConnectError();
+
+        driver.startTranslation();
+        driver.assertIsWaiting();
+
+        driver.stopTranslation();
+        driver.assertIsStopped();
 	}
 	
 	private void configureForConnectError() {
