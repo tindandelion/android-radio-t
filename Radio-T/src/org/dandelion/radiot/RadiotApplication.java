@@ -3,7 +3,6 @@ package org.dandelion.radiot;
 import android.app.Application;
 import org.dandelion.radiot.podcasts.PodcastsApp;
 import org.dandelion.radiot.podcasts.core.PodcastList.IPodcastListEngine;
-import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.podcasts.core.PodcastListEngine;
 import org.dandelion.radiot.podcasts.core.RssFeedModel;
 import org.dandelion.radiot.util.AppInfo;
@@ -22,7 +21,6 @@ public class RadiotApplication extends Application {
 		engines.put(
                 "after-show",
                 createPodcastEngine("http://feeds.feedburner.com/pirate-radio-t"));
-        LiveShowApp.initialize(this);
         PodcastsApp.initialize(this);
         AppInfo.initialize(this);
 	}
@@ -30,7 +28,6 @@ public class RadiotApplication extends Application {
 	@Override
 	public void onTerminate() {
 		super.onTerminate();
-        LiveShowApp.release();
         PodcastsApp.release();
 	}
 

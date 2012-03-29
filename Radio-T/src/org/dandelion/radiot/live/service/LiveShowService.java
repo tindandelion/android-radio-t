@@ -2,20 +2,25 @@ package org.dandelion.radiot.live.service;
 
 import android.app.Service;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.IBinder;
 import org.dandelion.radiot.R;
-import org.dandelion.radiot.live.LiveShowApp;
+import org.dandelion.radiot.live.core.AudioStream;
 import org.dandelion.radiot.live.core.LiveShowPlayer;
+import org.dandelion.radiot.live.core.Timeout;
 import org.dandelion.radiot.live.core.states.LiveShowState;
 
 public class LiveShowService extends Service implements LiveShowPlayer.StateChangeListener {
+    private static final String TIMEOUT = "org.dandelion.radiot.live.TimeoutElapsed";
     private static final int NOTIFICATION_ID = 1;
 
     private LiveShowPlayer player;
     private final IBinder binder = new LocalBinder();
     private WifiLocker wifiLocker;
     private NotificationController notificationController;
+    private Timeout waitTimeout;
+    private MediaPlayer mediaPlayer;
 
     public class LocalBinder extends Binder {
         public LiveShowService getService() {
@@ -41,14 +46,18 @@ public class LiveShowService extends Service implements LiveShowPlayer.StateChan
 		super.onCreate();
         wifiLocker = WifiLocker.create(this);
         notificationController = createNotificationController();
-        player = LiveShowApp.getInstance().getLiveShowPlayer();
+        waitTimeout = new AlarmTimeout(this, TIMEOUT);
+        mediaPlayer = new MediaPlayer();
+        player = new LiveShowPlayer(new AudioStream(mediaPlayer), waitTimeout);
         player.setListener(this);
     }
 
     @Override
     public void onDestroy() {
-        wifiLocker.release();
         player.setListener(null);
+        waitTimeout.release();
+        wifiLocker.release();
+        mediaPlayer.release();
         super.onDestroy();
     }
 
