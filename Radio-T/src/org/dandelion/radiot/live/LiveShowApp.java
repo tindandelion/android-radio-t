@@ -18,6 +18,10 @@ public class LiveShowApp {
         instance = new LiveShowApp(context);
     }
 
+    public static void setTestingInstance(LiveShowApp app) {
+        instance = app;
+    }
+
     public static void release() {
         instance.releaseInstance();
     }
@@ -26,7 +30,7 @@ public class LiveShowApp {
         return instance;
     }
 
-    private LiveShowApp(Context context) {
+    protected LiveShowApp(Context context) {
         mediaPlayer = new MediaPlayer();
         waitTimeout = new AlarmTimeout(context, TIMEOUT_ELAPSED);
         AudioStream audioStream = new AudioStream(mediaPlayer);
@@ -41,4 +45,5 @@ public class LiveShowApp {
     public LiveShowPlayer getLiveShowPlayer() {
         return liveShowPlayer;
     }
+
 }

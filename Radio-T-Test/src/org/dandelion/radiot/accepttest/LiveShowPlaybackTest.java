@@ -2,6 +2,8 @@ package org.dandelion.radiot.accepttest;
 
 import android.test.ActivityInstrumentationTestCase2;
 import org.dandelion.radiot.accepttest.drivers.LiveShowDriver;
+import org.dandelion.radiot.accepttest.testables.TestingLiveShowApp;
+import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.live.core.LiveShowPlayer;
 import org.dandelion.radiot.live.ui.LiveShowActivity;
 
@@ -11,8 +13,9 @@ public class LiveShowPlaybackTest extends
 	private static final String TEST_LIVE_URL = "http://icecast.bigrradio.com/80s90s";
 	private LiveShowActivity activity;
 	private LiveShowDriver driver;
+    private TestingLiveShowApp app;
 
-	public LiveShowPlaybackTest() {
+    public LiveShowPlaybackTest() {
 		super("org.dandelion.radiot", LiveShowActivity.class);
 	}
 
@@ -20,6 +23,8 @@ public class LiveShowPlaybackTest extends
 	protected void setUp() throws Exception {
 		super.setUp();
 		LiveShowPlayer.setLiveShowUrl(TEST_LIVE_URL);
+        app = new TestingLiveShowApp(getInstrumentation().getTargetContext());
+        LiveShowApp.setTestingInstance(app);
 		activity = getActivity();
 		driver = new LiveShowDriver(getInstrumentation(), activity);
 	}
