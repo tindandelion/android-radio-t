@@ -1,18 +1,14 @@
 package org.dandelion.radiot.accepttest;
 
 
-import android.content.Context;
 import android.os.Environment;
 import org.dandelion.radiot.accepttest.drivers.HomeScreenDriver;
 import org.dandelion.radiot.accepttest.drivers.PodcastListDriver;
+import org.dandelion.radiot.accepttest.testables.*;
 import org.dandelion.radiot.helpers.*;
 import org.dandelion.radiot.podcasts.PodcastsApp;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
-import org.dandelion.radiot.podcasts.core.PodcastAction;
-import org.dandelion.radiot.podcasts.download.DownloadManager;
 import org.dandelion.radiot.podcasts.download.FakeDownloaderActivity;
-import org.dandelion.radiot.podcasts.download.MediaScanner;
-import org.dandelion.radiot.podcasts.download.NotificationManager;
 
 import java.io.File;
 
@@ -120,58 +116,3 @@ public class SelectingPodcastsFromList extends PodcastListAcceptanceTestCase {
     }
 }
 
-class TestingPodcastsApp extends PodcastsApp {
-    private PodcastAction player;
-    private DownloadManager downloadManager;
-    private boolean downloadSupported = true;
-    private File downloadFolder;
-    private MediaScanner mediaScanner;
-    private NotificationManager notificationManager;
-
-    TestingPodcastsApp(Context context, PodcastAction player, DownloadManager downloadManager,
-                       MediaScanner scanner, NotificationManager notificationManager) {
-        super(context);
-        this.player = player;
-        this.downloadManager = downloadManager;
-        this.mediaScanner = scanner;
-        this.notificationManager = notificationManager;
-    }
-
-    @Override
-    public PodcastAction createPlayer() {
-        return player;
-    }
-
-    @Override
-    public DownloadManager createDownloadManager() {
-        return downloadManager;
-    }
-
-    @Override
-    protected File getSystemDownloadFolder() {
-        return downloadFolder;
-    }
-
-    @Override
-    public MediaScanner createMediaScanner() {
-        return mediaScanner;
-    }
-
-    @Override
-    public NotificationManager createNotificationManager() {
-        return notificationManager;
-    }
-
-    @Override
-    protected boolean supportsDownload() {
-        return downloadSupported;
-    }
-
-    public void setDownloadSupported(boolean value) {
-        downloadSupported = value;
-    }
-
-    public void setDownloadFolder(File value) {
-        downloadFolder = value;
-    }
-}

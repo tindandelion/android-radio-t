@@ -1,8 +1,9 @@
-package org.dandelion.radiot.helpers;
+package org.dandelion.radiot.accepttest.testables;
 
 import android.content.Context;
 import android.content.Intent;
 import junit.framework.Assert;
+import org.dandelion.radiot.helpers.SyncValueHolder;
 import org.dandelion.radiot.podcasts.download.DownloadManager;
 
 import java.io.File;

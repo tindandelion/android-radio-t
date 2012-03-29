@@ -1,6 +1,7 @@
-package org.dandelion.radiot.helpers;
+package org.dandelion.radiot.accepttest.testables;
 
 import junit.framework.Assert;
+import org.dandelion.radiot.helpers.SyncValueHolder;
 import org.dandelion.radiot.podcasts.download.NotificationManager;
 
 import java.io.File;

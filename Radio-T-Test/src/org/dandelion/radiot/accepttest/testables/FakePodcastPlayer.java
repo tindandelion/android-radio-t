@@ -1,7 +1,8 @@
-package org.dandelion.radiot.helpers;
+package org.dandelion.radiot.accepttest.testables;
 
 import android.content.Context;
 import junit.framework.Assert;
+import org.dandelion.radiot.helpers.SyncValueHolder;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastAction;
 
