@@ -45,19 +45,15 @@ public final class R {
         public static final int home_btn_main_show_default=0x7f020011;
         public static final int home_btn_main_show_pressed=0x7f020012;
         public static final int home_btn_main_show_selected=0x7f020013;
-        public static final int ic_list_about=0x7f020014;
-        public static final int ic_list_aftershow=0x7f020015;
-        public static final int ic_list_liveshow=0x7f020016;
-        public static final int ic_list_podcasts=0x7f020017;
-        public static final int ic_menu_home=0x7f020018;
-        public static final int ic_menu_refresh=0x7f020019;
-        public static final int ic_title_about=0x7f02001a;
-        public static final int ic_title_liveshow=0x7f02001b;
-        public static final int icon=0x7f02001c;
-        public static final int logo=0x7f02001d;
-        public static final int podcast_image_background=0x7f02001e;
-        public static final int stat_download_complete=0x7f02001f;
-        public static final int stat_live=0x7f020020;
+        public static final int ic_menu_home=0x7f020014;
+        public static final int ic_menu_refresh=0x7f020015;
+        public static final int ic_title_about=0x7f020016;
+        public static final int ic_title_liveshow=0x7f020017;
+        public static final int icon=0x7f020018;
+        public static final int logo=0x7f020019;
+        public static final int podcast_image_background=0x7f02001a;
+        public static final int stat_download_complete=0x7f02001b;
+        public static final int stat_live=0x7f02001c;
     }
     public static final class id {
         public static final int about_app_icon=0x7f0a0000;
@@ -70,31 +66,29 @@ public final class R {
         public static final int download_unsupported_title=0x7f0a000a;
         public static final int feedback_button=0x7f0a0006;
         public static final int gingerbread_icon=0x7f0a000b;
-        public static final int go_home=0x7f0a0022;
+        public static final int go_home=0x7f0a0020;
         public static final int home_btn_about=0x7f0a0013;
         public static final int home_btn_after_show=0x7f0a0011;
         public static final int home_btn_live_show=0x7f0a0012;
         public static final int home_btn_main_show=0x7f0a0010;
         public static final int home_screen_header=0x7f0a000d;
-        public static final int home_screen_item_icon=0x7f0a0014;
-        public static final int home_screen_item_title=0x7f0a0015;
-        public static final int live_show_action_button=0x7f0a001d;
-        public static final int live_show_hint=0x7f0a001c;
-        public static final int live_show_icon=0x7f0a0016;
-        public static final int live_show_info=0x7f0a0018;
-        public static final int live_show_status=0x7f0a0019;
-        public static final int live_show_title=0x7f0a0017;
-        public static final int live_timer_label=0x7f0a001a;
+        public static final int live_show_action_button=0x7f0a001b;
+        public static final int live_show_hint=0x7f0a001a;
+        public static final int live_show_icon=0x7f0a0014;
+        public static final int live_show_info=0x7f0a0016;
+        public static final int live_show_status=0x7f0a0017;
+        public static final int live_show_title=0x7f0a0015;
+        public static final int live_timer_label=0x7f0a0018;
         public static final int logo=0x7f0a0003;
         public static final int logo_image=0x7f0a0008;
         public static final int logo_text=0x7f0a000e;
         public static final int main_title=0x7f0a0007;
-        public static final int playback_state_label=0x7f0a001b;
-        public static final int podcast_item_icon=0x7f0a001e;
-        public static final int podcast_item_view_date=0x7f0a0020;
-        public static final int podcast_item_view_number=0x7f0a001f;
-        public static final int podcast_item_view_shownotes=0x7f0a0021;
-        public static final int refresh=0x7f0a0023;
+        public static final int playback_state_label=0x7f0a0019;
+        public static final int podcast_item_icon=0x7f0a001c;
+        public static final int podcast_item_view_date=0x7f0a001e;
+        public static final int podcast_item_view_number=0x7f0a001d;
+        public static final int podcast_item_view_shownotes=0x7f0a001f;
+        public static final int refresh=0x7f0a0021;
         public static final int version_label=0x7f0a0004;
     }
     public static final class layout {
@@ -102,10 +96,9 @@ public final class R {
         public static final int app_logo=0x7f030001;
         public static final int download_unsupported_screen=0x7f030002;
         public static final int home_screen=0x7f030003;
-        public static final int home_screen_item=0x7f030004;
-        public static final int live_show_screen=0x7f030005;
-        public static final int playback_control=0x7f030006;
-        public static final int podcast_list_item=0x7f030007;
+        public static final int live_show_screen=0x7f030004;
+        public static final int playback_control=0x7f030005;
+        public static final int podcast_list_item=0x7f030006;
     }
     public static final class menu {
         public static final int default_menu=0x7f090000;
