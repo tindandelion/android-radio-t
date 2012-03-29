@@ -1,7 +1,7 @@
 package org.dandelion.radiot.helpers;
 
 
-import org.dandelion.radiot.accepttest.drivers.ApplicationDriver;
+import org.dandelion.radiot.accepttest.drivers.HomeScreenDriver;
 import org.dandelion.radiot.podcasts.core.PodcastList.IModel;
 import org.dandelion.radiot.podcasts.core.PodcastList.IPodcastListEngine;
 import org.dandelion.radiot.home_screen.HomeScreenActivity;
@@ -16,9 +16,9 @@ public class BasicAcceptanceTestCase extends
 		super("org.dandelion.radiot", HomeScreenActivity.class);
 	}
 
-	protected ApplicationDriver createApplicationDriver() {
+	protected HomeScreenDriver createDriver() {
 		configurePodcastEngines();
-		return new ApplicationDriver(getInstrumentation(), getActivity());
+		return new HomeScreenDriver(getInstrumentation(), getActivity());
 	}
 
 	private void configurePodcastEngines() {

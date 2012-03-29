@@ -9,10 +9,10 @@ import android.app.Instrumentation;
 
 import com.jayway.android.robotium.solo.Solo;
 
-public class ApplicationDriver extends Solo {
+public class HomeScreenDriver extends Solo {
     private Instrumentation instrumentation;
 
-    public ApplicationDriver(Instrumentation inst, Activity activity) {
+    public HomeScreenDriver(Instrumentation inst, Activity activity) {
 		super(inst, activity);
         this.instrumentation = inst;
 	}

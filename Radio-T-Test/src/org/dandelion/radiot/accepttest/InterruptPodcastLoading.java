@@ -1,6 +1,6 @@
 package org.dandelion.radiot.accepttest;
 
-import org.dandelion.radiot.accepttest.drivers.ApplicationDriver;
+import org.dandelion.radiot.accepttest.drivers.HomeScreenDriver;
 import org.dandelion.radiot.podcasts.core.PodcastList.IModel;
 import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
 import org.dandelion.radiot.helpers.PodcastListAcceptanceTestCase;
@@ -10,30 +10,30 @@ import android.content.pm.ActivityInfo;
 
 public class InterruptPodcastLoading extends PodcastListAcceptanceTestCase {
 
-	private ApplicationDriver appDriver;
+	private HomeScreenDriver driver;
 	private TestModel model;
 
 	public void testCancelRssLoadingWhenPressingBack() throws Exception {
-		appDriver.visitMainShowPage();
-		appDriver.goBack();
+		driver.visitMainShowPage2();
+		driver.goBack();
 		mainShowPresenter().assertTaskIsCancelled();
-		appDriver.assertOnHomeScreen();
+		driver.assertOnHomeScreen();
 	}
 
 	public void testChangeOrientationContinuesBackgroundLoading()
 			throws Exception {
-		PodcastListActivity activity = appDriver.visitMainShowPage();
-		activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-		appDriver.waitSomeTime();
+		PodcastListActivity activity = driver.visitMainShowPage();
+        activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		driver.waitSomeTime();
 		allowPodcastRetrievalToFinish();
 		mainShowPresenter().assertStartedBackgroundTasksCount(1);
-		appDriver.assertShowingPodcastList();
+		driver.assertShowingPodcastList();
 	}
 
 	public void testDestroyingActivityWhileLoading() throws Exception {
-		PodcastListActivity activity = appDriver.visitMainShowPage();
+		PodcastListActivity activity = driver.visitMainShowPage();
 		activity.finish();
-		appDriver.assertOnHomeScreen();
+		driver.assertOnHomeScreen();
 		mainShowPresenter().assertTaskIsCancelled();
 	}
 
@@ -44,12 +44,12 @@ public class InterruptPodcastLoading extends PodcastListAcceptanceTestCase {
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		appDriver = createApplicationDriver();
+		driver = createDriver();
 	}
 
     @Override
     protected void tearDown() throws Exception {
-        appDriver.finish();
+        driver.finish();
         super.tearDown();
     }
 

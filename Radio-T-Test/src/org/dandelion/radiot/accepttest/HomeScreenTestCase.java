@@ -1,36 +1,36 @@
 package org.dandelion.radiot.accepttest;
 
-import org.dandelion.radiot.accepttest.drivers.ApplicationDriver;
+import org.dandelion.radiot.accepttest.drivers.HomeScreenDriver;
 import org.dandelion.radiot.helpers.PodcastListAcceptanceTestCase;
 
 public class HomeScreenTestCase extends
 		PodcastListAcceptanceTestCase {
 	
-	private ApplicationDriver appDriver;
+	private HomeScreenDriver driver;
 
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		appDriver = createApplicationDriver();
+		driver = createDriver();
 	}
 
 	public void testOpenPodcastsPage() throws Exception {
-		appDriver.visitMainShowPage();
+		driver.visitMainShowPage2();
 		mainShowPresenter().assertPodcastListIsUpdated();
 		assertTrue("The sample podcast record for main podcast show is not found",
-				appDriver.waitForText("#5192"));
+                driver.waitForText("#5192"));
 	}
 
 	public void testShowAfterShowPage() throws Exception {
-		appDriver.visitAfterShowPage();
+		driver.visitAfterShowPage();
 		afterShowPresenter().assertPodcastListIsUpdated();
 		assertTrue("The sample podcast record for pirates is not found",
-				appDriver.waitForText("#10193"));
+                driver.waitForText("#10193"));
 	}
 	
 	public void testShowingCorrectActivityTitle() throws Exception {
-		appDriver.visitMainShowPage();
+		driver.visitMainShowPage2();
 		mainShowPresenter().assertPodcastListIsUpdated();
-		assertEquals("Подкасты", appDriver.getCurrentActivity().getTitle());
+		assertEquals("Подкасты", driver.getCurrentActivity().getTitle());
 	}
 }

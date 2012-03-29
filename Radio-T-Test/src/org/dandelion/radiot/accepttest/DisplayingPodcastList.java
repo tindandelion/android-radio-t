@@ -4,7 +4,7 @@ import java.lang.reflect.Field;
 
 import org.dandelion.radiot.R;
 
-import org.dandelion.radiot.accepttest.drivers.ApplicationDriver;
+import org.dandelion.radiot.accepttest.drivers.HomeScreenDriver;
 import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
 import org.dandelion.radiot.helpers.PodcastListAcceptanceTestCase;
 
@@ -16,7 +16,7 @@ public class DisplayingPodcastList extends
 		PodcastListAcceptanceTestCase {
 
 	private PodcastListActivity activity;
-	private ApplicationDriver appDriver;
+	private HomeScreenDriver appDriver;
 	
 	public void testDisplayPodcastItemInfo() throws Exception {
 		View itemView = getItemView(0);
@@ -33,7 +33,7 @@ public class DisplayingPodcastList extends
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		appDriver = createApplicationDriver();
+		appDriver = createDriver();
 		activity = appDriver.visitMainShowPage();
 		presenters.get(0).assertPodcastListIsUpdated();
 	}

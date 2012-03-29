@@ -3,7 +3,7 @@ package org.dandelion.radiot.accepttest;
 
 import android.content.Context;
 import android.os.Environment;
-import org.dandelion.radiot.accepttest.drivers.ApplicationDriver;
+import org.dandelion.radiot.accepttest.drivers.HomeScreenDriver;
 import org.dandelion.radiot.accepttest.drivers.PodcastListDriver;
 import org.dandelion.radiot.helpers.*;
 import org.dandelion.radiot.podcasts.PodcastsApp;
@@ -23,7 +23,7 @@ public class SelectingPodcastsFromList extends PodcastListAcceptanceTestCase {
     private FakePodcastPlayer player;
     private FakeDownloadManager downloadManager;
     private TestingPodcastsApp application;
-    private ApplicationDriver appDriver;
+    private HomeScreenDriver appDriver;
     private FakeMediaScanner mediaScanner;
     private FakeNotificationManager notificationManager;
 
@@ -31,7 +31,7 @@ public class SelectingPodcastsFromList extends PodcastListAcceptanceTestCase {
 	protected void setUp() throws Exception {
 		super.setUp();
         setupEnvironment();
-        appDriver = createApplicationDriver();
+        appDriver = createDriver();
     }
 
     public void testPlayPodcastFromInternet() throws Exception {
