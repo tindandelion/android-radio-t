@@ -15,7 +15,7 @@ public class LiveShowDriver extends Solo {
         clickOnButton("Подключиться");
     }
 
-    public void assertIsTranslating() {
+    public void assertShowsTranslation() {
         assertTrue(waitForText("Трансляция"));
     }
 
@@ -23,7 +23,7 @@ public class LiveShowDriver extends Solo {
         clickOnButton("Остановить");
     }
 
-    public void assertIsStopped() {
+    public void assertShowsStopped() {
         assertTrue(waitForText("Остановлено"));
     }
 

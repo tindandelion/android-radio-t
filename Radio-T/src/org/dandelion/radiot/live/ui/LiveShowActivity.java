@@ -99,11 +99,7 @@ public class LiveShowActivity extends Activity {
             service.queryState(presenter);
     }
 
-    public LiveShowService getService() {
-		return service;
-	}
-
-	public void setButtonState(int labelId, boolean enabled) {
+    public void setButtonState(int labelId, boolean enabled) {
 		Button button = (Button) findViewById(R.id.live_show_action_button);
 		button.setText(buttonLabels[labelId]);
 		button.setEnabled(enabled);

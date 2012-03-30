@@ -38,6 +38,7 @@ public class AudioStream implements MediaPlayer.OnPreparedListener, MediaPlayer.
 
     public void reset() {
         player.reset();
+        listener.onStopped();
     }
 
     @SuppressWarnings("unchecked")

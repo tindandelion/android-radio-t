@@ -6,6 +6,7 @@ import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.IBinder;
 import org.dandelion.radiot.R;
+import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.live.core.AudioStream;
 import org.dandelion.radiot.live.core.LiveShowPlayer;
 import org.dandelion.radiot.live.core.Timeout;
@@ -48,8 +49,12 @@ public class LiveShowService extends Service implements LiveShowPlayer.StateChan
         notificationController = createNotificationController();
         waitTimeout = new AlarmTimeout(this, TIMEOUT);
         mediaPlayer = new MediaPlayer();
-        player = new LiveShowPlayer(new AudioStream(mediaPlayer), waitTimeout);
+        player = new LiveShowPlayer(createAudioStream(), waitTimeout);
         player.setListener(this);
+    }
+
+    private AudioStream createAudioStream() {
+        return LiveShowApp.getInstance().createAudioStream(mediaPlayer);
     }
 
     @Override
@@ -80,10 +85,6 @@ public class LiveShowService extends Service implements LiveShowPlayer.StateChan
     // TODO: Stupid delegation to player, just return the player?
 	public void queryState(LiveShowPlayer.StateVisitor visitor) {
         player.queryState(visitor);
-	}
-
-    public void reset() {
-        player.reset();
 	}
 
     public void togglePlayback() {
