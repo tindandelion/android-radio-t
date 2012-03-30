@@ -12,6 +12,7 @@ import static junit.framework.Assert.assertTrue;
 public class TestingLiveShowApp extends LiveShowApp {
     private boolean isPlaying = false;
     private AudioStream audioStream;
+    private String audioUrl = "";
 
     public TestingLiveShowApp() {
         super();
@@ -22,7 +23,7 @@ public class TestingLiveShowApp extends LiveShowApp {
         audioStream = new AudioStream(mediaPlayer) {
             @Override
             public void play(String url) throws IOException {
-                super.play(url);
+                super.play(audioUrl);
                 isPlaying = true;
             }
 
@@ -49,4 +50,7 @@ public class TestingLiveShowApp extends LiveShowApp {
         }
     }
 
+    public void setAudioUrl(String value) {
+        this.audioUrl = value;
+    }
 }

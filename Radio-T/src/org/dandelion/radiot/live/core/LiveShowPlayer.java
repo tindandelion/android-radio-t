@@ -3,9 +3,10 @@ package org.dandelion.radiot.live.core;
 import org.dandelion.radiot.live.core.states.*;
 
 public class LiveShowPlayer implements AudioStream.StateListener {
+    public static final String SHOW_URL = "http://radio10.promodeejay.net:8181/stream";
+    // private static final String SHOW_URL = "http://icecast.bigrradio.com/80s90s";
+
     public static int waitTimeoutMilliseconds = 60 * 1000;
-    public static String liveShowUrl = "http://radio10.promodeejay.net:8181/stream";
-    // public static String liveShowUrl = "http://icecast.bigrradio.com/80s90s";
 
     private StateChangeListener listener;
     private LiveShowState state;
@@ -35,10 +36,6 @@ public class LiveShowPlayer implements AudioStream.StateListener {
 		waitTimeoutMilliseconds = value * 1000;
 	}
 
-    public static void setLiveShowUrl(String value) {
-        liveShowUrl = value;
-    }
-
     public LiveShowPlayer(AudioStream audioStream, Timeout waitTimeout) {
         this.audioStream = audioStream;
         this.waitTimeout = waitTimeout;
@@ -52,11 +49,6 @@ public class LiveShowPlayer implements AudioStream.StateListener {
 
     public void queryState(StateVisitor visitor) {
         state.acceptVisitor(visitor);
-    }
-
-    public void reset() {
-        audioStream.reset();
-        beIdle();
     }
 
     public void togglePlayback() {
@@ -74,7 +66,7 @@ public class LiveShowPlayer implements AudioStream.StateListener {
 
     public void beConnecting() {
         try {
-            audioStream.play(liveShowUrl);
+            audioStream.play(SHOW_URL);
             setState(new Connecting());
         } catch (Exception e) {
             throw new RuntimeException(e);

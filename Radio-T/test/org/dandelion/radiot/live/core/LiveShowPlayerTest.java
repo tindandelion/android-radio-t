@@ -131,7 +131,7 @@ public class LiveShowPlayerTest implements LiveShowPlayer.StateChangeListener {
     }
 
     private void verifyIsConnecting() throws IOException {
-        verify(audioStream).play(LiveShowPlayer.liveShowUrl);
+        verify(audioStream).play(LiveShowPlayer.SHOW_URL);
         verifySwitchedToState(Connecting.class);
     }
 

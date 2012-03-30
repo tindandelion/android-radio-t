@@ -11,10 +11,9 @@ public class LiveShowPlaybackTest extends
 		ActivityInstrumentationTestCase2<LiveShowActivity> {
 
 	private static final String TEST_LIVE_URL = "http://icecast.bigrradio.com/80s90s";
-    private TestingLiveShowApp app;
 
-	private LiveShowActivity activity;
-	private LiveShowDriver driver;
+    private TestingLiveShowApp app;
+    private LiveShowDriver driver;
 
     public LiveShowPlaybackTest() {
 		super("org.dandelion.radiot", LiveShowActivity.class);
@@ -23,11 +22,10 @@ public class LiveShowPlaybackTest extends
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		LiveShowPlayer.setLiveShowUrl(TEST_LIVE_URL);
         app = new TestingLiveShowApp();
         LiveShowApp.setTestingInstance(app);
-		activity = getActivity();
-		driver = new LiveShowDriver(getInstrumentation(), activity);
+        app.setAudioUrl(TEST_LIVE_URL);
+		driver = new LiveShowDriver(getInstrumentation(), getActivity());
 	}
 	
 	@Override
@@ -69,8 +67,8 @@ public class LiveShowPlaybackTest extends
         driver.startTranslation();
         driver.assertIsWaiting();
 
-		// Switch back to existing URL 
-		LiveShowPlayer.setLiveShowUrl(TEST_LIVE_URL);
+		// Switch back to existing URL
+        app.setAudioUrl(TEST_LIVE_URL);
         driver.assertShowsTranslation();
 	}
 
@@ -87,7 +85,7 @@ public class LiveShowPlaybackTest extends
 	
 	private void configureForConnectError() {
 		// Try to beConnecting to non-existent url to simulate
-		LiveShowPlayer.setLiveShowUrl("http://non-existent");
+        app.setAudioUrl("http://non-existent");
 		// And set the wait timeout to a small value
 		LiveShowPlayer.setWaitTimeoutSeconds(1);
 	}
