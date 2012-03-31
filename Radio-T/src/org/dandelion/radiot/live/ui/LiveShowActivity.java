@@ -10,22 +10,21 @@ import android.widget.TextView;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.home_screen.HomeScreenActivity;
 import org.dandelion.radiot.live.LiveShowApp;
-import org.dandelion.radiot.live.core.states.LiveShowState;
 import org.dandelion.radiot.live.service.LiveShowClient;
-import org.dandelion.radiot.live.service.PlaybackStateChangedEvent;
 
 public class LiveShowActivity extends Activity {
-    private PlaybackStateChangedEvent.Listener onStateChanged = new PlaybackStateChangedEvent.Listener() {
+    private LiveShowClient.StateListener onStateChanged = new LiveShowClient.StateListener() {
         @Override
-        public void onPlaybackStateChanged(LiveShowState newState) {
-            updateVisualState(newState);
+        public void onStateChanged() {
+            updateVisualState();
         }
     };
+
+
     protected LiveShowClient client;
 	private String[] statusLabels;
 	private CharSequence[] buttonLabels;
 	private LiveShowPresenter presenter;
-    private PlaybackStateChangedEvent.Receiver eventReceiver;
     private TimerView timerLabel;
 
     @Override
@@ -44,22 +43,14 @@ public class LiveShowActivity extends Activity {
 	protected void onStart() {
 		super.onStart();
         client = createClient();
-        eventReceiver = PlaybackStateChangedEvent.createReceiver(this, onStateChanged);
 	}
 
     private LiveShowClient createClient() {
-        Runnable onServiceConnected = new Runnable() {
-            @Override
-            public void run() {
-                initVisualState();
-            }
-        };
-        return LiveShowApp.getInstance().createClient(this, onServiceConnected);
+        return LiveShowApp.getInstance().createClient(this, onStateChanged);
     }
 
     @Override
 	protected void onStop() {
-        eventReceiver.release();
         client.release();
 		client = null;
         timerLabel.stop();
@@ -84,13 +75,8 @@ public class LiveShowActivity extends Activity {
         presenter.togglePlaybackState(client);
 	}
 
-	protected void updateVisualState(LiveShowState newState) {
-        newState.acceptVisitor(presenter);
-    }
-
-    protected void initVisualState() {
-        if (client != null)
-            client.queryState(presenter);
+	protected void updateVisualState() {
+        client.queryState(presenter);
     }
 
     public void setButtonState(int labelId, boolean enabled) {

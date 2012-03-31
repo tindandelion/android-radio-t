@@ -6,10 +6,17 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 import org.dandelion.radiot.live.core.LiveShowPlayer;
+import org.dandelion.radiot.live.core.states.LiveShowState;
 
 public class LiveShowClient {
+
+    public interface StateListener {
+        void onStateChanged();
+    }
+
+    private PlaybackStateChangedEvent.Receiver eventReceiver;
+    private StateListener stateListener;
     private LiveShowService service;
-    private Runnable serviceConnected;
     private Context context;
 
     private ServiceConnection onService = new ServiceConnection() {
@@ -18,18 +25,34 @@ public class LiveShowClient {
 
         public void onServiceConnected(ComponentName name, IBinder binder) {
             service = ((LiveShowService.LocalBinder) binder).getService();
-            serviceConnected.run();
+            stateListener.onStateChanged();
         }
     };
 
-    public LiveShowClient(Context context, Runnable onServiceConnected) {
+    public LiveShowClient(Context context, StateListener listener) {
         this.context = context;
-        this.serviceConnected = onServiceConnected;
+        this.stateListener = listener;
         bindToService();
+        startTrackingState();
+    }
+
+    private void startTrackingState() {
+        PlaybackStateChangedEvent.Listener onStateChanged = new PlaybackStateChangedEvent.Listener() {
+            @Override
+            public void onPlaybackStateChanged(LiveShowState newState) {
+                stateListener.onStateChanged();
+            }
+        };
+        eventReceiver = PlaybackStateChangedEvent.createReceiver(context, onStateChanged);
     }
 
     public void release() {
         context.unbindService(onService);
+        stopTrackingState();
+    }
+
+    private void stopTrackingState() {
+        eventReceiver.release();
     }
 
     private void bindToService() {

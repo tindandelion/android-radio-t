@@ -25,7 +25,7 @@ public class LiveShowApp {
         return new AudioStream(mediaPlayer, LIVE_SHOW_URL);
     }
     
-    public LiveShowClient createClient(Context context, Runnable onServiceConnected) {
-        return new LiveShowClient(context, onServiceConnected);
+    public LiveShowClient createClient(Context context, LiveShowClient.StateListener listener) {
+        return new LiveShowClient(context, listener);
     }
 }
