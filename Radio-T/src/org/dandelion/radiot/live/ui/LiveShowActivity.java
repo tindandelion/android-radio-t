@@ -43,6 +43,7 @@ public class LiveShowActivity extends Activity {
 	protected void onStart() {
 		super.onStart();
         client = createClient();
+        updateVisualState();
 	}
 
     private LiveShowClient createClient() {

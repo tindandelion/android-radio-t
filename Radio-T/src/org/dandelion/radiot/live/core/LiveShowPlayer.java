@@ -6,7 +6,7 @@ public class LiveShowPlayer implements AudioStream.StateListener {
     public static int WAIT_TIMEOUT = 60 * 1000;
 
     private StateChangeListener listener;
-    private LiveShowState state;
+    private LiveShowStateHolder stateHolder;
     private AudioStream audioStream;
     private Timeout waitTimeout;
     private Runnable onWaitTimeout = new Runnable() {
@@ -28,10 +28,10 @@ public class LiveShowPlayer implements AudioStream.StateListener {
         void onStopping(long timestamp);
     }
 
-    public LiveShowPlayer(AudioStream audioStream, Timeout waitTimeout) {
+    public LiveShowPlayer(AudioStream audioStream, LiveShowStateHolder stateHolder, Timeout waitTimeout) {
         this.audioStream = audioStream;
         this.waitTimeout = waitTimeout;
-        this.state = new Idle();
+        this.stateHolder = stateHolder;
         this.audioStream.setStateListener(this);
     }
 
@@ -40,15 +40,15 @@ public class LiveShowPlayer implements AudioStream.StateListener {
     }
 
     public void queryState(StateVisitor visitor) {
-        state.acceptVisitor(visitor);
+        currentState().acceptVisitor(visitor);
     }
 
     public void togglePlayback() {
-        state.togglePlayback(this);
+        currentState().togglePlayback(this);
     }
 
     public boolean isIdle() {
-        return (state instanceof Idle);
+        return (currentState() instanceof Idle);
     }
 
     public void beIdle() {
@@ -82,7 +82,7 @@ public class LiveShowPlayer implements AudioStream.StateListener {
 
     @Override
     public void onError() {
-        state.handleError(this);
+        currentState().handleError(this);
     }
 
     @Override
@@ -90,8 +90,12 @@ public class LiveShowPlayer implements AudioStream.StateListener {
         beIdle();
     }
 
+    private LiveShowState currentState() {
+        return stateHolder.value();
+    }
+
     private void setState(LiveShowState state) {
-        this.state = state;
+        stateHolder.setValue(state);
         if (listener != null) {
             listener.onChangedState(state);
         }

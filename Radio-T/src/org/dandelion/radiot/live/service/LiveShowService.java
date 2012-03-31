@@ -9,6 +9,7 @@ import org.dandelion.radiot.R;
 import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.live.core.AudioStream;
 import org.dandelion.radiot.live.core.LiveShowPlayer;
+import org.dandelion.radiot.live.core.LiveShowStateHolder;
 import org.dandelion.radiot.live.core.Timeout;
 import org.dandelion.radiot.live.core.states.LiveShowState;
 
@@ -26,9 +27,6 @@ public class LiveShowService extends Service implements LiveShowPlayer.StateChan
     private MediaPlayer mediaPlayer;
 
     public class LocalBinder extends Binder {
-        public LiveShowService getService() {
-			return (LiveShowService.this);
-		}
     }
 
 	@Override
@@ -51,7 +49,7 @@ public class LiveShowService extends Service implements LiveShowPlayer.StateChan
         notificationController = createNotificationController();
         waitTimeout = new AlarmTimeout(this, TIMEOUT_ACTION);
         mediaPlayer = new MediaPlayer();
-        player = new LiveShowPlayer(createAudioStream(), waitTimeout);
+        player = new LiveShowPlayer(createAudioStream(), getStateHolder(), waitTimeout);
         player.setListener(this);
     }
 
@@ -65,6 +63,10 @@ public class LiveShowService extends Service implements LiveShowPlayer.StateChan
 
     private AudioStream createAudioStream() {
         return LiveShowApp.getInstance().createAudioStream(mediaPlayer);
+    }
+
+    private LiveShowStateHolder getStateHolder() {
+        return LiveShowApp.getInstance().stateHolder();
     }
 
     @Override
@@ -91,9 +93,4 @@ public class LiveShowService extends Service implements LiveShowPlayer.StateChan
         player.queryState(notificationController);
         PlaybackStateChangedEvent.send(this, newState);
     }
-
-    // TODO: Stupid delegation to player, just return the player?
-	public void queryState(LiveShowPlayer.StateVisitor visitor) {
-        player.queryState(visitor);
-	}
 }

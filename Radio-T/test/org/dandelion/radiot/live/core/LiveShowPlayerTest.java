@@ -16,13 +16,15 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-public class LiveShowPlayerTest implements LiveShowPlayer.StateChangeListener {
+public class LiveShowPlayerTest {
+    private final LiveShowStateHolder stateHolder = new LiveShowStateHolder(new Idle());
+    private final AudioStream audioStream = mock(AudioStream.class);
+    private final Timeout timeout = mock(Timeout.class);
     private LiveShowPlayer player;
-    private AudioStream audioStream = mock(AudioStream.class);
-    private AudioStream.StateListener audioStateListener;
-    private LiveShowState switchedState = new LiveShowState();
-    private Timeout timeout = mock(Timeout.class);
+
     private Runnable timeoutCallback;
+    private AudioStream.StateListener audioStateListener;
+
 
     @Before
     public void setUp() throws Exception {
@@ -42,8 +44,7 @@ public class LiveShowPlayerTest implements LiveShowPlayer.StateChangeListener {
             }
         }).when(timeout).set(anyInt(), any(Runnable.class));
 
-        player = new LiveShowPlayer(audioStream, timeout);
-        player.setListener(this);
+        player = new LiveShowPlayer(audioStream, stateHolder, timeout);
     }
 
     @Test
@@ -136,7 +137,7 @@ public class LiveShowPlayerTest implements LiveShowPlayer.StateChangeListener {
     }
 
     private void verifySwitchedToState(Class<?> expected) {
-        assertEquals(expected, switchedState.getClass());
+        assertEquals(expected, stateHolder.value().getClass());
     }
 
     private void verifyIsStopping() {
@@ -146,10 +147,5 @@ public class LiveShowPlayerTest implements LiveShowPlayer.StateChangeListener {
 
     private void verifyIsPlaying() {
         verifySwitchedToState(Playing.class);
-    }
-
-    @Override
-    public void onChangedState(LiveShowState newState) {
-        switchedState = newState;
     }
 }
