@@ -1,6 +1,7 @@
 package org.dandelion.radiot.live.ui;
 
 import org.dandelion.radiot.live.core.LiveShowPlayer;
+import org.dandelion.radiot.live.service.LiveShowClient;
 
 public class LiveShowPresenter implements LiveShowPlayer.StateVisitor {
 
@@ -30,7 +31,7 @@ public class LiveShowPresenter implements LiveShowPlayer.StateVisitor {
         beActiveState(4, false, false, timestamp);
     }
 
-    public void togglePlaybackState(LiveShowServiceClient client) {
+    public void togglePlaybackState(LiveShowClient client) {
         client.togglePlayback();
 	}
 

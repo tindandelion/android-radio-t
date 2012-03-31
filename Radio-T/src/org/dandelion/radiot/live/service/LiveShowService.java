@@ -13,6 +13,8 @@ import org.dandelion.radiot.live.core.Timeout;
 import org.dandelion.radiot.live.core.states.LiveShowState;
 
 public class LiveShowService extends Service implements LiveShowPlayer.StateChangeListener {
+    public static final String TAG = LiveShowService.class.getName();
+    public static final String TOGGLE_ACTION = TAG + ".Toggle";
     public static final String TIMEOUT_ACTION = "org.dandelion.radiot.live.TimeoutElapsed";
     private static final int NOTIFICATION_ID = 1;
 
@@ -53,6 +55,14 @@ public class LiveShowService extends Service implements LiveShowPlayer.StateChan
         player.setListener(this);
     }
 
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        if (TOGGLE_ACTION.equals(intent.getAction())) {
+            player.togglePlayback();
+        }
+        return START_STICKY;
+    }
+
     private AudioStream createAudioStream() {
         return LiveShowApp.getInstance().createAudioStream(mediaPlayer);
     }
@@ -86,8 +96,4 @@ public class LiveShowService extends Service implements LiveShowPlayer.StateChan
 	public void queryState(LiveShowPlayer.StateVisitor visitor) {
         player.queryState(visitor);
 	}
-
-    public void togglePlayback() {
-        player.togglePlayback();
-    }
 }

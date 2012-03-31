@@ -9,7 +9,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.home_screen.HomeScreenActivity;
+import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.live.core.states.LiveShowState;
+import org.dandelion.radiot.live.service.LiveShowClient;
 import org.dandelion.radiot.live.service.PlaybackStateChangedEvent;
 
 public class LiveShowActivity extends Activity {
@@ -19,7 +21,7 @@ public class LiveShowActivity extends Activity {
             updateVisualState(newState);
         }
     };
-    protected LiveShowServiceClient client;
+    protected LiveShowClient client;
 	private String[] statusLabels;
 	private CharSequence[] buttonLabels;
 	private LiveShowPresenter presenter;
@@ -41,16 +43,21 @@ public class LiveShowActivity extends Activity {
 	@Override
 	protected void onStart() {
 		super.onStart();
-        client = new LiveShowServiceClient(this, new Runnable() {
+        client = createClient();
+        eventReceiver = PlaybackStateChangedEvent.createReceiver(this, onStateChanged);
+	}
+
+    private LiveShowClient createClient() {
+        Runnable onServiceConnected = new Runnable() {
             @Override
             public void run() {
                 initVisualState();
             }
-        });
-        eventReceiver = PlaybackStateChangedEvent.createReceiver(this, onStateChanged);
-	}
+        };
+        return LiveShowApp.getInstance().createClient(this, onServiceConnected);
+    }
 
-	@Override
+    @Override
 	protected void onStop() {
         eventReceiver.release();
         client.release();
