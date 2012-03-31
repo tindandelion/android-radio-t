@@ -1,11 +1,7 @@
 package org.dandelion.radiot.live.ui;
 
 import android.app.Activity;
-import android.content.ComponentName;
-import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,9 +9,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.home_screen.HomeScreenActivity;
-import org.dandelion.radiot.live.service.PlaybackStateChangedEvent;
 import org.dandelion.radiot.live.core.states.LiveShowState;
-import org.dandelion.radiot.live.service.LiveShowService;
+import org.dandelion.radiot.live.service.PlaybackStateChangedEvent;
 
 public class LiveShowActivity extends Activity {
     private PlaybackStateChangedEvent.Listener onStateChanged = new PlaybackStateChangedEvent.Listener() {
@@ -24,18 +19,7 @@ public class LiveShowActivity extends Activity {
             updateVisualState(newState);
         }
     };
-
-	private ServiceConnection onService = new ServiceConnection() {
-		public void onServiceDisconnected(ComponentName name) {
-		}
-
-		public void onServiceConnected(ComponentName name, IBinder binder) {
-			service = ((LiveShowService.LocalBinder) binder).getService();
-            initVisualState();
-        }
-	};
-
-    protected LiveShowService service;
+    protected LiveShowServiceClient client;
 	private String[] statusLabels;
 	private CharSequence[] buttonLabels;
 	private LiveShowPresenter presenter;
@@ -57,17 +41,20 @@ public class LiveShowActivity extends Activity {
 	@Override
 	protected void onStart() {
 		super.onStart();
-		Intent i = new Intent(this, LiveShowService.class);
-		startService(i);
-		bindService(i, onService, 0);
+        client = new LiveShowServiceClient(this, new Runnable() {
+            @Override
+            public void run() {
+                initVisualState();
+            }
+        });
         eventReceiver = PlaybackStateChangedEvent.createReceiver(this, onStateChanged);
 	}
 
 	@Override
 	protected void onStop() {
         eventReceiver.release();
-		unbindService(onService);
-		service = null;
+        client.release();
+		client = null;
         timerLabel.stop();
 		super.onStop();
 	}
@@ -87,7 +74,7 @@ public class LiveShowActivity extends Activity {
 	}
 
 	public void onButtonPressed(View v) {
-        presenter.togglePlaybackState(service);
+        presenter.togglePlaybackState(client);
 	}
 
 	protected void updateVisualState(LiveShowState newState) {
@@ -95,8 +82,8 @@ public class LiveShowActivity extends Activity {
     }
 
     protected void initVisualState() {
-        if (service != null)
-            service.queryState(presenter);
+        if (client != null)
+            client.queryState(presenter);
     }
 
     public void setButtonState(int labelId, boolean enabled) {

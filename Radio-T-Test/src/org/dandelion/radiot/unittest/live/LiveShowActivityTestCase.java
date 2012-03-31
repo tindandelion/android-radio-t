@@ -20,7 +20,7 @@ public class LiveShowActivityTestCase extends
 		super.setUp();
 		activity = startActivity(new Intent(), null, null);
 		getInstrumentation().callActivityOnStart(activity);
-		Thread.sleep(500); // Give the service some time to start up
+		Thread.sleep(500); // Give the client some time to start up
 	}
 
 	public void testConnectsToServiceAtStart() throws Exception {

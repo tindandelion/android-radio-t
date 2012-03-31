@@ -1,7 +1,6 @@
 package org.dandelion.radiot.live.ui;
 
 import org.dandelion.radiot.live.core.LiveShowPlayer;
-import org.dandelion.radiot.live.service.LiveShowService;
 
 public class LiveShowPresenter implements LiveShowPlayer.StateVisitor {
 
@@ -31,8 +30,8 @@ public class LiveShowPresenter implements LiveShowPlayer.StateVisitor {
         beActiveState(4, false, false, timestamp);
     }
 
-    public void togglePlaybackState(LiveShowService service) {
-        service.togglePlayback();
+    public void togglePlaybackState(LiveShowServiceClient client) {
+        client.togglePlayback();
 	}
 
     private void beActiveState(int labelStringId, boolean isHelpTextVisible, boolean buttonEnabled, long timestamp) {
