@@ -15,11 +15,11 @@ public class AboutAppActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.about_app);
-		setVersionLabel(applicationInfo().getVersion());
+		setVersionLabel(appInfo().getVersion());
 	}
 
     public void sendFeedback(View view) {
-        new FeedbackEmail(this, applicationInfo()).openInEditor();
+        new FeedbackEmail(this, appInfo()).openInEditor();
 	}
 
     private void setVersionLabel(String value) {
@@ -29,7 +29,7 @@ public class AboutAppActivity extends Activity {
         versionView.setText(version);
     }
 
-    private AppInfo applicationInfo() {
-        return AppInfo.getInstance();
+    private AppInfo appInfo() {
+        return new AppInfo(this);
     }
 }

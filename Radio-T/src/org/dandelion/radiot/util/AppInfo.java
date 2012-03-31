@@ -7,18 +7,9 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 
 public class AppInfo {
-    private static AppInfo instance;
     private PackageManager packageManager;
     private String packageName;
     private ApplicationInfo applicationInfo;
-
-    public static void initialize(Context context) {
-        instance = new AppInfo(context);
-    }
-    
-    public static AppInfo getInstance() {
-        return instance;
-    }
 
     public String getVersion() {
         try {
@@ -38,7 +29,7 @@ public class AppInfo {
         return Build.VERSION.RELEASE;
     }
 
-    private AppInfo(Context context) {
+    public AppInfo(Context context) {
         packageManager = context.getPackageManager();
         packageName = context.getPackageName();
         applicationInfo = context.getApplicationInfo();

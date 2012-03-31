@@ -14,7 +14,7 @@ public class FakeDownloaderActivity extends Activity {
     }
     
     public void sendFeedback(View v) {
-        new FeedbackEmail(this, AppInfo.getInstance())
+        new FeedbackEmail(this, new AppInfo(this))
                 .setText(getString(R.string.implement_download_request))
                 .openInEditor();
     }
