@@ -10,10 +10,6 @@ public class LiveShowStateHolder {
         value = initial;
     }
 
-    public LiveShowStateHolder() {
-        this(null);
-    }
-
     public LiveShowState value() {
         return value;
     }
@@ -31,5 +27,6 @@ public class LiveShowStateHolder {
 
     public void setListener(LiveShowStateListener listener) {
         this.listener = listener;
+        notifyListener();
     }
 }
