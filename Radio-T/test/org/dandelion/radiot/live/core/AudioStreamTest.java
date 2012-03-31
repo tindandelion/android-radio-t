@@ -48,13 +48,13 @@ public class AudioStreamTest {
             }
         }).when(player).setOnCompletionListener(any(MediaPlayer.OnCompletionListener.class));
 
-        stream = new AudioStream(player);
+        stream = new AudioStream(player, TEST_STREAM_URL);
         stream.setStateListener(stateListener);
     }
 
     @Test
     public void initializePlayerWhenStartPlaying() throws IOException {
-        stream.play(TEST_STREAM_URL);
+        stream.play();
         verify(player).reset();
         verify(player).setDataSource(TEST_STREAM_URL);
         verify(player).prepareAsync();
@@ -62,7 +62,7 @@ public class AudioStreamTest {
 
     @Test
     public void startsPlaybackWhenPrepared() throws Exception {
-        stream.play(TEST_STREAM_URL);
+        stream.play();
         preparedListener.onPrepared(player);
         verify(player).start();
     }

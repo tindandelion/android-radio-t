@@ -9,6 +9,7 @@ public class AudioStream implements MediaPlayer.OnPreparedListener, MediaPlayer.
     private MediaPlayer player;
     private StateListener listener;
     private AudioStream.StopTask stopTask;
+    private String url;
 
 
     public interface StateListener {
@@ -17,8 +18,9 @@ public class AudioStream implements MediaPlayer.OnPreparedListener, MediaPlayer.
         void onStopped();
     }
 
-    public AudioStream(MediaPlayer player) {
+    public AudioStream(MediaPlayer player, String url) {
         this.player = player;
+        this.url = url;
         this.listener = new NullStateListener();
         listenForPlayerEvents();
     }
@@ -29,8 +31,12 @@ public class AudioStream implements MediaPlayer.OnPreparedListener, MediaPlayer.
             this.listener = new NullStateListener();
         }
     }
+    
+    public void play() throws IOException {
+        playUrl(url);
+    }
 
-    public void play(String url) throws IOException {
+    protected void playUrl(String url) throws IOException {
         player.reset();
         player.setDataSource(url);
         player.prepareAsync();

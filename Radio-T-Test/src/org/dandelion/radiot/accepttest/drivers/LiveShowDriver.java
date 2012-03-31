@@ -27,7 +27,7 @@ public class LiveShowDriver extends Solo {
         assertTrue(waitForText("Остановлено"));
     }
 
-    public void assertIsWaiting() {
+    public void assertShowsWaiting() {
         assertTrue(waitForText("Ожидание"));
     }
 }

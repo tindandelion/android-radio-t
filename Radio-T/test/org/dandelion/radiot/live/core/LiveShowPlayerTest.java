@@ -122,7 +122,7 @@ public class LiveShowPlayerTest implements LiveShowPlayer.StateChangeListener {
     }
 
     private void verifyIsWaiting() {
-        verify(timeout).set(eq(LiveShowPlayer.waitTimeoutMilliseconds), any(Runnable.class));
+        verify(timeout).set(eq(LiveShowPlayer.WAIT_TIMEOUT), any(Runnable.class));
         verifySwitchedToState(Waiting.class);
     }
 
@@ -131,7 +131,7 @@ public class LiveShowPlayerTest implements LiveShowPlayer.StateChangeListener {
     }
 
     private void verifyIsConnecting() throws IOException {
-        verify(audioStream).play(LiveShowPlayer.SHOW_URL);
+        verify(audioStream).play();
         verifySwitchedToState(Connecting.class);
     }
 

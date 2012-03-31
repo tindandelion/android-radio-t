@@ -13,7 +13,7 @@ import org.dandelion.radiot.live.core.Timeout;
 import org.dandelion.radiot.live.core.states.LiveShowState;
 
 public class LiveShowService extends Service implements LiveShowPlayer.StateChangeListener {
-    private static final String TIMEOUT = "org.dandelion.radiot.live.TimeoutElapsed";
+    public static final String TIMEOUT_ACTION = "org.dandelion.radiot.live.TimeoutElapsed";
     private static final int NOTIFICATION_ID = 1;
 
     private LiveShowPlayer player;
@@ -47,7 +47,7 @@ public class LiveShowService extends Service implements LiveShowPlayer.StateChan
 		super.onCreate();
         wifiLocker = WifiLocker.create(this);
         notificationController = createNotificationController();
-        waitTimeout = new AlarmTimeout(this, TIMEOUT);
+        waitTimeout = new AlarmTimeout(this, TIMEOUT_ACTION);
         mediaPlayer = new MediaPlayer();
         player = new LiveShowPlayer(createAudioStream(), waitTimeout);
         player.setListener(this);

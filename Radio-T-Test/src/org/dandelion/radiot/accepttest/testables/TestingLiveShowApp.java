@@ -1,47 +1,33 @@
 package org.dandelion.radiot.accepttest.testables;
 
+import android.content.Context;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.live.core.AudioStream;
+import org.dandelion.radiot.live.service.LiveShowService;
 
 import java.io.IOException;
 
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
-
 public class TestingLiveShowApp extends LiveShowApp {
-    private boolean isPlaying = false;
     private AudioStream audioStream;
     private String audioUrl = "";
+    private Context context;
 
-    public TestingLiveShowApp() {
+    public TestingLiveShowApp(Context context) {
         super();
+        this.context = context;
     }
 
     @Override
     public AudioStream createAudioStream(MediaPlayer mediaPlayer) {
-        audioStream = new AudioStream(mediaPlayer) {
+        audioStream = new AudioStream(mediaPlayer, null) {
             @Override
-            public void play(String url) throws IOException {
-                super.play(audioUrl);
-                isPlaying = true;
-            }
-
-            @Override
-            public void stop() {
-                super.stop();
-                isPlaying = false;
+            public void play() throws IOException {
+                super.playUrl(audioUrl);
             }
         };
         return audioStream;
-    }
-
-    public void assertIsPlaying() {
-        assertTrue(isPlaying);
-    }
-
-    public void assertIsStopped() {
-        assertFalse(isPlaying);
     }
 
     public void reset() {
@@ -52,5 +38,10 @@ public class TestingLiveShowApp extends LiveShowApp {
 
     public void setAudioUrl(String value) {
         this.audioUrl = value;
+    }
+
+    public void signalWaitTimeout() {
+        Intent intent = new Intent(LiveShowService.TIMEOUT_ACTION);
+        context.sendBroadcast(intent);
     }
 }
