@@ -4,6 +4,7 @@ import android.content.Context;
 import android.media.MediaPlayer;
 import org.dandelion.radiot.live.core.AudioStream;
 import org.dandelion.radiot.live.core.LiveShowStateHolder;
+import org.dandelion.radiot.live.core.LiveShowStateListener;
 import org.dandelion.radiot.live.core.states.Idle;
 import org.dandelion.radiot.live.service.LiveShowClient;
 
@@ -28,7 +29,7 @@ public class LiveShowApp {
         return new AudioStream(mediaPlayer, LIVE_SHOW_URL);
     }
     
-    public LiveShowClient createClient(Context context, LiveShowClient.StateListener listener) {
+    public LiveShowClient createClient(Context context, LiveShowStateListener listener) {
         return new LiveShowClient(context, stateHolder, listener);
     }
 

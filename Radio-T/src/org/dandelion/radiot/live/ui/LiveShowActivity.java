@@ -10,13 +10,20 @@ import android.widget.TextView;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.home_screen.HomeScreenActivity;
 import org.dandelion.radiot.live.LiveShowApp;
+import org.dandelion.radiot.live.core.LiveShowStateListener;
+import org.dandelion.radiot.live.core.states.LiveShowState;
 import org.dandelion.radiot.live.service.LiveShowClient;
 
 public class LiveShowActivity extends Activity {
-    private LiveShowClient.StateListener onStateChanged = new LiveShowClient.StateListener() {
+    private LiveShowStateListener onStateChanged = new LiveShowStateListener() {
         @Override
-        public void onStateChanged() {
-            updateVisualState();
+        public void onStateChanged(LiveShowState newValue) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    updateVisualState();
+                }
+            });
         }
     };
 
@@ -53,7 +60,6 @@ public class LiveShowActivity extends Activity {
     @Override
 	protected void onStop() {
         client.release();
-		client = null;
         timerLabel.stop();
 		super.onStop();
 	}

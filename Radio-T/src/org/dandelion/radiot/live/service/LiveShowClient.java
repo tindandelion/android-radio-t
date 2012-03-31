@@ -7,16 +7,10 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 import org.dandelion.radiot.live.core.LiveShowPlayer;
 import org.dandelion.radiot.live.core.LiveShowStateHolder;
-import org.dandelion.radiot.live.core.states.LiveShowState;
+import org.dandelion.radiot.live.core.LiveShowStateListener;
 
 public class LiveShowClient {
-    public interface StateListener {
-        void onStateChanged();
-    }
-
-    private PlaybackStateChangedEvent.Receiver eventReceiver;
     private LiveShowStateHolder stateHolder;
-    private StateListener stateListener;
     private Context context;
 
     private ServiceConnection onService = new ServiceConnection() {
@@ -27,22 +21,15 @@ public class LiveShowClient {
         }
     };
 
-    public LiveShowClient(Context context, LiveShowStateHolder stateHolder, StateListener listener) {
+    public LiveShowClient(Context context, LiveShowStateHolder stateHolder, LiveShowStateListener listener) {
         this.context = context;
         this.stateHolder = stateHolder;
-        this.stateListener = listener;
+        startTrackingState(listener);
         bindToService();
-        startTrackingState();
     }
 
-    private void startTrackingState() {
-        PlaybackStateChangedEvent.Listener onStateChanged = new PlaybackStateChangedEvent.Listener() {
-            @Override
-            public void onPlaybackStateChanged(LiveShowState newState) {
-                stateListener.onStateChanged();
-            }
-        };
-        eventReceiver = PlaybackStateChangedEvent.createReceiver(context, onStateChanged);
+    private void startTrackingState(LiveShowStateListener listener) {
+        stateHolder.setListener(listener);
     }
 
     public void release() {
@@ -51,7 +38,7 @@ public class LiveShowClient {
     }
 
     private void stopTrackingState() {
-        eventReceiver.release();
+        stateHolder.setListener(null);
     }
 
     private void bindToService() {

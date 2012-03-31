@@ -7,13 +7,10 @@ import android.os.Binder;
 import android.os.IBinder;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.live.LiveShowApp;
-import org.dandelion.radiot.live.core.AudioStream;
-import org.dandelion.radiot.live.core.LiveShowPlayer;
-import org.dandelion.radiot.live.core.LiveShowStateHolder;
-import org.dandelion.radiot.live.core.Timeout;
+import org.dandelion.radiot.live.core.*;
 import org.dandelion.radiot.live.core.states.LiveShowState;
 
-public class LiveShowService extends Service implements LiveShowPlayer.StateChangeListener {
+public class LiveShowService extends Service implements LiveShowStateListener {
     public static final String TAG = LiveShowService.class.getName();
     public static final String TOGGLE_ACTION = TAG + ".Toggle";
     public static final String TIMEOUT_ACTION = "org.dandelion.radiot.live.TimeoutElapsed";
@@ -86,11 +83,9 @@ public class LiveShowService extends Service implements LiveShowPlayer.StateChan
         return new NotificationController(foregrounder, nb, labels);
     }
 
-
     @Override
-    public void onChangedState(LiveShowState newState) {
+    public void onStateChanged(LiveShowState newValue) {
         player.queryState(wifiLocker);
         player.queryState(notificationController);
-        PlaybackStateChangedEvent.send(this, newState);
     }
 }

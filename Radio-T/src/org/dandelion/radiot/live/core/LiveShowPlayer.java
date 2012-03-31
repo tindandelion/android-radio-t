@@ -5,7 +5,7 @@ import org.dandelion.radiot.live.core.states.*;
 public class LiveShowPlayer implements AudioStream.StateListener {
     public static int WAIT_TIMEOUT = 60 * 1000;
 
-    private StateChangeListener listener;
+    private LiveShowStateListener listener;
     private LiveShowStateHolder stateHolder;
     private AudioStream audioStream;
     private Timeout waitTimeout;
@@ -15,10 +15,6 @@ public class LiveShowPlayer implements AudioStream.StateListener {
             beConnecting();
         }
     };
-
-    public interface StateChangeListener {
-        void onChangedState(LiveShowState newState);
-    }
 
     public static interface StateVisitor {
         void onWaiting(long timestamp);
@@ -35,7 +31,7 @@ public class LiveShowPlayer implements AudioStream.StateListener {
         this.audioStream.setStateListener(this);
     }
 
-    public void setListener(StateChangeListener listener) {
+    public void setListener(LiveShowStateListener listener) {
         this.listener = listener;
     }
 
@@ -97,7 +93,7 @@ public class LiveShowPlayer implements AudioStream.StateListener {
     private void setState(LiveShowState state) {
         stateHolder.setValue(state);
         if (listener != null) {
-            listener.onChangedState(state);
+            listener.onStateChanged(state);
         }
     }
 }

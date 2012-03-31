@@ -8,9 +8,11 @@ DONE New dashboard widget
  * Sync podcast list with SyncAdaptor
  * Google Analytics
 PROGRESS Live show service should only be alive while playing music
-    PROGRESS Live show state must be accessible without asking the service
+    DONE Live show state must be accessible without asking the service
     DONE Use intent API for live show commands
+    * Timeouts should come from outside as broadcast receiver events
     * Implement proper service lifecycle
+    * Test solution for memory leaks
 
 Downloading:
  * Respect background data loading settings
