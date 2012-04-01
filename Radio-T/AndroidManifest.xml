@@ -51,6 +51,11 @@
                 <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
             </intent-filter>
         </receiver>
+        <receiver android:name=".live.service.TimeoutReceiver">
+            <intent-filter>
+                <action android:name="org.dandelion.radiot.live.Timeout" />
+            </intent-filter>
+        </receiver>
     </application>
     <uses-permission
             android:name="android.permission.INTERNET"/>

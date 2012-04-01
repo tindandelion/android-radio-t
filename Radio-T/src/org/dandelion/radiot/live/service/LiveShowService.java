@@ -13,15 +13,16 @@ import org.dandelion.radiot.live.core.states.LiveShowState;
 public class LiveShowService extends Service implements LiveShowStateListener {
     public static final String TAG = LiveShowService.class.getName();
     public static final String TOGGLE_ACTION = TAG + ".Toggle";
-    public static final String TIMEOUT_ACTION = "org.dandelion.radiot.live.TimeoutElapsed";
+    public static final String TIMEOUT_ACTION = "org.dandelion.radiot.live.Timeout";
     private static final int NOTIFICATION_ID = 1;
 
     private LiveShowPlayer player;
     private final IBinder binder = new LocalBinder();
     private WifiLocker wifiLocker;
     private NotificationController notificationController;
-    private Timeout waitTimeout;
+    private Timeout timeout;
     private MediaPlayer mediaPlayer;
+    private TimeoutScheduler scheduler;
 
     public class LocalBinder extends Binder {
     }
@@ -44,9 +45,9 @@ public class LiveShowService extends Service implements LiveShowStateListener {
 		super.onCreate();
         wifiLocker = WifiLocker.create(this);
         notificationController = createNotificationController();
-        waitTimeout = new AlarmTimeout(this, TIMEOUT_ACTION);
+        timeout = new AlarmTimeout(this, TIMEOUT_ACTION);
         mediaPlayer = new MediaPlayer();
-        Scheduler scheduler = new TimeoutScheduler(waitTimeout);
+        scheduler = new TimeoutScheduler(timeout);
         player = new LiveShowPlayer(createAudioStream(), getStateHolder(), scheduler);
         scheduler.setPerformer(player);
         player.setListener(this);
@@ -54,8 +55,12 @@ public class LiveShowService extends Service implements LiveShowStateListener {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (TOGGLE_ACTION.equals(intent.getAction())) {
+        String action = intent.getAction();
+        if (TOGGLE_ACTION.equals(action)) {
             player.togglePlayback();
+        }
+        if (TIMEOUT_ACTION.equals(action)) {
+            scheduler.timeoutElapsed();
         }
         return START_STICKY;
     }
@@ -71,7 +76,6 @@ public class LiveShowService extends Service implements LiveShowStateListener {
     @Override
     public void onDestroy() {
         player.setListener(null);
-        waitTimeout.release();
         wifiLocker.release();
         mediaPlayer.release();
         super.onDestroy();
