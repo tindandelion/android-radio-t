@@ -1,27 +1,25 @@
 package org.dandelion.radiot.live.service;
 
-import android.app.Notification;
 import android.app.Service;
+import org.dandelion.radiot.util.IconNote;
 
 class Foregrounder {
-    protected Service service;
-    protected int notificationId;
+    private final Service service;
     private boolean isForeground = false;
 
-    public Foregrounder(Service service, int notificationId) {
+    public Foregrounder(Service service) {
         this.service = service;
-        this.notificationId = notificationId;
     }
 
-    public void startForeground(Notification note) {
-        service.startForeground(notificationId, note);
-        isForeground = true;
-    }
-    
     public void stopForeground() {
         if (isForeground) {
             service.stopForeground(true);
             isForeground = false;
         }
+    }
+
+    public void startForeground(IconNote note) {
+        service.startForeground(note.id(), note.build());
+        isForeground = true;
     }
 }

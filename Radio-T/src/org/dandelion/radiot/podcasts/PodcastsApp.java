@@ -1,6 +1,5 @@
 package org.dandelion.radiot.podcasts;
 
-import android.app.*;
 import android.content.Context;
 import android.os.Build;
 import android.os.Environment;
@@ -84,7 +83,7 @@ public class PodcastsApp {
     }
 
     public NotificationManager createNotificationManager() {
-        return new DownloadNotificationManager(context, createDownloadErrorMessages());
+        return new DownloadNotifier(context, createDownloadErrorMessages());
     }
 
     private DownloadErrorMessages createDownloadErrorMessages() {

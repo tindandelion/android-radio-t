@@ -9,6 +9,7 @@ import org.dandelion.radiot.R;
 import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.live.core.*;
 import org.dandelion.radiot.live.core.states.LiveShowState;
+import org.dandelion.radiot.util.IconNote;
 
 public class LiveShowService extends Service implements LiveShowStateListener {
     public static final String TAG = LiveShowService.class.getName();
@@ -83,10 +84,11 @@ public class LiveShowService extends Service implements LiveShowStateListener {
 
     private NotificationController createNotificationController() {
         String[] labels = getResources().getStringArray(R.array.live_show_notification_labels);
-        Foregrounder foregrounder = new Foregrounder(this, NOTIFICATION_ID);
-        NotificationBuilder nb = new NotificationBuilder(getApplication(), R.drawable.stat_live,
-                getString(R.string.app_name));
-        return new NotificationController(foregrounder, nb, labels);
+        Foregrounder foregrounder = new Foregrounder(this);
+        IconNote note = new LiveShowNote(getApplication(), NOTIFICATION_ID)
+                .setIcon(R.drawable.stat_live)
+                .setTitle(getString(R.string.app_name));
+        return new NotificationController(foregrounder, labels, note);
     }
 
     @Override

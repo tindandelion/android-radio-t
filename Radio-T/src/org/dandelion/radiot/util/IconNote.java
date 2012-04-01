@@ -11,6 +11,7 @@ public abstract class IconNote {
     private String text;
     private int iconId;
     private int notificationId;
+    private String ticker;
 
     public IconNote(Context context, int notificationId) {
         this.context = context;
@@ -19,6 +20,12 @@ public abstract class IconNote {
 
     public IconNote setTitle(String title) {
         this.title = title;
+        return this;
+    }
+
+    public IconNote setTitleAndTicker(String value) {
+        this.title = value;
+        this.ticker = value;
         return this;
     }
 
@@ -39,8 +46,8 @@ public abstract class IconNote {
         manager.notify(tag, notificationId, build());
     }
 
-    private Notification build() {
-        Notification note = new Notification(iconId, title, System.currentTimeMillis());
+    public Notification build() {
+        Notification note = new Notification(iconId, ticker, System.currentTimeMillis());
         note.setLatestEventInfo(context, title, text, intent());
         note.flags |= Notification.FLAG_AUTO_CANCEL;
         return note;
@@ -51,4 +58,8 @@ public abstract class IconNote {
     }
 
     protected abstract Intent activityIntent();
+
+    public int id() {
+        return notificationId;
+    }
 }

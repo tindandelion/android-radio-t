@@ -1,7 +1,7 @@
 package org.dandelion.radiot.live.service;
 
-import android.app.Notification;
 import org.dandelion.radiot.live.core.LiveShowPlayer;
+import org.dandelion.radiot.util.IconNote;
 
 public class NotificationController implements LiveShowPlayer.StateVisitor {
     private static final int PLAYING_ID = 0;
@@ -9,13 +9,13 @@ public class NotificationController implements LiveShowPlayer.StateVisitor {
     private static final int WAITING_ID = 2;
 
     private Foregrounder foregrounder;
-    private NotificationBuilder notificationBuilder;
     private String[] stateLabels;
+    private IconNote note;
 
-    public NotificationController(Foregrounder foregrounder, NotificationBuilder notificationBuilder, String[] stateLabels) {
+    public NotificationController(Foregrounder foregrounder, String[] stateLabels, IconNote note) {
         this.foregrounder = foregrounder;
-        this.notificationBuilder = notificationBuilder;
         this.stateLabels = stateLabels;
+        this.note = note;
     }
 
     @Override
@@ -48,8 +48,8 @@ public class NotificationController implements LiveShowPlayer.StateVisitor {
 
 
     private void startForeground(String label) {
-        Notification notification = notificationBuilder.createNotification(label);
-        foregrounder.startForeground(notification);
+        note.setText(label);
+        foregrounder.startForeground(note);
     }
 
     private void stopForeground() {

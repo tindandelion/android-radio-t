@@ -9,12 +9,12 @@ import org.dandelion.radiot.util.IconNote;
 
 import java.io.File;
 
-public class DownloadNotificationManager implements NotificationManager {
+public class DownloadNotifier implements NotificationManager {
     private int DOWNLOAD_COMPLETE_NOTE_ID = 2;
     private Context context;
     private DownloadErrorMessages errorMessages;
 
-    public DownloadNotificationManager(Context context, DownloadErrorMessages messages) {
+    public DownloadNotifier(Context context, DownloadErrorMessages messages) {
         this.context = context;
         this.errorMessages = messages;
     }
@@ -23,7 +23,7 @@ public class DownloadNotificationManager implements NotificationManager {
     public void showSuccess(String title, File audioFile) {
         String text = context.getString(R.string.download_complete_message);
         new SuccessNote(context, DOWNLOAD_COMPLETE_NOTE_ID, audioFile)
-                .setTitle(title)
+                .setTitleAndTicker(title)
                 .setText(text)
                 .setIcon(R.drawable.stat_download_complete)
                 .show(title);
@@ -33,7 +33,7 @@ public class DownloadNotificationManager implements NotificationManager {
     public void showError(String title, int errorCode) {
         String text = errorMessages.getMessageForCode(errorCode);
         new ErrorNote(context, DOWNLOAD_COMPLETE_NOTE_ID)
-                .setTitle(title)
+                .setTitleAndTicker(title)
                 .setText(text)
                 .setIcon(android.R.drawable.stat_sys_warning)
                 .show(title);
