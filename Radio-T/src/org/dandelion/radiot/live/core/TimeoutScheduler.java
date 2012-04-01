@@ -20,6 +20,10 @@ public class TimeoutScheduler implements Scheduler, Runnable {
         timeout.reset();
     }
 
+    public void timeoutElapsed() {
+        run();
+    }
+
     @Override
     public void run() {
         performer.performNextAttempt();

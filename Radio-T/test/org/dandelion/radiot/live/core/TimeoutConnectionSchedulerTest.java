@@ -30,7 +30,7 @@ public class TimeoutConnectionSchedulerTest {
 
     @Test
     public void callsPlayerWhenTimeoutElapses() throws Exception {
-        scheduler.run();
+        scheduler.timeoutElapsed();
         verify(performer).performNextAttempt();
     }
 }
