@@ -10,20 +10,15 @@ import java.io.IOException;
 
 import static junit.framework.Assert.assertEquals;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 public class LiveShowPlayerTest {
     private final LiveShowStateHolder stateHolder = new LiveShowStateHolder(new Idle());
     private final AudioStream audioStream = mock(AudioStream.class);
-    private final Timeout timeout = mock(Timeout.class);
     private LiveShowPlayer player;
 
-    private Runnable timeoutCallback;
     private AudioStream.StateListener audioStateListener;
+    private Scheduler schedule = mock(Scheduler.class);
 
 
     @Before
@@ -36,116 +31,103 @@ public class LiveShowPlayerTest {
             }
         }).when(audioStream).setStateListener(any(AudioStream.StateListener.class));
 
-        doAnswer(new Answer<Object>() {
-            @Override
-            public Object answer(InvocationOnMock invocation) throws Throwable {
-                timeoutCallback = (Runnable) invocation.getArguments()[1];
-                return null;
-            }
-        }).when(timeout).set(anyInt(), any(Runnable.class));
-
-        player = new LiveShowPlayer(audioStream, stateHolder, timeout);
+        player = new LiveShowPlayer(audioStream, stateHolder, schedule);
     }
 
     @Test
     public void goesConnecting() throws Exception {
         player.beConnecting();
-        verifyIsConnecting();
+        assertIsConnecting();
     }
 
     @Test
     public void goesStopping() throws Exception {
         player.beStopping();
-        verifyIsStopping();
+        assertIsStopping();
     }
 
     @Test
     public void goesPlayingWhenPrepared() throws Exception {
         player.beConnecting();
         audioStateListener.onStarted();
-        verifyIsPlaying();
+        assertIsPlaying();
     }
 
     @Test
-    public void goesWaitingOnPrepareError() throws Exception {
+    public void schedulesTheNextAttemptIfConnectFails() throws Exception {
         player.beConnecting();
         audioStateListener.onError();
-        verifySwitchedToState(Waiting.class);
+        assertCurrentStateIs(Waiting.class);
+        verify(schedule).scheduleNextAttempt();
     }
 
     @Test
     public void goesConnectingOnPlayingError() throws Exception {
         player.onStarted();
         audioStateListener.onError();
-        verifyIsConnecting();
+        assertIsConnecting();
     }
 
     @Test
     public void goesIdleOnStopped() throws Exception {
         player.beStopping();
         audioStateListener.onStopped();
-        verifyIsIdle();
+        assertIsIdle();
     }
 
     @Test
-    public void reconnectWhenWaitTimeoutElapses() throws Exception {
+    public void performNextConnectionAttempt() throws Exception {
         player.beWaiting();
-        verifyIsWaiting();
-        timeoutCallback.run();
-        verifyIsConnecting();
+        player.performNextAttempt();
+        assertIsConnecting();
     }
 
     @Test
-    public void resetsTimeoutWhenGoesIdle() throws Exception {
+    public void cancelsConnectionAttemptsWhenGoesIdle() throws Exception {
         player.beIdle();
-        verify(timeout).reset();
+        verify(schedule).cancelAttempts();
     }
 
     @Test
     public void normalPlaybackWorkflow() throws Exception {
         player.togglePlayback();
-        verifyIsConnecting();
+        assertIsConnecting();
         audioStateListener.onStarted();
-        verifyIsPlaying();
+        assertIsPlaying();
 
         player.togglePlayback();
-        verifyIsStopping();
+        assertIsStopping();
         audioStateListener.onStopped();
-        verifyIsIdle();
+        assertIsIdle();
     }
 
     @Test
     public void waitingForShowWorkflow() throws Exception {
         player.togglePlayback();
-        verifyIsConnecting();
+        assertIsConnecting();
         audioStateListener.onError();
-        verifyIsWaiting();
+        assertCurrentStateIs(Waiting.class);
     }
 
-    private void verifyIsWaiting() {
-        verify(timeout).set(eq(LiveShowPlayer.WAIT_TIMEOUT), any(Runnable.class));
-        verifySwitchedToState(Waiting.class);
+    private void assertIsIdle() {
+        assertCurrentStateIs(Idle.class);
     }
 
-    private void verifyIsIdle() {
-        verifySwitchedToState(Idle.class);
-    }
-
-    private void verifyIsConnecting() throws IOException {
+    private void assertIsConnecting() throws IOException {
         verify(audioStream).play();
-        verifySwitchedToState(Connecting.class);
+        assertCurrentStateIs(Connecting.class);
     }
 
-    private void verifySwitchedToState(Class<?> expected) {
+    private void assertCurrentStateIs(Class<?> expected) {
         assertEquals(expected, stateHolder.value().getClass());
     }
 
-    private void verifyIsStopping() {
+    private void assertIsStopping() {
         verify(audioStream).stop();
-        verifySwitchedToState(Stopping.class);
+        assertCurrentStateIs(Stopping.class);
     }
 
-    private void verifyIsPlaying() {
-        verifySwitchedToState(Playing.class);
+    private void assertIsPlaying() {
+        assertCurrentStateIs(Playing.class);
     }
 }

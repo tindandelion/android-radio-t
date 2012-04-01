@@ -46,7 +46,9 @@ public class LiveShowService extends Service implements LiveShowStateListener {
         notificationController = createNotificationController();
         waitTimeout = new AlarmTimeout(this, TIMEOUT_ACTION);
         mediaPlayer = new MediaPlayer();
-        player = new LiveShowPlayer(createAudioStream(), getStateHolder(), waitTimeout);
+        Scheduler scheduler = new TimeoutScheduler(waitTimeout);
+        player = new LiveShowPlayer(createAudioStream(), getStateHolder(), scheduler);
+        scheduler.setPerformer(player);
         player.setListener(this);
     }
 

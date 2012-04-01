@@ -33,20 +33,7 @@ public class LiveShowPlaybackTest extends
 		super.tearDown();
 	}
 	
-	public void testStartPlayback() throws Exception {
-        driver.startTranslation();
-        driver.assertShowsTranslation();
-	}
-	
-	public void testStopPlaybackWhenPressingStop() throws Exception {
-        driver.startTranslation();
-        driver.assertShowsTranslation();
-
-        driver.stopTranslation();
-        driver.assertShowsStopped();
-	}
-	
-	public void testRestartPlaybackAfterExplicitStop() throws Exception {
+	public void testStartStopPlayback() throws Exception {
         driver.startTranslation();
         driver.assertShowsTranslation();
 

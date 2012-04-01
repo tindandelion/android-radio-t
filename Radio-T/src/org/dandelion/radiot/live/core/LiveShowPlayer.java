@@ -2,19 +2,11 @@ package org.dandelion.radiot.live.core;
 
 import org.dandelion.radiot.live.core.states.*;
 
-public class LiveShowPlayer implements AudioStream.StateListener {
-    public static int WAIT_TIMEOUT = 60 * 1000;
-
+public class LiveShowPlayer implements AudioStream.StateListener, Scheduler.Performer {
     private LiveShowStateListener listener;
     private LiveShowStateHolder stateHolder;
     private AudioStream audioStream;
-    private Timeout waitTimeout;
-    private Runnable onWaitTimeout = new Runnable() {
-        @Override
-        public void run() {
-            beConnecting();
-        }
-    };
+    private Scheduler scheduler;
 
     public static interface StateVisitor {
         void onWaiting(long timestamp);
@@ -24,10 +16,10 @@ public class LiveShowPlayer implements AudioStream.StateListener {
         void onStopping(long timestamp);
     }
 
-    public LiveShowPlayer(AudioStream audioStream, LiveShowStateHolder stateHolder, Timeout waitTimeout) {
+    public LiveShowPlayer(AudioStream audioStream, LiveShowStateHolder stateHolder, Scheduler scheduler) {
         this.audioStream = audioStream;
-        this.waitTimeout = waitTimeout;
         this.stateHolder = stateHolder;
+        this.scheduler = scheduler;
         this.audioStream.setStateListener(this);
     }
 
@@ -43,13 +35,18 @@ public class LiveShowPlayer implements AudioStream.StateListener {
         currentState().togglePlayback(this);
     }
 
+    @Override
+    public void performNextAttempt() {
+        beConnecting();
+    }
+
     public boolean isIdle() {
         return (currentState() instanceof Idle);
     }
 
     public void beIdle() {
-        waitTimeout.reset();
         setState(new Idle());
+        scheduler.cancelAttempts();
     }
 
     public void beConnecting() {
@@ -67,8 +64,8 @@ public class LiveShowPlayer implements AudioStream.StateListener {
     }
 
     public void beWaiting() {
-        waitTimeout.set(WAIT_TIMEOUT, onWaitTimeout);
         setState(new Waiting());
+        scheduler.scheduleNextAttempt();
     }
 
     @Override
