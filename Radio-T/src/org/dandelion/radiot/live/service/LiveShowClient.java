@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
-import org.dandelion.radiot.live.core.LiveShowPlayer;
 import org.dandelion.radiot.live.core.LiveShowStateHolder;
 import org.dandelion.radiot.live.core.LiveShowStateListener;
 
@@ -51,9 +50,5 @@ public class LiveShowClient {
         Intent intent = new Intent(context, LiveShowService.class);
         intent.setAction(LiveShowService.TOGGLE_ACTION);
         context.startService(intent);
-    }
-
-    public void queryState(LiveShowPlayer.StateVisitor visitor) {
-        stateHolder.value().acceptVisitor(visitor);
     }
 }
