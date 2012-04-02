@@ -6,7 +6,7 @@ import org.junit.Test;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-public class TimeoutConnectionSchedulerTest {
+public class TimeoutSchedulerTest {
     private Timeout timeout = mock(Timeout.class);
     private final TimeoutScheduler scheduler = new TimeoutScheduler(timeout);
     private Scheduler.Performer performer = mock(Scheduler.Performer.class);
@@ -19,7 +19,7 @@ public class TimeoutConnectionSchedulerTest {
     @Test
     public void scheduleNextAttempt() throws Exception {
         scheduler.scheduleNextAttempt();
-        verify(timeout).set(TimeoutScheduler.WAIT_TIMEOUT, scheduler);
+        verify(timeout).set(TimeoutScheduler.WAIT_TIMEOUT);
     }
 
     @Test

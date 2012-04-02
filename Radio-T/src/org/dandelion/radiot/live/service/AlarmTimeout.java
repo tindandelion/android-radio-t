@@ -23,7 +23,7 @@ public class AlarmTimeout implements Timeout {
     }
 
     @Override
-    public void set(int milliseconds, Runnable action) {
+    public void set(int milliseconds) {
         manager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()
                 + milliseconds, intent);
     }

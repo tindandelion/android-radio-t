@@ -1,6 +1,6 @@
 package org.dandelion.radiot.live.core;
 
-public class TimeoutScheduler implements Scheduler, Runnable {
+public class TimeoutScheduler implements Scheduler {
     public static int WAIT_TIMEOUT = 60 * 1000;
 
     private Timeout timeout;
@@ -12,7 +12,7 @@ public class TimeoutScheduler implements Scheduler, Runnable {
 
     @Override
     public void scheduleNextAttempt() {
-        timeout.set(WAIT_TIMEOUT, this);
+        timeout.set(WAIT_TIMEOUT);
     }
 
     @Override
@@ -21,11 +21,6 @@ public class TimeoutScheduler implements Scheduler, Runnable {
     }
 
     public void timeoutElapsed() {
-        run();
-    }
-
-    @Override
-    public void run() {
         performer.performNextAttempt();
     }
 
