@@ -11,11 +11,14 @@ public class AudioStream implements MediaPlayer.OnPreparedListener, MediaPlayer.
     private AudioStream.StopTask stopTask;
     private String url;
 
-
     public interface StateListener {
         void onStarted();
         void onError();
         void onStopped();
+    }
+
+    public AudioStream(String url) {
+        this(new MediaPlayer(), url);
     }
 
     public AudioStream(MediaPlayer player, String url) {
@@ -23,6 +26,10 @@ public class AudioStream implements MediaPlayer.OnPreparedListener, MediaPlayer.
         this.url = url;
         this.listener = new NullStateListener();
         listenForPlayerEvents();
+    }
+
+    public void release() {
+        player.release();
     }
 
     public void setStateListener(StateListener listener) {

@@ -2,7 +2,6 @@ package org.dandelion.radiot.accepttest.testables;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.live.core.AudioStream;
 import org.dandelion.radiot.live.service.LiveShowService;
@@ -20,11 +19,17 @@ public class TestingLiveShowApp extends LiveShowApp {
     }
 
     @Override
-    public AudioStream createAudioStream(MediaPlayer mediaPlayer) {
-        audioStream = new AudioStream(mediaPlayer, null) {
+    public AudioStream createAudioStream() {
+        audioStream = new AudioStream(null) {
             @Override
             public void play() throws IOException {
                 super.playUrl(audioUrl);
+            }
+
+            @Override
+            public void release() {
+                super.release();
+                audioStream = null;
             }
         };
         return audioStream;

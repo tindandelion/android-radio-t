@@ -2,7 +2,6 @@ package org.dandelion.radiot.live.service;
 
 import android.app.Service;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.IBinder;
 import org.dandelion.radiot.R;
@@ -21,9 +20,8 @@ public class LiveShowService extends Service implements LiveShowStateListener {
     private final IBinder binder = new LocalBinder();
     private WifiLocker wifiLocker;
     private NotificationController notificationController;
-    private Timeout timeout;
-    private MediaPlayer mediaPlayer;
     private TimeoutScheduler scheduler;
+    private AudioStream stream;
 
     public class LocalBinder extends Binder {
     }
@@ -46,12 +44,16 @@ public class LiveShowService extends Service implements LiveShowStateListener {
 		super.onCreate();
         wifiLocker = WifiLocker.create(this);
         notificationController = createNotificationController();
-        timeout = new AlarmTimeout(this, TIMEOUT_ACTION);
-        mediaPlayer = new MediaPlayer();
-        scheduler = new TimeoutScheduler(timeout);
-        player = new LiveShowPlayer(createAudioStream(), getStateHolder(), scheduler);
+        scheduler = createWaitingScheduler();
+        stream = createAudioStream();
+        player = new LiveShowPlayer(stream, getStateHolder(), scheduler);
         scheduler.setPerformer(player);
         player.setListener(this);
+    }
+
+    private TimeoutScheduler createWaitingScheduler() {
+        Timeout timeout = new AlarmTimeout(this, TIMEOUT_ACTION);
+        return new TimeoutScheduler(timeout);
     }
 
     @Override
@@ -67,7 +69,7 @@ public class LiveShowService extends Service implements LiveShowStateListener {
     }
 
     private AudioStream createAudioStream() {
-        return LiveShowApp.getInstance().createAudioStream(mediaPlayer);
+        return LiveShowApp.getInstance().createAudioStream();
     }
 
     private LiveShowStateHolder getStateHolder() {
@@ -78,7 +80,7 @@ public class LiveShowService extends Service implements LiveShowStateListener {
     public void onDestroy() {
         player.setListener(null);
         wifiLocker.release();
-        mediaPlayer.release();
+        stream.release();
         super.onDestroy();
     }
 

@@ -68,6 +68,12 @@ public class AudioStreamTest {
     }
 
     @Test
+    public void releasesPlayerOnRelease() throws Exception {
+        stream.release();
+        verify(player).release();
+    }
+
+    @Test
     public void informsListenerThatStartedPlaying() throws Exception {
         preparedListener.onPrepared(player);
         verify(stateListener).onStarted();
