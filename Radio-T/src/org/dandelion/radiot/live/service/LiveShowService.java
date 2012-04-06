@@ -2,7 +2,6 @@ package org.dandelion.radiot.live.service;
 
 import android.app.Service;
 import android.content.Intent;
-import android.os.Binder;
 import android.os.IBinder;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.live.LiveShowApp;
@@ -17,27 +16,10 @@ public class LiveShowService extends Service implements LiveShowStateListener {
     private static final int NOTIFICATION_ID = 1;
 
     private LiveShowPlayer player;
-    private final IBinder binder = new LocalBinder();
     private WifiLocker wifiLocker;
     private NotificationController notificationController;
     private TimeoutScheduler scheduler;
     private AudioStream stream;
-
-    public class LocalBinder extends Binder {
-    }
-
-	@Override
-	public IBinder onBind(Intent intent) {
-		return binder;
-	}
-
-    @Override
-    public boolean onUnbind(Intent intent) {
-        if (player.isIdle()) {
-            stopSelf();
-        }
-        return true;
-    }
 
     @Override
 	public void onCreate() {
@@ -82,6 +64,11 @@ public class LiveShowService extends Service implements LiveShowStateListener {
         wifiLocker.release();
         stream.release();
         super.onDestroy();
+    }
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
     }
 
     private NotificationController createNotificationController() {
