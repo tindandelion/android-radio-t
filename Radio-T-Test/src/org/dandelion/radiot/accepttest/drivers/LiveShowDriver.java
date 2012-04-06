@@ -11,23 +11,23 @@ public class LiveShowDriver extends Solo {
         super(instrumentation, activity);
     }
 
-    public void startTranslation() {
+    public void clickConnect() {
         clickOnButton("Подключиться");
     }
 
-    public void assertShowsTranslation() {
+    public void showsTranslatingStatus() {
         assertTrue(waitForText("Трансляция"));
     }
 
-    public void stopTranslation() {
+    public void clickStop() {
         clickOnButton("Остановить");
     }
 
-    public void assertShowsStopped() {
+    public void showsStoppedStatus() {
         assertTrue(waitForText("Остановлено"));
     }
 
-    public void assertShowsWaiting() {
+    public void showsWaitingStatus() {
         assertTrue(waitForText("Ожидание"));
     }
 }

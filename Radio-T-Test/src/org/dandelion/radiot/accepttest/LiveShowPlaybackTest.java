@@ -1,7 +1,8 @@
 package org.dandelion.radiot.accepttest;
 
+import android.content.Context;
 import android.test.ActivityInstrumentationTestCase2;
-import org.dandelion.radiot.accepttest.drivers.LiveShowDriver;
+import org.dandelion.radiot.accepttest.drivers.LiveShowRunner;
 import org.dandelion.radiot.accepttest.testables.TestingLiveShowApp;
 import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.live.ui.LiveShowActivity;
@@ -11,7 +12,7 @@ public class LiveShowPlaybackTest extends
 	private static final String TEST_LIVE_URL = "http://icecast.bigrradio.com/80s90s";
 
     private TestingLiveShowApp app;
-    private LiveShowDriver driver;
+    private LiveShowRunner runner;
 
     public LiveShowPlaybackTest() {
 		super("org.dandelion.radiot", LiveShowActivity.class);
@@ -20,49 +21,49 @@ public class LiveShowPlaybackTest extends
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-        app = new TestingLiveShowApp(getInstrumentation().getTargetContext());
+        Context context = getInstrumentation().getTargetContext();
+        app = new TestingLiveShowApp(context);
         LiveShowApp.setTestingInstance(app);
         app.setAudioUrl(TEST_LIVE_URL);
-		driver = new LiveShowDriver(getInstrumentation(), getActivity());
+        runner = new LiveShowRunner(getInstrumentation(), getActivity());
 	}
 	
 	@Override
 	protected void tearDown() throws Exception {
-        app.reset();
-        driver.finishOpenedActivities();
+        runner.finish();
 		super.tearDown();
 	}
 	
 	public void testStartStopPlayback() throws Exception {
-        driver.startTranslation();
-        driver.assertShowsTranslation();
+        runner.startTranslation();
+        runner.showsTranslationInProgress();
 
-        driver.stopTranslation();
-        driver.assertShowsStopped();
+        runner.stopTranslation();
+        runner.showsTranslationStopped();
 
-        driver.startTranslation();
-        driver.assertShowsTranslation();
+        runner.startTranslation();
+        runner.showsTranslationInProgress();
 	}
 	
 	public void testTryToReconnectContinuouslyInWaitingMode() throws Exception {
         app.setAudioUrl("http://non-existent");
-        driver.startTranslation();
-        driver.assertShowsWaiting();
+        runner.startTranslation();
+        runner.showsWaiting();
 
         app.setAudioUrl(TEST_LIVE_URL);
         app.signalWaitTimeout();
-        driver.assertShowsTranslation();
+        runner.showsTranslationInProgress();
 	}
 
 	
 	public void testStopWaiting() throws Exception {
         app.setAudioUrl("http://non-existent");
 
-        driver.startTranslation();
-        driver.assertShowsWaiting();
+        runner.startTranslation();
+        runner.showsWaiting();
 
-        driver.stopTranslation();
-        driver.assertShowsStopped();
+        runner.stopTranslation();
+        runner.showsStopped();
 	}
 
 }

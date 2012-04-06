@@ -35,12 +35,6 @@ public class TestingLiveShowApp extends LiveShowApp {
         return audioStream;
     }
 
-    public void reset() {
-        if (audioStream != null) {
-            audioStream.reset();
-        }
-    }
-
     public void setAudioUrl(String value) {
         this.audioUrl = value;
     }

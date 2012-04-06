@@ -49,11 +49,6 @@ public class AudioStream implements MediaPlayer.OnPreparedListener, MediaPlayer.
         player.prepareAsync();
     }
 
-    public void reset() {
-        player.reset();
-        listener.onStopped();
-    }
-
     @SuppressWarnings("unchecked")
     public void stop() {
         ensureNoStopTasksExecuting();
