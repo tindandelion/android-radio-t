@@ -3,7 +3,6 @@ package org.dandelion.radiot.live.core;
 import org.dandelion.radiot.live.core.states.*;
 
 public class LiveShowPlayer implements AudioStream.StateListener, Scheduler.Performer {
-    private LiveShowStateListener listener;
     private LiveShowStateHolder stateHolder;
     private AudioStream audioStream;
     private Scheduler scheduler;
@@ -21,10 +20,6 @@ public class LiveShowPlayer implements AudioStream.StateListener, Scheduler.Perf
         this.stateHolder = stateHolder;
         this.scheduler = scheduler;
         this.audioStream.setStateListener(this);
-    }
-
-    public void setListener(LiveShowStateListener listener) {
-        this.listener = listener;
     }
 
     public void togglePlayback() {
@@ -80,9 +75,10 @@ public class LiveShowPlayer implements AudioStream.StateListener, Scheduler.Perf
     }
 
     private void setState(LiveShowState state) {
-        stateHolder.setValue(state);
-        if (listener != null) {
-            listener.onStateChanged(state);
-        }
+        stateHolder.setValue(state, currentTimestamp());
+    }
+
+    private long currentTimestamp() {
+        return System.currentTimeMillis();
     }
 }

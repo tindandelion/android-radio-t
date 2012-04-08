@@ -10,8 +10,8 @@ public class Connecting extends LiveShowState {
     }
 
     @Override
-    public void acceptVisitor(LiveShowPlayer.StateVisitor visitor) {
-        visitor.onConnecting(this.getTimestamp());
+    public void acceptVisitor(LiveShowPlayer.StateVisitor visitor, long timestamp) {
+        visitor.onConnecting(timestamp);
     }
 
     @Override

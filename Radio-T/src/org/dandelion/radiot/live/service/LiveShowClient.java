@@ -9,27 +9,22 @@ public class LiveShowClient {
     private LiveShowStateHolder stateHolder;
     private Context context;
 
-    public LiveShowClient(Context context, LiveShowStateHolder stateHolder, LiveShowStateListener listener) {
+    public LiveShowClient(Context context, LiveShowStateHolder stateHolder) {
         this.context = context;
         this.stateHolder = stateHolder;
-        startTrackingState(listener);
-    }
-
-    private void startTrackingState(LiveShowStateListener listener) {
-        stateHolder.setListener(listener);
-    }
-
-    public void release() {
-        stopTrackingState();
-    }
-
-    private void stopTrackingState() {
-        stateHolder.setListener(null);
     }
 
     public void togglePlayback() {
         Intent intent = new Intent(context, LiveShowService.class);
         intent.setAction(LiveShowService.TOGGLE_ACTION);
         context.startService(intent);
+    }
+
+    public void addListener(LiveShowStateListener listener) {
+        stateHolder.addListener(listener);
+    }
+
+    public void removeListener(LiveShowStateListener listener) {
+        stateHolder.removeListener(listener);
     }
 }

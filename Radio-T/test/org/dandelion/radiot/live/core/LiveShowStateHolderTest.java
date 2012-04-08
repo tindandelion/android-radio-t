@@ -3,29 +3,53 @@ package org.dandelion.radiot.live.core;
 import org.dandelion.radiot.live.core.states.LiveShowState;
 import org.junit.Test;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 public class LiveShowStateHolderTest {
+    private final long TIMESTAMP = 12345;
     private final LiveShowState state = new LiveShowState();
-    private final LiveShowStateHolder holder = new LiveShowStateHolder(state);
+    private final LiveShowStateHolder holder = new LiveShowStateHolder(state, TIMESTAMP);
     private final LiveShowStateListener listener = mock(LiveShowStateListener.class);
 
     @Test
     public void callListenerWhenAttached() throws Exception {
-        holder.setListener(listener);
-        verify(listener).onStateChanged(state);
+        holder.addListener(listener);
+        verify(listener).onStateChanged(state, TIMESTAMP);
     }
 
     @Test
     public void callListenerWhenNewValueSet() throws Exception {
-        LiveShowState newValue = new LiveShowState();
-        holder.setListener(listener);
+        final LiveShowState newValue = new LiveShowState();
+        final long newTimestamp = 45678;
+        holder.addListener(listener);
 
         reset(listener);
-        holder.setValue(newValue);
-        verify(listener).onStateChanged(newValue);
+        holder.setValue(newValue, newTimestamp);
+        verify(listener).onStateChanged(newValue, newTimestamp);
     }
 
+    @Test
+    public void notifiesAllListeners() throws Exception {
+        final LiveShowStateListener otherListener = mock(LiveShowStateListener.class);
+
+        holder.addListener(listener);
+        holder.addListener(otherListener);
+
+        reset(listener, otherListener);
+        holder.setValue(state, TIMESTAMP);
+
+        verify(listener).onStateChanged(any(LiveShowState.class), anyLong());
+        verify(otherListener).onStateChanged(any(LiveShowState.class), anyLong());
+    }
+
+    @Test
+    public void removesListener() throws Exception {
+        holder.addListener(listener);
+
+        reset(listener);
+        holder.removeListener(listener);
+        holder.setValue(state, 0);
+
+        verifyZeroInteractions(listener);
+    }
 }

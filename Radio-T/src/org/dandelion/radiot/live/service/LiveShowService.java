@@ -27,16 +27,16 @@ public class LiveShowService extends Service implements LiveShowStateListener {
     public void onCreate() {
         super.onCreate();
         statusDisplayer = new LiveStatusDisplayer(
-                LiveShowApp.getInstance().createNotificatioBar(this),
+                LiveShowApp.getInstance().createNotificationBar(this),
                 getString(R.string.app_name),
                 getResources().getStringArray(R.array.live_show_notification_labels));
         wifiLocker = WifiLocker.create(this);
         foregroundController = createNotificationController();
         scheduler = createWaitingScheduler();
         stream = createAudioStream();
-        player = new LiveShowPlayer(stream, getStateHolder(), scheduler);
+        player = new LiveShowPlayer(stream, stateHolder(), scheduler);
         scheduler.setPerformer(player);
-        player.setListener(this);
+        stateHolder().addListener(this);
     }
 
     private TimeoutScheduler createWaitingScheduler() {
@@ -60,13 +60,13 @@ public class LiveShowService extends Service implements LiveShowStateListener {
         return LiveShowApp.getInstance().createAudioStream();
     }
 
-    private LiveShowStateHolder getStateHolder() {
+    private LiveShowStateHolder stateHolder() {
         return LiveShowApp.getInstance().stateHolder();
     }
 
     @Override
     public void onDestroy() {
-        player.setListener(null);
+        stateHolder().removeListener(this);
         wifiLocker.release();
         stream.release();
         super.onDestroy();
@@ -86,9 +86,9 @@ public class LiveShowService extends Service implements LiveShowStateListener {
     }
 
     @Override
-    public void onStateChanged(LiveShowState state) {
+    public void onStateChanged(LiveShowState state, long timestamp) {
         statusDisplayer.updateStatus(state);
-        state.acceptVisitor(wifiLocker);
+        state.acceptVisitor(wifiLocker, timestamp);
     }
 
     private static class LiveStatusDisplayer {
@@ -106,13 +106,11 @@ public class LiveShowService extends Service implements LiveShowStateListener {
             if (state.getClass() == Idle.class) {
                 notificationBar.hideIcon(LiveShowApp.LIVE_NOTIFICATION_ID);
             } else {
-                final String iconTitle = title;
-                final String iconText = statusLabels[0];
                 notificationBar.showIcon(
                         LiveShowApp.LIVE_NOTIFICATION_ID,
                         LiveShowApp.LIVE_ICON_RESOURCE_ID,
-                        iconTitle,
-                        iconText);
+                        title,
+                        statusLabels[0]);
             }
         }
     }

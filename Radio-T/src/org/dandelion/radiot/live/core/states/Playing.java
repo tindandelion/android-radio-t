@@ -10,8 +10,8 @@ public class Playing extends LiveShowState {
     }
 
     @Override
-    public void acceptVisitor(LiveShowPlayer.StateVisitor visitor) {
-        visitor.onPlaying(this.getTimestamp());
+    public void acceptVisitor(LiveShowPlayer.StateVisitor visitor, long timestamp) {
+        visitor.onPlaying(timestamp);
     }
 
     public void handleError(LiveShowPlayer player) {

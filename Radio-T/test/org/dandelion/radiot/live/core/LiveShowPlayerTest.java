@@ -13,7 +13,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 public class LiveShowPlayerTest {
-    private final LiveShowStateHolder stateHolder = new LiveShowStateHolder(new Idle());
+    private final LiveShowStateHolder stateHolder = LiveShowStateHolder.initial();
     private final AudioStream audioStream = mock(AudioStream.class);
     private LiveShowPlayer player;
 

@@ -17,11 +17,11 @@ import org.dandelion.radiot.live.service.LiveShowClient;
 public class LiveShowActivity extends Activity {
     private LiveShowStateListener onStateChanged = new LiveShowStateListener() {
         @Override
-        public void onStateChanged(final LiveShowState state) {
+        public void onStateChanged(final LiveShowState state, final long timestamp) {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    updateVisualState(state);
+                    updateVisualState(state, timestamp);
                 }
             });
         }
@@ -50,15 +50,16 @@ public class LiveShowActivity extends Activity {
 	protected void onStart() {
 		super.onStart();
         client = createClient();
+        client.addListener(onStateChanged);
 	}
 
     private LiveShowClient createClient() {
-        return LiveShowApp.getInstance().createClient(this, onStateChanged);
+        return LiveShowApp.getInstance().createClient(this);
     }
 
     @Override
 	protected void onStop() {
-        client.release();
+        client.removeListener(onStateChanged);
         timerLabel.stop();
 		super.onStop();
 	}
@@ -81,8 +82,8 @@ public class LiveShowActivity extends Activity {
         presenter.togglePlaybackState(client);
 	}
 
-	protected void updateVisualState(LiveShowState state) {
-        state.acceptVisitor(presenter);
+	protected void updateVisualState(LiveShowState state, long timestamp) {
+        state.acceptVisitor(presenter, timestamp);
     }
 
     public void setButtonState(int labelId, boolean enabled) {

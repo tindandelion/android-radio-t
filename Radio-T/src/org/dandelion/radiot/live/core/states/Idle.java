@@ -10,7 +10,7 @@ public class Idle extends LiveShowState {
     }
 
     @Override
-    public void acceptVisitor(LiveShowPlayer.StateVisitor visitor) {
+    public void acceptVisitor(LiveShowPlayer.StateVisitor visitor, long timestamp) {
         visitor.onIdle();
     }
 }

@@ -10,7 +10,7 @@ public class Waiting extends LiveShowState {
     }
 
     @Override
-    public void acceptVisitor(LiveShowPlayer.StateVisitor visitor) {
-        visitor.onWaiting(this.getTimestamp());
+    public void acceptVisitor(LiveShowPlayer.StateVisitor visitor, long timestamp) {
+        visitor.onWaiting(timestamp);
     }
 }

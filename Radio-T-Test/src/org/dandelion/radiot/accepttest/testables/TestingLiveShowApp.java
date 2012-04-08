@@ -36,7 +36,7 @@ public class TestingLiveShowApp extends LiveShowApp {
     }
 
     @Override
-    public NotificationBar createNotificatioBar(Context context) {
+    public NotificationBar createNotificationBar(Context context) {
         return notificationBar;
     }
 
