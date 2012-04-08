@@ -5,17 +5,17 @@ import android.content.Intent;
 import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.live.core.AudioStream;
 import org.dandelion.radiot.live.service.LiveShowService;
+import org.dandelion.radiot.live.service.NotificationBar;
 
 import java.io.IOException;
 
 public class TestingLiveShowApp extends LiveShowApp {
     private AudioStream audioStream;
     private String audioUrl = "";
-    private Context context;
+    private NotificationBar notificationBar;
 
-    public TestingLiveShowApp(Context context) {
-        super();
-        this.context = context;
+    public TestingLiveShowApp(NotificationBar notificationBar) {
+        this.notificationBar = notificationBar;
     }
 
     @Override
@@ -35,11 +35,16 @@ public class TestingLiveShowApp extends LiveShowApp {
         return audioStream;
     }
 
+    @Override
+    public NotificationBar createNotificatioBar(Context context) {
+        return notificationBar;
+    }
+
     public void setAudioUrl(String value) {
         this.audioUrl = value;
     }
 
-    public void signalWaitTimeout() {
+    public void signalWaitTimeout(Context context) {
         Intent intent = new Intent(LiveShowService.TIMEOUT_ACTION);
         context.sendBroadcast(intent);
     }

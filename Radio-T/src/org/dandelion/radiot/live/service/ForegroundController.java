@@ -3,24 +3,18 @@ package org.dandelion.radiot.live.service;
 import org.dandelion.radiot.live.core.LiveShowPlayer;
 import org.dandelion.radiot.util.IconNote;
 
-public class NotificationController implements LiveShowPlayer.StateVisitor {
-    private static final int PLAYING_ID = 0;
-    private static final int CONNECTING_ID = 1;
-    private static final int WAITING_ID = 2;
-
+public class ForegroundController implements LiveShowPlayer.StateVisitor {
     private Foregrounder foregrounder;
-    private String[] stateLabels;
     private IconNote note;
 
-    public NotificationController(Foregrounder foregrounder, String[] stateLabels, IconNote note) {
+    public ForegroundController(Foregrounder foregrounder, IconNote note) {
         this.foregrounder = foregrounder;
-        this.stateLabels = stateLabels;
         this.note = note;
     }
 
     @Override
     public void onWaiting(long timestamp) {
-        startForeground(getStatusLabel(WAITING_ID));
+        startForeground();
     }
 
     @Override
@@ -30,25 +24,20 @@ public class NotificationController implements LiveShowPlayer.StateVisitor {
 
     @Override
     public void onConnecting(long timestamp) {
-        startForeground(getStatusLabel(CONNECTING_ID));
+        startForeground();
     }
 
     @Override
     public void onPlaying(long timestamp) {
-        startForeground(getStatusLabel(PLAYING_ID));
+        startForeground();
     }
 
     @Override
     public void onStopping(long timestamp) {
     }
 
-    private String getStatusLabel(int id) {
-        return stateLabels[id];
-    }
 
-
-    private void startForeground(String label) {
-        note.setText(label);
+    private void startForeground() {
         foregrounder.startForeground(note);
     }
 

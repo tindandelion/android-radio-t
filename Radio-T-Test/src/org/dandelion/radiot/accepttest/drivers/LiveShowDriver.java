@@ -15,19 +15,11 @@ public class LiveShowDriver extends Solo {
         clickOnButton("Подключиться");
     }
 
-    public void showsTranslatingStatus() {
-        assertTrue(waitForText("Трансляция"));
+    public void showTranslationStatus(String statusText) {
+        assertTrue(waitForText(statusText));
     }
 
     public void clickStop() {
         clickOnButton("Остановить");
-    }
-
-    public void showsStoppedStatus() {
-        assertTrue(waitForText("Остановлено"));
-    }
-
-    public void showsWaitingStatus() {
-        assertTrue(waitForText("Ожидание"));
     }
 }

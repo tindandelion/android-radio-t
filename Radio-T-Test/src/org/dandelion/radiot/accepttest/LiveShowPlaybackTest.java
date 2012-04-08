@@ -3,6 +3,7 @@ package org.dandelion.radiot.accepttest;
 import android.content.Context;
 import android.test.ActivityInstrumentationTestCase2;
 import org.dandelion.radiot.accepttest.drivers.LiveShowRunner;
+import org.dandelion.radiot.accepttest.testables.FakeNotificationBar;
 import org.dandelion.radiot.accepttest.testables.TestingLiveShowApp;
 import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.live.ui.LiveShowActivity;
@@ -11,6 +12,7 @@ public class LiveShowPlaybackTest extends
 		ActivityInstrumentationTestCase2<LiveShowActivity> {
 	private static final String TEST_LIVE_URL = "http://icecast.bigrradio.com/80s90s";
 
+    private final FakeNotificationBar notificationBar = new FakeNotificationBar();
     private TestingLiveShowApp app;
     private LiveShowRunner runner;
 
@@ -21,11 +23,10 @@ public class LiveShowPlaybackTest extends
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-        Context context = getInstrumentation().getTargetContext();
-        app = new TestingLiveShowApp(context);
+        app = new TestingLiveShowApp(notificationBar);
         LiveShowApp.setTestingInstance(app);
         app.setAudioUrl(TEST_LIVE_URL);
-        runner = new LiveShowRunner(getInstrumentation(), getActivity());
+        runner = new LiveShowRunner(getInstrumentation(), getActivity(), notificationBar);
 	}
 	
 	@Override
@@ -51,12 +52,11 @@ public class LiveShowPlaybackTest extends
         runner.showsWaiting();
 
         app.setAudioUrl(TEST_LIVE_URL);
-        app.signalWaitTimeout();
+        app.signalWaitTimeout(context());
         runner.showsTranslationInProgress();
 	}
 
-	
-	public void testStopWaiting() throws Exception {
+    public void testStopWaiting() throws Exception {
         app.setAudioUrl("http://non-existent");
 
         runner.startTranslation();
@@ -66,4 +66,7 @@ public class LiveShowPlaybackTest extends
         runner.showsStopped();
 	}
 
+    private Context context() {
+        return getInstrumentation().getTargetContext();
+    }
 }

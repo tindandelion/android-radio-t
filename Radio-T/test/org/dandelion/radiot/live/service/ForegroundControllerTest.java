@@ -5,34 +5,28 @@ import org.junit.Test;
 
 import static org.mockito.Mockito.*;
 
-public class NotificationControllerTest {
+public class ForegroundControllerTest {
     private Foregrounder foregrounder = mock(Foregrounder.class);
     private IconNote note = mock(IconNote.class);
-    private String[] statusLabels = new String[] {
-            "TestPlaying", "TestConnecting", "TestWaiting"
-    };
-    private NotificationController controller = new NotificationController(foregrounder, statusLabels, note);
+    private ForegroundController controller = new ForegroundController(foregrounder, note);
     public static final long TIMESTAMP = 0;
 
     @Test
     public void goesForegroundWhenConnecting() throws Exception {
         controller.onConnecting(TIMESTAMP);
         verify(foregrounder).startForeground(note);
-        verify(note).setText("TestConnecting");
     }
 
     @Test
     public void goesForegroundWhenPlaying() throws Exception {
         controller.onPlaying(TIMESTAMP);
         verify(foregrounder).startForeground(note);
-        verify(note).setText("TestPlaying");
     }
 
     @Test
     public void goesForegroundWhenWaiting() throws Exception {
         controller.onWaiting(TIMESTAMP);
         verify(foregrounder).startForeground(note);
-        verify(note).setText("TestWaiting");
     }
 
     @Test

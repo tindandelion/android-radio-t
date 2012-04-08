@@ -27,10 +27,6 @@ public class LiveShowPlayer implements AudioStream.StateListener, Scheduler.Perf
         this.listener = listener;
     }
 
-    public void queryState(StateVisitor visitor) {
-        currentState().acceptVisitor(visitor);
-    }
-
     public void togglePlayback() {
         currentState().togglePlayback(this);
     }
@@ -38,10 +34,6 @@ public class LiveShowPlayer implements AudioStream.StateListener, Scheduler.Perf
     @Override
     public void performNextAttempt() {
         beConnecting();
-    }
-
-    public boolean isIdle() {
-        return (currentState() instanceof Idle);
     }
 
     public void beIdle() {

@@ -46,6 +46,10 @@ public abstract class IconNote {
         manager.notify(tag, notificationId, build());
     }
 
+    public void show() {
+        show(null);
+    }
+
     public Notification build() {
         Notification note = new Notification(iconId, ticker, System.currentTimeMillis());
         note.setLatestEventInfo(context, title, text, intent());
@@ -62,4 +66,5 @@ public abstract class IconNote {
     public int id() {
         return notificationId;
     }
+
 }
