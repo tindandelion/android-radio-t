@@ -22,7 +22,7 @@ public class DisplayingPodcastList extends
 		View itemView = getItemView(0);
 
 		assertTextFieldHasText(itemView, "podcast_item_view_number", "#5192");
-		assertTextFieldHasText(itemView, "podcast_item_view_date", "12.02.2012");
+		assertTextFieldHasText(itemView, "podcast_item_view_date", "11.02.2012");
 	}
 
 	public void testDisplayPodcastList() throws Exception {
