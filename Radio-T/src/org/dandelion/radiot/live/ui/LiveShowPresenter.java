@@ -1,10 +1,49 @@
 package org.dandelion.radiot.live.ui;
 
-import org.dandelion.radiot.live.core.LiveShowPlayer;
 import org.dandelion.radiot.live.core.LiveShowState;
 import org.dandelion.radiot.live.core.LiveShowStateListener;
 
-public class LiveShowPresenter implements LiveShowPlayer.StateVisitor, LiveShowStateListener {
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.dandelion.radiot.live.core.LiveShowState.*;
+
+public class LiveShowPresenter implements LiveShowStateListener {
+    private static class VisualState {
+        public final int statusLabelId;
+        public final Boolean showHelpText;
+        public final int buttonLabelId;
+        public final Boolean buttonEnabled;
+        public final Boolean timerActive;
+
+        private VisualState(int statusLabelId, Boolean showHelpText,
+                            int buttonLabelId, Boolean buttonEnabled, Boolean timerActive) {
+            this.statusLabelId = statusLabelId;
+            this.showHelpText = showHelpText;
+            this.buttonLabelId = buttonLabelId;
+            this.buttonEnabled = buttonEnabled;
+            this.timerActive = timerActive;
+        }
+
+        public void update(LiveShowActivity activity, long timestamp) {
+            activity.setStatusLabel(statusLabelId);
+            activity.setButtonState(buttonLabelId, buttonEnabled);
+            activity.showHelpText(showHelpText);
+            if (timerActive) {
+                activity.startTimer(timestamp);
+            } else {
+                activity.stopTimer();
+            }
+        }
+    }
+    private static Map<LiveShowState, VisualState> stateMap = new HashMap<LiveShowState, VisualState>();
+    static {
+        stateMap.put(Idle, new VisualState(0, false, 1, true, false));
+        stateMap.put(Connecting, new VisualState(1, false, 0, true, true));
+        stateMap.put(Playing, new VisualState(2, false, 0, true, true));
+        stateMap.put(Stopping, new VisualState(3, false, 0, false, true));
+        stateMap.put(Waiting, new VisualState(4, true, 0, true, true));
+    }
 
 	private LiveShowActivity activity;
 
@@ -12,41 +51,9 @@ public class LiveShowPresenter implements LiveShowPlayer.StateVisitor, LiveShowS
 		this.activity = activity;
 	}
 
-	public void onIdle() {
-		beInactiveState();
-	}
-
-	public void onWaiting(long timestamp) {
-        beActiveState(true, true, timestamp);
-    }
-
-	public void onConnecting(long timestamp) {
-        beActiveState(false, true, timestamp);
-    }
-
-	public void onPlaying(long timestamp) {
-        beActiveState(false, true, timestamp);
-    }
-
-	public void onStopping(long timestamp) {
-        beActiveState(false, false, timestamp);
-    }
-
-    private void beActiveState(boolean isHelpTextVisible, boolean buttonEnabled, long timestamp) {
-        activity.showHelpText(isHelpTextVisible);
-        activity.setButtonState(0, buttonEnabled);
-        activity.startTimer(timestamp);
-    }
-
-    private void beInactiveState() {
-		activity.showHelpText(false);
-		activity.setButtonState(1, true);
-		activity.stopTimer();
-	}
-
     @Override
     public void onStateChanged(LiveShowState state, long timestamp) {
-        activity.setStatusLabel(state.ordinal());
-        state.acceptVisitor(this, timestamp);
+        final VisualState visualState = stateMap.get(state);
+        visualState.update(activity, timestamp);
     }
 }

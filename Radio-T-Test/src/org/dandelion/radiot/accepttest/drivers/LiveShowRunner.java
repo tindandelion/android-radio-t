@@ -4,19 +4,19 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Context;
 import android.content.Intent;
-import org.dandelion.radiot.accepttest.testables.FakeNotificationBar;
-import org.dandelion.radiot.live.LiveShowApp;
+import org.dandelion.radiot.accepttest.testables.FakeStatusDisplayer;
+import org.dandelion.radiot.live.core.LiveShowState;
 import org.dandelion.radiot.live.service.LiveShowService;
 
 public class LiveShowRunner {
     private final LiveShowDriver driver;
     private final Context context;
-    private final FakeNotificationBar notificationBar;
+    private final FakeStatusDisplayer statusNotifier;
 
-    public LiveShowRunner(Instrumentation inst, Activity activity, FakeNotificationBar notificationBar) {
+    public LiveShowRunner(Instrumentation inst, Activity activity, FakeStatusDisplayer statusNotifier) {
         this.driver = new LiveShowDriver(inst, activity);
         this.context = inst.getTargetContext();
-        this.notificationBar = notificationBar;
+        this.statusNotifier = statusNotifier;
     }
 
     public void finish() {
@@ -35,9 +35,7 @@ public class LiveShowRunner {
 
     public void showsTranslationInProgress() {
         driver.showTranslationStatus("Трансляция");
-        notificationBar.showsIcon(
-                LiveShowApp.LIVE_NOTIFICATION_ID, LiveShowApp.LIVE_ICON_RESOURCE_ID,
-                "Радио-Т", "Прямой эфир: Идет трансляция");
+        statusNotifier.showsStatusFor(LiveShowState.Playing);
     }
 
     public void stopTranslation() {
@@ -46,7 +44,7 @@ public class LiveShowRunner {
 
     public void showsTranslationStopped() {
         driver.showTranslationStatus("Остановлено");
-        notificationBar.hasRemovedIcon(LiveShowApp.LIVE_NOTIFICATION_ID);
+        statusNotifier.showsStatusFor(LiveShowState.Idle);
     }
 
     public void showsWaiting() {

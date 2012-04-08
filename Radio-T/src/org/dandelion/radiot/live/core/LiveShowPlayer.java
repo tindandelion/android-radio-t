@@ -5,14 +5,6 @@ public class LiveShowPlayer implements AudioStream.StateListener, Scheduler.Perf
     private AudioStream audioStream;
     private Scheduler scheduler;
 
-    public static interface StateVisitor {
-        void onWaiting(long timestamp);
-        void onIdle();
-        void onConnecting(long timestamp);
-        void onPlaying(long timestamp);
-        void onStopping(long timestamp);
-    }
-
     public LiveShowPlayer(AudioStream audioStream, LiveShowStateHolder stateHolder, Scheduler scheduler) {
         this.audioStream = audioStream;
         this.stateHolder = stateHolder;

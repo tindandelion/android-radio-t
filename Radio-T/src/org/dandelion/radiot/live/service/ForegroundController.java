@@ -1,9 +1,10 @@
 package org.dandelion.radiot.live.service;
 
-import org.dandelion.radiot.live.core.LiveShowPlayer;
+import org.dandelion.radiot.live.core.LiveShowState;
+import org.dandelion.radiot.live.core.LiveShowStateListener;
 import org.dandelion.radiot.util.IconNote;
 
-public class ForegroundController implements LiveShowPlayer.StateVisitor {
+public class ForegroundController implements LiveShowStateListener {
     private Foregrounder foregrounder;
     private IconNote note;
 
@@ -13,35 +14,11 @@ public class ForegroundController implements LiveShowPlayer.StateVisitor {
     }
 
     @Override
-    public void onWaiting(long timestamp) {
-        startForeground();
-    }
-
-    @Override
-    public void onIdle() {
-        stopForeground();
-    }
-
-    @Override
-    public void onConnecting(long timestamp) {
-        startForeground();
-    }
-
-    @Override
-    public void onPlaying(long timestamp) {
-        startForeground();
-    }
-
-    @Override
-    public void onStopping(long timestamp) {
-    }
-
-
-    private void startForeground() {
-        foregrounder.startForeground(note);
-    }
-
-    private void stopForeground() {
-        foregrounder.stopForeground();
+    public void onStateChanged(LiveShowState state, long timestamp) {
+        if (LiveShowState.isIdle(state)) {
+            foregrounder.stopForeground();
+        } else {
+            foregrounder.startForeground(note);
+        }
     }
 }

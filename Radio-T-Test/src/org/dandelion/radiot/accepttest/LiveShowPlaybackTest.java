@@ -3,7 +3,7 @@ package org.dandelion.radiot.accepttest;
 import android.content.Context;
 import android.test.ActivityInstrumentationTestCase2;
 import org.dandelion.radiot.accepttest.drivers.LiveShowRunner;
-import org.dandelion.radiot.accepttest.testables.FakeNotificationBar;
+import org.dandelion.radiot.accepttest.testables.FakeStatusDisplayer;
 import org.dandelion.radiot.accepttest.testables.TestingLiveShowApp;
 import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.live.ui.LiveShowActivity;
@@ -12,7 +12,7 @@ public class LiveShowPlaybackTest extends
 		ActivityInstrumentationTestCase2<LiveShowActivity> {
 	private static final String TEST_LIVE_URL = "http://icecast.bigrradio.com/80s90s";
 
-    private final FakeNotificationBar notificationBar = new FakeNotificationBar();
+    private final FakeStatusDisplayer statusDisplayer = new FakeStatusDisplayer();
     private TestingLiveShowApp app;
     private LiveShowRunner runner;
 
@@ -23,10 +23,10 @@ public class LiveShowPlaybackTest extends
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-        app = new TestingLiveShowApp(notificationBar);
+        app = new TestingLiveShowApp(statusDisplayer);
         LiveShowApp.setTestingInstance(app);
         app.setAudioUrl(TEST_LIVE_URL);
-        runner = new LiveShowRunner(getInstrumentation(), getActivity(), notificationBar);
+        runner = new LiveShowRunner(getInstrumentation(), getActivity(), statusDisplayer);
 	}
 	
 	@Override

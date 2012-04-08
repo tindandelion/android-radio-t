@@ -25,12 +25,9 @@ public class LiveShowService extends Service implements LiveShowStateListener {
     @Override
     public void onCreate() {
         super.onCreate();
-        statusDisplayer = new LiveStatusDisplayer(
-                LiveShowApp.getInstance().createNotificationBar(this),
-                getString(R.string.app_name),
-                getResources().getStringArray(R.array.live_show_notification_labels));
+        statusDisplayer = LiveShowApp.getInstance().createStatusDisplayer(this.getApplicationContext());
         wifiLocker = WifiLocker.create(this);
-        foregroundController = createNotificationController();
+        foregroundController = createForegroundController();
         scheduler = createWaitingScheduler();
         stream = createAudioStream();
         player = new LiveShowPlayer(stream, stateHolder(), scheduler);
@@ -76,7 +73,7 @@ public class LiveShowService extends Service implements LiveShowStateListener {
         return null;
     }
 
-    private ForegroundController createNotificationController() {
+    private ForegroundController createForegroundController() {
         Foregrounder foregrounder = new Foregrounder(this);
         IconNote note = new LiveShowNote(getApplication(), NOTIFICATION_ID)
                 .setIcon(R.drawable.stat_live)
@@ -86,7 +83,7 @@ public class LiveShowService extends Service implements LiveShowStateListener {
 
     @Override
     public void onStateChanged(LiveShowState state, long timestamp) {
-        statusDisplayer.updateStatus(state);
+
         wifiLocker.updateLock(state);
     }
 

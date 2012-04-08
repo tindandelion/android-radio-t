@@ -1,17 +1,12 @@
 package org.dandelion.radiot.live;
 
 import android.content.Context;
-import org.dandelion.radiot.R;
 import org.dandelion.radiot.live.core.AudioStream;
 import org.dandelion.radiot.live.core.LiveShowStateHolder;
 import org.dandelion.radiot.live.service.LiveShowClient;
-import org.dandelion.radiot.live.service.NotificationBar;
-import org.dandelion.radiot.live.service.SystemNotificationBar;
+import org.dandelion.radiot.live.service.LiveStatusDisplayer;
 
 public class LiveShowApp {
-    public static final int LIVE_NOTIFICATION_ID = 2;
-    public static final int LIVE_ICON_RESOURCE_ID = R.drawable.stat_live;
-
     private static LiveShowApp instance = new LiveShowApp();
     //private static final String LIVE_SHOW_URL = "http://radio10.promodeejay.net:8181/stream";
     private static final String LIVE_SHOW_URL = "http://icecast.bigrradio.com/80s90s";
@@ -40,7 +35,7 @@ public class LiveShowApp {
         return stateHolder;
     }
 
-    public NotificationBar createNotificationBar(Context context) {
-        return new SystemNotificationBar(context);
+    public LiveStatusDisplayer createStatusDisplayer(Context context) {
+        return new NotificationStatusDisplayer(context);
     }
 }

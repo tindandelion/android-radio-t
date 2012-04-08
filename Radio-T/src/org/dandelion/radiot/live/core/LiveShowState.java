@@ -9,21 +9,12 @@ public enum LiveShowState implements Serializable {
             player.beConnecting();
         }
 
-        @Override
-        public void acceptVisitor(LiveShowPlayer.StateVisitor visitor, long timestamp) {
-            visitor.onIdle();
-        }
     },
 
     Connecting {
         @Override
         public void togglePlayback(LiveShowPlayer player) {
             player.beStopping();
-        }
-
-        @Override
-        public void acceptVisitor(LiveShowPlayer.StateVisitor visitor, long timestamp) {
-            visitor.onConnecting(timestamp);
         }
 
         @Override
@@ -38,21 +29,12 @@ public enum LiveShowState implements Serializable {
             player.beStopping();
         }
 
-        @Override
-        public void acceptVisitor(LiveShowPlayer.StateVisitor visitor, long timestamp) {
-            visitor.onPlaying(timestamp);
-        }
-
         public void handleError(LiveShowPlayer player) {
             player.beConnecting();
         }
     },
 
     Stopping {
-        @Override
-        public void acceptVisitor(LiveShowPlayer.StateVisitor visitor, long timestamp) {
-            visitor.onStopping(timestamp);
-        }
     },
 
     Waiting {
@@ -61,14 +43,7 @@ public enum LiveShowState implements Serializable {
             player.beIdle();
         }
 
-        @Override
-        public void acceptVisitor(LiveShowPlayer.StateVisitor visitor, long timestamp) {
-            visitor.onWaiting(timestamp);
-        }
     };
-
-    public void acceptVisitor(LiveShowPlayer.StateVisitor visitor, long timestamp) {
-    }
 
     public void togglePlayback(LiveShowPlayer player) {
     }
@@ -76,7 +51,11 @@ public enum LiveShowState implements Serializable {
     public void handleError(LiveShowPlayer player) {
     }
 
-    public static boolean isInactive(LiveShowState state) {
-        return (state == Idle) || (state == Waiting);
+    public static boolean isIdle(LiveShowState state) {
+        return state == Idle;
+    }
+
+    public static boolean isActive(LiveShowState state) {
+        return state != Idle && state != Waiting;
     }
 }

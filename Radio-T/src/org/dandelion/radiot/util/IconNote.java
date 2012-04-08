@@ -6,12 +6,12 @@ import android.content.Context;
 import android.content.Intent;
 
 public abstract class IconNote {
-    protected Context context;
     private String title;
-    private String text;
     private int iconId;
+    private String text;
     private int notificationId;
     private String ticker;
+    protected Context context;
 
     public IconNote(Context context, int notificationId) {
         this.context = context;

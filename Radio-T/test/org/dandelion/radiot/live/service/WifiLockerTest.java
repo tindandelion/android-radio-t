@@ -4,8 +4,7 @@ import android.net.wifi.WifiManager;
 import org.dandelion.radiot.live.core.LiveShowState;
 import org.junit.Test;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 public class WifiLockerTest {
     private WifiManager.WifiLock lock = mock(WifiManager.WifiLock.class);
@@ -15,6 +14,14 @@ public class WifiLockerTest {
     public void locksWifiOnConnecting() throws Exception {
         locker.updateLock(LiveShowState.Connecting);
         verify(lock).acquire();
+    }
+
+    @Test
+    public void doNotAcquireLockIfAlreadyAcquired() throws Exception {
+        when(lock.isHeld()).thenReturn(true);
+        doThrow(new RuntimeException("Already acquired"))
+                .when(lock).acquire();
+        locker.updateLock(LiveShowState.Connecting);
     }
 
     @Test

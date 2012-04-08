@@ -24,9 +24,11 @@ public class WifiLocker {
     }
 
     public void updateLock(LiveShowState state) {
-        if (state == LiveShowState.Connecting) {
-            lock.acquire();
-        } else if (LiveShowState.isInactive(state)) {
+        if (LiveShowState.isActive(state)) {
+            if (!lock.isHeld()) {
+                lock.acquire();
+            }
+        } else {
             lock.release();
         }
     }
