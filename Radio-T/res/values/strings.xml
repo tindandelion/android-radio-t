@@ -80,9 +80,9 @@
             name="live_show_status_labels">
         <item>Остановлено</item>
         <item>Подключение</item>
-        <item>Ожидание</item>
         <item>Трансляция</item>
         <item>Остановка</item>
+        <item>Ожидание</item>
     </string-array>
     <string-array
             name="live_show_button_labels">

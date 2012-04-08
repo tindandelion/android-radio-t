@@ -10,26 +10,13 @@ import android.widget.TextView;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.home_screen.HomeScreenActivity;
 import org.dandelion.radiot.live.LiveShowApp;
-import org.dandelion.radiot.live.core.LiveShowStateListener;
-import org.dandelion.radiot.live.core.LiveShowState;
 import org.dandelion.radiot.live.service.LiveShowClient;
 
 public class LiveShowActivity extends Activity {
-    private LiveShowStateListener onStateChanged = new LiveShowStateListener() {
-        @Override
-        public void onStateChanged(final LiveShowState state, final long timestamp) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    updateVisualState(state, timestamp);
-                }
-            });
-        }
-    };
-
-
     protected LiveShowClient client;
-	private String[] statusLabels;
+
+
+    private String[] statusLabels;
 	private CharSequence[] buttonLabels;
 	private LiveShowPresenter presenter;
     private TimerView timerLabel;
@@ -50,7 +37,7 @@ public class LiveShowActivity extends Activity {
 	protected void onStart() {
 		super.onStart();
         client = createClient();
-        client.addListener(onStateChanged);
+        client.addListener(presenter);
 	}
 
     private LiveShowClient createClient() {
@@ -59,7 +46,7 @@ public class LiveShowActivity extends Activity {
 
     @Override
 	protected void onStop() {
-        client.removeListener(onStateChanged);
+        client.removeListener(presenter);
         timerLabel.stop();
 		super.onStop();
 	}
@@ -80,11 +67,7 @@ public class LiveShowActivity extends Activity {
 
 	@SuppressWarnings("UnusedParameters")
     public void onButtonPressed(View v) {
-        presenter.togglePlaybackState(client);
-	}
-
-	protected void updateVisualState(LiveShowState state, long timestamp) {
-        state.acceptVisitor(presenter, timestamp);
+        client.togglePlayback();
     }
 
     public void setButtonState(int labelId, boolean enabled) {

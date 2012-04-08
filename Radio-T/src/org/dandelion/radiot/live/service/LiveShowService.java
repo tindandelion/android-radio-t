@@ -90,27 +90,4 @@ public class LiveShowService extends Service implements LiveShowStateListener {
         wifiLocker.updateLock(state);
     }
 
-    private static class LiveStatusDisplayer {
-        private final NotificationBar notificationBar;
-        private final String title;
-        private final String[] statusLabels;
-
-        private LiveStatusDisplayer(NotificationBar notificationBar, String title, String[] statusLabels) {
-            this.notificationBar = notificationBar;
-            this.title = title;
-            this.statusLabels = statusLabels;
-        }
-
-        public void updateStatus(LiveShowState state) {
-            if (state == LiveShowState.Idle) {
-                notificationBar.hideIcon(LiveShowApp.LIVE_NOTIFICATION_ID);
-            } else {
-                notificationBar.showIcon(
-                        LiveShowApp.LIVE_NOTIFICATION_ID,
-                        LiveShowApp.LIVE_ICON_RESOURCE_ID,
-                        title,
-                        statusLabels[0]);
-            }
-        }
-    }
 }
