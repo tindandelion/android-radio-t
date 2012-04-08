@@ -1,8 +1,5 @@
 package org.dandelion.radiot.live.core;
 
-import org.dandelion.radiot.live.core.states.Idle;
-import org.dandelion.radiot.live.core.states.LiveShowState;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +9,7 @@ public class LiveShowStateHolder {
     private long timestamp;
 
     public static LiveShowStateHolder initial() {
-        return new LiveShowStateHolder(new Idle(), 0);
+        return new LiveShowStateHolder(LiveShowState.Idle, 0);
     }
 
     public LiveShowStateHolder(LiveShowState initialState, long timestamp) {

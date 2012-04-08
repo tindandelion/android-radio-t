@@ -1,13 +1,12 @@
 package org.dandelion.radiot.live.core;
 
-import org.dandelion.radiot.live.core.states.LiveShowState;
 import org.junit.Test;
 
 import static org.mockito.Mockito.*;
 
 public class LiveShowStateHolderTest {
     private final long TIMESTAMP = 12345;
-    private final LiveShowState state = new LiveShowState();
+    private final LiveShowState state = LiveShowState.Idle;
     private final LiveShowStateHolder holder = new LiveShowStateHolder(state, TIMESTAMP);
     private final LiveShowStateListener listener = mock(LiveShowStateListener.class);
 
@@ -19,7 +18,7 @@ public class LiveShowStateHolderTest {
 
     @Test
     public void callListenerWhenNewValueSet() throws Exception {
-        final LiveShowState newValue = new LiveShowState();
+        final LiveShowState newValue = LiveShowState.Playing;
         final long newTimestamp = 45678;
         holder.addListener(listener);
 

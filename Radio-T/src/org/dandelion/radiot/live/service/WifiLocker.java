@@ -3,9 +3,9 @@ package org.dandelion.radiot.live.service;
 import android.content.Context;
 import android.net.wifi.WifiManager;
 import android.net.wifi.WifiManager.WifiLock;
-import org.dandelion.radiot.live.core.LiveShowPlayer;
+import org.dandelion.radiot.live.core.LiveShowState;
 
-public class WifiLocker implements LiveShowPlayer.StateVisitor {
+public class WifiLocker {
     private WifiLock lock;
     
     public static WifiLocker create(Context context) {
@@ -23,26 +23,11 @@ public class WifiLocker implements LiveShowPlayer.StateVisitor {
         lock.release();
     }
 
-    @Override
-    public void onWaiting(long timestamp) {
-        lock.release();
-    }
-
-    @Override
-    public void onIdle() {
-        lock.release();
-    }
-
-    @Override
-    public void onConnecting(long timestamp) {
-        lock.acquire();
-    }
-
-    @Override
-    public void onPlaying(long timestamp) {
-    }
-
-    @Override
-    public void onStopping(long timestamp) {
+    public void updateLock(LiveShowState state) {
+        if (state == LiveShowState.Connecting) {
+            lock.acquire();
+        } else if (LiveShowState.isInactive(state)) {
+            lock.release();
+        }
     }
 }

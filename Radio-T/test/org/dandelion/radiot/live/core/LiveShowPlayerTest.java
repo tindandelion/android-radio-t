@@ -1,6 +1,5 @@
 package org.dandelion.radiot.live.core;
 
-import org.dandelion.radiot.live.core.states.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
@@ -57,7 +56,7 @@ public class LiveShowPlayerTest {
     public void schedulesTheNextAttemptIfConnectFails() throws Exception {
         player.beConnecting();
         audioStateListener.onError();
-        assertCurrentStateIs(Waiting.class);
+        assertCurrentStateIs(LiveShowState.Waiting);
         verify(schedule).scheduleNextAttempt();
     }
 
@@ -106,28 +105,29 @@ public class LiveShowPlayerTest {
         player.togglePlayback();
         assertIsConnecting();
         audioStateListener.onError();
-        assertCurrentStateIs(Waiting.class);
+        assertCurrentStateIs(LiveShowState.Waiting);
     }
 
     private void assertIsIdle() {
-        assertCurrentStateIs(Idle.class);
+        assertCurrentStateIs(LiveShowState.Idle);
     }
 
     private void assertIsConnecting() throws IOException {
         verify(audioStream).play();
-        assertCurrentStateIs(Connecting.class);
-    }
-
-    private void assertCurrentStateIs(Class<?> expected) {
-        assertEquals(expected, stateHolder.value().getClass());
+        assertCurrentStateIs(LiveShowState.Connecting);
     }
 
     private void assertIsStopping() {
         verify(audioStream).stop();
-        assertCurrentStateIs(Stopping.class);
+        assertCurrentStateIs(LiveShowState.Stopping);
     }
 
     private void assertIsPlaying() {
-        assertCurrentStateIs(Playing.class);
+        LiveShowState expected = LiveShowState.Playing;
+        assertCurrentStateIs(expected);
+    }
+
+    private void assertCurrentStateIs(LiveShowState expected) {
+        assertEquals("Current state", stateHolder.value(), expected);
     }
 }

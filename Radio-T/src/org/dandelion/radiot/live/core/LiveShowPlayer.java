@@ -1,7 +1,5 @@
 package org.dandelion.radiot.live.core;
 
-import org.dandelion.radiot.live.core.states.*;
-
 public class LiveShowPlayer implements AudioStream.StateListener, Scheduler.Performer {
     private LiveShowStateHolder stateHolder;
     private AudioStream audioStream;
@@ -32,14 +30,14 @@ public class LiveShowPlayer implements AudioStream.StateListener, Scheduler.Perf
     }
 
     public void beIdle() {
-        setState(new Idle());
+        setState(LiveShowState.Idle);
         scheduler.cancelAttempts();
     }
 
     public void beConnecting() {
         try {
             audioStream.play();
-            setState(new Connecting());
+            setState(LiveShowState.Connecting);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -47,17 +45,17 @@ public class LiveShowPlayer implements AudioStream.StateListener, Scheduler.Perf
 
     public void beStopping() {
         audioStream.stop();
-        setState(new Stopping());
+        setState(LiveShowState.Stopping);
     }
 
     public void beWaiting() {
-        setState(new Waiting());
+        setState(LiveShowState.Waiting);
         scheduler.scheduleNextAttempt();
     }
 
     @Override
     public void onStarted() {
-        setState(new Playing());
+        setState(LiveShowState.Playing);
     }
 
     @Override

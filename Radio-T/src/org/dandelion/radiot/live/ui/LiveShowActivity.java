@@ -11,7 +11,7 @@ import org.dandelion.radiot.R;
 import org.dandelion.radiot.home_screen.HomeScreenActivity;
 import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.live.core.LiveShowStateListener;
-import org.dandelion.radiot.live.core.states.LiveShowState;
+import org.dandelion.radiot.live.core.LiveShowState;
 import org.dandelion.radiot.live.service.LiveShowClient;
 
 public class LiveShowActivity extends Activity {
@@ -78,7 +78,8 @@ public class LiveShowActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	public void onButtonPressed(View v) {
+	@SuppressWarnings("UnusedParameters")
+    public void onButtonPressed(View v) {
         presenter.togglePlaybackState(client);
 	}
 

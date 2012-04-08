@@ -6,8 +6,7 @@ import android.os.IBinder;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.live.core.*;
-import org.dandelion.radiot.live.core.states.Idle;
-import org.dandelion.radiot.live.core.states.LiveShowState;
+import org.dandelion.radiot.live.core.LiveShowState;
 import org.dandelion.radiot.util.IconNote;
 
 public class LiveShowService extends Service implements LiveShowStateListener {
@@ -88,7 +87,7 @@ public class LiveShowService extends Service implements LiveShowStateListener {
     @Override
     public void onStateChanged(LiveShowState state, long timestamp) {
         statusDisplayer.updateStatus(state);
-        state.acceptVisitor(wifiLocker, timestamp);
+        wifiLocker.updateLock(state);
     }
 
     private static class LiveStatusDisplayer {
@@ -103,7 +102,7 @@ public class LiveShowService extends Service implements LiveShowStateListener {
         }
 
         public void updateStatus(LiveShowState state) {
-            if (state.getClass() == Idle.class) {
+            if (state == LiveShowState.Idle) {
                 notificationBar.hideIcon(LiveShowApp.LIVE_NOTIFICATION_ID);
             } else {
                 notificationBar.showIcon(
