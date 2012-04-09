@@ -5,8 +5,10 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import org.dandelion.radiot.live.ui.LiveShowActivity;
 
-public abstract class IconNote {
+public class IconNote {
     protected Context context;
     private String title;
     private int iconId;
@@ -14,6 +16,7 @@ public abstract class IconNote {
     private int notificationId;
     private String ticker;
     private int flags = Notification.FLAG_AUTO_CANCEL;
+    private Intent intent;
 
     public IconNote(Context context, int notificationId) {
         this.context = context;
@@ -69,7 +72,9 @@ public abstract class IconNote {
         return PendingIntent.getActivity(context, 0, activityIntent(), 0);
     }
 
-    protected abstract Intent activityIntent();
+    protected Intent activityIntent() {
+        return intent;
+    }
 
     public int id() {
         return notificationId;
@@ -77,6 +82,22 @@ public abstract class IconNote {
 
     public IconNote beOngoing() {
         flags = Notification.FLAG_ONGOING_EVENT;
+        return this;
+    }
+
+    public IconNote performsAction(String action) {
+        intent = new Intent(action);
+        return this;
+    }
+
+    public IconNote showsActivity(Class<LiveShowActivity> activityClass) {
+        intent = new Intent(context, activityClass);
+        return this;
+    }
+
+    public IconNote opensUri(Uri uri, String mimeType) {
+        intent = new Intent(Intent.ACTION_VIEW);
+        intent.setDataAndType(uri, mimeType);
         return this;
     }
 }

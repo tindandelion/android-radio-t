@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.os.IBinder;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.live.LiveShowApp;
-import org.dandelion.radiot.live.LiveShowNote;
 import org.dandelion.radiot.live.core.*;
-import org.dandelion.radiot.live.core.LiveShowState;
 import org.dandelion.radiot.util.IconNote;
 
 public class LiveShowService extends Service implements LiveShowStateListener {
@@ -77,7 +75,7 @@ public class LiveShowService extends Service implements LiveShowStateListener {
 
     private ForegroundController createForegroundController() {
         Foregrounder foregrounder = new Foregrounder(this);
-        IconNote note = new LiveShowNote(getApplication(), NOTIFICATION_ID)
+        IconNote note = new IconNote(getApplication(), NOTIFICATION_ID)
                 .setIcon(R.drawable.stat_live)
                 .setTitle(getString(R.string.app_name));
         return new ForegroundController(foregrounder, note);

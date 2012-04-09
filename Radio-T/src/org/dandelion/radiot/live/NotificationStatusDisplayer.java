@@ -12,14 +12,13 @@ public class NotificationStatusDisplayer implements LiveStatusDisplayer {
     private String[] labels;
 
     public NotificationStatusDisplayer(Context context, int noteId) {
-        this.note = new LiveShowNote(context, noteId)
-                .showsActivity(LiveShowActivity.class)
-                .setTitle(context.getString(R.string.app_name))
-                .setIcon(R.drawable.stat_live)
-                .beOngoing();
-
         this.labels = context.getResources().getStringArray(R.array.live_show_notification_labels);
-
+        this.note = new IconNote(context, noteId) {{
+            setTitle(context.getString(R.string.app_name));
+            setIcon(R.drawable.stat_live);
+            showsActivity(LiveShowActivity.class);
+            beOngoing();
+        }};
     }
 
     @Override
