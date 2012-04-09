@@ -1,17 +1,19 @@
 package org.dandelion.radiot.util;
 
 import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
 public abstract class IconNote {
+    protected Context context;
     private String title;
     private int iconId;
     private String text;
     private int notificationId;
     private String ticker;
-    protected Context context;
+    private int flags = Notification.FLAG_AUTO_CANCEL;
 
     public IconNote(Context context, int notificationId) {
         this.context = context;
@@ -40,20 +42,26 @@ public abstract class IconNote {
     }
 
     public void show(String tag) {
-        android.app.NotificationManager manager = (android.app.NotificationManager)
-                context.getSystemService(Context.NOTIFICATION_SERVICE);
+        noteManager().notify(tag, notificationId, build());
+    }
 
-        manager.notify(tag, notificationId, build());
+    private NotificationManager noteManager() {
+        return (NotificationManager)
+                context.getSystemService(Context.NOTIFICATION_SERVICE);
     }
 
     public void show() {
         show(null);
     }
 
+    public void hide() {
+        noteManager().cancel(notificationId);
+    }
+
     public Notification build() {
         Notification note = new Notification(iconId, ticker, System.currentTimeMillis());
         note.setLatestEventInfo(context, title, text, intent());
-        note.flags |= Notification.FLAG_AUTO_CANCEL;
+        note.flags |= flags;
         return note;
     }
 
@@ -67,4 +75,8 @@ public abstract class IconNote {
         return notificationId;
     }
 
+    public IconNote beOngoing() {
+        flags = Notification.FLAG_ONGOING_EVENT;
+        return this;
+    }
 }

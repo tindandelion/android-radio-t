@@ -72,8 +72,9 @@
     <string name="incorrect_audio_url">Неверная ссылка на аудио-файл подкаста</string>
     <string-array
             name="live_show_notification_labels">
-        <item>Прямой эфир: Идет трансляция</item>
         <item>Прямой эфир: Подключение</item>
+        <item>Прямой эфир: Идет трансляция</item>
+        <item>Прямой эфир: Остановка</item>
         <item>Прямой эфир: Ожидание</item>
     </string-array>
     <string-array

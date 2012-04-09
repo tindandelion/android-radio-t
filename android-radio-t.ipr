@@ -161,6 +161,7 @@
         <w>attrs</w>
         <w>basename</w>
         <w>dest</w>
+        <w>displayer</w>
         <w>foregrounder</w>
         <w>podcast</w>
         <w>podcasts</w>

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.IBinder;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.live.LiveShowApp;
+import org.dandelion.radiot.live.LiveShowNote;
 import org.dandelion.radiot.live.core.*;
 import org.dandelion.radiot.live.core.LiveShowState;
 import org.dandelion.radiot.util.IconNote;
@@ -21,6 +22,11 @@ public class LiveShowService extends Service implements LiveShowStateListener {
     private TimeoutScheduler scheduler;
     private AudioStream stream;
     private LiveStatusDisplayer statusDisplayer;
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
 
     @Override
     public void onCreate() {
@@ -68,10 +74,6 @@ public class LiveShowService extends Service implements LiveShowStateListener {
         super.onDestroy();
     }
 
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
-    }
 
     private ForegroundController createForegroundController() {
         Foregrounder foregrounder = new Foregrounder(this);
@@ -83,7 +85,7 @@ public class LiveShowService extends Service implements LiveShowStateListener {
 
     @Override
     public void onStateChanged(LiveShowState state, long timestamp) {
-
+        statusDisplayer.showStatus(state);
         wifiLocker.updateLock(state);
     }
 

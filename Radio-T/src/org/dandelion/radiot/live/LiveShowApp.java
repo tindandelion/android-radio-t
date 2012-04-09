@@ -11,6 +11,7 @@ public class LiveShowApp {
     //private static final String LIVE_SHOW_URL = "http://radio10.promodeejay.net:8181/stream";
     private static final String LIVE_SHOW_URL = "http://icecast.bigrradio.com/80s90s";
     private LiveShowStateHolder stateHolder = LiveShowStateHolder.initial();
+    private static final int LIVE_NOTE_ID = 1;
 
     public static LiveShowApp getInstance() {
         return instance;
@@ -36,6 +37,6 @@ public class LiveShowApp {
     }
 
     public LiveStatusDisplayer createStatusDisplayer(Context context) {
-        return new NotificationStatusDisplayer(context);
+        return new NotificationStatusDisplayer(context, LIVE_NOTE_ID);
     }
 }
