@@ -1,7 +1,7 @@
 package org.dandelion.radiot.accepttest.testables;
 
 import org.dandelion.radiot.live.core.LiveShowState;
-import org.dandelion.radiot.live.service.LiveStatusDisplayer;
+import org.dandelion.radiot.live.ui.LiveStatusDisplayer;
 
 import static junit.framework.Assert.assertEquals;
 

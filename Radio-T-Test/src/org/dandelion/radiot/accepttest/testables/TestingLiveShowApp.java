@@ -5,7 +5,7 @@ import android.content.Intent;
 import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.live.core.AudioStream;
 import org.dandelion.radiot.live.service.LiveShowService;
-import org.dandelion.radiot.live.service.LiveStatusDisplayer;
+import org.dandelion.radiot.live.ui.LiveStatusDisplayer;
 
 import java.io.IOException;
 

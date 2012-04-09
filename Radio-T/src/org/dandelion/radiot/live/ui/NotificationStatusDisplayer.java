@@ -1,10 +1,8 @@
-package org.dandelion.radiot.live;
+package org.dandelion.radiot.live.ui;
 
-import org.dandelion.radiot.R;
 import android.content.Context;
+import org.dandelion.radiot.R;
 import org.dandelion.radiot.live.core.LiveShowState;
-import org.dandelion.radiot.live.service.LiveStatusDisplayer;
-import org.dandelion.radiot.live.ui.LiveShowActivity;
 import org.dandelion.radiot.util.IconNote;
 
 public class NotificationStatusDisplayer implements LiveStatusDisplayer {
