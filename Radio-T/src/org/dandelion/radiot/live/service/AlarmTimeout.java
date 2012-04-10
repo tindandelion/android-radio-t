@@ -10,11 +10,15 @@ public class AlarmTimeout implements Timeout {
     private AlarmManager manager;
     private PendingIntent intent;
 
+    public static PendingIntent createPendingIntent(Context context, String action) {
+        return PendingIntent.getBroadcast(context.getApplicationContext(), 0,
+                new Intent(action), 0);
+    }
+
     public AlarmTimeout(Context context, String actionName) {
         this.context = context;
         this.manager = (AlarmManager) this.context.getSystemService(Context.ALARM_SERVICE);
-        this.intent = PendingIntent.getBroadcast(this.context.getApplicationContext(), 0,
-                new Intent(actionName), 0);
+        this.intent = createPendingIntent(this.context, actionName);
     }
 
     @Override

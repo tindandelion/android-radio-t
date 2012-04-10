@@ -22,7 +22,7 @@ public class LiveShowApp {
         instance = app;
     }
 
-    protected LiveShowApp() {
+    public LiveShowApp() {
     }
 
     public AudioStream createAudioStream() {

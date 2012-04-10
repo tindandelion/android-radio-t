@@ -5,7 +5,7 @@ import org.dandelion.radiot.live.core.AudioStream;
 
 import java.io.IOException;
 
-class TestableAudioStream extends AudioStream {
+public class TestableAudioStream extends AudioStream {
     public String url = "";
 
     public TestableAudioStream() {
