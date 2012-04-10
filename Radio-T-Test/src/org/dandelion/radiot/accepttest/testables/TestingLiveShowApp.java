@@ -7,12 +7,9 @@ import org.dandelion.radiot.live.core.AudioStream;
 import org.dandelion.radiot.live.service.LiveShowService;
 import org.dandelion.radiot.live.ui.LiveStatusDisplayer;
 
-import java.io.IOException;
-
 public class TestingLiveShowApp extends LiveShowApp {
-    private AudioStream audioStream;
-    private String audioUrl = "";
     private LiveStatusDisplayer statusDisplayer;
+    private TestableAudioStream audioStream = new TestableAudioStream();
 
     public TestingLiveShowApp(LiveStatusDisplayer statusDisplayer) {
         this.statusDisplayer = statusDisplayer;
@@ -20,23 +17,11 @@ public class TestingLiveShowApp extends LiveShowApp {
 
     @Override
     public AudioStream createAudioStream() {
-        audioStream = new AudioStream(null) {
-            @Override
-            public void play() throws IOException {
-                super.playUrl(audioUrl);
-            }
-
-            @Override
-            public void release() {
-                super.release();
-                audioStream = null;
-            }
-        };
         return audioStream;
     }
 
     public void setAudioUrl(String value) {
-        this.audioUrl = value;
+        audioStream.url = value;
     }
 
     public void signalWaitTimeout(Context context) {
@@ -47,5 +32,9 @@ public class TestingLiveShowApp extends LiveShowApp {
     @Override
     public LiveStatusDisplayer createStatusDisplayer(Context context) {
         return statusDisplayer;
+    }
+
+    public void finish() {
+        audioStream.doRelease();
     }
 }

@@ -23,15 +23,25 @@ public class LiveShowPlaybackTest extends
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-        app = new TestingLiveShowApp(statusDisplayer);
-        LiveShowApp.setTestingInstance(app);
+        setupTestingApp();
         app.setAudioUrl(TEST_LIVE_URL);
         runner = new LiveShowRunner(getInstrumentation(), getActivity(), statusDisplayer);
 	}
-	
-	@Override
+
+    private void setupTestingApp() {
+        getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                app = new TestingLiveShowApp(statusDisplayer);
+                LiveShowApp.setTestingInstance(app);
+            }
+        });
+    }
+
+    @Override
 	protected void tearDown() throws Exception {
         runner.finish();
+        app.finish();
 		super.tearDown();
 	}
 	
