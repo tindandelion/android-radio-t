@@ -68,6 +68,7 @@ public class LiveShowPlaybackTest extends
     @Override
     protected void tearDown() throws Exception {
         runner.finish();
+        liveStream.doRelease();
         super.tearDown();
     }
 
