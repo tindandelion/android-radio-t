@@ -3,21 +3,18 @@ package org.dandelion.radiot.live.service;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import org.dandelion.radiot.R;
+import android.util.Log;
 import org.dandelion.radiot.live.LiveShowApp;
-import org.dandelion.radiot.live.ui.LiveStatusDisplayer;
 import org.dandelion.radiot.live.core.*;
-import org.dandelion.radiot.util.IconNote;
+import org.dandelion.radiot.live.ui.LiveStatusDisplayer;
 
-public class LiveShowService extends Service implements LiveShowStateListener {
+public class LiveShowService extends Service implements LiveShowStateListener, PlayerActivityListener {
     public static final String TAG = LiveShowService.class.getName();
     public static final String TOGGLE_ACTION = TAG + ".Toggle";
     public static final String TIMEOUT_ACTION = "org.dandelion.radiot.live.Timeout";
-    private static final int NOTIFICATION_ID = 1;
 
     private LiveShowPlayer player;
     private WifiLocker wifiLocker;
-    private ForegroundController foregroundController;
     private TimeoutScheduler scheduler;
     private AudioStream stream;
     private LiveStatusDisplayer statusDisplayer;
@@ -32,11 +29,11 @@ public class LiveShowService extends Service implements LiveShowStateListener {
         super.onCreate();
         statusDisplayer = LiveShowApp.getInstance().createStatusDisplayer(this.getApplicationContext());
         wifiLocker = WifiLocker.create(this);
-        foregroundController = createForegroundController();
         scheduler = createWaitingScheduler();
         stream = createAudioStream();
         player = new LiveShowPlayer(stream, stateHolder(), scheduler);
         scheduler.setPerformer(player);
+        player.setActivityListener(this);
         stateHolder().addListener(this);
     }
 
@@ -73,19 +70,15 @@ public class LiveShowService extends Service implements LiveShowStateListener {
         super.onDestroy();
     }
 
-
-    private ForegroundController createForegroundController() {
-        Foregrounder foregrounder = new Foregrounder(this);
-        IconNote note = new IconNote(getApplication(), NOTIFICATION_ID)
-                .setIcon(R.drawable.stat_live)
-                .setTitle(getString(R.string.app_name));
-        return new ForegroundController(foregrounder, note);
-    }
-
     @Override
     public void onStateChanged(LiveShowState state, long timestamp) {
         statusDisplayer.showStatus(state);
         wifiLocker.updateLock(state);
     }
 
+    @Override
+    public void onDeactivated() {
+        Log.d("LIVE", "Deactivated");
+        stopSelf();
+    }
 }

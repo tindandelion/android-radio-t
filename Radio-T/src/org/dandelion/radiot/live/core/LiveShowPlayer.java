@@ -4,6 +4,7 @@ public class LiveShowPlayer implements AudioStream.StateListener, Scheduler.Perf
     private LiveShowStateHolder stateHolder;
     private AudioStream audioStream;
     private Scheduler scheduler;
+    private PlayerActivityListener activityListener;
 
     public LiveShowPlayer(AudioStream audioStream, LiveShowStateHolder stateHolder, Scheduler scheduler) {
         this.audioStream = audioStream;
@@ -24,6 +25,13 @@ public class LiveShowPlayer implements AudioStream.StateListener, Scheduler.Perf
     public void beIdle() {
         setState(LiveShowState.Idle);
         scheduler.cancelAttempts();
+        notifyActivityListener();
+    }
+
+    private void notifyActivityListener() {
+        if (null != activityListener) {
+            activityListener.onDeactivated();
+        }
     }
 
     public void beConnecting() {
@@ -70,5 +78,9 @@ public class LiveShowPlayer implements AudioStream.StateListener, Scheduler.Perf
 
     private long currentTimestamp() {
         return System.currentTimeMillis();
+    }
+
+    public void setActivityListener(PlayerActivityListener listener) {
+        this.activityListener = listener;
     }
 }

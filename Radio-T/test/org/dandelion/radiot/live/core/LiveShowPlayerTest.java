@@ -14,11 +14,12 @@ import static org.mockito.Mockito.*;
 public class LiveShowPlayerTest {
     private final LiveShowStateHolder stateHolder = LiveShowStateHolder.initial();
     private final AudioStream audioStream = mock(AudioStream.class);
+    private final Scheduler schedule = mock(Scheduler.class);
+    private final PlayerActivityListener activityListener = mock(PlayerActivityListener.class);
+
     private LiveShowPlayer player;
 
     private AudioStream.StateListener audioStateListener;
-    private Scheduler schedule = mock(Scheduler.class);
-
 
     @Before
     public void setUp() throws Exception {
@@ -31,6 +32,7 @@ public class LiveShowPlayerTest {
         }).when(audioStream).setStateListener(any(AudioStream.StateListener.class));
 
         player = new LiveShowPlayer(audioStream, stateHolder, schedule);
+        player.setActivityListener(activityListener);
     }
 
     @Test
@@ -71,7 +73,8 @@ public class LiveShowPlayerTest {
     public void goesIdleOnStopped() throws Exception {
         player.beStopping();
         audioStateListener.onStopped();
-        assertIsIdle();
+        assertCurrentStateIs(LiveShowState.Idle);
+        verify(activityListener).onDeactivated();
     }
 
     @Test
