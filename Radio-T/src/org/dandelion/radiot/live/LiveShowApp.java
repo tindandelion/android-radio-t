@@ -26,7 +26,7 @@ public class LiveShowApp {
     }
 
     public AudioStream createAudioStream() {
-        return new AudioStream(LIVE_SHOW_URL);
+        return new MediaPlayerStream(LIVE_SHOW_URL);
     }
     
     public LiveShowClient createClient(Context context) {

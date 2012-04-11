@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import org.dandelion.radiot.accepttest.drivers.LiveShowRunner;
 import org.dandelion.radiot.accepttest.testables.FakeStatusDisplayer;
-import org.dandelion.radiot.accepttest.testables.TestableAudioStream;
+import org.dandelion.radiot.accepttest.testables.TestableMediaPlayerStream;
 import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.live.core.AudioStream;
 import org.dandelion.radiot.live.service.LiveShowService;
@@ -20,7 +20,7 @@ public class LiveShowPlaybackTest extends
 
     private final FakeStatusDisplayer statusDisplayer = new FakeStatusDisplayer();
     private LiveShowRunner runner;
-    private TestableAudioStream liveStream;
+    private TestableMediaPlayerStream liveStream;
 
     public void testStartStopPlayback() throws Exception {
         runner.startTranslation();
@@ -76,7 +76,7 @@ public class LiveShowPlaybackTest extends
         getInstrumentation().runOnMainSync(new Runnable() {
             @Override
             public void run() {
-                liveStream = new TestableAudioStream();
+                liveStream = new TestableMediaPlayerStream();
                 LiveShowApp.setTestingInstance(new LiveShowApp() {
                     @Override
                     public AudioStream createAudioStream() {

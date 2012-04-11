@@ -1,14 +1,14 @@
 package org.dandelion.radiot.accepttest.testables;
 
 import android.util.Log;
-import org.dandelion.radiot.live.core.AudioStream;
+import org.dandelion.radiot.live.MediaPlayerStream;
 
 import java.io.IOException;
 
-public class TestableAudioStream extends AudioStream {
+public class TestableMediaPlayerStream extends MediaPlayerStream {
     public String url = "";
 
-    public TestableAudioStream() {
+    public TestableMediaPlayerStream() {
         super(null);
     }
 

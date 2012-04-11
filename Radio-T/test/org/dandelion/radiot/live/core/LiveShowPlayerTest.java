@@ -19,17 +19,17 @@ public class LiveShowPlayerTest {
 
     private LiveShowPlayer player;
 
-    private AudioStream.StateListener audioStateListener;
+    private AudioStream.Listener stateListener;
 
     @Before
     public void setUp() throws Exception {
         doAnswer(new Answer<Object>() {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
-                audioStateListener = (AudioStream.StateListener) invocation.getArguments()[0];
+                stateListener = (AudioStream.Listener) invocation.getArguments()[0];
                 return null;
             }
-        }).when(audioStream).setStateListener(any(AudioStream.StateListener.class));
+        }).when(audioStream).setStateListener(any(AudioStream.Listener.class));
 
         player = new LiveShowPlayer(audioStream, stateHolder, schedule);
         player.setActivityListener(activityListener);
@@ -50,14 +50,14 @@ public class LiveShowPlayerTest {
     @Test
     public void goesPlayingWhenPrepared() throws Exception {
         player.beConnecting();
-        audioStateListener.onStarted();
+        stateListener.onStarted();
         assertIsPlaying();
     }
 
     @Test
     public void schedulesTheNextAttemptIfConnectFails() throws Exception {
         player.beConnecting();
-        audioStateListener.onError();
+        stateListener.onError();
         assertCurrentStateIs(LiveShowState.Waiting);
         verify(schedule).scheduleNextAttempt();
     }
@@ -65,14 +65,14 @@ public class LiveShowPlayerTest {
     @Test
     public void goesConnectingOnPlayingError() throws Exception {
         player.onStarted();
-        audioStateListener.onError();
+        stateListener.onError();
         assertIsConnecting();
     }
 
     @Test
     public void goesIdleOnStopped() throws Exception {
         player.beStopping();
-        audioStateListener.onStopped();
+        stateListener.onStopped();
         assertCurrentStateIs(LiveShowState.Idle);
         verify(activityListener).onDeactivated();
     }
@@ -94,12 +94,12 @@ public class LiveShowPlayerTest {
     public void normalPlaybackWorkflow() throws Exception {
         player.togglePlayback();
         assertIsConnecting();
-        audioStateListener.onStarted();
+        stateListener.onStarted();
         assertIsPlaying();
 
         player.togglePlayback();
         assertIsStopping();
-        audioStateListener.onStopped();
+        stateListener.onStopped();
         assertIsIdle();
     }
 
@@ -107,7 +107,7 @@ public class LiveShowPlayerTest {
     public void waitingForShowWorkflow() throws Exception {
         player.togglePlayback();
         assertIsConnecting();
-        audioStateListener.onError();
+        stateListener.onError();
         assertCurrentStateIs(LiveShowState.Waiting);
     }
 

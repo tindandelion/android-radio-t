@@ -1,6 +1,6 @@
 package org.dandelion.radiot.live.core;
 
-public class LiveShowPlayer implements AudioStream.StateListener, Scheduler.Performer {
+public class LiveShowPlayer implements AudioStream.Listener, Scheduler.Performer {
     private LiveShowStateHolder stateHolder;
     private AudioStream audioStream;
     private Scheduler scheduler;
