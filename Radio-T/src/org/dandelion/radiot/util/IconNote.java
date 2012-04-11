@@ -28,6 +28,11 @@ public class IconNote {
         return this;
     }
 
+    public IconNote setTicker(String value) {
+        ticker = value;
+        return this;
+    }
+
     public IconNote setTitleAndTicker(String value) {
         this.title = value;
         this.ticker = value;
@@ -100,4 +105,5 @@ public class IconNote {
         intent.setDataAndType(uri, mimeType);
         return this;
     }
+
 }

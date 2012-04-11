@@ -24,12 +24,14 @@ public class NotificationStatusDisplayer implements LiveStatusDisplayer {
         if (LiveShowState.isIdle(state)) {
             note.hide();
         } else {
-            note.setText(getTextForState(state));
-            note.show();
+            String text = textForState(state);
+            note.setTicker(text)
+                    .setText(text)
+                    .show();
         }
     }
 
-    private String getTextForState(LiveShowState state) {
+    private String textForState(LiveShowState state) {
         return labels[state.ordinal() - 1];
     }
 }

@@ -25,10 +25,10 @@ public class LiveShowPlayer implements AudioStream.Listener, Scheduler.Performer
     public void beIdle() {
         setState(LiveShowState.Idle);
         scheduler.cancelAttempts();
-        notifyActivityListener();
+        notifyDeactivated();
     }
 
-    private void notifyActivityListener() {
+    private void notifyDeactivated() {
         if (null != activityListener) {
             activityListener.onDeactivated();
         }
@@ -44,13 +44,14 @@ public class LiveShowPlayer implements AudioStream.Listener, Scheduler.Performer
     }
 
     public void beStopping() {
-        audioStream.stop();
         setState(LiveShowState.Stopping);
+        audioStream.stop();
     }
 
     public void beWaiting() {
         setState(LiveShowState.Waiting);
         scheduler.scheduleNextAttempt();
+        notifyDeactivated();
     }
 
     @Override

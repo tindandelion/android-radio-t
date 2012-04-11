@@ -85,6 +85,12 @@ public class LiveShowPlayerTest {
     }
 
     @Test
+    public void notifiesListenerWhenGoesWaiting() throws Exception {
+        player.beWaiting();
+        verify(activityListener).onDeactivated();
+    }
+
+    @Test
     public void cancelsConnectionAttemptsWhenGoesIdle() throws Exception {
         player.beIdle();
         verify(schedule).cancelAttempts();
