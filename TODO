@@ -4,15 +4,20 @@ Backlog:
  * User topics
 
 Version 1.4:
-DONE New dashboard widget
+ * Consistent UI across all application
+   * Background color (?)
+   * Activity titles
+   * Icons in activity titles
+
  * Sync podcast list with SyncAdaptor
  * Google Analytics
-PROGRESS Live show service should only be alive while playing music
+ * Test solution for memory leaks
+DONE New dashboard widget
+DONE Live show service should only be alive while playing music
     DONE Live show state must be accessible without asking the service
     DONE Use intent API for live show commands
     DONE Timeouts should come from outside as broadcast receiver events
     DONE Implement proper service lifecycle
-    PROGRESS Test solution for memory leaks
 
 Downloading:
  * Respect background data loading settings
