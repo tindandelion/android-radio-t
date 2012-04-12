@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.IBinder;
 import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.live.core.*;
-import org.dandelion.radiot.live.ui.LiveStatusDisplayer;
 import org.dandelion.radiot.util.IconNote;
 
 public class LiveShowService extends Service implements LiveShowStateListener, PlayerActivityListener {
@@ -84,7 +83,6 @@ public class LiveShowService extends Service implements LiveShowStateListener, P
 
     @Override
     public void onDeactivated() {
-        stopForeground(false);
         stopSelf();
     }
 }

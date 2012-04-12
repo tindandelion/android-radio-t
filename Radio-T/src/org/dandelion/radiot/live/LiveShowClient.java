@@ -1,9 +1,10 @@
-package org.dandelion.radiot.live.service;
+package org.dandelion.radiot.live;
 
 import android.content.Context;
 import android.content.Intent;
 import org.dandelion.radiot.live.core.LiveShowStateHolder;
 import org.dandelion.radiot.live.core.LiveShowStateListener;
+import org.dandelion.radiot.live.service.LiveShowService;
 
 public class LiveShowClient {
     private LiveShowStateHolder stateHolder;

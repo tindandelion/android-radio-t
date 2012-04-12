@@ -12,7 +12,7 @@ import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.live.core.AudioStream;
 import org.dandelion.radiot.live.service.LiveShowService;
 import org.dandelion.radiot.live.ui.LiveShowActivity;
-import org.dandelion.radiot.live.ui.LiveStatusDisplayer;
+import org.dandelion.radiot.live.service.LiveStatusDisplayer;
 
 public class LiveShowPlaybackTest extends
         ActivityInstrumentationTestCase2<LiveShowActivity> {

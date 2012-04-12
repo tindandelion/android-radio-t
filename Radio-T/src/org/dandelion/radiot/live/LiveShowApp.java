@@ -4,10 +4,8 @@ import org.dandelion.radiot.R;
 import android.content.Context;
 import org.dandelion.radiot.live.core.AudioStream;
 import org.dandelion.radiot.live.core.LiveShowStateHolder;
-import org.dandelion.radiot.live.service.LiveShowClient;
 import org.dandelion.radiot.live.ui.LiveShowActivity;
-import org.dandelion.radiot.live.ui.LiveStatusDisplayer;
-import org.dandelion.radiot.live.ui.NotificationStatusDisplayer;
+import org.dandelion.radiot.live.service.LiveStatusDisplayer;
 import org.dandelion.radiot.util.IconNote;
 
 public class LiveShowApp {

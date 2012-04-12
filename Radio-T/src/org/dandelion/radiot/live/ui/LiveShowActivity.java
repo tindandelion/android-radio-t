@@ -10,7 +10,7 @@ import android.widget.TextView;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.home_screen.HomeScreenActivity;
 import org.dandelion.radiot.live.LiveShowApp;
-import org.dandelion.radiot.live.service.LiveShowClient;
+import org.dandelion.radiot.live.LiveShowClient;
 
 public class LiveShowActivity extends Activity {
     protected LiveShowClient client;

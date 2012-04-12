@@ -1,4 +1,4 @@
-package org.dandelion.radiot.live.ui;
+package org.dandelion.radiot.live.service;
 
 import org.dandelion.radiot.live.core.LiveShowState;
 

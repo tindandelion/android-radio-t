@@ -5,7 +5,7 @@ import android.content.Context;
 import android.test.InstrumentationTestCase;
 import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.live.core.AudioStream;
-import org.dandelion.radiot.live.service.LiveShowClient;
+import org.dandelion.radiot.live.LiveShowClient;
 import org.dandelion.radiot.live.service.LiveShowService;
 
 import java.io.IOException;

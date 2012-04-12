@@ -1,6 +1,7 @@
-package org.dandelion.radiot.live.ui;
+package org.dandelion.radiot.live;
 
 import org.dandelion.radiot.live.core.LiveShowState;
+import org.dandelion.radiot.live.service.LiveStatusDisplayer;
 import org.dandelion.radiot.util.IconNote;
 
 public class NotificationStatusDisplayer implements LiveStatusDisplayer {
