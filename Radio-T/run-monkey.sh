@@ -1,0 +1,1 @@
+adb shell monkey -p "org.dandelion.radiot" --throttle 300 20000
