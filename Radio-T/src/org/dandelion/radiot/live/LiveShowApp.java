@@ -1,11 +1,12 @@
 package org.dandelion.radiot.live;
 
-import org.dandelion.radiot.R;
 import android.content.Context;
+import android.net.wifi.WifiManager;
+import org.dandelion.radiot.R;
 import org.dandelion.radiot.live.core.AudioStream;
 import org.dandelion.radiot.live.core.LiveShowStateHolder;
+import org.dandelion.radiot.live.core.LiveShowStateListener;
 import org.dandelion.radiot.live.ui.LiveShowActivity;
-import org.dandelion.radiot.live.service.LiveStatusDisplayer;
 import org.dandelion.radiot.util.IconNote;
 
 public class LiveShowApp {
@@ -27,6 +28,13 @@ public class LiveShowApp {
     public LiveShowApp() {
     }
 
+    public WifiManager.WifiLock createWifiLock(Context context) {
+        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        WifiManager.WifiLock lck = wifiManager.createWifiLock("LiveShow");
+        lck.setReferenceCounted(false);
+        return lck;
+    }
+
     public AudioStream createAudioStream() {
         return new MediaPlayerStream(LIVE_SHOW_URL);
     }
@@ -39,7 +47,7 @@ public class LiveShowApp {
         return stateHolder;
     }
 
-    public LiveStatusDisplayer createStatusDisplayer(Context context) {
+    public LiveShowStateListener createStatusDisplayer(Context context) {
         String[] labels = context.getResources().getStringArray(R.array.live_show_notification_labels);
         IconNote note = createNote(context);
         return new NotificationStatusDisplayer(note, labels);

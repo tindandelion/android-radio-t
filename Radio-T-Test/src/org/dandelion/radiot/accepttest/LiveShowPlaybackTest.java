@@ -10,9 +10,9 @@ import org.dandelion.radiot.accepttest.testables.FakeStatusDisplayer;
 import org.dandelion.radiot.accepttest.testables.TestableMediaPlayerStream;
 import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.live.core.AudioStream;
+import org.dandelion.radiot.live.core.LiveShowStateListener;
 import org.dandelion.radiot.live.service.LiveShowService;
 import org.dandelion.radiot.live.ui.LiveShowActivity;
-import org.dandelion.radiot.live.service.LiveStatusDisplayer;
 
 public class LiveShowPlaybackTest extends
         ActivityInstrumentationTestCase2<LiveShowActivity> {
@@ -84,7 +84,7 @@ public class LiveShowPlaybackTest extends
                     }
 
                     @Override
-                    public LiveStatusDisplayer createStatusDisplayer(Context context) {
+                    public LiveShowStateListener createStatusDisplayer(Context context) {
                         return statusDisplayer;
                     }
                 });

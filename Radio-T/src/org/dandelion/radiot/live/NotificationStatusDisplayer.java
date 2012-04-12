@@ -1,10 +1,10 @@
 package org.dandelion.radiot.live;
 
 import org.dandelion.radiot.live.core.LiveShowState;
-import org.dandelion.radiot.live.service.LiveStatusDisplayer;
+import org.dandelion.radiot.live.core.LiveShowStateListener;
 import org.dandelion.radiot.util.IconNote;
 
-public class NotificationStatusDisplayer implements LiveStatusDisplayer {
+public class NotificationStatusDisplayer implements LiveShowStateListener {
     private IconNote note;
     private String[] labels;
 
@@ -13,7 +13,6 @@ public class NotificationStatusDisplayer implements LiveStatusDisplayer {
         this.note = note;
     }
 
-    @Override
     public void showStatus(LiveShowState state) {
         if (LiveShowState.isIdle(state)) {
             note.hide();
@@ -29,4 +28,8 @@ public class NotificationStatusDisplayer implements LiveStatusDisplayer {
         return labels[state.ordinal()-1];
     }
 
+    @Override
+    public void onStateChanged(LiveShowState state, long timestamp) {
+        showStatus(state);
+    }
 }

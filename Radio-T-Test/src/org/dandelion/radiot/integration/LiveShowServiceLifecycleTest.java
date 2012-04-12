@@ -2,6 +2,7 @@ package org.dandelion.radiot.integration;
 
 import android.app.ActivityManager;
 import android.content.Context;
+import android.net.wifi.WifiManager;
 import android.test.InstrumentationTestCase;
 import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.live.core.AudioStream;
@@ -13,12 +14,28 @@ import java.util.List;
 
 public class LiveShowServiceLifecycleTest extends InstrumentationTestCase {
     private FakeAudioStream audioStream = new FakeAudioStream();
+    private WifiManager.WifiLock lock;
 
     public void testStartStopServiceInStraightLifecycle() throws Exception {
         startPlayback();
         assertServiceIsStarted();
         stopPlayback();
         assertServiceIsStopped();
+    }
+
+    public void testManagesWifiLockInStandardLifecycle() throws Exception {
+        startPlayback();
+        assertTrue(lock.isHeld());
+        stopPlayback();
+        assertFalse(lock.isHeld());
+    }
+
+    public void testReleasesWifiLockInWaitingLifecycle() throws Exception {
+        startPlayback();
+        audioStream.signalError();
+        assertFalse(lock.isHeld());
+        stopPlayback();
+        assertFalse(lock.isHeld());
     }
 
     public void testStopServiceWhenPlayerGoesWaiting() throws Exception {
@@ -43,6 +60,12 @@ public class LiveShowServiceLifecycleTest extends InstrumentationTestCase {
             @Override
             public AudioStream createAudioStream() {
                 return audioStream;
+            }
+
+            @Override
+            public WifiManager.WifiLock createWifiLock(Context context) {
+                lock = super.createWifiLock(context);
+                return lock;
             }
         };
     }
