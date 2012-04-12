@@ -1,7 +1,5 @@
 package org.dandelion.radiot.live.ui;
 
-import android.content.Context;
-import org.dandelion.radiot.R;
 import org.dandelion.radiot.live.core.LiveShowState;
 import org.dandelion.radiot.util.IconNote;
 
@@ -9,14 +7,9 @@ public class NotificationStatusDisplayer implements LiveStatusDisplayer {
     private IconNote note;
     private String[] labels;
 
-    public NotificationStatusDisplayer(Context context, int noteId) {
-        this.labels = context.getResources().getStringArray(R.array.live_show_notification_labels);
-        this.note = new IconNote(context, noteId) {{
-            setTitle(context.getString(R.string.app_name));
-            setIcon(R.drawable.stat_live);
-            showsActivity(LiveShowActivity.class);
-            beOngoing();
-        }};
+    public NotificationStatusDisplayer(IconNote note, String[] stateLabels) {
+        this.labels = stateLabels;
+        this.note = note;
     }
 
     @Override
@@ -32,6 +25,7 @@ public class NotificationStatusDisplayer implements LiveStatusDisplayer {
     }
 
     private String textForState(LiveShowState state) {
-        return labels[state.ordinal() - 1];
+        return labels[state.ordinal()-1];
     }
+
 }

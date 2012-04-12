@@ -35,6 +35,7 @@ public class LiveShowPlayer implements AudioStream.Listener, Scheduler.Performer
     }
 
     public void beConnecting() {
+        activityListener.onActivated();
         try {
             audioStream.play();
             setState(LiveShowState.Connecting);

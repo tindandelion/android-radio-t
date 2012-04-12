@@ -14,7 +14,7 @@ import java.util.List;
 public class LiveShowServiceLifecycleTest extends InstrumentationTestCase {
     private FakeAudioStream audioStream = new FakeAudioStream();
 
-    public void testStopServiceWhenPlayerGoesIdle() throws Exception {
+    public void testStartStopServiceInStraightLifecycle() throws Exception {
         startPlayback();
         assertServiceIsStarted();
         stopPlayback();
@@ -48,7 +48,9 @@ public class LiveShowServiceLifecycleTest extends InstrumentationTestCase {
     }
 
     private void assertServiceIsStarted() {
-        assertNotNull("Service is not running", liveServiceInfo());
+        ActivityManager.RunningServiceInfo info = liveServiceInfo();
+        assertNotNull("Service is not running", info);
+        assertTrue("Service is not foreground", info.foreground);
     }
 
     private void assertServiceIsStopped() {

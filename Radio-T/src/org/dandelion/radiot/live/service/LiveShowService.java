@@ -3,10 +3,10 @@ package org.dandelion.radiot.live.service;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import android.util.Log;
 import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.live.core.*;
 import org.dandelion.radiot.live.ui.LiveStatusDisplayer;
+import org.dandelion.radiot.util.IconNote;
 
 public class LiveShowService extends Service implements LiveShowStateListener, PlayerActivityListener {
     public static final String TAG = LiveShowService.class.getName();
@@ -77,8 +77,14 @@ public class LiveShowService extends Service implements LiveShowStateListener, P
     }
 
     @Override
+    public void onActivated() {
+        IconNote note = LiveShowApp.getInstance().createForegroundNote(this);
+        startForeground(note.id(), note.build());
+    }
+
+    @Override
     public void onDeactivated() {
-        Log.d("LIVE", "Deactivated");
+        stopForeground(false);
         stopSelf();
     }
 }
