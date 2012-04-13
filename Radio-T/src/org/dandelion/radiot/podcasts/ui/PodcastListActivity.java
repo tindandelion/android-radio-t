@@ -1,15 +1,5 @@
 package org.dandelion.radiot.podcasts.ui;
 
-import java.util.List;
-
-import org.dandelion.radiot.*;
-
-import org.dandelion.radiot.podcasts.PodcastsApp;
-import org.dandelion.radiot.podcasts.core.PodcastList.IPodcastListEngine;
-import org.dandelion.radiot.podcasts.core.PodcastList.IView;
-import org.dandelion.radiot.R;
-import org.dandelion.radiot.home_screen.HomeScreenActivity;
-
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -18,17 +8,20 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import org.dandelion.radiot.R;
+import org.dandelion.radiot.RadiotApplication;
+import org.dandelion.radiot.home_screen.HomeScreenActivity;
+import org.dandelion.radiot.podcasts.PodcastsApp;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
+import org.dandelion.radiot.podcasts.core.PodcastList.IPodcastListEngine;
+import org.dandelion.radiot.podcasts.core.PodcastList.IView;
+
+import java.util.List;
 
 public class PodcastListActivity extends android.app.ListActivity implements IView {
 
@@ -57,10 +50,17 @@ public class PodcastListActivity extends android.app.ListActivity implements IVi
 		super.onCreate(savedInstanceState);
 		extras = getIntent().getExtras();
 		setTitle(getTitleFromExtra());
-		initListAdapter();
+        initListView();
+        initListAdapter();
         initSelectionHandler();
 		attachToEngine();
 	}
+
+    private void initListView() {
+        int bgColor = getResources().getColor(R.color.window_background);
+        getListView().setCacheColorHint(bgColor);
+        getListView().setBackgroundColor(bgColor);
+    }
 
     private void initSelectionHandler() {
         selectionHandler = new PodcastSelectionHandler(PodcastsApp.getInstance().createPlayer(),

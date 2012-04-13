@@ -18,8 +18,8 @@ public final class R {
     public static final class attr {
     }
     public static final class color {
-        public static final int accent_1=0x7f040000;
         public static final int button_text_color=0x7f040001;
+        public static final int window_background=0x7f040000;
     }
     public static final class dimen {
         public static final int text_size_small=0x7f050000;
@@ -134,12 +134,11 @@ public final class R {
     public static final class style {
         public static final int ActivityIcon=0x7f080004;
         public static final int ActivityTitle=0x7f080003;
-        public static final int DashboardButton=0x7f080008;
+        public static final int DashboardButton=0x7f080007;
         public static final int Divider=0x7f080005;
         public static final int InfoBox=0x7f080000;
         public static final int Radiot_Button=0x7f080002;
         public static final int Radiot_TextView=0x7f080001;
         public static final int Theme_Radiot=0x7f080006;
-        public static final int Theme_RadiotNoTitle=0x7f080007;
     }
 }

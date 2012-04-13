@@ -4,14 +4,17 @@ Backlog:
  * User topics
 
 Version 1.4:
- * Consistent UI across all application
-   * Background color (?)
+PROGRESS Consistent UI across all application
+   PROGRESS Background color (?)
    * Activity titles
    * Icons in activity titles
 
  * Sync podcast list with SyncAdaptor
  * Google Analytics
- * Test solution for memory leaks
+ * Testing
+   * Memory leaks in live show
+   * User interface for tablets
+
 DONE New dashboard widget
 DONE Live show service should only be alive while playing music
     DONE Live show state must be accessible without asking the service
