@@ -1,5 +1,6 @@
 package org.dandelion.radiot.home_screen;
 
+import android.view.Window;
 import org.dandelion.radiot.R;
 
 import android.app.Activity;
@@ -14,10 +15,17 @@ public class AboutAppActivity extends Activity {
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		setContentView(R.layout.about_app);
+        setupTitleBar();
 		setVersionLabel(appInfo().getVersion());
 	}
 
+    private void setupTitleBar() {
+        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.titlebar);
+    }
+
+    @SuppressWarnings("UnusedParameters")
     public void sendFeedback(View view) {
         new FeedbackEmail(this, appInfo()).openInEditor();
 	}

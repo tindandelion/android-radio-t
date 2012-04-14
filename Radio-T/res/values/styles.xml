@@ -46,10 +46,22 @@
 		<item name="android:layout_width">fill_parent</item>
 		<item name="android:background">@android:drawable/divider_horizontal_dark</item>
 	</style>
-	<style name="Theme.Radiot" parent="android:Theme">
-		<item name="android:textViewStyle">@style/Radiot.TextView</item>
-		<item name="android:buttonStyle">@style/Radiot.Button</item>
+
+    <style name="Theme.Radiot" parent="android:Theme">
+        <item name="android:textViewStyle">@style/Radiot.TextView</item>
+        <item name="android:buttonStyle">@style/Radiot.Button</item>
         <item name="android:windowBackground">@color/window_background</item>
+
+        <item name="android:windowTitleSize">@dimen/actionbar_compat_height</item>
+        <item name="android:windowTitleBackgroundStyle">@style/Titlebar</item>
+        <item name="android:windowContentOverlay">@drawable/titlebar_shadow</item>
+    </style>
+
+    <style name="Titlebar">
+        <item name="android:background">#222</item>
+    </style>
+
+    <style name="Theme.RadiotNoTitle" parent="Theme.Radiot">
         <item name="android:windowNoTitle">true</item>
 	</style>
     <style name="DashboardButton">
@@ -63,4 +75,5 @@
         <item name="android:textColor">@color/button_text_color</item>
         <item name="android:background">@null</item>
     </style>
+
 </resources>

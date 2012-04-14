@@ -22,6 +22,7 @@ public final class R {
         public static final int window_background=0x7f040000;
     }
     public static final class dimen {
+        public static final int actionbar_compat_height=0x7f050001;
         public static final int text_size_small=0x7f050000;
     }
     public static final class drawable {
@@ -54,6 +55,7 @@ public final class R {
         public static final int podcast_image_background=0x7f02001a;
         public static final int stat_download_complete=0x7f02001b;
         public static final int stat_live=0x7f02001c;
+        public static final int titlebar_shadow=0x7f02001d;
     }
     public static final class id {
         public static final int about_app_icon=0x7f0a0000;
@@ -66,7 +68,7 @@ public final class R {
         public static final int download_unsupported_title=0x7f0a000a;
         public static final int feedback_button=0x7f0a0006;
         public static final int gingerbread_icon=0x7f0a000b;
-        public static final int go_home=0x7f0a0020;
+        public static final int go_home=0x7f0a0022;
         public static final int home_btn_about=0x7f0a0013;
         public static final int home_btn_after_show=0x7f0a0011;
         public static final int home_btn_live_show=0x7f0a0012;
@@ -88,7 +90,9 @@ public final class R {
         public static final int podcast_item_view_date=0x7f0a001e;
         public static final int podcast_item_view_number=0x7f0a001d;
         public static final int podcast_item_view_shownotes=0x7f0a001f;
-        public static final int refresh=0x7f0a0021;
+        public static final int refresh=0x7f0a0023;
+        public static final int titlebar_icon=0x7f0a0020;
+        public static final int titlebar_title=0x7f0a0021;
         public static final int version_label=0x7f0a0004;
     }
     public static final class layout {
@@ -99,6 +103,7 @@ public final class R {
         public static final int live_show_screen=0x7f030004;
         public static final int playback_control=0x7f030005;
         public static final int podcast_list_item=0x7f030006;
+        public static final int titlebar=0x7f030007;
     }
     public static final class menu {
         public static final int default_menu=0x7f090000;
@@ -134,11 +139,13 @@ public final class R {
     public static final class style {
         public static final int ActivityIcon=0x7f080004;
         public static final int ActivityTitle=0x7f080003;
-        public static final int DashboardButton=0x7f080007;
+        public static final int DashboardButton=0x7f080009;
         public static final int Divider=0x7f080005;
         public static final int InfoBox=0x7f080000;
         public static final int Radiot_Button=0x7f080002;
         public static final int Radiot_TextView=0x7f080001;
         public static final int Theme_Radiot=0x7f080006;
+        public static final int Theme_RadiotNoTitle=0x7f080008;
+        public static final int Titlebar=0x7f080007;
     }
 }
