@@ -7,5 +7,5 @@
     <TextView
             android:id="@+id/titlebar_title"
             style="@style/ActivityTitle"
-            />
+            android:drawablePadding="10dp"/>
 </LinearLayout>

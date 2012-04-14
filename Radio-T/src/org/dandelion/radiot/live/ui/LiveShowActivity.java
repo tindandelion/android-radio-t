@@ -1,6 +1,5 @@
 package org.dandelion.radiot.live.ui;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,10 +10,10 @@ import org.dandelion.radiot.R;
 import org.dandelion.radiot.home_screen.HomeScreenActivity;
 import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.live.LiveShowClient;
+import org.dandelion.radiot.util.CustomTitleActivity;
 
-public class LiveShowActivity extends Activity {
+public class LiveShowActivity extends CustomTitleActivity {
     protected LiveShowClient client;
-
 
     private String[] statusLabels;
 	private CharSequence[] buttonLabels;
@@ -33,7 +32,12 @@ public class LiveShowActivity extends Activity {
         timerLabel = (TimerView) findViewById(R.id.live_timer_label);
 	}
 
-	@Override
+    @Override
+    protected int getTitleIcon() {
+        return R.drawable.ic_title_liveshow;
+    }
+
+    @Override
 	protected void onStart() {
 		super.onStart();
         client = createClient();

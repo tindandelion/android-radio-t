@@ -3,26 +3,13 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
-	<ImageView
-		android:id="@+id/live_show_icon"
-		android:src="@drawable/ic_title_liveshow"
-		style="@style/ActivityIcon" />
-	<TextView
-		android:id="@+id/live_show_title"
-		android:text="@string/live_show_title"
-		style="@style/ActivityTitle"
-		android:layout_alignTop="@id/live_show_icon"
-		android:layout_alignBottom="@id/live_show_icon" />
-	<View
-		style="@style/Divider"
-		android:layout_below="@id/live_show_title" />
 	<TextView
 		android:id="@+id/live_show_info"
 		android:text="@string/live_show_info"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:textAppearance="@android:style/TextAppearance.Small"
-		android:layout_below="@id/live_show_icon"
+        android:layout_alignParentTop="true"
 		android:paddingTop="10dp"
 		android:paddingLeft="5dp"
 		android:paddingRight="5dp"
