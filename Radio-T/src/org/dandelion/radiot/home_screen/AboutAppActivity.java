@@ -17,11 +17,6 @@ public class AboutAppActivity extends CustomTitleActivity {
 		setVersionLabel(appInfo().getVersion());
 	}
 
-    @Override
-    protected int getTitleIcon() {
-        return R.drawable.ic_title_about;
-    }
-
     @SuppressWarnings("UnusedParameters")
     public void sendFeedback(View view) {
         new FeedbackEmail(this, appInfo()).openInEditor();

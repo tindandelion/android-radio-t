@@ -23,8 +23,7 @@ public abstract class CustomTitleListActivity extends ListActivity {
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.titlebar);
         TextView titleText = (TextView) findViewById(R.id.titlebar_title);
         titleText.setText(getTitle());
-        titleText.setCompoundDrawablesWithIntrinsicBounds(getTitleIcon(), 0, 0, 0);
+        titleText.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_title_icon, 0, 0, 0);
     }
 
-    protected abstract int getTitleIcon();
 }

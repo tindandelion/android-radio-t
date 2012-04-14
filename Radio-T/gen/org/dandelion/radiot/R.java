@@ -18,7 +18,8 @@ public final class R {
     public static final class attr {
     }
     public static final class color {
-        public static final int button_text_color=0x7f040001;
+        public static final int button_text_color=0x7f040002;
+        public static final int title_text_color=0x7f040001;
         public static final int window_background=0x7f040000;
     }
     public static final class dimen {
@@ -49,13 +50,14 @@ public final class R {
         public static final int ic_menu_home=0x7f020014;
         public static final int ic_menu_refresh=0x7f020015;
         public static final int ic_title_about=0x7f020016;
-        public static final int ic_title_liveshow=0x7f020017;
-        public static final int icon=0x7f020018;
-        public static final int logo=0x7f020019;
-        public static final int podcast_image_background=0x7f02001a;
-        public static final int stat_download_complete=0x7f02001b;
-        public static final int stat_live=0x7f02001c;
-        public static final int titlebar_shadow=0x7f02001d;
+        public static final int ic_title_icon=0x7f020017;
+        public static final int ic_title_liveshow=0x7f020018;
+        public static final int icon=0x7f020019;
+        public static final int logo=0x7f02001a;
+        public static final int podcast_image_background=0x7f02001b;
+        public static final int stat_download_complete=0x7f02001c;
+        public static final int stat_live=0x7f02001d;
+        public static final int titlebar_shadow=0x7f02001e;
     }
     public static final class id {
         public static final int acknoledgements=0x7f0a0003;
@@ -133,7 +135,7 @@ public final class R {
     }
     public static final class style {
         public static final int ActivityIcon=0x7f080004;
-        public static final int ActivityTitle=0x7f080003;
+        public static final int ActivityTitleText=0x7f080003;
         public static final int DashboardButton=0x7f080009;
         public static final int Divider=0x7f080005;
         public static final int InfoBox=0x7f080000;

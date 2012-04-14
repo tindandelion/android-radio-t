@@ -57,11 +57,6 @@ public class PodcastListActivity extends CustomTitleListActivity implements IVie
 		attachToEngine();
 	}
 
-    @Override
-    protected int getTitleIcon() {
-        return 0;
-    }
-
     private void initListView() {
         int bgColor = getResources().getColor(R.color.window_background);
         getListView().setCacheColorHint(bgColor);

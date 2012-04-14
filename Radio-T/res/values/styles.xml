@@ -22,18 +22,16 @@
 		<item name="android:padding">8dp</item>
 		<item name="android:background">@drawable/button_background</item>
 	</style>
-	<style name="ActivityTitle"
+	<style name="ActivityTitleText"
 		parent="@android:style/Widget.TextView">
-		<item name="android:layout_width">wrap_content</item>
-		<item name="android:layout_height">wrap_content</item>
-		<item name="android:textColor">@android:color/white</item>
-		<item name="android:textStyle">bold</item>
-		<item name="android:textSize">23sp</item>
-		<item name="android:textScaleX">1.1</item>
-		<item name="android:paddingRight">10dp</item>
-		<item name="android:layout_alignParentRight">true</item>
-		<item name="android:gravity">center_vertical|right</item>
-	</style>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:paddingLeft">6dp</item>
+        <item name="android:paddingRight">6dp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:textColor">@color/title_text_color</item>
+    </style>
 	<style name="ActivityIcon">
 		<item name="android:layout_width">wrap_content</item>
 		<item name="android:layout_height">wrap_content</item>

@@ -33,11 +33,6 @@ public class LiveShowActivity extends CustomTitleActivity {
 	}
 
     @Override
-    protected int getTitleIcon() {
-        return R.drawable.ic_title_liveshow;
-    }
-
-    @Override
 	protected void onStart() {
 		super.onStart();
         client = createClient();
