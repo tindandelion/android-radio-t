@@ -4,15 +4,8 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
               android:orientation="horizontal">
-    <ImageView
-            android:id="@+id/titlebar_icon"
-            android:src="@drawable/ic_title_about"
-            style="@style/ActivityIcon"
-            android:paddingLeft="2dp"/>
     <TextView
             android:id="@+id/titlebar_title"
             style="@style/ActivityTitle"
-            android:text="@string/about_app_title"
-            android:layout_alignTop="@id/about_app_icon"
-            android:layout_alignBottom="@id/about_app_icon"/>
+            />
 </LinearLayout>

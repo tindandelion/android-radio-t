@@ -16,13 +16,25 @@ public class AboutAppActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
-		setContentView(R.layout.about_app);
-        setupTitleBar();
+        setContentView(R.layout.about_app);
 		setVersionLabel(appInfo().getVersion());
 	}
 
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        setupTitleBar();
+    }
+
     private void setupTitleBar() {
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.titlebar);
+        TextView titleText = (TextView) findViewById(R.id.titlebar_title);
+        titleText.setText(getTitle());
+        titleText.setCompoundDrawablesWithIntrinsicBounds(getTitleIcon(), 0, 0, 0);
+    }
+
+    private int getTitleIcon() {
+        return R.drawable.ic_title_about;
     }
 
     @SuppressWarnings("UnusedParameters")
