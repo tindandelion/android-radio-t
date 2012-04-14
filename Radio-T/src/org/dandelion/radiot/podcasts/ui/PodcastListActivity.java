@@ -20,10 +20,11 @@ import org.dandelion.radiot.podcasts.PodcastsApp;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastList.IPodcastListEngine;
 import org.dandelion.radiot.podcasts.core.PodcastList.IView;
+import org.dandelion.radiot.util.CustomTitleListActivity;
 
 import java.util.List;
 
-public class PodcastListActivity extends android.app.ListActivity implements IView {
+public class PodcastListActivity extends CustomTitleListActivity implements IView {
 
 	public static final String TITLE_EXTRA = "title";
 	public static final String SHOW_NAME_EXTRA = "podcast_url";
@@ -55,6 +56,11 @@ public class PodcastListActivity extends android.app.ListActivity implements IVi
         initSelectionHandler();
 		attachToEngine();
 	}
+
+    @Override
+    protected int getTitleIcon() {
+        return 0;
+    }
 
     private void initListView() {
         int bgColor = getResources().getColor(R.color.window_background);

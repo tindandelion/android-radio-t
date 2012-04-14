@@ -16,7 +16,7 @@
         <activity
                 android:name=".podcasts.ui.PodcastListActivity"
                 android:screenOrientation="portrait"
-                android:theme="@style/Theme.RadiotNoTitle"
+                android:theme="@style/Theme.Radiot"
                 android:configChanges="orientation|keyboardHidden"/>
         <activity
                 android:name=".podcasts.download.FakeDownloaderActivity"
