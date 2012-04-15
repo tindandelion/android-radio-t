@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.live.ui.LiveShowActivity;
 import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
@@ -58,6 +59,6 @@ public class HomeScreenActivity extends CustomTitleActivity {
     }
 
     protected void setupTitleBar() {
-//        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.home_screen_titlebar);
+     getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.home_screen_titlebar);
     }
 }
