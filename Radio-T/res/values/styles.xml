@@ -50,15 +50,9 @@
         <item name="android:buttonStyle">@style/Radiot.Button</item>
         <item name="android:windowBackground">@color/window_background</item>
 
-        <item name="android:windowTitleSize">@dimen/titlebar_height</item>
+        <item name="android:windowTitleSize">@dimen/actionbar_compat_height</item>
         <item name="android:windowTitleBackgroundStyle">@style/Titlebar</item>
         <item name="android:windowContentOverlay">@drawable/titlebar_shadow</item>
-    </style>
-
-
-
-    <style name="Theme.RadiotHomeScreen" parent="Theme.Radiot">
-        <item name="android:windowTitleSize">@dimen/home_screen_title_height</item>
     </style>
 
     <style name="Titlebar">

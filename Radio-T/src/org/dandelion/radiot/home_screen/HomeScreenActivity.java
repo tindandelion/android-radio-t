@@ -1,16 +1,18 @@
 package org.dandelion.radiot.home_screen;
 
+import android.view.View;
+import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
+import org.dandelion.radiot.R;
+import org.dandelion.radiot.live.ui.LiveShowActivity;
+
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.view.Window;
-import org.dandelion.radiot.R;
-import org.dandelion.radiot.live.ui.LiveShowActivity;
-import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
-import org.dandelion.radiot.util.CustomTitleActivity;
+import android.widget.ListView;
 
-public class HomeScreenActivity extends CustomTitleActivity {
+public class HomeScreenActivity extends Activity {
+
     public static void start(Context context) {
         Intent intent = new Intent(context, HomeScreenActivity.class);
         context.startActivity(intent);
@@ -56,9 +58,5 @@ public class HomeScreenActivity extends CustomTitleActivity {
 
     private void onButtonClick(int id, View.OnClickListener listener) {
         findViewById(id).setOnClickListener(listener);
-    }
-
-    protected void setupTitleBar() {
-     getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.home_screen_titlebar);
     }
 }
