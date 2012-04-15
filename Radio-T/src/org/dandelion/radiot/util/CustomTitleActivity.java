@@ -19,7 +19,7 @@ public abstract class CustomTitleActivity extends Activity {
         setupTitleBar();
     }
 
-    private void setupTitleBar() {
+    protected void setupTitleBar() {
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.titlebar);
         TextView titleText = (TextView) findViewById(R.id.titlebar_title);
         titleText.setText(getTitle());

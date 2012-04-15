@@ -1,4 +1,5 @@
 <resources>
     <dimen name="text_size_small">14sp</dimen>
-    <dimen name="actionbar_compat_height">48dp</dimen>
+    <dimen name="titlebar_height">48dp</dimen>
+    <dimen name="home_screen_title_height">86dp</dimen>
 </resources>
