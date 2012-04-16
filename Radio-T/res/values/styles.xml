@@ -50,18 +50,19 @@
         <item name="android:buttonStyle">@style/Radiot.Button</item>
         <item name="android:windowBackground">@color/window_background</item>
 
-        <item name="android:windowTitleSize">@dimen/actionbar_compat_height</item>
+        <item name="android:windowTitleSize">@dimen/titlebar_height</item>
         <item name="android:windowTitleBackgroundStyle">@style/Titlebar</item>
         <item name="android:windowContentOverlay">@drawable/titlebar_shadow</item>
     </style>
 
     <style name="Titlebar">
-        <item name="android:background">#222</item>
+        <item name="android:background">@color/titlebar_background</item>
     </style>
 
-    <style name="Theme.RadiotNoTitle" parent="Theme.Radiot">
+    <style name="Theme.RadiotHome" parent="Theme.Radiot">
         <item name="android:windowNoTitle">true</item>
-	</style>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
     <style name="DashboardButton">
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:layout_width">wrap_content</item>

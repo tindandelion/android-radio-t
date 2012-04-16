@@ -18,13 +18,14 @@ public final class R {
     public static final class attr {
     }
     public static final class color {
-        public static final int button_text_color=0x7f040002;
-        public static final int title_text_color=0x7f040001;
+        public static final int button_text_color=0x7f040003;
+        public static final int title_text_color=0x7f040002;
+        public static final int titlebar_background=0x7f040001;
         public static final int window_background=0x7f040000;
     }
     public static final class dimen {
-        public static final int actionbar_compat_height=0x7f050001;
         public static final int text_size_small=0x7f050000;
+        public static final int titlebar_height=0x7f050001;
     }
     public static final class drawable {
         public static final int button_background=0x7f020000;
@@ -142,7 +143,7 @@ public final class R {
         public static final int Radiot_Button=0x7f080002;
         public static final int Radiot_TextView=0x7f080001;
         public static final int Theme_Radiot=0x7f080006;
-        public static final int Theme_RadiotNoTitle=0x7f080008;
+        public static final int Theme_RadiotHome=0x7f080008;
         public static final int Titlebar=0x7f080007;
     }
 }

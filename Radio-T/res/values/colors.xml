@@ -1,4 +1,5 @@
 <resources>
     <color name="window_background">#333</color>
+    <color name="titlebar_background">#222</color>
     <color name="title_text_color">#fff</color>
 </resources>
