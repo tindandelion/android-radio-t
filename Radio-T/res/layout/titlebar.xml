@@ -9,6 +9,7 @@
             android:layout_width="fill_parent"
             android:id="@+id/titlebar_title"
             style="@style/ActivityTitleText"
-            android:drawablePadding="10dp"
+            android:drawablePadding="14dp"
+            android:drawableLeft="@drawable/ic_titlebar"
             android:gravity="center_vertical"/>
 </LinearLayout>

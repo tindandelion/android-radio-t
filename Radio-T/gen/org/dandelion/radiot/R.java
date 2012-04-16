@@ -51,8 +51,8 @@ public final class R {
         public static final int ic_menu_home=0x7f020014;
         public static final int ic_menu_refresh=0x7f020015;
         public static final int ic_title_about=0x7f020016;
-        public static final int ic_title_icon=0x7f020017;
-        public static final int ic_title_liveshow=0x7f020018;
+        public static final int ic_title_liveshow=0x7f020017;
+        public static final int ic_titlebar=0x7f020018;
         public static final int icon=0x7f020019;
         public static final int logo=0x7f02001a;
         public static final int podcast_image_background=0x7f02001b;
