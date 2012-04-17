@@ -1,19 +1,19 @@
 Backlog:
  * Sync podcast list with SyncAdaptor
- * Live show service should only be alive while playing music
  * User topics
+ * Google Analytics
+
 
 Version 1.4:
-PROGRESS Consistent UI across all application
-   PROGRESS Background color (?)
-   * Activity titles
-   * Icons in activity titles
+  * Play with halting live show service in different states
 
- * Sync podcast list with SyncAdaptor
- * Google Analytics
- * Testing
-   * Memory leaks in live show
-   * User interface for tablets
+PROGRESS Consistent UI across all application
+   DONE Background color
+   DONE Activity titles
+   DONE Icons in activity titles
+   * New icon with ICS guidelines
+   * Make logo more appealing
+
 
 DONE New dashboard widget
 DONE Live show service should only be alive while playing music
@@ -21,6 +21,9 @@ DONE Live show service should only be alive while playing music
     DONE Use intent API for live show commands
     DONE Timeouts should come from outside as broadcast receiver events
     DONE Implement proper service lifecycle
+DONE Testing
+    DONE Memory leaks in live show
+    DONE User interface for tablets
 
 Downloading:
  * Respect background data loading settings
