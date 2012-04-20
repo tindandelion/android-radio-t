@@ -14,11 +14,11 @@
    height="72"
    id="svg2"
    version="1.1"
-   inkscape:version="0.47 r22583"
-   sodipodi:docname="main-logo.svg"
-   inkscape:export-filename="/Users/sergio/Projects/Eclipse/android-radio-t/Radio-T/res/drawable-ldpi/logo.png"
-   inkscape:export-xdpi="51.25"
-   inkscape:export-ydpi="51.25">
+   inkscape:version="0.48.2 r9819"
+   sodipodi:docname="logo.svg"
+   inkscape:export-filename="/mnt/vbox/Radio-T/res/drawable-hdpi/logo.png"
+   inkscape:export-xdpi="102.5"
+   inkscape:export-ydpi="102.5">
   <defs
      id="defs4">
     <inkscape:perspective
@@ -35,15 +35,6 @@
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_x="0 : 0.5 : 1"
        sodipodi:type="inkscape:persp3d" />
-    <filter
-       color-interpolation-filters="sRGB"
-       inkscape:collect="always"
-       id="filter3720">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="0.55"
-         id="feGaussianBlur3722" />
-    </filter>
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient3956"
@@ -56,11 +47,11 @@
     <linearGradient
        id="linearGradient3956">
       <stop
-         style="stop-color:#217acc;stop-opacity:1"
+         style="stop-color:#1c65a8;stop-opacity:1;"
          offset="0"
          id="stop3958" />
       <stop
-         style="stop-color:#58a2dc;stop-opacity:1"
+         style="stop-color:#3790d5;stop-opacity:1;"
          offset="1"
          id="stop3960" />
     </linearGradient>
@@ -92,7 +83,7 @@
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient3956"
-       id="linearGradient4325"
+       id="linearGradient3781"
        gradientUnits="userSpaceOnUse"
        x1="-16"
        y1="25"
@@ -106,17 +97,17 @@
      borderopacity="1.0"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="4.9497475"
-     inkscape:cx="49.210742"
-     inkscape:cy="31.532981"
+     inkscape:zoom="10.125"
+     inkscape:cx="26.312154"
+     inkscape:cy="36"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="layer3"
      showgrid="true"
-     inkscape:window-width="1280"
-     inkscape:window-height="752"
+     inkscape:window-width="1440"
+     inkscape:window-height="876"
      inkscape:window-x="0"
-     inkscape:window-y="0"
-     inkscape:window-maximized="0"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
      inkscape:snap-grids="false">
     <inkscape:grid
        type="xygrid"
@@ -140,48 +131,57 @@
     </rdf:RDF>
   </metadata>
   <g
-     inkscape:label="Layer 1"
      inkscape:groupmode="layer"
-     id="layer1"
-     transform="translate(0,-980.36218)">
+     id="layer2"
+     inkscape:label="Background"
+     sodipodi:insensitive="true"
+     style="display:none">
+    <rect
+       style="fill:#333333;fill-opacity:1;stroke:none"
+       id="rect3003"
+       width="72.790123"
+       height="72.493828"
+       x="-0.19753087"
+       y="-0.2962963" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer4"
+     inkscape:label="Waves"
+     style="display:inline">
     <path
-       style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;color:#000000;fill:#ffffff;fill-opacity:0.32286996;stroke:none;stroke-width:3.21726703999999986;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans"
-       d="m 32.025443,985.14938 a 2.250225,2.250225 0 0 0 1.901496,2.36496 c 15.59922,2.66731 27.69003,15.08866 29.950711,30.75206 a 2.2530519,2.2530519 0 1 0 4.457991,-0.6568 C 65.798678,1000.0321 52.19136,986.06996 34.685736,983.07667 a 2.250225,2.250225 0 0 0 -2.660293,2.07271 z"
-       id="path4242" />
+       transform="translate(0,-980.36218)"
+       style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;color:#000000;fill:#ffffff;fill-opacity:0.13725491;stroke:none;stroke-width:3.21726703999999986;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans"
+       d="m 32.025443,985.14938 a 2.250225,2.250225 0 0 0 1.901496,2.36496 c 15.59922,2.66731 27.69003,15.08866 29.950711,30.75206 a 2.2530574,2.2530574 0 1 0 4.457991,-0.6568 C 65.798678,1000.0321 52.19136,986.06996 34.685736,983.07667 a 2.250225,2.250225 0 0 0 -2.660293,2.07271 z"
+       id="path4242"
+       inkscape:connector-curvature="0" />
     <path
-       style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;color:#000000;fill:#ffffff;fill-opacity:0.32286996;stroke:none;stroke-width:4.05354499999999973;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans"
+       transform="translate(0,-980.36218)"
+       style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;color:#000000;fill:#ffffff;fill-opacity:0.13725491;stroke:none;stroke-width:4.05354499999999973;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans"
        d="m 36.623481,994.3454 a 2.2502251,2.2502251 0 0 0 1.178923,3.13058 c 7.834573,3.16652 13.887604,9.65452 16.472548,17.69972 a 2.2502251,2.2502251 0 1 0 4.271139,-1.3873 c -2.992446,-9.3136 -9.960384,-16.80925 -19.030037,-20.47501 a 2.2502251,2.2502251 0 0 0 -2.892573,1.03201 z"
-       id="path4227" />
-    <g
-       inkscape:export-ydpi="90"
-       inkscape:export-xdpi="90"
-       inkscape:export-filename="/Users/sergio/Projects/Eclipse/android-radio-t/Radio-T/res/drawable-mdpi/icon.png"
-       transform="matrix(1.1382573,0,0,1.1382573,-0.27798378,-146.62738)"
-       id="g4229">
-      <path
-         transform="matrix(1.931267,0,0,1.931267,55.029713,1002.5145)"
-         d="m -5,14 c 0,6.075132 -4.9248678,11 -11,11 -6.075132,0 -11,-4.924868 -11,-11 0,-6.0751322 4.924868,-11 11,-11 6.0751322,0 11,4.9248678 11,11 z"
-         sodipodi:ry="11"
-         sodipodi:rx="11"
-         sodipodi:cy="14"
-         sodipodi:cx="-16"
-         id="path4231"
-         style="opacity:0.75;fill:#000000;fill-opacity:1;stroke:none;filter:url(#filter3720)"
-         sodipodi:type="arc" />
-      <path
-         sodipodi:type="arc"
-         style="fill:url(#linearGradient4325);fill-opacity:1;stroke:none"
-         id="path4233"
-         sodipodi:cx="-16"
-         sodipodi:cy="14"
-         sodipodi:rx="11"
-         sodipodi:ry="11"
-         d="m -5,14 c 0,6.075132 -4.9248678,11 -11,11 -6.075132,0 -11,-4.924868 -11,-11 0,-6.0751322 4.924868,-11 11,-11 6.0751322,0 11,4.9248678 11,11 z"
-         transform="matrix(1.931267,0,0,1.931267,55.029713,1001.1457)" />
-      <path
-         id="path4235"
-         d="m 13.480457,1017.6365 0,4.75 8.21875,0 0,16.3438 4.71875,0 0,-16.3438 8.34375,0 0,-4.75 -21.28125,0 z"
-         style="fill:#ffffff;fill-opacity:0.99170125;stroke:#2877c0;stroke-opacity:1;filter:url(#filter3640)" />
-    </g>
+       id="path4227"
+       inkscape:connector-curvature="0" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="Shape"
+     style="display:inline">
+    <path
+       transform="matrix(2.1982788,0,0,2.1982788,62.359989,12.571801)"
+       d="m -5,14 a 11,11 0 1 1 -22,0 11,11 0 1 1 22,0 z"
+       sodipodi:ry="11"
+       sodipodi:rx="11"
+       sodipodi:cy="14"
+       sodipodi:cx="-16"
+       id="path4233"
+       style="fill:url(#linearGradient3781);fill-opacity:1;stroke:none"
+       sodipodi:type="arc" />
+    <path
+       inkscape:connector-curvature="0"
+       style="fill:#e1e1e1;fill-opacity:1;stroke:#2877c0;stroke-opacity:1;filter:url(#filter3640)"
+       d="m 13.480457,1017.6365 0,4.75 8.21875,0 0,16.3438 4.71875,0 0,-16.3438 8.34375,0 0,-4.75 -21.28125,0 z"
+       id="path4235"
+       transform="matrix(1.1382573,0,0,1.1382573,-0.27798378,-1126.9896)" />
   </g>
 </svg>
