@@ -2,7 +2,8 @@ Backlog:
  * Sync podcast list with SyncAdaptor
  * User topics
  * Google Analytics
-
+ * Android 4.0 UI
+   * New icon with ICS guidelines
 
 Version 1.4:
   * Play with halting live show service in different states
@@ -11,8 +12,9 @@ PROGRESS Consistent UI across all application
    DONE Background color
    DONE Activity titles
    DONE Icons in activity titles
-   * New icon with ICS guidelines
-   * Make logo more appealing
+   DONE Make logo more appealing
+   * Check out main logo dimensions and aligning
+   * Tweak icon for the titlebar
 
 
 DONE New dashboard widget
