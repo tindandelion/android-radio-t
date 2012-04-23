@@ -13,8 +13,9 @@ PROGRESS Consistent UI across all application
    DONE Activity titles
    DONE Icons in activity titles
    DONE Make logo more appealing
-   * Check out main logo dimensions and aligning
-   * Tweak icon for the titlebar
+   DONE Tweak icon for the titlebar
+   * Adjust about screen for big and small dimensions
+   * Check out main logo dimensions and alignment
 
 
 DONE New dashboard widget
