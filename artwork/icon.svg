@@ -14,9 +14,9 @@
    height="48"
    id="svg2"
    version="1.1"
-   inkscape:version="0.47 r22583"
-   sodipodi:docname="launcher-icon.svg"
-   inkscape:export-filename="/Users/sergio/Projects/Eclipse/android-radio-t/Radio-T/res/drawable-ldpi/icon.png"
+   inkscape:version="0.48.2 r9819"
+   sodipodi:docname="icon.svg"
+   inkscape:export-filename="/mnt/vbox/Radio-T/res/drawable-ldpi/icon.png"
    inkscape:export-xdpi="67.5"
    inkscape:export-ydpi="67.5">
   <defs
@@ -40,11 +40,11 @@
     <linearGradient
        id="linearGradient3956">
       <stop
-         style="stop-color:#217acc;stop-opacity:1"
+         style="stop-color:#1c65a8;stop-opacity:1;"
          offset="0"
          id="stop3958" />
       <stop
-         style="stop-color:#58a2dc;stop-opacity:1"
+         style="stop-color:#3790d5;stop-opacity:1;"
          offset="1"
          id="stop3960" />
     </linearGradient>
@@ -199,22 +199,6 @@
        y1="25"
        x2="-16"
        y2="3" />
-    <filter
-       inkscape:collect="always"
-       id="filter3640">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="0.37008777"
-         id="feGaussianBlur3642" />
-    </filter>
-    <filter
-       inkscape:collect="always"
-       id="filter3720">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="0.55"
-         id="feGaussianBlur3722" />
-    </filter>
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient3956"
@@ -224,6 +208,14 @@
        y1="25"
        x2="-16"
        y2="3" />
+    <filter
+       inkscape:collect="always"
+       id="filter3915">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="0.66"
+         id="feGaussianBlur3917" />
+    </filter>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -232,17 +224,17 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="3.8743559"
-     inkscape:cx="20.962955"
-     inkscape:cy="23.999999"
+     inkscape:zoom="13.0625"
+     inkscape:cx="21.557115"
+     inkscape:cy="24"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="layer3"
      showgrid="true"
-     inkscape:window-width="1280"
-     inkscape:window-height="774"
+     inkscape:window-width="1440"
+     inkscape:window-height="876"
      inkscape:window-x="0"
-     inkscape:window-y="0"
-     inkscape:window-maximized="0"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
      inkscape:snap-grids="false"
      showguides="true"
      inkscape:guide-bbox="true">
@@ -268,40 +260,56 @@
     </rdf:RDF>
   </metadata>
   <g
-     inkscape:label="Layer 1"
      inkscape:groupmode="layer"
-     id="layer1"
-     transform="translate(0,-1004.3622)">
-    <g
-       id="g3724"
-       transform="matrix(0.9482387,0,0,0.9482387,1.1195302,53.290955)"
-       inkscape:export-filename="/Users/sergio/Projects/Eclipse/android-radio-t/Radio-T/res/drawable-mdpi/icon.png"
-       inkscape:export-xdpi="90"
-       inkscape:export-ydpi="90">
-      <path
-         sodipodi:type="arc"
-         style="opacity:0.75;fill:#000000;fill-opacity:1;stroke:none;filter:url(#filter3720)"
-         id="path3654"
-         sodipodi:cx="-16"
-         sodipodi:cy="14"
-         sodipodi:rx="11"
-         sodipodi:ry="11"
-         d="m -5,14 c 0,6.075132 -4.9248678,11 -11,11 -6.075132,0 -11,-4.924868 -11,-11 0,-6.0751322 4.924868,-11 11,-11 6.0751322,0 11,4.9248678 11,11 z"
-         transform="matrix(1.931267,0,0,1.931267,55.029713,1002.5145)" />
-      <path
-         transform="matrix(1.931267,0,0,1.931267,55.029713,1001.1457)"
-         d="m -5,14 c 0,6.075132 -4.9248678,11 -11,11 -6.075132,0 -11,-4.924868 -11,-11 0,-6.0751322 4.924868,-11 11,-11 6.0751322,0 11,4.9248678 11,11 z"
-         sodipodi:ry="11"
-         sodipodi:rx="11"
-         sodipodi:cy="14"
-         sodipodi:cx="-16"
-         id="path3918"
-         style="fill:url(#linearGradient3729);fill-opacity:1;stroke:none"
-         sodipodi:type="arc" />
-      <path
-         style="fill:#ffffff;fill-opacity:0.99170125;stroke:#2877c0;stroke-opacity:1;filter:url(#filter3640)"
-         d="m 13.480457,1017.6365 0,4.75 8.21875,0 0,16.3438 4.71875,0 0,-16.3438 8.34375,0 0,-4.75 -21.28125,0 z"
-         id="path4010" />
-    </g>
+     id="layer2"
+     inkscape:label="Background"
+     sodipodi:insensitive="true"
+     style="display:none">
+    <rect
+       style="fill:#333333;fill-opacity:1;stroke:none"
+       id="rect3023"
+       width="48.229664"
+       height="48.229664"
+       x="-0.15311004"
+       y="0" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="Shape"
+     style="display:inline"
+     sodipodi:insensitive="true">
+    <path
+       transform="matrix(1.8313021,0,0,1.8313021,53.377389,-0.98408528)"
+       d="m -5,14 a 11,11 0 1 1 -22,0 11,11 0 1 1 22,0 z"
+       sodipodi:ry="11"
+       sodipodi:rx="11"
+       sodipodi:cy="14"
+       sodipodi:cx="-16"
+       id="path3654"
+       style="opacity:0.6;fill:#000000;fill-opacity:1;stroke:none;filter:url(#filter3915)"
+       sodipodi:type="arc" />
+    <path
+       sodipodi:type="arc"
+       style="fill:url(#linearGradient3729);fill-opacity:1;stroke:none"
+       id="path3918"
+       sodipodi:cx="-16"
+       sodipodi:cy="14"
+       sodipodi:rx="11"
+       sodipodi:ry="11"
+       d="m -5,14 a 11,11 0 1 1 -22,0 11,11 0 1 1 22,0 z"
+       transform="matrix(1.8313021,0,0,1.8313021,53.300834,-1.7461)" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer4"
+     inkscape:label="Letter"
+     style="display:inline"
+     sodipodi:insensitive="true">
+    <path
+       inkscape:connector-curvature="0"
+       id="path4010"
+       d="m 13.902221,14.656612 0,4.504134 7.793337,0 0,15.497823 4.474501,0 0,-15.497823 7.911867,0 0,-4.504134 -20.179705,0 z"
+       style="fill:#ffffff;fill-opacity:0.99170125;stroke:#2877c0;stroke-width:0.5;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
   </g>
 </svg>
