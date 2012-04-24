@@ -15,7 +15,8 @@ PROGRESS Consistent UI across all application
    DONE Make logo more appealing
    DONE Tweak icon for the titlebar
    DONE Adjust about screen for big and small dimensions
-   * Check out main logo dimensions and alignment
+   DONE Check out main logo dimensions and alignment
+   * Make application icon consistent with logo
 
 
 DONE New dashboard widget
