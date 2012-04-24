@@ -5,10 +5,16 @@ Backlog:
  * Android 4.0 UI
    * New icon with ICS guidelines
 
-Version 1.4:
-  * Play with halting live show service in different states
 
-PROGRESS Consistent UI across all application
+Version 1.4:
+ * Play with halting live show service in different states
+ * Release work
+   * Version label
+   * Live show URL
+   * Screenshots
+   * Recent changes
+
+DONE Consistent UI across all application
    DONE Background color
    DONE Activity titles
    DONE Icons in activity titles
@@ -16,7 +22,7 @@ PROGRESS Consistent UI across all application
    DONE Tweak icon for the titlebar
    DONE Adjust about screen for big and small dimensions
    DONE Check out main logo dimensions and alignment
-   * Make application icon consistent with logo
+   DONE Make application icon consistent with logo
 
 
 DONE New dashboard widget
