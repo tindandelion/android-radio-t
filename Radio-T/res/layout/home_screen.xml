@@ -28,7 +28,7 @@
                 android:textColor="#A0A0A0"
                 android:textStyle="bold"
                 android:textSize="15dp"
-                android:paddingTop="8dp"/>
+                android:paddingTop="10dp"/>
     </RelativeLayout>
     <org.dandelion.radiot.home_screen.DashboardLayout
             android:id="@+id/dashboard_view"
