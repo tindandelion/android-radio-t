@@ -16,7 +16,7 @@ public class IconNote {
     private int notificationId;
     private String ticker;
     private int flags = Notification.FLAG_AUTO_CANCEL;
-    private Intent intent;
+    private Intent intent = new Intent();
 
     public IconNote(Context context, int notificationId) {
         this.context = context;
@@ -74,11 +74,7 @@ public class IconNote {
     }
 
     private PendingIntent intent() {
-        return PendingIntent.getActivity(context, 0, activityIntent(), 0);
-    }
-
-    protected Intent activityIntent() {
-        return intent;
+        return PendingIntent.getActivity(context, 0, intent, 0);
     }
 
     public int id() {

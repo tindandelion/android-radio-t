@@ -91,7 +91,7 @@ public class LiveShowServiceLifecycleTest extends InstrumentationTestCase {
     private void togglePlayback() throws InterruptedException {
         LiveShowClient client = LiveShowApp.getInstance().createClient(context());
         client.togglePlayback();
-        Thread.sleep(100);  // Give a service some time to process the request
+        Thread.sleep(500);  // Give a service some time to process the request
     }
 
     private Context context() {
