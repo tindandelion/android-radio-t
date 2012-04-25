@@ -9,10 +9,10 @@ Backlog:
 Version 1.4:
  * Play with halting live show service in different states
  * Release work
-   * Version label
    * Live show URL
-   * Screenshots
-   * Recent changes
+   DONE Version label
+   DONE Screenshots
+   DONE Recent changes
 
 DONE Consistent UI across all application
    DONE Background color
