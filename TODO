@@ -7,17 +7,17 @@ Backlog:
 
 
 Version 1.4:
- * Android 4.0 support
-   DONE Live show icon note
-   * Unstable tests for going back
-   DONE Displaying podcast date in list
-
  * Play with halting live show service in different states
  * Release work
    * Live show URL
    DONE Version label
    DONE Screenshots
    DONE Recent changes
+
+ DONE Android 4.0 support
+   DONE Live show icon note
+   DONE Unstable tests for going back
+   DONE Displaying podcast date in list
 
 DONE Consistent UI across all application
    DONE Background color
