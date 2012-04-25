@@ -7,6 +7,11 @@ Backlog:
 
 
 Version 1.4:
+ * Android 4.0 support
+   * Live show icon note
+   * Unstable tests for going back
+   * Displaying podcast date in list
+
  * Play with halting live show service in different states
  * Release work
    * Live show URL
