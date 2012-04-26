@@ -1,4 +1,5 @@
 Backlog:
+ * Live show: graceful process termination
  * Sync podcast list with SyncAdaptor
  * User topics
  * Google Analytics
@@ -7,9 +8,8 @@ Backlog:
 
 
 Version 1.4:
- * Play with halting live show service in different states
- * Release work
-   * Live show URL
+ DONE Release work
+   DONE Live show URL
    DONE Version label
    DONE Screenshots
    DONE Recent changes
