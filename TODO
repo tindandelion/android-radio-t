@@ -1,47 +1,14 @@
 Backlog:
  * Live show: graceful process termination
+ * Downloading: Respect background data loading settings
  * Sync podcast list with SyncAdaptor
  * User topics
+
+Version 1.5:
+ * Cache podcast list locally
  * Google Analytics
  * Android 4.0 UI
    * New icon with ICS guidelines
-
-
-Version 1.4:
- DONE Release work
-   DONE Live show URL
-   DONE Version label
-   DONE Screenshots
-   DONE Recent changes
-
- DONE Android 4.0 support
-   DONE Live show icon note
-   DONE Unstable tests for going back
-   DONE Displaying podcast date in list
-
-DONE Consistent UI across all application
-   DONE Background color
-   DONE Activity titles
-   DONE Icons in activity titles
-   DONE Make logo more appealing
-   DONE Tweak icon for the titlebar
-   DONE Adjust about screen for big and small dimensions
-   DONE Check out main logo dimensions and alignment
-   DONE Make application icon consistent with logo
-
-
-DONE New dashboard widget
-DONE Live show service should only be alive while playing music
-    DONE Live show state must be accessible without asking the service
-    DONE Use intent API for live show commands
-    DONE Timeouts should come from outside as broadcast receiver events
-    DONE Implement proper service lifecycle
-DONE Testing
-    DONE Memory leaks in live show
-    DONE User interface for tablets
-
-Downloading:
- * Respect background data loading settings
 
 * Debt:
  * Podcast type "audo/mpeg" appears in lots of places
