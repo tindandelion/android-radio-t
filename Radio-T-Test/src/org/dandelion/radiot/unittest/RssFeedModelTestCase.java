@@ -2,7 +2,6 @@ package org.dandelion.radiot.unittest;
 
 import junit.framework.TestCase;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
-import org.dandelion.radiot.podcasts.core.PodcastList.IModel;
 import org.dandelion.radiot.podcasts.core.RssFeedModel;
 
 import java.io.ByteArrayInputStream;
@@ -11,8 +10,7 @@ import java.io.InputStream;
 import java.util.List;
 
 public class RssFeedModelTestCase extends TestCase {
-
-	private IModel model;
+	private RssFeedModel model;
 	private String feedContent;
 	private List<PodcastItem> parsedItems;
 	private PodcastItem firstParsedItem;
@@ -26,7 +24,7 @@ public class RssFeedModelTestCase extends TestCase {
 		feedContent = "";
 	}
 
-	protected IModel createTestModel() {
+	protected RssFeedModel createTestModel() {
 		return new RssFeedModel(null) {
 			@Override
 			protected InputStream openContentStream() throws IOException {
@@ -108,12 +106,6 @@ public class RssFeedModelTestCase extends TestCase {
 			return;
 		}
 		fail("Should have raised the exception");
-	}
-
-	public void testExtractingImageUrl() throws Exception {
-		newFeedItem("<media:thumbnail url=\"http://image-url\"/>");
-		parseRssFeed();
-		assertEquals("http://image-url", firstParsedItem.getThumbnailUrl());
 	}
 
 	private void newFeedItem(String itemContent) {

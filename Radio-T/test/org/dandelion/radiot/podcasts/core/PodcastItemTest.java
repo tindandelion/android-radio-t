@@ -3,6 +3,7 @@ package org.dandelion.radiot.podcasts.core;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class PodcastItemTest {
     private final PodcastItem item = new PodcastItem();
@@ -48,5 +49,18 @@ public class PodcastItemTest {
         String notes = "   Note 1 - Note 2   \n\n";
         item.extractShowNotes(notes);
         assertEquals("Note 1 - Note 2", item.getShowNotes());
+    }
+
+    @Test
+    public void constructThumbnailUrlFromPodcastNumber() throws Exception {
+        item.setTitle("Radio-T 100");
+        assertEquals("http://www.radio-t.com/images/radio-t/rt100.jpg",
+                item.getThumbnailUrl());
+    }
+
+    @Test
+    public void noThumbnailUrlIfNoNumberIsInTitle() throws Exception {
+        item.setTitle("Blah");
+        assertNull(item.getThumbnailUrl());
     }
 }

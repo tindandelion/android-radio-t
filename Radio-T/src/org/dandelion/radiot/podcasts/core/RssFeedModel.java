@@ -78,15 +78,7 @@ public class RssFeedModel implements PodcastList.IModel {
 						return attributes.getValue("type").equals("audio/mpeg");
 					}
 				});
-        
-        item.getChild("http://search.yahoo.com/mrss/", "thumbnail")
-                .setStartElementListener(new StartElementListener() {
-                    @Override
-                    public void start(Attributes attributes) {
-                        currentItem.setThumbnailUrl(attributes.getValue("url"));
-                    }
-                });
-        
+
         item.getChild("http://www.itunes.com/dtds/podcast-1.0.dtd", "summary")
                 .setEndTextElementListener(new EndTextElementListener() {
                     @Override

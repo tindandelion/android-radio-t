@@ -10,6 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class PodcastItem implements Cloneable {
+    private static final String THUMBNAIL_URL_TEMPLATE = "http://www.radio-t.com/images/radio-t/rt%s.jpg";
 	private static final Pattern NUMBER_PATTERN = Pattern.compile("\\d+");
 	private static SimpleDateFormat INPUT_DATE_FORMAT = new SimpleDateFormat(
 			"EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);
@@ -20,9 +21,9 @@ public class PodcastItem implements Cloneable {
 	private String pubDate;
 	private String showNotes;
 	private String audioUri;
-	private String thumbnailUrl;
-	private Bitmap thumbnail;
+    private Bitmap thumbnail;
     private String title;
+    private String thumbnailUrl;
 
     public String getAudioUri() {
 		return audioUri;
@@ -49,16 +50,21 @@ public class PodcastItem implements Cloneable {
 
     public void setTitle(String value) {
         title = value;
-        number = extractPodcastNumber(value);
+        String numberFromTitle = extractPodcastNumber(value);
+        if (numberFromTitle != null) {
+            number = "#" + numberFromTitle;
+            thumbnailUrl = String.format(THUMBNAIL_URL_TEMPLATE, numberFromTitle);
+        } else {
+            number = title;
+        }
 	}
 
     private String extractPodcastNumber(String value) {
         Matcher matcher = NUMBER_PATTERN.matcher(value);
         if (matcher.find()) {
-            return "#" + matcher.group();
-        } else {
-            return value;
+            return matcher.group();
         }
+        return null;
     }
 
     public void extractPubDate(String value) {
@@ -85,10 +91,6 @@ public class PodcastItem implements Cloneable {
 	public void setThumbnail(Bitmap value) {
 		thumbnail = value;
 	}
-
-    public void setThumbnailUrl(String value) {
-        thumbnailUrl = value;
-    }
 
     public void setAudioUri(String value) {
         audioUri = value;
