@@ -10,20 +10,19 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class PodcastItem implements Cloneable {
-    private static final String THUMBNAIL_URL_TEMPLATE = "http://www.radio-t.com/images/radio-t/rt%s.jpg";
-	private static final Pattern NUMBER_PATTERN = Pattern.compile("\\d+");
+    private static final Pattern NUMBER_PATTERN = Pattern.compile("\\d+");
 	private static SimpleDateFormat INPUT_DATE_FORMAT = new SimpleDateFormat(
 			"EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);
 	private static SimpleDateFormat OUTPUT_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
 	
 
-	private String number;
+	private String numberString;
+    private String rawNumber;
 	private String pubDate;
 	private String showNotes;
 	private String audioUri;
     private Bitmap thumbnail;
     private String title;
-    private String thumbnailUrl;
 
     public String getAudioUri() {
 		return audioUri;
@@ -40,22 +39,25 @@ public class PodcastItem implements Cloneable {
 		return showNotes;
 	}
 
-	public String getNumber() {
-		return number;
+	public String getNumberString() {
+		return numberString;
 	}
-    
+
+    public String getNumber() {
+        return rawNumber;
+    }
+
     public String getTitle() {
         return title;
     }
 
     public void setTitle(String value) {
         title = value;
-        String numberFromTitle = extractPodcastNumber(value);
-        if (numberFromTitle != null) {
-            number = "#" + numberFromTitle;
-            thumbnailUrl = String.format(THUMBNAIL_URL_TEMPLATE, numberFromTitle);
+        rawNumber = extractPodcastNumber(value);
+        if (rawNumber != null) {
+            numberString = "#" + rawNumber;
         } else {
-            number = title;
+            numberString = title;
         }
 	}
 
@@ -80,11 +82,7 @@ public class PodcastItem implements Cloneable {
 		showNotes = value.trim();
 	}
 
-    public String getThumbnailUrl() {
-		return thumbnailUrl;
-	}
-
-	public Bitmap getThumbnail() {
+    public Bitmap getThumbnail() {
 		return thumbnail;
 	}
 
@@ -95,4 +93,5 @@ public class PodcastItem implements Cloneable {
     public void setAudioUri(String value) {
         audioUri = value;
     }
+
 }

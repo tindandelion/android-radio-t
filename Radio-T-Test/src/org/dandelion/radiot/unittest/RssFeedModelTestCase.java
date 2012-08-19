@@ -50,24 +50,19 @@ public class RssFeedModelTestCase extends TestCase {
 		newFeedItem("");
 
 		parseRssFeed();
-
 		assertEquals(2, parsedItems.size());
 		assertNotNull(parsedItems.get(0));
 	}
 
 	public void testExtractingPodcastNumber() throws Exception {
 		newFeedItem("<title>Radio 192</title>");
-
 		parseRssFeed();
-
-		assertEquals("#192", firstParsedItem.getNumber());
+		assertEquals("#192", firstParsedItem.getNumberString());
 	}
 
 	public void testExtractPodcastDate() throws Exception {
 		newFeedItem("<pubDate>Sun, 13 Jun 2010 01:37:22 +0000</pubDate>");
-
 		parseRssFeed();
-
 		assertEquals("13.06.2010", firstParsedItem.getPubDate());
 	}
 

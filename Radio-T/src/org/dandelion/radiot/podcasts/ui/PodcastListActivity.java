@@ -185,7 +185,7 @@ public class PodcastListActivity extends CustomTitleListActivity implements IVie
 		}
 
 		private View fillRowWithData(View row, PodcastItem item) {
-			setElementText(row, R.id.podcast_item_view_number, item.getNumber());
+			setElementText(row, R.id.podcast_item_view_number, item.getNumberString());
 			setElementText(row, R.id.podcast_item_view_date, item.getPubDate());
 			setElementText(row, R.id.podcast_item_view_shownotes,
 					item.getShowNotes());
