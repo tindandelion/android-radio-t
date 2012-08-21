@@ -18,8 +18,7 @@ public class PodcastItem implements Cloneable {
 
 
     private String numberString;
-    private String rawNumber;
-	private String pubDate;
+    private String pubDate;
 	private String showNotes;
 	private String audioUri;
     private Bitmap thumbnail;
@@ -45,17 +44,13 @@ public class PodcastItem implements Cloneable {
 		return numberString;
 	}
 
-    public String getNumber() {
-        return rawNumber;
-    }
-
     public String getTitle() {
         return title;
     }
 
     public void setTitle(String value) {
         title = value;
-        rawNumber = extractPodcastNumber(value);
+        String rawNumber = extractPodcastNumber(value);
         if (rawNumber != null) {
             numberString = "#" + rawNumber;
         } else {

@@ -19,7 +19,6 @@ import android.sax.StartElementListener;
 import android.util.Xml;
 
 public class RssFeedModel implements PodcastList.IModel {
-    public static final String THUMBNAIL_URL_TEMPLATE = "http://www.radio-t.com/images/radio-t/rt%s.jpg";
     private ArrayList<PodcastItem> items;
 	private PodcastItem currentItem;
 	private String address;
@@ -108,15 +107,6 @@ public class RssFeedModel implements PodcastList.IModel {
 	}
 
 	public Bitmap loadPodcastImage(PodcastItem item) {
-		return BitmapFactory.decodeStream(openImageStream(constructThumbnailUrl(item)));
+		return BitmapFactory.decodeStream(openImageStream(item.getThumbnailUrl()));
 	}
-
-    private String constructThumbnailUrl(PodcastItem item) {
-        String number = item.getNumber();
-        if (number != null) {
-            return String.format(THUMBNAIL_URL_TEMPLATE, number);
-        } else {
-            return null;
-        }
-    }
 }

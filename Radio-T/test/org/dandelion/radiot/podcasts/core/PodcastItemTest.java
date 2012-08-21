@@ -11,21 +11,18 @@ public class PodcastItemTest {
     @Test
     public void extractPodcastNumberFromTitle() throws Exception {
         item.setTitle("Radio 100");
-        assertEquals("100", item.getNumber());
         assertEquals("#100", item.getNumberString());
     }
 
     @Test
     public void podcastNumberInLocalizedString() throws Exception {
         item.setTitle("Радио-Т 192");
-        assertEquals("192", item.getNumber());
         assertEquals("#192", item.getNumberString());
     }
 
     @Test
     public void noNumberInTitle() throws Exception {
         item.setTitle("Blah");
-        assertNull("Blah", item.getNumber());
         assertEquals("Blah", item.getNumberString());
     }
 
