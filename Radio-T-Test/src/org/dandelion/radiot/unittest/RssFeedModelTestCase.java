@@ -87,7 +87,15 @@ public class RssFeedModelTestCase extends TestCase {
 		assertEquals("http://podcast-link",	firstParsedItem.getAudioUri());
 	}
 
-	public void testEnsureStreamIsClosed() throws Exception {
+    public void testExtractThumbnailUrl() throws Exception {
+        newFeedItem("<description>" +
+                "&lt;p&gt;&lt;img src=\"http://www.radio-t.com/images/radio-t/rt302.jpg\" alt=\"\" /&gt;&lt;/p&gt;\n" +
+                "</description>");
+        parseRssFeed();
+        assertEquals("http://www.radio-t.com/images/radio-t/rt302.jpg", firstParsedItem.getThumbnailUrl());
+    }
+
+    public void testEnsureStreamIsClosed() throws Exception {
 		streamClosed = false;
 		parseRssFeed();
 		assertTrue(streamClosed);
