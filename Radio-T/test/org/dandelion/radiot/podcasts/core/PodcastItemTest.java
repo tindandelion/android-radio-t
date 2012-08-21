@@ -47,4 +47,22 @@ public class PodcastItemTest {
         item.extractShowNotes(notes);
         assertEquals("Note 1 - Note 2", item.getShowNotes());
     }
+
+    @Test
+    public void extractImageFromDescription() throws Exception {
+        item.extractThumbnailUrl("<img src=\"http://radio-t.com/thumbnail.jpg\" />");
+        assertEquals("http://radio-t.com/thumbnail.jpg", item.getThumbnailUrl());
+    }
+
+    @Test
+    public void noThumbnailUrlInDescription() throws Exception {
+        item.extractThumbnailUrl("Blah blah");
+        assertNull(item.getThumbnailUrl());
+    }
+
+    @Test
+    public void veryMessyThumbnailUrl() throws Exception {
+        item.extractThumbnailUrl("<img    src=\"http://radio-t.com/thumbnail.jpg\" alt=\"thumbnail\" width=\"100\"/>");
+        assertEquals("http://radio-t.com/thumbnail.jpg", item.getThumbnailUrl());
+    }
 }

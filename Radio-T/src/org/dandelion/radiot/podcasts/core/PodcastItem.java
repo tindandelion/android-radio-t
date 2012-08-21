@@ -10,19 +10,21 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class PodcastItem implements Cloneable {
+    public static final Pattern THUMBNAIL_URL_PATTERN = Pattern.compile("<img\\s+src=\"(\\S+)\".*/>");
     private static final Pattern NUMBER_PATTERN = Pattern.compile("\\d+");
-	private static SimpleDateFormat INPUT_DATE_FORMAT = new SimpleDateFormat(
-			"EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);
+	private static SimpleDateFormat INPUT_DATE_FORMAT =
+            new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);
 	private static SimpleDateFormat OUTPUT_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
-	
 
-	private String numberString;
+
+    private String numberString;
     private String rawNumber;
 	private String pubDate;
 	private String showNotes;
 	private String audioUri;
     private Bitmap thumbnail;
     private String title;
+    private String thumbnailUrl;
 
     public String getAudioUri() {
 		return audioUri;
@@ -94,4 +96,14 @@ public class PodcastItem implements Cloneable {
         audioUri = value;
     }
 
+    public void extractThumbnailUrl(String description) {
+        Matcher matcher = THUMBNAIL_URL_PATTERN.matcher(description);
+        if (matcher.find()) {
+            thumbnailUrl = matcher.group(1);
+        }
+    }
+
+    public String getThumbnailUrl() {
+        return thumbnailUrl;
+    }
 }
