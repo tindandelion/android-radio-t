@@ -6,6 +6,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.net.Uri;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 
@@ -107,6 +108,31 @@ public class RssFeedModel implements PodcastList.IModel {
 	}
 
 	public Bitmap loadPodcastImage(PodcastItem item) {
-		return BitmapFactory.decodeStream(openImageStream(item.getThumbnailUrl()));
+		return BitmapFactory.decodeStream(openImageStream(
+                fullyQualifiedUrl(item.getThumbnailUrl())));
 	}
+
+    private String fullyQualifiedUrl(String urlPart) {
+        return ThumbnailUrl.construct(urlPart);
+    }
+
+    public static class ThumbnailUrl {
+        private static final String HOST = "http://www.radio-t.com";
+
+        public static String construct(String urlPart) {
+            if (null == urlPart) {
+                return null;
+            }
+            return constructFullUrl(urlPart);
+        }
+
+        private static String constructFullUrl(String urlPart) {
+            Uri uri = Uri.parse(urlPart);
+            if (uri.isAbsolute()) {
+                return urlPart;
+            } else {
+                return HOST + urlPart;
+            }
+        }
+    }
 }
