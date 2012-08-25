@@ -6,56 +6,72 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.app.NotificationCompat;
 import org.dandelion.radiot.live.ui.LiveShowActivity;
 
 public class IconNote {
     protected Context context;
-    private String title;
-    private int iconId;
-    private String text;
     private int notificationId;
-    private String ticker;
-    private int flags = Notification.FLAG_AUTO_CANCEL;
-    private Intent intent = new Intent();
+    private NotificationCompat.Builder builder;
 
     public IconNote(Context context, int notificationId) {
         this.context = context;
         this.notificationId = notificationId;
+        this.builder = new NotificationCompat.Builder(context)
+                .setAutoCancel(true);
     }
 
-    public IconNote setTitle(String title) {
-        this.title = title;
+    public IconNote setTitle(String value) {
+        builder.setContentTitle(value);
         return this;
     }
 
     public IconNote setTicker(String value) {
-        ticker = value;
+        builder.setTicker(value);
         return this;
     }
 
     public IconNote setTitleAndTicker(String value) {
-        this.title = value;
-        this.ticker = value;
+        setTitle(value);
+        setTicker(value);
         return this;
     }
 
     public IconNote setText(String value) {
-        this.text = value;
+        builder.setContentText(value);
         return this;
     }
 
     public IconNote setIcon(int resourceId) {
-        this.iconId = resourceId;
+        builder.setSmallIcon(resourceId);
         return this;
+    }
+
+    public IconNote beOngoing() {
+        builder
+                .setAutoCancel(false)
+                .setOngoing(true);
+        return this;
+    }
+
+    public IconNote performsAction(String action) {
+        Intent intent = new Intent(action);
+        return setContentIntent(intent);
+    }
+
+
+    public IconNote showsActivity(Class<LiveShowActivity> activityClass) {
+        return setContentIntent(new Intent(context, activityClass));
+    }
+
+    public IconNote opensUri(Uri uri, String mimeType) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setDataAndType(uri, mimeType);
+        return setContentIntent(intent);
     }
 
     public void show(String tag) {
         noteManager().notify(tag, notificationId, build());
-    }
-
-    private NotificationManager noteManager() {
-        return (NotificationManager)
-                context.getSystemService(Context.NOTIFICATION_SERVICE);
     }
 
     public void show() {
@@ -66,40 +82,22 @@ public class IconNote {
         noteManager().cancel(notificationId);
     }
 
-    public Notification build() {
-        Notification note = new Notification(iconId, ticker, System.currentTimeMillis());
-        note.setLatestEventInfo(context, title, text, intent());
-        note.flags |= flags;
-        return note;
+    private NotificationManager noteManager() {
+        return (NotificationManager)
+                context.getSystemService(Context.NOTIFICATION_SERVICE);
     }
 
-    private PendingIntent intent() {
-        return PendingIntent.getActivity(context, 0, intent, 0);
+    public Notification build() {
+        return builder.build();
+    }
+
+    private IconNote setContentIntent(Intent intent) {
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+        builder.setContentIntent(pendingIntent);
+        return this;
     }
 
     public int id() {
         return notificationId;
     }
-
-    public IconNote beOngoing() {
-        flags = Notification.FLAG_ONGOING_EVENT;
-        return this;
-    }
-
-    public IconNote performsAction(String action) {
-        intent = new Intent(action);
-        return this;
-    }
-
-    public IconNote showsActivity(Class<LiveShowActivity> activityClass) {
-        intent = new Intent(context, activityClass);
-        return this;
-    }
-
-    public IconNote opensUri(Uri uri, String mimeType) {
-        intent = new Intent(Intent.ACTION_VIEW);
-        intent.setDataAndType(uri, mimeType);
-        return this;
-    }
-
 }
