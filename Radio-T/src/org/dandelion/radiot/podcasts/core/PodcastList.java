@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import java.util.List;
 
 public class PodcastList {
-
 	public interface IModel {
 		List<PodcastItem> retrievePodcasts() throws Exception;
 		Bitmap loadPodcastImage(PodcastItem item);
@@ -23,4 +22,8 @@ public class PodcastList {
 		void detach();
 		void attach(IView view);
 	}
+
+    public interface ThumbnailDownloader {
+        Bitmap loadPodcastImage(PodcastItem item);
+    }
 }

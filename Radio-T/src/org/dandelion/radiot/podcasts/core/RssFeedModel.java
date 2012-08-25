@@ -6,12 +6,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.net.Uri;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.sax.Element;
 import android.sax.EndElementListener;
 import android.sax.EndTextElementListener;
@@ -23,12 +21,14 @@ public class RssFeedModel implements PodcastList.IModel {
     private ArrayList<PodcastItem> items;
 	private PodcastItem currentItem;
 	private String address;
+    private PodcastList.ThumbnailDownloader thumbnailDownloader;
 
-	public RssFeedModel(String url) {
-		this.address = url;
-	}
+    public RssFeedModel(String address, PodcastList.ThumbnailDownloader thumbnailDownloader) {
+        this.address = address;
+        this.thumbnailDownloader = thumbnailDownloader;
+    }
 
-	public List<PodcastItem> retrievePodcasts() throws Exception {
+    public List<PodcastItem> retrievePodcasts() throws Exception {
 		items = new ArrayList<PodcastItem>();
 		Xml.parse(openContentStream(), Xml.Encoding.UTF_8, getContentHandler());
 		return items;
@@ -98,41 +98,7 @@ public class RssFeedModel implements PodcastList.IModel {
 		return root.getContentHandler();
 	}
 
-	protected InputStream openImageStream(String address) {
-		try {
-			URL url = new URL(address);
-			return url.openStream();
-		} catch (Exception ex) {
-			return null;
-		}
+    public Bitmap loadPodcastImage(PodcastItem item) {
+        return thumbnailDownloader.loadPodcastImage(item);
 	}
-
-	public Bitmap loadPodcastImage(PodcastItem item) {
-		return BitmapFactory.decodeStream(openImageStream(
-                fullyQualifiedUrl(item.getThumbnailUrl())));
-	}
-
-    private String fullyQualifiedUrl(String urlPart) {
-        return ThumbnailUrl.construct(urlPart);
-    }
-
-    public static class ThumbnailUrl {
-        private static final String HOST = "http://www.radio-t.com";
-
-        public static String construct(String urlPart) {
-            if (null == urlPart) {
-                return null;
-            }
-            return constructFullUrl(urlPart);
-        }
-
-        private static String constructFullUrl(String urlPart) {
-            Uri uri = Uri.parse(urlPart);
-            if (uri.isAbsolute()) {
-                return urlPart;
-            } else {
-                return HOST + urlPart;
-            }
-        }
-    }
 }
