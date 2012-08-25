@@ -1,17 +1,15 @@
 package org.dandelion.radiot.home_screen;
 
-import android.view.View;
-import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
-import org.dandelion.radiot.R;
-import org.dandelion.radiot.live.ui.LiveShowActivity;
-
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ListView;
+import android.support.v4.app.FragmentActivity;
+import android.view.View;
+import org.dandelion.radiot.R;
+import org.dandelion.radiot.live.ui.LiveShowActivity;
+import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
 
-public class HomeScreenActivity extends Activity {
+public class HomeScreenActivity extends FragmentActivity {
 
     public static void start(Context context) {
         Intent intent = new Intent(context, HomeScreenActivity.class);
