@@ -46,7 +46,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="Radio-T" />
+    <orderEntry type="module" module-name="Radio-T" scope="PROVIDED" />
     <orderEntry type="module-library">
       <library>
         <CLASSES>
