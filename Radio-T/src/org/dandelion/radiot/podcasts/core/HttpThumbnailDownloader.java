@@ -8,10 +8,15 @@ import java.io.InputStream;
 import java.net.URL;
 
 public class HttpThumbnailDownloader implements PodcastList.ThumbnailDownloader {
+    private static final String HOST = "http://www.radio-t.com";
+
     @Override
-    public Bitmap loadPodcastImage(PodcastItem item) {
-        String url = fullyQualifiedUrl(item);
-        return BitmapFactory.decodeStream(openImageStream(url));
+    public Bitmap loadPodcastImage(String url) {
+        if (null != url) {
+            return BitmapFactory.decodeStream(openImageStream(constructFullUrl(url)));
+        } else {
+            return null;
+        }
     }
 
     private InputStream openImageStream(String url) {
@@ -22,27 +27,12 @@ public class HttpThumbnailDownloader implements PodcastList.ThumbnailDownloader 
         }
     }
 
-    private String fullyQualifiedUrl(PodcastItem item) {
-        return ThumbnailUrl.construct(item.getThumbnailUrl());
-    }
-
-    public static class ThumbnailUrl {
-        private static final String HOST = "http://www.radio-t.com";
-
-        public static String construct(String urlPart) {
-            if (null == urlPart) {
-                return null;
-            }
-            return constructFullUrl(urlPart);
-        }
-
-        private static String constructFullUrl(String urlPart) {
-            Uri uri = Uri.parse(urlPart);
-            if (uri.isAbsolute()) {
-                return urlPart;
-            } else {
-                return HOST + urlPart;
-            }
+    private String constructFullUrl(String url) {
+        Uri uri = Uri.parse(url);
+        if (uri.isAbsolute()) {
+            return url;
+        } else {
+            return HOST + url;
         }
     }
 }

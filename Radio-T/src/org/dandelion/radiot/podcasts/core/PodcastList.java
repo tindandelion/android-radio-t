@@ -24,6 +24,6 @@ public class PodcastList {
 	}
 
     public interface ThumbnailDownloader {
-        Bitmap loadPodcastImage(PodcastItem item);
+        Bitmap loadPodcastImage(String url);
     }
 }

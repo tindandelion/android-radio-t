@@ -99,6 +99,6 @@ public class RssFeedModel implements PodcastList.IModel {
 	}
 
     public Bitmap loadPodcastImage(PodcastItem item) {
-        return thumbnailDownloader.loadPodcastImage(item);
+        return thumbnailDownloader.loadPodcastImage(item.getThumbnailUrl());
 	}
 }
