@@ -13,7 +13,7 @@ public class BasicAcceptanceTestCase extends
 		ActivityInstrumentationTestCase2<HomeScreenActivity> {
 
 	public BasicAcceptanceTestCase() {
-		super("org.dandelion.radiot", HomeScreenActivity.class);
+		super(HomeScreenActivity.class);
 	}
 
 	protected HomeScreenDriver createDriver() {

@@ -54,7 +54,7 @@ public class LiveShowPlaybackTest extends
     }
 
     public LiveShowPlaybackTest() {
-        super("org.dandelion.radiot", LiveShowActivity.class);
+        super(LiveShowActivity.class);
     }
 
     @Override
