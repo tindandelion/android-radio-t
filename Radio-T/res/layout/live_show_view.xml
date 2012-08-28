@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+    <TextView
+            android:id="@+id/live_show_info"
+            android:text="@string/live_show_info"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@android:style/TextAppearance.Small"
+            android:layout_alignParentTop="true"
+            android:paddingTop="10dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:gravity="center" />
+    <LinearLayout
+            android:id="@+id/live_show_status"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerInParent="true">
+        <org.dandelion.radiot.live.ui.TimerView
+                android:id="@+id/live_timer_label"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="72dp"
+                android:textScaleX="1.1"
+                android:gravity="center_horizontal"
+                android:typeface="sans" />
+        <TextView
+                android:id="@+id/playback_state_label"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:typeface="sans"
+                android:textScaleX="1.1"
+                android:gravity="center_horizontal" />
+    </LinearLayout>
+    <TextView
+            android:id="@+id/live_show_hint"
+            android:text="@string/live_show_waiting_hint"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/live_show_status"
+            android:paddingTop="10dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:textSize="12sp"
+            android:textColor="#606060"
+            android:gravity="center" />
+    <Button
+            android:id="@+id/live_show_action_button"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:onClick="onButtonPressed"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
+</RelativeLayout>
