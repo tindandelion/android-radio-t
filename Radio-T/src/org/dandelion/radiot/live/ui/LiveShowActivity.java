@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.home_screen.HomeScreenActivity;
 import org.dandelion.radiot.live.LiveShowApp;
@@ -14,23 +12,16 @@ import org.dandelion.radiot.util.CustomTitleActivity;
 
 public class LiveShowActivity extends CustomTitleActivity {
     protected LiveShowClient client;
-
-    private String[] statusLabels;
-	private CharSequence[] buttonLabels;
 	private LiveShowPresenter presenter;
-    private TimerView timerLabel;
+    private LiveShowFragment fragment;
 
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.live_show_screen);
+        fragment = (LiveShowFragment) getSupportFragmentManager().findFragmentById(R.id.live_show_view);
 		presenter = new LiveShowPresenter(this);
-		statusLabels = getResources().getStringArray(
-				R.array.live_show_status_labels);
-		buttonLabels = getResources().getStringArray(
-				R.array.live_show_button_labels);
-        timerLabel = (TimerView) findViewById(R.id.live_timer_label);
-	}
+    }
 
     @Override
 	protected void onStart() {
@@ -46,7 +37,7 @@ public class LiveShowActivity extends CustomTitleActivity {
     @Override
 	protected void onStop() {
         client.removeListener(presenter);
-        timerLabel.stop();
+        fragment.stopTimer();
 		super.onStop();
 	}
 
@@ -70,28 +61,23 @@ public class LiveShowActivity extends CustomTitleActivity {
     }
 
     public void setButtonState(int labelId, boolean enabled) {
-		Button button = (Button) findViewById(R.id.live_show_action_button);
-		button.setText(buttonLabels[labelId]);
-		button.setEnabled(enabled);
+        fragment.setButtonState(labelId, enabled);
 	}
 
-	public void setStatusLabel(int labelId) {
-		TextView view = (TextView) findViewById(R.id.playback_state_label);
-		view.setText(statusLabels[labelId]);
+	public void setStatusLabel(int id) {
+        fragment.setStatusLabel(id);
 	}
 
     public void stopTimer() {
-        timerLabel.stop();
+        fragment.stopTimer();
     }
 
     public void startTimer(long timestamp) {
-        timerLabel.start(timestamp);
+        fragment.startTimer(timestamp);
     }
 
 	public void showHelpText(boolean visible) {
-		View view = findViewById(R.id.live_show_hint);
-		int visibility = (visible) ? View.VISIBLE : View.INVISIBLE;
-		view.setVisibility(visibility);
+        fragment.showHelpText(visible);
 	}
 
 }
