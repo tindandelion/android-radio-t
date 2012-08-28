@@ -55,7 +55,6 @@
             android:id="@+id/live_show_action_button"
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
-            android:onClick="onButtonPressed"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true" />
 </RelativeLayout>
