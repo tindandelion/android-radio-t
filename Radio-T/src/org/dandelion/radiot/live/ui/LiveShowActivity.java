@@ -13,14 +13,17 @@ import org.dandelion.radiot.util.CustomTitleActivity;
 public class LiveShowActivity extends CustomTitleActivity {
     protected LiveShowClient client;
 	private LiveShowPresenter presenter;
-    private LiveShowFragment fragment;
 
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.live_show_screen);
-        fragment = (LiveShowFragment) getSupportFragmentManager().findFragmentById(R.id.live_show_view);
-		presenter = new LiveShowPresenter(this);
+        initPresenter();
+    }
+
+    private void initPresenter() {
+        LiveShowFragment fragment = (LiveShowFragment) getSupportFragmentManager().findFragmentById(R.id.live_show_view);
+        presenter = new LiveShowPresenter(fragment);
     }
 
     @Override
@@ -37,7 +40,6 @@ public class LiveShowActivity extends CustomTitleActivity {
     @Override
 	protected void onStop() {
         client.removeListener(presenter);
-        fragment.stopTimer();
 		super.onStop();
 	}
 
@@ -59,25 +61,5 @@ public class LiveShowActivity extends CustomTitleActivity {
     public void onButtonPressed(View v) {
         client.togglePlayback();
     }
-
-    public void setButtonState(int labelId, boolean enabled) {
-        fragment.setButtonState(labelId, enabled);
-	}
-
-	public void setStatusLabel(int id) {
-        fragment.setStatusLabel(id);
-	}
-
-    public void stopTimer() {
-        fragment.stopTimer();
-    }
-
-    public void startTimer(long timestamp) {
-        fragment.startTimer(timestamp);
-    }
-
-	public void showHelpText(boolean visible) {
-        fragment.showHelpText(visible);
-	}
 
 }

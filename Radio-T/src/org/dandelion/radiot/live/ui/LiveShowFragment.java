@@ -31,6 +31,12 @@ public class LiveShowFragment extends Fragment {
         return initFragment(inflater.inflate(R.layout.live_show_view, container, false));
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        stopTimer();
+    }
+
     private View initFragment(View view) {
         statusLabel = (TextView) view.findViewById(R.id.playback_state_label);
         timerLabel = (TimerView) view.findViewById(R.id.live_timer_label);

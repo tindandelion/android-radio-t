@@ -9,6 +9,28 @@ import java.util.Map;
 import static org.dandelion.radiot.live.core.LiveShowState.*;
 
 public class LiveShowPresenter implements LiveShowStateListener {
+    private static Map<LiveShowState, VisualState> stateMap = new HashMap<LiveShowState, VisualState>();
+
+    static {
+        stateMap.put(Idle, new VisualState(0, false, 1, true, false));
+        stateMap.put(Connecting, new VisualState(1, false, 0, true, true));
+        stateMap.put(Playing, new VisualState(2, false, 0, true, true));
+        stateMap.put(Stopping, new VisualState(3, false, 0, false, true));
+        stateMap.put(Waiting, new VisualState(4, true, 0, true, true));
+    }
+
+    private LiveShowFragment view;
+
+    public LiveShowPresenter(LiveShowFragment view) {
+        this.view = view;
+	}
+
+    @Override
+    public void onStateChanged(LiveShowState state, long timestamp) {
+        final VisualState visualState = stateMap.get(state);
+        visualState.update(view, timestamp);
+    }
+
     private static class VisualState {
         public final int statusLabelId;
         public final Boolean showHelpText;
@@ -25,35 +47,15 @@ public class LiveShowPresenter implements LiveShowStateListener {
             this.timerActive = timerActive;
         }
 
-        public void update(LiveShowActivity activity, long timestamp) {
-            activity.setStatusLabel(statusLabelId);
-            activity.setButtonState(buttonLabelId, buttonEnabled);
-            activity.showHelpText(showHelpText);
+        public void update(LiveShowFragment view, long timestamp) {
+            view.setStatusLabel(statusLabelId);
+            view.setButtonState(buttonLabelId, buttonEnabled);
+            view.showHelpText(showHelpText);
             if (timerActive) {
-                activity.startTimer(timestamp);
+                view.startTimer(timestamp);
             } else {
-                activity.stopTimer();
+                view.stopTimer();
             }
         }
-    }
-    private static Map<LiveShowState, VisualState> stateMap = new HashMap<LiveShowState, VisualState>();
-    static {
-        stateMap.put(Idle, new VisualState(0, false, 1, true, false));
-        stateMap.put(Connecting, new VisualState(1, false, 0, true, true));
-        stateMap.put(Playing, new VisualState(2, false, 0, true, true));
-        stateMap.put(Stopping, new VisualState(3, false, 0, false, true));
-        stateMap.put(Waiting, new VisualState(4, true, 0, true, true));
-    }
-
-	private LiveShowActivity activity;
-
-	public LiveShowPresenter(LiveShowActivity activity) {
-		this.activity = activity;
-	}
-
-    @Override
-    public void onStateChanged(LiveShowState state, long timestamp) {
-        final VisualState visualState = stateMap.get(state);
-        visualState.update(activity, timestamp);
     }
 }
