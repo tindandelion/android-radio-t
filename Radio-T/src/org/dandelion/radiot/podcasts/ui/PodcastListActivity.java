@@ -5,10 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
 import android.view.*;
 import android.widget.*;
 import org.dandelion.radiot.R;
@@ -26,8 +23,7 @@ public class PodcastListActivity extends CustomTitleActivity implements IView {
 
 	public static final String TITLE_EXTRA = "title";
 	public static final String SHOW_NAME_EXTRA = "podcast_url";
-    private ListView listView;
-    private ListFragment fragment;
+    private PodcastListFragment fragment;
 
     public static void start(Context context, String title, String showName) {
 		Intent intent = new Intent(context, PodcastListActivity.class);
@@ -52,34 +48,25 @@ public class PodcastListActivity extends CustomTitleActivity implements IView {
         setContentView(R.layout.podcast_list_screen);
         initTitleFromExtras();
         initFragment();
-        initListView();
         initListAdapter();
         initSelectionHandler();
 		attachToEngine();
 	}
 
     private void initFragment() {
-        fragment = (ListFragment) getSupportFragmentManager().findFragmentById(R.id.podcast_list);
-    }
-
-    private void initTitleFromExtras() {
-        extras = getIntent().getExtras();
-        setTitle(getTitleFromExtra());
-    }
-
-    private void initListView() {
-        int bgColor = getResources().getColor(R.color.window_background);
-        listView = fragment.getListView();
-
-        listView.setCacheColorHint(bgColor);
-        listView.setBackgroundColor(bgColor);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        fragment = (PodcastListFragment) getSupportFragmentManager().findFragmentById(R.id.podcast_list);
+        fragment.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 PodcastItem selectedItem = listAdapter.getItem(position);
                 selectionHandler.process(PodcastListActivity.this, selectedItem);
             }
         });
+    }
+
+    private void initTitleFromExtras() {
+        extras = getIntent().getExtras();
+        setTitle(getTitleFromExtra());
     }
 
     private void initSelectionHandler() {
@@ -171,12 +158,11 @@ public class PodcastListActivity extends CustomTitleActivity implements IView {
 	}
 
 	private void initListAdapter() {
-		listAdapter = new PodcastListAdapter();
-        fragment.setListAdapter(listAdapter);
+		listAdapter = (PodcastListAdapter) fragment.getListAdapter();
 	}
 
     public ListView getListView() {
-        return listView;
+        return fragment.getListView();
     }
 
     public PodcastListAdapter getListAdapter() {
@@ -186,51 +172,4 @@ public class PodcastListActivity extends CustomTitleActivity implements IView {
     public void updatePodcastImage(int index) {
         listAdapter.notifyDataSetChanged();
     }
-
-    public class PodcastListAdapter extends ArrayAdapter<PodcastItem> {
-		private final Bitmap defaultPodcastImage = BitmapFactory
-				.decodeResource(PodcastListActivity.this.getResources(),
-						R.drawable.default_podcast_image);
-
-		public PodcastListAdapter() {
-			super(PodcastListActivity.this, 0);
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			View row = convertView;
-			if (row == null) {
-				LayoutInflater inflater = getLayoutInflater();
-				row = inflater.inflate(R.layout.podcast_list_item, parent,
-						false);
-			}
-
-			return fillRowWithData(row, getItem(position));
-		}
-
-		private View fillRowWithData(View row, PodcastItem item) {
-			setElementText(row, R.id.podcast_item_view_number, item.getNumberString());
-			setElementText(row, R.id.podcast_item_view_date, item.getPubDate());
-			setElementText(row, R.id.podcast_item_view_shownotes,
-					item.getShowNotes());
-			setPodcastIcon(row, item);
-			return row;
-		}
-
-		private void setPodcastIcon(View row, PodcastItem item) {
-			ImageView image = (ImageView) row
-					.findViewById(R.id.podcast_item_icon);
-			Bitmap bitmap = item.getThumbnail();
-			if (null == bitmap) {
-				bitmap = defaultPodcastImage;
-			}
-			image.setImageBitmap(bitmap);
-		}
-
-		private void setElementText(View row, int resourceId, String value) {
-			TextView view = (TextView) row.findViewById(resourceId);
-			view.setText(value);
-		}
-	}
-
 }
