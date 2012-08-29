@@ -3,7 +3,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent">
-    <ListView android:id="@+id/podcast_list"
+    <fragment android:name="org.dandelion.radiot.podcasts.ui.PodcastListFragment"
+              android:id="@+id/podcast_list"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"/>
 </LinearLayout>

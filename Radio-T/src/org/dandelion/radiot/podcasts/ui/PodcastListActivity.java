@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v4.app.ListFragment;
 import android.view.*;
 import android.widget.*;
 import org.dandelion.radiot.R;
@@ -26,6 +27,7 @@ public class PodcastListActivity extends CustomTitleActivity implements IView {
 	public static final String TITLE_EXTRA = "title";
 	public static final String SHOW_NAME_EXTRA = "podcast_url";
     private ListView listView;
+    private ListFragment fragment;
 
     public static void start(Context context, String title, String showName) {
 		Intent intent = new Intent(context, PodcastListActivity.class);
@@ -49,11 +51,16 @@ public class PodcastListActivity extends CustomTitleActivity implements IView {
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.podcast_list_screen);
         initTitleFromExtras();
+        initFragment();
         initListView();
         initListAdapter();
         initSelectionHandler();
 		attachToEngine();
 	}
+
+    private void initFragment() {
+        fragment = (ListFragment) getSupportFragmentManager().findFragmentById(R.id.podcast_list);
+    }
 
     private void initTitleFromExtras() {
         extras = getIntent().getExtras();
@@ -62,7 +69,7 @@ public class PodcastListActivity extends CustomTitleActivity implements IView {
 
     private void initListView() {
         int bgColor = getResources().getColor(R.color.window_background);
-        listView = (ListView) findViewById(R.id.podcast_list);
+        listView = fragment.getListView();
 
         listView.setCacheColorHint(bgColor);
         listView.setBackgroundColor(bgColor);
@@ -165,7 +172,7 @@ public class PodcastListActivity extends CustomTitleActivity implements IView {
 
 	private void initListAdapter() {
 		listAdapter = new PodcastListAdapter();
-		listView.setAdapter(listAdapter);
+        fragment.setListAdapter(listAdapter);
 	}
 
     public ListView getListView() {
@@ -174,6 +181,10 @@ public class PodcastListActivity extends CustomTitleActivity implements IView {
 
     public PodcastListAdapter getListAdapter() {
         return listAdapter;
+    }
+
+    public void updatePodcastImage(int index) {
+        listAdapter.notifyDataSetChanged();
     }
 
     public class PodcastListAdapter extends ArrayAdapter<PodcastItem> {
@@ -222,7 +233,4 @@ public class PodcastListActivity extends CustomTitleActivity implements IView {
 		}
 	}
 
-    public void updatePodcastImage(int index) {
-		listAdapter.notifyDataSetChanged();
-	}
 }
