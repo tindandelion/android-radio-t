@@ -9,10 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.*;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.*;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.RadiotApplication;
 import org.dandelion.radiot.home_screen.HomeScreenActivity;
@@ -20,16 +17,17 @@ import org.dandelion.radiot.podcasts.PodcastsApp;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastList.IPodcastListEngine;
 import org.dandelion.radiot.podcasts.core.PodcastList.IView;
-import org.dandelion.radiot.util.CustomTitleListActivity;
+import org.dandelion.radiot.util.CustomTitleActivity;
 
 import java.util.List;
 
-public class PodcastListActivity extends CustomTitleListActivity implements IView {
+public class PodcastListActivity extends CustomTitleActivity implements IView {
 
 	public static final String TITLE_EXTRA = "title";
 	public static final String SHOW_NAME_EXTRA = "podcast_url";
+    private ListView listView;
 
-	public static void start(Context context, String title, String showName) {
+    public static void start(Context context, String title, String showName) {
 		Intent intent = new Intent(context, PodcastListActivity.class);
 		intent.putExtra(SHOW_NAME_EXTRA, showName);
 		intent.putExtra(TITLE_EXTRA, title);
@@ -49,18 +47,32 @@ public class PodcastListActivity extends CustomTitleListActivity implements IVie
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		extras = getIntent().getExtras();
-		setTitle(getTitleFromExtra());
+        setContentView(R.layout.podcast_list_screen);
+        initTitleFromExtras();
         initListView();
         initListAdapter();
         initSelectionHandler();
 		attachToEngine();
 	}
 
+    private void initTitleFromExtras() {
+        extras = getIntent().getExtras();
+        setTitle(getTitleFromExtra());
+    }
+
     private void initListView() {
         int bgColor = getResources().getColor(R.color.window_background);
-        getListView().setCacheColorHint(bgColor);
-        getListView().setBackgroundColor(bgColor);
+        listView = (ListView) findViewById(R.id.podcast_list);
+
+        listView.setCacheColorHint(bgColor);
+        listView.setBackgroundColor(bgColor);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                PodcastItem selectedItem = listAdapter.getItem(position);
+                selectionHandler.process(PodcastListActivity.this, selectedItem);
+            }
+        });
     }
 
     private void initSelectionHandler() {
@@ -137,13 +149,6 @@ public class PodcastListActivity extends CustomTitleListActivity implements IVie
 		}
 	}
 
-	@Override
-	protected void onListItemClick(ListView l, View v, int position, long id) {
-		super.onListItemClick(l, v, position, id);
-        PodcastItem selectedItem = listAdapter.getItem(position);
-        selectionHandler.process(this, selectedItem);
-    }
-
     private String getFeedUrlFromExtra() {
 		if (null == extras) {
 			return null;
@@ -160,10 +165,18 @@ public class PodcastListActivity extends CustomTitleListActivity implements IVie
 
 	private void initListAdapter() {
 		listAdapter = new PodcastListAdapter();
-		setListAdapter(listAdapter);
+		listView.setAdapter(listAdapter);
 	}
 
-    class PodcastListAdapter extends ArrayAdapter<PodcastItem> {
+    public ListView getListView() {
+        return listView;
+    }
+
+    public PodcastListAdapter getListAdapter() {
+        return listAdapter;
+    }
+
+    public class PodcastListAdapter extends ArrayAdapter<PodcastItem> {
 		private final Bitmap defaultPodcastImage = BitmapFactory
 				.decodeResource(PodcastListActivity.this.getResources(),
 						R.drawable.default_podcast_image);
@@ -209,11 +222,7 @@ public class PodcastListActivity extends CustomTitleListActivity implements IVie
 		}
 	}
 
-	public IPodcastListEngine getPodcastListEngine() {
-		return engine;
-	}
-
-	public void updatePodcastImage(int index) {
+    public void updatePodcastImage(int index) {
 		listAdapter.notifyDataSetChanged();
 	}
 }
