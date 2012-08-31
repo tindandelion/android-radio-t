@@ -1,0 +1,16 @@
+<resources>
+    <style name="Theme.Radiot" parent="android:Theme">
+        <item name="android:textViewStyle">@style/Radiot.TextView</item>
+        <item name="android:buttonStyle">@style/Radiot.Button</item>
+        <item name="android:windowBackground">@color/window_background</item>
+
+        <item name="android:windowTitleSize">@dimen/titlebar_height</item>
+        <item name="android:windowTitleBackgroundStyle">@style/Titlebar</item>
+        <item name="android:windowContentOverlay">@drawable/titlebar_shadow</item>
+    </style>
+
+    <style name="Theme.RadiotHome" parent="Theme.Radiot">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+</resources>

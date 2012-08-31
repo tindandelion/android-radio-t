@@ -10,11 +10,13 @@
 		<item name="android:paddingTop">30dp</item>
 		<item name="android:paddingBottom">30dp</item>
 	</style>
+
 	<style name="Radiot.TextView"
 		parent="@android:style/Widget.TextView">
 		<item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
 		<item name="android:textColor">?android:attr/textColorSecondary</item>
 	</style>
+
 	<style name="Radiot.Button"
 		parent="@android:style/Widget.Button">
 		<item name="android:textColor">@color/button_text_color</item>
@@ -22,6 +24,7 @@
 		<item name="android:padding">8dp</item>
 		<item name="android:background">@drawable/button_background</item>
 	</style>
+
 	<style name="ActivityTitleText"
 		parent="@android:style/Widget.TextView">
         <item name="android:gravity">center_vertical</item>
@@ -32,6 +35,7 @@
         <item name="android:ellipsize">marquee</item>
         <item name="android:textColor">@color/title_text_color</item>
     </style>
+
 	<style name="ActivityIcon">
 		<item name="android:layout_width">wrap_content</item>
 		<item name="android:layout_height">wrap_content</item>
@@ -39,30 +43,17 @@
 		<item name="android:layout_alignParentTop">true</item>
 		<item name="android:paddingLeft">10dp</item>
 	</style>
+
 	<style name="Divider">
 		<item name="android:layout_height">1px</item>
 		<item name="android:layout_width">fill_parent</item>
 		<item name="android:background">@android:drawable/divider_horizontal_dark</item>
 	</style>
 
-    <style name="Theme.Radiot" parent="android:Theme">
-        <item name="android:textViewStyle">@style/Radiot.TextView</item>
-        <item name="android:buttonStyle">@style/Radiot.Button</item>
-        <item name="android:windowBackground">@color/window_background</item>
-
-        <item name="android:windowTitleSize">@dimen/titlebar_height</item>
-        <item name="android:windowTitleBackgroundStyle">@style/Titlebar</item>
-        <item name="android:windowContentOverlay">@drawable/titlebar_shadow</item>
-    </style>
-
     <style name="Titlebar">
         <item name="android:background">@color/titlebar_background</item>
     </style>
 
-    <style name="Theme.RadiotHome" parent="Theme.Radiot">
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowContentOverlay">@null</item>
-    </style>
     <style name="DashboardButton">
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:layout_width">wrap_content</item>
