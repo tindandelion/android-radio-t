@@ -16,8 +16,9 @@ public class DisplayingPodcastList extends
 		PodcastListAcceptanceTestCase {
 
 	private PodcastListActivity activity;
-
-    public void testDisplayPodcastItemInfo() throws Exception {
+	private HomeScreenDriver appDriver;
+	
+	public void testDisplayPodcastItemInfo() throws Exception {
 		View itemView = getItemView(0);
 
 		assertTextFieldHasText(itemView, "podcast_item_view_number", "#5192");
@@ -32,7 +33,7 @@ public class DisplayingPodcastList extends
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-        HomeScreenDriver appDriver = createDriver();
+		appDriver = createDriver();
 		activity = appDriver.visitMainShowPage();
 		presenters.get(0).assertPodcastListIsUpdated();
 	}

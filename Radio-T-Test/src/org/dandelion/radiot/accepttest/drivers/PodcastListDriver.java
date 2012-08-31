@@ -1,15 +1,15 @@
 package org.dandelion.radiot.accepttest.drivers;
 
 import android.app.Instrumentation;
+import android.app.ListActivity;
 import android.widget.ListAdapter;
 import com.jayway.android.robotium.solo.Solo;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
-import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
 
 public class PodcastListDriver extends Solo {
-    private PodcastListActivity listActivity;
+    private ListActivity listActivity;
 
-    public PodcastListDriver(Instrumentation instrumentation, PodcastListActivity activity) {
+    public PodcastListDriver(Instrumentation instrumentation, ListActivity activity) {
         super(instrumentation, activity);
         this.listActivity = activity;
     }
