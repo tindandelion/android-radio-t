@@ -6,6 +6,7 @@ import com.jayway.android.robotium.solo.Solo;
 
 import static junit.framework.Assert.assertTrue;
 
+// TODO: Merge this functionality into the LiveShowRunner?
 public class LiveShowDriver extends Solo {
     public LiveShowDriver(Instrumentation instrumentation, Activity activity) {
         super(instrumentation, activity);

@@ -9,6 +9,7 @@ import android.app.Instrumentation;
 
 import com.jayway.android.robotium.solo.Solo;
 
+// TODO HomeScreenDriver starts to become a more general driver
 public class HomeScreenDriver extends Solo {
     private Instrumentation instrumentation;
 
@@ -52,5 +53,13 @@ public class HomeScreenDriver extends Solo {
     public PodcastListDriver visitMainShowPage2() {
         PodcastListActivity activity = visitMainShowPage();
         return new PodcastListDriver(instrumentation, activity);
+    }
+
+    public void goToAboutScreen() {
+        clickOnText("О программе");
+    }
+
+    public void clickActivityTitle() {
+        clickOnActionBarHomeButton();
     }
 }
