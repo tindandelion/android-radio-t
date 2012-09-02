@@ -1,10 +1,8 @@
 package org.dandelion.radiot.util;
 
-import android.content.Intent;
-import android.view.MenuItem;
 import android.app.Activity;
 import android.os.Bundle;
-import org.dandelion.radiot.home_screen.HomeScreenActivity;
+import android.view.MenuItem;
 
 public class CustomTitleActivity extends Activity {
     private ActivityHelper helper;
@@ -24,15 +22,8 @@ public class CustomTitleActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                Intent intent = new Intent(this, HomeScreenActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+        return helper.onOptionsItemSelected(item) ||
+                super.onOptionsItemSelected(item);
     }
 }
 

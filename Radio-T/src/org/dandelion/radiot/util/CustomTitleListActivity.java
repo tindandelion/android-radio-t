@@ -2,6 +2,7 @@ package org.dandelion.radiot.util;
 
 import android.app.ListActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 public abstract class CustomTitleListActivity extends ListActivity {
 
@@ -18,5 +19,11 @@ public abstract class CustomTitleListActivity extends ListActivity {
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         helper.onPostCreate();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return helper.onOptionsItemSelected(item) ||
+                super.onOptionsItemSelected(item);
     }
 }

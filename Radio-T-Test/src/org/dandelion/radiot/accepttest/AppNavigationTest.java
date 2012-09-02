@@ -17,8 +17,14 @@ public class AppNavigationTest extends ActivityInstrumentationTestCase2<HomeScre
         driver = new HomeScreenDriver(getInstrumentation(), getActivity());
     }
 
-    public void testNavigateToHomeScreenWhenClickingActionBarTitle() throws Exception {
+    public void testNavigateToHomeScreenFromAboutScreen() throws Exception {
         driver.goToAboutScreen();
+        driver.clickActivityTitle();
+        driver.assertOnHomeScreen();
+    }
+
+    public void testNavigateToHomeScreenFromPodcastsScreen() throws Exception {
+        driver.goToPodcastsScreen();
         driver.clickActivityTitle();
         driver.assertOnHomeScreen();
     }

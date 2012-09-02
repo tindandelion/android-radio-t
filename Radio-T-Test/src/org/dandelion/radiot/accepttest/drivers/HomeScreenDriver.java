@@ -1,6 +1,7 @@
 package org.dandelion.radiot.accepttest.drivers;
 
 
+import org.dandelion.radiot.home_screen.AboutAppActivity;
 import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
 import org.dandelion.radiot.home_screen.HomeScreenActivity;
 
@@ -22,17 +23,27 @@ public class HomeScreenDriver extends Solo {
 		assertCurrentActivity("Must be on the home screen", HomeScreenActivity.class);
 	}
 
+    public void goToAboutScreen() {
+        clickOnText("О программе");
+        assertCurrentActivity("Must be on the about screen", AboutAppActivity.class);
+    }
+
+    public void goToPodcastsScreen() {
+        clickOnText("Подкасты");
+        assertCurrentActivity("Must be on the main show screen", PodcastListActivity.class);
+    }
+
+    public void goToAfterShowScreen() {
+        clickOnText("После-шоу");
+        assertCurrentActivity("Must be on the after show page", PodcastListActivity.class);
+    }
+
     // TODO: Get rid of visitMainShowPage()
 	public PodcastListActivity visitMainShowPage() {
-		clickOnText("Подкасты");
-		assertCurrentActivity("Must be on the main show page", PodcastListActivity.class);
+        goToPodcastsScreen();
 		return (PodcastListActivity) getCurrentActivity();
 	}
 
-	public void visitAfterShowPage() {
-		clickOnText("После-шоу");
-		assertCurrentActivity("Must be on the after show page", PodcastListActivity.class);
-	}
 
 	public void waitSomeTime() {
 		try {
@@ -53,10 +64,6 @@ public class HomeScreenDriver extends Solo {
     public PodcastListDriver visitMainShowPage2() {
         PodcastListActivity activity = visitMainShowPage();
         return new PodcastListDriver(instrumentation, activity);
-    }
-
-    public void goToAboutScreen() {
-        clickOnText("О программе");
     }
 
     public void clickActivityTitle() {

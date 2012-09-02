@@ -1,11 +1,14 @@
 package org.dandelion.radiot.util;
 
+import android.content.Intent;
+import android.view.MenuItem;
 import org.dandelion.radiot.R;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Build;
 import android.view.Window;
 import android.widget.TextView;
+import org.dandelion.radiot.home_screen.HomeScreenActivity;
 
 abstract class ActivityHelper {
     protected Activity activity;
@@ -25,6 +28,17 @@ abstract class ActivityHelper {
     public abstract void onCreate();
 
     public abstract void onPostCreate();
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            Intent intent = new Intent(activity, HomeScreenActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            activity.startActivity(intent);
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     private static class GingerbreadHelper extends ActivityHelper {
         public GingerbreadHelper(Activity activity) {

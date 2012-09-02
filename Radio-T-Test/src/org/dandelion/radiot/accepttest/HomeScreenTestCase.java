@@ -22,7 +22,7 @@ public class HomeScreenTestCase extends
 	}
 
 	public void testShowAfterShowPage() throws Exception {
-		driver.visitAfterShowPage();
+		driver.goToAfterShowScreen();
 		afterShowPresenter().assertPodcastListIsUpdated();
 		assertTrue("The sample podcast record for pirates is not found",
                 driver.waitForText("#10193"));
