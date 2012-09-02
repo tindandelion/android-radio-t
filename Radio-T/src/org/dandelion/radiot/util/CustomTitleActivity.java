@@ -11,44 +11,20 @@ import android.view.Window;
 import android.widget.TextView;
 import org.dandelion.radiot.home_screen.HomeScreenActivity;
 
-public abstract class CustomTitleActivity extends Activity {
+public class CustomTitleActivity extends Activity {
+    private ActivityHelper helper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-            onCreateGingerbread();
-        } else {
-            onCreateHoneycomb();
-        }
-    }
-
-    private void onCreateHoneycomb() {
-        ActionBar actionBar = getActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-    }
-
-    private void onCreateGingerbread() {
-        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+        helper = ActivityHelper.create(this);
+        helper.onCreate();
     }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-            onPostCreateGingerbread();
-        } else {
-            onPostCreateHoneycomb();
-        }
-    }
-
-    private void onPostCreateGingerbread() {
-        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.titlebar);
-        TextView titleText = (TextView) findViewById(R.id.titlebar_title);
-        titleText.setText(getTitle());
-    }
-
-    private void onPostCreateHoneycomb() {
-
+        helper.onPostCreate();
     }
 
     @Override
@@ -61,6 +37,61 @@ public abstract class CustomTitleActivity extends Activity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+}
+
+abstract class ActivityHelper {
+    protected Activity activity;
+
+    public static ActivityHelper create(Activity activity) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
+            return new GingerbreadHelper(activity);
+        } else {
+            return new HoneycombHelper(activity);
+        }
+    }
+
+    private ActivityHelper(Activity activity) {
+        this.activity = activity;
+    }
+
+    public abstract void onCreate();
+
+    public abstract void onPostCreate();
+
+    private static class GingerbreadHelper extends ActivityHelper {
+        public GingerbreadHelper(Activity activity) {
+            super(activity);
+        }
+
+        @Override
+        public void onCreate() {
+            activity.requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+        }
+
+        @Override
+        public void onPostCreate() {
+            activity.getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.titlebar);
+            TextView titleText = (TextView) activity.findViewById(R.id.titlebar_title);
+            titleText.setText(activity.getTitle());
+        }
+    }
+
+    private static class HoneycombHelper extends ActivityHelper {
+        public HoneycombHelper(Activity activity) {
+            super(activity);
+        }
+
+        @Override
+        public void onCreate() {
+            ActionBar actionBar = activity.getActionBar();
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
+        @Override
+        public void onPostCreate() {
+
         }
     }
 }
