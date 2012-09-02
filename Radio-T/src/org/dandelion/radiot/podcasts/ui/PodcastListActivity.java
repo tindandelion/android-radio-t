@@ -15,7 +15,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.RadiotApplication;
-import org.dandelion.radiot.home_screen.HomeScreenActivity;
 import org.dandelion.radiot.podcasts.PodcastsApp;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastList.IPodcastListEngine;
@@ -97,7 +96,6 @@ public class PodcastListActivity extends CustomTitleListActivity implements IVie
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.default_menu, menu);
 		inflater.inflate(R.menu.podcast_list, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
@@ -108,8 +106,6 @@ public class PodcastListActivity extends CustomTitleListActivity implements IVie
 		case R.id.refresh:
 			engine.refresh(true);
 			return true;
-		case R.id.go_home: 
-			HomeScreenActivity.start(this);
 		default:
 			return super.onOptionsItemSelected(item);
 		}
