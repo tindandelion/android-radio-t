@@ -15,7 +15,7 @@ public class AboutAppActivity extends CustomTitleActivity {
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.about_app);
 		setVersionLabel(appInfo().getVersion());
-	}
+    }
 
     @SuppressWarnings("UnusedParameters")
     public void sendFeedback(View view) {
