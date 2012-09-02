@@ -1,11 +1,26 @@
 <resources>
+    <style name="ActionBar">
+        <item name="android:background">@color/titlebar_background</item>
+    </style>
+
+    <style name="ActionBar.Text"
+           parent="@android:style/Widget.TextView">
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">@dimen/actionbar_text_size</item>
+        <item name="android:textColor">@color/actionbar_text_color</item>
+        <item name="android:paddingLeft">6dp</item>
+        <item name="android:paddingRight">6dp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">marquee</item>
+    </style>
+
     <style name="Theme.Radiot" parent="android:Theme">
         <item name="android:textViewStyle">@style/Radiot.TextView</item>
         <item name="android:buttonStyle">@style/Radiot.Button</item>
         <item name="android:windowBackground">@color/window_background</item>
 
-        <item name="android:windowTitleSize">@dimen/titlebar_height</item>
-        <item name="android:windowTitleBackgroundStyle">@style/Titlebar</item>
+        <item name="android:windowTitleSize">@dimen/actionbar_height</item>
+        <item name="android:windowTitleBackgroundStyle">@style/ActionBar</item>
         <item name="android:windowContentOverlay">@drawable/titlebar_shadow</item>
     </style>
 
