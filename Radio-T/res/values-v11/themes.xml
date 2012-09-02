@@ -1,8 +1,12 @@
 <resources>
+    <style name="Radiot.ActionBar" parent="@android:style/Widget.Holo.ActionBar">
+        <item name="android:background">@color/titlebar_background</item>
+    </style>
     <style name="Theme.Radiot" parent="android:Theme.Holo">
         <item name="android:textViewStyle">@style/Radiot.TextView</item>
         <item name="android:buttonStyle">@style/Radiot.Button</item>
         <item name="android:windowBackground">@color/window_background</item>
+        <item name="android:actionBarStyle">@style/Radiot.ActionBar</item>
         <item name="android:windowContentOverlay">@drawable/titlebar_shadow</item>
     </style>
 
