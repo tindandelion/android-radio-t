@@ -4,6 +4,10 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
               android:orientation="horizontal">
+    <ImageButton android:layout_height="fill_parent"
+                 android:layout_width="wrap_content"
+                 android:id="@+id/titlebar_icon"
+                 android:src="@drawable/ic_titlebar" />
     <TextView
             android:layout_height="fill_parent"
             android:layout_width="fill_parent"

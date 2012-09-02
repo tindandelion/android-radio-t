@@ -2,6 +2,8 @@ package org.dandelion.radiot.util;
 
 import android.content.Intent;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 import org.dandelion.radiot.R;
 import android.app.ActionBar;
 import android.app.Activity;
@@ -31,13 +33,17 @@ abstract class ActivityHelper {
 
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            Intent intent = new Intent(activity, HomeScreenActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            activity.startActivity(intent);
+            startHomeActivity();
             return true;
         } else {
             return false;
         }
+    }
+
+    public void startHomeActivity() {
+        Intent intent = new Intent(activity, HomeScreenActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        activity.startActivity(intent);
     }
 
     private static class GingerbreadHelper extends ActivityHelper {
@@ -54,7 +60,15 @@ abstract class ActivityHelper {
         public void onPostCreate() {
             activity.getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.titlebar);
             TextView titleText = (TextView) activity.findViewById(R.id.titlebar_title);
+            ImageButton homeButton = (ImageButton) activity.findViewById(R.id.titlebar_icon);
+
             titleText.setText(activity.getTitle());
+            homeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startHomeActivity();
+                }
+            });
         }
     }
 

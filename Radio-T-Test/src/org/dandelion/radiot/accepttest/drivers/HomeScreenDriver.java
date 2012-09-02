@@ -1,10 +1,9 @@
 package org.dandelion.radiot.accepttest.drivers;
 
-
+import android.os.Build;
 import org.dandelion.radiot.home_screen.AboutAppActivity;
 import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
 import org.dandelion.radiot.home_screen.HomeScreenActivity;
-
 import android.app.Activity;
 import android.app.Instrumentation;
 
@@ -67,6 +66,48 @@ public class HomeScreenDriver extends Solo {
     }
 
     public void clickActivityTitle() {
-        clickOnActionBarHomeButton();
+        ActivityTitleClicker titleClicker = ActivityTitleClicker.create(this);
+        titleClicker.click();
+    }
+
+}
+
+abstract class ActivityTitleClicker {
+    protected HomeScreenDriver driver;
+
+    public static ActivityTitleClicker create(HomeScreenDriver driver) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
+            return new GingerbreadActivityTitleClicker(driver);
+        } else {
+            return new HoneycombActivityTitleClicker(driver);
+        }
+    }
+
+    private ActivityTitleClicker(HomeScreenDriver driver) {
+        this.driver = driver;
+    }
+
+    public abstract void click();
+
+    private static class HoneycombActivityTitleClicker extends ActivityTitleClicker {
+        public HoneycombActivityTitleClicker(HomeScreenDriver driver) {
+            super(driver);
+        }
+
+        @Override
+        public void click() {
+            driver.clickOnActionBarHomeButton();
+        }
+    }
+
+    private static class GingerbreadActivityTitleClicker extends ActivityTitleClicker {
+        public GingerbreadActivityTitleClicker(HomeScreenDriver driver) {
+            super(driver);
+        }
+
+        @Override
+        public void click() {
+            driver.clickOnImageButton(0);
+        }
     }
 }
