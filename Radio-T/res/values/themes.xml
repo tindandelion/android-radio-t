@@ -1,6 +1,6 @@
 <resources>
     <style name="ActionBar">
-        <item name="android:background">@color/titlebar_background</item>
+        <item name="android:background">@color/actionbar_background</item>
     </style>
 
     <style name="ActionBar.Text"
@@ -18,7 +18,6 @@
         <item name="android:textViewStyle">@style/Radiot.TextView</item>
         <item name="android:buttonStyle">@style/Radiot.Button</item>
         <item name="android:windowBackground">@color/window_background</item>
-
         <item name="android:windowTitleSize">@dimen/actionbar_height</item>
         <item name="android:windowTitleBackgroundStyle">@style/ActionBar</item>
         <item name="android:windowContentOverlay">@drawable/titlebar_shadow</item>

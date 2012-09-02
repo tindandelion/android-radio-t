@@ -1,5 +1,5 @@
 <resources>
     <color name="window_background">#333</color>
-    <color name="titlebar_background">#222</color>
+    <color name="actionbar_background">#222</color>
     <color name="actionbar_text_color">#fff</color>
 </resources>

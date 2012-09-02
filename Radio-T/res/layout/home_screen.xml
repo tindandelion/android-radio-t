@@ -11,7 +11,7 @@
             android:paddingBottom="17dp"
             android:paddingRight="7dp"
             android:paddingLeft="7dp"
-            android:background="@color/titlebar_background">
+            android:background="@color/actionbar_background">
         <include
                 android:id="@+id/logo"
                 layout="@layout/app_logo"/>

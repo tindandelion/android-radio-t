@@ -6,7 +6,7 @@
     </style>
 
     <style name="Radiot.ActionBar" parent="@android:style/Widget.Holo.ActionBar">
-        <item name="android:background">@color/titlebar_background</item>
+        <item name="android:background">@color/actionbar_background</item>
         <item name="android:titleTextStyle">@style/TextAppearance.ActionBar.Title</item>
     </style>
 
