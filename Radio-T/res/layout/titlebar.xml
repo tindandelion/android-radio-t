@@ -3,12 +3,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
-              android:orientation="horizontal"
-                android:gravity="center_vertical">
-    <ImageButton android:layout_height="wrap_content"
+              android:orientation="horizontal">
+    <ImageButton android:layout_height="fill_parent"
                  android:layout_width="wrap_content"
                  android:id="@+id/titlebar_icon"
-                 android:background="@android:color/transparent"
+                 android:background="@android:drawable/list_selector_background"
                  android:paddingLeft="7dp"
                  android:paddingRight="7dp"
                  android:src="@drawable/ic_titlebar" />
