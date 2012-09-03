@@ -10,6 +10,13 @@
         <item name="android:titleTextStyle">@style/TextAppearance.ActionBar.Title</item>
     </style>
 
+    <style name="Radiot.Button"
+           parent="@android:style/Widget.Holo.Button.Borderless">
+        <item name="android:textColor">@color/button_text_color</item>
+        <item name="android:textSize">@dimen/button_text_size</item>
+        <item name="android:padding">8dp</item>
+    </style>
+
     <style name="Theme.Radiot" parent="android:Theme.Holo">
         <item name="android:textViewStyle">@style/Radiot.TextView</item>
         <item name="android:buttonStyle">@style/Radiot.Button</item>
