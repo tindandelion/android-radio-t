@@ -4,12 +4,13 @@ Backlog:
  * Sync podcast list with SyncAdaptor
  * User topics
 
+
 Version 1.5:
  * Cache podcast list locally
  * Google Analytics
  * Android 4.0 UI
    * New icon with ICS guidelines
-   * New status bar icons
+   DONE New status bar icons
    * Button background styling
    * Larger screens
  * Testing: Notifications
