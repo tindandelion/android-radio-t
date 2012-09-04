@@ -20,7 +20,9 @@
 	<style name="Divider">
 		<item name="android:layout_height">1px</item>
 		<item name="android:layout_width">fill_parent</item>
-        <item name="android:background">@android:drawable/divider_horizontal_dark</item>
+        <item name="android:layout_marginLeft">@dimen/divider_margin</item>
+        <item name="android:layout_marginRight">@dimen/divider_margin</item>
+        <item name="android:background">?android:attr/listDivider</item>
 	</style>
 
     <style name="DashboardButton">

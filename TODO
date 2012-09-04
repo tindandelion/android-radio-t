@@ -11,9 +11,7 @@ Version 1.5:
  * Android 4.0 UI
    * New icon with ICS guidelines
    DONE New status bar icons
-   * Button background styling
-     * Divider from theme?
-     * Divider padded?
+   DONE Button background styling
    * Larger screens
  * Testing: Notifications
 
