@@ -1,15 +1,33 @@
 require "pathname"
 require "pry"
 
-RES_DIR = Pathname(__FILE__).dirname.join('Radio-T', 'res')
-MDPI_DIR_PREFIX = 'drawable-mdpi'
+PROJECT_PATH = Pathname('Radio-T')
+RES_DIR = PROJECT_PATH + 'res'
 XHDPI_DIR_PREFIX = 'drawable-xhdpi'
 
-def mdpi_directories
-  RES_DIR.children.select do |path|
-    path.directory? &&
-      path.basename.to_s.start_with?(MDPI_DIR_PREFIX)
+class Resources
+  MDPI_DIR_PREFIX = 'drawable-mdpi'
+
+  def initialize(project_path)
+    @res_path = project_path + 'res'
   end
+
+  def mdpi_directories
+    @res_path.children.select do |path|
+      path.directory? &&
+        path.basename.to_s.start_with?(MDPI_DIR_PREFIX)
+    end
+  end
+
+  def xhdpi_directory(version_suffix)
+    @res_path.join(XHDPI_DIR_PREFIX + version_suffix)    
+  end
+end
+
+$resources = Resources.new(PROJECT_PATH)
+
+def mdpi_directories
+  $resources.mdpi_directories
 end
 
 def version_suffix_from(path)
@@ -19,16 +37,23 @@ def version_suffix_from(path)
 end
 
 def xhdpi_directory(version_suffix)
-  RES_DIR.join(XHDPI_DIR_PREFIX + version_suffix)
+  $resources.xhdpi_directory(version_suffix)
 end
 
-mdpi_directories.each do |path|
-  version_suffix = version_suffix_from(path)
-  xhdpi_dir = xhdpi_directory(version_suffix)
-  puts xhdpi_dir
-  path.children.each do |file|
-    resource_name = file.basename.to_s
-    xhdpi_file = xhdpi_dir + resource_name
-    puts "\t" + resource_name unless xhdpi_file.exist?
+def missing_drawables_xhdpi
+  result = []
+  mdpi_directories.each do |mdpi_path|
+    version_suffix = version_suffix_from(mdpi_path)
+    xhdpi_dir = xhdpi_directory(version_suffix)
+    mdpi_path.children.each do |file|
+      resource_name = file.basename.to_s
+      xhdpi_path = xhdpi_dir + resource_name
+      result << xhdpi_path unless xhdpi_path.exist?
+    end
   end
+  result
 end
+
+puts missing_drawables_xhdpi
+
+
