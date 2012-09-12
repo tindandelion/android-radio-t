@@ -2,21 +2,7 @@ require 'pathname'
 require 'tmpdir'
 require 'pry'
 
-DENSITIES = %w(ldpi mdpi hdpi xhdpi)
-
-def find_missing_drawables(svg_dir, drawables_dir)
-  missing_files = []
-  svg_dir.children.each do |svg|
-    next if svg.directory?
-    
-    name = svg.basename('.*').to_s
-    DENSITIES.collect do |d|
-      png_file = drawables_dir + ('drawable-' + d) + (name + '.png')
-      missing_files << png_file unless png_file.exist?
-    end
-  end
-  missing_files
-end
+require Pathname(__FILE__).dirname + 'drawables.rb'
 
 describe 'Missing drawables' do
   let(:work_dir) { Pathname(Dir.mktmpdir) }
