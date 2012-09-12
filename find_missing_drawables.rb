@@ -3,11 +3,11 @@ require "pry"
 
 PROJECT_PATH = Pathname('Radio-T')
 RES_DIR = PROJECT_PATH + 'res'
-XHDPI_DIR_PREFIX = 'drawable-xhdpi'
 
 class Resources
   MDPI_DIR_PREFIX = 'drawable-mdpi'
-
+  XHDPI_DIR_PREFIX = 'drawable-xhdpi'
+  
   def initialize(project_path)
     @res_path = project_path + 'res'
   end
@@ -26,10 +26,6 @@ end
 
 $resources = Resources.new(PROJECT_PATH)
 
-def mdpi_directories
-  $resources.mdpi_directories
-end
-
 def version_suffix_from(path)
   components = path.basename.to_s.split('-')
   return "" if components.size < 3
@@ -42,7 +38,7 @@ end
 
 def missing_drawables_xhdpi
   result = []
-  mdpi_directories.each do |mdpi_path|
+  $resources.mdpi_directories.each do |mdpi_path|
     version_suffix = version_suffix_from(mdpi_path)
     xhdpi_dir = xhdpi_directory(version_suffix)
     mdpi_path.children.each do |file|
@@ -54,6 +50,14 @@ def missing_drawables_xhdpi
   result
 end
 
-puts missing_drawables_xhdpi
+def missing_artwork_files
+  result = []
+  $resources.mdpi_directories.each do |mdpi_path|
+    version_suffix = version_suffix_from(mdpi_path)
+    puts version_suffix
+  end
+  result
+end  
 
-
+# puts missing_drawables_xhdpi  
+puts missing_artwork_files
