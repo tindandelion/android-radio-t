@@ -36,7 +36,7 @@ describe 'Missing drawables' do
     missing_drawables.should_not include(existing_drawable)
   end
 
-  it 'skips the directories in SVG dir' do
+  it 'skips the sub-directories which are not version-specific dirs' do
     FileUtils.mkpath svg_dir + 'subdir'
 
     missing_drawables = find_missing_drawables(svg_dir, drawables_dir)
