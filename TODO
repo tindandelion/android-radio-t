@@ -13,7 +13,18 @@ Version 1.5:
    DONE New status bar icons
    DONE Button background styling
    * Larger screens
+     DONE Logo 54x54 (108x108)
+     DONE Icon 48x48 (96x96)
+     DONE Status live 24x24 (48x48)
+     DONE Status dl complete 24x24 (48x48)
+     DONE Default podcast image 72x72 (144x144)
+     * Titlebar icon? 32x32 (64x64)
+     * Refresh 32x32 (64x64)
+     * Center logo text
+     * !! Home screen buttons
+
  * Testing: Notifications
+ * Testing: file to download already exists
 
 * Debt:
  * Podcast type "audo/mpeg" appears in lots of places
