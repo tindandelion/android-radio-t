@@ -1,25 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="wrap_content"
-	android:layout_height="wrap_content"
-	android:orientation="horizontal">
-	<TextView
-		android:id="@+id/main_title"
-		android:layout_width="wrap_content"
-		android:layout_height="fill_parent"
-		android:textColor="@android:color/white"
-		android:gravity="bottom"
-		android:paddingBottom="@dimen/logo_text_padding_bottom"
-		android:textStyle="bold"
-		android:textSize="23dp"
-		android:textScaleX="1.1"
-		android:text="@string/main_title" />
-	<ImageView
-		android:id="@+id/logo_image"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:src="@drawable/logo"
-		android:layout_marginLeft="2dp"
-		android:layout_toRightOf="@id/main_title" />
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:textColor="@android:color/white"
+            android:gravity="bottom"
+            android:paddingBottom="@dimen/logo_text_padding_bottom"
+            android:textStyle="bold"
+            android:textSize="23dp"
+            android:textScaleX="1.1"
+            android:text="@string/main_title"/>
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logo"
+            android:layout_marginLeft="2dp"/>
 </LinearLayout>

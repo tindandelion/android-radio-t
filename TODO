@@ -18,7 +18,7 @@ Version 1.5:
      DONE Status dl complete 24x24 (48x48)
      DONE Default podcast image 72x72 (144x144)
      DONE Refresh 32x32 (64x64)
-     * Center logo text
+     DONE Center logo text
      * !! Home screen buttons
      * Titlebar icon? 32x32 (64x64)
  * Testing: file to download already exists
