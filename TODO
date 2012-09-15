@@ -3,15 +3,16 @@ Backlog:
  * Downloading: Respect background data loading settings
  * Sync podcast list with SyncAdaptor
  * User topics
+ * Android 4.0 UI
+   * New icon with ICS guidelines
 
 Version 1.5:
  * Cache podcast list locally
  * Google Analytics
- * Android 4.0 UI
-   * New icon with ICS guidelines
+ DONE Android 4.0 UI
    DONE New status bar icons
    DONE Button background styling
-   * Larger screens
+   DONE Larger screens
      DONE Logo 54x54 (108x108)
      DONE Icon 48x48 (96x96)
      DONE Status live 24x24 (48x48)
@@ -19,8 +20,7 @@ Version 1.5:
      DONE Default podcast image 72x72 (144x144)
      DONE Refresh 32x32 (64x64)
      DONE Center logo text
-     * !! Home screen buttons
-     * Titlebar icon? 32x32 (64x64)
+     DONE Home screen buttons
  * Testing: file to download already exists
 
 * Debt:
