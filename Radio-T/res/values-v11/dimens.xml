@@ -1,0 +1,3 @@
+<resources>
+    <dimen name="logo_text_padding_bottom">6dp</dimen>
+</resources>

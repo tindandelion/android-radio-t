@@ -4,7 +4,6 @@ Backlog:
  * Sync podcast list with SyncAdaptor
  * User topics
 
-
 Version 1.5:
  * Cache podcast list locally
  * Google Analytics
@@ -18,10 +17,10 @@ Version 1.5:
      DONE Status live 24x24 (48x48)
      DONE Status dl complete 24x24 (48x48)
      DONE Default podcast image 72x72 (144x144)
-     * Refresh 32x32 (64x64)
+     DONE Refresh 32x32 (64x64)
      * Center logo text
-     * Titlebar icon? 32x32 (64x64)
      * !! Home screen buttons
+     * Titlebar icon? 32x32 (64x64)
  * Testing: file to download already exists
 
 * Debt:
