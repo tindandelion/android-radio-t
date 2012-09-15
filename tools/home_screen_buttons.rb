@@ -2,6 +2,8 @@ require 'rexml/document'
 require 'pry'
 
 DENSITY_RES = {
+  ldpi: 45,
+  mdpi: 60,
   hdpi: 90,
   xhdpi: 120
 }
@@ -15,11 +17,12 @@ BUTTON_STATES = {
 
 INKSCAPE_PATH = "/Applications/Inkscape.app/Contents/Resources/bin/inkscape"
 
-def create_home_screen_buttons(src_dir, drawable_dir, density)
-  dest_dir = drawable_dir + ('drawable' + '-' + density.to_s)
-  dpi = DENSITY_RES[density]
-  Dir.glob(src_dir + "*.svg") do |svg_file|
-    create_home_screen_button(Pathname(svg_file), dest_dir, dpi)
+def create_home_screen_buttons(src_dir, drawable_dir)
+  DENSITY_RES.each_pair do |density, dpi|
+    dest_dir = drawable_dir + ('drawable' + '-' + density.to_s)
+    Dir.glob(src_dir + "*.svg") do |svg_file|
+      create_home_screen_button(Pathname(svg_file), dest_dir, dpi)
+    end
   end
 end
 

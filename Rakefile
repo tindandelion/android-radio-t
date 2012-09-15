@@ -15,10 +15,6 @@ end
 
 desc "Create home screen buttons"
 task :home_screen_buttons do
-  densities = [:hdpi, :xhdpi]
-  densities.each do |den|
-    create_home_screen_buttons(SVG_DIR + 'home_buttons',
-                               RESOURCE_DIR, den)
-  end
+  create_home_screen_buttons(SVG_DIR + 'home_buttons', RESOURCE_DIR)
 end
 
