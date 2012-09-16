@@ -1,4 +1,4 @@
-package org.dandelion.radiot.accepttest.testables;
+package org.dandelion.radiot.endtoend.podcasts;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;

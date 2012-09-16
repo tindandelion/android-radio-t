@@ -1,10 +1,8 @@
-package org.dandelion.radiot.accepttest;
+package org.dandelion.radiot.endtoend.podcasts;
 
 import android.content.Context;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
-import org.dandelion.radiot.accepttest.drivers.PodcastListRunner;
-import org.dandelion.radiot.accepttest.testables.TestRssServer;
 import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
 
 public class VisualizePodcastListTest

@@ -1,4 +1,4 @@
-package org.dandelion.radiot.accepttest.drivers;
+package org.dandelion.radiot.endtoend.podcasts;
 
 import android.app.Instrumentation;
 import android.widget.ListView;
@@ -9,10 +9,10 @@ import org.hamcrest.Matcher;
 import static org.hamcrest.CoreMatchers.equalTo;
 
 public class PodcastListRunner {
-    private PodcastListUiDriver driver;
+    private PodcastListDriver driver;
 
     public PodcastListRunner(Instrumentation instrumentation, PodcastListActivity activity) {
-        this.driver = new PodcastListUiDriver(instrumentation, activity);
+        this.driver = new PodcastListDriver(instrumentation, activity);
     }
 
     public void showsEmptyPodcastList() {
@@ -36,4 +36,5 @@ public class PodcastListRunner {
             }
         };
     }
+
 }
