@@ -6,10 +6,10 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import com.jayway.android.robotium.solo.Solo;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
+import org.hamcrest.Matcher;
 
-import java.util.ArrayList;
-
-import static junit.framework.Assert.assertTrue;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class PodcastListUiDriver extends Solo {
     private ListActivity listActivity;
@@ -45,9 +45,9 @@ public class PodcastListUiDriver extends Solo {
         item.setAudioUri(url);
     }
 
-    public ListView listView() {
-        assertTrue("List view haven't appeared", waitForView(ListView.class));
-        ArrayList<ListView> listViews = getCurrentListViews();
-        return listViews.get(0);
+    public void podcastListCount(Matcher<Integer> matcher) {
+        assertThat(waitForView(ListView.class), is(true));
+        ListView view = getCurrentListViews().get(0);
+        assertThat(view.getCount(), matcher);
     }
 }
