@@ -5,11 +5,12 @@ import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
 
-public class VisualizePodcastListTest
+public class PodcastListLoadingTests
         extends ActivityInstrumentationTestCase2<PodcastListActivity> {
     private TestRssServer backend;
+    private PodcastListRunner app;
 
-    public VisualizePodcastListTest() {
+    public PodcastListLoadingTests() {
         super(PodcastListActivity.class);
     }
 
@@ -18,7 +19,7 @@ public class VisualizePodcastListTest
                 .empty()
                 .done();
 
-        PodcastListRunner app = startApplication();
+        app = startApplication();
         app.showsEmptyPodcastList();
     }
 
@@ -27,7 +28,7 @@ public class VisualizePodcastListTest
                 .items(5)
                 .done();
 
-        PodcastListRunner app = startApplication();
+        app = startApplication();
         app.showsPodcastListWithItemCount(5);
     }
 
@@ -37,7 +38,7 @@ public class VisualizePodcastListTest
                         "<pubDate>Sun, 13 Jun 2010 01:37:22 +0000</pubDate>" +
                         "<itunes:summary>Lorem ipsum dolor sit amet</itunes:summary>")
                 .done();
-        PodcastListRunner app = startApplication();
+        app = startApplication();
         app.showsPodcastItem("#140", "13.06.2010", "Lorem ipsum dolor sit amet");
     }
 
