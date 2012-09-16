@@ -9,20 +9,39 @@ import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
 
 public class VisualizePodcastListTest
         extends ActivityInstrumentationTestCase2<PodcastListActivity> {
+    private TestRssServer backend;
+
     public VisualizePodcastListTest() {
         super(PodcastListActivity.class);
     }
 
+    public void testNoPodcastsInList() throws Exception {
+        backend.provideEmptyRssFeed();
+        PodcastListRunner app = startApplication();
+        app.showsPodcastsInCount(0);
+    }
+
     public void testShowsTheCorrectNumberOfPodcasts() throws Exception {
-        TestRssServer backend = new TestRssServer();
-        PodcastListRunner app = new PodcastListRunner(getInstrumentation(), startActivity());
         backend.provideRssFeedWithItemCount(20);
+        PodcastListRunner app = startApplication();
         app.showsPodcastsInCount(20);
     }
 
-    private PodcastListActivity startActivity() {
+    @Override
+    public void setUp() throws Exception {
+        super.setUp();
+        backend = new TestRssServer();
+    }
+
+    @Override
+    public void tearDown() throws Exception {
+        backend.stop();
+        super.tearDown();
+    }
+
+    private PodcastListRunner startApplication() {
         setActivityIntent(startupIntent());
-        return getActivity();
+        return new PodcastListRunner(getInstrumentation(), getActivity());
     }
 
     private Intent startupIntent() {
