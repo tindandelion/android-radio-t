@@ -12,7 +12,7 @@ import org.dandelion.radiot.podcasts.download.FakeDownloaderActivity;
 
 import java.io.File;
 
-public class SelectingPodcastsFromList extends PodcastListAcceptanceTestCase {
+public class PodcastOperationsTest extends PodcastListAcceptanceTestCase {
     public static final String SAMPLE_URL = "http://example.com/podcast_file.mp3";
     private static final String TITLE = "Радио-Т 001";
 
