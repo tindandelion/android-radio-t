@@ -9,18 +9,18 @@ import org.dandelion.radiot.live.core.LiveShowState;
 import org.dandelion.radiot.live.service.LiveShowService;
 
 public class LiveShowRunner {
-    private final LiveShowDriver driver;
+    private final LiveShowUiDriver uiDriver;
     private final Context context;
     private final FakeStatusDisplayer statusNotifier;
 
     public LiveShowRunner(Instrumentation inst, Activity activity, FakeStatusDisplayer statusNotifier) {
-        this.driver = new LiveShowDriver(inst, activity);
+        this.uiDriver = new LiveShowUiDriver(inst, activity);
         this.context = inst.getTargetContext();
         this.statusNotifier = statusNotifier;
     }
 
     public void finish() {
-        driver.finishOpenedActivities();
+        uiDriver.finishOpenedActivities();
         stopService();
     }
 
@@ -30,28 +30,28 @@ public class LiveShowRunner {
     }
 
     public void startTranslation() {
-        driver.clickConnect();
+        uiDriver.clickConnect();
     }
 
     public void showsTranslationInProgress() {
-        driver.showsTranslationStatus("Трансляция");
+        uiDriver.showsTranslationStatus("Трансляция");
         statusNotifier.showsStatusFor(LiveShowState.Playing);
     }
 
     public void stopTranslation() {
-        driver.clickStop();
+        uiDriver.clickStop();
     }
 
     public void showsTranslationStopped() {
-        driver.showsTranslationStatus("Остановлено");
+        uiDriver.showsTranslationStatus("Остановлено");
         statusNotifier.showsStatusFor(LiveShowState.Idle);
     }
 
     public void showsWaiting() {
-        driver.showsTranslationStatus("Ожидание");
+        uiDriver.showsTranslationStatus("Ожидание");
     }
 
     public void showsStopped() {
-        driver.showsTranslationStatus("Остановлено");
+        uiDriver.showsTranslationStatus("Остановлено");
     }
 }
