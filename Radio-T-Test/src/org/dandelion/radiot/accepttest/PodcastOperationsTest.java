@@ -3,7 +3,7 @@ package org.dandelion.radiot.accepttest;
 
 import android.os.Environment;
 import org.dandelion.radiot.accepttest.drivers.HomeScreenDriver;
-import org.dandelion.radiot.accepttest.drivers.PodcastListDriver;
+import org.dandelion.radiot.accepttest.drivers.PodcastListUiDriver;
 import org.dandelion.radiot.accepttest.testables.*;
 import org.dandelion.radiot.helpers.*;
 import org.dandelion.radiot.podcasts.PodcastsApp;
@@ -31,13 +31,13 @@ public class PodcastOperationsTest extends PodcastListAcceptanceTestCase {
     }
 
     public void testPlayPodcastFromInternet() throws Exception {
-        PodcastListDriver driver = gotoPodcastListPage();
+        PodcastListUiDriver driver = gotoPodcastListPage();
         PodcastItem item = driver.selectItemForPlaying(0);
 		player.assertIsPlaying(item.getAudioUri());
 	}
 
     public void testDownloadPodcastFileLocally() throws Exception {
-        PodcastListDriver driver = gotoPodcastListPage();
+        PodcastListUiDriver driver = gotoPodcastListPage();
         driver.makeSamplePodcastWithUrl(TITLE, SAMPLE_URL);
         File localPath = new File(getDownloadFolder(), "podcast_file.mp3");
 
@@ -50,7 +50,7 @@ public class PodcastOperationsTest extends PodcastListAcceptanceTestCase {
     }
 
     public void testDownloadFinishedWithError() throws Exception {
-        PodcastListDriver driver = gotoPodcastListPage();
+        PodcastListUiDriver driver = gotoPodcastListPage();
         driver.makeSamplePodcastWithUrl(TITLE, SAMPLE_URL);
         File localPath = new File(getDownloadFolder(), "podcast_file.mp3");
         final int errorCode = 1000;
@@ -64,7 +64,7 @@ public class PodcastOperationsTest extends PodcastListAcceptanceTestCase {
     }
 
     public void testMissingPodcastUrl() throws Exception {
-        PodcastListDriver driver = gotoPodcastListPage();
+        PodcastListUiDriver driver = gotoPodcastListPage();
         driver.makeSamplePodcastWithUrl(TITLE, null);
         
         driver.selectItemForDownloading(0);
@@ -72,7 +72,7 @@ public class PodcastOperationsTest extends PodcastListAcceptanceTestCase {
     }
 
     public void testCancelDownloadInProgress() throws Exception {
-        PodcastListDriver driver = gotoPodcastListPage();
+        PodcastListUiDriver driver = gotoPodcastListPage();
         driver.makeSamplePodcastWithUrl(TITLE, SAMPLE_URL);
         File localPath = new File(getDownloadFolder(), "podcast_file.mp3");
 
@@ -84,7 +84,7 @@ public class PodcastOperationsTest extends PodcastListAcceptanceTestCase {
 
     public void testInformsUserOnUnsupportedPlatforms() throws Exception {
         application.setDownloadSupported(false);
-        PodcastListDriver driver = gotoPodcastListPage();
+        PodcastListUiDriver driver = gotoPodcastListPage();
 
         driver.selectItemForDownloading(0);
 
@@ -94,8 +94,8 @@ public class PodcastOperationsTest extends PodcastListAcceptanceTestCase {
 
     }
 
-    private PodcastListDriver gotoPodcastListPage() throws InterruptedException {
-        PodcastListDriver driver = appDriver.visitMainShowPage2();
+    private PodcastListUiDriver gotoPodcastListPage() throws InterruptedException {
+        PodcastListUiDriver driver = appDriver.visitMainShowPage2();
         mainShowPresenter().assertPodcastListIsUpdated();
         return driver;
     }

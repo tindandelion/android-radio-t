@@ -19,6 +19,9 @@ public class RadiotApplication extends Application {
         engines.put(
                 "after-show",
                 createPodcastEngine("http://feeds.feedburner.com/pirate-radio-t", new NullThumbnailDownloader()));
+        engines.put(
+                "test-show",
+                createPodcastEngine("http://localhost:8080/rss", new NullThumbnailDownloader()));
         PodcastsApp.initialize(this);
 	}
 	

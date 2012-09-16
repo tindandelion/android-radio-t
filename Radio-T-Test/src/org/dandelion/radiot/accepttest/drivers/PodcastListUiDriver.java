@@ -3,13 +3,18 @@ package org.dandelion.radiot.accepttest.drivers;
 import android.app.Instrumentation;
 import android.app.ListActivity;
 import android.widget.ListAdapter;
+import android.widget.ListView;
 import com.jayway.android.robotium.solo.Solo;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 
-public class PodcastListDriver extends Solo {
+import java.util.ArrayList;
+
+import static junit.framework.Assert.assertTrue;
+
+public class PodcastListUiDriver extends Solo {
     private ListActivity listActivity;
 
-    public PodcastListDriver(Instrumentation instrumentation, ListActivity activity) {
+    public PodcastListUiDriver(Instrumentation instrumentation, ListActivity activity) {
         super(instrumentation, activity);
         this.listActivity = activity;
     }
@@ -38,5 +43,11 @@ public class PodcastListDriver extends Solo {
         PodcastItem item = (PodcastItem) adapter.getItem(0);
         item.setTitle(title);
         item.setAudioUri(url);
+    }
+
+    public ListView listView() {
+        assertTrue("List view haven't appeared", waitForView(ListView.class));
+        ArrayList<ListView> listViews = getCurrentListViews();
+        return listViews.get(0);
     }
 }

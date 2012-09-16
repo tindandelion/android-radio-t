@@ -29,13 +29,18 @@ public class PodcastListActivity extends CustomTitleListActivity implements IVie
 	public static final String SHOW_NAME_EXTRA = "podcast_url";
 
 	public static void start(Context context, String title, String showName) {
-		Intent intent = new Intent(context, PodcastListActivity.class);
-		intent.putExtra(SHOW_NAME_EXTRA, showName);
-		intent.putExtra(TITLE_EXTRA, title);
+        Intent intent = createIntent(context, title, showName);
 		context.startActivity(intent);
 	}
 
-	private Bundle extras;
+    public static Intent createIntent(Context context, String title, String showName) {
+        Intent intent = new Intent(context, PodcastListActivity.class);
+        intent.putExtra(SHOW_NAME_EXTRA, showName);
+        intent.putExtra(TITLE_EXTRA, title);
+        return intent;
+    }
+
+    private Bundle extras;
 	private PodcastListAdapter listAdapter;
     private IPodcastListEngine engine;
 	private ProgressDialog progress;
@@ -69,7 +74,7 @@ public class PodcastListActivity extends CustomTitleListActivity implements IVie
 
     protected void attachToEngine() {
 		RadiotApplication app = (RadiotApplication) getApplication();
-		engine = app.getPodcastEngine(getFeedUrlFromExtra());
+		engine = app.getPodcastEngine(getShowNameFromExtra());
 		engine.attach(this);
 	}
 
@@ -140,7 +145,7 @@ public class PodcastListActivity extends CustomTitleListActivity implements IVie
         selectionHandler.process(this, selectedItem);
     }
 
-    private String getFeedUrlFromExtra() {
+    private String getShowNameFromExtra() {
 		if (null == extras) {
 			return null;
 		}

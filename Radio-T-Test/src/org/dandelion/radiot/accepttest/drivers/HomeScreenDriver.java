@@ -60,9 +60,9 @@ public class HomeScreenDriver extends Solo {
         finishOpenedActivities();
     }
 
-    public PodcastListDriver visitMainShowPage2() {
+    public PodcastListUiDriver visitMainShowPage2() {
         PodcastListActivity activity = visitMainShowPage();
-        return new PodcastListDriver(instrumentation, activity);
+        return new PodcastListUiDriver(instrumentation, activity);
     }
 
     public void clickActivityTitle() {
