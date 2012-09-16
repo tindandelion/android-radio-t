@@ -16,31 +16,48 @@ public class TestRssServer extends NanoHTTPD {
         return new Response(HTTP_OK, MIME_XML, rssContent);
     }
 
-    public void provideRssFeedWithItemCount(int count) {
-        RssFeedBuilder builder = new RssFeedBuilder();
-        for(int i = 0; i < count; i++) {
-            builder.newRssItem();
-        }
-        rssContent = builder.build();
+    public void setContent(String value) {
+        rssContent = value;
     }
 
-    public void provideEmptyRssFeed() {
-        rssContent = new RssFeedBuilder().build();
+    public RssFeedBuilder buildFeed() {
+        return new RssFeedBuilder(this);
     }
 
-    private static class RssFeedBuilder {
+    public static class RssFeedBuilder {
         private String items = "";
-        public String build() {
-            return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
+        private TestRssServer server;
+
+        public RssFeedBuilder(TestRssServer server) {
+            this.server = server;
+        }
+
+        public void done() {
+            String result = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
                     "<rss>" +
                     "<channel>" +
                     items +
                     "</channel>" +
                     "</rss>";
+            server.setContent(result);
         }
 
-        public void newRssItem() {
+        public RssFeedBuilder empty() {
+            items = "";
+            return this;
+        }
+
+        public RssFeedBuilder item() {
             items += "<item></item>";
+            return this;
+        }
+
+        public RssFeedBuilder items(int count) {
+            for(int i = 0; i < count; i++) {
+                item();
+            }
+            return this;
         }
     }
+
 }

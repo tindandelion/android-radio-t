@@ -16,15 +16,21 @@ public class VisualizePodcastListTest
     }
 
     public void testNoPodcastsInList() throws Exception {
-        backend.provideEmptyRssFeed();
+        backend.buildFeed()
+                .empty()
+                .done();
+
         PodcastListRunner app = startApplication();
         app.showsPodcastsInCount(0);
     }
 
     public void testShowsTheCorrectNumberOfPodcasts() throws Exception {
-        backend.provideRssFeedWithItemCount(20);
+        backend.buildFeed()
+                .items(3)
+                .done();
+
         PodcastListRunner app = startApplication();
-        app.showsPodcastsInCount(20);
+        app.showsPodcastsInCount(3);
     }
 
     @Override
