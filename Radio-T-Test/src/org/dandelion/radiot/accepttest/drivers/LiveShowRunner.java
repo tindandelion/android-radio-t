@@ -34,7 +34,7 @@ public class LiveShowRunner {
     }
 
     public void showsTranslationInProgress() {
-        driver.showTranslationStatus("Трансляция");
+        driver.showsTranslationStatus("Трансляция");
         statusNotifier.showsStatusFor(LiveShowState.Playing);
     }
 
@@ -43,15 +43,15 @@ public class LiveShowRunner {
     }
 
     public void showsTranslationStopped() {
-        driver.showTranslationStatus("Остановлено");
+        driver.showsTranslationStatus("Остановлено");
         statusNotifier.showsStatusFor(LiveShowState.Idle);
     }
 
     public void showsWaiting() {
-        driver.showTranslationStatus("Ожидание");
+        driver.showsTranslationStatus("Ожидание");
     }
 
     public void showsStopped() {
-        driver.showTranslationStatus("Остановлено");
+        driver.showsTranslationStatus("Остановлено");
     }
 }

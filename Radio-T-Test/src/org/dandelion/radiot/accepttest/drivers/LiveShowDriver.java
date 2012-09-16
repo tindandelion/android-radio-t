@@ -16,7 +16,7 @@ public class LiveShowDriver extends Solo {
         clickOnButton("Подключиться");
     }
 
-    public void showTranslationStatus(String statusText) {
+    public void showsTranslationStatus(String statusText) {
         assertTrue(waitForText(statusText));
     }
 
