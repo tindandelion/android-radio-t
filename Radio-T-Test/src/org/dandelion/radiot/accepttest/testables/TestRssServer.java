@@ -1,5 +1,7 @@
 package org.dandelion.radiot.accepttest.testables;
 
+import android.util.Log;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Properties;
@@ -13,6 +15,7 @@ public class TestRssServer extends NanoHTTPD {
 
     @Override
     public Response serve(String uri, String method, Properties header, Properties parms, Properties files) {
+        Log.d("PODCASTS", "Serving the request");
         return new Response(HTTP_OK, MIME_XML, rssContent);
     }
 

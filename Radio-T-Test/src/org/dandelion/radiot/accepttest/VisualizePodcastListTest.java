@@ -3,9 +3,14 @@ package org.dandelion.radiot.accepttest;
 import android.content.Context;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
+import android.widget.ListView;
 import org.dandelion.radiot.accepttest.drivers.PodcastListRunner;
 import org.dandelion.radiot.accepttest.testables.TestRssServer;
 import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
+import org.hamcrest.FeatureMatcher;
+import org.hamcrest.Matcher;
+
+import static org.hamcrest.CoreMatchers.equalTo;
 
 public class VisualizePodcastListTest
         extends ActivityInstrumentationTestCase2<PodcastListActivity> {
@@ -21,17 +26,18 @@ public class VisualizePodcastListTest
                 .done();
 
         PodcastListRunner app = startApplication();
-        app.showsPodcastsInCount(0);
+        app.assertPodcastList(isEmpty());
     }
 
     public void testShowsTheCorrectNumberOfPodcasts() throws Exception {
         backend.buildFeed()
-                .items(3)
+                .items(5)
                 .done();
 
         PodcastListRunner app = startApplication();
-        app.showsPodcastsInCount(3);
+        app.assertPodcastList(hasCount(5));
     }
+
 
     @Override
     public void setUp() throws Exception {
@@ -43,6 +49,20 @@ public class VisualizePodcastListTest
     public void tearDown() throws Exception {
         backend.stop();
         super.tearDown();
+    }
+
+    private Matcher<? super ListView> isEmpty() {
+        return hasCount(0);
+    }
+
+    private Matcher<? super ListView> hasCount(int expected) {
+        return new FeatureMatcher<ListView, Integer>(equalTo(expected),
+                "Podcast count equals", "Podcast count") {
+            @Override
+            protected Integer featureValueOf(ListView listView) {
+                return listView.getCount();
+            }
+        };
     }
 
     private PodcastListRunner startApplication() {

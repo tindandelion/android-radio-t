@@ -6,6 +6,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.util.Log;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 
@@ -30,7 +31,9 @@ public class RssFeedModel implements PodcastList.IModel {
 
     public List<PodcastItem> retrievePodcasts() throws Exception {
 		items = new ArrayList<PodcastItem>();
+        Log.d("PODCASTS", "Starting to parse podcast list");
 		Xml.parse(openContentStream(), Xml.Encoding.UTF_8, getContentHandler());
+        Log.d("PODCASTS", String.format("Finished parsing with items: %d", items.size()));
 		return items;
 	}
 

@@ -1,39 +1,30 @@
 package org.dandelion.radiot.accepttest;
 
-import java.lang.reflect.Field;
-
-import org.dandelion.radiot.R;
-
-import org.dandelion.radiot.accepttest.drivers.HomeScreenDriver;
-import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
-import org.dandelion.radiot.helpers.PodcastListAcceptanceTestCase;
-
 import android.view.View;
-import android.widget.ListView;
 import android.widget.TextView;
+import org.dandelion.radiot.R;
+import org.dandelion.radiot.accepttest.drivers.HomeScreenDriver;
+import org.dandelion.radiot.helpers.PodcastListAcceptanceTestCase;
+import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
+
+import java.lang.reflect.Field;
 
 public class DisplayingPodcastList extends
 		PodcastListAcceptanceTestCase {
 
 	private PodcastListActivity activity;
-	private HomeScreenDriver appDriver;
-	
-	public void testDisplayPodcastItemInfo() throws Exception {
+
+    public void testDisplayPodcastItemInfo() throws Exception {
 		View itemView = getItemView(0);
 
 		assertTextFieldHasText(itemView, "podcast_item_view_number", "#5192");
 		assertTextFieldHasText(itemView, "podcast_item_view_date", "12.02.2012");
 	}
 
-	public void testDisplayPodcastList() throws Exception {
-		ListView list = activity.getListView();
-		assertEquals(25, list.getCount());
-	}
-
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		appDriver = createDriver();
+        HomeScreenDriver appDriver = createDriver();
 		activity = appDriver.visitMainShowPage();
 		presenters.get(0).assertPodcastListIsUpdated();
 	}
