@@ -12,7 +12,6 @@ import org.dandelion.radiot.util.IconNote;
 public class LiveShowApp {
     private static LiveShowApp instance = new LiveShowApp();
     private static final String LIVE_SHOW_URL = "http://radio10.promodeejay.net:8181/stream";
-    // private static final String LIVE_SHOW_URL = "http://icecast.bigrradio.com/80s90s";
     private LiveShowStateHolder stateHolder = LiveShowStateHolder.initial();
     private static final int LIVE_NOTE_ID = 1;
     private static final int FOREGROUND_NOTE_ID = 2;

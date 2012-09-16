@@ -16,13 +16,12 @@ import org.dandelion.radiot.live.ui.LiveShowActivity;
 
 public class LiveShowPlaybackTest extends
         ActivityInstrumentationTestCase2<LiveShowActivity> {
-    private static final String TEST_LIVE_URL = "http://icecast.bigrradio.com/80s90s";
-
-    private final FakeStatusDisplayer statusDisplayer = new FakeStatusDisplayer();
     private LiveShowRunner runner;
-    private TestableMediaPlayerStream liveStream;
+    private TestableMediaPlayerStream liveShowStream;
 
     public void testStartStopPlayback() throws Exception {
+        liveShowStream.activateTranslation();
+
         runner.startTranslation();
         runner.showsTranslationInProgress();
 
@@ -34,17 +33,17 @@ public class LiveShowPlaybackTest extends
     }
 
     public void testTryToReconnectContinuouslyInWaitingMode() throws Exception {
-        liveStream.url = "http://non-existent";
+        liveShowStream.suppressTranslation();
         runner.startTranslation();
         runner.showsWaiting();
 
-        liveStream.url = TEST_LIVE_URL;
+        liveShowStream.activateTranslation();
         signalWaitTimeout();
         runner.showsTranslationInProgress();
     }
 
     public void testStopWaiting() throws Exception {
-        liveStream.url = "http://non-existent";
+        liveShowStream.suppressTranslation();
 
         runner.startTranslation();
         runner.showsWaiting();
@@ -60,27 +59,27 @@ public class LiveShowPlaybackTest extends
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        setupTestingApp();
-        liveStream.url = TEST_LIVE_URL;
+        FakeStatusDisplayer statusDisplayer = new FakeStatusDisplayer();
+        setupTestingApp(statusDisplayer);
         runner = new LiveShowRunner(getInstrumentation(), getActivity(), statusDisplayer);
     }
 
     @Override
     protected void tearDown() throws Exception {
         runner.finish();
-        liveStream.doRelease();
+        liveShowStream.doRelease();
         super.tearDown();
     }
 
-    private void setupTestingApp() {
+    private void setupTestingApp(final LiveShowStateListener statusDisplayer) {
         getInstrumentation().runOnMainSync(new Runnable() {
             @Override
             public void run() {
-                liveStream = new TestableMediaPlayerStream();
+                liveShowStream = new TestableMediaPlayerStream();
                 LiveShowApp.setTestingInstance(new LiveShowApp() {
                     @Override
                     public AudioStream createAudioStream() {
-                        return liveStream;
+                        return liveShowStream;
                     }
 
                     @Override
