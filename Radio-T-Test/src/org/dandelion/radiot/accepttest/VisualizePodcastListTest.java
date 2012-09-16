@@ -33,6 +33,15 @@ public class VisualizePodcastListTest
         app.showsPodcastListWithItemCount(5);
     }
 
+    public void testDisplaysTextFieldsOfPodcastItem() throws Exception {
+        backend.buildFeed()
+                .item("<title>Радио-Т 140</title>" +
+                        "<pubDate>Sun, 13 Jun 2010 01:37:22 +0000</pubDate>" +
+                        "<itunes:summary>Lorem ipsum dolor sit amet</itunes:summary>")
+                .done();
+        PodcastListRunner app = startApplication();
+        app.showsPodcastItem("#140", "13.06.2010", "Lorem ipsum dolor sit amet");
+    }
 
     @Override
     public void setUp() throws Exception {

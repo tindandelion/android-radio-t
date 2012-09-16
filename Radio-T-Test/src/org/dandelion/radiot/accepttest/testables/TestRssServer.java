@@ -37,7 +37,7 @@ public class TestRssServer extends NanoHTTPD {
 
         public void done() {
             String result = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
-                    "<rss>" +
+                    "<rss xmlns:itunes=\"http://www.itunes.com/dtds/podcast-1.0.dtd\">" +
                     "<channel>" +
                     items +
                     "</channel>" +
@@ -50,14 +50,14 @@ public class TestRssServer extends NanoHTTPD {
             return this;
         }
 
-        public RssFeedBuilder item() {
-            items += "<item></item>";
+        public RssFeedBuilder item(String content) {
+            items += "<item>" + content + "</item>";
             return this;
         }
 
         public RssFeedBuilder items(int count) {
             for(int i = 0; i < count; i++) {
-                item();
+                item("");
             }
             return this;
         }
