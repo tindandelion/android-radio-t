@@ -16,8 +16,11 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 class PodcastListDriver extends Solo {
+    private Activity activity;
+
     public PodcastListDriver(Instrumentation instrumentation, Activity activity) {
         super(instrumentation, activity);
+        this.activity = activity;
     }
 
     public void podcastList(Matcher<? super ListView> matcher) {
@@ -30,8 +33,31 @@ class PodcastListDriver extends Solo {
         podcastList(has(anItemWith(number, date, description)));
     }
 
-    public void hasFinished() {
-        assertThat(getCurrentActivity().isFinishing(), is(true));
+    public void wasClosed() {
+        assertThat(activity, isFinishing());
+    }
+
+    private Matcher<? super Activity> isFinishing() {
+        return new TypeSafeMatcher<Activity>() {
+            @Override
+            protected boolean matchesSafely(Activity activity) {
+                return activity.isFinishing();
+            }
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("an activity that is finishing");
+            }
+
+            @Override
+            protected void describeMismatchSafely(Activity item, Description mismatchDescription) {
+                mismatchDescription
+                        .appendText("activity was active [title=")
+                        .appendText(item.getTitle().toString())
+                        .appendText(", id=")
+                        .appendText(item.toString());
+            }
+        };
     }
 
     private Matcher<? super ListView> has(final Matcher<View> itemMatcher) {

@@ -18,7 +18,7 @@ public class PodcastListRunner {
         driver.goBack();
     }
 
-    public void hasFinished() {
-        driver.hasFinished();
+    public void wasClosed() {
+        driver.wasClosed();
     }
 }

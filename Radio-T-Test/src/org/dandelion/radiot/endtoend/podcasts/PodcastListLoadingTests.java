@@ -36,12 +36,12 @@ public class PodcastListLoadingTests
         app.showsPodcastItem("#141", "19.06.2010", "consectetur adipiscing elit");
     }
 
-    public void testInterruptsLoadingByPressingBackButton() throws Exception {
+    public void testPressingBackButtonWhileLoadingClosesActivity() throws Exception {
         app = startApplication();
         backend.hasReceivedRequest();
 
         app.pressBack();
-        app.hasFinished();
+        app.wasClosed();
     }
 
     @Override
