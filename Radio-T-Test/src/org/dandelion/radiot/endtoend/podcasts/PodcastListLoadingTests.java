@@ -3,7 +3,11 @@ package org.dandelion.radiot.endtoend.podcasts;
 import android.content.Context;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
+import org.dandelion.radiot.endtoend.podcasts.helpers.PodcastListRunner;
+import org.dandelion.radiot.endtoend.podcasts.helpers.TestRssServer;
 import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
+
+import static org.dandelion.radiot.endtoend.podcasts.helpers.RssFeedBuilder.buildFeed;
 
 public class PodcastListLoadingTests
         extends ActivityInstrumentationTestCase2<PodcastListActivity> {
@@ -14,32 +18,22 @@ public class PodcastListLoadingTests
         super(PodcastListActivity.class);
     }
 
-    public void testNoPodcastsInList() throws Exception {
-        backend.buildFeed()
-                .empty()
-                .done();
-
-        app = startApplication();
-        app.showsEmptyPodcastList();
-    }
-
-    public void testShowsTheCorrectNumberOfPodcasts() throws Exception {
-        backend.buildFeed()
-                .items(5)
-                .done();
-
-        app = startApplication();
-        app.showsPodcastListWithItemCount(5);
-    }
-
-    public void testDisplaysTextFieldsOfPodcastItem() throws Exception {
-        backend.buildFeed()
+    public void testRetrievePodcastListFromRssServerAndDisplayIt() throws Exception {
+        String feed = buildFeed()
                 .item("<title>Радио-Т 140</title>" +
                         "<pubDate>Sun, 13 Jun 2010 01:37:22 +0000</pubDate>" +
                         "<itunes:summary>Lorem ipsum dolor sit amet</itunes:summary>")
+                .item("<title>Радио-Т 141</title>" +
+                        "<pubDate>Sun, 19 Jun 2010 01:37:22 +0000</pubDate>" +
+                        "<itunes:summary>consectetur adipiscing elit</itunes:summary>")
                 .done();
+
         app = startApplication();
+        backend.hasReceivedRequest();
+        backend.respondWith(feed);
+
         app.showsPodcastItem("#140", "13.06.2010", "Lorem ipsum dolor sit amet");
+        app.showsPodcastItem("#141", "19.06.2010", "consectetur adipiscing elit");
     }
 
     @Override

@@ -1,4 +1,4 @@
-package org.dandelion.radiot.endtoend.podcasts;
+package org.dandelion.radiot.endtoend.podcasts.helpers;
 
 import android.app.Activity;
 import android.app.Instrumentation;
@@ -7,8 +7,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import com.jayway.android.robotium.solo.Solo;
 import org.dandelion.radiot.R;
+import org.hamcrest.Description;
 import org.hamcrest.FeatureMatcher;
 import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -24,25 +26,35 @@ class PodcastListDriver extends Solo {
         assertThat(view, matcher);
     }
 
-    public void firstItemShows(String number, String date, String notes) {
-        podcastList(hasFirstItemAs(itemWith(number, date, notes)));
+    public void showsItemWith(String number, String date, String description) {
+        podcastList(has(anItemWith(number, date, description)));
     }
 
-    public Matcher<View> itemWith(String number, String date, String notes) {
+    private Matcher<? super ListView> has(final Matcher<View> itemMatcher) {
+        return new TypeSafeMatcher<ListView>() {
+            @Override
+            protected boolean matchesSafely(ListView listView) {
+                for(int i = 0; i < listView.getCount(); i++) {
+                    View item = listView.getChildAt(i);
+                    if (itemMatcher.matches(item)) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("Any list item");
+            }
+        };
+    }
+
+    public Matcher<View> anItemWith(String number, String date, String notes) {
         return allOf(
                 textField(R.id.podcast_item_view_number, equalTo(number)),
                 textField(R.id.podcast_item_view_date, equalTo(date)),
                 textField(R.id.podcast_item_view_shownotes, equalTo(notes)));
-    }
-
-    public Matcher<? super ListView> hasFirstItemAs(Matcher<View> matcher) {
-        return new FeatureMatcher<ListView, View>(matcher, "first list item",
-                "first list item") {
-            @Override
-            protected View featureValueOf(ListView listView) {
-                return listView.getChildAt(0);
-            }
-        };
     }
 
     private Matcher<? super View> textField(final int id, Matcher<String> matcher) {
@@ -58,4 +70,5 @@ class PodcastListDriver extends Solo {
             }
         };
     }
+
 }
