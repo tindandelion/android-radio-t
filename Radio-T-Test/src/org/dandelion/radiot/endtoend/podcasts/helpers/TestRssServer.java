@@ -1,14 +1,22 @@
 package org.dandelion.radiot.endtoend.podcasts.helpers;
 
-import org.dandelion.radiot.helpers.SyncValueHolder;
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class TestRssServer extends NanoHTTPD {
-    private SyncValueHolder<Object> requestHolder = new SyncValueHolder<Object>();
-    private SyncValueHolder<String> responseHolder = new SyncValueHolder<String>();
+    private CountDownLatch requestFlag = new CountDownLatch(1);
+    private BlockingQueue<String> responseHolder = new ArrayBlockingQueue<String>(1);
 
     public TestRssServer() throws IOException {
         super(8080, new File(""));
@@ -16,21 +24,45 @@ public class TestRssServer extends NanoHTTPD {
 
     @Override
     public Response serve(String uri, String method, Properties header, Properties parms, Properties files) {
-        requestHolder.setValue(new Object());
-        return new Response(HTTP_OK, MIME_XML, responseHolder.getValue());
+        requestFlag.countDown();
+        try {
+            return new Response(HTTP_OK, MIME_XML, responseHolder.take());
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public void hasReceivedRequest() {
-        requestHolder.getValue();
+    public void hasReceivedRequest() throws InterruptedException {
+        assertThat(requestFlag, signalledWithinSeconds(10));
+        requestFlag = new CountDownLatch(1);
     }
+
 
     public void respondWith(String response) {
-        responseHolder.setValue(response);
+        responseHolder.add(response);
     }
 
     @Override
     public void stop() {
-        responseHolder.setValue("");
+        responseHolder.add("");
         super.stop();
+    }
+
+    private Matcher<? super CountDownLatch> signalledWithinSeconds(final int seconds) {
+        return new TypeSafeMatcher<CountDownLatch>() {
+            @Override
+            protected boolean matchesSafely(CountDownLatch countDownLatch) {
+                try {
+                    return countDownLatch.await(seconds, TimeUnit.SECONDS);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText(String.format("wait for condition until %d seconds", seconds));
+            }
+        };
     }
 }
