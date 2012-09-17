@@ -13,13 +13,6 @@ public class InterruptPodcastLoading extends PodcastListAcceptanceTestCase {
 	private HomeScreenDriver driver;
 	private TestModel model;
 
-	public void testCancelRssLoadingWhenPressingBack() throws Exception {
-		driver.visitMainShowPage2();
-		driver.goBack();
-		mainShowPresenter().assertTaskIsCancelled();
-		driver.assertOnHomeScreen();
-	}
-
 	public void testChangeOrientationContinuesBackgroundLoading()
 			throws Exception {
 		PodcastListActivity activity = driver.visitMainShowPage();

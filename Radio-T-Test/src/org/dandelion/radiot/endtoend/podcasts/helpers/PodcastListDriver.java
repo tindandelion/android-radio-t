@@ -30,6 +30,10 @@ class PodcastListDriver extends Solo {
         podcastList(has(anItemWith(number, date, description)));
     }
 
+    public void hasFinished() {
+        assertThat(getCurrentActivity().isFinishing(), is(true));
+    }
+
     private Matcher<? super ListView> has(final Matcher<View> itemMatcher) {
         return new TypeSafeMatcher<ListView>() {
             @Override
@@ -58,7 +62,7 @@ class PodcastListDriver extends Solo {
     }
 
     private Matcher<? super View> textField(final int id, Matcher<String> matcher) {
-        return new FeatureMatcher<View, String>(matcher, "Podcast field", "Podcast field") {
+        return new FeatureMatcher<View, String>(matcher, "text field", "text field") {
             @Override
             protected String featureValueOf(View container) {
                 try {

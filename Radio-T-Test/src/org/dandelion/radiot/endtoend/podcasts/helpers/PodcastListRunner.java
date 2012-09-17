@@ -14,4 +14,11 @@ public class PodcastListRunner {
         driver.showsItemWith(number, date, description);
     }
 
+    public void pressBack() {
+        driver.goBack();
+    }
+
+    public void hasFinished() {
+        driver.hasFinished();
+    }
 }

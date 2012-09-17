@@ -27,4 +27,10 @@ public class TestRssServer extends NanoHTTPD {
     public void respondWith(String response) {
         responseHolder.setValue(response);
     }
+
+    @Override
+    public void stop() {
+        responseHolder.setValue("");
+        super.stop();
+    }
 }
