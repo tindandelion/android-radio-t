@@ -1,4 +1,4 @@
-package org.dandelion.radiot.podcasts.ui;
+package org.dandelion.radiot.podcasts;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,7 +6,7 @@ import android.net.Uri;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastAction;
 
-public class ExternalPlayer implements PodcastAction {
+class ExternalPlayer implements PodcastAction {
     public ExternalPlayer() {
     }
 

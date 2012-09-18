@@ -11,7 +11,7 @@ import org.dandelion.radiot.podcasts.core.PodcastAction;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class PodcastSelectionHandler implements DialogInterface.OnClickListener {
+class PodcastSelectionHandler implements DialogInterface.OnClickListener {
     private static final int DOWNLOAD_ACTION = 0;
     private static final int PLAY_ACTION = 1;
 

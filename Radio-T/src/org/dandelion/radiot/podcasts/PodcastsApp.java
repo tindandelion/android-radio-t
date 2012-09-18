@@ -8,7 +8,6 @@ import org.dandelion.radiot.podcasts.download.*;
 import org.dandelion.radiot.podcasts.core.PodcastAction;
 import org.dandelion.radiot.podcasts.download.DownloadManager;
 import org.dandelion.radiot.podcasts.download.NotificationManager;
-import org.dandelion.radiot.podcasts.ui.ExternalPlayer;
 
 import java.io.File;
 

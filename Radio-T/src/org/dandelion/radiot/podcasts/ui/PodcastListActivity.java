@@ -5,14 +5,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.*;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.RadiotApplication;
 import org.dandelion.radiot.podcasts.PodcastsApp;
@@ -24,7 +19,6 @@ import org.dandelion.radiot.util.CustomTitleListActivity;
 import java.util.List;
 
 public class PodcastListActivity extends CustomTitleListActivity implements IView {
-
 	public static final String TITLE_EXTRA = "title";
 	public static final String SHOW_NAME_EXTRA = "podcast_url";
 
@@ -140,9 +134,7 @@ public class PodcastListActivity extends CustomTitleListActivity implements IVie
 
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
-		super.onListItemClick(l, v, position, id);
-        PodcastItem selectedItem = listAdapter.getItem(position);
-        selectionHandler.process(this, selectedItem);
+        selectionHandler.process(this, listAdapter.getItem(position));
     }
 
     private String getShowNameFromExtra() {
@@ -160,57 +152,11 @@ public class PodcastListActivity extends CustomTitleListActivity implements IVie
 	}
 
 	private void initListAdapter() {
-		listAdapter = new PodcastListAdapter();
+		listAdapter = new PodcastListAdapter(this);
 		setListAdapter(listAdapter);
 	}
 
-    class PodcastListAdapter extends ArrayAdapter<PodcastItem> {
-		private final Bitmap defaultPodcastImage = BitmapFactory
-				.decodeResource(PodcastListActivity.this.getResources(),
-						R.drawable.default_podcast_image);
-
-		public PodcastListAdapter() {
-			super(PodcastListActivity.this, 0);
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			View row = convertView;
-			if (row == null) {
-				LayoutInflater inflater = getLayoutInflater();
-				row = inflater.inflate(R.layout.podcast_list_item, parent,
-						false);
-			}
-
-			return fillRowWithData(row, getItem(position));
-		}
-
-		private View fillRowWithData(View row, PodcastItem item) {
-			setElementText(row, R.id.podcast_item_view_number, item.getNumberString());
-			setElementText(row, R.id.podcast_item_view_date, item.getPubDate());
-			setElementText(row, R.id.podcast_item_view_shownotes,
-					item.getShowNotes());
-			setPodcastIcon(row, item);
-			return row;
-		}
-
-		private void setPodcastIcon(View row, PodcastItem item) {
-			ImageView image = (ImageView) row
-					.findViewById(R.id.podcast_item_icon);
-			Bitmap bitmap = item.getThumbnail();
-			if (null == bitmap) {
-				bitmap = defaultPodcastImage;
-			}
-			image.setImageBitmap(bitmap);
-		}
-
-		private void setElementText(View row, int resourceId, String value) {
-			TextView view = (TextView) row.findViewById(resourceId);
-			view.setText(value);
-		}
-	}
-
-	public IPodcastListEngine getPodcastListEngine() {
+    public IPodcastListEngine getPodcastListEngine() {
 		return engine;
 	}
 
