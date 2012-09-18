@@ -1,12 +1,13 @@
-package org.dandelion.radiot.podcasts.download;
+package org.dandelion.radiot.podcasts;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import org.dandelion.radiot.podcasts.download.DownloadManager;
 
 import java.io.File;
 
-public class SystemDownloadManager implements DownloadManager {
+class SystemDownloadManager implements DownloadManager {
     private android.app.DownloadManager service;
 
     public SystemDownloadManager(Context context) {

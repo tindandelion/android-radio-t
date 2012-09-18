@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 
+import java.util.List;
+
 class PodcastListAdapter extends ArrayAdapter<PodcastItem> {
     private final Bitmap defaultPodcastImage;
     private Activity activity;
@@ -55,5 +57,12 @@ class PodcastListAdapter extends ArrayAdapter<PodcastItem> {
     private void setElementText(View row, int resourceId, String value) {
         TextView view = (TextView) row.findViewById(resourceId);
         view.setText(value);
+    }
+
+    public void populateList(List<PodcastItem> items) {
+        clear();
+        for (PodcastItem item : items) {
+            add(item);
+        }
     }
 }

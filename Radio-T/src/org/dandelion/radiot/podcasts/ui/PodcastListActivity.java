@@ -19,10 +19,6 @@ import org.dandelion.radiot.util.CustomTitleListActivity;
 import java.util.List;
 
 public class PodcastListActivity extends CustomTitleListActivity implements IView {
-    public static void start(Context context, String title, String showName) {
-        context.startActivity(createIntent(context, title, showName));
-	}
-
     public static Intent createIntent(Context context, String title, String showName) {
         return StartParams.createIntent(context, title, showName);
     }
@@ -40,11 +36,12 @@ public class PodcastListActivity extends CustomTitleListActivity implements IVie
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         StartParams params = StartParams.fromIntent(getIntent());
-		setTitle(params.title());
+
         initListView();
         initListAdapter();
         initSelectionHandler();
-		attachToEngine(params.showName());
+        setTitle(params.title());
+        attachToEngine(params.showName());
 	}
 
     private void initListView() {
@@ -54,8 +51,9 @@ public class PodcastListActivity extends CustomTitleListActivity implements IVie
     }
 
     private void initSelectionHandler() {
-        selectionHandler = new PodcastSelectionHandler(PodcastsApp.getInstance().createPlayer(),
-                PodcastsApp.getInstance().createDownloader(), this);
+        PodcastsApp app = PodcastsApp.getInstance();
+        selectionHandler = new PodcastSelectionHandler(app.createPlayer(),
+                app.createDownloader(), this);
     }
 
     protected void attachToEngine(String showName) {
@@ -118,10 +116,7 @@ public class PodcastListActivity extends CustomTitleListActivity implements IVie
 	}
 
 	public void updatePodcasts(List<PodcastItem> newList) {
-		listAdapter.clear();
-		for (PodcastItem item : newList) {
-			listAdapter.add(item);
-		}
+        listAdapter.populateList(newList);
 	}
 
 	@Override

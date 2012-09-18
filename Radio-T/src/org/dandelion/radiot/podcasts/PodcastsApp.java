@@ -1,6 +1,7 @@
 package org.dandelion.radiot.podcasts;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Environment;
 import org.dandelion.radiot.R;
@@ -8,12 +9,17 @@ import org.dandelion.radiot.podcasts.download.*;
 import org.dandelion.radiot.podcasts.core.PodcastAction;
 import org.dandelion.radiot.podcasts.download.DownloadManager;
 import org.dandelion.radiot.podcasts.download.NotificationManager;
+import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
 
 import java.io.File;
 
 public class PodcastsApp {
     private static PodcastsApp instance;
-    protected Context context;
+    protected Context application;
+
+    public static void openScreen(Context context, String title, String showName) {
+        context.startActivity(PodcastListActivity.createIntent(context, title, showName));
+    }
 
     public static void initialize(Context context) {
         if (null == instance) {
@@ -34,8 +40,8 @@ public class PodcastsApp {
         instance = newInstance;
     }
 
-    protected PodcastsApp(Context context) {
-        this.context = context;
+    protected PodcastsApp(Context application) {
+        this.application = application;
     }
 
     private void releaseInstance() {
@@ -70,7 +76,7 @@ public class PodcastsApp {
     }
 
     public DownloadManager createDownloadManager() {
-        return new SystemDownloadManager(context);
+        return new SystemDownloadManager(application);
     }
 
     public DownloadFolder getPodcastDownloadFolder() {
@@ -78,18 +84,20 @@ public class PodcastsApp {
     }
 
     public MediaScanner createMediaScanner() {
-        return new SystemMediaScanner(context);
+        return new SystemMediaScanner(application);
     }
 
     public NotificationManager createNotificationManager() {
-        return new DownloadNotifier(context, createDownloadErrorMessages());
+        return new DownloadNotifier(application, createDownloadErrorMessages());
     }
 
     private DownloadErrorMessages createDownloadErrorMessages() {
+        Resources resources = application.getResources();
         return new DownloadErrorMessages(
-                context.getResources().getStringArray(R.array.download_error_messages),
+                resources.getStringArray(R.array.download_error_messages),
                 android.app.DownloadManager.ERROR_UNKNOWN,
-                context.getString(R.string.download_default_message)
+                resources.getString(R.string.download_default_message)
         );
     }
+
 }

@@ -1,11 +1,12 @@
-package org.dandelion.radiot.podcasts.download;
+package org.dandelion.radiot.podcasts;
 
 import android.content.Context;
 import android.media.MediaScannerConnection;
+import org.dandelion.radiot.podcasts.download.MediaScanner;
 
 import java.io.File;
 
-public class SystemMediaScanner implements MediaScanner {
+class SystemMediaScanner implements MediaScanner {
     private Context context;
 
     public SystemMediaScanner(Context context) {
