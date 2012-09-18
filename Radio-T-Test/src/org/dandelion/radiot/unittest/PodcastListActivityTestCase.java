@@ -1,16 +1,15 @@
 package org.dandelion.radiot.unittest;
 
-import java.util.ArrayList;
-
+import android.content.Intent;
+import android.test.ActivityUnitTestCase;
+import android.test.UiThreadTest;
+import org.dandelion.radiot.RadiotApplication;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastList.IPodcastListEngine;
 import org.dandelion.radiot.podcasts.core.PodcastList.IView;
 import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
-import org.dandelion.radiot.RadiotApplication;
 
-import android.content.Intent;
-import android.test.ActivityUnitTestCase;
-import android.test.UiThreadTest;
+import java.util.ArrayList;
 
 public class PodcastListActivityTestCase extends
 		ActivityUnitTestCase<PodcastListActivity> {
@@ -30,24 +29,15 @@ public class PodcastListActivityTestCase extends
 		assertEquals(activity, engine.getView());
 	}
 
-	public void testGetsShowNameFromBundleExtra() throws Exception {
-		Intent intent = new Intent();
-		intent.putExtra(PodcastListActivity.SHOW_NAME_EXTRA, "show-name");
+	public void testConfiguresItselfFromStartParameters() throws Exception {
+        Intent intent = PodcastListActivity.createIntent(getInstrumentation().getContext(),
+                "Custom title", "show-name");
 
-		startActivity(intent, null, null);
+        activity = startActivity(intent, null, null);
 
 		assertEquals("show-name", showName);
-
-	}
-
-	public void testGetsTitleFromExtra() throws Exception {
-		Intent intent = new Intent();
-		intent.putExtra(PodcastListActivity.TITLE_EXTRA, "Custom title");
-
-		activity = startActivity(intent, null, null);
-
-		assertEquals("Custom title", activity.getTitle());
-	}
+        assertEquals("Custom title", activity.getTitle());
+    }
 
 	@UiThreadTest
 	public void testUpdatingPodcastList() throws Exception {
@@ -69,18 +59,15 @@ public class PodcastListActivityTestCase extends
 	protected void setUp() throws Exception {
 		super.setUp();
 		engine = new NullPodcastEngine();
-		setApplication(new RadiotApplication() {
-			@Override
-			public IPodcastListEngine getPodcastEngine(String feedUrl) {
-				showName = feedUrl;
-				return engine;
-			}
-		});
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-		super.tearDown();
+        RadiotApplication application = new RadiotApplication() {
+            @Override
+            public IPodcastListEngine getPodcastEngine(String feedUrl) {
+                showName = feedUrl;
+                return engine;
+            }
+        };
+        application.onCreate();
+        setApplication(application);
 	}
 
 	class NullPodcastEngine implements IPodcastListEngine {

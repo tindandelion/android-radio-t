@@ -19,22 +19,14 @@ import org.dandelion.radiot.util.CustomTitleListActivity;
 import java.util.List;
 
 public class PodcastListActivity extends CustomTitleListActivity implements IView {
-	public static final String TITLE_EXTRA = "title";
-	public static final String SHOW_NAME_EXTRA = "podcast_url";
-
-	public static void start(Context context, String title, String showName) {
-        Intent intent = createIntent(context, title, showName);
-		context.startActivity(intent);
+    public static void start(Context context, String title, String showName) {
+        context.startActivity(createIntent(context, title, showName));
 	}
 
     public static Intent createIntent(Context context, String title, String showName) {
-        Intent intent = new Intent(context, PodcastListActivity.class);
-        intent.putExtra(SHOW_NAME_EXTRA, showName);
-        intent.putExtra(TITLE_EXTRA, title);
-        return intent;
+        return StartParams.createIntent(context, title, showName);
     }
 
-    private Bundle extras;
 	private PodcastListAdapter listAdapter;
     private IPodcastListEngine engine;
 	private ProgressDialog progress;
@@ -47,12 +39,12 @@ public class PodcastListActivity extends CustomTitleListActivity implements IVie
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		extras = getIntent().getExtras();
-		setTitle(getTitleFromExtra());
+        StartParams params = StartParams.fromIntent(getIntent());
+		setTitle(params.title());
         initListView();
         initListAdapter();
         initSelectionHandler();
-		attachToEngine();
+		attachToEngine(params.showName());
 	}
 
     private void initListView() {
@@ -66,9 +58,9 @@ public class PodcastListActivity extends CustomTitleListActivity implements IVie
                 PodcastsApp.getInstance().createDownloader(), this);
     }
 
-    protected void attachToEngine() {
+    protected void attachToEngine(String showName) {
 		RadiotApplication app = (RadiotApplication) getApplication();
-		engine = app.getPodcastEngine(getShowNameFromExtra());
+		engine = app.getPodcastEngine(showName);
 		engine.attach(this);
 	}
 
@@ -137,21 +129,7 @@ public class PodcastListActivity extends CustomTitleListActivity implements IVie
         selectionHandler.process(this, listAdapter.getItem(position));
     }
 
-    private String getShowNameFromExtra() {
-		if (null == extras) {
-			return null;
-		}
-		return extras.getString(SHOW_NAME_EXTRA);
-	}
-
-	private String getTitleFromExtra() {
-		if (null == extras) {
-			return "";
-		}
-		return extras.getString(TITLE_EXTRA);
-	}
-
-	private void initListAdapter() {
+    private void initListAdapter() {
 		listAdapter = new PodcastListAdapter(this);
 		setListAdapter(listAdapter);
 	}
