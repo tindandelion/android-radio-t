@@ -13,8 +13,9 @@ public class PodcastListEngine implements PodcastList.IPodcastListEngine {
 	protected IView view;
 	protected UpdateTask task;
 	private List<PodcastItem> currentPodcasts;
+    private PodcastListConsumer consumer;
 
-	public PodcastListEngine(PodcastList.IModel model) {
+    public PodcastListEngine(PodcastList.IModel model) {
 		this.model = model;
 		view = new NullView();
 	}
@@ -32,7 +33,7 @@ public class PodcastListEngine implements PodcastList.IPodcastListEngine {
 	}
 
 	protected void updateViewWithCurrentPodcasts() {
-		view.updatePodcasts(currentPodcasts);
+		consumer.updatePodcasts(currentPodcasts);
 	}
 
 	public void taskStarted() {
@@ -56,10 +57,12 @@ public class PodcastListEngine implements PodcastList.IPodcastListEngine {
 
 	public void detach() {
 		view = new NullView();
+        consumer = new NullConsumer();
 	}
 
-	public void attach(IView view) {
+	public void attach(IView view, PodcastListConsumer consumer) {
 		this.view = view;
+        this.consumer = consumer;
 	}
 
 	protected boolean isInProgress() {
@@ -144,7 +147,7 @@ public class PodcastListEngine implements PodcastList.IPodcastListEngine {
 				item.setThumbnail(model.loadPodcastImage(item));
 				publishProgress(new Runnable() {
 					public void run() {
-						view.updatePodcastImage(index);
+						consumer.updatePodcastImage(index);
 					}
 				});
 			}
@@ -152,12 +155,19 @@ public class PodcastListEngine implements PodcastList.IPodcastListEngine {
 	}
 }
 
+class NullConsumer implements PodcastListConsumer {
+    @Override
+    public void updatePodcasts(List<PodcastItem> podcasts) {
+    }
+
+    @Override
+    public void updatePodcastImage(int index) {
+    }
+}
+
 class NullView implements IView {
 
-	public void updatePodcasts(List<PodcastItem> podcasts) {
-	}
-
-	public void showProgress() {
+    public void showProgress() {
 	}
 
 	public void closeProgress() {
@@ -166,6 +176,4 @@ class NullView implements IView {
 	public void showErrorMessage(String errorMessage) {
 	}
 
-	public void updatePodcastImage(int index) {
-	}
 }

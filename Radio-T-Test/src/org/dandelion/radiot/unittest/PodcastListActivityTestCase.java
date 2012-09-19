@@ -2,14 +2,11 @@ package org.dandelion.radiot.unittest;
 
 import android.content.Intent;
 import android.test.ActivityUnitTestCase;
-import android.test.UiThreadTest;
 import org.dandelion.radiot.RadiotApplication;
-import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastList.IPodcastListEngine;
 import org.dandelion.radiot.podcasts.core.PodcastList.IView;
+import org.dandelion.radiot.podcasts.core.PodcastListConsumer;
 import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
-
-import java.util.ArrayList;
 
 public class PodcastListActivityTestCase extends
 		ActivityUnitTestCase<PodcastListActivity> {
@@ -27,6 +24,7 @@ public class PodcastListActivityTestCase extends
 
 		assertEquals(engine, activity.getPodcastListEngine());
 		assertEquals(activity, engine.getView());
+        assertEquals(activity.getListAdapter(), engine.getListConsumer());
 	}
 
 	public void testConfiguresItselfFromStartParameters() throws Exception {
@@ -38,22 +36,6 @@ public class PodcastListActivityTestCase extends
 		assertEquals("show-name", showName);
         assertEquals("Custom title", activity.getTitle());
     }
-
-	@UiThreadTest
-	public void testUpdatingPodcastList() throws Exception {
-		activity = startActivity(new Intent(), null, null);
-		assertEquals(0, activity.getListView().getCount());
-
-		ArrayList<PodcastItem> newList = new ArrayList<PodcastItem>();
-		PodcastItem itemToDisplay = new PodcastItem();
-		newList.add(itemToDisplay);
-
-		activity.updatePodcasts(newList);
-		assertEquals(1, activity.getListView().getCount());
-		Object displayedItem = activity.getListAdapter().getItem(0);
-
-		assertEquals(itemToDisplay, displayedItem);
-	}
 
 	@Override
 	protected void setUp() throws Exception {
@@ -72,23 +54,30 @@ public class PodcastListActivityTestCase extends
 
 	class NullPodcastEngine implements IPodcastListEngine {
 		private Object view;
+        private PodcastListConsumer consumer;
 
-		public void cancelUpdate() {
+        public void cancelUpdate() {
 		}
 
 		public void detach() {
 			view = null;
+            consumer = null;
 		}
 
 		public Object getView() {
 			return view;
 		}
 
-		public void refresh(boolean resetCache) {
+        public Object getListConsumer() {
+            return consumer;
+        }
+
+        public void refresh(boolean resetCache) {
 		}
 
-		public void attach(IView view) {
+		public void attach(IView view, PodcastListConsumer consumer) {
 			this.view = view;
+            this.consumer = consumer;
 		}
-	}
+    }
 }

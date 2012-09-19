@@ -10,6 +10,7 @@ import junit.framework.TestCase;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastList.IPodcastListEngine;
 import org.dandelion.radiot.podcasts.core.PodcastList.IView;
+import org.dandelion.radiot.podcasts.core.PodcastListConsumer;
 import org.dandelion.radiot.podcasts.core.PodcastListEngine;
 import org.dandelion.radiot.helpers.TestModel;
 
@@ -61,7 +62,7 @@ public class PodcastListEngineTestCase extends TestCase {
 
 	private IPodcastListEngine newPresenter() {
 		PodcastListEngine p = new PodcastListEngine(model);
-		p.attach(view);
+		p.attach(view, view);
 		return p;
 	}
 
@@ -77,7 +78,7 @@ public class PodcastListEngineTestCase extends TestCase {
 	}
 }
 
-class TestView implements IView {
+class TestView implements IView, PodcastListConsumer {
 	private LinkedBlockingQueue<Integer> updatedImages; 
 	private LinkedBlockingQueue<List<PodcastItem>> updatedPodcasts;
 	

@@ -6,19 +6,21 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.*;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.RadiotApplication;
 import org.dandelion.radiot.podcasts.PodcastsApp;
-import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastList.IPodcastListEngine;
 import org.dandelion.radiot.podcasts.core.PodcastList.IView;
 import org.dandelion.radiot.util.CustomTitleListActivity;
 
-import java.util.List;
+public class PodcastListActivity extends CustomTitleListActivity
+        implements IView {
 
-public class PodcastListActivity extends CustomTitleListActivity implements IView {
     public static Intent createIntent(Context context, String title, String showName) {
         return StartParams.createIntent(context, title, showName);
     }
@@ -27,10 +29,6 @@ public class PodcastListActivity extends CustomTitleListActivity implements IVie
     private IPodcastListEngine engine;
 	private ProgressDialog progress;
     private PodcastSelectionHandler selectionHandler;
-
-	public void closeProgress() {
-		progress.dismiss();
-	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -59,7 +57,7 @@ public class PodcastListActivity extends CustomTitleListActivity implements IVie
     protected void attachToEngine(String showName) {
 		RadiotApplication app = (RadiotApplication) getApplication();
 		engine = app.getPodcastEngine(showName);
-		engine.attach(this);
+		engine.attach(this, listAdapter);
 	}
 
 	@Override
@@ -115,11 +113,11 @@ public class PodcastListActivity extends CustomTitleListActivity implements IVie
 				});
 	}
 
-	public void updatePodcasts(List<PodcastItem> newList) {
-        listAdapter.populateList(newList);
-	}
+    public void closeProgress() {
+        progress.dismiss();
+    }
 
-	@Override
+    @Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
         selectionHandler.process(this, listAdapter.getItem(position));
     }
@@ -131,9 +129,5 @@ public class PodcastListActivity extends CustomTitleListActivity implements IVie
 
     public IPodcastListEngine getPodcastListEngine() {
 		return engine;
-	}
-
-	public void updatePodcastImage(int index) {
-		listAdapter.notifyDataSetChanged();
 	}
 }

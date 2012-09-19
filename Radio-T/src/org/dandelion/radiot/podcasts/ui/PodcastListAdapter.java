@@ -11,10 +11,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
+import org.dandelion.radiot.podcasts.core.PodcastListConsumer;
 
 import java.util.List;
 
-class PodcastListAdapter extends ArrayAdapter<PodcastItem> {
+class PodcastListAdapter extends ArrayAdapter<PodcastItem> implements PodcastListConsumer {
     private final Bitmap defaultPodcastImage;
     private Activity activity;
 
@@ -59,10 +60,16 @@ class PodcastListAdapter extends ArrayAdapter<PodcastItem> {
         view.setText(value);
     }
 
-    public void populateList(List<PodcastItem> items) {
+    @Override
+    public void updatePodcasts(List<PodcastItem> podcasts) {
         clear();
-        for (PodcastItem item : items) {
+        for (PodcastItem item : podcasts) {
             add(item);
         }
+    }
+
+    @Override
+    public void updatePodcastImage(int index) {
+        notifyDataSetChanged();
     }
 }
