@@ -117,7 +117,4 @@ public class PodcastListActivity extends CustomTitleListActivity
         progress.dismiss();
     }
 
-    public IPodcastListEngine getPodcastListEngine() {
-		return engine;
-	}
 }
