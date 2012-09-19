@@ -4,8 +4,8 @@ import android.content.Intent;
 import android.test.ActivityUnitTestCase;
 import org.dandelion.radiot.RadiotApplication;
 import org.dandelion.radiot.podcasts.core.PodcastList.IPodcastListEngine;
-import org.dandelion.radiot.podcasts.core.PodcastList.IView;
 import org.dandelion.radiot.podcasts.core.PodcastListConsumer;
+import org.dandelion.radiot.podcasts.core.ProgressListener;
 import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
 
 public class PodcastListActivityTestCase extends
@@ -75,7 +75,7 @@ public class PodcastListActivityTestCase extends
         public void refresh(boolean resetCache) {
 		}
 
-		public void attach(IView view, PodcastListConsumer consumer) {
+		public void attach(ProgressListener view, PodcastListConsumer consumer) {
 			this.view = view;
             this.consumer = consumer;
 		}

@@ -7,11 +7,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
-import org.dandelion.radiot.podcasts.core.PodcastItem;
+import org.dandelion.radiot.podcasts.core.*;
 import org.dandelion.radiot.podcasts.core.PodcastList.IPodcastListEngine;
-import org.dandelion.radiot.podcasts.core.PodcastList.IView;
-import org.dandelion.radiot.podcasts.core.PodcastListConsumer;
-import org.dandelion.radiot.podcasts.core.PodcastListEngine;
 import org.dandelion.radiot.helpers.TestModel;
 
 import android.graphics.Bitmap;
@@ -78,7 +75,7 @@ public class PodcastListEngineTestCase extends TestCase {
 	}
 }
 
-class TestView implements IView, PodcastListConsumer {
+class TestView implements ProgressListener, PodcastListConsumer {
 	private LinkedBlockingQueue<Integer> updatedImages; 
 	private LinkedBlockingQueue<List<PodcastItem>> updatedPodcasts;
 	
@@ -91,7 +88,7 @@ class TestView implements IView, PodcastListConsumer {
 		Assert.assertEquals(new Integer(index), updatedImages.take());
 	}
 
-	public void closeProgress() {
+	public void onFinished() {
 	}
 
 	public void waitAndCheckUpdatedPodcasts(ArrayList<PodcastItem> podcastList) throws InterruptedException {
@@ -102,10 +99,10 @@ class TestView implements IView, PodcastListConsumer {
 		updatedPodcasts.take();
 	}
 
-	public void showErrorMessage(String errorMessage) {
+	public void onError(String errorMessage) {
 	}
 
-	public void showProgress() {
+	public void onStarted() {
 	}
 
 	public void updatePodcastImage(int index) {

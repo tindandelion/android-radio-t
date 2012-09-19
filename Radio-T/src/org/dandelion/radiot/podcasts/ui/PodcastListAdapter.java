@@ -72,4 +72,6 @@ class PodcastListAdapter extends ArrayAdapter<PodcastItem> implements PodcastLis
     public void updatePodcastImage(int index) {
         notifyDataSetChanged();
     }
+
+
 }

@@ -3,33 +3,36 @@ package org.dandelion.radiot.podcasts.ui;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.view.View;
+import android.widget.AdapterView;
 import org.dandelion.radiot.R;
-import org.dandelion.radiot.podcasts.core.ErrorDisplay;
+import org.dandelion.radiot.podcasts.core.ErrorListener;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastAction;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
-class PodcastSelectionHandler implements DialogInterface.OnClickListener {
+class PodcastSelectionHandler implements DialogInterface.OnClickListener, AdapterView.OnItemClickListener {
     private static final int DOWNLOAD_ACTION = 0;
     private static final int PLAY_ACTION = 1;
 
     private Context context;
     private PodcastAction player;
     private PodcastAction downloader;
-    private ErrorDisplay errorDisplay;
+    private ErrorListener errorListener;
     private PodcastItem podcast;
 
-    public PodcastSelectionHandler(PodcastAction player, PodcastAction downloader, ErrorDisplay errorDisplay) {
+    public PodcastSelectionHandler(Context context, PodcastAction player, PodcastAction downloader, ErrorListener errorListener) {
+        this.context = context;
         this.player = player;
         this.downloader = downloader;
-        this.errorDisplay = errorDisplay;
+        this.errorListener = errorListener;
     }
 
-    public void process(Context context, PodcastItem podcast) {
-        this.context = context;
-        this.podcast = podcast;
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        podcast = (PodcastItem) parent.getAdapter().getItem(position);
         showActionSelector(podcast.getTitle(), this);
     }
 
@@ -55,11 +58,12 @@ class PodcastSelectionHandler implements DialogInterface.OnClickListener {
             PodcastAction action = selectProcessor(index);
             action.perform(context, podcast);
         } catch (MalformedURLException ex) {
-            errorDisplay.showErrorMessage(context.getString(R.string.incorrect_audio_url));
+            errorListener.onError(context.getString(R.string.incorrect_audio_url));
         }
     }
 
     private void checkPodcastUrl() throws MalformedURLException {
         new URL(podcast.getAudioUri());
     }
+
 }

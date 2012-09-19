@@ -40,7 +40,7 @@ public class RadiotApplication extends Application {
         PodcastsApp.release();
     }
 
-    protected IPodcastListEngine podcastEngine(String url, PodcastList.ThumbnailDownloader thumbnailDownloader) {
+    protected IPodcastListEngine podcastEngine(String url, ThumbnailDownloader thumbnailDownloader) {
         return new PodcastListEngine(new RssFeedModel(url, thumbnailDownloader));
     }
 

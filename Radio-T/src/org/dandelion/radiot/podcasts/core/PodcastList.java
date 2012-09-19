@@ -9,19 +9,11 @@ public class PodcastList {
 		Bitmap loadPodcastImage(PodcastItem item);
 	}
 
-    public interface IView extends ErrorDisplay {
-		void showProgress();
-		void closeProgress();
-	}
-
-	public interface IPodcastListEngine {
+    public interface IPodcastListEngine {
 		void refresh(boolean resetCache);
 		void cancelUpdate();
 		void detach();
-		void attach(IView view, PodcastListConsumer consumer);
+		void attach(ProgressListener view, PodcastListConsumer consumer);
 	}
 
-    public interface ThumbnailDownloader {
-        Bitmap loadPodcastImage(String url);
-    }
 }

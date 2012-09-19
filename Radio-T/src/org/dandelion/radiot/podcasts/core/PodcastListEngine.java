@@ -3,14 +3,13 @@ package org.dandelion.radiot.podcasts.core;
 import java.util.List;
 
 import org.dandelion.radiot.podcasts.core.PodcastList.IModel;
-import org.dandelion.radiot.podcasts.core.PodcastList.IView;
 
 import android.os.AsyncTask;
 
 @SuppressWarnings("unchecked")
 public class PodcastListEngine implements PodcastList.IPodcastListEngine {
 	protected IModel model;
-	protected IView view;
+	protected ProgressListener view;
 	protected UpdateTask task;
 	private List<PodcastItem> currentPodcasts;
     private PodcastListConsumer consumer;
@@ -45,10 +44,10 @@ public class PodcastListEngine implements PodcastList.IPodcastListEngine {
 
 	protected void publishPodcastList(List<PodcastItem> newList,
 			Exception loadError) {
-		view.closeProgress();
+		view.onFinished();
 
 		if (null != loadError) {
-			view.showErrorMessage(loadError.getMessage());
+			view.onError(loadError.getMessage());
 		} else {
 			currentPodcasts = newList;
 			updateViewWithCurrentPodcasts();
@@ -60,7 +59,7 @@ public class PodcastListEngine implements PodcastList.IPodcastListEngine {
         consumer = new NullConsumer();
 	}
 
-	public void attach(IView view, PodcastListConsumer consumer) {
+	public void attach(ProgressListener view, PodcastListConsumer consumer) {
 		this.view = view;
         this.consumer = consumer;
 	}
@@ -70,7 +69,7 @@ public class PodcastListEngine implements PodcastList.IPodcastListEngine {
 	}
 
 	protected void startRefreshTask() {
-		view.showProgress();
+		view.onStarted();
 		if (!isInProgress()) {
 			task = new UpdateTask();
             task.execute();
@@ -80,7 +79,7 @@ public class PodcastListEngine implements PodcastList.IPodcastListEngine {
 	public void cancelUpdate() {
 		if (isInProgress()) {
 			task.cancel(true);
-			view.closeProgress();
+			view.onFinished();
 		}
 	}
 
@@ -165,15 +164,15 @@ class NullConsumer implements PodcastListConsumer {
     }
 }
 
-class NullView implements IView {
+class NullView implements ProgressListener {
 
-    public void showProgress() {
+    public void onStarted() {
 	}
 
-	public void closeProgress() {
+	public void onFinished() {
 	}
 
-	public void showErrorMessage(String errorMessage) {
+	public void onError(String errorMessage) {
 	}
 
 }

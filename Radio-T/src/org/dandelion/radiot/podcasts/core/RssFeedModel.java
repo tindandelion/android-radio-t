@@ -22,9 +22,9 @@ public class RssFeedModel implements PodcastList.IModel {
     private ArrayList<PodcastItem> items;
 	private PodcastItem currentItem;
 	private String address;
-    private PodcastList.ThumbnailDownloader thumbnailDownloader;
+    private ThumbnailDownloader thumbnailDownloader;
 
-    public RssFeedModel(String address, PodcastList.ThumbnailDownloader thumbnailDownloader) {
+    public RssFeedModel(String address, ThumbnailDownloader thumbnailDownloader) {
         this.address = address;
         this.thumbnailDownloader = thumbnailDownloader;
     }
