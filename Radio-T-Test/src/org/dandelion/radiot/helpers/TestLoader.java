@@ -7,6 +7,7 @@ import junit.framework.Assert;
 
 import org.dandelion.radiot.podcasts.core.AsyncPodcastListLoader;
 import org.dandelion.radiot.podcasts.core.PodcastsProvider;
+import org.dandelion.radiot.podcasts.core.ThumbnailProvider;
 
 public class TestLoader extends AsyncPodcastListLoader {
 	private static final int WAIT_TIMEOUT = 60;
@@ -15,8 +16,8 @@ public class TestLoader extends AsyncPodcastListLoader {
 	private int startedTasksCount;
 	private int finishedTasksCount;
 
-	public TestLoader(PodcastsProvider model) {
-		super(model);
+	public TestLoader(PodcastsProvider podcasts, ThumbnailProvider thumbnails) {
+		super(podcasts, thumbnails);
 		taskCancelLatch = new CountDownLatch(1);
 		taskFinishLatch = new CountDownLatch(1);
 		startedTasksCount = 0;

@@ -6,14 +6,16 @@ import android.os.AsyncTask;
 
 @SuppressWarnings("unchecked")
 public class AsyncPodcastListLoader implements PodcastListLoader {
-	protected PodcastsProvider provider;
+	protected PodcastsProvider podcasts;
 	protected ProgressListener progressListener;
 	protected UpdateTask task;
 	private List<PodcastItem> currentPodcasts;
     private PodcastListConsumer consumer;
+    private ThumbnailProvider thumbnails;
 
-    public AsyncPodcastListLoader(PodcastsProvider provider) {
-		this.provider = provider;
+    public AsyncPodcastListLoader(PodcastsProvider podcasts, ThumbnailProvider thumbnails) {
+		this.podcasts = podcasts;
+        this.thumbnails = thumbnails;
 		progressListener = new NullListener();
 	}
 
@@ -119,7 +121,7 @@ public class AsyncPodcastListLoader implements PodcastListLoader {
 			List<PodcastItem> newList = null;
 			Exception error = null;
 			try {
-				newList = provider.retrieveAll();
+				newList = podcasts.retrieveAll();
 			} catch (Exception e) {
 				error = e;
 			}
@@ -141,7 +143,7 @@ public class AsyncPodcastListLoader implements PodcastListLoader {
 				PodcastItem item = list.get(i);
 				final int index = i;
 
-				item.setThumbnail(provider.thumbnailFor(item));
+				item.setThumbnail(podcasts.thumbnailFor(item));
 				publishProgress(new Runnable() {
 					public void run() {
 						consumer.updateThumbnail(index);

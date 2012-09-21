@@ -26,7 +26,8 @@ public class RadiotApplication extends Application {
     }
 
     private PodcastListLoader testPodcastEngine() {
-        return new AsyncPodcastListLoader(new RssFeedProvider("http://localhost:8080/rss", new NullThumbnailProvider())) {
+        NullThumbnailProvider thumbnails = new NullThumbnailProvider();
+        return new AsyncPodcastListLoader(new RssFeedProvider("http://localhost:8080/rss", thumbnails), thumbnails) {
             @Override
             public void refresh(boolean resetCache) {
                 super.refresh(true);
@@ -40,8 +41,8 @@ public class RadiotApplication extends Application {
         PodcastsApp.release();
     }
 
-    protected PodcastListLoader podcastEngine(String url, ThumbnailProvider thumbnailProvider) {
-        return new AsyncPodcastListLoader(new RssFeedProvider(url, thumbnailProvider));
+    protected PodcastListLoader podcastEngine(String url, ThumbnailProvider thumbnails) {
+        return new AsyncPodcastListLoader(new RssFeedProvider(url, thumbnails), thumbnails);
     }
 
     public PodcastListLoader getPodcastEngine(String name) {

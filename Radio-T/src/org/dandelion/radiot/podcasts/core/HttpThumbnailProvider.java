@@ -11,7 +11,11 @@ public class HttpThumbnailProvider implements ThumbnailProvider {
     private static final String HOST = "http://www.radio-t.com";
 
     @Override
-    public Bitmap loadPodcastImage(String url) {
+    public Bitmap thumbnailFor(PodcastItem item) {
+        return loadThumbnail(item.getThumbnailUrl());
+    }
+
+    private Bitmap loadThumbnail(String url) {
         if (null != url) {
             return BitmapFactory.decodeStream(openImageStream(constructFullUrl(url)));
         } else {

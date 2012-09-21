@@ -99,6 +99,6 @@ public class RssFeedProvider implements PodcastsProvider {
 	}
 
     public Bitmap thumbnailFor(PodcastItem item) {
-        return thumbnailProvider.loadPodcastImage(item.getThumbnailUrl());
+        return thumbnailProvider.thumbnailFor(item);
 	}
 }

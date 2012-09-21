@@ -2,6 +2,7 @@ package org.dandelion.radiot.integration;
 
 import junit.framework.TestCase;
 import org.dandelion.radiot.podcasts.core.HttpThumbnailProvider;
+import org.dandelion.radiot.podcasts.core.PodcastItem;
 
 public class HttpThumbnailDownloaderTestCase extends TestCase {
     private HttpThumbnailProvider downloader;
@@ -13,25 +14,31 @@ public class HttpThumbnailDownloaderTestCase extends TestCase {
 
     public void testDownloadPodcastByFullUrl() throws Exception {
         final String fullUrl = "http://www.radio-t.com/images/radio-t/rt302.jpg";
-        assertNotNull(downloader.loadPodcastImage(fullUrl));
+        assertNotNull(downloader.thumbnailFor(anItemWithThumbnail(fullUrl)));
     }
 
     public void testDownloadPodcastByPartialUrl() throws Exception {
         final String partialUrl = "/images/radio-t/rt302.jpg";
-        assertNotNull(downloader.loadPodcastImage(partialUrl));
+        assertNotNull(downloader.thumbnailFor(anItemWithThumbnail(partialUrl)));
     }
 
     public void testReturnNullIfUnableToLoadThumbnail() throws Exception {
         final String nonExistentUrl = "/non-existent/thumbnail.jpg";
-        assertNull(downloader.loadPodcastImage(nonExistentUrl));
+        assertNull(downloader.thumbnailFor(anItemWithThumbnail(nonExistentUrl)));
     }
 
     public void testReturnNullIfNowUrlIsSupplied() throws Exception {
-        assertNull(downloader.loadPodcastImage(null));
+        assertNull(downloader.thumbnailFor(anItemWithThumbnail(null)));
     }
 
     public void testJunkUri() throws Exception {
         String junkUrl = "http://ftp://Hello world/This is junk";
-        assertNull(downloader.loadPodcastImage(junkUrl));
+        assertNull(downloader.thumbnailFor(anItemWithThumbnail(junkUrl)));
+    }
+
+    private PodcastItem anItemWithThumbnail(String url) {
+        PodcastItem item = new PodcastItem();
+        item.setThumbnailUrl(url);
+        return item;
     }
 }

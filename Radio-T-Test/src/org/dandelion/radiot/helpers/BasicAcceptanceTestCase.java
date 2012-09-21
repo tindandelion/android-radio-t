@@ -33,7 +33,7 @@ public class BasicAcceptanceTestCase extends
 	}
 
     protected TestLoader createLoader(String url) {
-        return new TestLoader(createTestProvider(url));
+        return new TestLoader(createTestProvider(url), new NullThumbnailProvider());
     }
 
     private RadiotApplication getRadiotApplication() {

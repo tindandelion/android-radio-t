@@ -101,4 +101,8 @@ public class PodcastItem implements Cloneable {
     public String getThumbnailUrl() {
         return thumbnailUrl;
     }
+
+    public void setThumbnailUrl(String value) {
+        this.thumbnailUrl = value;
+    }
 }
