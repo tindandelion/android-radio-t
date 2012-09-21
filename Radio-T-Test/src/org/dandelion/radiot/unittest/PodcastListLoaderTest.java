@@ -17,7 +17,7 @@ import android.os.Looper;
 public class PodcastListLoaderTest extends TestCase {
 	private TestModel model;
 	private TestView view;
-	private PodcastListLoader presenter;
+	private PodcastListLoader loader;
 
 	public void testRetrieveAndPublishPodcastList() throws Exception {
 		ArrayList<PodcastItem> podcastList = newPodcastList();
@@ -53,7 +53,7 @@ public class PodcastListLoaderTest extends TestCase {
 		super.setUp();
 		model = new TestModel();
 		view = new TestView();
-		presenter = newPresenter();
+		loader = newPresenter();
 	}
 
 	private PodcastListLoader newPresenter() {
@@ -67,7 +67,7 @@ public class PodcastListLoaderTest extends TestCase {
 
 			public void run() {
 				Looper.prepare();
-				presenter.refresh(false);
+				loader.refresh(false);
 				Looper.loop();
 			}
 		}).start();
