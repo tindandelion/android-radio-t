@@ -104,7 +104,7 @@ class TestView implements ProgressListener, PodcastListConsumer {
 	public void onStarted() {
 	}
 
-	public void updatePodcastImage(int index) {
+	public void updateThumbnail(int index) {
 		try {
 			updatedImages.put(index);
 		} catch (InterruptedException ignored) {

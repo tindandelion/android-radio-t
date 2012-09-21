@@ -69,7 +69,7 @@ class PodcastListAdapter extends ArrayAdapter<PodcastItem> implements PodcastLis
     }
 
     @Override
-    public void updatePodcastImage(int index) {
+    public void updateThumbnail(int index) {
         notifyDataSetChanged();
     }
 

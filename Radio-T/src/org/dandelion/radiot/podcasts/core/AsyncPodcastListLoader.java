@@ -144,7 +144,7 @@ public class AsyncPodcastListLoader implements PodcastListLoader {
 				item.setThumbnail(provider.thumbnailFor(item));
 				publishProgress(new Runnable() {
 					public void run() {
-						consumer.updatePodcastImage(index);
+						consumer.updateThumbnail(index);
 					}
 				});
 			}
@@ -158,7 +158,7 @@ class NullConsumer implements PodcastListConsumer {
     }
 
     @Override
-    public void updatePodcastImage(int index) {
+    public void updateThumbnail(int index) {
     }
 }
 
