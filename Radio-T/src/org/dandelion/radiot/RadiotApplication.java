@@ -15,10 +15,10 @@ public class RadiotApplication extends Application {
         super.onCreate();
         engines = new HashMap<String, PodcastListLoader>();
         engines.put("main-show",
-                podcastEngine("http://feeds.rucast.net/radio-t", new HttpThumbnailDownloader()));
+                podcastEngine("http://feeds.rucast.net/radio-t", new HttpThumbnailProvider()));
         engines.put(
                 "after-show",
-                podcastEngine("http://feeds.feedburner.com/pirate-radio-t", new NullThumbnailDownloader()));
+                podcastEngine("http://feeds.feedburner.com/pirate-radio-t", new NullThumbnailProvider()));
         engines.put(
                 "test-show",
                 testPodcastEngine());
@@ -26,7 +26,7 @@ public class RadiotApplication extends Application {
     }
 
     private PodcastListLoader testPodcastEngine() {
-        return new AsyncPodcastListLoader(new RssFeedProvider("http://localhost:8080/rss", new NullThumbnailDownloader())) {
+        return new AsyncPodcastListLoader(new RssFeedProvider("http://localhost:8080/rss", new NullThumbnailProvider())) {
             @Override
             public void refresh(boolean resetCache) {
                 super.refresh(true);
@@ -40,8 +40,8 @@ public class RadiotApplication extends Application {
         PodcastsApp.release();
     }
 
-    protected PodcastListLoader podcastEngine(String url, ThumbnailDownloader thumbnailDownloader) {
-        return new AsyncPodcastListLoader(new RssFeedProvider(url, thumbnailDownloader));
+    protected PodcastListLoader podcastEngine(String url, ThumbnailProvider thumbnailProvider) {
+        return new AsyncPodcastListLoader(new RssFeedProvider(url, thumbnailProvider));
     }
 
     public PodcastListLoader getPodcastEngine(String name) {

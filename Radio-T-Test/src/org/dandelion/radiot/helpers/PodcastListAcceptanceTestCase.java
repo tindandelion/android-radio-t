@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-import org.dandelion.radiot.podcasts.core.NullThumbnailDownloader;
+import org.dandelion.radiot.podcasts.core.NullThumbnailProvider;
 import org.dandelion.radiot.podcasts.core.PodcastListLoader;
 import org.dandelion.radiot.podcasts.core.PodcastsProvider;
 import org.dandelion.radiot.podcasts.core.RssFeedProvider;
@@ -19,7 +19,7 @@ public class PodcastListAcceptanceTestCase extends BasicAcceptanceTestCase {
 	protected PodcastsProvider createTestModel(final String url) {
 		final AssetManager assets = getInstrumentation().getContext()
 				.getAssets();
-		return new RssFeedProvider(url, new NullThumbnailDownloader()) {
+		return new RssFeedProvider(url, new NullThumbnailProvider()) {
 			@Override
 			protected InputStream openContentStream() throws IOException {
 				return assets.open((url + ".xml"));

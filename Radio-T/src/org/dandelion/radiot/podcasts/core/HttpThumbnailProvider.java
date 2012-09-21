@@ -7,7 +7,7 @@ import android.net.Uri;
 import java.io.InputStream;
 import java.net.URL;
 
-public class HttpThumbnailDownloader implements ThumbnailDownloader {
+public class HttpThumbnailProvider implements ThumbnailProvider {
     private static final String HOST = "http://www.radio-t.com";
 
     @Override

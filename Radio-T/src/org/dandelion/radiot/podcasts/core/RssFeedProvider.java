@@ -21,11 +21,11 @@ public class RssFeedProvider implements PodcastsProvider {
     private ArrayList<PodcastItem> items;
 	private PodcastItem currentItem;
 	private String address;
-    private ThumbnailDownloader thumbnailDownloader;
+    private ThumbnailProvider thumbnailProvider;
 
-    public RssFeedProvider(String address, ThumbnailDownloader thumbnailDownloader) {
+    public RssFeedProvider(String address, ThumbnailProvider thumbnailProvider) {
         this.address = address;
-        this.thumbnailDownloader = thumbnailDownloader;
+        this.thumbnailProvider = thumbnailProvider;
     }
 
     public List<PodcastItem> retrieveAll() throws Exception {
@@ -99,6 +99,6 @@ public class RssFeedProvider implements PodcastsProvider {
 	}
 
     public Bitmap thumbnailFor(PodcastItem item) {
-        return thumbnailDownloader.loadPodcastImage(item.getThumbnailUrl());
+        return thumbnailProvider.loadPodcastImage(item.getThumbnailUrl());
 	}
 }

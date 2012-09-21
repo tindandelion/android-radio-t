@@ -1,7 +1,7 @@
 package org.dandelion.radiot.unittest;
 
 import junit.framework.TestCase;
-import org.dandelion.radiot.podcasts.core.NullThumbnailDownloader;
+import org.dandelion.radiot.podcasts.core.NullThumbnailProvider;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.RssFeedProvider;
 
@@ -25,7 +25,7 @@ public class RssFeedModelTestCase extends TestCase {
 	}
 
 	protected RssFeedProvider createTestModel() {
-		return new RssFeedProvider(null, new NullThumbnailDownloader()) {
+		return new RssFeedProvider(null, new NullThumbnailProvider()) {
 			@Override
 			protected InputStream openContentStream() throws IOException {
 				return new ByteArrayInputStream(getCompleteFeed().getBytes()) {

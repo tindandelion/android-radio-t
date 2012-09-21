@@ -1,14 +1,14 @@
 package org.dandelion.radiot.integration;
 
 import junit.framework.TestCase;
-import org.dandelion.radiot.podcasts.core.HttpThumbnailDownloader;
+import org.dandelion.radiot.podcasts.core.HttpThumbnailProvider;
 
 public class HttpThumbnailDownloaderTestCase extends TestCase {
-    private HttpThumbnailDownloader downloader;
+    private HttpThumbnailProvider downloader;
 
     @Override
     public void setUp() throws Exception {
-        downloader = new HttpThumbnailDownloader();
+        downloader = new HttpThumbnailProvider();
     }
 
     public void testDownloadPodcastByFullUrl() throws Exception {
