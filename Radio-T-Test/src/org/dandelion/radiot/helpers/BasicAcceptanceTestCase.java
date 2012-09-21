@@ -1,13 +1,18 @@
 package org.dandelion.radiot.helpers;
 
 
+import android.content.res.AssetManager;
 import org.dandelion.radiot.accepttest.drivers.HomeScreenDriver;
-import org.dandelion.radiot.podcasts.core.PodcastListLoader;
+import org.dandelion.radiot.podcasts.core.NullThumbnailProvider;
 import org.dandelion.radiot.home_screen.HomeScreenActivity;
 import org.dandelion.radiot.RadiotApplication;
 
 import android.test.ActivityInstrumentationTestCase2;
 import org.dandelion.radiot.podcasts.core.PodcastsProvider;
+import org.dandelion.radiot.podcasts.core.RssFeedProvider;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 public class BasicAcceptanceTestCase extends
 		ActivityInstrumentationTestCase2<HomeScreenActivity> {
@@ -23,24 +28,26 @@ public class BasicAcceptanceTestCase extends
 
 	private void configurePodcastEngines() {
 		RadiotApplication app = getRadiotApplication();
-		app.setPodcastEngine("main-show", createTestEngine(createTestModel("radio-t")));
-		app.setPodcastEngine("after-show", createTestEngine(createTestModel("pirate-radio-t")));
+        app.setPodcastEngine("main-show", createLoader("radio-t"));
+		app.setPodcastEngine("after-show", createLoader("pirate-radio-t"));
 	}
 
-	protected RadiotApplication getRadiotApplication() {
+    protected TestLoader createLoader(String url) {
+        return new TestLoader(createTestProvider(url));
+    }
+
+    private RadiotApplication getRadiotApplication() {
 		return (RadiotApplication) getActivity().getApplication();
 	}
 
-	protected PodcastListLoader createTestEngine(PodcastsProvider model) {
-		return null;
-	}
-
-	protected PodcastsProvider createTestModel(String url) {
-		return null;
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-		super.tearDown();
-	}
+    private PodcastsProvider createTestProvider(final String url) {
+        final AssetManager assets = getInstrumentation().getContext()
+                .getAssets();
+        return new RssFeedProvider(url, new NullThumbnailProvider()) {
+            @Override
+            protected InputStream openContentStream() throws IOException {
+                return assets.open((url + ".xml"));
+            }
+        };
+    }
 }

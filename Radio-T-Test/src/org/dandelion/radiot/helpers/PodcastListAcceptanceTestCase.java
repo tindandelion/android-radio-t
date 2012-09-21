@@ -1,39 +1,17 @@
 package org.dandelion.radiot.helpers;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
-
-import org.dandelion.radiot.podcasts.core.NullThumbnailProvider;
-import org.dandelion.radiot.podcasts.core.PodcastListLoader;
-import org.dandelion.radiot.podcasts.core.PodcastsProvider;
-import org.dandelion.radiot.podcasts.core.RssFeedProvider;
-
-import android.content.res.AssetManager;
 
 public class PodcastListAcceptanceTestCase extends BasicAcceptanceTestCase {
 	protected ArrayList<TestLoader> loaders;
 
+    @Override
+    protected TestLoader createLoader(String url) {
+        TestLoader loader = super.createLoader(url);
+        loaders.add(loader);
+        return loader;
+    }
 
-	@Override
-	protected PodcastsProvider createTestModel(final String url) {
-		final AssetManager assets = getInstrumentation().getContext()
-				.getAssets();
-		return new RssFeedProvider(url, new NullThumbnailProvider()) {
-			@Override
-			protected InputStream openContentStream() throws IOException {
-				return assets.open((url + ".xml"));
-			}
-		};
-	}
-
-	@Override
-	protected PodcastListLoader createTestEngine(PodcastsProvider model) {
-		TestLoader loader = new TestLoader(model);
-		loaders.add(loader);
-		return loader;
-	}
-	
 	public TestLoader mainShowPresenter() {
 		return loaders.get(0);
 	}
