@@ -2,6 +2,7 @@ package org.dandelion.radiot.unittest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import junit.framework.Assert;
@@ -9,21 +10,21 @@ import junit.framework.TestCase;
 
 import org.dandelion.radiot.podcasts.core.*;
 import org.dandelion.radiot.podcasts.core.PodcastListLoader;
-import org.dandelion.radiot.helpers.TestModel;
 
 import android.graphics.Bitmap;
 import android.os.Looper;
 
 public class PodcastListLoaderTest extends TestCase {
-	private TestModel model;
+	private TestPodcastsProvider podcasts;
 	private TestView view;
 	private PodcastListLoader loader;
+    private TestThumbnailProvider thumbnails;
 
-	public void testRetrieveAndPublishPodcastList() throws Exception {
+    public void testRetrieveAndPublishPodcastList() throws Exception {
 		ArrayList<PodcastItem> podcastList = newPodcastList();
 
 		startPodcastListUpdate();
-		model.returnsPodcasts(podcastList);
+		podcasts.returnsPodcasts(podcastList);
 		
 		view.waitAndCheckUpdatedPodcasts(podcastList);
 	}
@@ -33,13 +34,13 @@ public class PodcastListLoaderTest extends TestCase {
 		PodcastItem item = new PodcastItem();
 		podcastList.add(item);
 
-		model.returnsPodcasts(podcastList);
+		podcasts.returnsPodcasts(podcastList);
 		startPodcastListUpdate();
 		view.waitUntilPodcastListUpdated();
 		assertNull(item.getThumbnail());
 
 		Bitmap image = Bitmap.createBitmap(1, 1, Bitmap.Config.RGB_565);
-		model.returnsPodcastImage(image);
+		thumbnails.returnsPodcastImage(image);
 		view.assertPodcastImageUpdated(0);
 		assertEquals(image, item.getThumbnail());
 	}
@@ -51,15 +52,14 @@ public class PodcastListLoaderTest extends TestCase {
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		model = new TestModel();
+		podcasts = new TestPodcastsProvider();
+        thumbnails = new TestThumbnailProvider();
 		view = new TestView();
-		loader = newPresenter();
+		loader = newLoader(podcasts, thumbnails);
 	}
 
-	private PodcastListLoader newPresenter() {
-        // TODO: Here will be the change soon
-        NullThumbnailProvider thumbnails = new NullThumbnailProvider();
-		AsyncPodcastListLoader p = new AsyncPodcastListLoader(model, thumbnails);
+	private PodcastListLoader newLoader(PodcastsProvider podcasts, ThumbnailProvider thumbnails) {
+		AsyncPodcastListLoader p = new AsyncPodcastListLoader(podcasts, thumbnails);
 		p.attach(view, view);
 		return p;
 	}
@@ -74,6 +74,37 @@ public class PodcastListLoaderTest extends TestCase {
 			}
 		}).start();
 	}
+}
+
+class TestPodcastsProvider implements PodcastsProvider {
+    private LinkedBlockingQueue<List<PodcastItem>> podcastQueue =
+            new LinkedBlockingQueue<List<PodcastItem>>();
+
+    @Override
+    public List<PodcastItem> retrieveAll() throws Exception {
+        return podcastQueue.take();
+    }
+
+    public void returnsPodcasts(List<PodcastItem> list) {
+        podcastQueue.add(list);
+    }
+}
+
+class TestThumbnailProvider implements ThumbnailProvider {
+    private final BlockingQueue<Bitmap> imageQueue = new LinkedBlockingQueue<Bitmap>();
+
+    @Override
+    public Bitmap thumbnailFor(PodcastItem item) {
+        try {
+            return imageQueue.take();
+        } catch (InterruptedException e) {
+            return null;
+        }
+    }
+
+    public void returnsPodcastImage(Bitmap image) {
+        imageQueue.add(image);
+    }
 }
 
 class TestView implements ProgressListener, PodcastListConsumer {

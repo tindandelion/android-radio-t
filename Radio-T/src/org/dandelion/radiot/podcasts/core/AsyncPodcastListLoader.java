@@ -143,7 +143,7 @@ public class AsyncPodcastListLoader implements PodcastListLoader {
 				PodcastItem item = list.get(i);
 				final int index = i;
 
-				item.setThumbnail(podcasts.thumbnailFor(item));
+				item.setThumbnail(thumbnails.thumbnailFor(item));
 				publishProgress(new Runnable() {
 					public void run() {
 						consumer.updateThumbnail(index);
