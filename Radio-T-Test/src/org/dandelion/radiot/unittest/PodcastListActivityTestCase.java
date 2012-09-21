@@ -53,7 +53,7 @@ public class PodcastListActivityTestCase extends
         public void refresh(boolean resetCache) {
 		}
 
-		public void attach(ProgressListener view, PodcastListConsumer consumer) {
+		public void attach(ProgressListener listener, PodcastListConsumer consumer) {
 		}
     }
 }

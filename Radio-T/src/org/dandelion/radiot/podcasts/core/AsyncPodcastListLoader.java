@@ -57,8 +57,8 @@ public class AsyncPodcastListLoader implements PodcastListLoader {
         consumer = new NullConsumer();
 	}
 
-	public void attach(ProgressListener view, PodcastListConsumer consumer) {
-		this.progressListener = view;
+	public void attach(ProgressListener listener, PodcastListConsumer consumer) {
+		this.progressListener = listener;
         this.consumer = consumer;
 	}
 

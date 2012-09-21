@@ -4,5 +4,5 @@ public interface PodcastListLoader {
     void refresh(boolean resetCache);
     void cancelUpdate();
     void detach();
-    void attach(ProgressListener view, PodcastListConsumer consumer);
+    void attach(ProgressListener listener, PodcastListConsumer consumer);
 }
