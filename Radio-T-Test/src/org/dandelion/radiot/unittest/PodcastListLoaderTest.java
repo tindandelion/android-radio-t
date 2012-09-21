@@ -8,17 +8,16 @@ import junit.framework.Assert;
 import junit.framework.TestCase;
 
 import org.dandelion.radiot.podcasts.core.*;
-import org.dandelion.radiot.podcasts.core.PodcastList.IPodcastListEngine;
+import org.dandelion.radiot.podcasts.core.PodcastListLoader;
 import org.dandelion.radiot.helpers.TestModel;
 
 import android.graphics.Bitmap;
 import android.os.Looper;
 
-public class PodcastListEngineTestCase extends TestCase {
-
+public class PodcastListLoaderTest extends TestCase {
 	private TestModel model;
 	private TestView view;
-	private IPodcastListEngine presenter;
+	private PodcastListLoader presenter;
 
 	public void testRetrieveAndPublishPodcastList() throws Exception {
 		ArrayList<PodcastItem> podcastList = newPodcastList();
@@ -57,8 +56,8 @@ public class PodcastListEngineTestCase extends TestCase {
 		presenter = newPresenter();
 	}
 
-	private IPodcastListEngine newPresenter() {
-		PodcastListEngine p = new PodcastListEngine(model);
+	private PodcastListLoader newPresenter() {
+		AsyncPodcastListLoader p = new AsyncPodcastListLoader(model);
 		p.attach(view, view);
 		return p;
 	}

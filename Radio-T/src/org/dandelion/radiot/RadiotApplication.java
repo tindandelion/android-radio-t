@@ -3,17 +3,17 @@ package org.dandelion.radiot;
 import android.app.Application;
 import org.dandelion.radiot.podcasts.PodcastsApp;
 import org.dandelion.radiot.podcasts.core.*;
-import org.dandelion.radiot.podcasts.core.PodcastList.IPodcastListEngine;
+import org.dandelion.radiot.podcasts.core.PodcastListLoader;
 
 import java.util.HashMap;
 
 public class RadiotApplication extends Application {
-    private HashMap<String, IPodcastListEngine> engines;
+    private HashMap<String, PodcastListLoader> engines;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        engines = new HashMap<String, IPodcastListEngine>();
+        engines = new HashMap<String, PodcastListLoader>();
         engines.put("main-show",
                 podcastEngine("http://feeds.rucast.net/radio-t", new HttpThumbnailDownloader()));
         engines.put(
@@ -25,8 +25,8 @@ public class RadiotApplication extends Application {
         PodcastsApp.initialize(this);
     }
 
-    private IPodcastListEngine testPodcastEngine() {
-        return new PodcastListEngine(new RssFeedModel("http://localhost:8080/rss", new NullThumbnailDownloader())) {
+    private PodcastListLoader testPodcastEngine() {
+        return new AsyncPodcastListLoader(new RssFeedProvider("http://localhost:8080/rss", new NullThumbnailDownloader())) {
             @Override
             public void refresh(boolean resetCache) {
                 super.refresh(true);
@@ -40,15 +40,15 @@ public class RadiotApplication extends Application {
         PodcastsApp.release();
     }
 
-    protected IPodcastListEngine podcastEngine(String url, ThumbnailDownloader thumbnailDownloader) {
-        return new PodcastListEngine(new RssFeedModel(url, thumbnailDownloader));
+    protected PodcastListLoader podcastEngine(String url, ThumbnailDownloader thumbnailDownloader) {
+        return new AsyncPodcastListLoader(new RssFeedProvider(url, thumbnailDownloader));
     }
 
-    public IPodcastListEngine getPodcastEngine(String name) {
+    public PodcastListLoader getPodcastEngine(String name) {
         return engines.get(name);
     }
 
-    public void setPodcastEngine(String name, IPodcastListEngine engine) {
-        engines.put(name, engine);
+    public void setPodcastEngine(String name, PodcastListLoader loader) {
+        engines.put(name, loader);
     }
 }

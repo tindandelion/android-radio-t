@@ -2,12 +2,12 @@ package org.dandelion.radiot.helpers;
 
 
 import org.dandelion.radiot.accepttest.drivers.HomeScreenDriver;
-import org.dandelion.radiot.podcasts.core.PodcastList.IModel;
-import org.dandelion.radiot.podcasts.core.PodcastList.IPodcastListEngine;
+import org.dandelion.radiot.podcasts.core.PodcastListLoader;
 import org.dandelion.radiot.home_screen.HomeScreenActivity;
 import org.dandelion.radiot.RadiotApplication;
 
 import android.test.ActivityInstrumentationTestCase2;
+import org.dandelion.radiot.podcasts.core.PodcastsProvider;
 
 public class BasicAcceptanceTestCase extends
 		ActivityInstrumentationTestCase2<HomeScreenActivity> {
@@ -31,11 +31,11 @@ public class BasicAcceptanceTestCase extends
 		return (RadiotApplication) getActivity().getApplication();
 	}
 
-	protected IPodcastListEngine createTestEngine(IModel model) {
+	protected PodcastListLoader createTestEngine(PodcastsProvider model) {
 		return null;
 	}
 
-	protected IModel createTestModel(String url) {
+	protected PodcastsProvider createTestModel(String url) {
 		return null;
 	}
 

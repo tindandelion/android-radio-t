@@ -13,7 +13,7 @@ import android.widget.ListView;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.RadiotApplication;
 import org.dandelion.radiot.podcasts.PodcastsApp;
-import org.dandelion.radiot.podcasts.core.PodcastList.IPodcastListEngine;
+import org.dandelion.radiot.podcasts.core.PodcastListLoader;
 import org.dandelion.radiot.podcasts.core.ProgressListener;
 import org.dandelion.radiot.util.CustomTitleListActivity;
 
@@ -24,7 +24,7 @@ public class PodcastListActivity extends CustomTitleListActivity
         return StartParams.createIntent(context, title, showName);
     }
 
-    private IPodcastListEngine engine;
+    private PodcastListLoader loader;
 	private ProgressDialog progress;
 
     @Override
@@ -56,26 +56,26 @@ public class PodcastListActivity extends CustomTitleListActivity
 
     protected void attachToEngine(String showName, PodcastListAdapter listAdapter) {
 		RadiotApplication app = (RadiotApplication) getApplication();
-		engine = app.getPodcastEngine(showName);
-		engine.attach(this, listAdapter);
+		loader = app.getPodcastEngine(showName);
+		loader.attach(this, listAdapter);
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		engine.refresh(false);
+		loader.refresh(false);
 	}
 	
 	@Override
 	protected void onStop() {
 		super.onStop();
-		engine.detach();
+		loader.detach();
 	}
 
 	@Override
 	protected void onDestroy() {
-		if (null != engine) {
-			engine.cancelUpdate();
+		if (null != loader) {
+			loader.cancelUpdate();
 		}
 		super.onDestroy();
 	}
@@ -91,7 +91,7 @@ public class PodcastListActivity extends CustomTitleListActivity
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.refresh:
-			engine.refresh(true);
+			loader.refresh(true);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

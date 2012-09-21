@@ -5,21 +5,21 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 import org.dandelion.radiot.podcasts.core.NullThumbnailDownloader;
-import org.dandelion.radiot.podcasts.core.PodcastList.IModel;
-import org.dandelion.radiot.podcasts.core.PodcastList.IPodcastListEngine;
-import org.dandelion.radiot.podcasts.core.RssFeedModel;
+import org.dandelion.radiot.podcasts.core.PodcastListLoader;
+import org.dandelion.radiot.podcasts.core.PodcastsProvider;
+import org.dandelion.radiot.podcasts.core.RssFeedProvider;
 
 import android.content.res.AssetManager;
 
 public class PodcastListAcceptanceTestCase extends BasicAcceptanceTestCase {
-	protected ArrayList<TestPresenter> presenters;
+	protected ArrayList<TestLoader> loaders;
 
 
 	@Override
-	protected IModel createTestModel(final String url) {
+	protected PodcastsProvider createTestModel(final String url) {
 		final AssetManager assets = getInstrumentation().getContext()
 				.getAssets();
-		return new RssFeedModel(url, new NullThumbnailDownloader()) {
+		return new RssFeedProvider(url, new NullThumbnailDownloader()) {
 			@Override
 			protected InputStream openContentStream() throws IOException {
 				return assets.open((url + ".xml"));
@@ -28,31 +28,31 @@ public class PodcastListAcceptanceTestCase extends BasicAcceptanceTestCase {
 	}
 
 	@Override
-	protected IPodcastListEngine createTestEngine(IModel model) {
-		TestPresenter presenter = new TestPresenter(model);
-		presenters.add(presenter);
-		return presenter;
+	protected PodcastListLoader createTestEngine(PodcastsProvider model) {
+		TestLoader loader = new TestLoader(model);
+		loaders.add(loader);
+		return loader;
 	}
 	
-	public TestPresenter mainShowPresenter() { 
-		return presenters.get(0);
+	public TestLoader mainShowPresenter() {
+		return loaders.get(0);
 	}
 	
-	public TestPresenter afterShowPresenter() {
-		return presenters.get(1);
+	public TestLoader afterShowPresenter() {
+		return loaders.get(1);
 	}
 	
 	@Override
 	protected void setUp() throws Exception {
-		presenters = new ArrayList<TestPresenter>();
+		loaders = new ArrayList<TestLoader>();
 		super.setUp();
 	}
 
 	@Override
 	protected void tearDown() throws Exception {
 		super.tearDown();
-		for (TestPresenter presenter : presenters) {
-			presenter.assertNoTasksAreActive();
+		for (TestLoader loader : loaders) {
+			loader.assertNoTasksAreActive();
 		}
 	}
 

@@ -1,15 +1,13 @@
 package org.dandelion.radiot.helpers;
 
-import java.util.ArrayList;
+import android.graphics.Bitmap;
+import org.dandelion.radiot.podcasts.core.PodcastItem;
+import org.dandelion.radiot.podcasts.core.PodcastsProvider;
+
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import org.dandelion.radiot.podcasts.core.PodcastItem;
-import org.dandelion.radiot.podcasts.core.PodcastList.IModel;
-
-import android.graphics.Bitmap;
-
-public class TestModel implements IModel {
+public class TestModel implements PodcastsProvider {
 
 	private LinkedBlockingQueue<List<PodcastItem>> podcastQueue;
 	private LinkedBlockingQueue<Bitmap> imageQueue;
@@ -19,11 +17,11 @@ public class TestModel implements IModel {
 		imageQueue = new LinkedBlockingQueue<Bitmap>();
 	}
 
-	public List<PodcastItem> retrievePodcasts() throws Exception {
+	public List<PodcastItem> retrieveAll() throws Exception {
 		return podcastQueue.take();
 	}
 
-	public Bitmap loadPodcastImage(PodcastItem item) {
+	public Bitmap thumbnailFor(PodcastItem item) {
 		try {
 			return imageQueue.take();
 		} catch (InterruptedException e) {
@@ -35,11 +33,7 @@ public class TestModel implements IModel {
 		podcastQueue.add(list);
 	}
 
-	public void returnsEmptyPodcastList() {
-		returnsPodcasts(new ArrayList<PodcastItem>());
-	}
-
-	public void returnsPodcastImage(Bitmap image) {
+    public void returnsPodcastImage(Bitmap image) {
 		imageQueue.add(image);
 	}
 

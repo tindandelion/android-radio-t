@@ -3,7 +3,7 @@ package org.dandelion.radiot.unittest;
 import junit.framework.TestCase;
 import org.dandelion.radiot.podcasts.core.NullThumbnailDownloader;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
-import org.dandelion.radiot.podcasts.core.RssFeedModel;
+import org.dandelion.radiot.podcasts.core.RssFeedProvider;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -11,7 +11,7 @@ import java.io.InputStream;
 import java.util.List;
 
 public class RssFeedModelTestCase extends TestCase {
-	private RssFeedModel model;
+	private RssFeedProvider model;
 	private String feedContent;
 	private List<PodcastItem> parsedItems;
 	private PodcastItem firstParsedItem;
@@ -24,8 +24,8 @@ public class RssFeedModelTestCase extends TestCase {
 		feedContent = "";
 	}
 
-	protected RssFeedModel createTestModel() {
-		return new RssFeedModel(null, new NullThumbnailDownloader()) {
+	protected RssFeedProvider createTestModel() {
+		return new RssFeedProvider(null, new NullThumbnailDownloader()) {
 			@Override
 			protected InputStream openContentStream() throws IOException {
 				return new ByteArrayInputStream(getCompleteFeed().getBytes()) {
@@ -110,7 +110,7 @@ public class RssFeedModelTestCase extends TestCase {
 	}
 
 	private void parseRssFeed() throws Exception {
-		parsedItems = model.retrievePodcasts();
+		parsedItems = model.retrieveAll();
 		if (!parsedItems.isEmpty()) {
 			firstParsedItem = parsedItems.get(0);
 		}

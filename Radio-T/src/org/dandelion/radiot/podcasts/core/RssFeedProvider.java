@@ -6,7 +6,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.util.Log;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 
@@ -18,22 +17,20 @@ import android.sax.RootElement;
 import android.sax.StartElementListener;
 import android.util.Xml;
 
-public class RssFeedModel implements PodcastList.IModel {
+public class RssFeedProvider implements PodcastsProvider {
     private ArrayList<PodcastItem> items;
 	private PodcastItem currentItem;
 	private String address;
     private ThumbnailDownloader thumbnailDownloader;
 
-    public RssFeedModel(String address, ThumbnailDownloader thumbnailDownloader) {
+    public RssFeedProvider(String address, ThumbnailDownloader thumbnailDownloader) {
         this.address = address;
         this.thumbnailDownloader = thumbnailDownloader;
     }
 
-    public List<PodcastItem> retrievePodcasts() throws Exception {
+    public List<PodcastItem> retrieveAll() throws Exception {
 		items = new ArrayList<PodcastItem>();
-        Log.d("PODCASTS", "Starting to parse podcast list");
 		Xml.parse(openContentStream(), Xml.Encoding.UTF_8, getContentHandler());
-        Log.d("PODCASTS", String.format("Finished parsing with items: %d", items.size()));
 		return items;
 	}
 
@@ -101,7 +98,7 @@ public class RssFeedModel implements PodcastList.IModel {
 		return root.getContentHandler();
 	}
 
-    public Bitmap loadPodcastImage(PodcastItem item) {
+    public Bitmap thumbnailFor(PodcastItem item) {
         return thumbnailDownloader.loadPodcastImage(item.getThumbnailUrl());
 	}
 }

@@ -5,17 +5,17 @@ import java.util.concurrent.TimeUnit;
 
 import junit.framework.Assert;
 
-import org.dandelion.radiot.podcasts.core.PodcastList.IModel;
-import org.dandelion.radiot.podcasts.core.PodcastListEngine;
+import org.dandelion.radiot.podcasts.core.AsyncPodcastListLoader;
+import org.dandelion.radiot.podcasts.core.PodcastsProvider;
 
-public class TestPresenter extends PodcastListEngine {
+public class TestLoader extends AsyncPodcastListLoader {
 	private static final int WAIT_TIMEOUT = 60;
 	private CountDownLatch taskCancelLatch;
 	private CountDownLatch taskFinishLatch;
 	private int startedTasksCount;
 	private int finishedTasksCount;
 
-	public TestPresenter(IModel model) {
+	public TestLoader(PodcastsProvider model) {
 		super(model);
 		taskCancelLatch = new CountDownLatch(1);
 		taskFinishLatch = new CountDownLatch(1);
@@ -44,22 +44,14 @@ public class TestPresenter extends PodcastListEngine {
 		}
 		finishedTasksCount += 1;
 	}
-	
-	public void assertStartedBackgroundTasksCount(int i) {
-		Assert.assertEquals(i, startedTasksCount);
-	}
 
-	public void assertNoTasksAreActive() {
+    public void assertNoTasksAreActive() {
 		if (startedTasksCount > finishedTasksCount) {
 			Assert.fail("Not all background tasks were finished by tear down");
 		}
 	}
 
-	public void assertTaskIsCancelled() throws InterruptedException {
-		waitForLatch(taskCancelLatch, "Failed to wait for task to be cancelled");
-	}
-	
-	public void assertPodcastListIsUpdated() throws InterruptedException {
+    public void assertPodcastListIsUpdated() throws InterruptedException {
 		waitForLatch(taskFinishLatch, "Failed to wait for task to be finished");
 	}
 

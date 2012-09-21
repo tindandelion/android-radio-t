@@ -2,21 +2,19 @@ package org.dandelion.radiot.podcasts.core;
 
 import java.util.List;
 
-import org.dandelion.radiot.podcasts.core.PodcastList.IModel;
-
 import android.os.AsyncTask;
 
 @SuppressWarnings("unchecked")
-public class PodcastListEngine implements PodcastList.IPodcastListEngine {
-	protected IModel model;
-	protected ProgressListener view;
+public class AsyncPodcastListLoader implements PodcastListLoader {
+	protected PodcastsProvider provider;
+	protected ProgressListener progressListener;
 	protected UpdateTask task;
 	private List<PodcastItem> currentPodcasts;
     private PodcastListConsumer consumer;
 
-    public PodcastListEngine(PodcastList.IModel model) {
-		this.model = model;
-		view = new NullView();
+    public AsyncPodcastListLoader(PodcastsProvider provider) {
+		this.provider = provider;
+		progressListener = new NullListener();
 	}
 
 	public void refresh(boolean resetCache) {
@@ -44,10 +42,10 @@ public class PodcastListEngine implements PodcastList.IPodcastListEngine {
 
 	protected void publishPodcastList(List<PodcastItem> newList,
 			Exception loadError) {
-		view.onFinished();
+		progressListener.onFinished();
 
 		if (null != loadError) {
-			view.onError(loadError.getMessage());
+			progressListener.onError(loadError.getMessage());
 		} else {
 			currentPodcasts = newList;
 			updateViewWithCurrentPodcasts();
@@ -55,12 +53,12 @@ public class PodcastListEngine implements PodcastList.IPodcastListEngine {
 	}
 
 	public void detach() {
-		view = new NullView();
+		progressListener = new NullListener();
         consumer = new NullConsumer();
 	}
 
 	public void attach(ProgressListener view, PodcastListConsumer consumer) {
-		this.view = view;
+		this.progressListener = view;
         this.consumer = consumer;
 	}
 
@@ -69,7 +67,7 @@ public class PodcastListEngine implements PodcastList.IPodcastListEngine {
 	}
 
 	protected void startRefreshTask() {
-		view.onStarted();
+		progressListener.onStarted();
 		if (!isInProgress()) {
 			task = new UpdateTask();
             task.execute();
@@ -79,7 +77,7 @@ public class PodcastListEngine implements PodcastList.IPodcastListEngine {
 	public void cancelUpdate() {
 		if (isInProgress()) {
 			task.cancel(true);
-			view.onFinished();
+			progressListener.onFinished();
 		}
 	}
 
@@ -121,7 +119,7 @@ public class PodcastListEngine implements PodcastList.IPodcastListEngine {
 			List<PodcastItem> newList = null;
 			Exception error = null;
 			try {
-				newList = model.retrievePodcasts();
+				newList = provider.retrieveAll();
 			} catch (Exception e) {
 				error = e;
 			}
@@ -143,7 +141,7 @@ public class PodcastListEngine implements PodcastList.IPodcastListEngine {
 				PodcastItem item = list.get(i);
 				final int index = i;
 
-				item.setThumbnail(model.loadPodcastImage(item));
+				item.setThumbnail(provider.thumbnailFor(item));
 				publishProgress(new Runnable() {
 					public void run() {
 						consumer.updatePodcastImage(index);
@@ -164,7 +162,7 @@ class NullConsumer implements PodcastListConsumer {
     }
 }
 
-class NullView implements ProgressListener {
+class NullListener implements ProgressListener {
 
     public void onStarted() {
 	}

@@ -3,7 +3,7 @@ package org.dandelion.radiot.unittest;
 import android.content.Intent;
 import android.test.ActivityUnitTestCase;
 import org.dandelion.radiot.RadiotApplication;
-import org.dandelion.radiot.podcasts.core.PodcastList.IPodcastListEngine;
+import org.dandelion.radiot.podcasts.core.PodcastListLoader;
 import org.dandelion.radiot.podcasts.core.PodcastListConsumer;
 import org.dandelion.radiot.podcasts.core.ProgressListener;
 import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
@@ -12,7 +12,7 @@ public class PodcastListActivityTestCase extends
 		ActivityUnitTestCase<PodcastListActivity> {
 
 	protected String showName;
-    private NullPodcastEngine engine;
+    private NullPodcastLoader engine;
 
 	public PodcastListActivityTestCase() {
 		super(PodcastListActivity.class);
@@ -31,10 +31,10 @@ public class PodcastListActivityTestCase extends
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		engine = new NullPodcastEngine();
+		engine = new NullPodcastLoader();
         RadiotApplication application = new RadiotApplication() {
             @Override
-            public IPodcastListEngine getPodcastEngine(String feedUrl) {
+            public PodcastListLoader getPodcastEngine(String feedUrl) {
                 showName = feedUrl;
                 return engine;
             }
@@ -43,7 +43,7 @@ public class PodcastListActivityTestCase extends
         setApplication(application);
 	}
 
-	class NullPodcastEngine implements IPodcastListEngine {
+	class NullPodcastLoader implements PodcastListLoader {
         public void cancelUpdate() {
 		}
 
