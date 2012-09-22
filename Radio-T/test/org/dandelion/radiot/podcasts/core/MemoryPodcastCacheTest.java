@@ -22,10 +22,25 @@ public class MemoryPodcastCacheTest {
 
     @Test
     public void callsProviderOnceAndCachesTheList() throws Exception {
-        when(provider.retrieveAll()).thenReturn(list);
+        retrieveInitialList();
 
         assertThat(cache.retrieveAll(), equalTo(list));
+        verify(provider, never()).retrieveAll();
+    }
+
+    @Test
+    public void resetsCache() throws Exception {
+        retrieveInitialList();
+
+        cache.reset();
+
         assertThat(cache.retrieveAll(), equalTo(list));
         verify(provider, times(1)).retrieveAll();
+    }
+
+    private void retrieveInitialList() throws Exception {
+        when(provider.retrieveAll()).thenReturn(list);
+        cache.retrieveAll();
+        reset(provider);
     }
 }

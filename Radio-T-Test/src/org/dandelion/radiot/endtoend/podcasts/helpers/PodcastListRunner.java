@@ -22,4 +22,11 @@ public class PodcastListRunner {
         driver.wasClosed();
     }
 
+    public void showsEmptyList() {
+        driver.showsEmptyList();
+    }
+
+    public void refreshPodcasts() {
+        driver.refreshPodcasts();
+    }
 }

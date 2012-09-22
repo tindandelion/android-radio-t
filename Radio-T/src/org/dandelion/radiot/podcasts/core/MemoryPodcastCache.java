@@ -17,4 +17,8 @@ public class MemoryPodcastCache implements PodcastsProvider {
         }
         return cachedResult;
     }
+
+    public void reset() {
+        cachedResult = null;
+    }
 }

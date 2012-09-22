@@ -24,13 +24,21 @@ class PodcastListDriver extends Solo {
     }
 
     public void podcastList(Matcher<? super ListView> matcher) {
-        assertThat(waitForView(ListView.class), is(true));
+        waitForListToDisplay();
         ListView view = getCurrentListViews().get(0);
         assertThat(view, matcher);
     }
 
+    public void waitForListToDisplay() {
+        assertThat(waitForView(ListView.class), is(true));
+    }
+
     public void showsItemWith(String number, String date, String description) {
         podcastList(has(anItemWith(number, date, description)));
+    }
+
+    public void showsEmptyList() {
+        podcastList(isEmpty());
     }
 
     public void wasClosed() {
@@ -75,7 +83,13 @@ class PodcastListDriver extends Solo {
 
             @Override
             public void describeTo(Description description) {
-                description.appendText("Any list item");
+                description.appendText("a list item matching");
+                itemMatcher.describeTo(description);
+            }
+
+            @Override
+            protected void describeMismatchSafely(ListView item, Description mismatchDescription) {
+                mismatchDescription.appendText("no item found");
             }
         };
     }
@@ -101,4 +115,17 @@ class PodcastListDriver extends Solo {
         };
     }
 
+    private Matcher<? super ListView> isEmpty() {
+        return new FeatureMatcher<ListView, Integer>(equalTo(0),
+                "an empty list", "list size") {
+            @Override
+            protected Integer featureValueOf(ListView listView) {
+                return listView.getCount();
+            }
+        };
+    }
+
+    public void refreshPodcasts() {
+        this.clickOnActionBarItem(R.id.refresh);
+    }
 }

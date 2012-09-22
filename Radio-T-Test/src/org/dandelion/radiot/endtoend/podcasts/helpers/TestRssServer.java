@@ -7,16 +7,13 @@ import org.hamcrest.TypeSafeMatcher;
 import java.io.File;
 import java.io.IOException;
 import java.util.Properties;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class TestRssServer extends NanoHTTPD {
     private CountDownLatch requestFlag = new CountDownLatch(1);
-    private BlockingQueue<String> responseHolder = new ArrayBlockingQueue<String>(1);
+    private BlockingQueue<String> responseHolder = new LinkedBlockingDeque<String>();
 
     public TestRssServer() throws IOException {
         super(8080, new File(""));

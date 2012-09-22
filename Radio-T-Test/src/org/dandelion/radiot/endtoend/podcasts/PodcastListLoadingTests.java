@@ -44,6 +44,26 @@ public class PodcastListLoadingTests
         app.wasClosed();
     }
 
+    public void testRefreshingPodcastListRetrievesItFromServerAgain() throws Exception {
+        String initialFeed = buildFeed().done();
+        String updatedFeed = buildFeed()
+                .item("<title>Радио-Т 140</title>" +
+                        "<pubDate>Sun, 13 Jun 2010 01:37:22 +0000</pubDate>" +
+                        "<itunes:summary>Lorem ipsum dolor sit amet</itunes:summary>")
+                .done();
+
+        backend.respondWith(initialFeed);
+
+        app = startApplication();
+        app.showsEmptyList();
+
+        app.refreshPodcasts();
+        backend.hasReceivedRequest();
+        backend.respondWith(updatedFeed);
+
+        app.showsPodcastItem("#140", "13.06.2010", "Lorem ipsum dolor sit amet");
+    }
+
     @Override
     public void setUp() throws Exception {
         super.setUp();
