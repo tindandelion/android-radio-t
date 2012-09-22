@@ -4,7 +4,7 @@ import junit.framework.TestCase;
 import org.dandelion.radiot.podcasts.core.HttpThumbnailProvider;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 
-public class HttpThumbnailDownloaderTestCase extends TestCase {
+public class HttpThumbnailDownloaderTest extends TestCase {
     private HttpThumbnailProvider downloader;
 
     @Override
