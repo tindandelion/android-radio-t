@@ -6,7 +6,6 @@ import org.dandelion.radiot.podcasts.core.*;
 import org.dandelion.radiot.podcasts.core.PodcastListLoader;
 
 import java.util.HashMap;
-import java.util.List;
 
 public class RadiotApplication extends Application {
     private HashMap<String, PodcastListLoader> engines;
@@ -14,6 +13,11 @@ public class RadiotApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        createEngines();
+        PodcastsApp.initialize(this);
+    }
+
+    protected void createEngines() {
         engines = new HashMap<String, PodcastListLoader>();
         engines.put("main-show",
                 podcastEngine("http://feeds.rucast.net/radio-t", new HttpThumbnailProvider()));
@@ -23,15 +27,11 @@ public class RadiotApplication extends Application {
         engines.put(
                 "test-show",
                 testPodcastEngine());
-        PodcastsApp.initialize(this);
     }
 
     private PodcastListLoader testPodcastEngine() {
         // TODO: Refreshing list avoiding cache is cheating
-        return new AsyncPodcastListLoader(
-                new RssFeedProvider("http://localhost:8080/rss"),
-                new NullThumbnailProvider(),
-                new NullPodcastsCache());
+        return TestPodcastListLoader.create(this);
     }
 
     @Override
@@ -52,24 +52,4 @@ public class RadiotApplication extends Application {
         engines.put(name, loader);
     }
 
-    private static class NullPodcastsCache implements PodcastsCache {
-        @Override
-        public void reset() {
-
-        }
-
-        @Override
-        public List<PodcastItem> getData() {
-            throw new RuntimeException("Should never be called");
-        }
-
-        @Override
-        public void updateWith(List<PodcastItem> data) {
-        }
-
-        @Override
-        public boolean isValid() {
-            return false;
-        }
-    }
 }

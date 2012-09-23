@@ -34,6 +34,11 @@ public class PodcastListActivityTestCase extends
 		engine = new NullPodcastLoader();
         RadiotApplication application = new RadiotApplication() {
             @Override
+            protected void createEngines() {
+
+            }
+
+            @Override
             public PodcastListLoader getPodcastEngine(String feedUrl) {
                 showName = feedUrl;
                 return engine;

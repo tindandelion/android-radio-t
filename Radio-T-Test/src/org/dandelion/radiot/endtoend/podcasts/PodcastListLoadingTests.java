@@ -3,6 +3,7 @@ package org.dandelion.radiot.endtoend.podcasts;
 import android.content.Context;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
+import org.dandelion.radiot.TestPodcastListLoader;
 import org.dandelion.radiot.endtoend.podcasts.helpers.PodcastListRunner;
 import org.dandelion.radiot.endtoend.podcasts.helpers.TestRssServer;
 import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
@@ -68,6 +69,7 @@ public class PodcastListLoadingTests
     public void setUp() throws Exception {
         super.setUp();
         backend = new TestRssServer();
+        TestPodcastListLoader.resetCache();
     }
 
     @Override
