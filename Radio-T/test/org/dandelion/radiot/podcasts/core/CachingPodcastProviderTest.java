@@ -2,7 +2,6 @@ package org.dandelion.radiot.podcasts.core;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -14,7 +13,7 @@ public class CachingPodcastProviderTest {
     private final PodcastsCache cache = mock(PodcastsCache.class);
     private final CachingPodcastProvider cachedProvider =
             new CachingPodcastProvider(realProvider, cache);
-    private final List<PodcastItem> list = new ArrayList<PodcastItem>();
+    private final List<PodcastItem> list = new PodcastList();
 
     @Test
     public void retrievesListFromProviderIfCacheIsInvalid() throws Exception {
