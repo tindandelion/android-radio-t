@@ -18,7 +18,10 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class FilePodcastsCacheTest extends InstrumentationTestCase {
+    private static final int FORMAT_VERSION = 42;
+
     private FilePodcastsCache cache;
+    private File cacheFile;
 
     public void testSavingAndLoadingPodcastList() throws Exception {
         final PodcastItem original = aPodcastItem();
@@ -49,19 +52,39 @@ public class FilePodcastsCacheTest extends InstrumentationTestCase {
         assertThat(cache, not(valid()));
     }
 
-    // TODO: Add tests for erroneous files etc
+    public void testCacheIsInvalidIfFileIsCorrupt() throws Exception {
+        createValidCacheFile(FORMAT_VERSION);
+
+        writeCacheFile("Some junk content");
+        assertThat(cache, not(valid()));
+    }
+
+    private void createValidCacheFile(int formatVersion) {
+        new FilePodcastsCache(cacheFile, formatVersion).updateWith(aListWith(aPodcastItem()));
+    }
+
+    private void writeCacheFile(String content) throws IOException {
+        FileWriter out = new FileWriter(cacheFile);
+        out.write(content);
+    }
+
+    public void testCacheIsInvalidIfFileIsWrongVersion() throws Exception {
+        final int olderVersion = FORMAT_VERSION - 1;
+        createValidCacheFile(olderVersion);
+        assertThat(cache, not(valid()));
+    }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
     public void setUp() throws Exception {
         super.setUp();
         Context context = getInstrumentation().getTargetContext();
-        File cacheFile = new File(context.getCacheDir(), "test-cache");
+        cacheFile = new File(context.getCacheDir(), "test-cache");
         if (cacheFile.exists()) {
             cacheFile.delete();
         }
 
-        cache = new FilePodcastsCache(cacheFile);
+        cache = new FilePodcastsCache(cacheFile, FORMAT_VERSION);
     }
 
     private PodcastItem aPodcastItem() {

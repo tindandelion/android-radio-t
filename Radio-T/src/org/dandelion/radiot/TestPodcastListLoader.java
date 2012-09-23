@@ -6,7 +6,7 @@ import org.dandelion.radiot.podcasts.core.*;
 import java.io.File;
 
 public class TestPodcastListLoader extends AsyncPodcastListLoader {
-
+    public static final int FORMAT_VERSION = 0;
     private static TestPodcastListLoader instance;
 
     public TestPodcastListLoader(PodcastsProvider podcasts, ThumbnailProvider thumbnails, PodcastsCache cache) {
@@ -23,7 +23,7 @@ public class TestPodcastListLoader extends AsyncPodcastListLoader {
 
     private static PodcastsCache createPodcastsCache(Context context) {
         File cacheFile = new File(context.getCacheDir(), "test-cache");
-        return new FilePodcastsCache(cacheFile);
+        return new FilePodcastsCache(cacheFile, FORMAT_VERSION);
     }
 
     public static void resetCache() {

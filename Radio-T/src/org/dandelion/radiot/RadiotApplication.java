@@ -9,6 +9,7 @@ import java.io.File;
 import java.util.HashMap;
 
 public class RadiotApplication extends Application {
+    private static final int CACHE_FORMAT_VERSION = 1;
     private HashMap<String, PodcastListLoader> engines;
 
     @Override
@@ -43,7 +44,7 @@ public class RadiotApplication extends Application {
 
     private PodcastsCache createPodcastsCache(String showName) {
         File cacheFile = new File(getCacheDir(), showName);
-        return new FilePodcastsCache(cacheFile);
+        return new FilePodcastsCache(cacheFile, CACHE_FORMAT_VERSION);
     }
 
     public PodcastListLoader getPodcastEngine(String name) {

@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FilePodcastsCache implements PodcastsCache {
-    private File file;
+    private final File file;
+    private final int formatVersion;
 
-    public FilePodcastsCache(File file) {
+    public FilePodcastsCache(File file, int formatVersion) {
         this.file = file;
+        this.formatVersion = formatVersion;
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
@@ -19,13 +21,41 @@ public class FilePodcastsCache implements PodcastsCache {
 
     @Override
     public List<PodcastItem> getData() {
-        ArrayList<PodcastItem> list = new ArrayList<PodcastItem>();
         try {
-            readObjectsInto(list);
+            return readItems();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return list;
+    }
+
+    private List<PodcastItem> readItems() throws IOException, ClassNotFoundException {
+        ObjectInputStream in = openInputStream();
+        try {
+            readVersionFrom(in);
+            return readItemsUntilEnd(in);
+        } finally {
+            in.close();
+        }
+    }
+
+    private ObjectInputStream openInputStream() throws IOException {
+        return new ObjectInputStream(new FileInputStream(file));
+    }
+
+    private int readVersionFrom(ObjectInputStream in) throws IOException {
+        return in.readInt();
+    }
+
+    @SuppressWarnings({"InfiniteLoopStatement", "EmptyCatchBlock"})
+    private ArrayList<PodcastItem> readItemsUntilEnd(ObjectInputStream in) throws ClassNotFoundException, IOException {
+        ArrayList<PodcastItem> result = new ArrayList<PodcastItem>();
+        try {
+            for (; ; ) {
+                result.add((PodcastItem) in.readObject());
+            }
+        } catch (EOFException e) {
+        }
+        return result;
     }
 
     @Override
@@ -37,40 +67,43 @@ public class FilePodcastsCache implements PodcastsCache {
         }
     }
 
-    @Override
-    public boolean isValid() {
-        return file.exists();
-    }
-
-    private void readObjectsInto(ArrayList<PodcastItem> list) throws IOException, ClassNotFoundException {
-        ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
-        try {
-            readUntilEnd(in, list);
-        } finally {
-            in.close();
-        }
-    }
-
-    @SuppressWarnings({"InfiniteLoopStatement", "EmptyCatchBlock"})
-    private void readUntilEnd(ObjectInputStream in, ArrayList<PodcastItem> list) throws ClassNotFoundException, IOException {
-        try {
-            for (; ; ) {
-                list.add((PodcastItem) in.readObject());
-            }
-        } catch (EOFException e) {
-        }
-    }
-
-
     private void saveObjects(List<PodcastItem> data) throws IOException {
         ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
         try {
-            for (PodcastItem i : data) {
-                out.writeObject(i);
-            }
+            writeVersionInto(out);
+            writeItemsInto(out, data);
         } finally {
             out.close();
         }
 
     }
+
+    private void writeVersionInto(ObjectOutputStream out) throws IOException {
+        out.writeInt(formatVersion);
+    }
+
+    private void writeItemsInto(ObjectOutputStream out, List<PodcastItem> data) throws IOException {
+        for (PodcastItem i : data) {
+            out.writeObject(i);
+        }
+    }
+
+    @Override
+    public boolean isValid() {
+        try {
+            return readVersion() == formatVersion;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
+    private int readVersion() throws IOException {
+        ObjectInputStream in = openInputStream();
+        try {
+            return readVersionFrom(in);
+        } finally {
+            in.close();
+        }
+    }
+
 }
