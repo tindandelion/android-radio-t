@@ -13,7 +13,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class TestRssServer extends NanoHTTPD {
     private CountDownLatch requestFlag = new CountDownLatch(1);
-    private BlockingQueue<String> responseHolder = new LinkedBlockingDeque<String>();
+    private BlockingQueue<Response> responseHolder = new LinkedBlockingDeque<Response>();
 
     public TestRssServer() throws IOException {
         super(8080, new File(""));
@@ -23,7 +23,7 @@ public class TestRssServer extends NanoHTTPD {
     public Response serve(String uri, String method, Properties header, Properties parms, Properties files) {
         requestFlag.countDown();
         try {
-            return new Response(HTTP_OK, MIME_XML, responseHolder.take());
+            return responseHolder.take();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -35,13 +35,17 @@ public class TestRssServer extends NanoHTTPD {
     }
 
 
-    public void respondWith(String response) {
-        responseHolder.add(response);
+    public void respondSuccessWith(String response) {
+        responseHolder.add(new Response(HTTP_OK, MIME_XML, response));
+    }
+
+    public void respondNotFoundError() {
+        responseHolder.add(new Response(HTTP_NOTFOUND, MIME_HTML, ""));
     }
 
     @Override
     public void stop() {
-        responseHolder.add("");
+        respondSuccessWith("");
         super.stop();
     }
 
@@ -62,4 +66,5 @@ public class TestRssServer extends NanoHTTPD {
             }
         };
     }
+
 }

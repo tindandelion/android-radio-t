@@ -31,7 +31,7 @@ public class PodcastListLoadingTests
 
         app = startApplication();
         backend.hasReceivedRequest();
-        backend.respondWith(feed);
+        backend.respondSuccessWith(feed);
 
         app.showsPodcastItem("#140", "13.06.2010", "Lorem ipsum dolor sit amet");
         app.showsPodcastItem("#141", "19.06.2010", "consectetur adipiscing elit");
@@ -53,16 +53,22 @@ public class PodcastListLoadingTests
                         "<itunes:summary>Lorem ipsum dolor sit amet</itunes:summary>")
                 .done();
 
-        backend.respondWith(initialFeed);
+        backend.respondSuccessWith(initialFeed);
 
         app = startApplication();
         app.showsEmptyList();
 
         app.refreshPodcasts();
         backend.hasReceivedRequest();
-        backend.respondWith(updatedFeed);
+        backend.respondSuccessWith(updatedFeed);
 
         app.showsPodcastItem("#140", "13.06.2010", "Lorem ipsum dolor sit amet");
+    }
+
+    public void testShowsErrorIfUnableToRetrieveList() throws Exception {
+        backend.respondNotFoundError();
+        app = startApplication();
+        app.showsErrorMessage();
     }
 
     @Override

@@ -40,6 +40,10 @@ public class PodcastListRunner {
         podcastList(isEmpty());
     }
 
+    public void showsErrorMessage() {
+        assertThat(solo.waitForText("Ошибка"), is(true));
+    }
+
     public void refreshPodcasts() {
         solo.clickOnActionBarItem(R.id.refresh);
     }
@@ -133,4 +137,5 @@ public class PodcastListRunner {
             }
         };
     }
+
 }
