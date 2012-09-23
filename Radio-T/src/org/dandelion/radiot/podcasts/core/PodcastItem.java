@@ -2,6 +2,7 @@ package org.dandelion.radiot.podcasts.core;
 
 import android.graphics.Bitmap;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -9,7 +10,7 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class PodcastItem implements Cloneable {
+public class PodcastItem implements Cloneable, Serializable {
     public static final Pattern THUMBNAIL_URL_PATTERN = Pattern.compile("<img\\s+src=\"(\\S+)\".*/>");
     private static final Pattern NUMBER_PATTERN = Pattern.compile("\\d+");
 	private static SimpleDateFormat INPUT_DATE_FORMAT =
