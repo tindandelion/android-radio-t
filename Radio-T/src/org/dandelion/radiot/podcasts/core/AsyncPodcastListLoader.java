@@ -82,11 +82,15 @@ public class AsyncPodcastListLoader implements PodcastListLoader {
     }
 
     class UpdateTask extends AsyncTask<Void, Runnable, Void> {
+
+        private List<PodcastItem> list;
+        private Exception error;
+
         @Override
         protected Void doInBackground(Void... params) {
-            List<PodcastItem> list = retrievePodcastList();
+            retrievePodcastList();
             if (null != list) {
-                retrievePodcastImages(list);
+                retrievePodcastImages();
             }
             return null;
         }
@@ -98,6 +102,7 @@ public class AsyncPodcastListLoader implements PodcastListLoader {
 
         @Override
         protected void onPostExecute(Void result) {
+            publishPodcastList(list, error);
             taskFinished();
         }
 
@@ -111,38 +116,18 @@ public class AsyncPodcastListLoader implements PodcastListLoader {
             taskCancelled();
         }
 
-        public List<PodcastItem> retrievePodcastList() {
-            List<PodcastItem> newList = null;
-            Exception error = null;
+        public void retrievePodcastList() {
             try {
-                newList = podcasts.retrieveAll();
+                list = podcasts.retrieveAll();
             } catch (Exception e) {
                 error = e;
             }
-            publishProgress(updatePodcastsRunnable(newList, error));
-            return newList;
+
         }
 
-        protected Runnable updatePodcastsRunnable(
-                final List<PodcastItem> newList, final Exception error) {
-            return new Runnable() {
-                public void run() {
-                    publishPodcastList(newList, error);
-                }
-            };
-        }
-
-        private void retrievePodcastImages(List<PodcastItem> list) {
-            for (int i = 0; i < list.size(); i++) {
-                PodcastItem item = list.get(i);
-                final int index = i;
-
+        private void retrievePodcastImages() {
+            for (PodcastItem item : list) {
                 item.setThumbnail(thumbnails.thumbnailFor(item));
-                publishProgress(new Runnable() {
-                    public void run() {
-                        consumer.updateThumbnail(index);
-                    }
-                });
             }
         }
     }
@@ -154,9 +139,6 @@ class NullConsumer implements PodcastListConsumer {
     public void updatePodcasts(List<PodcastItem> podcasts) {
     }
 
-    @Override
-    public void updateThumbnail(int index) {
-    }
 }
 
 class NullListener implements ProgressListener {

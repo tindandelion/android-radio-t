@@ -37,7 +37,15 @@ public class PodcastListLoadingTests
         app.showsPodcastItem("#141", "19.06.2010", "consectetur adipiscing elit");
     }
 
-    public void testRetriesThumbnailsFromTheServer() throws Exception {
+    public void testPressingBackButtonWhileLoadingClosesActivity() throws Exception {
+        app = startApplication();
+        backend.hasReceivedRequestForRss();
+
+        app.pressBack();
+        app.wasClosed();
+    }
+
+    public void testRetrievesThumbnailsFromTheServer() throws Exception {
         final String thumbnailUrl = "/images/radio-t/rt307.jpg";
         String feed = buildFeed()
                 .item("<title>Радио-Т 140</title>" +
@@ -52,14 +60,6 @@ public class PodcastListLoadingTests
         backend.respondSuccessWith(feed);
 
         backend.hasReceivedRequestForUrl(thumbnailUrl);
-    }
-
-    public void testPressingBackButtonWhileLoadingClosesActivity() throws Exception {
-        app = startApplication();
-        backend.hasReceivedRequestForRss();
-
-        app.pressBack();
-        app.wasClosed();
     }
 
     public void testRefreshingPodcastListRetrievesItFromServerAgain() throws Exception {

@@ -1,5 +1,6 @@
 package org.dandelion.radiot.endtoend.podcasts.helpers;
 
+import org.dandelion.radiot.TestPodcastListLoader;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
@@ -17,7 +18,7 @@ public class TestRssServer extends NanoHTTPD {
     private BlockingQueue<Response> responseHolder = new LinkedBlockingDeque<Response>();
 
     public TestRssServer() throws IOException {
-        super(8080, new File(""));
+        super(TestPodcastListLoader.PORT, new File(""));
     }
 
     @Override

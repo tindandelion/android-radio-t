@@ -7,7 +7,8 @@ import java.io.File;
 
 public class TestPodcastListLoader extends AsyncPodcastListLoader {
     public static final int FORMAT_VERSION = 0;
-    public static final String HOST = "http://localhost:8080";
+    public static final int PORT = 32768;
+    public static final String BASE_URL = String.format("http://localhost:%d", PORT);
 
     private static TestPodcastListLoader instance;
 
@@ -17,8 +18,8 @@ public class TestPodcastListLoader extends AsyncPodcastListLoader {
 
     public static PodcastListLoader create(Context context) {
         instance = new TestPodcastListLoader(
-                new RssFeedProvider(HOST + "/rss"),
-                new HttpThumbnailProvider(HOST),
+                new RssFeedProvider(BASE_URL + "/rss"),
+                new HttpThumbnailProvider(BASE_URL),
                 createPodcastsCache(context));
         return instance;
     }

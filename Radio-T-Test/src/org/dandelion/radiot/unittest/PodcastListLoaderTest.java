@@ -1,18 +1,13 @@
 package org.dandelion.radiot.unittest;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
-
-import junit.framework.Assert;
-import junit.framework.TestCase;
-
-import org.dandelion.radiot.podcasts.core.*;
-import org.dandelion.radiot.podcasts.core.PodcastListLoader;
-
 import android.graphics.Bitmap;
 import android.os.Looper;
+import junit.framework.Assert;
+import junit.framework.TestCase;
+import org.dandelion.radiot.podcasts.core.*;
+
+import java.util.List;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class PodcastListLoaderTest extends TestCase {
 	private TestPodcastsProvider podcasts;
@@ -21,7 +16,7 @@ public class PodcastListLoaderTest extends TestCase {
     private TestThumbnailProvider thumbnails;
 
     public void testRetrieveAndPublishPodcastList() throws Exception {
-		ArrayList<PodcastItem> podcastList = newPodcastList();
+        PodcastList podcastList = new PodcastList();
 
 		startPodcastListUpdate();
 		podcasts.returnsPodcasts(podcastList);
@@ -30,26 +25,20 @@ public class PodcastListLoaderTest extends TestCase {
 	}
 	
 	public void testLoadingPodcastImages() throws Exception {
-		ArrayList<PodcastItem> podcastList = newPodcastList();
+        PodcastList list = new PodcastList();
 		PodcastItem item = new PodcastItem();
-		podcastList.add(item);
+		list.add(item);
 
-		podcasts.returnsPodcasts(podcastList);
-		startPodcastListUpdate();
+		podcasts.returnsPodcasts(list);
+        Bitmap image = Bitmap.createBitmap(1, 1, Bitmap.Config.RGB_565);
+        thumbnails.returnsPodcastImage(image);
+
+        startPodcastListUpdate();
 		view.waitUntilPodcastListUpdated();
-		assertNull(item.getThumbnail());
-
-		Bitmap image = Bitmap.createBitmap(1, 1, Bitmap.Config.RGB_565);
-		thumbnails.returnsPodcastImage(image);
-		view.assertPodcastImageUpdated(0);
 		assertEquals(image, item.getThumbnail());
 	}
 
-	protected ArrayList<PodcastItem> newPodcastList() {
-		return new ArrayList<PodcastItem>();
-	}
-
-	@Override
+    @Override
 	protected void setUp() throws Exception {
 		super.setUp();
 		podcasts = new TestPodcastsProvider();
@@ -77,54 +66,41 @@ public class PodcastListLoaderTest extends TestCase {
 }
 
 class TestPodcastsProvider implements PodcastsProvider {
-    private LinkedBlockingQueue<List<PodcastItem>> podcastQueue =
-            new LinkedBlockingQueue<List<PodcastItem>>();
+    private LinkedBlockingQueue<PodcastList> podcastQueue =
+            new LinkedBlockingQueue<PodcastList>();
 
     @Override
     public List<PodcastItem> retrieveAll() throws Exception {
         return podcastQueue.take();
     }
 
-    public void returnsPodcasts(List<PodcastItem> list) {
-        podcastQueue.add(list);
+    public void returnsPodcasts(PodcastList pl) {
+        podcastQueue.add(pl);
     }
 }
 
 class TestThumbnailProvider implements ThumbnailProvider {
-    private final BlockingQueue<Bitmap> imageQueue = new LinkedBlockingQueue<Bitmap>();
+    private Bitmap image;
 
     @Override
     public Bitmap thumbnailFor(PodcastItem item) {
-        try {
-            return imageQueue.take();
-        } catch (InterruptedException e) {
-            return null;
-        }
+        return image;
     }
 
     public void returnsPodcastImage(Bitmap image) {
-        imageQueue.add(image);
+        this.image = image;
     }
 }
 
 class TestView implements ProgressListener, PodcastListConsumer {
-	private LinkedBlockingQueue<Integer> updatedImages; 
-	private LinkedBlockingQueue<List<PodcastItem>> updatedPodcasts;
-	
-	public TestView() {
-		updatedPodcasts = new LinkedBlockingQueue<List<PodcastItem>>();
-		updatedImages = new LinkedBlockingQueue<Integer>();
-	}
-	
-	public void assertPodcastImageUpdated(int index) throws InterruptedException {
-		Assert.assertEquals(new Integer(index), updatedImages.take());
-	}
+	private LinkedBlockingQueue<PodcastList> updatedPodcasts =
+            new LinkedBlockingQueue<PodcastList>();
 
 	public void onFinished() {
 	}
 
-	public void waitAndCheckUpdatedPodcasts(ArrayList<PodcastItem> podcastList) throws InterruptedException {
-		Assert.assertEquals(podcastList, updatedPodcasts.take());
+	public void waitAndCheckUpdatedPodcasts(PodcastList pl) throws InterruptedException {
+		Assert.assertEquals(pl, updatedPodcasts.take());
 	}
 
 	public void waitUntilPodcastListUpdated() throws InterruptedException {
@@ -137,14 +113,7 @@ class TestView implements ProgressListener, PodcastListConsumer {
 	public void onStarted() {
 	}
 
-	public void updateThumbnail(int index) {
-		try {
-			updatedImages.put(index);
-		} catch (InterruptedException ignored) {
-		}
-	}
-
 	public void updatePodcasts(List<PodcastItem> podcasts) {
-		updatedPodcasts.add(podcasts);
+		updatedPodcasts.add(new PodcastList(podcasts));
 	}
 }
