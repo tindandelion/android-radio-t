@@ -43,7 +43,7 @@ public class BasicAcceptanceTestCase extends
     private PodcastsProvider createTestProvider(final String url) {
         final AssetManager assets = getInstrumentation().getContext()
                 .getAssets();
-        return new RssFeedProvider(url, new NullThumbnailProvider()) {
+        return new RssFeedProvider(url) {
             @Override
             protected InputStream openContentStream() throws IOException {
                 return assets.open((url + ".xml"));

@@ -6,7 +6,7 @@ import android.os.AsyncTask;
 
 @SuppressWarnings("unchecked")
 public class AsyncPodcastListLoader implements PodcastListLoader {
-    private PodcastsCache cache = new MemoryCache();
+    private PodcastsCache cache;
     private ProgressListener progressListener = new NullListener();
     private PodcastsProvider podcasts;
     private PodcastListConsumer consumer;
@@ -14,6 +14,11 @@ public class AsyncPodcastListLoader implements PodcastListLoader {
     private UpdateTask task;
 
     public AsyncPodcastListLoader(PodcastsProvider podcasts, ThumbnailProvider thumbnails) {
+        this(podcasts, thumbnails, new MemoryCache());
+    }
+
+    public AsyncPodcastListLoader(PodcastsProvider podcasts, ThumbnailProvider thumbnails, PodcastsCache cache) {
+        this.cache = cache;
         this.podcasts = new CachingPodcastProvider(podcasts, cache);
         this.thumbnails = thumbnails;
     }

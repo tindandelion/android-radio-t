@@ -1,31 +1,23 @@
 package org.dandelion.radiot.podcasts.core;
 
+import android.sax.*;
+import android.util.Xml;
+import org.xml.sax.Attributes;
+import org.xml.sax.ContentHandler;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.xml.sax.Attributes;
-import org.xml.sax.ContentHandler;
-
-import android.graphics.Bitmap;
-import android.sax.Element;
-import android.sax.EndElementListener;
-import android.sax.EndTextElementListener;
-import android.sax.RootElement;
-import android.sax.StartElementListener;
-import android.util.Xml;
-
 public class RssFeedProvider implements PodcastsProvider {
     private ArrayList<PodcastItem> items;
 	private PodcastItem currentItem;
 	private String address;
-    private ThumbnailProvider thumbnailProvider;
 
-    public RssFeedProvider(String address, ThumbnailProvider thumbnailProvider) {
+    public RssFeedProvider(String address) {
         this.address = address;
-        this.thumbnailProvider = thumbnailProvider;
     }
 
     public List<PodcastItem> retrieveAll() throws Exception {
@@ -98,7 +90,4 @@ public class RssFeedProvider implements PodcastsProvider {
 		return root.getContentHandler();
 	}
 
-    public Bitmap thumbnailFor(PodcastItem item) {
-        return thumbnailProvider.thumbnailFor(item);
-	}
 }
