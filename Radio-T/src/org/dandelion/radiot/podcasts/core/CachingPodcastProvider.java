@@ -13,10 +13,16 @@ public class CachingPodcastProvider implements PodcastsProvider {
 
     @Override
     public List<PodcastItem> retrieveAll() throws Exception {
-        if (!cache.isValid()) {
-            cache.updateWith(podcasts.retrieveAll());
+        if (cache.isValid()) {
+            return cache.getData();
+        } else {
+            return updateCacheWith(podcasts.retrieveAll());
         }
-        return cache.getData();
+    }
+
+    private List<PodcastItem> updateCacheWith(List<PodcastItem> newData) {
+        cache.updateWith(newData);
+        return newData;
     }
 
     public void reset() {
