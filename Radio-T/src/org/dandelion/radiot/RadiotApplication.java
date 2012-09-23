@@ -5,6 +5,7 @@ import org.dandelion.radiot.podcasts.PodcastsApp;
 import org.dandelion.radiot.podcasts.core.*;
 import org.dandelion.radiot.podcasts.core.PodcastListLoader;
 
+import java.io.File;
 import java.util.HashMap;
 
 public class RadiotApplication extends Application {
@@ -20,18 +21,13 @@ public class RadiotApplication extends Application {
     protected void createEngines() {
         engines = new HashMap<String, PodcastListLoader>();
         engines.put("main-show",
-                podcastEngine("http://feeds.rucast.net/radio-t", new HttpThumbnailProvider()));
+                podcastLoader("main-show", "http://feeds.rucast.net/radio-t", new HttpThumbnailProvider()));
         engines.put(
                 "after-show",
-                podcastEngine("http://feeds.feedburner.com/pirate-radio-t", new NullThumbnailProvider()));
+                podcastLoader("after-show", "http://feeds.feedburner.com/pirate-radio-t", new NullThumbnailProvider()));
         engines.put(
                 "test-show",
-                testPodcastEngine());
-    }
-
-    private PodcastListLoader testPodcastEngine() {
-        // TODO: Refreshing list avoiding cache is cheating
-        return TestPodcastListLoader.create(this);
+                TestPodcastListLoader.create(this));
     }
 
     @Override
@@ -40,8 +36,14 @@ public class RadiotApplication extends Application {
         PodcastsApp.release();
     }
 
-    protected PodcastListLoader podcastEngine(String url, ThumbnailProvider thumbnails) {
-        return new AsyncPodcastListLoader(new RssFeedProvider(url), thumbnails);
+    protected PodcastListLoader podcastLoader(String showName, String url, ThumbnailProvider thumbnails) {
+        return new AsyncPodcastListLoader(new RssFeedProvider(url),
+                thumbnails, createPodcastsCache(showName));
+    }
+
+    private PodcastsCache createPodcastsCache(String showName) {
+        File cacheFile = new File(getCacheDir(), showName);
+        return new FilePodcastsCache(cacheFile);
     }
 
     public PodcastListLoader getPodcastEngine(String name) {

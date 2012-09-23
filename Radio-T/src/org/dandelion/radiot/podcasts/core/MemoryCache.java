@@ -2,7 +2,7 @@ package org.dandelion.radiot.podcasts.core;
 
 import java.util.List;
 
-class MemoryCache implements PodcastsCache {
+public class MemoryCache implements PodcastsCache {
     public List<PodcastItem> data;
 
     @Override
