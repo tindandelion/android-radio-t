@@ -88,10 +88,15 @@ public class AsyncPodcastListLoader implements PodcastListLoader {
 
         @Override
         protected Void doInBackground(Void... params) {
-            retrievePodcastList();
-            if (null != list) {
-                retrievePodcastImages();
+            try {
+                list = podcasts.retrieveAll();
+                for (PodcastItem item : list) {
+                    item.setThumbnail(thumbnails.thumbnailFor(item));
+                }
+            } catch (Exception e) {
+                error = e;
             }
+
             return null;
         }
 
@@ -114,21 +119,6 @@ public class AsyncPodcastListLoader implements PodcastListLoader {
         @Override
         protected void onCancelled() {
             taskCancelled();
-        }
-
-        public void retrievePodcastList() {
-            try {
-                list = podcasts.retrieveAll();
-            } catch (Exception e) {
-                error = e;
-            }
-
-        }
-
-        private void retrievePodcastImages() {
-            for (PodcastItem item : list) {
-                item.setThumbnail(thumbnails.thumbnailFor(item));
-            }
         }
     }
 }
