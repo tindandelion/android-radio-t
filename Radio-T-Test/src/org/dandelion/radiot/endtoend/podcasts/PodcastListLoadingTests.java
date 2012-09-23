@@ -30,7 +30,7 @@ public class PodcastListLoadingTests
                 .done();
 
         app = startApplication();
-        backend.hasReceivedRequest();
+        backend.hasReceivedRequestForRss();
         backend.respondSuccessWith(feed);
 
         app.showsPodcastItem("#140", "13.06.2010", "Lorem ipsum dolor sit amet");
@@ -39,7 +39,7 @@ public class PodcastListLoadingTests
 
     public void testPressingBackButtonWhileLoadingClosesActivity() throws Exception {
         app = startApplication();
-        backend.hasReceivedRequest();
+        backend.hasReceivedRequestForRss();
 
         app.pressBack();
         app.wasClosed();
@@ -59,7 +59,7 @@ public class PodcastListLoadingTests
         app.showsEmptyList();
 
         app.refreshPodcasts();
-        backend.hasReceivedRequest();
+        backend.hasReceivedRequestForRss();
         backend.respondSuccessWith(updatedFeed);
 
         app.showsPodcastItem("#140", "13.06.2010", "Lorem ipsum dolor sit amet");
@@ -69,6 +69,22 @@ public class PodcastListLoadingTests
         backend.respondNotFoundError();
         app = startApplication();
         app.showsErrorMessage();
+    }
+
+    public void testRetrievingThumbnailsFromTheServer() throws Exception {
+        String thumbnailUrl = "http://localhost:8080/images/radio-t/rt307.jpg";
+        String feed = buildFeed()
+                .item("<title>Радио-Т 140</title>" +
+                        "<pubDate>Sun, 13 Jun 2010 01:37:22 +0000</pubDate>" +
+                        "<description>&lt;p&gt;&lt;img src=\"" +
+                        thumbnailUrl +
+                        "\" alt=\"\" /&gt;&lt;/p&gt;</description>")
+        .done();
+
+        app = startApplication();
+        backend.hasReceivedRequestForRss();
+        backend.respondSuccessWith(feed);
+        backend.hasReceivedRequestForUrl("/images/radio-t/rt307.jpg");
     }
 
     @Override

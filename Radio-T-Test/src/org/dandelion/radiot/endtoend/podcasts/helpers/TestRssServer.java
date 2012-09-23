@@ -12,7 +12,8 @@ import java.util.concurrent.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class TestRssServer extends NanoHTTPD {
-    private CountDownLatch requestFlag = new CountDownLatch(1);
+    private static final long REQUEST_TIMEOUT = 10;
+    private BlockingQueue<String> requestQueue = new LinkedBlockingQueue<String>();
     private BlockingQueue<Response> responseHolder = new LinkedBlockingDeque<Response>();
 
     public TestRssServer() throws IOException {
@@ -21,7 +22,7 @@ public class TestRssServer extends NanoHTTPD {
 
     @Override
     public Response serve(String uri, String method, Properties header, Properties parms, Properties files) {
-        requestFlag.countDown();
+        requestQueue.add(uri);
         try {
             return responseHolder.take();
         } catch (InterruptedException e) {
@@ -29,9 +30,31 @@ public class TestRssServer extends NanoHTTPD {
         }
     }
 
-    public void hasReceivedRequest() throws InterruptedException {
-        assertThat(requestFlag, signalledWithinSeconds(10));
-        requestFlag = new CountDownLatch(1);
+    public void hasReceivedRequestForRss() throws InterruptedException {
+        assertThat(requestQueue, receivedRequest("/rss"));
+    }
+
+    public void hasReceivedRequestForUrl(String request) {
+        assertThat(requestQueue, receivedRequest(request));
+    }
+
+    private Matcher<? super BlockingQueue<String>> receivedRequest(final String expected) {
+        return new TypeSafeMatcher<BlockingQueue<String>>() {
+            @Override
+            protected boolean matchesSafely(BlockingQueue<String> queue) {
+                try {
+                    String value = queue.poll(REQUEST_TIMEOUT, TimeUnit.SECONDS);
+                    return expected.equals(value);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("A request for URL ").appendValue(expected);
+            }
+        };
     }
 
 
@@ -47,24 +70,6 @@ public class TestRssServer extends NanoHTTPD {
     public void stop() {
         respondSuccessWith("");
         super.stop();
-    }
-
-    private Matcher<? super CountDownLatch> signalledWithinSeconds(final int seconds) {
-        return new TypeSafeMatcher<CountDownLatch>() {
-            @Override
-            protected boolean matchesSafely(CountDownLatch countDownLatch) {
-                try {
-                    return countDownLatch.await(seconds, TimeUnit.SECONDS);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-
-            @Override
-            public void describeTo(Description description) {
-                description.appendText(String.format("wait for condition until %d seconds", seconds));
-            }
-        };
     }
 
 }
