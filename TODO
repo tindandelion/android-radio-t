@@ -8,6 +8,9 @@ Backlog:
 
 Version 1.5:
  * Cache podcast list locally
+   * Cache expiration
+   * Trying to load at least one item
+
  * Google Analytics
  DONE Android 4.0 UI
    DONE New status bar icons
