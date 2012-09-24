@@ -2,18 +2,18 @@ package org.dandelion.radiot.unittest;
 
 import junit.framework.TestCase;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
+import org.dandelion.radiot.podcasts.core.PodcastList;
 import org.dandelion.radiot.podcasts.core.RssFeedProvider;
 import org.dandelion.radiot.podcasts.core.ThumbnailProvider;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 
 public class RssFeedProviderTest extends TestCase {
 	private RssFeedProvider provider;
 	private String feedContent;
-	private List<PodcastItem> parsedItems;
+	private PodcastList parsedItems;
 	private PodcastItem firstParsedItem;
 	protected boolean streamClosed;
     private TestThumbnailProvider thumbnails;
@@ -47,7 +47,7 @@ public class RssFeedProviderTest extends TestCase {
 
 		parseRssFeed();
 		assertEquals(2, parsedItems.size());
-		assertNotNull(parsedItems.get(0));
+		assertNotNull(parsedItems.first());
 	}
 
 	public void testExtractingPodcastNumber() throws Exception {
@@ -113,9 +113,7 @@ public class RssFeedProviderTest extends TestCase {
 
 	private void parseRssFeed() throws Exception {
 		parsedItems = provider.retrieveAll();
-		if (!parsedItems.isEmpty()) {
-			firstParsedItem = parsedItems.get(0);
-		}
+        firstParsedItem = parsedItems.first();
 	}
 
 	private String getCompleteFeed() {

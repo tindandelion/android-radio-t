@@ -12,7 +12,6 @@ import org.hamcrest.TypeSafeMatcher;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.List;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -27,9 +26,9 @@ public class FilePodcastsCacheTest extends InstrumentationTestCase {
         final PodcastItem original = aPodcastItem();
 
         cache.updateWith(aListWith(original));
-        List<PodcastItem> cachedList = cache.getData();
+        PodcastList cachedList = cache.getData();
 
-        PodcastItem restored = cachedList.get(0);
+        PodcastItem restored = cachedList.first();
         assertThat(restored.getTitle(), equalTo(original.getTitle()));
     }
 
