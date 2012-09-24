@@ -87,6 +87,11 @@ class TestThumbnailProvider implements ThumbnailProvider {
         return image;
     }
 
+    @Override
+    public byte[] thumbnailDataFor(PodcastItem item) {
+        return null;
+    }
+
     public void returnsPodcastImage(Bitmap image) {
         this.image = image;
     }

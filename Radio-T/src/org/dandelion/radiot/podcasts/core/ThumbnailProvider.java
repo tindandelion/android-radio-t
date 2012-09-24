@@ -4,4 +4,5 @@ import android.graphics.Bitmap;
 
 public interface ThumbnailProvider {
     Bitmap thumbnailFor(PodcastItem item);
+    byte [] thumbnailDataFor(PodcastItem item);
 }

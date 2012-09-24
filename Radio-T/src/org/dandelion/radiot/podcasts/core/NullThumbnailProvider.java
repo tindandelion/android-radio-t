@@ -7,4 +7,9 @@ public class NullThumbnailProvider implements ThumbnailProvider {
     public Bitmap thumbnailFor(PodcastItem item) {
         return null;
     }
+
+    @Override
+    public byte[] thumbnailDataFor(PodcastItem item) {
+        return null;
+    }
 }
