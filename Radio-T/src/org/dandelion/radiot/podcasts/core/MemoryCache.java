@@ -1,9 +1,7 @@
 package org.dandelion.radiot.podcasts.core;
 
-import java.util.List;
-
 public class MemoryCache implements PodcastsCache {
-    public List<PodcastItem> data;
+    public PodcastList data;
 
     @Override
     public void reset() {
@@ -11,12 +9,12 @@ public class MemoryCache implements PodcastsCache {
     }
 
     @Override
-    public List<PodcastItem> getData() {
+    public PodcastList getData() {
         return data;
     }
 
     @Override
-    public void updateWith(List<PodcastItem> data) {
+    public void updateWith(PodcastList data) {
         this.data = data;
     }
 

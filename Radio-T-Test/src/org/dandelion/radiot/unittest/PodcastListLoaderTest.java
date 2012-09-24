@@ -5,7 +5,6 @@ import junit.framework.Assert;
 import junit.framework.TestCase;
 import org.dandelion.radiot.podcasts.core.*;
 
-import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class PodcastListLoaderTest extends TestCase {
@@ -53,7 +52,7 @@ class TestPodcastsProvider implements PodcastsProvider {
             new LinkedBlockingQueue<PodcastList>();
 
     @Override
-    public List<PodcastItem> retrieveAll() throws Exception {
+    public PodcastList retrieveAll() throws Exception {
         return podcastQueue.take();
     }
 
@@ -79,7 +78,7 @@ class TestView implements ProgressListener, PodcastListConsumer {
 	public void onStarted() {
 	}
 
-	public void updatePodcasts(List<PodcastItem> podcasts) {
-		updatedPodcasts.add(new PodcastList(podcasts));
+	public void updatePodcasts(PodcastList podcasts) {
+		updatedPodcasts.add(podcasts);
 	}
 }

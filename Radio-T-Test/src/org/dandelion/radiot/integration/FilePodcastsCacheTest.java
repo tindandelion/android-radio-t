@@ -4,17 +4,17 @@ import android.content.Context;
 import android.test.InstrumentationTestCase;
 import org.dandelion.radiot.podcasts.core.FilePodcastsCache;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
+import org.dandelion.radiot.podcasts.core.PodcastList;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
-import java.io.*;
-import java.util.ArrayList;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class FilePodcastsCacheTest extends InstrumentationTestCase {
@@ -113,8 +113,8 @@ public class FilePodcastsCacheTest extends InstrumentationTestCase {
         };
     }
 
-    private ArrayList<PodcastItem> aListWith(final PodcastItem original) {
-        return new ArrayList<PodcastItem>() {{
+    private PodcastList aListWith(final PodcastItem original) {
+        return new PodcastList() {{
                 add(original);
             }};
     }

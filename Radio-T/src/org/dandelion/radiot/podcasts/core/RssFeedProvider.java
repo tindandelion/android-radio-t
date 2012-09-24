@@ -8,11 +8,9 @@ import org.xml.sax.ContentHandler;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 public class RssFeedProvider implements PodcastsProvider {
-    private ArrayList<PodcastItem> items;
+    private PodcastList items;
 	private PodcastItem currentItem;
 	private String address;
     private ThumbnailProvider thumbnails;
@@ -22,8 +20,8 @@ public class RssFeedProvider implements PodcastsProvider {
         this.thumbnails = thumbnails;
     }
 
-    public List<PodcastItem> retrieveAll() throws Exception {
-		items = new ArrayList<PodcastItem>();
+    public PodcastList retrieveAll() throws Exception {
+		items = new PodcastList();
 		Xml.parse(openContentStream(), Xml.Encoding.UTF_8, getContentHandler());
 		return items;
 	}

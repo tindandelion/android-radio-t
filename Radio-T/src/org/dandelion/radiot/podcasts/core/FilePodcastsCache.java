@@ -1,8 +1,6 @@
 package org.dandelion.radiot.podcasts.core;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class FilePodcastsCache implements PodcastsCache {
     private final File file;
@@ -20,7 +18,7 @@ public class FilePodcastsCache implements PodcastsCache {
     }
 
     @Override
-    public List<PodcastItem> getData() {
+    public PodcastList getData() {
         try {
             return readItems();
         } catch (Exception e) {
@@ -28,7 +26,7 @@ public class FilePodcastsCache implements PodcastsCache {
         }
     }
 
-    private List<PodcastItem> readItems() throws IOException, ClassNotFoundException {
+    private PodcastList readItems() throws IOException, ClassNotFoundException {
         ObjectInputStream in = openInputStream();
         try {
             readVersionFrom(in);
@@ -47,8 +45,8 @@ public class FilePodcastsCache implements PodcastsCache {
     }
 
     @SuppressWarnings({"InfiniteLoopStatement", "EmptyCatchBlock"})
-    private ArrayList<PodcastItem> readItemsUntilEnd(ObjectInputStream in) throws ClassNotFoundException, IOException {
-        ArrayList<PodcastItem> result = new ArrayList<PodcastItem>();
+    private PodcastList readItemsUntilEnd(ObjectInputStream in) throws ClassNotFoundException, IOException {
+        PodcastList result = new PodcastList();
         try {
             for (; ; ) {
                 result.add((PodcastItem) in.readObject());
@@ -59,7 +57,7 @@ public class FilePodcastsCache implements PodcastsCache {
     }
 
     @Override
-    public void updateWith(List<PodcastItem> data) {
+    public void updateWith(PodcastList data) {
         try {
             saveObjects(data);
         } catch (Exception e) {
@@ -67,7 +65,7 @@ public class FilePodcastsCache implements PodcastsCache {
         }
     }
 
-    private void saveObjects(List<PodcastItem> data) throws IOException {
+    private void saveObjects(PodcastList data) throws IOException {
         ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
         try {
             writeVersionInto(out);
@@ -82,7 +80,7 @@ public class FilePodcastsCache implements PodcastsCache {
         out.writeInt(formatVersion);
     }
 
-    private void writeItemsInto(ObjectOutputStream out, List<PodcastItem> data) throws IOException {
+    private void writeItemsInto(ObjectOutputStream out, PodcastList data) throws IOException {
         for (PodcastItem i : data) {
             out.writeObject(i);
         }

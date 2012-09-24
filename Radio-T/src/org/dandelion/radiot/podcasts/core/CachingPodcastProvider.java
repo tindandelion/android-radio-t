@@ -1,7 +1,5 @@
 package org.dandelion.radiot.podcasts.core;
 
-import java.util.List;
-
 public class CachingPodcastProvider implements PodcastsProvider {
     private final PodcastsProvider podcasts;
     private PodcastsCache cache;
@@ -12,7 +10,7 @@ public class CachingPodcastProvider implements PodcastsProvider {
     }
 
     @Override
-    public List<PodcastItem> retrieveAll() throws Exception {
+    public PodcastList retrieveAll() throws Exception {
         if (cache.isValid()) {
             return cache.getData();
         } else {
@@ -20,7 +18,7 @@ public class CachingPodcastProvider implements PodcastsProvider {
         }
     }
 
-    private List<PodcastItem> updateCacheWith(List<PodcastItem> newData) {
+    private PodcastList updateCacheWith(PodcastList newData) {
         cache.updateWith(newData);
         return newData;
     }

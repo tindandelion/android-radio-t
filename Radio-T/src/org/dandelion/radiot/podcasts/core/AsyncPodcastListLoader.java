@@ -1,7 +1,5 @@
 package org.dandelion.radiot.podcasts.core;
 
-import java.util.List;
-
 import android.os.AsyncTask;
 
 @SuppressWarnings("unchecked")
@@ -35,14 +33,14 @@ public class AsyncPodcastListLoader implements PodcastListLoader {
         task = null;
     }
 
-    protected void publishPodcastList(List<PodcastItem> newList,
+    protected void publishPodcastList(PodcastList list,
                                       Exception loadError) {
         progressListener.onFinished();
 
         if (null != loadError) {
             progressListener.onError(loadError.getMessage());
         } else {
-            consumer.updatePodcasts(newList);
+            consumer.updatePodcasts(list);
         }
     }
 
@@ -81,7 +79,7 @@ public class AsyncPodcastListLoader implements PodcastListLoader {
 
     class UpdateTask extends AsyncTask<Void, Runnable, Void> {
 
-        private List<PodcastItem> list;
+        private PodcastList list;
         private Exception error;
 
         @Override
@@ -121,7 +119,7 @@ public class AsyncPodcastListLoader implements PodcastListLoader {
 
 class NullConsumer implements PodcastListConsumer {
     @Override
-    public void updatePodcasts(List<PodcastItem> podcasts) {
+    public void updatePodcasts(PodcastList podcasts) {
     }
 
 }

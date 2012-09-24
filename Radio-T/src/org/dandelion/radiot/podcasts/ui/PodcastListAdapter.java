@@ -1,6 +1,5 @@
 package org.dandelion.radiot.podcasts.ui;
 
-import org.dandelion.radiot.R;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,10 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import org.dandelion.radiot.R;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
+import org.dandelion.radiot.podcasts.core.PodcastList;
 import org.dandelion.radiot.podcasts.core.PodcastListConsumer;
-
-import java.util.List;
 
 class PodcastListAdapter extends ArrayAdapter<PodcastItem> implements PodcastListConsumer {
     private final Bitmap defaultPodcastImage;
@@ -61,7 +60,7 @@ class PodcastListAdapter extends ArrayAdapter<PodcastItem> implements PodcastLis
     }
 
     @Override
-    public void updatePodcasts(List<PodcastItem> podcasts) {
+    public void updatePodcasts(PodcastList podcasts) {
         clear();
         for (PodcastItem item : podcasts) {
             add(item);
