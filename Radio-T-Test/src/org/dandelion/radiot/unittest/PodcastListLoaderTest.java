@@ -1,6 +1,5 @@
 package org.dandelion.radiot.unittest;
 
-import android.graphics.Bitmap;
 import android.os.Looper;
 import junit.framework.Assert;
 import junit.framework.TestCase;
@@ -13,7 +12,6 @@ public class PodcastListLoaderTest extends TestCase {
 	private TestPodcastsProvider podcasts;
 	private TestView view;
 	private PodcastListLoader loader;
-    private TestThumbnailProvider thumbnails;
 
     public void testRetrieveAndPublishPodcastList() throws Exception {
         PodcastList podcastList = new PodcastList();
@@ -23,32 +21,17 @@ public class PodcastListLoaderTest extends TestCase {
 		
 		view.waitAndCheckUpdatedPodcasts(podcastList);
 	}
-	
-	public void testLoadingPodcastImages() throws Exception {
-        PodcastList list = new PodcastList();
-		PodcastItem item = new PodcastItem();
-		list.add(item);
-
-		podcasts.returnsPodcasts(list);
-        Bitmap image = Bitmap.createBitmap(1, 1, Bitmap.Config.RGB_565);
-        thumbnails.returnsPodcastImage(image);
-
-        startPodcastListUpdate();
-		view.waitUntilPodcastListUpdated();
-		assertEquals(image, item.getThumbnail());
-	}
 
     @Override
 	protected void setUp() throws Exception {
 		super.setUp();
 		podcasts = new TestPodcastsProvider();
-        thumbnails = new TestThumbnailProvider();
-		view = new TestView();
-		loader = newLoader(podcasts, thumbnails);
+        view = new TestView();
+		loader = newLoader(podcasts);
 	}
 
-	private PodcastListLoader newLoader(PodcastsProvider podcasts, ThumbnailProvider thumbnails) {
-		AsyncPodcastListLoader p = new AsyncPodcastListLoader(podcasts, thumbnails);
+	private PodcastListLoader newLoader(PodcastsProvider podcasts) {
+		AsyncPodcastListLoader p = new AsyncPodcastListLoader(podcasts, new NullThumbnailProvider());
 		p.attach(view, view);
 		return p;
 	}
@@ -79,24 +62,6 @@ class TestPodcastsProvider implements PodcastsProvider {
     }
 }
 
-class TestThumbnailProvider implements ThumbnailProvider {
-    private Bitmap image;
-
-    @Override
-    public Bitmap thumbnailFor(PodcastItem item) {
-        return image;
-    }
-
-    @Override
-    public byte[] thumbnailDataFor(PodcastItem item) {
-        return null;
-    }
-
-    public void returnsPodcastImage(Bitmap image) {
-        this.image = image;
-    }
-}
-
 class TestView implements ProgressListener, PodcastListConsumer {
 	private LinkedBlockingQueue<PodcastList> updatedPodcasts =
             new LinkedBlockingQueue<PodcastList>();
@@ -106,10 +71,6 @@ class TestView implements ProgressListener, PodcastListConsumer {
 
 	public void waitAndCheckUpdatedPodcasts(PodcastList pl) throws InterruptedException {
 		Assert.assertEquals(pl, updatedPodcasts.take());
-	}
-
-	public void waitUntilPodcastListUpdated() throws InterruptedException {
-		updatedPodcasts.take();
 	}
 
 	public void onError(String errorMessage) {

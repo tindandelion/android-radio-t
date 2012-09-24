@@ -1,6 +1,7 @@
 package org.dandelion.radiot.podcasts.core;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import java.io.Serializable;
 import java.text.ParseException;
@@ -84,10 +85,6 @@ public class PodcastItem implements Cloneable, Serializable {
 		return thumbnail;
 	}
 
-	public void setThumbnail(Bitmap value) {
-		thumbnail = value;
-	}
-
     public void setAudioUri(String value) {
         audioUri = value;
     }
@@ -105,5 +102,13 @@ public class PodcastItem implements Cloneable, Serializable {
 
     public void setThumbnailUrl(String value) {
         this.thumbnailUrl = value;
+    }
+
+    public void setThumbnailData(byte[] data) {
+        if (data == null) {
+            thumbnail = null;
+        } else {
+            thumbnail = BitmapFactory.decodeByteArray(data, 0, data.length);
+        }
     }
 }

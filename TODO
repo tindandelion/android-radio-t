@@ -9,7 +9,6 @@ Backlog:
 Version 1.5:
  * Cache podcast list locally
    * Cache expiration
-   * Trying to load at least one item
 
  * Google Analytics
  DONE Android 4.0 UI
@@ -24,6 +23,7 @@ Version 1.5:
      DONE Refresh 32x32 (64x64)
      DONE Center logo text
      DONE Home screen buttons
+ * Testing: podcast loading performance
  * Testing: file to download already exists
 
 * Debt:

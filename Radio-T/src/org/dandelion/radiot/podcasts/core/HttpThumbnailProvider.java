@@ -1,7 +1,5 @@
 package org.dandelion.radiot.podcasts.core;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -24,25 +22,15 @@ public class HttpThumbnailProvider implements ThumbnailProvider {
     }
 
     @Override
-    public Bitmap thumbnailFor(PodcastItem item) {
-        byte[] data = thumbnailDataFor(item);
-        if (data != null) {
-            return BitmapFactory.decodeByteArray(data, 0, data.length);
-        } else {
-            return null;
-        }
-    }
-
-    @Override
     public byte[] thumbnailDataFor(PodcastItem item) {
         String url = item.getThumbnailUrl();
         if (url == null) {
             return null;
         }
-        return thumbnailDataFor(constructFullUrl(url));
+        return retrieveDataFrom(constructFullUrl(url));
     }
 
-    private byte[] thumbnailDataFor(String fullUrl) {
+    private byte[] retrieveDataFrom(String fullUrl) {
         try {
             HttpResponse response = executeRequstFor(fullUrl);
             if (isSuccessful(response)) {
