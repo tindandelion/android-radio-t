@@ -9,7 +9,7 @@ import java.io.File;
 import java.util.HashMap;
 
 public class RadiotApplication extends Application {
-    private static final int CACHE_FORMAT_VERSION = 1;
+    private static final int CACHE_FORMAT_VERSION = 3;
     private HashMap<String, PodcastListLoader> engines;
 
     @Override

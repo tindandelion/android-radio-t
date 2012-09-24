@@ -23,9 +23,9 @@ public class PodcastItem implements Cloneable, Serializable {
     private String pubDate;
 	private String showNotes;
 	private String audioUri;
-    private Bitmap thumbnail;
     private String title;
     private String thumbnailUrl;
+    private byte[] thumbnailData;
 
     public String getAudioUri() {
 		return audioUri;
@@ -82,7 +82,11 @@ public class PodcastItem implements Cloneable, Serializable {
 	}
 
     public Bitmap getThumbnail() {
-		return thumbnail;
+        if (thumbnailData == null) {
+            return null;
+        } else {
+            return BitmapFactory.decodeByteArray(thumbnailData, 0, thumbnailData.length);
+        }
 	}
 
     public void setAudioUri(String value) {
@@ -105,10 +109,6 @@ public class PodcastItem implements Cloneable, Serializable {
     }
 
     public void setThumbnailData(byte[] data) {
-        if (data == null) {
-            thumbnail = null;
-        } else {
-            thumbnail = BitmapFactory.decodeByteArray(data, 0, data.length);
-        }
+        thumbnailData = data;
     }
 }
