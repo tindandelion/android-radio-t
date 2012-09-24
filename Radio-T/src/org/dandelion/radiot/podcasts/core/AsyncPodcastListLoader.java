@@ -91,7 +91,7 @@ public class AsyncPodcastListLoader implements PodcastListLoader {
             try {
                 list = podcasts.retrieveAll();
                 for (PodcastItem item : list) {
-                    item.setThumbnailData(thumbnails.thumbnailDataFor(item));
+                    item.setThumbnailData(thumbnails.thumbnailDataFor(item.getThumbnailUrl()));
                 }
             } catch (Exception e) {
                 error = e;

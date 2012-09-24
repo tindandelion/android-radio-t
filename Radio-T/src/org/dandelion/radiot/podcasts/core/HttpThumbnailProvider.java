@@ -22,13 +22,13 @@ public class HttpThumbnailProvider implements ThumbnailProvider {
     }
 
     @Override
-    public byte[] thumbnailDataFor(PodcastItem item) {
-        String url = item.getThumbnailUrl();
+    public byte[] thumbnailDataFor(String url) {
         if (url == null) {
             return null;
         }
         return retrieveDataFrom(constructFullUrl(url));
     }
+
 
     private byte[] retrieveDataFrom(String fullUrl) {
         try {
