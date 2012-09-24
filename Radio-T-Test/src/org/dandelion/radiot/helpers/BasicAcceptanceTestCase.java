@@ -33,7 +33,7 @@ public class BasicAcceptanceTestCase extends
 	}
 
     protected TestLoader createLoader(String url) {
-        return new TestLoader(createTestProvider(url), new NullThumbnailProvider());
+        return new TestLoader(createTestProvider(url));
     }
 
     private RadiotApplication getRadiotApplication() {
@@ -43,7 +43,7 @@ public class BasicAcceptanceTestCase extends
     private PodcastsProvider createTestProvider(final String url) {
         final AssetManager assets = getInstrumentation().getContext()
                 .getAssets();
-        return new RssFeedProvider(url) {
+        return new RssFeedProvider(url, new NullThumbnailProvider()) {
             @Override
             protected InputStream openContentStream() throws IOException {
                 return assets.open((url + ".xml"));

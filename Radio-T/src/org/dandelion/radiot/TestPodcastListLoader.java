@@ -12,14 +12,14 @@ public class TestPodcastListLoader extends AsyncPodcastListLoader {
 
     private static TestPodcastListLoader instance;
 
-    public TestPodcastListLoader(PodcastsProvider podcasts, ThumbnailProvider thumbnails, PodcastsCache cache) {
-        super(podcasts, thumbnails, cache);
+    public TestPodcastListLoader(PodcastsProvider podcasts, PodcastsCache cache) {
+        super(podcasts, cache);
     }
 
     public static PodcastListLoader create(Context context) {
         instance = new TestPodcastListLoader(
-                new RssFeedProvider(BASE_URL + "/rss"),
-                new HttpThumbnailProvider(BASE_URL),
+                new RssFeedProvider(BASE_URL + "/rss",
+                        new HttpThumbnailProvider(BASE_URL)),
                 createPodcastsCache(context));
         return instance;
     }

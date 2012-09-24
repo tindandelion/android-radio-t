@@ -24,7 +24,6 @@ public class PodcastItem implements Cloneable, Serializable {
 	private String showNotes;
 	private String audioUri;
     private String title;
-    private String thumbnailUrl;
     private byte[] thumbnailData;
 
     public String getAudioUri() {
@@ -93,19 +92,12 @@ public class PodcastItem implements Cloneable, Serializable {
         audioUri = value;
     }
 
-    public void extractThumbnailUrl(String description) {
+    public String extractThumbnailUrl(String description) {
         Matcher matcher = THUMBNAIL_URL_PATTERN.matcher(description);
         if (matcher.find()) {
-            thumbnailUrl = matcher.group(1);
+            return matcher.group(1);
         }
-    }
-
-    public String getThumbnailUrl() {
-        return thumbnailUrl;
-    }
-
-    public void setThumbnailUrl(String value) {
-        this.thumbnailUrl = value;
+        return null;
     }
 
     public void setThumbnailData(byte[] data) {

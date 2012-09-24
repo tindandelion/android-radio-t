@@ -10,17 +10,15 @@ public class AsyncPodcastListLoader implements PodcastListLoader {
     private ProgressListener progressListener = new NullListener();
     private PodcastsProvider podcasts;
     private PodcastListConsumer consumer;
-    private ThumbnailProvider thumbnails;
     private UpdateTask task;
 
-    public AsyncPodcastListLoader(PodcastsProvider podcasts, ThumbnailProvider thumbnails) {
-        this(podcasts, thumbnails, new MemoryCache());
+    public AsyncPodcastListLoader(PodcastsProvider podcasts) {
+        this(podcasts, new MemoryCache());
     }
 
-    public AsyncPodcastListLoader(PodcastsProvider podcasts, ThumbnailProvider thumbnails, PodcastsCache cache) {
+    public AsyncPodcastListLoader(PodcastsProvider podcasts, PodcastsCache cache) {
         this.cache = cache;
         this.podcasts = new CachingPodcastProvider(podcasts, cache);
-        this.thumbnails = thumbnails;
     }
 
     public void refresh(boolean resetCache) {
@@ -90,9 +88,6 @@ public class AsyncPodcastListLoader implements PodcastListLoader {
         protected Void doInBackground(Void... params) {
             try {
                 list = podcasts.retrieveAll();
-                for (PodcastItem item : list) {
-                    item.setThumbnailData(thumbnails.thumbnailDataFor(item.getThumbnailUrl()));
-                }
             } catch (Exception e) {
                 error = e;
             }

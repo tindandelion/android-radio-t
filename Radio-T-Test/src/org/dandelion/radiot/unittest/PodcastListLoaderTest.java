@@ -31,7 +31,7 @@ public class PodcastListLoaderTest extends TestCase {
 	}
 
 	private PodcastListLoader newLoader(PodcastsProvider podcasts) {
-		AsyncPodcastListLoader p = new AsyncPodcastListLoader(podcasts, new NullThumbnailProvider());
+		AsyncPodcastListLoader p = new AsyncPodcastListLoader(podcasts);
 		p.attach(view, view);
 		return p;
 	}

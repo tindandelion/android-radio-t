@@ -9,7 +9,7 @@ import java.io.File;
 import java.util.HashMap;
 
 public class RadiotApplication extends Application {
-    private static final int CACHE_FORMAT_VERSION = 3;
+    private static final int CACHE_FORMAT_VERSION = 4;
     private HashMap<String, PodcastListLoader> engines;
 
     @Override
@@ -38,8 +38,8 @@ public class RadiotApplication extends Application {
     }
 
     protected PodcastListLoader podcastLoader(String showName, String url, ThumbnailProvider thumbnails) {
-        return new AsyncPodcastListLoader(new RssFeedProvider(url),
-                thumbnails, createPodcastsCache(showName));
+        return new AsyncPodcastListLoader(new RssFeedProvider(url, thumbnails),
+                createPodcastsCache(showName));
     }
 
     private PodcastsCache createPodcastsCache(String showName) {

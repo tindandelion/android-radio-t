@@ -3,28 +3,31 @@ package org.dandelion.radiot.unittest;
 import junit.framework.TestCase;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.RssFeedProvider;
+import org.dandelion.radiot.podcasts.core.ThumbnailProvider;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-public class RssFeedModelTestCase extends TestCase {
-	private RssFeedProvider model;
+public class RssFeedProviderTest extends TestCase {
+	private RssFeedProvider provider;
 	private String feedContent;
 	private List<PodcastItem> parsedItems;
 	private PodcastItem firstParsedItem;
 	protected boolean streamClosed;
+    private TestThumbnailProvider thumbnails;
 
-	@Override
+    @Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		model = createTestModel();
+        thumbnails = new TestThumbnailProvider();
+		provider = createProvider();
 		feedContent = "";
 	}
 
-	protected RssFeedProvider createTestModel() {
-		return new RssFeedProvider(null) {
+	protected RssFeedProvider createProvider() {
+		return new RssFeedProvider(null, thumbnails) {
 			@Override
 			protected InputStream openContentStream() throws IOException {
 				return new ByteArrayInputStream(getCompleteFeed().getBytes()) {
@@ -85,7 +88,7 @@ public class RssFeedModelTestCase extends TestCase {
                 "&lt;p&gt;&lt;img src=\"http://www.radio-t.com/images/radio-t/rt302.jpg\" alt=\"\" /&gt;&lt;/p&gt;\n" +
                 "</description>");
         parseRssFeed();
-        assertEquals("http://www.radio-t.com/images/radio-t/rt302.jpg", firstParsedItem.getThumbnailUrl());
+        assertEquals("http://www.radio-t.com/images/radio-t/rt302.jpg", thumbnails.requestedUrl);
     }
 
     public void testEnsureStreamIsClosed() throws Exception {
@@ -109,7 +112,7 @@ public class RssFeedModelTestCase extends TestCase {
 	}
 
 	private void parseRssFeed() throws Exception {
-		parsedItems = model.retrieveAll();
+		parsedItems = provider.retrieveAll();
 		if (!parsedItems.isEmpty()) {
 			firstParsedItem = parsedItems.get(0);
 		}
@@ -120,4 +123,15 @@ public class RssFeedModelTestCase extends TestCase {
                 "xmlns:itunes=\"http://www.itunes.com/dtds/podcast-1.0.dtd\"><channel>"
 				+ feedContent + "</channel></rss>";
 	}
+
+    private static class TestThumbnailProvider implements ThumbnailProvider {
+        public final byte[] thumbnailData = new byte[0];
+        public String requestedUrl;
+
+        @Override
+        public byte[] thumbnailDataFor(String url) {
+            requestedUrl = url;
+            return thumbnailData;
+        }
+    }
 }
