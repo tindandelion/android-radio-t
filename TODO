@@ -7,10 +7,8 @@ Backlog:
    * New icon with ICS guidelines
 
 Version 1.5:
- * Cache podcast list locally
-   * Cache expiration
-
  * Google Analytics
+ DONE Cache podcast list locally
  DONE Android 4.0 UI
    DONE New status bar icons
    DONE Button background styling
@@ -24,6 +22,8 @@ Version 1.5:
      DONE Center logo text
      DONE Home screen buttons
  * Testing: podcast loading performance
+   * Memory usage
+   * Time to load from cache
  * Testing: file to download already exists
 
 * Debt:

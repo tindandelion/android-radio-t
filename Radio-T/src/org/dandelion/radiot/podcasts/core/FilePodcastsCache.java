@@ -3,6 +3,9 @@ package org.dandelion.radiot.podcasts.core;
 import java.io.*;
 
 public class FilePodcastsCache implements PodcastsCache {
+    // A threshold of one day
+    private static final long LIFETIME_THRESHOLD = 24 * 3600 * 1000;
+
     private final File file;
     private final int formatVersion;
 
@@ -89,10 +92,14 @@ public class FilePodcastsCache implements PodcastsCache {
     @Override
     public boolean isValid() {
         try {
-            return readVersion() == formatVersion;
+            return isCurrent() && isValidVersion();
         } catch (Exception ex) {
             return false;
         }
+    }
+
+    private boolean isValidVersion() throws IOException {
+        return readVersion() == formatVersion;
     }
 
     private int readVersion() throws IOException {
@@ -104,4 +111,8 @@ public class FilePodcastsCache implements PodcastsCache {
         }
     }
 
+    public boolean isCurrent() {
+        long lifetime = System.currentTimeMillis() - file.lastModified();
+        return lifetime < LIFETIME_THRESHOLD;
+    }
 }

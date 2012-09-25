@@ -32,11 +32,6 @@ public class FilePodcastsCacheTest extends InstrumentationTestCase {
         assertThat(restored.getTitle(), equalTo(original.getTitle()));
     }
 
-    public void testCacheIsValidWhenItHasData() throws Exception {
-        assertThat(cache, not(valid()));
-        cache.updateWith(aListWith(aPodcastItem()));
-        assertThat(cache, is(valid()));
-    }
 
     public void testResettingTheCache() throws Exception {
         cache.updateWith(aListWith(aPodcastItem()));
@@ -51,11 +46,39 @@ public class FilePodcastsCacheTest extends InstrumentationTestCase {
         assertThat(cache, not(valid()));
     }
 
+    public void testCacheIsValidWhenItHasData() throws Exception {
+        assertThat(cache, not(valid()));
+        cache.updateWith(aListWith(aPodcastItem()));
+        assertThat(cache, is(valid()));
+    }
+
     public void testCacheIsInvalidIfFileIsCorrupt() throws Exception {
         createValidCacheFile(FORMAT_VERSION);
 
         writeCacheFile("Some junk content");
         assertThat(cache, not(valid()));
+    }
+
+    public void testCacheIsInvalidIfOlderThanOneDay() throws Exception {
+        createValidCacheFile(FORMAT_VERSION);
+        assertThat(cache, is(valid()));
+
+        cacheCreated(hoursAgo(23));
+        assertThat(cache, is((valid())));
+
+        cacheCreated(hoursAgo(25));
+        assertThat(cache, is(not(valid())));
+    }
+
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    private void cacheCreated(long timestamp) {
+        cacheFile.setLastModified(timestamp);
+    }
+
+    private long hoursAgo(int hours) {
+        long current = System.currentTimeMillis();
+        int millis = (hours * 3600 * 1000);
+        return current - millis;
     }
 
     private void createValidCacheFile(int formatVersion) {
