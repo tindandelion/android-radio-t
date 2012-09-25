@@ -8,7 +8,8 @@ Backlog:
 
 Version 1.5:
  * Google Analytics
- DONE Cache podcast list locally
+ * Cache podcast list locally
+   * Optimize garbage collection for podcast list
  DONE Android 4.0 UI
    DONE New status bar icons
    DONE Button background styling
