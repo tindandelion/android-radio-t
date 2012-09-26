@@ -7,19 +7,21 @@ import org.dandelion.radiot.podcasts.core.PodcastItem;
 public class PodcastVisual {
     public final PodcastItem podcast;
     private Bitmap thumbnail;
+    private Bitmap defaultThumbnail;
 
-    public PodcastVisual(PodcastItem p) {
-        podcast = p;
+    public PodcastVisual(PodcastItem p, Bitmap defaultThumbnail) {
+        this.podcast = p;
+        this.defaultThumbnail = defaultThumbnail;
     }
 
-    public Bitmap getThumbnail(Bitmap defaultValue) {
+    public Bitmap getThumbnail() {
         if (thumbnail == null) {
-            thumbnail = decodeThumbnail(defaultValue);
+            thumbnail = decodeThumbnail();
         }
         return thumbnail;
     }
 
-    private Bitmap decodeThumbnail(Bitmap defaultValue) {
+    private Bitmap decodeThumbnail() {
         Bitmap bitmap = null;
         byte[] thData = podcast.getThumbnailData();
 
@@ -30,7 +32,7 @@ public class PodcastVisual {
         if (bitmap != null) {
             return bitmap;
         } else {
-            return defaultValue;
+            return defaultThumbnail;
         }
     }
 }

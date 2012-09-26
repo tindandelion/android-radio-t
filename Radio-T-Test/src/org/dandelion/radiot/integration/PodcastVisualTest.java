@@ -15,30 +15,41 @@ public class PodcastVisualTest extends InstrumentationTestCase {
             Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
 
     public void testReturnsDefaultThumbnailIfThumbnailIsMissing() throws Exception {
-        PodcastVisual visual = new PodcastVisual(aPodcastItemWith(noThumbnail()));
+        PodcastVisual visual = aVisualFor(aPodcastItemWith(noThumbnail()));
 
-        assertThat(visual.getThumbnail(DEFAULT_THUMBNAIL),
+        assertThat(visual.getThumbnail(),
                 equalTo(DEFAULT_THUMBNAIL));
     }
 
+
     public void testReturnsBitmapIfThumbnailDataIsValid() throws Exception {
-        PodcastVisual visual = new PodcastVisual(aPodcastItemWith(validThumbnail()));
-        assertThat(visual.getThumbnail(DEFAULT_THUMBNAIL),
+        PodcastVisual visual = aVisualFor(aPodcastItemWith(validThumbnail()));
+        assertThat(visual.getThumbnail(),
                 not(equalTo(DEFAULT_THUMBNAIL)));
     }
 
     public void testReturnsDefaultThumbnailIfThumbnailDataIsInvalid() throws Exception {
-        PodcastVisual visual = new PodcastVisual(aPodcastItemWith(invalidThumbnail()));
-        assertThat(visual.getThumbnail(DEFAULT_THUMBNAIL),
+        PodcastVisual visual = aVisualFor(aPodcastItemWith(invalidThumbnail()));
+        assertThat(visual.getThumbnail(),
                 (equalTo(DEFAULT_THUMBNAIL)));
     }
 
     public void testCachesThumbnail() throws Exception {
-        PodcastVisual visual = new PodcastVisual(aPodcastItemWith(validThumbnail()));
+        PodcastVisual visual = aVisualFor(aPodcastItemWith(validThumbnail()));
 
-        Bitmap first = visual.getThumbnail(DEFAULT_THUMBNAIL);
-        Bitmap second = visual.getThumbnail(DEFAULT_THUMBNAIL);
+        Bitmap first = visual.getThumbnail();
+        Bitmap second = visual.getThumbnail();
         assertThat(first, sameInstance(second));
+    }
+
+    private PodcastVisual aVisualFor(PodcastItem p) {
+        return new PodcastVisual(p, DEFAULT_THUMBNAIL);
+    }
+
+    private PodcastItem aPodcastItemWith(byte[] thumbnailData) {
+        PodcastItem p = new PodcastItem();
+        p.setThumbnailData(thumbnailData);
+        return p;
     }
 
     private byte[] invalidThumbnail() {
@@ -50,12 +61,6 @@ public class PodcastVisualTest extends InstrumentationTestCase {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         thumbnail.compress(Bitmap.CompressFormat.PNG, 100, out);
         return out.toByteArray();
-    }
-
-    private PodcastItem aPodcastItemWith(byte[] thumbnailData) {
-        PodcastItem p = new PodcastItem();
-        p.setThumbnailData(thumbnailData);
-        return p;
     }
 
     private byte[] noThumbnail() {

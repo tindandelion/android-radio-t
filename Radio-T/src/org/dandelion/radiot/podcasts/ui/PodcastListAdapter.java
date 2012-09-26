@@ -15,13 +15,13 @@ import org.dandelion.radiot.podcasts.core.PodcastList;
 import org.dandelion.radiot.podcasts.core.PodcastListConsumer;
 
 class PodcastListAdapter extends ArrayAdapter<PodcastVisual> implements PodcastListConsumer {
-    private final Bitmap defaultPodcastImage;
+    private final Bitmap defaultThumbnail;
     private Activity activity;
 
     public PodcastListAdapter(Activity activity) {
         super(activity, 0);
         this.activity = activity;
-        defaultPodcastImage = BitmapFactory
+        defaultThumbnail = BitmapFactory
                 .decodeResource(activity.getResources(),
                         R.drawable.default_podcast_image);
     }
@@ -47,7 +47,7 @@ class PodcastListAdapter extends ArrayAdapter<PodcastVisual> implements PodcastL
 
     private void setPodcastIcon(View row, PodcastVisual pv) {
         ImageView image = (ImageView) row.findViewById(R.id.podcast_item_icon);
-        image.setImageBitmap(pv.getThumbnail(defaultPodcastImage));
+        image.setImageBitmap(pv.getThumbnail());
     }
 
     private void setElementText(View row, int resourceId, String value) {
@@ -59,7 +59,7 @@ class PodcastListAdapter extends ArrayAdapter<PodcastVisual> implements PodcastL
     public void updatePodcasts(PodcastList podcasts) {
         clear();
         for (PodcastItem item : podcasts) {
-            add(new PodcastVisual(item));
+            add(new PodcastVisual(item, defaultThumbnail));
         }
     }
 }
