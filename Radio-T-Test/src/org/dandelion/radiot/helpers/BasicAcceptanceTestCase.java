@@ -2,14 +2,13 @@ package org.dandelion.radiot.helpers;
 
 
 import android.content.res.AssetManager;
-import org.dandelion.radiot.accepttest.drivers.HomeScreenDriver;
-import org.dandelion.radiot.podcasts.core.NullThumbnailProvider;
-import org.dandelion.radiot.home_screen.HomeScreenActivity;
-import org.dandelion.radiot.RadiotApplication;
-
 import android.test.ActivityInstrumentationTestCase2;
+import org.dandelion.radiot.RadiotApplication;
+import org.dandelion.radiot.accepttest.drivers.HomeScreenDriver;
+import org.dandelion.radiot.home_screen.HomeScreenActivity;
 import org.dandelion.radiot.podcasts.core.PodcastsProvider;
 import org.dandelion.radiot.podcasts.core.RssFeedProvider;
+import org.dandelion.radiot.podcasts.core.ThumbnailProvider;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -43,7 +42,7 @@ public class BasicAcceptanceTestCase extends
     private PodcastsProvider createTestProvider(final String url) {
         final AssetManager assets = getInstrumentation().getContext()
                 .getAssets();
-        return new RssFeedProvider(url, new NullThumbnailProvider()) {
+        return new RssFeedProvider(url, ThumbnailProvider.Null) {
             @Override
             protected InputStream openContentStream() throws IOException {
                 return assets.open((url + ".xml"));

@@ -15,7 +15,7 @@ public class TestLoader extends AsyncPodcastListLoader {
 	private int finishedTasksCount;
 
 	public TestLoader(PodcastsProvider podcasts) {
-		super(podcasts);
+		super(podcasts, new MemoryCache());
 		taskCancelLatch = new CountDownLatch(1);
 		taskFinishLatch = new CountDownLatch(1);
 		startedTasksCount = 0;

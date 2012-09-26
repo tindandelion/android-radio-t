@@ -10,10 +10,6 @@ public class AsyncPodcastListLoader implements PodcastListLoader {
     private PodcastListConsumer consumer;
     private UpdateTask task;
 
-    public AsyncPodcastListLoader(PodcastsProvider podcasts) {
-        this(podcasts, new MemoryCache());
-    }
-
     public AsyncPodcastListLoader(PodcastsProvider podcasts, PodcastsCache cache) {
         this.cache = cache;
         this.podcasts = new CachingPodcastProvider(podcasts, cache);
@@ -77,29 +73,21 @@ public class AsyncPodcastListLoader implements PodcastListLoader {
         task = null;
     }
 
-    class UpdateTask extends AsyncTask<Void, Runnable, Void> {
-
-        private PodcastList list;
+    class UpdateTask extends AsyncTask<Void, Void, PodcastList> {
         private Exception error;
 
         @Override
-        protected Void doInBackground(Void... params) {
+        protected PodcastList doInBackground(Void... params) {
             try {
-                list = podcasts.retrieveAll();
+                return podcasts.retrieveAll();
             } catch (Exception e) {
                 error = e;
             }
-
             return null;
         }
 
         @Override
-        protected void onProgressUpdate(Runnable... values) {
-            values[0].run();
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
+        protected void onPostExecute(PodcastList list) {
             publishPodcastList(list, error);
             taskFinished();
         }

@@ -3,6 +3,7 @@ package org.dandelion.radiot.unittest;
 import android.os.Looper;
 import junit.framework.Assert;
 import junit.framework.TestCase;
+import org.dandelion.radiot.helpers.MemoryCache;
 import org.dandelion.radiot.podcasts.core.*;
 
 import java.util.concurrent.LinkedBlockingQueue;
@@ -30,7 +31,7 @@ public class PodcastListLoaderTest extends TestCase {
 	}
 
 	private PodcastListLoader newLoader(PodcastsProvider podcasts) {
-		AsyncPodcastListLoader p = new AsyncPodcastListLoader(podcasts);
+		AsyncPodcastListLoader p = new AsyncPodcastListLoader(podcasts, new MemoryCache());
 		p.attach(view, view);
 		return p;
 	}

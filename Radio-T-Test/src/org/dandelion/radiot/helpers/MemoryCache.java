@@ -1,4 +1,7 @@
-package org.dandelion.radiot.podcasts.core;
+package org.dandelion.radiot.helpers;
+
+import org.dandelion.radiot.podcasts.core.PodcastList;
+import org.dandelion.radiot.podcasts.core.PodcastsCache;
 
 public class MemoryCache implements PodcastsCache {
     public PodcastList data;

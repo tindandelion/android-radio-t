@@ -10,6 +10,7 @@ import java.util.HashMap;
 
 public class RadiotApplication extends Application {
     private static final int CACHE_FORMAT_VERSION = 5;
+    private static final String THUMBNAIL_HOST = "http://www.radio-t.com";
     private HashMap<String, PodcastListLoader> engines;
 
     @Override
@@ -22,10 +23,12 @@ public class RadiotApplication extends Application {
     protected void createEngines() {
         engines = new HashMap<String, PodcastListLoader>();
         engines.put("main-show",
-                podcastLoader("main-show", "http://feeds.rucast.net/radio-t", new HttpThumbnailProvider()));
+                podcastLoader("main-show", "http://feeds.rucast.net/radio-t",
+                        new HttpThumbnailProvider(THUMBNAIL_HOST)));
         engines.put(
                 "after-show",
-                podcastLoader("after-show", "http://feeds.feedburner.com/pirate-radio-t", new NullThumbnailProvider()));
+                podcastLoader("after-show", "http://feeds.feedburner.com/pirate-radio-t",
+                        ThumbnailProvider.Null));
         engines.put(
                 "test-show",
                 TestPodcastListLoader.create(this));

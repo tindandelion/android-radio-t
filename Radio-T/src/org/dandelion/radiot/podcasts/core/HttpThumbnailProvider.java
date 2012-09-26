@@ -9,13 +9,8 @@ import org.apache.http.util.EntityUtils;
 import java.io.IOException;
 
 public class HttpThumbnailProvider implements ThumbnailProvider {
-    private static final String DEFAULT_HOST = "http://www.radio-t.com";
     public static final int HTTP_OK = 200;
     private String defaultHost;
-
-    public HttpThumbnailProvider() {
-        this(DEFAULT_HOST);
-    }
 
     public HttpThumbnailProvider(String host) {
         this.defaultHost = host;
