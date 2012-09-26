@@ -5,6 +5,7 @@ import android.app.ListActivity;
 import android.widget.ListAdapter;
 import com.jayway.android.robotium.solo.Solo;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
+import org.dandelion.radiot.podcasts.ui.PodcastVisual;
 
 public class PodcastListUiDriver extends Solo {
     private ListActivity listActivity;
@@ -29,14 +30,14 @@ public class PodcastListUiDriver extends Solo {
 
     private PodcastItem clickOnPodcastItem(int index) {
         ListAdapter adapter = listActivity.getListAdapter();
-        PodcastItem item = (PodcastItem) adapter.getItem(index);
+        PodcastVisual pv = (PodcastVisual) adapter.getItem(index);
         clickInList(index);
-        return item;
+        return pv.podcast;
     }
 
     public void makeSamplePodcastWithUrl(String title, String url) {
         ListAdapter adapter = listActivity.getListAdapter();
-        PodcastItem item = (PodcastItem) adapter.getItem(0);
+        PodcastItem item = ((PodcastVisual) adapter.getItem(0)).podcast;
         item.setTitle(title);
         item.setAudioUri(url);
     }

@@ -14,7 +14,7 @@ import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastList;
 import org.dandelion.radiot.podcasts.core.PodcastListConsumer;
 
-class PodcastListAdapter extends ArrayAdapter<PodcastItem> implements PodcastListConsumer {
+class PodcastListAdapter extends ArrayAdapter<PodcastVisual> implements PodcastListConsumer {
     private final Bitmap defaultPodcastImage;
     private Activity activity;
 
@@ -37,17 +37,17 @@ class PodcastListAdapter extends ArrayAdapter<PodcastItem> implements PodcastLis
         return fillRowWithData(row, getItem(position));
     }
 
-    private View fillRowWithData(View row, PodcastItem item) {
-        setElementText(row, R.id.podcast_item_view_number, item.getNumberString());
-        setElementText(row, R.id.podcast_item_view_date, item.getPubDate());
-        setElementText(row, R.id.podcast_item_view_shownotes, item.getShowNotes());
-        setPodcastIcon(row, item);
+    private View fillRowWithData(View row, PodcastVisual pv) {
+        setElementText(row, R.id.podcast_item_view_number, pv.podcast.getNumberString());
+        setElementText(row, R.id.podcast_item_view_date, pv.podcast.getPubDate());
+        setElementText(row, R.id.podcast_item_view_shownotes, pv.podcast.getShowNotes());
+        setPodcastIcon(row, pv);
         return row;
     }
 
-    private void setPodcastIcon(View row, PodcastItem item) {
+    private void setPodcastIcon(View row, PodcastVisual pv) {
         ImageView image = (ImageView) row.findViewById(R.id.podcast_item_icon);
-        Bitmap bitmap = item.getThumbnail();
+        Bitmap bitmap = pv.podcast.getThumbnail();
         if (null == bitmap) {
             bitmap = defaultPodcastImage;
         }
@@ -63,9 +63,7 @@ class PodcastListAdapter extends ArrayAdapter<PodcastItem> implements PodcastLis
     public void updatePodcasts(PodcastList podcasts) {
         clear();
         for (PodcastItem item : podcasts) {
-            add(item);
+            add(new PodcastVisual(item));
         }
     }
-
-
 }
