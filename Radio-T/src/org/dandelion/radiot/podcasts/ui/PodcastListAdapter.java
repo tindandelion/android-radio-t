@@ -47,11 +47,7 @@ class PodcastListAdapter extends ArrayAdapter<PodcastVisual> implements PodcastL
 
     private void setPodcastIcon(View row, PodcastVisual pv) {
         ImageView image = (ImageView) row.findViewById(R.id.podcast_item_icon);
-        Bitmap bitmap = pv.podcast.getThumbnail();
-        if (null == bitmap) {
-            bitmap = defaultPodcastImage;
-        }
-        image.setImageBitmap(bitmap);
+        image.setImageBitmap(pv.getThumbnail(defaultPodcastImage));
     }
 
     private void setElementText(View row, int resourceId, String value) {
