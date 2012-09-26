@@ -1,6 +1,9 @@
 package org.dandelion.radiot.integration;
 
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.test.InstrumentationTestCase;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.ui.PodcastVisual;
@@ -11,8 +14,8 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class PodcastVisualTest extends InstrumentationTestCase {
-    private static final Bitmap DEFAULT_THUMBNAIL =
-            Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
+    private static final Drawable DEFAULT_THUMBNAIL =
+            new BitmapDrawable((Resources) null);
 
     public void testReturnsDefaultThumbnailIfThumbnailIsMissing() throws Exception {
         PodcastVisual visual = aVisualFor(aPodcastItemWith(noThumbnail()));
@@ -31,19 +34,20 @@ public class PodcastVisualTest extends InstrumentationTestCase {
     public void testReturnsDefaultThumbnailIfThumbnailDataIsInvalid() throws Exception {
         PodcastVisual visual = aVisualFor(aPodcastItemWith(invalidThumbnail()));
         assertThat(visual.getThumbnail(),
-                (equalTo(DEFAULT_THUMBNAIL)));
+                equalTo(DEFAULT_THUMBNAIL));
     }
 
     public void testCachesThumbnail() throws Exception {
         PodcastVisual visual = aVisualFor(aPodcastItemWith(validThumbnail()));
 
-        Bitmap first = visual.getThumbnail();
-        Bitmap second = visual.getThumbnail();
+        Drawable first = visual.getThumbnail();
+        Drawable second = visual.getThumbnail();
         assertThat(first, sameInstance(second));
     }
 
     private PodcastVisual aVisualFor(PodcastItem p) {
-        return new PodcastVisual(p, DEFAULT_THUMBNAIL);
+        Resources res = getInstrumentation().getContext().getResources();
+        return new PodcastVisual(p, DEFAULT_THUMBNAIL, res);
     }
 
     private PodcastItem aPodcastItemWith(byte[] thumbnailData) {

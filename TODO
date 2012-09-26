@@ -7,9 +7,13 @@ Backlog:
    * New icon with ICS guidelines
 
 Version 1.5:
+ * Testing: file to download already exists
  * Google Analytics
  * Cache podcast list locally
-   * Optimize garbage collection for podcast list
+   DONE Optimize garbage collection for podcast list
+   * Load local podcast cache first, if it exists, and then
+     refresh from server in background
+
  DONE Android 4.0 UI
    DONE New status bar icons
    DONE Button background styling
@@ -22,10 +26,9 @@ Version 1.5:
      DONE Refresh 32x32 (64x64)
      DONE Center logo text
      DONE Home screen buttons
- * Testing: podcast loading performance
-   * Memory usage
-   * Time to load from cache
- * Testing: file to download already exists
+ DONE Testing: podcast loading performance
+   DONE Memory usage
+   DONE Time to load from cache
 
 * Debt:
  * Podcast type "audo/mpeg" appears in lots of places

@@ -1,8 +1,8 @@
 package org.dandelion.radiot.podcasts.ui;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,22 +15,23 @@ import org.dandelion.radiot.podcasts.core.PodcastList;
 import org.dandelion.radiot.podcasts.core.PodcastListConsumer;
 
 class PodcastListAdapter extends ArrayAdapter<PodcastVisual> implements PodcastListConsumer {
-    private final Bitmap defaultThumbnail;
-    private Activity activity;
+    private final Drawable defaultThumbnail;
+    private LayoutInflater inflater;
 
     public PodcastListAdapter(Activity activity) {
         super(activity, 0);
-        this.activity = activity;
-        defaultThumbnail = BitmapFactory
-                .decodeResource(activity.getResources(),
-                        R.drawable.default_podcast_image);
+        this.inflater = activity.getLayoutInflater();
+        defaultThumbnail = loadDefaultThumbnail();
+    }
+
+    private Drawable loadDefaultThumbnail() {
+        return getContext().getResources().getDrawable(R.drawable.default_podcast_image);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;
         if (row == null) {
-            LayoutInflater inflater = activity.getLayoutInflater();
             row = inflater.inflate(R.layout.podcast_list_item, parent, false);
         }
 
@@ -47,7 +48,7 @@ class PodcastListAdapter extends ArrayAdapter<PodcastVisual> implements PodcastL
 
     private void setPodcastIcon(View row, PodcastVisual pv) {
         ImageView image = (ImageView) row.findViewById(R.id.podcast_item_icon);
-        image.setImageBitmap(pv.getThumbnail());
+        image.setImageDrawable(pv.getThumbnail());
     }
 
     private void setElementText(View row, int resourceId, String value) {
@@ -57,9 +58,11 @@ class PodcastListAdapter extends ArrayAdapter<PodcastVisual> implements PodcastL
 
     @Override
     public void updatePodcasts(PodcastList podcasts) {
+        final Resources res = getContext().getResources();
+
         clear();
         for (PodcastItem item : podcasts) {
-            add(new PodcastVisual(item, defaultThumbnail));
+            add(new PodcastVisual(item, defaultThumbnail, res));
         }
     }
 }

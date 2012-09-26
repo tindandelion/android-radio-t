@@ -3,6 +3,11 @@ package org.dandelion.radiot.integration;
 import junit.framework.TestCase;
 import org.dandelion.radiot.podcasts.core.HttpThumbnailProvider;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 public class HttpThumbnailProviderTest extends TestCase {
     private HttpThumbnailProvider downloader;
 
@@ -13,26 +18,25 @@ public class HttpThumbnailProviderTest extends TestCase {
 
     public void testDownloadPodcastByFullUrl() throws Exception {
         final String fullUrl = "http://www.radio-t.com/images/radio-t/rt302.jpg";
-        assertNotNull(downloader.thumbnailDataFor(fullUrl));
+        assertThat(downloader.thumbnailDataFor(fullUrl), is(notNullValue()));
     }
 
     public void testDownloadPodcastByPartialUrl() throws Exception {
         final String partialUrl = "/images/radio-t/rt302.jpg";
-        assertNotNull(downloader.thumbnailDataFor(partialUrl));
+        assertThat(downloader.thumbnailDataFor(partialUrl), is(notNullValue()));
     }
 
     public void testReturnNullIfUnableToLoadThumbnail() throws Exception {
         final String nonExistentUrl = "/non-existent/thumbnail.jpg";
-        assertNull(downloader.thumbnailDataFor(nonExistentUrl));
+        assertThat(downloader.thumbnailDataFor(nonExistentUrl), is(nullValue()));
     }
 
     public void testReturnNullIfNowUrlIsSupplied() throws Exception {
-        assertNull(downloader.thumbnailDataFor(null));
+        assertThat(downloader.thumbnailDataFor(null), is(nullValue()));
     }
 
     public void testJunkUri() throws Exception {
         String junkUrl = "http://ftp://Hello world/This is junk";
-        assertNull(downloader.thumbnailDataFor(junkUrl));
+        assertThat(downloader.thumbnailDataFor(junkUrl), is(nullValue()));
     }
-
 }
