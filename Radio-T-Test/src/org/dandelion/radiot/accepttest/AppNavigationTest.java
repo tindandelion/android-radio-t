@@ -1,11 +1,11 @@
 package org.dandelion.radiot.accepttest;
 
 import android.test.ActivityInstrumentationTestCase2;
-import org.dandelion.radiot.accepttest.drivers.HomeScreenDriver;
+import org.dandelion.radiot.accepttest.drivers.AppNavigator;
 import org.dandelion.radiot.home_screen.HomeScreenActivity;
 
 public class AppNavigationTest extends ActivityInstrumentationTestCase2<HomeScreenActivity> {
-    private HomeScreenDriver driver;
+    private AppNavigator driver;
 
     public AppNavigationTest() {
         super(HomeScreenActivity.class);
@@ -14,18 +14,30 @@ public class AppNavigationTest extends ActivityInstrumentationTestCase2<HomeScre
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        driver = new HomeScreenDriver(getInstrumentation(), getActivity());
+        driver = new AppNavigator(getInstrumentation(), getActivity());
     }
 
-    public void testNavigateToHomeScreenFromAboutScreen() throws Exception {
+    public void testNavigateToAboutScreenAndBack() throws Exception {
         driver.goToAboutScreen();
+        driver.showsAboutSrceen();
+
         driver.clickActivityTitle();
-        driver.assertOnHomeScreen();
+        driver.showsHomeScreen();
     }
 
-    public void testNavigateToHomeScreenFromPodcastsScreen() throws Exception {
+    public void testNavigateToMainShowScreenAndBack() throws Exception {
         driver.goToPodcastsScreen();
+        driver.showsPodcastsScreen("Подкасты");
+
         driver.clickActivityTitle();
-        driver.assertOnHomeScreen();
+        driver.showsHomeScreen();
+    }
+
+    public void testNavigateToAfterShowScreenAndBack() throws Exception {
+        driver.goToAfterShowScreen();
+        driver.showsPodcastsScreen("После-шоу");
+
+        driver.clickActivityTitle();
+        driver.showsHomeScreen();
     }
 }

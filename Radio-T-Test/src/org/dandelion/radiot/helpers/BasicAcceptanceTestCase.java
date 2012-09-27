@@ -4,7 +4,7 @@ package org.dandelion.radiot.helpers;
 import android.content.res.AssetManager;
 import android.test.ActivityInstrumentationTestCase2;
 import org.dandelion.radiot.RadiotApplication;
-import org.dandelion.radiot.accepttest.drivers.HomeScreenDriver;
+import org.dandelion.radiot.accepttest.drivers.AppNavigator;
 import org.dandelion.radiot.home_screen.HomeScreenActivity;
 import org.dandelion.radiot.podcasts.core.PodcastsProvider;
 import org.dandelion.radiot.podcasts.core.RssFeedProvider;
@@ -20,9 +20,9 @@ public class BasicAcceptanceTestCase extends
 		super(HomeScreenActivity.class);
 	}
 
-	protected HomeScreenDriver createDriver() {
+	protected AppNavigator createDriver() {
 		configurePodcastEngines();
-		return new HomeScreenDriver(getInstrumentation(), getActivity());
+		return new AppNavigator(getInstrumentation(), getActivity());
 	}
 
 	private void configurePodcastEngines() {

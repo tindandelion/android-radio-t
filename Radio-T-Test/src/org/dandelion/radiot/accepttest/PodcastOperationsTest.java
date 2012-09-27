@@ -2,13 +2,14 @@ package org.dandelion.radiot.accepttest;
 
 
 import android.os.Environment;
-import org.dandelion.radiot.accepttest.drivers.HomeScreenDriver;
+import org.dandelion.radiot.accepttest.drivers.AppNavigator;
 import org.dandelion.radiot.accepttest.drivers.PodcastListUiDriver;
 import org.dandelion.radiot.accepttest.testables.*;
 import org.dandelion.radiot.helpers.*;
 import org.dandelion.radiot.podcasts.PodcastsApp;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.download.FakeDownloaderActivity;
+import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
 
 import java.io.File;
 
@@ -19,7 +20,7 @@ public class PodcastOperationsTest extends PodcastListAcceptanceTestCase {
     private FakePodcastPlayer player;
     private FakeDownloadManager downloadManager;
     private TestingPodcastsApp application;
-    private HomeScreenDriver appDriver;
+    private AppNavigator appDriver;
     private FakeMediaScanner mediaScanner;
     private FakeNotificationManager notificationManager;
 
@@ -95,7 +96,9 @@ public class PodcastOperationsTest extends PodcastListAcceptanceTestCase {
     }
 
     private PodcastListUiDriver gotoPodcastListPage() throws InterruptedException {
-        PodcastListUiDriver driver = appDriver.visitMainShowPage2();
+        appDriver.goToPodcastsScreen();
+        PodcastListActivity activity = (PodcastListActivity) appDriver.getCurrentActivity();
+        PodcastListUiDriver driver = new PodcastListUiDriver(getInstrumentation(), activity);
         mainShowPresenter().assertPodcastListIsUpdated();
         return driver;
     }
