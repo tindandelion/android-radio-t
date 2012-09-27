@@ -1,4 +1,4 @@
-package org.dandelion.radiot.accepttest;
+package org.dandelion.radiot.endtoend.podcasts;
 
 import android.test.ActivityInstrumentationTestCase2;
 import org.dandelion.radiot.accepttest.drivers.AppNavigator;
