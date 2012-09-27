@@ -109,7 +109,7 @@ public class PodcastOperationsTest extends PodcastListAcceptanceTestCase {
         downloadManager = new FakeDownloadManager(getInstrumentation().getTargetContext());
         mediaScanner = new FakeMediaScanner();
         notificationManager = new FakeNotificationManager();
-        application = new TestingPodcastsApp(getInstrumentation().getTargetContext(),
+        application = new TestingPodcastsApp(getInstrumentation().getContext(),
                 player, downloadManager, mediaScanner, notificationManager);
         application.setDownloadFolder(getDownloadFolder());
         PodcastsApp.setTestingInstance(application);

@@ -8,13 +8,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ListView;
 import org.dandelion.radiot.R;
-import org.dandelion.radiot.RadiotApplication;
 import org.dandelion.radiot.podcasts.PodcastsApp;
 import org.dandelion.radiot.podcasts.core.PodcastListLoader;
 import org.dandelion.radiot.util.CustomTitleListActivity;
 
 public class PodcastListActivity extends CustomTitleListActivity {
-
     public static Intent createIntent(Context context, String title, String showName) {
         return StartParams.createIntent(context, title, showName);
     }
@@ -53,8 +51,8 @@ public class PodcastListActivity extends CustomTitleListActivity {
     }
 
     protected void attachToEngine(String showName, PodcastListAdapter listAdapter) {
-		RadiotApplication app = (RadiotApplication) getApplication();
-		loader = app.getPodcastEngine(showName);
+        PodcastsApp app = PodcastsApp.getInstance();
+		loader = app.createLoaderForShow(showName);
 		loader.attach(new ProgressDisplayer(this), listAdapter);
 	}
 
