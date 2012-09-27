@@ -6,7 +6,7 @@ import org.dandelion.radiot.live.MediaPlayerStream;
 import java.io.IOException;
 
 public class TestableMediaPlayerStream extends MediaPlayerStream {
-    private static String ACTIVE_TRANSLATION_URL = "http://icecast.bigrradio.com/80s90s";
+    private static String ACTIVE_TRANSLATION_URL = "http://174.37.110.72:5020";
     private static String INACTIVE_TRANSLATION_URL = "http://non-existent";
 
     private String url = "";
