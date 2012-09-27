@@ -1,18 +1,18 @@
 package org.dandelion.radiot.accepttest.drivers;
 
 import android.app.Instrumentation;
-import android.app.ListActivity;
 import android.widget.ListAdapter;
 import com.jayway.android.robotium.solo.Solo;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
+import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
 import org.dandelion.radiot.podcasts.ui.PodcastVisual;
 
 public class PodcastListUiDriver extends Solo {
-    private ListActivity listActivity;
+    private PodcastListActivity activity;
 
-    public PodcastListUiDriver(Instrumentation instrumentation, ListActivity activity) {
+    public PodcastListUiDriver(Instrumentation instrumentation, PodcastListActivity activity) {
         super(instrumentation, activity);
-        this.listActivity = activity;
+        this.activity = activity;
     }
     
 
@@ -29,14 +29,14 @@ public class PodcastListUiDriver extends Solo {
     }
 
     private PodcastItem clickOnPodcastItem(int index) {
-        ListAdapter adapter = listActivity.getListAdapter();
+        ListAdapter adapter = activity.getListAdapter();
         PodcastVisual pv = (PodcastVisual) adapter.getItem(index);
         clickInList(index);
         return pv.podcast;
     }
 
     public void makeSamplePodcastWithUrl(String title, String url) {
-        ListAdapter adapter = listActivity.getListAdapter();
+        ListAdapter adapter = activity.getListAdapter();
         PodcastItem item = ((PodcastVisual) adapter.getItem(0)).podcast;
         item.setTitle(title);
         item.setAudioUri(url);

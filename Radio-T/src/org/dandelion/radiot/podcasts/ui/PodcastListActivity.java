@@ -6,13 +6,14 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.podcasts.PodcastsApp;
 import org.dandelion.radiot.podcasts.core.PodcastListLoader;
-import org.dandelion.radiot.util.CustomTitleListActivity;
+import org.dandelion.radiot.util.CustomTitleActivity;
 
-public class PodcastListActivity extends CustomTitleListActivity {
+public class PodcastListActivity extends CustomTitleActivity {
     public static Intent createIntent(Context context, String title, String showName) {
         return StartParams.createIntent(context, title, showName);
     }
@@ -22,26 +23,23 @@ public class PodcastListActivity extends CustomTitleListActivity {
     @Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+        setContentView(R.layout.podcast_screen);
         StartParams params = StartParams.fromIntent(getIntent());
         setTitle(params.title());
-        initListView();
-
         PodcastListAdapter listAdapter = new PodcastListAdapter(this);
-        setListAdapter(listAdapter);
-        attachToEngine(params.showName(), listAdapter);
+
+        initListView(listAdapter);
+        attachToLoader(params.showName(), listAdapter);
     }
 
-    private void initListView() {
+    private void initListView(PodcastListAdapter adapter) {
         ListView listView = getListView();
-        setListBackground(listView);
+        listView.setAdapter(adapter);
         listView.setOnItemClickListener(createSelectionHandler());
     }
 
-    private void setListBackground(ListView listView) {
-        final int bgColor = getResources().getColor(R.color.window_background);
-
-        listView.setCacheColorHint(bgColor);
-        listView.setBackgroundColor(bgColor);
+    private ListView getListView() {
+        return (ListView) findViewById(R.id.podcast_list);
     }
 
     private PodcastSelectionHandler createSelectionHandler() {
@@ -50,7 +48,7 @@ public class PodcastListActivity extends CustomTitleListActivity {
                 app.createDownloader(), new DialogErrorDisplayer(this));
     }
 
-    protected void attachToEngine(String showName, PodcastListAdapter listAdapter) {
+    protected void attachToLoader(String showName, PodcastListAdapter listAdapter) {
         PodcastsApp app = PodcastsApp.getInstance();
 		loader = app.createLoaderForShow(showName);
 		loader.attach(new ProgressDisplayer(this), listAdapter);
@@ -93,4 +91,8 @@ public class PodcastListActivity extends CustomTitleListActivity {
 			return super.onOptionsItemSelected(item);
 		}
 	}
+
+    public ListAdapter getListAdapter() {
+        return getListView().getAdapter();
+    }
 }
