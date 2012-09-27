@@ -2,6 +2,7 @@ package org.dandelion.radiot.accepttest;
 
 
 import android.os.Environment;
+import android.widget.ListView;
 import org.dandelion.radiot.accepttest.drivers.AppNavigator;
 import org.dandelion.radiot.accepttest.drivers.PodcastListUiDriver;
 import org.dandelion.radiot.accepttest.testables.*;
@@ -99,7 +100,7 @@ public class PodcastOperationsTest extends PodcastListAcceptanceTestCase {
         appDriver.goToPodcastsScreen();
         PodcastListActivity activity = (PodcastListActivity) appDriver.getCurrentActivity();
         PodcastListUiDriver driver = new PodcastListUiDriver(getInstrumentation(), activity);
-        mainShowPresenter().assertPodcastListIsUpdated();
+        assertTrue(driver.waitForView(ListView.class));
         return driver;
     }
 
