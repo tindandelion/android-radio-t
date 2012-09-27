@@ -21,7 +21,7 @@ public class PodcastListAcceptanceTestCase extends
     }
 
     protected AsyncPodcastListLoader createLoader(String url) {
-        return new AsyncPodcastListLoader(createTestProvider(url), new MemoryCache());
+        return new AsyncPodcastListLoader(createTestProvider(url), new FakeCache());
     }
 
     protected PodcastsProvider createTestProvider(final String url) {
