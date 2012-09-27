@@ -1,9 +1,6 @@
 package org.dandelion.radiot.podcasts.ui;
 
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,18 +11,15 @@ import org.dandelion.radiot.R;
 import org.dandelion.radiot.RadiotApplication;
 import org.dandelion.radiot.podcasts.PodcastsApp;
 import org.dandelion.radiot.podcasts.core.PodcastListLoader;
-import org.dandelion.radiot.podcasts.core.ProgressListener;
 import org.dandelion.radiot.util.CustomTitleListActivity;
 
-public class PodcastListActivity extends CustomTitleListActivity
-        implements ProgressListener {
+public class PodcastListActivity extends CustomTitleListActivity {
 
     public static Intent createIntent(Context context, String title, String showName) {
         return StartParams.createIntent(context, title, showName);
     }
 
     private PodcastListLoader loader;
-	private ProgressDialog progress;
 
     @Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -40,24 +34,28 @@ public class PodcastListActivity extends CustomTitleListActivity
     }
 
     private void initListView() {
-        int bgColor = getResources().getColor(R.color.window_background);
         ListView listView = getListView();
+        setListBackground(listView);
+        listView.setOnItemClickListener(createSelectionHandler());
+    }
+
+    private void setListBackground(ListView listView) {
+        final int bgColor = getResources().getColor(R.color.window_background);
 
         listView.setCacheColorHint(bgColor);
         listView.setBackgroundColor(bgColor);
-        listView.setOnItemClickListener(createSelectionHandler());
     }
 
     private PodcastSelectionHandler createSelectionHandler() {
         PodcastsApp app = PodcastsApp.getInstance();
         return new PodcastSelectionHandler(this, app.createPlayer(),
-                app.createDownloader(), this);
+                app.createDownloader(), new DialogErrorDisplayer(this));
     }
 
     protected void attachToEngine(String showName, PodcastListAdapter listAdapter) {
 		RadiotApplication app = (RadiotApplication) getApplication();
 		loader = app.getPodcastEngine(showName);
-		loader.attach(this, listAdapter);
+		loader.attach(new ProgressDisplayer(this), listAdapter);
 	}
 
 	@Override
@@ -97,24 +95,4 @@ public class PodcastListActivity extends CustomTitleListActivity
 			return super.onOptionsItemSelected(item);
 		}
 	}
-
-    public void onError(String errorMessage) {
-		new AlertDialog.Builder(this).setTitle(R.string.error_title)
-				.setMessage(errorMessage).show();
-	}
-
-	public void onStarted() {
-		progress = ProgressDialog.show(this, null,
-				getString(R.string.loading_message), true, true,
-				new DialogInterface.OnCancelListener() {
-					public void onCancel(DialogInterface dialog) {
-						finish();
-					}
-				});
-	}
-
-    public void onFinished() {
-        progress.dismiss();
-    }
-
 }
