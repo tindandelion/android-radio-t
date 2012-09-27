@@ -3,10 +3,11 @@ package org.dandelion.radiot.endtoend.podcasts;
 import android.content.Context;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
-import org.dandelion.radiot.TestPodcastListLoader;
 import org.dandelion.radiot.endtoend.podcasts.helpers.PodcastListRunner;
 import org.dandelion.radiot.endtoend.podcasts.helpers.TestRssServer;
 import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
+
+import java.io.File;
 
 import static org.dandelion.radiot.endtoend.podcasts.helpers.RssFeedBuilder.buildFeed;
 
@@ -93,7 +94,16 @@ public class PodcastListLoadingTests
     public void setUp() throws Exception {
         super.setUp();
         backend = new TestRssServer();
-        TestPodcastListLoader.resetCache();
+        clearCacheDir();
+    }
+
+    private void clearCacheDir() {
+        File cacheDir = getInstrumentation().getTargetContext().getCacheDir();
+        for (File f : cacheDir.listFiles()) {
+            if (!f.delete()) {
+                throw new RuntimeException("Unable to delete " + f.getAbsolutePath());
+            }
+        }
     }
 
     @Override

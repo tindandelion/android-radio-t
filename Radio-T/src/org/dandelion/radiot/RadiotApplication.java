@@ -2,36 +2,30 @@ package org.dandelion.radiot;
 
 import android.app.Application;
 import org.dandelion.radiot.podcasts.PodcastsApp;
-import org.dandelion.radiot.podcasts.core.*;
 import org.dandelion.radiot.podcasts.core.PodcastListLoader;
 
-import java.io.File;
 import java.util.HashMap;
 
 public class RadiotApplication extends Application {
-    private static final int CACHE_FORMAT_VERSION = 5;
     private static final String THUMBNAIL_HOST = "http://www.radio-t.com";
     private HashMap<String, PodcastListLoader> engines;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        createEngines();
         PodcastsApp.initialize(this);
+        createEngines();
     }
 
     protected void createEngines() {
         engines = new HashMap<String, PodcastListLoader>();
         engines.put("main-show",
-                podcastLoader("main-show", "http://feeds.rucast.net/radio-t",
-                        new HttpThumbnailProvider(THUMBNAIL_HOST)));
-        engines.put(
-                "after-show",
-                podcastLoader("after-show", "http://feeds.feedburner.com/pirate-radio-t",
-                        ThumbnailProvider.Null));
+                podcastLoader("main-show", "http://feeds.rucast.net/radio-t", THUMBNAIL_HOST));
+        engines.put("after-show",
+                podcastLoader("after-show", "http://feeds.feedburner.com/pirate-radio-t", THUMBNAIL_HOST));
         engines.put(
                 "test-show",
-                TestPodcastListLoader.create(this));
+                podcastLoader("test-show", TestPodcastListLoader.RSS_URL, TestPodcastListLoader.BASE_URL));
     }
 
     @Override
@@ -40,14 +34,8 @@ public class RadiotApplication extends Application {
         PodcastsApp.release();
     }
 
-    protected PodcastListLoader podcastLoader(String showName, String url, ThumbnailProvider thumbnails) {
-        return new AsyncPodcastListLoader(new RssFeedProvider(url, thumbnails),
-                createPodcastsCache(showName));
-    }
-
-    private PodcastsCache createPodcastsCache(String showName) {
-        File cacheFile = new File(getCacheDir(), showName);
-        return new FilePodcastsCache(cacheFile, CACHE_FORMAT_VERSION);
+    protected PodcastListLoader podcastLoader(String showName, String url, String thumbnailHost) {
+        return PodcastsApp.getInstance().createPodcastLoader(showName, url, thumbnailHost);
     }
 
     public PodcastListLoader getPodcastEngine(String name) {
