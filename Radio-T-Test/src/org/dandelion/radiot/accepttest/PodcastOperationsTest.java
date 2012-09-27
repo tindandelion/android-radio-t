@@ -2,11 +2,12 @@ package org.dandelion.radiot.accepttest;
 
 
 import android.os.Environment;
+import android.test.ActivityInstrumentationTestCase2;
 import android.widget.ListView;
 import org.dandelion.radiot.accepttest.drivers.AppNavigator;
 import org.dandelion.radiot.accepttest.drivers.PodcastListUiDriver;
 import org.dandelion.radiot.accepttest.testables.*;
-import org.dandelion.radiot.helpers.*;
+import org.dandelion.radiot.home_screen.HomeScreenActivity;
 import org.dandelion.radiot.podcasts.PodcastsApp;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.download.FakeDownloaderActivity;
@@ -14,7 +15,8 @@ import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
 
 import java.io.File;
 
-public class PodcastOperationsTest extends PodcastListAcceptanceTestCase {
+public class PodcastOperationsTest extends
+        ActivityInstrumentationTestCase2<HomeScreenActivity> {
     public static final String SAMPLE_URL = "http://example.com/podcast_file.mp3";
     private static final String TITLE = "Радио-Т 001";
 
@@ -24,6 +26,10 @@ public class PodcastOperationsTest extends PodcastListAcceptanceTestCase {
     private AppNavigator appDriver;
     private FakeMediaScanner mediaScanner;
     private FakeNotificationManager notificationManager;
+
+    public PodcastOperationsTest() {
+        super(HomeScreenActivity.class);
+    }
 
     @Override
 	protected void setUp() throws Exception {
@@ -117,6 +123,10 @@ public class PodcastOperationsTest extends PodcastListAcceptanceTestCase {
 
     private static File getDownloadFolder() {
         return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+    }
+
+    protected AppNavigator createDriver() {
+        return new AppNavigator(getInstrumentation(), getActivity());
     }
 }
 
