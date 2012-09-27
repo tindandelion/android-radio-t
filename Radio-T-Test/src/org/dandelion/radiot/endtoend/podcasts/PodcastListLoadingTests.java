@@ -5,14 +5,20 @@ import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import org.dandelion.radiot.endtoend.podcasts.helpers.PodcastListRunner;
 import org.dandelion.radiot.endtoend.podcasts.helpers.TestRssServer;
+import org.dandelion.radiot.podcasts.PodcastsApp;
+import org.dandelion.radiot.podcasts.core.*;
 import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
-
-import java.io.File;
 
 import static org.dandelion.radiot.endtoend.podcasts.helpers.RssFeedBuilder.buildFeed;
 
 public class PodcastListLoadingTests
         extends ActivityInstrumentationTestCase2<PodcastListActivity> {
+    private static final int PORT = 32768;
+    private static final String BASE_URL = String.format("http://localhost:%d", PORT);
+    private static final String RSS_URL = BASE_URL + "/rss";
+
+
+
     private TestRssServer backend;
     private PodcastListRunner app;
 
@@ -93,17 +99,10 @@ public class PodcastListLoadingTests
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        backend = new TestRssServer();
-        clearCacheDir();
-    }
+        backend = new TestRssServer(PORT);
+        PodcastsApp factory = new MyPodcastsApp(context());
+        PodcastsApp.setTestingInstance(factory);
 
-    private void clearCacheDir() {
-        File cacheDir = getInstrumentation().getTargetContext().getCacheDir();
-        for (File f : cacheDir.listFiles()) {
-            if (!f.delete()) {
-                throw new RuntimeException("Unable to delete " + f.getAbsolutePath());
-            }
-        }
     }
 
     @Override
@@ -118,8 +117,32 @@ public class PodcastListLoadingTests
     }
 
     private Intent startupIntent() {
-        Context context = getInstrumentation().getContext();
-        return PodcastListActivity.createIntent(context, "Test Activity", "test-show");
+        return PodcastListActivity.createIntent(context(), "Test Activity", "test-show");
     }
 
+    private Context context() {
+        return getInstrumentation().getTargetContext();
+    }
+
+    private static class MyPodcastsApp extends PodcastsApp {
+        private static String CACHE_FILENAME = "test-show";
+        public MyPodcastsApp(Context context) {
+            super(context);
+        }
+
+        @Override
+        public PodcastListLoader createLoaderForShow(String name) {
+            HttpThumbnailProvider thumbnails = new HttpThumbnailProvider(BASE_URL);
+            return new AsyncPodcastListLoader(
+                    new RssFeedProvider(RSS_URL, thumbnails),
+                    createPodcastsCache("test-show"));
+        }
+
+        @Override
+        public PodcastsCache createPodcastsCache(String name) {
+            PodcastsCache cache = super.createPodcastsCache(CACHE_FILENAME);
+            cache.reset();
+            return cache;
+        }
+    }
 }

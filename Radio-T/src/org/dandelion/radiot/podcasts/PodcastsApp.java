@@ -15,7 +15,7 @@ import java.io.File;
 
 public class PodcastsApp {
     private static final int CACHE_FORMAT_VERSION = 5;
-
+    private static final String THUMBNAIL_HOST = "http://www.radio-t.com";
 
     private static PodcastsApp instance;
     protected Context application;
@@ -108,9 +108,14 @@ public class PodcastsApp {
         return new FilePodcastsCache(cacheFile, CACHE_FORMAT_VERSION);
     }
 
-    public PodcastListLoader createPodcastLoader(String showName, String url, String thumbnailHost) {
-        HttpThumbnailProvider thumbnails = new HttpThumbnailProvider(thumbnailHost);
-        return new AsyncPodcastListLoader(new RssFeedProvider(url, thumbnails),
-                createPodcastsCache(showName));
+    public PodcastListLoader createLoaderForShow(String name) {
+        PodcastProperties props = PodcastProperties.propertiesForShow(name);
+        return createPodcastLoader(props);
+    }
+
+    public PodcastListLoader createPodcastLoader(PodcastProperties props) {
+        HttpThumbnailProvider thumbnails = new HttpThumbnailProvider(THUMBNAIL_HOST);
+        return new AsyncPodcastListLoader(new RssFeedProvider(props.url, thumbnails),
+                createPodcastsCache(props.name));
     }
 }

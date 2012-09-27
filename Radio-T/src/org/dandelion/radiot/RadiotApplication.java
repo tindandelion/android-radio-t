@@ -7,7 +7,6 @@ import org.dandelion.radiot.podcasts.core.PodcastListLoader;
 import java.util.HashMap;
 
 public class RadiotApplication extends Application {
-    private static final String THUMBNAIL_HOST = "http://www.radio-t.com";
     private HashMap<String, PodcastListLoader> engines;
 
     @Override
@@ -20,12 +19,9 @@ public class RadiotApplication extends Application {
     protected void createEngines() {
         engines = new HashMap<String, PodcastListLoader>();
         engines.put("main-show",
-                podcastLoader("main-show", "http://feeds.rucast.net/radio-t", THUMBNAIL_HOST));
+                loaderForShow("main-show"));
         engines.put("after-show",
-                podcastLoader("after-show", "http://feeds.feedburner.com/pirate-radio-t", THUMBNAIL_HOST));
-        engines.put(
-                "test-show",
-                podcastLoader("test-show", TestPodcastListLoader.RSS_URL, TestPodcastListLoader.BASE_URL));
+                loaderForShow("after-show"));
     }
 
     @Override
@@ -34,12 +30,16 @@ public class RadiotApplication extends Application {
         PodcastsApp.release();
     }
 
-    protected PodcastListLoader podcastLoader(String showName, String url, String thumbnailHost) {
-        return PodcastsApp.getInstance().createPodcastLoader(showName, url, thumbnailHost);
+    protected PodcastListLoader loaderForShow(String showName) {
+        return PodcastsApp.getInstance().createLoaderForShow(showName);
     }
 
     public PodcastListLoader getPodcastEngine(String name) {
-        return engines.get(name);
+        if (engines.containsKey(name)) {
+            return engines.get(name);
+        } else {
+            return loaderForShow(name);
+        }
     }
 
     public void setPodcastEngine(String name, PodcastListLoader loader) {
