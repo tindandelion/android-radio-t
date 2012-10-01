@@ -14,10 +14,6 @@ import static org.dandelion.radiot.endtoend.podcasts.helpers.RssFeedBuilder.buil
 public class PodcastListLoadingTests
         extends ActivityInstrumentationTestCase2<PodcastListActivity> {
     private static final int PORT = 32768;
-    private static final String BASE_URL = String.format("http://localhost:%d", PORT);
-    private static final String RSS_URL = BASE_URL + "/rss";
-
-
 
     private TestRssServer backend;
     private PodcastListRunner app;
@@ -126,6 +122,9 @@ public class PodcastListLoadingTests
 
     private static class MyPodcastsApp extends PodcastsApp {
         private static String CACHE_FILENAME = "test-show";
+        private static final String BASE_URL = String.format("http://localhost:%d", PORT);
+        private static final String RSS_URL = BASE_URL + "/rss";
+
         public MyPodcastsApp(Context context) {
             super(context);
         }
