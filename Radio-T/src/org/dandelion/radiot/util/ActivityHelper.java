@@ -12,14 +12,18 @@ import android.view.Window;
 import android.widget.TextView;
 import org.dandelion.radiot.home_screen.HomeScreenActivity;
 
-abstract class ActivityHelper {
+public abstract class ActivityHelper {
     protected Activity activity;
 
+    public static boolean supportsActionBar() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
+    }
+
     public static ActivityHelper create(Activity activity) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-            return new GingerbreadHelper(activity);
-        } else {
+        if (supportsActionBar()) {
             return new HoneycombHelper(activity);
+        } else {
+            return new GingerbreadHelper(activity);
         }
     }
 
