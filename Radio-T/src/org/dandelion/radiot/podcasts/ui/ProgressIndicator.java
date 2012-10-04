@@ -1,9 +1,7 @@
 package org.dandelion.radiot.podcasts.ui;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,58 +16,50 @@ abstract class ProgressIndicator extends DialogErrorDisplayer implements Progres
 
     public static ProgressIndicator create(Activity activity) {
         if (ActivityHelper.supportsActionBar()) {
-            return new ActionBarProgressIndicator(activity);
+            return new ActionItemIndicator(activity);
         } else {
-            return new DialogProgressIndicator(activity);
+            return new SimpleProgressIndicator(activity);
         }
     }
 
-    public abstract void setRefreshItem(MenuItem item);
+    public abstract void setActionItem(MenuItem item);
 
-    private static class DialogProgressIndicator extends ProgressIndicator {
-        private Activity activity;
-        private ProgressDialog progress;
+    private static class SimpleProgressIndicator extends ProgressIndicator {
+        private View indicator;
 
-        DialogProgressIndicator(Activity activity) {
+        public SimpleProgressIndicator(Activity activity) {
             super(activity);
-            this.activity = activity;
+            this.indicator = activity.findViewById(R.id.titlebar_progress);
+        }
+
+        @Override
+        public void setActionItem(MenuItem item) {
         }
 
         @Override
         public void onStarted() {
-            progress = ProgressDialog.show(activity, null,
-                    activity.getString(R.string.loading_message), true, true,
-                    new DialogInterface.OnCancelListener() {
-                        public void onCancel(DialogInterface dialog) {
-                            activity.finish();
-                        }
-                    });
+            indicator.setVisibility(View.VISIBLE);
         }
 
         @Override
         public void onFinished() {
-            progress.dismiss();
-        }
-
-        @Override
-        public void setRefreshItem(MenuItem item) {
-
+            indicator.setVisibility(View.INVISIBLE);
         }
     }
 
-    private static class ActionBarProgressIndicator extends ProgressIndicator {
+    private static class ActionItemIndicator extends ProgressIndicator {
         private boolean inProgress = false;
         private MenuItem refreshItem;
         private final View progressView;
 
-        public ActionBarProgressIndicator(Activity context) {
+        public ActionItemIndicator(Activity context) {
             super(context);
             LayoutInflater inflater = context.getLayoutInflater();
             progressView = inflater.inflate(R.layout.progress_view, null);
         }
 
         @Override
-        public void setRefreshItem(MenuItem item) {
+        public void setActionItem(MenuItem item) {
             this.refreshItem = item;
             updateItem();
         }

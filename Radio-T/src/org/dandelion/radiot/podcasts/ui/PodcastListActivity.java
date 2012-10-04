@@ -25,14 +25,18 @@ public class PodcastListActivity extends CustomTitleActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.podcast_screen);
-        StartParams params = StartParams.fromIntent(getIntent());
-        setTitle(params.title());
+    }
 
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
         progress = ProgressIndicator.create(this);
 
-        PodcastListAdapter listAdapter = new PodcastListAdapter(this);
-        initListView(listAdapter);
-        attachToLoader(params.showName(), listAdapter);
+        StartParams params = StartParams.fromIntent(getIntent());
+        setTitle(params.title());
+        PodcastListAdapter pa = new PodcastListAdapter(this);
+        initListView(pa);
+        attachToLoader(params.showName(), pa, progress);
     }
 
     private void initListView(PodcastListAdapter adapter) {
@@ -51,10 +55,10 @@ public class PodcastListActivity extends CustomTitleActivity {
                 app.createDownloader(), new DialogErrorDisplayer(this));
     }
 
-    protected void attachToLoader(String showName, PodcastListAdapter listAdapter) {
+    protected void attachToLoader(String show, PodcastListAdapter la, ProgressIndicator pi) {
         PodcastsApp app = PodcastsApp.getInstance();
-		loader = app.createLoaderForShow(showName);
-		loader.attach(progress, listAdapter);
+		loader = app.createLoaderForShow(show);
+		loader.attach(pi, la);
 	}
 
 	@Override
@@ -81,7 +85,7 @@ public class PodcastListActivity extends CustomTitleActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.podcast_list, menu);
-        progress.setRefreshItem(menu.findItem(R.id.refresh));
+        progress.setActionItem(menu.findItem(R.id.refresh));
 		return super.onCreateOptionsMenu(menu);
 	}
 
