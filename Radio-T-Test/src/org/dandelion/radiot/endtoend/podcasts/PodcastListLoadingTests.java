@@ -101,8 +101,7 @@ public class PodcastListLoadingTests
     public void testWhenHasLocalCache_ShouldDisplayItPriorToRequestingTheServer() throws Exception {
         final PodcastList localCachedList = aListWith(aPodcastItem("Радио-Т 140"));
         final String feedOnServer = rssFeed()
-                .item(rssItem()
-                        .title("Радио-Т 141"))
+                .item(rssItem().title("Радио-Т 141"))
                 .done();
 
         platform.saveInLocalCache(localCachedList);
