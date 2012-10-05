@@ -72,7 +72,7 @@ public class TestingPodcastsApp extends PodcastsApp {
             }
 
             @Override
-            public void attach(ProgressListener listener, PodcastListConsumer consumer) {
+            public void attach(ProgressListener listener, PodcastsConsumer consumer) {
                 PodcastList list = new PodcastList();
                 PodcastItem item = new PodcastItem();
 

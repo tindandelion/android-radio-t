@@ -7,7 +7,7 @@ public class AsyncPodcastListLoader implements PodcastListLoader {
     protected PodcastsCache cache;
     private ProgressListener progressListener = new NullListener();
     private PodcastsProvider podcasts;
-    private PodcastListConsumer consumer;
+    private PodcastsConsumer consumer;
     private UpdateTask task;
 
     public AsyncPodcastListLoader(PodcastsProvider podcasts, PodcastsCache cache) {
@@ -45,7 +45,7 @@ public class AsyncPodcastListLoader implements PodcastListLoader {
         consumer = new NullConsumer();
     }
 
-    public void attach(ProgressListener listener, PodcastListConsumer consumer) {
+    public void attach(ProgressListener listener, PodcastsConsumer consumer) {
         this.progressListener = listener;
         this.consumer = consumer;
     }
@@ -105,7 +105,7 @@ public class AsyncPodcastListLoader implements PodcastListLoader {
 }
 
 
-class NullConsumer implements PodcastListConsumer {
+class NullConsumer implements PodcastsConsumer {
     @Override
     public void updatePodcasts(PodcastList podcasts) {
     }

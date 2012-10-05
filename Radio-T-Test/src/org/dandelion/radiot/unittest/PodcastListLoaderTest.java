@@ -62,7 +62,7 @@ class TestPodcastsProvider implements PodcastsProvider {
     }
 }
 
-class TestView implements ProgressListener, PodcastListConsumer {
+class TestView implements ProgressListener, PodcastsConsumer {
 	private LinkedBlockingQueue<PodcastList> updatedPodcasts =
             new LinkedBlockingQueue<PodcastList>();
 
