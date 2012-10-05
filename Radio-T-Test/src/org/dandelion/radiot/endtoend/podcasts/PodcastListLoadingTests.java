@@ -9,7 +9,8 @@ import org.dandelion.radiot.podcasts.PodcastsApp;
 import org.dandelion.radiot.podcasts.core.*;
 import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
 
-import static org.dandelion.radiot.endtoend.podcasts.helpers.RssFeedBuilder.buildFeed;
+import static org.dandelion.radiot.endtoend.podcasts.helpers.RssFeedBuilder.rssFeed;
+import static org.dandelion.radiot.endtoend.podcasts.helpers.RssFeedBuilder.rssItem;
 
 public class PodcastListLoadingTests
         extends ActivityInstrumentationTestCase2<PodcastListActivity> {
@@ -23,13 +24,15 @@ public class PodcastListLoadingTests
     }
 
     public void testRetrievePodcastListFromRssServerAndDisplayIt() throws Exception {
-        String feed = buildFeed()
-                .item("<title>Радио-Т 140</title>" +
-                        "<pubDate>Sun, 13 Jun 2010 01:37:22 +0000</pubDate>" +
-                        "<itunes:summary>Lorem ipsum dolor sit amet</itunes:summary>")
-                .item("<title>Радио-Т 141</title>" +
-                        "<pubDate>Sun, 19 Jun 2010 01:37:22 +0000</pubDate>" +
-                        "<itunes:summary>consectetur adipiscing elit</itunes:summary>")
+        String feed = rssFeed()
+                .item(rssItem()
+                        .title("Радио-Т 140")
+                        .pubDate("Sun, 13 Jun 2010 01:37:22 +0000")
+                        .summary("Lorem ipsum dolor sit amet"))
+                .item(rssItem()
+                        .title("Радио-Т 141")
+                        .pubDate("Sun, 19 Jun 2010 01:37:22 +0000")
+                        .summary("consectetur adipiscing elit"))
                 .done();
 
         app = startApplication();
@@ -50,12 +53,12 @@ public class PodcastListLoadingTests
 
     public void testRetrievesThumbnailsFromTheServer() throws Exception {
         final String thumbnailUrl = "/images/radio-t/rt307.jpg";
-        String feed = buildFeed()
-                .item("<title>Радио-Т 140</title>" +
-                        "<pubDate>Sun, 13 Jun 2010 01:37:22 +0000</pubDate>" +
-                        "<description>&lt;p&gt;&lt;img src=\"" +
-                        thumbnailUrl +
-                        "\" alt=\"\" /&gt;&lt;/p&gt;</description>")
+        final String feed = rssFeed()
+                .item(rssItem()
+                        .title("Радио-Т 140")
+                        .pubDate("Sun, 13 Jun 2010 01:37:22 +0000")
+                        .description("&lt;p&gt;&lt;img src=\"" +
+                                thumbnailUrl + "\" alt=\"\" /&gt;&lt;/p&gt;"))
                 .done();
 
         app = startApplication();
@@ -66,11 +69,12 @@ public class PodcastListLoadingTests
     }
 
     public void testRefreshingPodcastListRetrievesItFromServerAgain() throws Exception {
-        String initialFeed = buildFeed().done();
-        String updatedFeed = buildFeed()
-                .item("<title>Радио-Т 140</title>" +
-                        "<pubDate>Sun, 13 Jun 2010 01:37:22 +0000</pubDate>" +
-                        "<itunes:summary>Lorem ipsum dolor sit amet</itunes:summary>")
+        String initialFeed = rssFeed().done();
+        String updatedFeed = rssFeed()
+                .item(rssItem()
+                        .title("Радио-Т 140")
+                        .pubDate("Sun, 13 Jun 2010 01:37:22 +0000")
+                        .summary("Lorem ipsum dolor sit amet"))
                 .done();
 
         backend.respondSuccessWith(initialFeed);
@@ -90,6 +94,7 @@ public class PodcastListLoadingTests
         app = startApplication();
         app.showsErrorMessage();
     }
+
 
 
     @Override
