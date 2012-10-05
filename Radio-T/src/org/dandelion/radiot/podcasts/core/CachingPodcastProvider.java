@@ -22,9 +22,4 @@ public class CachingPodcastProvider implements PodcastsProvider {
         cache.updateWith(newData);
         return newData;
     }
-
-    public void reset() {
-        cache.reset();
-    }
-
 }
