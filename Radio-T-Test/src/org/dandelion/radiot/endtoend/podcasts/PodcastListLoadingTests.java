@@ -23,7 +23,7 @@ public class PodcastListLoadingTests
         super(PodcastListActivity.class);
     }
 
-    public void testRetrievePodcastListFromRssServerAndDisplayIt() throws Exception {
+    public void testGivenAFeed_ShouldRetrieveAndDisplayIt() throws Exception {
         String feed = rssFeed()
                 .item(rssItem()
                         .title("Радио-Т 140")
@@ -43,7 +43,7 @@ public class PodcastListLoadingTests
         app.showsPodcastItem("#141", "19.06.2010", "consectetur adipiscing elit");
     }
 
-    public void testPressingBackButtonWhileLoadingClosesActivity() throws Exception {
+    public void testPressingbackButtonWhileLoading_ShouldCloseActivity() throws Exception {
         app = startApplication();
         backend.hasReceivedRequestForRss();
 
@@ -51,7 +51,7 @@ public class PodcastListLoadingTests
         app.wasClosed();
     }
 
-    public void testRetrievesThumbnailsFromTheServer() throws Exception {
+    public void testGivenAFeedItemWithThumbnailLink_ShouldRetrieveItsContents() throws Exception {
         final String thumbnailUrl = "/images/radio-t/rt307.jpg";
         final String feed = rssFeed()
                 .item(rssItem()
@@ -68,7 +68,7 @@ public class PodcastListLoadingTests
         backend.hasReceivedRequestForUrl(thumbnailUrl);
     }
 
-    public void testRefreshingPodcastListRetrievesItFromServerAgain() throws Exception {
+    public void testWhenRequestedToRefreshList_ShouldRetrieveItFromServer() throws Exception {
         String initialFeed = rssFeed().done();
         String updatedFeed = rssFeed()
                 .item(rssItem()
@@ -89,12 +89,11 @@ public class PodcastListLoadingTests
         app.showsPodcastItem("#140", "13.06.2010", "Lorem ipsum dolor sit amet");
     }
 
-    public void testShowsErrorIfUnableToRetrieveList() throws Exception {
+    public void testWhenServerRespondsWithError_ShouldDisplayItOnScreen() throws Exception {
         backend.respondNotFoundError();
         app = startApplication();
         app.showsErrorMessage();
     }
-
 
 
     @Override
