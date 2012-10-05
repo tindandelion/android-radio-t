@@ -10,11 +10,11 @@ public class CachingPodcastProvider implements PodcastsProvider {
     }
 
     @Override
-    public PodcastList retrieveAll() throws Exception {
+    public PodcastList retrieve() throws Exception {
         if (cache.isValid()) {
             return cache.getData();
         } else {
-            return updateCacheWith(podcasts.retrieveAll());
+            return updateCacheWith(podcasts.retrieve());
         }
     }
 

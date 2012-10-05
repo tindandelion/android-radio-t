@@ -112,7 +112,7 @@ public class RssFeedProviderTest extends TestCase {
 	}
 
 	private void parseRssFeed() throws Exception {
-		parsedItems = provider.retrieveAll();
+		parsedItems = provider.retrieve();
         firstParsedItem = parsedItems.first();
 	}
 

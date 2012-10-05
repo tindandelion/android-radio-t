@@ -20,7 +20,7 @@ public class RssFeedProvider implements PodcastsProvider {
         this.thumbnails = thumbnails;
     }
 
-    public PodcastList retrieveAll() throws Exception {
+    public PodcastList retrieve() throws Exception {
 		items = new PodcastList();
 		Xml.parse(openContentStream(), Xml.Encoding.UTF_8, getContentHandler());
 		return items;

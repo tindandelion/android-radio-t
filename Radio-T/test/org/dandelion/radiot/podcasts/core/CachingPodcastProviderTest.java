@@ -16,18 +16,18 @@ public class CachingPodcastProviderTest {
     @Test
     public void retrievesListFromProviderIfCacheIsInvalid() throws Exception {
         when(cache.isValid()).thenReturn(false);
-        when(realProvider.retrieveAll()).thenReturn(list);
+        when(realProvider.retrieve()).thenReturn(list);
 
-        assertThat(cachedProvider.retrieveAll(), equalTo(list));
-        verify(realProvider).retrieveAll();
+        assertThat(cachedProvider.retrieve(), equalTo(list));
+        verify(realProvider).retrieve();
     }
 
     @Test
     public void updatesCacheWithNewDataIfCacheIsInvalid() throws Exception {
         when(cache.isValid()).thenReturn(false);
-        when(realProvider.retrieveAll()).thenReturn(list);
+        when(realProvider.retrieve()).thenReturn(list);
 
-        cachedProvider.retrieveAll();
+        cachedProvider.retrieve();
         verify(cache).updateWith(list);
 
     }
@@ -38,7 +38,7 @@ public class CachingPodcastProviderTest {
         when(cache.isValid()).thenReturn(true);
         when(cache.getData()).thenReturn(list);
 
-        assertThat(cachedProvider.retrieveAll(), equalTo(list));
-        verify(realProvider, never()).retrieveAll();
+        assertThat(cachedProvider.retrieve(), equalTo(list));
+        verify(realProvider, never()).retrieve();
     }
 }

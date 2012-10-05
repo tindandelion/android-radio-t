@@ -79,7 +79,7 @@ public class AsyncPodcastListLoader implements PodcastListLoader {
         @Override
         protected PodcastList doInBackground(Void... params) {
             try {
-                return podcasts.retrieveAll();
+                return podcasts.retrieve();
             } catch (Exception e) {
                 error = e;
             }

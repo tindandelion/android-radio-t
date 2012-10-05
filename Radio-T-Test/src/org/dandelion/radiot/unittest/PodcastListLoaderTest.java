@@ -53,7 +53,7 @@ class TestPodcastsProvider implements PodcastsProvider {
             new LinkedBlockingQueue<PodcastList>();
 
     @Override
-    public PodcastList retrieveAll() throws Exception {
+    public PodcastList retrieve() throws Exception {
         return podcastQueue.take();
     }
 
