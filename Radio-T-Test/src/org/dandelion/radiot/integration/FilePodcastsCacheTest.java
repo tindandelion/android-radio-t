@@ -13,6 +13,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import static org.dandelion.radiot.helpers.PodcastListBuilder.aListWith;
+import static org.dandelion.radiot.helpers.PodcastListBuilder.aPodcastItem;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -109,13 +111,6 @@ public class FilePodcastsCacheTest extends InstrumentationTestCase {
         cache = new FilePodcastsCache(cacheFile, FORMAT_VERSION);
     }
 
-    private PodcastItem aPodcastItem() {
-        final PodcastItem original = new PodcastItem();
-        original.setTitle("Title");
-        return original;
-    }
-
-
     private Matcher<? super FilePodcastsCache> valid() {
         return new TypeSafeMatcher<FilePodcastsCache>() {
             @Override
@@ -134,12 +129,4 @@ public class FilePodcastsCacheTest extends InstrumentationTestCase {
             }
         };
     }
-
-    private PodcastList aListWith(final PodcastItem original) {
-        return new PodcastList() {{
-                add(original);
-            }};
-    }
-
-
 }

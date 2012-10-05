@@ -11,6 +11,8 @@ import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
 
 import static org.dandelion.radiot.endtoend.podcasts.helpers.RssFeedBuilder.rssFeed;
 import static org.dandelion.radiot.endtoend.podcasts.helpers.RssFeedBuilder.rssItem;
+import static org.dandelion.radiot.helpers.PodcastListBuilder.aListWith;
+import static org.dandelion.radiot.helpers.PodcastListBuilder.aPodcastItem;
 
 public class PodcastListLoadingTests
         extends ActivityInstrumentationTestCase2<PodcastListActivity> {
@@ -18,6 +20,7 @@ public class PodcastListLoadingTests
 
     private TestRssServer backend;
     private PodcastListRunner app;
+    private TestPodcastsApp platform;
 
     public PodcastListLoadingTests() {
         super(PodcastListActivity.class);
@@ -69,8 +72,8 @@ public class PodcastListLoadingTests
     }
 
     public void testWhenRequestedToRefreshList_ShouldRetrieveItFromServer() throws Exception {
-        String initialFeed = rssFeed().done();
-        String updatedFeed = rssFeed()
+        final String initialFeed = rssFeed().done();
+        final String updatedFeed = rssFeed()
                 .item(rssItem()
                         .title("Радио-Т 140")
                         .pubDate("Sun, 13 Jun 2010 01:37:22 +0000")
@@ -95,14 +98,30 @@ public class PodcastListLoadingTests
         app.showsErrorMessage();
     }
 
+    public void testWhenHasLocalCache_ShouldDisplayItPriorToRequestingTheServer() throws Exception {
+        final PodcastList localCachedList = aListWith(aPodcastItem("Радио-Т 140"));
+        final String feedOnServer = rssFeed()
+                .item(rssItem()
+                        .title("Радио-Т 141"))
+                .done();
+
+        platform.saveInLocalCache(localCachedList);
+
+        app = startApplication();
+        app.showsPodcastItem("#140", "", "");
+
+        backend.hasReceivedRequestForRss();
+        backend.respondSuccessWith(feedOnServer);
+
+        app.showsPodcastItem("#141", "", "");
+    }
 
     @Override
     public void setUp() throws Exception {
         super.setUp();
         backend = new TestRssServer(PORT);
-        PodcastsApp factory = new MyPodcastsApp(context());
-        PodcastsApp.setTestingInstance(factory);
-
+        platform = new TestPodcastsApp(context());
+        PodcastsApp.setTestingInstance(platform);
     }
 
     @Override
@@ -124,13 +143,16 @@ public class PodcastListLoadingTests
         return getInstrumentation().getTargetContext();
     }
 
-    private static class MyPodcastsApp extends PodcastsApp {
+    private static class TestPodcastsApp extends PodcastsApp {
         private static String CACHE_FILENAME = "test-show";
         private static final String BASE_URL = String.format("http://localhost:%d", PORT);
         private static final String RSS_URL = BASE_URL + "/rss";
+        public PodcastsCache localCache;
 
-        public MyPodcastsApp(Context context) {
+        public TestPodcastsApp(Context context) {
             super(context);
+            localCache = super.createPodcastsCache(CACHE_FILENAME);
+            localCache.reset();
         }
 
         @Override
@@ -138,14 +160,11 @@ public class PodcastListLoadingTests
             HttpThumbnailProvider thumbnails = new HttpThumbnailProvider(BASE_URL);
             return new AsyncPodcastListLoader(
                     new RssFeedProvider(RSS_URL, thumbnails),
-                    createPodcastsCache("test-show"));
+                    localCache);
         }
 
-        @Override
-        public PodcastsCache createPodcastsCache(String name) {
-            PodcastsCache cache = super.createPodcastsCache(CACHE_FILENAME);
-            cache.reset();
-            return cache;
+        public void saveInLocalCache(PodcastList pl) {
+            localCache.updateWith(pl);
         }
     }
 }
