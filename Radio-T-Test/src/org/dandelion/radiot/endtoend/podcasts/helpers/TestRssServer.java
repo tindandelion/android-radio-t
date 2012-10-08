@@ -12,10 +12,13 @@ import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
+import static org.hamcrest.CoreMatchers.any;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class TestRssServer extends NanoHTTPD {
-    private static final long REQUEST_TIMEOUT = 10;
+    private static final long REQUEST_TIMEOUT = 3;
     private BlockingQueue<String> requestQueue = new LinkedBlockingQueue<String>();
     private BlockingQueue<Response> responseHolder = new LinkedBlockingDeque<Response>();
 
@@ -33,34 +36,6 @@ public class TestRssServer extends NanoHTTPD {
         }
     }
 
-    public void hasReceivedRequestForRss() throws InterruptedException {
-        assertThat(requestQueue, receivedRequest("/rss"));
-    }
-
-    public void hasReceivedRequestForUrl(String request) {
-        assertThat(requestQueue, receivedRequest(request));
-    }
-
-    private Matcher<? super BlockingQueue<String>> receivedRequest(final String expected) {
-        return new TypeSafeMatcher<BlockingQueue<String>>() {
-            @Override
-            protected boolean matchesSafely(BlockingQueue<String> queue) {
-                try {
-                    String value = queue.poll(REQUEST_TIMEOUT, TimeUnit.SECONDS);
-                    return expected.equals(value);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-
-            @Override
-            public void describeTo(Description description) {
-                description.appendText("A request for URL ").appendValue(expected);
-            }
-        };
-    }
-
-
     public void respondSuccessWith(String response) {
         responseHolder.add(new Response(HTTP_OK, MIME_XML, response));
     }
@@ -75,4 +50,35 @@ public class TestRssServer extends NanoHTTPD {
         super.stop();
     }
 
+    public void hasReceivedRequestForRss() throws InterruptedException {
+        assertThat(requestQueue, receivedRequest(equalTo("/rss")));
+    }
+
+    public void hasReceivedRequestForUrl(String request) {
+        assertThat(requestQueue, receivedRequest(equalTo(request)));
+    }
+
+    public void hasNotReceivedAnyRequest() {
+        assertThat(requestQueue, not(receivedRequest(any(String.class))));
+    }
+
+    private Matcher<? super BlockingQueue<String>> receivedRequest(final Matcher<String> matcher) {
+        return new TypeSafeMatcher<BlockingQueue<String>>() {
+            @Override
+            protected boolean matchesSafely(BlockingQueue<String> queue) {
+                try {
+                    String value = queue.poll(REQUEST_TIMEOUT, TimeUnit.SECONDS);
+                    return matcher.matches(value);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("A request for URL ");
+                matcher.describeTo(description);
+            }
+        };
+    }
 }

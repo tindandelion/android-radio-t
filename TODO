@@ -8,6 +8,7 @@ Backlog:
 
 Version 1.5:
  * Testing: file to download already exists
+ * Testing: what happens if we have a local cache, but server responds with error?
  * Google Analytics
  * Cache podcast list locally
    DONE Optimize garbage collection for podcast list
