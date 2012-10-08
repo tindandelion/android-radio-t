@@ -90,12 +90,18 @@ public class FilePodcastsCache implements PodcastsCache {
     }
 
     @Override
-    public boolean isValid() {
+    public boolean hasData() {
         try {
-            return isCurrent() && isValidVersion();
+            return isValidVersion();
         } catch (Exception ex) {
             return false;
         }
+    }
+
+    @Override
+    public boolean hasExpired() {
+        long lifetime = System.currentTimeMillis() - file.lastModified();
+        return lifetime >= LIFETIME_THRESHOLD;
     }
 
     private boolean isValidVersion() throws IOException {
@@ -111,8 +117,4 @@ public class FilePodcastsCache implements PodcastsCache {
         }
     }
 
-    public boolean isCurrent() {
-        long lifetime = System.currentTimeMillis() - file.lastModified();
-        return lifetime < LIFETIME_THRESHOLD;
-    }
 }

@@ -18,7 +18,12 @@ public class FakeCache implements PodcastsCache {
     }
 
     @Override
-    public boolean isValid() {
+    public boolean hasData() {
         return false;
+    }
+
+    @Override
+    public boolean hasExpired() {
+        return true;
     }
 }

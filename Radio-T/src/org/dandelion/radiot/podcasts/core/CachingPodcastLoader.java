@@ -10,21 +10,28 @@ public class CachingPodcastLoader {
     }
 
     public void retrieveTo(PodcastsConsumer consumer) throws Exception {
-        PodcastList pl = retrieve();
-        consumer.updatePodcasts(pl);
-    }
-
-    private PodcastList retrieve() throws Exception {
-        if (cache.isValid()) {
-            return cache.getData();
+        if (cache.hasData()) {
+            populateCachedData(consumer);
+            refreshCachedDataIfExpired(consumer);
         } else {
-            return updateCacheWith(podcasts.retrieve());
+            obtainNewData(consumer);
         }
     }
 
-    private PodcastList updateCacheWith(PodcastList newData) {
-        cache.updateWith(newData);
-        return newData;
+    private void refreshCachedDataIfExpired(PodcastsConsumer consumer) throws Exception {
+        if (cache.hasExpired()) {
+            obtainNewData(consumer);
+        }
     }
 
+    private void populateCachedData(PodcastsConsumer consumer) {
+        PodcastList pl = cache.getData();
+        consumer.updatePodcasts(pl);
+    }
+
+    private void obtainNewData(PodcastsConsumer consumer) throws Exception {
+        PodcastList pl = podcasts.retrieve();
+        cache.updateWith(pl);
+        consumer.updatePodcasts(pl);
+    }
 }

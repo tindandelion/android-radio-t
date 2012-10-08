@@ -7,5 +7,7 @@ public interface PodcastsCache {
 
     void updateWith(PodcastList data);
 
-    boolean isValid();
+    boolean hasData();
+
+    boolean hasExpired();
 }

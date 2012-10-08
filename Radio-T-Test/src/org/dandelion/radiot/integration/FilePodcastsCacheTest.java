@@ -24,7 +24,7 @@ public class FilePodcastsCacheTest extends InstrumentationTestCase {
     private FilePodcastsCache cache;
     private File cacheFile;
 
-    public void testSavingAndLoadingPodcastList() throws Exception {
+    public void testWhenProvidedWithData_ShouldReturnItBack() throws Exception {
         final PodcastItem original = aPodcastItem();
 
         cache.updateWith(aListWith(original));
@@ -35,41 +35,42 @@ public class FilePodcastsCacheTest extends InstrumentationTestCase {
     }
 
 
-    public void testResettingTheCache() throws Exception {
+    public void testWhenCacheIsReset_ShouldLoseData() throws Exception {
         cache.updateWith(aListWith(aPodcastItem()));
 
         cache.reset();
 
-        assertThat(cache, not(valid()));
+        assertThat(cache, not(hasData()));
     }
 
-    public void testResettingTheInvalidCacheIsNotAnError() throws Exception {
+    public void testResettingCacheWithNoData_IsNotAnError() throws Exception {
         cache.reset();
-        assertThat(cache, not(valid()));
+        cache.reset();
+        assertThat(cache, not(hasData()));
     }
 
-    public void testCacheIsValidWhenItHasData() throws Exception {
-        assertThat(cache, not(valid()));
+    public void testCacheHasValidData() throws Exception {
+        assertThat(cache, not(hasData()));
         cache.updateWith(aListWith(aPodcastItem()));
-        assertThat(cache, is(valid()));
+        assertThat(cache, is(hasData()));
     }
 
-    public void testCacheIsInvalidIfFileIsCorrupt() throws Exception {
+    public void testWhenFileIsCorrupted_CacheHasNoData() throws Exception {
         createValidCacheFile(FORMAT_VERSION);
 
         writeCacheFile("Some junk content");
-        assertThat(cache, not(valid()));
+        assertThat(cache, not(hasData()));
     }
 
-    public void testCacheIsInvalidIfOlderThanOneDay() throws Exception {
+    public void testWhenCreatedMoreThanOneDayAgo_ShouldBecomeExpired() throws Exception {
         createValidCacheFile(FORMAT_VERSION);
-        assertThat(cache, is(valid()));
+        assertThat(cache, not(expired()));
 
         cacheCreated(hoursAgo(23));
-        assertThat(cache, is((valid())));
+        assertThat(cache, not(expired()));
 
         cacheCreated(hoursAgo(25));
-        assertThat(cache, is(not(valid())));
+        assertThat(cache, is(expired()));
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
@@ -95,7 +96,7 @@ public class FilePodcastsCacheTest extends InstrumentationTestCase {
     public void testCacheIsInvalidIfFileIsWrongVersion() throws Exception {
         final int olderVersion = FORMAT_VERSION - 1;
         createValidCacheFile(olderVersion);
-        assertThat(cache, not(valid()));
+        assertThat(cache, not(hasData()));
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
@@ -111,11 +112,11 @@ public class FilePodcastsCacheTest extends InstrumentationTestCase {
         cache = new FilePodcastsCache(cacheFile, FORMAT_VERSION);
     }
 
-    private Matcher<? super FilePodcastsCache> valid() {
+    private Matcher<? super FilePodcastsCache> hasData() {
         return new TypeSafeMatcher<FilePodcastsCache>() {
             @Override
             protected boolean matchesSafely(FilePodcastsCache cache) {
-                return cache.isValid();
+                return cache.hasData();
             }
 
             @Override
@@ -126,6 +127,20 @@ public class FilePodcastsCacheTest extends InstrumentationTestCase {
             @Override
             protected void describeMismatchSafely(FilePodcastsCache item, Description mismatchDescription) {
                 mismatchDescription.appendText("a cache with no data");
+            }
+        };
+    }
+
+    private Matcher<? super FilePodcastsCache> expired() {
+        return new TypeSafeMatcher<FilePodcastsCache>() {
+            @Override
+            protected boolean matchesSafely(FilePodcastsCache expired) {
+                return expired.hasExpired();
+            }
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("a cache that is expired");
             }
         };
     }
