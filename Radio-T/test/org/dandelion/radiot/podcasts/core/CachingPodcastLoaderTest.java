@@ -6,11 +6,11 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 
-public class CachingPodcastProviderTest {
+public class CachingPodcastLoaderTest {
     private final PodcastsProvider realProvider = mock(PodcastsProvider.class);
     private final PodcastsCache cache = mock(PodcastsCache.class);
-    private final CachingPodcastProvider cachedProvider =
-            new CachingPodcastProvider(realProvider, cache);
+    private final CachingPodcastLoader cachedLoader =
+            new CachingPodcastLoader(realProvider, cache);
     private final PodcastList list = new PodcastList();
 
     @Test
@@ -18,7 +18,7 @@ public class CachingPodcastProviderTest {
         when(cache.isValid()).thenReturn(false);
         when(realProvider.retrieve()).thenReturn(list);
 
-        assertThat(cachedProvider.retrieve(), equalTo(list));
+        assertThat(cachedLoader.retrieve(), equalTo(list));
         verify(realProvider).retrieve();
     }
 
@@ -27,7 +27,7 @@ public class CachingPodcastProviderTest {
         when(cache.isValid()).thenReturn(false);
         when(realProvider.retrieve()).thenReturn(list);
 
-        cachedProvider.retrieve();
+        cachedLoader.retrieve();
         verify(cache).updateWith(list);
 
     }
@@ -38,7 +38,7 @@ public class CachingPodcastProviderTest {
         when(cache.isValid()).thenReturn(true);
         when(cache.getData()).thenReturn(list);
 
-        assertThat(cachedProvider.retrieve(), equalTo(list));
+        assertThat(cachedLoader.retrieve(), equalTo(list));
         verify(realProvider, never()).retrieve();
     }
 }

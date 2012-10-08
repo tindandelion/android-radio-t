@@ -8,12 +8,12 @@ public class AsyncPodcastListLoader implements PodcastListLoader {
     private PodcastsConsumer consumer = PodcastsConsumer.Null;
 
     protected PodcastsCache cache;
-    private PodcastsProvider podcasts;
+    private CachingPodcastLoader podcasts;
     private UpdateTask task;
 
     public AsyncPodcastListLoader(PodcastsProvider podcasts, PodcastsCache cache) {
         this.cache = cache;
-        this.podcasts = new CachingPodcastProvider(podcasts, cache);
+        this.podcasts = new CachingPodcastLoader(podcasts, cache);
     }
 
     public void refresh(boolean resetCache) {
@@ -54,16 +54,20 @@ public class AsyncPodcastListLoader implements PodcastListLoader {
         }
     }
 
-    class UpdateTask extends AsyncTask<Void, PodcastList, Exception> {
+    class UpdateTask extends AsyncTask<Void, PodcastList, Exception> implements PodcastsConsumer {
         @Override
         protected Exception doInBackground(Void... params) {
             try {
-                PodcastList pl = podcasts.retrieve();
-                publishProgress(pl);
+                podcasts.retrieveTo(this);
             } catch (Exception e) {
                 return e;
             }
             return null;
+        }
+
+        @Override
+        public void updatePodcasts(PodcastList podcasts) {
+            publishProgress(podcasts);
         }
 
         @Override
@@ -97,6 +101,7 @@ public class AsyncPodcastListLoader implements PodcastListLoader {
             progressListener.onFinished();
             taskFinished();
         }
+
     }
 }
 
