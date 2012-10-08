@@ -27,16 +27,6 @@ public class AsyncPodcastListLoader implements PodcastListLoader {
         task = null;
     }
 
-    protected void publishPodcastList(PodcastList list,
-                                      Exception loadError) {
-
-        if (null != loadError) {
-            progressListener.onError(loadError.getMessage());
-        } else {
-            consumer.updatePodcasts(list);
-        }
-    }
-
     public void detach() {
         progressListener = ProgressListener.Null;
         consumer = PodcastsConsumer.Null;
@@ -52,7 +42,6 @@ public class AsyncPodcastListLoader implements PodcastListLoader {
     }
 
     protected void startRefreshTask() {
-        progressListener.onStarted();
         if (!isInProgress()) {
             task = new UpdateTask();
             task.execute();
@@ -62,27 +51,36 @@ public class AsyncPodcastListLoader implements PodcastListLoader {
     public void cancelUpdate() {
         if (isInProgress()) {
             task.cancel(true);
-            progressListener.onFinished();
         }
     }
 
-    class UpdateTask extends AsyncTask<Void, Void, PodcastList> {
-        private Exception error;
-
+    class UpdateTask extends AsyncTask<Void, PodcastList, Exception> {
         @Override
-        protected PodcastList doInBackground(Void... params) {
+        protected Exception doInBackground(Void... params) {
             try {
-                return podcasts.retrieve();
+                PodcastList pl = podcasts.retrieve();
+                publishProgress(pl);
             } catch (Exception e) {
-                error = e;
+                return e;
             }
             return null;
         }
 
         @Override
-        protected void onPostExecute(PodcastList list) {
+        protected void onProgressUpdate(PodcastList... values) {
+            consumer.updatePodcasts(values[0]);
+        }
+
+        @Override
+        protected void onPostExecute(Exception ex) {
             finishSelf();
-            publishPodcastList(list, error);
+            publishError(ex);
+        }
+
+        private void publishError(Exception ex) {
+            if (ex != null) {
+                progressListener.onError(ex.getMessage());
+            }
         }
 
         @Override
