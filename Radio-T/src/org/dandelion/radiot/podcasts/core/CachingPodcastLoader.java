@@ -9,6 +9,11 @@ public class CachingPodcastLoader {
         this.cache = cache;
     }
 
+    public void retrieveTo(PodcastsConsumer consumer) throws Exception {
+        PodcastList pl = retrieve();
+        consumer.updatePodcasts(pl);
+    }
+
     public PodcastList retrieve() throws Exception {
         if (cache.isValid()) {
             return cache.getData();
@@ -22,8 +27,4 @@ public class CachingPodcastLoader {
         return newData;
     }
 
-    public void retrieveTo(PodcastsConsumer consumer) throws Exception {
-        PodcastList pl = retrieve();
-        consumer.updatePodcasts(pl);
-    }
 }
