@@ -4,10 +4,11 @@ import android.os.AsyncTask;
 
 @SuppressWarnings("unchecked")
 public class AsyncPodcastListLoader implements PodcastListLoader {
+    private ProgressListener progressListener = ProgressListener.Null;
+    private PodcastsConsumer consumer = PodcastsConsumer.Null;
+
     protected PodcastsCache cache;
-    private ProgressListener progressListener = new NullListener();
     private PodcastsProvider podcasts;
-    private PodcastsConsumer consumer;
     private UpdateTask task;
 
     public AsyncPodcastListLoader(PodcastsProvider podcasts, PodcastsCache cache) {
@@ -22,16 +23,12 @@ public class AsyncPodcastListLoader implements PodcastListLoader {
         startRefreshTask();
     }
 
-    public void taskStarted() {
-    }
-
     public void taskFinished() {
         task = null;
     }
 
     protected void publishPodcastList(PodcastList list,
                                       Exception loadError) {
-        progressListener.onFinished();
 
         if (null != loadError) {
             progressListener.onError(loadError.getMessage());
@@ -41,8 +38,8 @@ public class AsyncPodcastListLoader implements PodcastListLoader {
     }
 
     public void detach() {
-        progressListener = new NullListener();
-        consumer = new NullConsumer();
+        progressListener = ProgressListener.Null;
+        consumer = PodcastsConsumer.Null;
     }
 
     public void attach(ProgressListener listener, PodcastsConsumer consumer) {
@@ -69,10 +66,6 @@ public class AsyncPodcastListLoader implements PodcastListLoader {
         }
     }
 
-    public void taskCancelled() {
-        task = null;
-    }
-
     class UpdateTask extends AsyncTask<Void, Void, PodcastList> {
         private Exception error;
 
@@ -88,39 +81,25 @@ public class AsyncPodcastListLoader implements PodcastListLoader {
 
         @Override
         protected void onPostExecute(PodcastList list) {
+            finishSelf();
             publishPodcastList(list, error);
-            taskFinished();
         }
 
         @Override
         protected void onPreExecute() {
-            taskStarted();
+            progressListener.onStarted();
         }
 
         @Override
         protected void onCancelled() {
-            taskCancelled();
+            finishSelf();
+        }
+
+        private void finishSelf() {
+            progressListener.onFinished();
+            taskFinished();
         }
     }
 }
 
 
-class NullConsumer implements PodcastsConsumer {
-    @Override
-    public void updatePodcasts(PodcastList podcasts) {
-    }
-
-}
-
-class NullListener implements ProgressListener {
-
-    public void onStarted() {
-    }
-
-    public void onFinished() {
-    }
-
-    public void onError(String errorMessage) {
-    }
-
-}
