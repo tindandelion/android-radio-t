@@ -14,7 +14,7 @@ public class CachingPodcastLoader {
         consumer.updatePodcasts(pl);
     }
 
-    public PodcastList retrieve() throws Exception {
+    private PodcastList retrieve() throws Exception {
         if (cache.isValid()) {
             return cache.getData();
         } else {
