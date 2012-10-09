@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.live.ui.LiveShowActivity;
-import org.dandelion.radiot.podcasts.PodcastsApp;
+import org.dandelion.radiot.podcasts.main.PodcastsApp;
 
 public class HomeScreenActivity extends Activity {
     @Override

@@ -1,7 +1,7 @@
 package org.dandelion.radiot;
 
 import android.app.Application;
-import org.dandelion.radiot.podcasts.PodcastsApp;
+import org.dandelion.radiot.podcasts.main.PodcastsApp;
 
 public class RadiotApplication extends Application {
     @Override

@@ -1,7 +1,7 @@
 package org.dandelion.radiot.accepttest.testables;
 
 import android.content.Context;
-import org.dandelion.radiot.podcasts.PodcastsApp;
+import org.dandelion.radiot.podcasts.main.PodcastsApp;
 import org.dandelion.radiot.podcasts.core.*;
 import org.dandelion.radiot.podcasts.download.DownloadManager;
 import org.dandelion.radiot.podcasts.download.MediaScanner;

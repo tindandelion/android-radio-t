@@ -2,7 +2,7 @@ package org.dandelion.radiot.podcasts.download;
 
 import android.app.IntentService;
 import android.content.Intent;
-import org.dandelion.radiot.podcasts.PodcastsApp;
+import org.dandelion.radiot.podcasts.main.PodcastsApp;
 
 public class DownloadService extends IntentService {
     private static String TAG = DownloadService.class.getName();

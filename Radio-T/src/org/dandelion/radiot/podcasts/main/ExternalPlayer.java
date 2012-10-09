@@ -1,4 +1,4 @@
-package org.dandelion.radiot.podcasts;
+package org.dandelion.radiot.podcasts.main;
 
 import android.content.Context;
 import android.content.Intent;
