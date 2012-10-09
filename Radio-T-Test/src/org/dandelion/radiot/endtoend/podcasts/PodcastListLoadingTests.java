@@ -22,7 +22,7 @@ public class PodcastListLoadingTests
 
     private TestRssServer backend;
     private PodcastListRunner app;
-    private TestPodcastsFactory platform;
+    private TestPodcastsPlatform platform;
 
     public PodcastListLoadingTests() {
         super(PodcastListActivity.class);
@@ -132,7 +132,7 @@ public class PodcastListLoadingTests
     public void setUp() throws Exception {
         super.setUp();
         backend = new TestRssServer(PORT);
-        platform = new TestPodcastsFactory(context());
+        platform = new TestPodcastsPlatform(context());
         PodcastListActivity.loaderFactory = platform;
     }
 
@@ -155,7 +155,7 @@ public class PodcastListLoadingTests
         return getInstrumentation().getTargetContext();
     }
 
-    private static class TestPodcastsFactory implements LoaderFactory {
+    private static class TestPodcastsPlatform implements LoaderFactory {
         private static String CACHE_FILENAME = "test-show";
         private static final String BASE_URL = String.format("http://localhost:%d", PORT);
         private static final String RSS_URL = BASE_URL + "/rss";
@@ -164,7 +164,7 @@ public class PodcastListLoadingTests
         private PodcastsCache localCache;
         private Context context;
 
-        public TestPodcastsFactory(Context context) {
+        public TestPodcastsPlatform(Context context) {
             this.context = context;
             localCache = new FilePodcastsCache(cacheFile(), CACHE_FORMAT_VERSION);
             localCache.reset();

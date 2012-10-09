@@ -5,18 +5,13 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.os.Environment;
 import org.dandelion.radiot.R;
-import org.dandelion.radiot.podcasts.core.*;
+import org.dandelion.radiot.podcasts.core.PodcastAction;
 import org.dandelion.radiot.podcasts.download.*;
-import org.dandelion.radiot.podcasts.download.DownloadManager;
-import org.dandelion.radiot.podcasts.download.NotificationManager;
-import org.dandelion.radiot.podcasts.loader.*;
 import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
 
 import java.io.File;
 
 public class PodcastsApp {
-    private static final int CACHE_FORMAT_VERSION = 5;
-    private static final String THUMBNAIL_HOST = "http://www.radio-t.com";
 
     private static PodcastsApp instance;
     protected Context application;
@@ -29,7 +24,7 @@ public class PodcastsApp {
         if (null == instance) {
             instance = new PodcastsApp(context);
         }
-        PodcastListActivity.loaderFactory = new PodcastLoaderFactory(instance);
+        PodcastListActivity.loaderFactory = new PodcastsLoaderPlatform(context);
     }
     
     public static void release() {
@@ -105,14 +100,4 @@ public class PodcastsApp {
         );
     }
 
-    public PodcastsCache createPodcastsCache(String name) {
-        File cacheFile = new File(application.getCacheDir(), name);
-        return new FilePodcastsCache(cacheFile, CACHE_FORMAT_VERSION);
-    }
-
-    public PodcastListLoader createPodcastLoader(PodcastProperties props) {
-        HttpThumbnailProvider thumbnails = new HttpThumbnailProvider(THUMBNAIL_HOST);
-        return new AsyncPodcastListLoader(new RssFeedProvider(props.url, thumbnails),
-                createPodcastsCache(props.name));
-    }
 }
