@@ -17,13 +17,12 @@ import org.dandelion.radiot.util.CustomTitleActivity;
 public class PodcastListActivity extends CustomTitleActivity {
     public static LoaderFactory loaderFactory = null;
 
-    // TODO: Do I need this method here?
+    private PodcastListLoader loader;
+    private ProgressIndicator progress;
+
     public static Intent createIntent(Context context, String title, String showName) {
         return StartParams.createIntent(context, title, showName);
     }
-
-    private PodcastListLoader loader;
-    private ProgressIndicator progress;
 
     @Override
 	public void onCreate(Bundle savedInstanceState) {
