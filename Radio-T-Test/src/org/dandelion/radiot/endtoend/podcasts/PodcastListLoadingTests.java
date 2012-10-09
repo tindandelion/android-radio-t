@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import org.dandelion.radiot.endtoend.podcasts.helpers.PodcastListRunner;
 import org.dandelion.radiot.endtoend.podcasts.helpers.TestRssServer;
-import org.dandelion.radiot.podcasts.main.PodcastsApp;
 import org.dandelion.radiot.podcasts.core.*;
 import org.dandelion.radiot.podcasts.loader.*;
 import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
@@ -23,7 +22,7 @@ public class PodcastListLoadingTests
 
     private TestRssServer backend;
     private PodcastListRunner app;
-    private TestPodcastsApp platform;
+    private TestPodcastsFactory platform;
 
     public PodcastListLoadingTests() {
         super(PodcastListActivity.class);
@@ -133,8 +132,8 @@ public class PodcastListLoadingTests
     public void setUp() throws Exception {
         super.setUp();
         backend = new TestRssServer(PORT);
-        platform = new TestPodcastsApp(context());
-        PodcastsApp.setTestingInstance(platform);
+        platform = new TestPodcastsFactory(context());
+        PodcastListActivity.loaderFactory = platform;
     }
 
     @Override
@@ -156,22 +155,23 @@ public class PodcastListLoadingTests
         return getInstrumentation().getTargetContext();
     }
 
-    private static class TestPodcastsApp extends PodcastsApp {
+    private static class TestPodcastsFactory implements LoaderFactory {
         private static String CACHE_FILENAME = "test-show";
         private static final String BASE_URL = String.format("http://localhost:%d", PORT);
         private static final String RSS_URL = BASE_URL + "/rss";
         private static final int CACHE_FORMAT_VERSION = 0;
         private static final int LONG_AGO = 0;
         private PodcastsCache localCache;
+        private Context context;
 
-        public TestPodcastsApp(Context context) {
-            super(context);
+        public TestPodcastsFactory(Context context) {
+            this.context = context;
             localCache = new FilePodcastsCache(cacheFile(), CACHE_FORMAT_VERSION);
             localCache.reset();
         }
 
         private File cacheFile() {
-            return new File(application.getCacheDir(), CACHE_FILENAME);
+            return new File(context.getCacheDir(), CACHE_FILENAME);
         }
 
         @Override

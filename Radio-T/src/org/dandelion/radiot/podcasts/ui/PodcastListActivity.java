@@ -9,11 +9,15 @@ import android.view.MenuItem;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import org.dandelion.radiot.R;
+import org.dandelion.radiot.podcasts.loader.LoaderFactory;
 import org.dandelion.radiot.podcasts.main.PodcastsApp;
 import org.dandelion.radiot.podcasts.loader.PodcastListLoader;
 import org.dandelion.radiot.util.CustomTitleActivity;
 
 public class PodcastListActivity extends CustomTitleActivity {
+    public static LoaderFactory loaderFactory = null;
+
+    // TODO: Do I need this method here?
     public static Intent createIntent(Context context, String title, String showName) {
         return StartParams.createIntent(context, title, showName);
     }
@@ -56,8 +60,7 @@ public class PodcastListActivity extends CustomTitleActivity {
     }
 
     protected void attachToLoader(String show, PodcastListAdapter la, ProgressIndicator pi) {
-        PodcastsApp app = PodcastsApp.getInstance();
-		loader = app.createLoaderForShow(show);
+		loader = loaderFactory.createLoaderForShow(show);
 		loader.attach(pi, la);
 	}
 

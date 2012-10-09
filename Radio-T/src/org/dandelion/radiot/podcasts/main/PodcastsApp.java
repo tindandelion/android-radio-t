@@ -29,6 +29,7 @@ public class PodcastsApp {
         if (null == instance) {
             instance = new PodcastsApp(context);
         }
+        PodcastListActivity.loaderFactory = new PodcastLoaderFactory(instance);
     }
     
     public static void release() {
@@ -107,11 +108,6 @@ public class PodcastsApp {
     public PodcastsCache createPodcastsCache(String name) {
         File cacheFile = new File(application.getCacheDir(), name);
         return new FilePodcastsCache(cacheFile, CACHE_FORMAT_VERSION);
-    }
-
-    public PodcastListLoader createLoaderForShow(String name) {
-        PodcastProperties props = PodcastProperties.propertiesForShow(name);
-        return createPodcastLoader(props);
     }
 
     public PodcastListLoader createPodcastLoader(PodcastProperties props) {

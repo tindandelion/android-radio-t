@@ -6,9 +6,6 @@ import org.dandelion.radiot.podcasts.core.*;
 import org.dandelion.radiot.podcasts.download.DownloadManager;
 import org.dandelion.radiot.podcasts.download.MediaScanner;
 import org.dandelion.radiot.podcasts.download.NotificationManager;
-import org.dandelion.radiot.podcasts.loader.PodcastListLoader;
-import org.dandelion.radiot.podcasts.loader.PodcastsConsumer;
-import org.dandelion.radiot.podcasts.loader.ProgressListener;
 
 import java.io.File;
 
@@ -57,33 +54,6 @@ public class TestingPodcastsApp extends PodcastsApp {
     @Override
     protected boolean supportsDownload() {
         return downloadSupported;
-    }
-
-    @Override
-    public PodcastListLoader createLoaderForShow(String name) {
-        return new PodcastListLoader() {
-            @Override
-            public void refresh(boolean resetCache) {
-            }
-
-            @Override
-            public void cancelUpdate() {
-            }
-
-            @Override
-            public void detach() {
-            }
-
-            @Override
-            public void attach(ProgressListener listener, PodcastsConsumer consumer) {
-                PodcastList list = new PodcastList();
-                PodcastItem item = new PodcastItem();
-
-                item.setAudioUri("http://example.com/podcast.mp3");
-                list.add(item);
-                consumer.updatePodcasts(list);
-            }
-        };
     }
 
     public void setDownloadSupported(boolean value) {
