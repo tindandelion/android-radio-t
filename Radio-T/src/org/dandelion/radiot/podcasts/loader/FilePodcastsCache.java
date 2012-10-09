@@ -1,4 +1,7 @@
-package org.dandelion.radiot.podcasts.core;
+package org.dandelion.radiot.podcasts.loader;
+
+import org.dandelion.radiot.podcasts.core.PodcastItem;
+import org.dandelion.radiot.podcasts.core.PodcastList;
 
 import java.io.*;
 

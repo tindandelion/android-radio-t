@@ -1,6 +1,7 @@
-package org.dandelion.radiot.podcasts.core;
+package org.dandelion.radiot.podcasts.loader;
 
 import android.os.AsyncTask;
+import org.dandelion.radiot.podcasts.core.PodcastList;
 
 @SuppressWarnings("unchecked")
 public class AsyncPodcastListLoader implements PodcastListLoader {

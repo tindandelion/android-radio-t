@@ -1,4 +1,6 @@
-package org.dandelion.radiot.podcasts.core;
+package org.dandelion.radiot.podcasts.loader;
+
+import org.dandelion.radiot.podcasts.core.PodcastList;
 
 public class CachingPodcastLoader {
     private final PodcastsProvider podcasts;

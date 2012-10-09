@@ -1,4 +1,4 @@
-package org.dandelion.radiot.podcasts.core;
+package org.dandelion.radiot.podcasts.loader;
 
 public interface PodcastListLoader {
     void refresh(boolean resetCache);

@@ -9,6 +9,7 @@ import org.dandelion.radiot.podcasts.core.*;
 import org.dandelion.radiot.podcasts.download.*;
 import org.dandelion.radiot.podcasts.download.DownloadManager;
 import org.dandelion.radiot.podcasts.download.NotificationManager;
+import org.dandelion.radiot.podcasts.loader.*;
 import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
 
 import java.io.File;

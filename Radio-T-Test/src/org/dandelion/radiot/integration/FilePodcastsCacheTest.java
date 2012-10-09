@@ -2,7 +2,7 @@ package org.dandelion.radiot.integration;
 
 import android.content.Context;
 import android.test.InstrumentationTestCase;
-import org.dandelion.radiot.podcasts.core.FilePodcastsCache;
+import org.dandelion.radiot.podcasts.loader.FilePodcastsCache;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastList;
 import org.hamcrest.Description;

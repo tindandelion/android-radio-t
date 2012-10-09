@@ -6,6 +6,9 @@ import org.dandelion.radiot.podcasts.core.*;
 import org.dandelion.radiot.podcasts.download.DownloadManager;
 import org.dandelion.radiot.podcasts.download.MediaScanner;
 import org.dandelion.radiot.podcasts.download.NotificationManager;
+import org.dandelion.radiot.podcasts.loader.PodcastListLoader;
+import org.dandelion.radiot.podcasts.loader.PodcastsConsumer;
+import org.dandelion.radiot.podcasts.loader.ProgressListener;
 
 import java.io.File;
 

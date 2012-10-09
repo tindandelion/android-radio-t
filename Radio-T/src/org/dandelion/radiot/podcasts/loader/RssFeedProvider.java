@@ -1,7 +1,9 @@
-package org.dandelion.radiot.podcasts.core;
+package org.dandelion.radiot.podcasts.loader;
 
 import android.sax.*;
 import android.util.Xml;
+import org.dandelion.radiot.podcasts.core.PodcastItem;
+import org.dandelion.radiot.podcasts.core.PodcastList;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 

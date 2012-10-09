@@ -1,7 +1,7 @@
 package org.dandelion.radiot.integration;
 
 import junit.framework.TestCase;
-import org.dandelion.radiot.podcasts.core.HttpThumbnailProvider;
+import org.dandelion.radiot.podcasts.loader.HttpThumbnailProvider;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;

@@ -12,7 +12,7 @@ import android.widget.TextView;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastList;
-import org.dandelion.radiot.podcasts.core.PodcastsConsumer;
+import org.dandelion.radiot.podcasts.loader.PodcastsConsumer;
 
 class PodcastListAdapter extends ArrayAdapter<PodcastVisual> implements PodcastsConsumer {
     private final Drawable defaultThumbnail;

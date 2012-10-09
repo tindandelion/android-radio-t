@@ -3,8 +3,8 @@ package org.dandelion.radiot.unittest;
 import junit.framework.TestCase;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastList;
-import org.dandelion.radiot.podcasts.core.RssFeedProvider;
-import org.dandelion.radiot.podcasts.core.ThumbnailProvider;
+import org.dandelion.radiot.podcasts.loader.RssFeedProvider;
+import org.dandelion.radiot.podcasts.loader.ThumbnailProvider;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

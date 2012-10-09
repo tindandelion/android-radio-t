@@ -7,6 +7,7 @@ import org.dandelion.radiot.endtoend.podcasts.helpers.PodcastListRunner;
 import org.dandelion.radiot.endtoend.podcasts.helpers.TestRssServer;
 import org.dandelion.radiot.podcasts.PodcastsApp;
 import org.dandelion.radiot.podcasts.core.*;
+import org.dandelion.radiot.podcasts.loader.*;
 import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
 
 import java.io.File;

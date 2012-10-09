@@ -1,5 +1,9 @@
 package org.dandelion.radiot.podcasts.core;
 
+import org.dandelion.radiot.podcasts.loader.CachingPodcastLoader;
+import org.dandelion.radiot.podcasts.loader.PodcastsCache;
+import org.dandelion.radiot.podcasts.loader.PodcastsConsumer;
+import org.dandelion.radiot.podcasts.loader.PodcastsProvider;
 import org.junit.Before;
 import org.junit.Test;
 
