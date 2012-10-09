@@ -1,14 +1,17 @@
 Backlog:
+ * Google Analytics
  * Live show: graceful process termination
  * Downloading: Respect background data loading settings
+ * Downloading: Warn a user if a file already exists
+ * Podcast list: do not clear cache if download error occurs
+ * Podcast list: Better error explanation?
  * User topics
  * Android 4.0 UI
    * New icon with ICS guidelines
 
 Version 1.5:
- * Testing: file to download already exists
- * Testing: what happens if we have a local cache, but server responds with error?
- * Google Analytics
+ * Live show urls
+ DONE Testing: file to download already exists
  DONE Cache podcast list locally
    DONE Optimize garbage collection for podcast list
    DONE Load local podcast cache first, if it exists, and then
