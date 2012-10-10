@@ -3,6 +3,7 @@ package org.dandelion.radiot.live;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import org.dandelion.radiot.live.core.AudioStream;
+import org.dandelion.radiot.live.util.ValueProvider;
 
 import java.io.IOException;
 
@@ -11,15 +12,11 @@ public class MediaPlayerStream implements MediaPlayer.OnPreparedListener, MediaP
     private MediaPlayer player;
     private Listener listener;
     private StopTask stopTask;
-    private String url;
+    private ValueProvider<String> urlProvider;
 
-    public MediaPlayerStream(String url) {
-        this(new MediaPlayer(), url);
-    }
-
-    public MediaPlayerStream(MediaPlayer player, String url) {
+    public MediaPlayerStream(MediaPlayer player, ValueProvider<String> urlProvider) {
         this.player = player;
-        this.url = url;
+        this.urlProvider = urlProvider;
         this.listener = new NullStateListener();
         listenForPlayerEvents();
     }
@@ -39,7 +36,7 @@ public class MediaPlayerStream implements MediaPlayer.OnPreparedListener, MediaP
     
     @Override
     public void play() throws IOException {
-        playUrl(url);
+        playUrl(urlProvider.value());
     }
 
     protected void playUrl(String url) throws IOException {

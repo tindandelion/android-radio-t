@@ -2,6 +2,8 @@ package org.dandelion.radiot.live.core;
 
 import android.media.MediaPlayer;
 import org.dandelion.radiot.live.MediaPlayerStream;
+import org.dandelion.radiot.live.util.ConstantProvider;
+import org.dandelion.radiot.live.util.ValueProvider;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
@@ -16,6 +18,9 @@ import static org.mockito.Mockito.verify;
 
 public class MediaPlayerStreamTest {
     private static final String TEST_STREAM_URL = "http://audio-stream";
+    private static final ValueProvider<String> URL_PROVIDER =
+            new ConstantProvider<String>(TEST_STREAM_URL);
+
     private MediaPlayer.OnPreparedListener preparedListener;
     private MediaPlayer player = mock(MediaPlayer.class);
     private MediaPlayerStream stream;
@@ -49,7 +54,7 @@ public class MediaPlayerStreamTest {
             }
         }).when(player).setOnCompletionListener(any(MediaPlayer.OnCompletionListener.class));
 
-        stream = new MediaPlayerStream(player, TEST_STREAM_URL);
+        stream = new MediaPlayerStream(player, URL_PROVIDER);
         stream.setStateListener(stateListener);
     }
 
