@@ -1,7 +1,6 @@
 package org.dandelion.radiot.accepttest.testables;
 
 import android.media.MediaPlayer;
-import android.util.Log;
 import org.dandelion.radiot.live.MediaPlayerStream;
 import org.dandelion.radiot.live.util.ConstantProvider;
 
@@ -23,11 +22,6 @@ public class TestableMediaPlayerStream extends MediaPlayerStream {
         playUrl(url);
     }
 
-    @Override
-    protected void playUrl(String url) throws IOException {
-        Log.d("LIVE", "Playing URL: " + url);
-        super.playUrl(url);
-    }
 
     @Override
     public void release() {
