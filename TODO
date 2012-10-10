@@ -1,6 +1,7 @@
 Backlog:
  * Google Analytics
  * Live show: graceful process termination
+ * Live show: take show URL from provided M3U
  * Downloading: Respect background data loading settings
  * Downloading: Warn a user if a file already exists
  * Podcast list: do not clear cache if download error occurs
@@ -10,7 +11,7 @@ Backlog:
    * New icon with ICS guidelines
 
 Version 1.5:
- * Live show urls
+ DONE Live show urls
  DONE Testing: file to download already exists
  DONE Cache podcast list locally
    DONE Optimize garbage collection for podcast list
