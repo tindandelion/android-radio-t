@@ -1,5 +1,6 @@
 package org.dandelion.radiot.endtoend.podcasts.helpers;
 
+import org.dandelion.radiot.helpers.NanoHTTPD;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
