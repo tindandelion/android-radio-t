@@ -14,11 +14,35 @@ public class MediaPlayerTest extends InstrumentationTestCase {
     private StreamServer backend;
     private MediaPlayer player;
 
-    public void testConnection() throws Exception {
-        player.setDataSource(StreamServer.REDIRECT_URL);
+    public void testGivenADirectUrl_PlaysIt() throws Exception {
+        player.setDataSource(StreamServer.DIRECT_URL);
+        backend.startBroadcasting();
+
         player.prepare();
         player.start();
-        Thread.sleep(3000);
+
+        assertTrue(player.isPlaying());
+    }
+
+    public void testGivenARedirectUrl_FollowsRedirection() throws Exception {
+        player.setDataSource(StreamServer.REDIRECT_URL);
+        backend.startBroadcasting();
+
+        player.prepare();
+        player.start();
+
+        assertTrue(player.isPlaying());
+    }
+
+    public void testWhenServerRespondsWithError_RaisesException() throws Exception {
+        player.setDataSource(StreamServer.REDIRECT_URL);
+        backend.stopBroadcasting();
+
+        try {
+            player.prepare();
+            fail();
+        } catch (IOException ex) {
+        }
     }
 
     @Override
@@ -42,6 +66,7 @@ public class MediaPlayerTest extends InstrumentationTestCase {
         public static String DIRECT_URL = String.format("http://localhost:%d", PORT) + STREAM_RESOURCE;
         public static String REDIRECT_URL = String.format("http://localhost:%d", PORT) + MAIN_RESOURCE;
         private Context context;
+        private boolean broadcastStarted = false;
 
         public StreamServer(Context context) throws IOException {
             super(PORT, new File(""));
@@ -66,15 +91,35 @@ public class MediaPlayerTest extends InstrumentationTestCase {
         }
 
         private Response respondWithStream() {
+            if (broadcastStarted) {
+                return respondWithValidStream();
+            } else {
+                return respondWithNotFound();
+            }
+        }
+
+        private Response respondWithNotFound() {
+            return new Response(HTTP_NOTFOUND, MIME_HTML, "");
+        }
+
+        private Response respondWithValidStream() {
             try {
                 return new Response(HTTP_OK, "audio/mpeg", openAudioStream());
             } catch (IOException e) {
-                return null;
+                throw new RuntimeException(e);
             }
         }
 
         private InputStream openAudioStream() throws IOException {
             return context.getAssets().open("stream.mp3");
+        }
+
+        public void startBroadcasting() {
+            broadcastStarted = true;
+        }
+
+        public void stopBroadcasting() {
+            broadcastStarted = false;
         }
     }
 }
