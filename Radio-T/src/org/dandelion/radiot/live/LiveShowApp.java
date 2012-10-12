@@ -1,21 +1,17 @@
 package org.dandelion.radiot.live;
 
 import android.content.Context;
-import android.media.MediaPlayer;
 import android.net.wifi.WifiManager;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.live.core.AudioStream;
 import org.dandelion.radiot.live.core.LiveShowStateHolder;
 import org.dandelion.radiot.live.core.LiveShowStateListener;
 import org.dandelion.radiot.live.ui.LiveShowActivity;
-import org.dandelion.radiot.live.util.ConstantProvider;
-import org.dandelion.radiot.live.util.ValueProvider;
 import org.dandelion.radiot.util.IconNote;
 
 public class LiveShowApp {
     private static LiveShowApp instance = new LiveShowApp();
-    private static final ValueProvider<String> LIVE_SHOW_URLS =
-            new ConstantProvider<String>("http://radio10.promodeejay.net:8181/stream");
+    private static final String LIVE_SHOW_URL = "http://radio10.promodeejay.net:8181/stream";
     private LiveShowStateHolder stateHolder = LiveShowStateHolder.initial();
     private static final int LIVE_NOTE_ID = 1;
     private static final int FOREGROUND_NOTE_ID = 2;
@@ -39,7 +35,7 @@ public class LiveShowApp {
     }
 
     public AudioStream createAudioStream() {
-        return new MediaPlayerStream(new MediaPlayer(), LIVE_SHOW_URLS);
+        return new MediaPlayerStream(LIVE_SHOW_URL);
     }
     
     public LiveShowClient createClient(Context context) {
