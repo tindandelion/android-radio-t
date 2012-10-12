@@ -8,22 +8,17 @@ import org.dandelion.radiot.live.core.AudioStream;
 import org.dandelion.radiot.live.core.LiveShowStateHolder;
 import org.dandelion.radiot.live.core.LiveShowStateListener;
 import org.dandelion.radiot.live.ui.LiveShowActivity;
-import org.dandelion.radiot.live.util.IterableValueProvider;
+import org.dandelion.radiot.live.util.ConstantProvider;
 import org.dandelion.radiot.live.util.ValueProvider;
 import org.dandelion.radiot.util.IconNote;
 
-import static java.util.Arrays.asList;
-
 public class LiveShowApp {
+    private static LiveShowApp instance = new LiveShowApp();
+    private static final ValueProvider<String> LIVE_SHOW_URLS =
+            new ConstantProvider<String>("http://radio10.promodeejay.net:8181/stream");
+    private LiveShowStateHolder stateHolder = LiveShowStateHolder.initial();
     private static final int LIVE_NOTE_ID = 1;
     private static final int FOREGROUND_NOTE_ID = 2;
-
-    private static LiveShowApp instance = new LiveShowApp();
-
-    private LiveShowStateHolder stateHolder = LiveShowStateHolder.initial();
-    private ValueProvider<String> urlProvider = new IterableValueProvider<String>(asList(
-            "http://91.213.196.95:8181/stream",
-            "http://88.212.207.7:8181/stream"));
 
     public static LiveShowApp getInstance() {
         return instance;
@@ -44,7 +39,7 @@ public class LiveShowApp {
     }
 
     public AudioStream createAudioStream() {
-        return new MediaPlayerStream(new MediaPlayer(), urlProvider);
+        return new MediaPlayerStream(new MediaPlayer(), LIVE_SHOW_URLS);
     }
     
     public LiveShowClient createClient(Context context) {
