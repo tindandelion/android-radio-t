@@ -1,4 +1,4 @@
-package org.dandelion.radiot.endtoend.podcasts.helpers;
+package org.dandelion.radiot.helpers;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
