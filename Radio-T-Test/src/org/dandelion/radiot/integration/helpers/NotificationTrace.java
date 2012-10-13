@@ -28,17 +28,30 @@ public class NotificationTrace<T> {
         }
     }
 
-    public void containsNotification(Matcher<? super T> criteria) throws InterruptedException {
+    public void receivedNotification(Matcher<? super T> criteria) throws InterruptedException {
+        if (!containsNotification(criteria)) {
+            throw new AssertionError(failureDescriptionFrom(criteria));
+        }
+    }
+
+    public void notReceivedNotification(Matcher<? super T> criteria) throws InterruptedException {
+        if (containsNotification(criteria)) {
+            throw new AssertionError(failureDescriptionFrom(criteria));
+        }
+    }
+
+    private boolean containsNotification(Matcher<? super T> criteria) throws InterruptedException {
         NotificationTimeout timeout = new NotificationTimeout(timeoutMs);
         synchronized (traceLock) {
             NotificationStream<T> stream = new NotificationStream<T>(trace, criteria);
             while(!stream.hasMatched()) {
                 if (timeout.hasTimedOut()) {
-                    throw new AssertionError(failureDescriptionFrom(criteria));
+                    return false;
                 }
                 timeout.waitOn(traceLock);
             }
         }
+        return true;
     }
 
     private String failureDescriptionFrom(Matcher<? super T> criteria) {
@@ -57,6 +70,8 @@ public class NotificationTrace<T> {
         return description.toString();
     }
 
+
+
     static class NotificationStream<T> {
         private List<T> notifications;
         private Matcher<? super T> criteria;
@@ -65,7 +80,6 @@ public class NotificationTrace<T> {
         public NotificationStream(List<T> notifications, Matcher<? super T> criteria) {
             this.notifications = notifications;
             this.criteria = criteria;
-
         }
 
         public boolean hasMatched() {

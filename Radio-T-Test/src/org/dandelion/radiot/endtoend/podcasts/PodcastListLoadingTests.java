@@ -18,7 +18,6 @@ import static org.dandelion.radiot.helpers.PodcastListBuilder.aPodcastItem;
 
 public class PodcastListLoadingTests
         extends ActivityInstrumentationTestCase2<PodcastListActivity> {
-    private static final int PORT = 32768;
 
     private TestRssServer backend;
     private PodcastListRunner app;
@@ -131,7 +130,7 @@ public class PodcastListLoadingTests
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        backend = new TestRssServer(PORT);
+        backend = new TestRssServer();
         platform = new TestPodcastsPlatform(context());
         PodcastListActivity.loaderFactory = platform;
     }
@@ -157,8 +156,8 @@ public class PodcastListLoadingTests
 
     private static class TestPodcastsPlatform implements LoaderFactory {
         private static String CACHE_FILENAME = "test-show";
-        private static final String BASE_URL = String.format("http://localhost:%d", PORT);
-        private static final String RSS_URL = BASE_URL + "/rss";
+        private static final String BASE_URL = TestRssServer.addressForUrl("");
+        private static final String RSS_URL = TestRssServer.addressForUrl("/rss");
         private static final int CACHE_FORMAT_VERSION = 0;
         private static final int LONG_AGO = 0;
         private PodcastsCache localCache;

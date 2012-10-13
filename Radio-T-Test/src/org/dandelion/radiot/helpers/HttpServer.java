@@ -21,7 +21,11 @@ public abstract class HttpServer extends NanoHTTPD {
     }
 
     public void hasReceivedRequest(Matcher<String> matcher) throws InterruptedException {
-        requests.containsNotification(matcher);
+        requests.receivedNotification(matcher);
+    }
+
+    public void hasNotReceivedRequest(Matcher<String> matcher) throws InterruptedException {
+        requests.notReceivedNotification(matcher);
     }
 
     protected abstract Response serveUri(String uri);
@@ -31,4 +35,5 @@ public abstract class HttpServer extends NanoHTTPD {
         requests.append(uri);
         return serveUri(uri);
     }
+
 }
