@@ -8,7 +8,8 @@ import org.apache.http.util.EntityUtils;
 import org.dandelion.radiot.helpers.HttpServer;
 
 import java.io.IOException;
-import java.util.Properties;
+
+import static org.hamcrest.CoreMatchers.equalTo;
 
 public class HttpServerTest extends TestCase {
     public static final String URL = HttpServer.addressForUrl("/");
@@ -17,6 +18,7 @@ public class HttpServerTest extends TestCase {
 
     public void testExecuteGetRequest() throws Exception {
         HttpResponse response = client.execute(new HttpGet(URL));
+        server.hasReceivedRequest(equalTo("/"));
         assertEquals(200, response.getStatusLine().getStatusCode());
     }
 
@@ -47,7 +49,7 @@ public class HttpServerTest extends TestCase {
         }
 
         @Override
-        public Response serve(String uri, String method, Properties header, Properties parms, Properties files) {
+        protected Response serveUri(String uri) {
             return new Response(HTTP_OK, MIME_HTML, BODY_TEXT);
         }
     }
