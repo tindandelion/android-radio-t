@@ -1,5 +1,6 @@
 package org.dandelion.radiot.integration;
 
+import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.test.InstrumentationTestCase;
@@ -7,6 +8,7 @@ import org.dandelion.radiot.helpers.NanoHTTPD;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 public class MediaPlayerTest extends InstrumentationTestCase {
@@ -29,10 +31,21 @@ public class MediaPlayerTest extends InstrumentationTestCase {
         assertTrue(player.isPlaying());
     }
 
+    public void testStressTest() throws Exception {
+        for(int i = 0; i < 10; i++) {
+            MediaPlayer p = new MediaPlayer();
+            p.setDataSource(LiveStreamServer.REDIRECT_URL);
+            p.prepare();
+            p.start();
+            Thread.sleep(2000);
+            p.release();
+        }
+    }
+
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        backend = new LiveStreamServer();
+        backend = new LiveStreamServer(getInstrumentation().getContext());
         player = new MediaPlayer();
         player.setAudioStreamType(AudioManager.STREAM_MUSIC);
     }
@@ -46,13 +59,17 @@ public class MediaPlayerTest extends InstrumentationTestCase {
 
     private static class LiveStreamServer extends NanoHTTPD {
         public static final int PORT = 32768;
-        private static final String DIRECT_URL = "http://icecast.bigrradio.com/80s90s";
         private static final String REDIRECT_RESOURCE = "/stream";
+        private static final String DIRECT_RESOURCE = "/audio";
         public static final String REDIRECT_URL =
                 String.format("http://localhost:%d", PORT) + REDIRECT_RESOURCE;
+        private static final String DIRECT_URL =
+                String.format("http://localhost:%d", PORT) + DIRECT_RESOURCE;
+        private Context context;
 
-        public LiveStreamServer() throws IOException {
+        public LiveStreamServer(Context context) throws IOException {
             super(PORT, new File(""));
+            this.context = context;
         }
 
         @Override
@@ -60,7 +77,22 @@ public class MediaPlayerTest extends InstrumentationTestCase {
             if (uri.equals(REDIRECT_RESOURCE)) {
                 return redirectToStream();
             }
+            if (uri.equals(DIRECT_RESOURCE)) {
+                return broadcastStream();
+            }
             return null;
+        }
+
+        private Response broadcastStream() {
+            try {
+                return new Response(HTTP_OK, "audio/mpeg", openAudioStream());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        private InputStream openAudioStream() throws IOException {
+            return context.getAssets().open("stream.mp3");
         }
 
         private Response redirectToStream() {
