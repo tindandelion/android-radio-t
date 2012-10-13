@@ -8,9 +8,18 @@ import java.util.List;
 
 public class NotificationTrace<T> {
     private static int DEFAULT_TIMEOUT_MS = 5000;
+
     private final Object traceLock = new Object();
     private final List<T> trace = new ArrayList<T>();
-    private long timeoutMs = DEFAULT_TIMEOUT_MS;
+    private long timeoutMs;
+
+    public NotificationTrace(int timeoutMs) {
+        this.timeoutMs = timeoutMs;
+    }
+
+    public NotificationTrace() {
+        this(DEFAULT_TIMEOUT_MS);
+    }
 
     public void append(T message) {
         synchronized (traceLock) {
