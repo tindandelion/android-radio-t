@@ -6,19 +6,12 @@ import android.content.*;
 import org.dandelion.radiot.live.core.Timeout;
 
 public class AlarmTimeout implements Timeout {
-    public Context context;
     private AlarmManager manager;
     private PendingIntent intent;
 
-    public static PendingIntent createPendingIntent(Context context, String action) {
-        return PendingIntent.getBroadcast(context.getApplicationContext(), 0,
-                new Intent(action), 0);
-    }
-
     public AlarmTimeout(Context context, String actionName) {
-        this.context = context;
-        this.manager = (AlarmManager) this.context.getSystemService(Context.ALARM_SERVICE);
-        this.intent = createPendingIntent(this.context, actionName);
+        this.manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        this.intent = createPendingIntent(context, actionName);
     }
 
     @Override
@@ -30,5 +23,10 @@ public class AlarmTimeout implements Timeout {
     public void set(int milliseconds) {
         manager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()
                 + milliseconds, intent);
+    }
+
+    private static PendingIntent createPendingIntent(Context context, String action) {
+        return PendingIntent.getBroadcast(context.getApplicationContext(), 0,
+                new Intent(action), 0);
     }
 }
