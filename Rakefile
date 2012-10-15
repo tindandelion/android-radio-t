@@ -1,3 +1,4 @@
+
 require 'pathname'
 
 WORK_DIR = Pathname(__FILE__).dirname
@@ -16,5 +17,10 @@ end
 desc "Create home screen buttons"
 task :home_screen_buttons do
   create_home_screen_buttons(SVG_DIR + 'home_buttons', RESOURCE_DIR)
+end
+
+desc "Run audio server"
+task :audio_server do
+  ruby "test-server/server.rb"
 end
 
