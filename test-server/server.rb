@@ -2,16 +2,13 @@ require "sinatra"
 require "pathname"
 require "pry"
 
+require_relative "profiles"
+
 STREAM_FILE = Pathname(__FILE__).dirname + "stream.mp3" 
 # STREAM_FILE = Pathname(__FILE__).dirname + "stream-small.mp3"
 
 CHUNK_SIZE = 4096
-DELAY_MEAN = 0.102
-DELAY_VARIATION = 0.05
-SECOND_DELAY_CHANCE = 0.01
-GRAND_DELAY_CHANCE = 0.001
-GRAND_DELAY = 40
-
+STREAM_SPEED = 0.102
 
 class Stat
   def initialize
@@ -36,15 +33,19 @@ class Stat
   end
 end
 
+# DELAY_PROFILE = RandomDelayProfile.new(STREAM_SPEED)
+DELAY_PROFILE = ConstantDelayProfile.new(STREAM_SPEED)
+
 get "/stream" do
-  puts "\n * Starting streaming with delay mean: #{DELAY_MEAN}"
+  puts "\n * Starting streaming with speed factor: #{STREAM_SPEED}"
   content_type "audio/mpeg"
   stream :keep_open do |out|
-    open(STREAM_FILE, "rb") { |io| read_file_with_delays io, out, DELAY_MEAN }
+    open(STREAM_FILE, "rb") { |io| read_file_with_delays io, out }
   end
 end
 
-def read_file_with_delays(io, out, delay)
+
+def read_file_with_delays(io, out)
   stat = Stat.new
   stat.start
   interrupted = false
@@ -56,27 +57,10 @@ def read_file_with_delays(io, out, delay)
     stat.sample chunk.size
     out << chunk
     print "."
-    sleep randomize(delay)
+    DELAY_PROFILE.introduce_delay
   end
   stat.stop
   out.close
   puts "\nStatistics is: #{stat.bytes_per_sec.to_i}"
 end
 
-def randomize(median)
-  fluctuated = median + fluctuation + second_delay + grand_delay
-end
-
-def second_delay
-  chances = rand()
-  (chances < SECOND_DELAY_CHANCE) ? 1 : 0
-end
-
-def grand_delay
-  chances = rand()
-  (chances < GRAND_DELAY_CHANCE) ? GRAND_DELAY : 0
-end
-
-def fluctuation
-  ((DELAY_VARIATION / 2) - (DELAY_VARIATION * rand()))
-end
