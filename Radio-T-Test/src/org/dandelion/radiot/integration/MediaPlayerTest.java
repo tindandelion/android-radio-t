@@ -17,9 +17,10 @@ public class MediaPlayerTest extends InstrumentationTestCase {
         backend.hasReceivedRequest(equalTo(LiveStreamServer.DIRECT_RESOURCE));
 
         player.start();
-        Thread.sleep(2000);
+        playSomeTime();
         assertTrue(player.isPlaying());
     }
+
 
     public void testWhenGivenRedirectUrl_FollowsRedirection() throws Exception {
         player.setDataSource(LiveStreamServer.REDIRECT_URL);
@@ -28,7 +29,7 @@ public class MediaPlayerTest extends InstrumentationTestCase {
         backend.hasReceivedRequest(equalTo(LiveStreamServer.DIRECT_RESOURCE));
 
         player.start();
-        Thread.sleep(2000);
+        playSomeTime();
         assertTrue(player.isPlaying());
     }
 
@@ -38,7 +39,7 @@ public class MediaPlayerTest extends InstrumentationTestCase {
             p.setDataSource(LiveStreamServer.REDIRECT_URL);
             p.prepare();
             p.start();
-            Thread.sleep(2000);
+            playSomeTime();
             p.release();
         }
     }
@@ -58,4 +59,7 @@ public class MediaPlayerTest extends InstrumentationTestCase {
         super.tearDown();
     }
 
+    private void playSomeTime() throws InterruptedException {
+        Thread.sleep(2000);
+    }
 }
