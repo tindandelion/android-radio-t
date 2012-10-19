@@ -1,13 +1,11 @@
 package org.dandelion.radiot.live.service;
 
-import android.app.Service;
 import android.content.Intent;
-import android.os.IBinder;
 import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.live.core.*;
 import org.dandelion.radiot.util.IconNote;
 
-public class LiveShowService extends Service implements PlayerActivityListener {
+public class LiveShowService extends WakefulService implements PlayerActivityListener {
     public static final String TAG = LiveShowService.class.getName();
     public static final String TOGGLE_ACTION = TAG + ".Toggle";
     public static final String TIMEOUT_ACTION = "org.dandelion.radiot.live.Timeout";
@@ -17,11 +15,6 @@ public class LiveShowService extends Service implements PlayerActivityListener {
     private AudioStream stream;
     private LiveShowStateListener statusDisplayer;
     private Lockable networkLock;
-
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
-    }
 
     @Override
     public void onCreate() {
