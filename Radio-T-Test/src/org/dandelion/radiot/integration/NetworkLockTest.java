@@ -5,7 +5,6 @@ import android.test.InstrumentationTestCase;
 import org.dandelion.radiot.live.NetworkLock;
 
 public class NetworkLockTest extends InstrumentationTestCase {
-    public static final String TAG = "TestLock";
     private WifiManager.WifiLock wifiLock;
     private NetworkLock lock;
 
@@ -69,6 +68,7 @@ public class NetworkLockTest extends InstrumentationTestCase {
     }
 
     private WifiManager.WifiLock createWifiLock() {
-        return NetworkLock.createWifiLock(getInstrumentation().getContext(), TAG);
+        return NetworkLock.createLock(getInstrumentation().getContext(),
+                WifiManager.WIFI_MODE_FULL, "TestLock");
     }
 }
