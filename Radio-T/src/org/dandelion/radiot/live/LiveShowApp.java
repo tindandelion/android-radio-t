@@ -1,7 +1,6 @@
 package org.dandelion.radiot.live;
 
 import android.content.Context;
-import android.net.wifi.WifiManager;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.live.core.AudioStream;
 import org.dandelion.radiot.live.core.LiveShowStateHolder;
@@ -64,13 +63,6 @@ public class LiveShowApp {
     }
 
     public Lockable createNetworkLock(Context context) {
-        return NetworkLock.create(createWifiLock(context));
-    }
-
-    private WifiManager.WifiLock createWifiLock(Context context) {
-        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-        WifiManager.WifiLock lck = wifiManager.createWifiLock("LiveShow");
-        lck.setReferenceCounted(false);
-        return lck;
+        return NetworkLock.create(context);
     }
 }
