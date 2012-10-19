@@ -11,14 +11,14 @@ public class NetworkLockTest extends InstrumentationTestCase {
 
     public void testAcquireAndReleaseLock() throws Exception {
         lock.acquire();
-        assertTrue(wifiLock.isHeld());
+        assertLocksAquired(wifiLock);
 
         lock.release();
-        assertFalse(wifiLock.isHeld());
+        assertLocksReleased(wifiLock);
     }
 
     public void testReleaseUnaquiredLock_ShouldNotRaiseError() throws Exception {
-        assertFalse(wifiLock.isHeld());
+        assertLocksReleased(wifiLock);
 
         try {
             lock.release();
@@ -26,7 +26,7 @@ public class NetworkLockTest extends InstrumentationTestCase {
             fail(ex.getMessage());
         }
 
-        assertFalse(wifiLock.isHeld());
+        assertLocksReleased(wifiLock);
     }
 
     public void testMultipleAcquires_ShouldNotAccumulate() throws Exception {
@@ -34,7 +34,31 @@ public class NetworkLockTest extends InstrumentationTestCase {
         lock.acquire();
 
         lock.release();
-        assertFalse(wifiLock.isHeld());
+        assertLocksReleased(wifiLock);
+    }
+
+    public void testAcquireAndReleaseMultipleLocks() throws Exception {
+        WifiManager.WifiLock firstLock = createWifiLock();
+        WifiManager.WifiLock anotherLock = createWifiLock();
+        NetworkLock multiLock = new NetworkLock(firstLock, anotherLock);
+
+        multiLock.acquire();
+        assertLocksAquired(firstLock, anotherLock);
+
+        multiLock.release();
+        assertLocksReleased(firstLock, anotherLock);
+    }
+
+    private void assertLocksAquired(WifiManager.WifiLock... locks) {
+        for (WifiManager.WifiLock l : locks) {
+            assertTrue(l.isHeld());
+        }
+    }
+
+    private void assertLocksReleased(WifiManager.WifiLock... locks) {
+        for (WifiManager.WifiLock l : locks) {
+            assertFalse(l.isHeld());
+        }
     }
 
     @Override
