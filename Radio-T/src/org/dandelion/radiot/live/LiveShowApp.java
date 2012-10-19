@@ -11,9 +11,7 @@ import org.dandelion.radiot.util.IconNote;
 
 public class LiveShowApp {
     private static LiveShowApp instance = new LiveShowApp();
-    private static final String LIVE_SHOW_URL = "http://icecast.bigrradio.com/80s90s";
-
-    // private static final String LIVE_SHOW_URL = "http://stream.radio-t.com/stream";
+    private static final String LIVE_SHOW_URL = "http://stream.radio-t.com/stream";
     // private static final String LIVE_SHOW_URL = "http://192.168.5.109:4567/stream";
     private LiveShowStateHolder stateHolder = LiveShowStateHolder.initial();
     private static final int LIVE_NOTE_ID = 1;
