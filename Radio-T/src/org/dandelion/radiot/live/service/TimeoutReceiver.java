@@ -5,14 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 
 public class TimeoutReceiver extends BroadcastReceiver {
+    public static final String BROADCAST = "org.dandelion.radiot.live.Timeout";
+
     @Override
     public void onReceive(Context context, Intent intent) {
         signalToLiveShowService(context);
     }
 
     private void signalToLiveShowService(Context context) {
-        Intent intent = new Intent(context, LiveShowService.class);
-        intent.setAction(LiveShowService.TIMEOUT_ACTION);
-        context.startService(intent);
+        LiveShowService.sendTimeoutElapsed(context);
     }
 }

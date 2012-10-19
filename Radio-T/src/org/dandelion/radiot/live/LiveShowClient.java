@@ -1,7 +1,6 @@
 package org.dandelion.radiot.live;
 
 import android.content.Context;
-import android.content.Intent;
 import org.dandelion.radiot.live.core.LiveShowStateHolder;
 import org.dandelion.radiot.live.core.LiveShowStateListener;
 import org.dandelion.radiot.live.service.LiveShowService;
@@ -16,9 +15,7 @@ public class LiveShowClient {
     }
 
     public void togglePlayback() {
-        Intent intent = new Intent(context, LiveShowService.class);
-        intent.setAction(LiveShowService.TOGGLE_ACTION);
-        context.startService(intent);
+        LiveShowService.sendTogglePlayback(context);
     }
 
     public void addListener(LiveShowStateListener listener) {

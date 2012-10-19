@@ -11,7 +11,7 @@ import org.dandelion.radiot.accepttest.testables.TestableMediaPlayerStream;
 import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.live.core.AudioStream;
 import org.dandelion.radiot.live.core.LiveShowStateListener;
-import org.dandelion.radiot.live.service.LiveShowService;
+import org.dandelion.radiot.live.service.TimeoutReceiver;
 import org.dandelion.radiot.live.ui.LiveShowActivity;
 
 public class LiveShowPlaybackTest extends
@@ -93,7 +93,7 @@ public class LiveShowPlaybackTest extends
     }
 
     private void signalWaitTimeout() {
-        Intent intent = new Intent(LiveShowService.TIMEOUT_ACTION);
+        Intent intent = new Intent(TimeoutReceiver.BROADCAST);
         cancelScheduledAlarm(intent);
         fireSimulatedAlarm(intent);
     }

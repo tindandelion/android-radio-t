@@ -1,20 +1,29 @@
 package org.dandelion.radiot.live.service;
 
+import android.content.Context;
 import android.content.Intent;
 import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.live.core.*;
 import org.dandelion.radiot.util.IconNote;
 
 public class LiveShowService extends WakefulService implements PlayerActivityListener {
-    public static final String TAG = LiveShowService.class.getName();
-    public static final String TOGGLE_ACTION = TAG + ".Toggle";
-    public static final String TIMEOUT_ACTION = "org.dandelion.radiot.live.Timeout";
+    private static final String TAG = LiveShowService.class.getName();
+    private static final String TOGGLE_ACTION = TAG + ".Toggle";
+    private static final String TIMEOUT_ACTION = TAG + ".Timeout";
 
     private LiveShowPlayer player;
     private TimeoutScheduler scheduler;
     private AudioStream stream;
     private LiveShowStateListener statusDisplayer;
     private Lockable networkLock;
+
+    public static void sendTimeoutElapsed(Context context) {
+        performWakefulAction(context, LiveShowService.class, TIMEOUT_ACTION);
+    }
+
+    public static void sendTogglePlayback(Context context) {
+        performWakefulAction(context, LiveShowService.class, TOGGLE_ACTION);
+    }
 
     @Override
     public void onCreate() {
@@ -26,7 +35,7 @@ public class LiveShowService extends WakefulService implements PlayerActivityLis
 
     private void createInfrastructure() {
         networkLock = app().createNetworkLock(this);
-        scheduler = new TimeoutScheduler(new AlarmTimeout(this, TIMEOUT_ACTION));
+        scheduler = new TimeoutScheduler(new AlarmTimeout(this, TimeoutReceiver.BROADCAST));
         stream = app().createAudioStream();
     }
 
