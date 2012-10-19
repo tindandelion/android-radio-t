@@ -2,7 +2,6 @@ package org.dandelion.radiot.live.service;
 
 import android.app.Service;
 import android.content.Intent;
-import android.net.wifi.WifiManager;
 import android.os.IBinder;
 import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.live.core.*;
@@ -17,7 +16,7 @@ public class LiveShowService extends Service implements PlayerActivityListener {
     private TimeoutScheduler scheduler;
     private AudioStream stream;
     private LiveShowStateListener statusDisplayer;
-    private WifiManager.WifiLock wifiLock;
+    private Lockable networkLock;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -33,7 +32,7 @@ public class LiveShowService extends Service implements PlayerActivityListener {
     }
 
     private void createInfrastructure() {
-        wifiLock = app().createWifiLock(this);
+        networkLock = app().createNetworkLock(this);
         scheduler = new TimeoutScheduler(new AlarmTimeout(this, TIMEOUT_ACTION));
         stream = app().createAudioStream();
     }
@@ -61,7 +60,7 @@ public class LiveShowService extends Service implements PlayerActivityListener {
     }
 
     private void releaseInfrastructure() {
-        wifiLock.release();
+        networkLock.release();
         stream.release();
     }
 
@@ -89,7 +88,7 @@ public class LiveShowService extends Service implements PlayerActivityListener {
     public void onActivated() {
         IconNote note = app().createForegroundNote(this);
         startForeground(note.id(), note.build());
-        wifiLock.acquire();
+        networkLock.acquire();
     }
 
     @Override

@@ -6,6 +6,7 @@ import org.dandelion.radiot.R;
 import org.dandelion.radiot.live.core.AudioStream;
 import org.dandelion.radiot.live.core.LiveShowStateHolder;
 import org.dandelion.radiot.live.core.LiveShowStateListener;
+import org.dandelion.radiot.live.service.Lockable;
 import org.dandelion.radiot.live.ui.LiveShowActivity;
 import org.dandelion.radiot.util.IconNote;
 
@@ -28,12 +29,6 @@ public class LiveShowApp {
     public LiveShowApp() {
     }
 
-    public WifiManager.WifiLock createWifiLock(Context context) {
-        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-        WifiManager.WifiLock lck = wifiManager.createWifiLock("LiveShow");
-        lck.setReferenceCounted(false);
-        return lck;
-    }
 
     public AudioStream createAudioStream() {
         return new MediaPlayerStream(LIVE_SHOW_URL);
@@ -66,5 +61,16 @@ public class LiveShowApp {
         // Creating the invisible note simply to satisfy
         // the Android Service.startForeground() requirements
         return new IconNote(context, FOREGROUND_NOTE_ID);
+    }
+
+    public Lockable createNetworkLock(Context context) {
+        return NetworkLock.create(createWifiLock(context));
+    }
+
+    private WifiManager.WifiLock createWifiLock(Context context) {
+        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        WifiManager.WifiLock lck = wifiManager.createWifiLock("LiveShow");
+        lck.setReferenceCounted(false);
+        return lck;
     }
 }
