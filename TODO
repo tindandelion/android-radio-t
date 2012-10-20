@@ -1,7 +1,6 @@
 Backlog:
  * Google Analytics
  * Live show: graceful process termination
- * Live show: take show URL from provided M3U
  * Downloading: Respect background data loading settings
  * Downloading: Warn a user if a file already exists
  * Podcast list: do not clear cache if download error occurs

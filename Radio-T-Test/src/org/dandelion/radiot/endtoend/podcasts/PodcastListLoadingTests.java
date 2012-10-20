@@ -61,8 +61,7 @@ public class PodcastListLoadingTests
                 .item(rssItem()
                         .title("Радио-Т 140")
                         .pubDate("Sun, 13 Jun 2010 01:37:22 +0000")
-                        .description("&lt;p&gt;&lt;img src=\"" +
-                                thumbnailUrl + "\" alt=\"\" /&gt;&lt;/p&gt;"))
+                        .thumbnailUrl(thumbnailUrl))
                 .done();
 
         app = startApplication();

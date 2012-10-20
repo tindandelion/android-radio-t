@@ -52,5 +52,10 @@ public class RssFeedBuilder {
             content += String.format("<%1$s>%2$s</%1$s>", tag, value);
             return this;
         }
+
+        public RssItemBuilder thumbnailUrl(String thumbnailUrl) {
+            return description("&lt;p&gt;&lt;img src=\"" +
+                    thumbnailUrl + "\" alt=\"\" /&gt;&lt;/p&gt;");
+        }
     }
 }
