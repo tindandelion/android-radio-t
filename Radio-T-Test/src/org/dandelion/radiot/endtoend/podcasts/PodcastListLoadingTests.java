@@ -71,6 +71,24 @@ public class PodcastListLoadingTests
         backend.hasReceivedRequestForUrl(thumbnailUrl);
     }
 
+    // TODO: This test duplicates the previous
+    public void testGivenAFeedItemWithThumbnailLink_ShouldFirstDisplayAnItemAndThenRetrieveTheThumbnail() throws Exception {
+        final String thumbnailUrl = "/images/radio-t/rt307.jpg";
+        final String feed = rssFeed()
+                .item(rssItem()
+                        .title("Радио-Т 140")
+                        .pubDate("Sun, 13 Jun 2010 01:37:22 +0000")
+                        .thumbnailUrl(thumbnailUrl))
+                .done();
+
+        app = startApplication();
+        backend.hasReceivedRequestForRss();
+        backend.respondSuccessWith(feed);
+
+        app.showsPodcastItem("#140", "13.06.2010", "");
+        backend.hasReceivedRequestForUrl(thumbnailUrl);
+    }
+
     public void testWhenRequestedToRefreshList_ShouldRetrieveItFromServer() throws Exception {
         final String initialFeed = rssFeed().done();
         final String updatedFeed = rssFeed()
