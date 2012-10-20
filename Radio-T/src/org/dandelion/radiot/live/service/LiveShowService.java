@@ -1,27 +1,28 @@
 package org.dandelion.radiot.live.service;
 
-import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
-import android.net.wifi.WifiManager;
-import android.os.IBinder;
 import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.live.core.*;
 import org.dandelion.radiot.util.IconNote;
 
-public class LiveShowService extends Service implements PlayerActivityListener {
-    public static final String TAG = LiveShowService.class.getName();
-    public static final String TOGGLE_ACTION = TAG + ".Toggle";
-    public static final String TIMEOUT_ACTION = "org.dandelion.radiot.live.Timeout";
+public class LiveShowService extends WakefulService implements PlayerActivityListener {
+    private static final String TAG = LiveShowService.class.getName();
+    private static final String TOGGLE_ACTION = TAG + ".Toggle";
+    private static final String TIMEOUT_ACTION = TAG + ".Timeout";
 
     private LiveShowPlayer player;
     private TimeoutScheduler scheduler;
     private AudioStream stream;
     private LiveShowStateListener statusDisplayer;
-    private WifiManager.WifiLock wifiLock;
+    private Lockable networkLock;
 
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
+    public static void sendTimeoutElapsed(Context context) {
+        performWakefulAction(context, LiveShowService.class, TIMEOUT_ACTION);
+    }
+
+    public static void sendTogglePlayback(Context context) {
+        performWakefulAction(context, LiveShowService.class, TOGGLE_ACTION);
     }
 
     @Override
@@ -33,8 +34,8 @@ public class LiveShowService extends Service implements PlayerActivityListener {
     }
 
     private void createInfrastructure() {
-        wifiLock = app().createWifiLock(this);
-        scheduler = new TimeoutScheduler(new AlarmTimeout(this, TIMEOUT_ACTION));
+        networkLock = app().createNetworkLock(this);
+        scheduler = new TimeoutScheduler(new AlarmTimeout(this, TimeoutReceiver.BROADCAST));
         stream = app().createAudioStream();
     }
 
@@ -61,7 +62,7 @@ public class LiveShowService extends Service implements PlayerActivityListener {
     }
 
     private void releaseInfrastructure() {
-        wifiLock.release();
+        networkLock.release();
         stream.release();
     }
 
@@ -89,7 +90,7 @@ public class LiveShowService extends Service implements PlayerActivityListener {
     public void onActivated() {
         IconNote note = app().createForegroundNote(this);
         startForeground(note.id(), note.build());
-        wifiLock.acquire();
+        networkLock.acquire();
     }
 
     @Override

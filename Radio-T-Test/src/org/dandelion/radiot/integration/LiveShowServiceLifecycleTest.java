@@ -2,19 +2,19 @@ package org.dandelion.radiot.integration;
 
 import android.app.ActivityManager;
 import android.content.Context;
-import android.net.wifi.WifiManager;
 import android.test.InstrumentationTestCase;
 import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.live.core.AudioStream;
 import org.dandelion.radiot.live.LiveShowClient;
 import org.dandelion.radiot.live.service.LiveShowService;
+import org.dandelion.radiot.live.service.Lockable;
 
 import java.io.IOException;
 import java.util.List;
 
 public class LiveShowServiceLifecycleTest extends InstrumentationTestCase {
     private FakeAudioStream audioStream = new FakeAudioStream();
-    private WifiManager.WifiLock lock;
+    private FakeLock lock = new FakeLock();
 
     public void testStartStopServiceInStraightLifecycle() throws Exception {
         startPlayback();
@@ -25,17 +25,17 @@ public class LiveShowServiceLifecycleTest extends InstrumentationTestCase {
 
     public void testManagesWifiLockInStandardLifecycle() throws Exception {
         startPlayback();
-        assertTrue(lock.isHeld());
+        assertTrue(lock.isAcquired);
         stopPlayback();
-        assertFalse(lock.isHeld());
+        assertFalse(lock.isAcquired);
     }
 
     public void testReleasesWifiLockInWaitingLifecycle() throws Exception {
         startPlayback();
         audioStream.signalError();
-        assertFalse(lock.isHeld());
+        assertFalse(lock.isAcquired);
         stopPlayback();
-        assertFalse(lock.isHeld());
+        assertFalse(lock.isAcquired);
     }
 
     public void testStopServiceWhenPlayerGoesWaiting() throws Exception {
@@ -63,8 +63,7 @@ public class LiveShowServiceLifecycleTest extends InstrumentationTestCase {
             }
 
             @Override
-            public WifiManager.WifiLock createWifiLock(Context context) {
-                lock = super.createWifiLock(context);
+            public Lockable createNetworkLock(Context context) {
                 return lock;
             }
         };
@@ -107,6 +106,20 @@ public class LiveShowServiceLifecycleTest extends InstrumentationTestCase {
             }
         }
         return null;
+    }
+
+    private static class FakeLock implements Lockable {
+        public boolean isAcquired;
+
+        @Override
+        public void release() {
+            isAcquired = false;
+        }
+
+        @Override
+        public void acquire() {
+            isAcquired = true;
+        }
     }
 
     private class FakeAudioStream implements AudioStream {
