@@ -7,6 +7,7 @@ import org.dandelion.radiot.endtoend.podcasts.helpers.PodcastListRunner;
 import org.dandelion.radiot.endtoend.podcasts.helpers.TestRssServer;
 import org.dandelion.radiot.podcasts.core.*;
 import org.dandelion.radiot.podcasts.loader.*;
+import org.dandelion.radiot.podcasts.ui.PodcastLoaderFactory;
 import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
 
 import java.io.File;
@@ -171,7 +172,7 @@ public class PodcastListLoadingTests
         return getInstrumentation().getTargetContext();
     }
 
-    private static class TestPodcastsPlatform implements LoaderFactory {
+    private static class TestPodcastsPlatform implements PodcastLoaderFactory {
         private static String CACHE_FILENAME = "test-show";
         private static final String BASE_URL = TestRssServer.addressForUrl("");
         private static final String RSS_URL = TestRssServer.addressForUrl("/rss");

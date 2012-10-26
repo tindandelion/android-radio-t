@@ -12,7 +12,6 @@ import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
 import java.io.File;
 
 public class PodcastsApp {
-
     private static PodcastsApp instance;
     protected Context application;
 

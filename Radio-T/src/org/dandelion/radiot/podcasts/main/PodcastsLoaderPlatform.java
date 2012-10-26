@@ -2,11 +2,12 @@ package org.dandelion.radiot.podcasts.main;
 
 import android.content.Context;
 import org.dandelion.radiot.podcasts.loader.*;
+import org.dandelion.radiot.podcasts.ui.PodcastLoaderFactory;
 
 import java.io.File;
 import java.util.HashMap;
 
-public class PodcastsLoaderPlatform implements LoaderFactory {
+public class PodcastsLoaderPlatform implements PodcastLoaderFactory {
     private static final int CACHE_FORMAT_VERSION = 5;
     private static final String THUMBNAIL_HOST = "http://www.radio-t.com";
 
