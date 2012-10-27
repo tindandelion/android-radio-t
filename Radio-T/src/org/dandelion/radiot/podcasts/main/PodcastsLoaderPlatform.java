@@ -45,13 +45,8 @@ public class PodcastsLoaderPlatform implements PodcastLoaderFactory {
                 createThumbnailProvider());
     }
 
-    private ThumbnailProvider createThumbnailProvider() {
-        return new ThumbnailProvider() {
-            @Override
-            public byte[] thumbnailDataFor(String url) {
-                return new byte[0];
-            }
-        };
+    protected ThumbnailProvider createThumbnailProvider() {
+        return new HttpThumbnailProvider(THUMBNAIL_HOST);
     }
 
     private PodcastsCache createPodcastsCache(String name) {
