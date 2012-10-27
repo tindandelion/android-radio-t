@@ -23,18 +23,17 @@ public class ThumbnailRetrieverTest {
 
         final ThumbnailRetriever retriever = new ThumbnailRetriever(list, provider, consumer);
 
-        retriever.retrieve();
+        retriever.retrieveNext();
         verify(consumer).updateThumbnail(item, THUMBNAIL);
     }
 
     @Test
     public void whenNoThumbnailUrl_skipsItem() throws Exception {
-        final PodcastItem item = anItemWithThumbnailUrl(null);
-        final PodcastList list = aListWith(item);
+        final PodcastList list = aListWith(anItemWithThumbnailUrl(null));
 
         final ThumbnailRetriever retriever = new ThumbnailRetriever(list, provider, consumer);
 
-        retriever.retrieve();
+        retriever.retrieveNext();
         verifyZeroInteractions(consumer);
     }
 

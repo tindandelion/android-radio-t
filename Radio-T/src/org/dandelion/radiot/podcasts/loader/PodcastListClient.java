@@ -34,9 +34,16 @@ public class PodcastListClient {
         task = null;
     }
 
-    public void detach() {
+    public void release() {
+        cancelCurrentTask();
         progressListener = ProgressListener.Null;
         consumer = PodcastsConsumer.Null;
+    }
+
+    private void cancelCurrentTask() {
+        if (isInProgress()) {
+            task.cancel(true);
+        }
     }
 
     public void attach(ProgressListener listener, PodcastsConsumer consumer) {
@@ -78,7 +85,11 @@ public class PodcastListClient {
         }
 
         private void retrieveThumbnails() {
-            new ThumbnailRetriever(list, thumbnails, this).retrieve();
+            ThumbnailRetriever retriever = new ThumbnailRetriever(list, thumbnails, this);
+            while (retriever.hasNext()) {
+                retriever.retrieveNext();
+                if (isCancelled()) break;
+            }
         }
 
         @Override
@@ -118,6 +129,11 @@ public class PodcastListClient {
             if (ex != null) {
                 progressListener.onError(ex.getMessage());
             }
+        }
+
+        @Override
+        protected void onCancelled() {
+            finishSelf();
         }
 
         @Override

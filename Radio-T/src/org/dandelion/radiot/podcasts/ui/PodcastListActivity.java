@@ -71,7 +71,7 @@ public class PodcastListActivity extends CustomTitleActivity {
 	@Override
 	protected void onStop() {
 		super.onStop();
-		client.detach();
+		client.release();
 	}
 
 	@Override
