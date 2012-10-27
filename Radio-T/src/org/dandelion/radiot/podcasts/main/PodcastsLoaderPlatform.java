@@ -9,7 +9,6 @@ import java.util.HashMap;
 
 public class PodcastsLoaderPlatform implements PodcastLoaderFactory {
     private static final int CACHE_FORMAT_VERSION = 5;
-    private static final String THUMBNAIL_HOST = "http://www.radio-t.com";
 
     private static HashMap<String, PodcastProperties> shows;
     static {
@@ -39,9 +38,8 @@ public class PodcastsLoaderPlatform implements PodcastLoaderFactory {
     }
 
     private PodcastListLoader createPodcastLoader(PodcastProperties props) {
-        HttpThumbnailProvider thumbnails = new HttpThumbnailProvider(THUMBNAIL_HOST);
         return new AsyncPodcastListLoader(
-                new RssFeedProvider(props.url, thumbnails),
+                new RssFeedProvider(props.url),
                 createPodcastsCache(props.name));
     }
 

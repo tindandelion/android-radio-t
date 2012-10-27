@@ -8,6 +8,8 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+// TODO: Remove thumbnailData from PodcastItem
+
 public class PodcastItem implements Cloneable, Serializable {
     public static final Pattern THUMBNAIL_URL_PATTERN = Pattern.compile("<img\\s+src=\"(\\S+)\".*/>");
     private static final Pattern NUMBER_PATTERN = Pattern.compile("\\d+");
@@ -22,6 +24,7 @@ public class PodcastItem implements Cloneable, Serializable {
 	private String audioUri;
     private String title;
     private byte[] thumbnailData;
+    private String thumbnailUrl;
 
     public String getAudioUri() {
 		return audioUri;
@@ -81,12 +84,11 @@ public class PodcastItem implements Cloneable, Serializable {
         audioUri = value;
     }
 
-    public String extractThumbnailUrl(String description) {
+    public void extractThumbnailUrl(String description) {
         Matcher matcher = THUMBNAIL_URL_PATTERN.matcher(description);
         if (matcher.find()) {
-            return matcher.group(1);
+            thumbnailUrl = matcher.group(1);
         }
-        return null;
     }
 
     public void setThumbnailData(byte[] data) {
@@ -95,5 +97,9 @@ public class PodcastItem implements Cloneable, Serializable {
 
     public byte[] getThumbnailData() {
         return thumbnailData;
+    }
+
+    public String getThumbnailUrl() {
+        return thumbnailUrl;
     }
 }

@@ -46,20 +46,20 @@ public class PodcastItemTest {
     }
 
     @Test
-    public void extractImageFromDescription() throws Exception {
-        String url = item.extractThumbnailUrl("<img src=\"http://radio-t.com/thumbnail.jpg\" />");
-        assertEquals("http://radio-t.com/thumbnail.jpg", url);
+    public void extractThumbnailFromDescription() throws Exception {
+        item.extractThumbnailUrl("<img src=\"http://radio-t.com/thumbnail.jpg\" />");
+        assertEquals("http://radio-t.com/thumbnail.jpg", item.getThumbnailUrl());
     }
 
     @Test
     public void noThumbnailUrlInDescription() throws Exception {
-        String url = item.extractThumbnailUrl("Blah blah");
-        assertNull(url);
+        item.extractThumbnailUrl("Blah blah");
+        assertNull(item.getThumbnailUrl());
     }
 
     @Test
     public void veryMessyThumbnailUrl() throws Exception {
-        String url = item.extractThumbnailUrl("<img    src=\"http://radio-t.com/thumbnail.jpg\" alt=\"thumbnail\" width=\"100\"/>");
-        assertEquals("http://radio-t.com/thumbnail.jpg", url);
+        item.extractThumbnailUrl("<img    src=\"http://radio-t.com/thumbnail.jpg\" alt=\"thumbnail\" width=\"100\"/>");
+        assertEquals("http://radio-t.com/thumbnail.jpg", item.getThumbnailUrl());
     }
 }

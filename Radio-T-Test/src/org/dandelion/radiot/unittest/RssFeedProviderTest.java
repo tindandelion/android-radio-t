@@ -4,7 +4,6 @@ import junit.framework.TestCase;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastList;
 import org.dandelion.radiot.podcasts.loader.RssFeedProvider;
-import org.dandelion.radiot.podcasts.loader.ThumbnailProvider;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -16,18 +15,16 @@ public class RssFeedProviderTest extends TestCase {
 	private PodcastList parsedItems;
 	private PodcastItem firstParsedItem;
 	protected boolean streamClosed;
-    private TestThumbnailProvider thumbnails;
 
     @Override
 	protected void setUp() throws Exception {
 		super.setUp();
-        thumbnails = new TestThumbnailProvider();
-		provider = createProvider();
+        provider = createProvider();
 		feedContent = "";
 	}
 
 	protected RssFeedProvider createProvider() {
-		return new RssFeedProvider(null, thumbnails) {
+		return new RssFeedProvider(null) {
 			@Override
 			protected InputStream openContentStream() throws IOException {
 				return new ByteArrayInputStream(getCompleteFeed().getBytes()) {
@@ -88,7 +85,7 @@ public class RssFeedProviderTest extends TestCase {
                 "&lt;p&gt;&lt;img src=\"http://www.radio-t.com/images/radio-t/rt302.jpg\" alt=\"\" /&gt;&lt;/p&gt;\n" +
                 "</description>");
         parseRssFeed();
-        assertEquals("http://www.radio-t.com/images/radio-t/rt302.jpg", thumbnails.requestedUrl);
+        assertEquals("http://www.radio-t.com/images/radio-t/rt302.jpg", firstParsedItem.getThumbnailUrl());
     }
 
     public void testEnsureStreamIsClosed() throws Exception {
@@ -122,14 +119,4 @@ public class RssFeedProviderTest extends TestCase {
 				+ feedContent + "</channel></rss>";
 	}
 
-    private static class TestThumbnailProvider implements ThumbnailProvider {
-        public final byte[] thumbnailData = new byte[0];
-        public String requestedUrl;
-
-        @Override
-        public byte[] thumbnailDataFor(String url) {
-            requestedUrl = url;
-            return thumbnailData;
-        }
-    }
 }

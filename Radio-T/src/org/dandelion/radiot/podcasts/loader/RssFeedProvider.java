@@ -15,11 +15,9 @@ public class RssFeedProvider implements PodcastsProvider {
     private PodcastList items;
 	private PodcastItem currentItem;
 	private String address;
-    private ThumbnailProvider thumbnails;
 
-    public RssFeedProvider(String address, ThumbnailProvider thumbnails) {
+    public RssFeedProvider(String address) {
         this.address = address;
-        this.thumbnails = thumbnails;
     }
 
     public PodcastList retrieve() throws Exception {
@@ -63,8 +61,7 @@ public class RssFeedProvider implements PodcastsProvider {
         item.getChild("description").setEndTextElementListener(new EndTextElementListener() {
             @Override
             public void end(String body) {
-                String tu = currentItem.extractThumbnailUrl(body);
-                currentItem.setThumbnailData(thumbnails.thumbnailDataFor(tu));
+                currentItem.extractThumbnailUrl(body);
             }
         });
 

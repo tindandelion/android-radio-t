@@ -56,23 +56,6 @@ public class PodcastListLoadingTests
         app.wasClosed();
     }
 
-    public void testGivenAFeedItemWithThumbnailLink_ShouldRetrieveItsContents() throws Exception {
-        final String thumbnailUrl = "/images/radio-t/rt307.jpg";
-        final String feed = rssFeed()
-                .item(rssItem()
-                        .title("Радио-Т 140")
-                        .pubDate("Sun, 13 Jun 2010 01:37:22 +0000")
-                        .thumbnailUrl(thumbnailUrl))
-                .done();
-
-        app = startApplication();
-        backend.hasReceivedRequestForRss();
-        backend.respondSuccessWith(feed);
-
-        backend.hasReceivedRequestForUrl(thumbnailUrl);
-    }
-
-    // TODO: This test duplicates the previous
     public void testGivenAFeedItemWithThumbnailLink_ShouldFirstDisplayAnItemAndThenRetrieveTheThumbnail() throws Exception {
         final String thumbnailUrl = "/images/radio-t/rt307.jpg";
         final String feed = rssFeed()
@@ -174,7 +157,6 @@ public class PodcastListLoadingTests
 
     private static class TestPodcastsPlatform implements PodcastLoaderFactory {
         private static String CACHE_FILENAME = "test-show";
-        private static final String BASE_URL = TestRssServer.addressForUrl("");
         private static final String RSS_URL = TestRssServer.addressForUrl("/rss");
         private static final int CACHE_FORMAT_VERSION = 0;
         private static final int LONG_AGO = 0;
@@ -193,8 +175,7 @@ public class PodcastListLoadingTests
 
         @Override
         public PodcastListLoader createLoaderForShow(String name) {
-            HttpThumbnailProvider thumbnails = new HttpThumbnailProvider(BASE_URL);
-            RssFeedProvider rssProvider = new RssFeedProvider(RSS_URL, thumbnails);
+            RssFeedProvider rssProvider = new RssFeedProvider(RSS_URL);
             return new AsyncPodcastListLoader(rssProvider, localCache);
         }
 
