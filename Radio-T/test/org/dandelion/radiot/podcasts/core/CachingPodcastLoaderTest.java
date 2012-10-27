@@ -15,14 +15,14 @@ public class CachingPodcastLoaderTest {
 
     private final PodcastsProvider provider = mock(PodcastsProvider.class);
     private final PodcastsCache cache = mock(PodcastsCache.class);
-    private final CachingPodcastLoader loader = new CachingPodcastLoader(provider, cache);
     private final PodcastsConsumer consumer = mock(PodcastsConsumer.class);
+    private final CachingPodcastLoader loader = new CachingPodcastLoader(provider, cache, consumer);
 
     @Test
     public void whenCacheHasNoData_ShouldRetrieveListFromRealProvider() throws Exception {
         cacheHasNoData();
 
-        loader.retrieveTo(consumer);
+        loader.retrieve();
 
         verify(consumer).updateList(remoteList);
     }
@@ -32,7 +32,7 @@ public class CachingPodcastLoaderTest {
     public void whenTheCacheHasNoData_ShouldUpdateItWithNewData() throws Exception {
         cacheHasNoData();
 
-        loader.retrieveTo(consumer);
+        loader.retrieve();
         verify(cache).updateWith(remoteList);
     }
 
@@ -40,7 +40,7 @@ public class CachingPodcastLoaderTest {
     public void whenCacheHasFreshData_RetrieveDataFromCache() throws Exception {
         cacheHasFreshData();
 
-        loader.retrieveTo(consumer);
+        loader.retrieve();
         verify(consumer).updateList(cachedList);
     }
 
@@ -48,7 +48,7 @@ public class CachingPodcastLoaderTest {
     public void whenCacheHasExpiredData_ShouldPopulateDataFromCacheFirstAndThenFromServer() throws Exception {
         cacheHasExpiredData();
 
-        loader.retrieveTo(consumer);
+        loader.retrieve();
         verify(consumer).updateList(cachedList);
         verify(consumer).updateList(remoteList);
     }
@@ -57,7 +57,7 @@ public class CachingPodcastLoaderTest {
     public void whenCacheHasExpiredData_ShouldRefreshItFromServer() throws Exception {
         cacheHasExpiredData();
 
-        loader.retrieveTo(consumer);
+        loader.retrieve();
         verify(cache).updateWith(remoteList);
     }
 

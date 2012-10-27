@@ -9,22 +9,25 @@ public class PodcastListLoader {
     private ProgressListener progressListener = ProgressListener.Null;
     private PodcastsConsumer consumer = PodcastsConsumer.Null;
 
-    private CachingPodcastLoader podcasts;
     private ThumbnailProvider thumbnails;
 
     private UpdateTask task;
+    private PodcastsCache cache;
+    private PodcastsProvider podcasts;
 
     public PodcastListLoader(PodcastsProvider podcasts, PodcastsCache cache, ThumbnailProvider thumbnails) {
-        this.podcasts = new CachingPodcastLoader(podcasts, cache);
         this.thumbnails = thumbnails;
+        this.podcasts = podcasts;
+        this.cache = cache;
     }
 
     public void refreshFromServer() {
-        startRefreshTask(true);
+        cache.reset();
+        startRefreshTask();
     }
 
     public void refreshFromCache() {
-        startRefreshTask(false);
+        startRefreshTask();
     }
 
     public void taskFinished() {
@@ -46,42 +49,47 @@ public class PodcastListLoader {
         return task != null;
     }
 
-    protected void startRefreshTask(boolean resetCache) {
+    protected void startRefreshTask() {
         if (!isInProgress()) {
-            task = new UpdateTask(resetCache);
+            task = new UpdateTask();
             task.execute();
         }
     }
 
     class UpdateTask extends AsyncTask<Void, Runnable, Exception> implements PodcastsConsumer {
-        private boolean resetCache;
+        private PodcastList list;
 
-        public UpdateTask(boolean resetCache) {
-            this.resetCache = resetCache;
+        public UpdateTask() {
         }
 
         @Override
         protected Exception doInBackground(Void... params) {
             try {
-                if (resetCache) {
-                    podcasts.resetCache();
-                }
-                podcasts.retrieveTo(this);
+                retrievePodcastList();
+                retrieveThumbnails();
             } catch (Exception e) {
                 return e;
             }
             return null;
         }
 
+        private void retrievePodcastList() throws Exception {
+            new CachingPodcastLoader(podcasts, cache, this).retrieve();
+        }
+
+        private void retrieveThumbnails() {
+            new ThumbnailLoader(list, thumbnails, this).retrieve();
+        }
+
         @Override
-        public void updateList(final PodcastList podcasts) {
+        public void updateList(final PodcastList pl) {
+            this.list = pl;
             publishProgress(new Runnable() {
                 @Override
                 public void run() {
-                    consumer.updateList(podcasts);
+                    consumer.updateList(pl);
                 }
             });
-            retrieveThumbnails(podcasts);
         }
 
         @Override
@@ -94,9 +102,6 @@ public class PodcastListLoader {
             });
         }
 
-        private void retrieveThumbnails(PodcastList list) {
-            new ThumbnailLoader(list, thumbnails, this).retrieve();
-        }
 
         @Override
         protected void onProgressUpdate(Runnable... values) {
