@@ -7,7 +7,7 @@ import org.dandelion.radiot.endtoend.podcasts.helpers.PodcastListRunner;
 import org.dandelion.radiot.endtoend.podcasts.helpers.TestRssServer;
 import org.dandelion.radiot.podcasts.core.*;
 import org.dandelion.radiot.podcasts.loader.*;
-import org.dandelion.radiot.podcasts.ui.PodcastLoaderFactory;
+import org.dandelion.radiot.podcasts.ui.PodcastClientFactory;
 import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
 
 import java.io.File;
@@ -133,7 +133,7 @@ public class PodcastListLoadingTests
         super.setUp();
         backend = new TestRssServer();
         platform = new TestPodcastsPlatform(context());
-        PodcastListActivity.loaderFactory = platform;
+        PodcastListActivity.clientFactory = platform;
     }
 
     @Override
@@ -155,7 +155,7 @@ public class PodcastListLoadingTests
         return getInstrumentation().getTargetContext();
     }
 
-    private static class TestPodcastsPlatform implements PodcastLoaderFactory {
+    private static class TestPodcastsPlatform implements PodcastClientFactory {
         private static String CACHE_FILENAME = "test-show";
         private static final String RSS_URL = TestRssServer.addressForUrl("/rss");
         private static final String THUMBNAIL_URL = TestRssServer.addressForUrl("");
@@ -175,10 +175,10 @@ public class PodcastListLoadingTests
         }
 
         @Override
-        public PodcastListLoader createLoaderForShow(String name) {
+        public PodcastListClient createLoaderForShow(String name) {
             RssFeedProvider rssProvider = new RssFeedProvider(RSS_URL);
             ThumbnailProvider thumbnails = new HttpThumbnailProvider(THUMBNAIL_URL);
-            return new PodcastListLoader(rssProvider, localCache, thumbnails);
+            return new PodcastListClient(rssProvider, localCache, thumbnails);
         }
 
         public void saveInLocalCache(PodcastList pl) {

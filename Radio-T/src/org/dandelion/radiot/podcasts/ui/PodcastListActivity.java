@@ -9,14 +9,14 @@ import android.view.MenuItem;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import org.dandelion.radiot.R;
-import org.dandelion.radiot.podcasts.loader.PodcastListLoader;
+import org.dandelion.radiot.podcasts.loader.PodcastListClient;
 import org.dandelion.radiot.podcasts.main.PodcastsApp;
 import org.dandelion.radiot.util.CustomTitleActivity;
 
 public class PodcastListActivity extends CustomTitleActivity {
-    public static PodcastLoaderFactory loaderFactory = null;
+    public static PodcastClientFactory clientFactory = null;
 
-    private PodcastListLoader loader;
+    private PodcastListClient client;
     private ProgressIndicator progress;
 
     public static Intent createIntent(Context context, String title, String showName) {
@@ -58,20 +58,20 @@ public class PodcastListActivity extends CustomTitleActivity {
     }
 
     protected void attachToLoader(String show, PodcastListAdapter la, ProgressIndicator pi) {
-		loader = loaderFactory.createLoaderForShow(show);
-		loader.attach(pi, la);
+		client = clientFactory.createLoaderForShow(show);
+		client.attach(pi, la);
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		loader.refreshFromCache();
+		client.refreshFromCache();
 	}
 	
 	@Override
 	protected void onStop() {
 		super.onStop();
-		loader.detach();
+		client.detach();
 	}
 
 	@Override
@@ -86,7 +86,7 @@ public class PodcastListActivity extends CustomTitleActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.refresh:
-            loader.refreshFromServer();
+            client.refreshFromServer();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

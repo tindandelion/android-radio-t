@@ -2,12 +2,12 @@ package org.dandelion.radiot.podcasts.main;
 
 import android.content.Context;
 import org.dandelion.radiot.podcasts.loader.*;
-import org.dandelion.radiot.podcasts.ui.PodcastLoaderFactory;
+import org.dandelion.radiot.podcasts.ui.PodcastClientFactory;
 
 import java.io.File;
 import java.util.HashMap;
 
-public class PodcastsLoaderPlatform implements PodcastLoaderFactory {
+public class PodcastClientPlatform implements PodcastClientFactory {
     private static final String THUMBNAIL_HOST = "http://www.radio-t.com";
     private static final int CACHE_FORMAT_VERSION = 5;
 
@@ -24,12 +24,12 @@ public class PodcastsLoaderPlatform implements PodcastLoaderFactory {
 
     private Context context;
 
-    public PodcastsLoaderPlatform(Context context) {
+    public PodcastClientPlatform(Context context) {
         this.context = context;
     }
 
     @Override
-    public PodcastListLoader createLoaderForShow(String name) {
+    public PodcastListClient createLoaderForShow(String name) {
         PodcastProperties props = propertiesForShow(name);
         return createPodcastLoader(props);
     }
@@ -38,8 +38,8 @@ public class PodcastsLoaderPlatform implements PodcastLoaderFactory {
         return shows.get(name);
     }
 
-    private PodcastListLoader createPodcastLoader(PodcastProperties props) {
-        return new PodcastListLoader(
+    private PodcastListClient createPodcastLoader(PodcastProperties props) {
+        return new PodcastListClient(
                 new RssFeedProvider(props.url),
                 createPodcastsCache(props.name),
                 createThumbnailProvider());

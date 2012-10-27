@@ -5,7 +5,7 @@ import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastList;
 
 @SuppressWarnings("unchecked")
-public class PodcastListLoader {
+public class PodcastListClient {
     private ProgressListener progressListener = ProgressListener.Null;
     private PodcastsConsumer consumer = PodcastsConsumer.Null;
 
@@ -15,7 +15,7 @@ public class PodcastListLoader {
     private PodcastsCache cache;
     private PodcastsProvider podcasts;
 
-    public PodcastListLoader(PodcastsProvider podcasts, PodcastsCache cache, ThumbnailProvider thumbnails) {
+    public PodcastListClient(PodcastsProvider podcasts, PodcastsCache cache, ThumbnailProvider thumbnails) {
         this.thumbnails = thumbnails;
         this.podcasts = podcasts;
         this.cache = cache;
