@@ -48,7 +48,7 @@ class PodcastListAdapter extends ArrayAdapter<PodcastVisual> implements Podcasts
 
     private void setPodcastIcon(View row, PodcastVisual pv) {
         ImageView image = (ImageView) row.findViewById(R.id.podcast_item_icon);
-        image.setImageDrawable(pv.getThumbnail());
+        image.setImageDrawable(pv.thumbnail);
     }
 
     private void setElementText(View row, int resourceId, String value) {
@@ -64,5 +64,22 @@ class PodcastListAdapter extends ArrayAdapter<PodcastVisual> implements Podcasts
         for (PodcastItem item : podcasts) {
             add(new PodcastVisual(item, defaultThumbnail, res));
         }
+    }
+
+    @Override
+    public void updateThumbnail(PodcastItem item, byte[] thumbnail) {
+        PodcastVisual visual = findVisualForItem(item);
+        visual.setThumbnail(thumbnail);
+        notifyDataSetChanged();
+    }
+
+    private PodcastVisual findVisualForItem(PodcastItem item) {
+        for(int i = 0; i < getCount(); i++) {
+            PodcastVisual visual = getItem(i);
+            if (visual.podcast == item) {
+                return visual;
+            }
+        }
+        return null;
     }
 }

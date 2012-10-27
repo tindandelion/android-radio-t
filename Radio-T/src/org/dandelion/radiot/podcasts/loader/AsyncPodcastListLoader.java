@@ -57,7 +57,7 @@ public class AsyncPodcastListLoader implements PodcastListLoader {
         }
     }
 
-    class UpdateTask extends AsyncTask<Void, PodcastList, Exception> implements PodcastsConsumer {
+    class UpdateTask extends AsyncTask<Void, Runnable, Exception> implements PodcastsConsumer {
         private boolean resetCache;
 
         public UpdateTask(boolean resetCache) {
@@ -78,27 +78,33 @@ public class AsyncPodcastListLoader implements PodcastListLoader {
         }
 
         @Override
-        public void updateList(PodcastList podcasts) {
-            publishProgress(podcasts);
+        public void updateList(final PodcastList podcasts) {
+            publishProgress(new Runnable() {
+                @Override
+                public void run() {
+                    consumer.updateList(podcasts);
+                }
+            });
             retrieveThumbnails(podcasts);
         }
 
-        private void retrieveThumbnails(PodcastList list) {
-            new ThumbnailLoader(list, thumbnails, thumbnailConsumer()).retrieve();
+        @Override
+        public void updateThumbnail(final PodcastItem item, final byte[] thumbnail) {
+            publishProgress(new Runnable() {
+                @Override
+                public void run() {
+                    consumer.updateThumbnail(item, thumbnail);
+                }
+            });
         }
 
-        private ThumbnailConsumer thumbnailConsumer() {
-            return new ThumbnailConsumer() {
-                @Override
-                public void consume(PodcastItem item, byte[] thumbnail) {
-
-                }
-            };
+        private void retrieveThumbnails(PodcastList list) {
+            new ThumbnailLoader(list, thumbnails, this).retrieve();
         }
 
         @Override
-        protected void onProgressUpdate(PodcastList... values) {
-            consumer.updateList(values[0]);
+        protected void onProgressUpdate(Runnable... values) {
+            values[0].run();
         }
 
         @Override

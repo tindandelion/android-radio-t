@@ -9,36 +9,29 @@ import org.dandelion.radiot.podcasts.core.PodcastItem;
 
 public class PodcastVisual {
     public final PodcastItem podcast;
-    private Drawable thumbnail;
+    public Drawable thumbnail;
     private Resources resources;
-    private Drawable defaultThumbnail;
 
-    public PodcastVisual(PodcastItem p, Drawable defaultThumbnail, Resources res) {
+    public PodcastVisual(PodcastItem p, Drawable thumbnail, Resources res) {
         this.podcast = p;
-        this.defaultThumbnail = defaultThumbnail;
+        this.thumbnail = thumbnail;
         this.resources = res;
     }
 
-    public Drawable getThumbnail() {
-        if (thumbnail == null) {
-            thumbnail = decodeThumbnail();
+    public void setThumbnail(byte[] data) {
+        Drawable newValue = createBitmapDrawable(data);
+        if (newValue != null) {
+            thumbnail = newValue;
         }
-        return thumbnail;
     }
 
-    private Drawable decodeThumbnail() {
-        Bitmap bitmap = null;
-        byte[] thData = podcast.getThumbnailData();
-
+    private Drawable createBitmapDrawable(byte[] thData) {
         if (thData != null) {
-            bitmap = BitmapFactory.decodeByteArray(thData, 0, thData.length);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(thData, 0, thData.length);
+            if (bitmap != null) {
+                return new BitmapDrawable(resources, bitmap);
+            }
         }
-
-        if (bitmap != null) {
-            return new BitmapDrawable(resources, bitmap);
-        } else {
-            return defaultThumbnail;
-        }
+        return null;
     }
-
 }

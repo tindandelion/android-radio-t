@@ -12,21 +12,21 @@ public class ThumbnailLoaderTest {
     final static String URL = "http://radio-t.com/thumbnail.jpg";
     final static byte[] THUMBNAIL = new byte[0];
 
-    final ThumbnailProvider thumbnailProvider = mock(ThumbnailProvider.class);
-    final ThumbnailConsumer thumbnailConsumer = mock(ThumbnailConsumer.class);
+    final ThumbnailProvider provider = mock(ThumbnailProvider.class);
+    final PodcastsConsumer consumer = mock(PodcastsConsumer.class);
 
     @Test
     public void feedsThumbnailToConsumer() throws Exception {
         final PodcastItem item = anItemWithThumbnailUrl();
         final PodcastList list = aListWith(item);
 
-        when(thumbnailProvider.thumbnailDataFor(URL))
+        when(provider.thumbnailDataFor(URL))
                 .thenReturn(THUMBNAIL);
 
-        final ThumbnailLoader loader = new ThumbnailLoader(list, thumbnailProvider, thumbnailConsumer);
+        final ThumbnailLoader loader = new ThumbnailLoader(list, provider, consumer);
 
         loader.retrieve();
-        verify(thumbnailConsumer).consume(item, THUMBNAIL);
+        verify(consumer).updateThumbnail(item, THUMBNAIL);
     }
 
     private PodcastItem anItemWithThumbnailUrl() {
