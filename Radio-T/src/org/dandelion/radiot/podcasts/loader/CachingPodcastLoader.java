@@ -11,6 +11,10 @@ public class CachingPodcastLoader {
         this.cache = cache;
     }
 
+    public void resetCache() {
+        cache.reset();
+    }
+
     public void retrieveTo(PodcastsConsumer consumer) throws Exception {
         if (cache.hasData()) {
             populateCacheData(consumer);

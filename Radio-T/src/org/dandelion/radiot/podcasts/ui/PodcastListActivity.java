@@ -65,21 +65,13 @@ public class PodcastListActivity extends CustomTitleActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		loader.refresh(false);
+		loader.refreshFromCache();
 	}
 	
 	@Override
 	protected void onStop() {
 		super.onStop();
 		loader.detach();
-	}
-
-	@Override
-	protected void onDestroy() {
-		if (null != loader) {
-			loader.cancelUpdate();
-		}
-		super.onDestroy();
 	}
 
 	@Override
@@ -94,7 +86,7 @@ public class PodcastListActivity extends CustomTitleActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.refresh:
-			loader.refresh(true);
+            loader.refreshFromServer();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

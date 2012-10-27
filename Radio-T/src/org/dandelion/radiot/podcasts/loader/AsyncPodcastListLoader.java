@@ -8,57 +8,64 @@ public class AsyncPodcastListLoader implements PodcastListLoader {
     private ProgressListener progressListener = ProgressListener.Null;
     private PodcastsConsumer consumer = PodcastsConsumer.Null;
 
-    protected PodcastsCache cache;
     private CachingPodcastLoader podcasts;
     private UpdateTask task;
 
     public AsyncPodcastListLoader(PodcastsProvider podcasts, PodcastsCache cache) {
-        this.cache = cache;
         this.podcasts = new CachingPodcastLoader(podcasts, cache);
     }
 
-    public void refresh(boolean resetCache) {
-        if (resetCache) {
-            cache.reset();
-        }
-        startRefreshTask();
+    @Override
+    public void refreshFromServer() {
+        startRefreshTask(true);
+    }
+
+    @Override
+    public void refreshFromCache() {
+        startRefreshTask(false);
     }
 
     public void taskFinished() {
         task = null;
     }
 
+    @Override
     public void detach() {
         progressListener = ProgressListener.Null;
         consumer = PodcastsConsumer.Null;
     }
 
+    @Override
     public void attach(ProgressListener listener, PodcastsConsumer consumer) {
         this.progressListener = listener;
         this.consumer = consumer;
     }
 
+
     protected boolean isInProgress() {
         return task != null;
     }
 
-    protected void startRefreshTask() {
+    protected void startRefreshTask(boolean resetCache) {
         if (!isInProgress()) {
-            task = new UpdateTask();
+            task = new UpdateTask(resetCache);
             task.execute();
         }
     }
 
-    public void cancelUpdate() {
-        if (isInProgress()) {
-            task.cancel(true);
-        }
-    }
-
     class UpdateTask extends AsyncTask<Void, PodcastList, Exception> implements PodcastsConsumer {
+        private boolean resetCache;
+
+        public UpdateTask(boolean resetCache) {
+            this.resetCache = resetCache;
+        }
+
         @Override
         protected Exception doInBackground(Void... params) {
             try {
+                if (resetCache) {
+                    podcasts.resetCache();
+                }
                 podcasts.retrieveTo(this);
             } catch (Exception e) {
                 return e;
@@ -91,11 +98,6 @@ public class AsyncPodcastListLoader implements PodcastListLoader {
         @Override
         protected void onPreExecute() {
             progressListener.onStarted();
-        }
-
-        @Override
-        protected void onCancelled() {
-            finishSelf();
         }
 
         private void finishSelf() {
