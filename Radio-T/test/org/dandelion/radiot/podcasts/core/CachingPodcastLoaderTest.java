@@ -24,7 +24,7 @@ public class CachingPodcastLoaderTest {
 
         loader.retrieveTo(consumer);
 
-        verify(consumer).updatePodcasts(remoteList);
+        verify(consumer).updateList(remoteList);
     }
 
 
@@ -41,7 +41,7 @@ public class CachingPodcastLoaderTest {
         cacheHasFreshData();
 
         loader.retrieveTo(consumer);
-        verify(consumer).updatePodcasts(cachedList);
+        verify(consumer).updateList(cachedList);
     }
 
     @Test
@@ -49,8 +49,8 @@ public class CachingPodcastLoaderTest {
         cacheHasExpiredData();
 
         loader.retrieveTo(consumer);
-        verify(consumer).updatePodcasts(cachedList);
-        verify(consumer).updatePodcasts(remoteList);
+        verify(consumer).updateList(cachedList);
+        verify(consumer).updateList(remoteList);
     }
 
     @Test

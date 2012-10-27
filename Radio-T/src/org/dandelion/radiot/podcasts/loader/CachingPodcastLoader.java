@@ -32,12 +32,12 @@ public class CachingPodcastLoader {
 
     private void populateCacheData(PodcastsConsumer consumer) {
         PodcastList pl = cache.getData();
-        consumer.updatePodcasts(pl);
+        consumer.updateList(pl);
     }
 
     private void obtainNewData(PodcastsConsumer consumer) throws Exception {
         PodcastList pl = podcasts.retrieve();
         cache.updateWith(pl);
-        consumer.updatePodcasts(pl);
+        consumer.updateList(pl);
     }
 }

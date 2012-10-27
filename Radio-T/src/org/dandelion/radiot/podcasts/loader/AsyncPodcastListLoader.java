@@ -1,6 +1,7 @@
 package org.dandelion.radiot.podcasts.loader;
 
 import android.os.AsyncTask;
+import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastList;
 
 @SuppressWarnings("unchecked")
@@ -9,10 +10,13 @@ public class AsyncPodcastListLoader implements PodcastListLoader {
     private PodcastsConsumer consumer = PodcastsConsumer.Null;
 
     private CachingPodcastLoader podcasts;
+    private ThumbnailProvider thumbnails;
+
     private UpdateTask task;
 
-    public AsyncPodcastListLoader(PodcastsProvider podcasts, PodcastsCache cache) {
+    public AsyncPodcastListLoader(PodcastsProvider podcasts, PodcastsCache cache, ThumbnailProvider thumbnails) {
         this.podcasts = new CachingPodcastLoader(podcasts, cache);
+        this.thumbnails = thumbnails;
     }
 
     @Override
@@ -74,13 +78,27 @@ public class AsyncPodcastListLoader implements PodcastListLoader {
         }
 
         @Override
-        public void updatePodcasts(PodcastList podcasts) {
+        public void updateList(PodcastList podcasts) {
             publishProgress(podcasts);
+            retrieveThumbnails(podcasts);
+        }
+
+        private void retrieveThumbnails(PodcastList list) {
+            new ThumbnailLoader(list, thumbnails, thumbnailConsumer()).retrieve();
+        }
+
+        private ThumbnailConsumer thumbnailConsumer() {
+            return new ThumbnailConsumer() {
+                @Override
+                public void consume(PodcastItem item, byte[] thumbnail) {
+
+                }
+            };
         }
 
         @Override
         protected void onProgressUpdate(PodcastList... values) {
-            consumer.updatePodcasts(values[0]);
+            consumer.updateList(values[0]);
         }
 
         @Override

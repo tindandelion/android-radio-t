@@ -158,6 +158,7 @@ public class PodcastListLoadingTests
     private static class TestPodcastsPlatform implements PodcastLoaderFactory {
         private static String CACHE_FILENAME = "test-show";
         private static final String RSS_URL = TestRssServer.addressForUrl("/rss");
+        private static final String THUMBNAIL_URL = TestRssServer.addressForUrl("");
         private static final int CACHE_FORMAT_VERSION = 0;
         private static final int LONG_AGO = 0;
         private PodcastsCache localCache;
@@ -176,7 +177,8 @@ public class PodcastListLoadingTests
         @Override
         public PodcastListLoader createLoaderForShow(String name) {
             RssFeedProvider rssProvider = new RssFeedProvider(RSS_URL);
-            return new AsyncPodcastListLoader(rssProvider, localCache);
+            ThumbnailProvider thumbnails = new HttpThumbnailProvider(THUMBNAIL_URL);
+            return new AsyncPodcastListLoader(rssProvider, localCache, thumbnails);
         }
 
         public void saveInLocalCache(PodcastList pl) {

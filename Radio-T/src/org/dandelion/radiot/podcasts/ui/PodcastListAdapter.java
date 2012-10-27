@@ -57,7 +57,7 @@ class PodcastListAdapter extends ArrayAdapter<PodcastVisual> implements Podcasts
     }
 
     @Override
-    public void updatePodcasts(PodcastList podcasts) {
+    public void updateList(PodcastList podcasts) {
         final Resources res = getContext().getResources();
 
         clear();
