@@ -39,7 +39,7 @@ public class PodcastsLoaderPlatform implements PodcastLoaderFactory {
     }
 
     private PodcastListLoader createPodcastLoader(PodcastProperties props) {
-        return new AsyncPodcastListLoader(
+        return new PodcastListLoader(
                 new RssFeedProvider(props.url),
                 createPodcastsCache(props.name),
                 createThumbnailProvider());

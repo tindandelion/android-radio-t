@@ -178,7 +178,7 @@ public class PodcastListLoadingTests
         public PodcastListLoader createLoaderForShow(String name) {
             RssFeedProvider rssProvider = new RssFeedProvider(RSS_URL);
             ThumbnailProvider thumbnails = new HttpThumbnailProvider(THUMBNAIL_URL);
-            return new AsyncPodcastListLoader(rssProvider, localCache, thumbnails);
+            return new PodcastListLoader(rssProvider, localCache, thumbnails);
         }
 
         public void saveInLocalCache(PodcastList pl) {

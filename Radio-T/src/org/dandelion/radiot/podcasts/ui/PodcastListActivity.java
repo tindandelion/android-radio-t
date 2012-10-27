@@ -9,8 +9,8 @@ import android.view.MenuItem;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import org.dandelion.radiot.R;
-import org.dandelion.radiot.podcasts.main.PodcastsApp;
 import org.dandelion.radiot.podcasts.loader.PodcastListLoader;
+import org.dandelion.radiot.podcasts.main.PodcastsApp;
 import org.dandelion.radiot.util.CustomTitleActivity;
 
 public class PodcastListActivity extends CustomTitleActivity {
