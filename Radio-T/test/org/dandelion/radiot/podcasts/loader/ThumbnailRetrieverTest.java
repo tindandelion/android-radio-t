@@ -4,11 +4,9 @@ import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastList;
 import org.junit.Test;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
-public class ThumbnailLoaderTest {
+public class ThumbnailRetrieverTest {
     final static String URL = "http://radio-t.com/thumbnail.jpg";
     final static byte[] THUMBNAIL = new byte[0];
 
@@ -17,21 +15,32 @@ public class ThumbnailLoaderTest {
 
     @Test
     public void feedsThumbnailToConsumer() throws Exception {
-        final PodcastItem item = anItemWithThumbnailUrl();
+        final PodcastItem item = anItemWithThumbnailUrl(URL);
         final PodcastList list = aListWith(item);
 
         when(provider.thumbnailDataFor(URL))
                 .thenReturn(THUMBNAIL);
 
-        final ThumbnailLoader loader = new ThumbnailLoader(list, provider, consumer);
+        final ThumbnailRetriever retriever = new ThumbnailRetriever(list, provider, consumer);
 
-        loader.retrieve();
+        retriever.retrieve();
         verify(consumer).updateThumbnail(item, THUMBNAIL);
     }
 
-    private PodcastItem anItemWithThumbnailUrl() {
+    @Test
+    public void whenNoThumbnailUrl_skipsItem() throws Exception {
+        final PodcastItem item = anItemWithThumbnailUrl(null);
+        final PodcastList list = aListWith(item);
+
+        final ThumbnailRetriever retriever = new ThumbnailRetriever(list, provider, consumer);
+
+        retriever.retrieve();
+        verifyZeroInteractions(consumer);
+    }
+
+    private PodcastItem anItemWithThumbnailUrl(String url) {
         final PodcastItem item = new PodcastItem();
-        item.setThumbnailUrl(URL);
+        item.setThumbnailUrl(url);
         return item;
     }
 

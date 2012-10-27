@@ -1,6 +1,6 @@
 package org.dandelion.radiot.podcasts.core;
 
-import org.dandelion.radiot.podcasts.loader.CachingPodcastLoader;
+import org.dandelion.radiot.podcasts.loader.PodcastListRetriever;
 import org.dandelion.radiot.podcasts.loader.PodcastsCache;
 import org.dandelion.radiot.podcasts.loader.PodcastsConsumer;
 import org.dandelion.radiot.podcasts.loader.PodcastsProvider;
@@ -16,13 +16,13 @@ public class CachingPodcastLoaderTest {
     private final PodcastsProvider provider = mock(PodcastsProvider.class);
     private final PodcastsCache cache = mock(PodcastsCache.class);
     private final PodcastsConsumer consumer = mock(PodcastsConsumer.class);
-    private final CachingPodcastLoader loader = new CachingPodcastLoader(provider, cache, consumer);
+    private final PodcastListRetriever listRetriever = new PodcastListRetriever(provider, cache, consumer);
 
     @Test
     public void whenCacheHasNoData_ShouldRetrieveListFromRealProvider() throws Exception {
         cacheHasNoData();
 
-        loader.retrieve();
+        listRetriever.retrieve();
 
         verify(consumer).updateList(remoteList);
     }
@@ -32,7 +32,7 @@ public class CachingPodcastLoaderTest {
     public void whenTheCacheHasNoData_ShouldUpdateItWithNewData() throws Exception {
         cacheHasNoData();
 
-        loader.retrieve();
+        listRetriever.retrieve();
         verify(cache).updateWith(remoteList);
     }
 
@@ -40,7 +40,7 @@ public class CachingPodcastLoaderTest {
     public void whenCacheHasFreshData_RetrieveDataFromCache() throws Exception {
         cacheHasFreshData();
 
-        loader.retrieve();
+        listRetriever.retrieve();
         verify(consumer).updateList(cachedList);
     }
 
@@ -48,7 +48,7 @@ public class CachingPodcastLoaderTest {
     public void whenCacheHasExpiredData_ShouldPopulateDataFromCacheFirstAndThenFromServer() throws Exception {
         cacheHasExpiredData();
 
-        loader.retrieve();
+        listRetriever.retrieve();
         verify(consumer).updateList(cachedList);
         verify(consumer).updateList(remoteList);
     }
@@ -57,7 +57,7 @@ public class CachingPodcastLoaderTest {
     public void whenCacheHasExpiredData_ShouldRefreshItFromServer() throws Exception {
         cacheHasExpiredData();
 
-        loader.retrieve();
+        listRetriever.retrieve();
         verify(cache).updateWith(remoteList);
     }
 

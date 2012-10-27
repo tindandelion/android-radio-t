@@ -2,12 +2,12 @@ package org.dandelion.radiot.podcasts.loader;
 
 import org.dandelion.radiot.podcasts.core.PodcastList;
 
-public class CachingPodcastLoader {
+public class PodcastListRetriever {
     private final PodcastsProvider provider;
     private PodcastsCache cache;
     private PodcastsConsumer consumer;
 
-    public CachingPodcastLoader(PodcastsProvider provider, PodcastsCache cache, PodcastsConsumer consumer) {
+    public PodcastListRetriever(PodcastsProvider provider, PodcastsCache cache, PodcastsConsumer consumer) {
         this.provider = provider;
         this.cache = cache;
         this.consumer = consumer;

@@ -31,10 +31,6 @@ public class HttpThumbnailProviderTest extends TestCase {
         assertThat(thumbnails.thumbnailDataFor(nonExistentUrl), is(nullValue()));
     }
 
-    public void testReturnNullIfNowUrlIsSupplied() throws Exception {
-        assertThat(thumbnails.thumbnailDataFor(null), is(nullValue()));
-    }
-
     public void testJunkUri() throws Exception {
         String junkUrl = "http://ftp://Hello world/This is junk";
         assertThat(thumbnails.thumbnailDataFor(junkUrl), is(nullValue()));

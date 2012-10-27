@@ -74,11 +74,11 @@ public class PodcastListClient {
         }
 
         private void retrievePodcastList() throws Exception {
-            new CachingPodcastLoader(podcasts, cache, this).retrieve();
+            new PodcastListRetriever(podcasts, cache, this).retrieve();
         }
 
         private void retrieveThumbnails() {
-            new ThumbnailLoader(list, thumbnails, this).retrieve();
+            new ThumbnailRetriever(list, thumbnails, this).retrieve();
         }
 
         @Override

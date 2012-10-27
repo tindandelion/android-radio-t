@@ -18,9 +18,6 @@ public class HttpThumbnailProvider implements ThumbnailProvider {
 
     @Override
     public byte[] thumbnailDataFor(String url) {
-        if (url == null) {
-            return null;
-        }
         return retrieveDataFrom(constructFullUrl(url));
     }
 
