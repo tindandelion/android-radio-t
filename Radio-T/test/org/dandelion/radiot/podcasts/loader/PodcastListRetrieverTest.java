@@ -1,15 +1,12 @@
-package org.dandelion.radiot.podcasts.core;
+package org.dandelion.radiot.podcasts.loader;
 
-import org.dandelion.radiot.podcasts.loader.PodcastListRetriever;
-import org.dandelion.radiot.podcasts.loader.PodcastsCache;
-import org.dandelion.radiot.podcasts.loader.PodcastsConsumer;
-import org.dandelion.radiot.podcasts.loader.PodcastsProvider;
+import org.dandelion.radiot.podcasts.core.PodcastList;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.mockito.Mockito.*;
 
-public class CachingPodcastLoaderTest {
+public class PodcastListRetrieverTest {
     private final PodcastList cachedList = mock(PodcastList.class, "Cached list");
     private final PodcastList remoteList = mock(PodcastList.class, "Remote list");
 
