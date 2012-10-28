@@ -22,6 +22,7 @@ public class PodcastVisual {
     public final String showNotes;
 
     public Drawable thumbnail;
+    private PodcastItemView assocView;
 
     public PodcastVisual(PodcastItem p, Drawable thumbnail) {
         this.podcast = p;
@@ -31,9 +32,12 @@ public class PodcastVisual {
         this.thumbnail = thumbnail;
     }
 
-    public void setThumbnail(Drawable value) {
+    public void updateThumbnail(Drawable value) {
         if (value != null) {
             thumbnail = value;
+            if (assocView != null) {
+                assocView.setThumbnail(thumbnail);
+            }
         }
     }
 
@@ -60,5 +64,14 @@ public class PodcastVisual {
             return "#" + matcher.group();
         }
         return value;
+    }
+
+    public void disassociate() {
+        assocView = null;
+    }
+
+    public void associateWith(PodcastItemView row) {
+        assocView = row;
+        row.populateWith(this);
     }
 }

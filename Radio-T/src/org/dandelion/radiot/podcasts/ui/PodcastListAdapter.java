@@ -37,8 +37,25 @@ class PodcastListAdapter extends ArrayAdapter<PodcastVisual> implements Podcasts
         }
 
         PodcastVisual pv = getItem(position);
-        row.populateWith(pv);
+        associate(row, pv);
         return row;
+    }
+
+    private void associate(PodcastItemView row, PodcastVisual pv) {
+        disassoc(row);
+        assoc(row, pv);
+    }
+
+    private void assoc(PodcastItemView row, PodcastVisual pv) {
+        row.setTag(pv);
+        pv.associateWith(row);
+    }
+
+    private void disassoc(PodcastItemView row) {
+        PodcastVisual former = (PodcastVisual) row.getTag();
+        if (former != null) {
+            former.disassociate();
+        }
     }
 
     @Override
@@ -52,8 +69,7 @@ class PodcastListAdapter extends ArrayAdapter<PodcastVisual> implements Podcasts
     @Override
     public void updateThumbnail(PodcastItem item, byte[] thumbnail) {
         PodcastVisual pv = findVisualForItem(item);
-        pv.setThumbnail(createDrawable(thumbnail));
-        notifyDataSetChanged();
+        pv.updateThumbnail(createDrawable(thumbnail));
     }
 
     private Drawable createDrawable(byte[] thumbnail) {
