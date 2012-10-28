@@ -38,20 +38,25 @@ class PodcastListAdapter extends ArrayAdapter<PodcastVisual> implements Podcasts
             row = inflater.inflate(R.layout.podcast_list_item, parent, false);
         }
 
-        return fillRowWithData(row, getItem(position));
+        PodcastVisual pv = getItem(position);
+        return associate(row, pv);
     }
 
-    private View fillRowWithData(View row, PodcastVisual pv) {
-        setElementText(row, R.id.podcast_item_view_number, pv.number);
-        setElementText(row, R.id.podcast_item_view_date, pv.pubDate);
-        setElementText(row, R.id.podcast_item_view_shownotes, pv.showNotes);
-        setPodcastIcon(row, pv);
+    private View associate(View row, PodcastVisual pv) {
+        fillRowWithData(row, pv);
         return row;
     }
 
-    private void setPodcastIcon(View row, PodcastVisual pv) {
+    private void fillRowWithData(View row, PodcastVisual pv) {
+        setElementText(row, R.id.podcast_item_view_number, pv.number);
+        setElementText(row, R.id.podcast_item_view_date, pv.pubDate);
+        setElementText(row, R.id.podcast_item_view_shownotes, pv.showNotes);
+        setThumbnail(row, pv.thumbnail);
+    }
+
+    private void setThumbnail(View row, Drawable thumbnail) {
         ImageView image = (ImageView) row.findViewById(R.id.podcast_item_icon);
-        image.setImageDrawable(pv.thumbnail);
+        image.setImageDrawable(thumbnail);
     }
 
     private void setElementText(View row, int resourceId, String value) {

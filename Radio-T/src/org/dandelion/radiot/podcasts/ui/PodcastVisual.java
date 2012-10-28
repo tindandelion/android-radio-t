@@ -25,23 +25,10 @@ public class PodcastVisual {
 
     public PodcastVisual(PodcastItem p, Drawable thumbnail) {
         this.podcast = p;
-        this.number = extractNumberFrom(p.title);
-        this.pubDate = extractPubDateFrom(p.pubDate);
+        this.number = formatNumber(p.title);
+        this.pubDate = formatPubDate(p.pubDate);
         this.showNotes = extractShowNotes(p.showNotes);
         this.thumbnail = thumbnail;
-    }
-
-    private String extractShowNotes(String value) {
-        return value.trim();
-    }
-
-    private String extractPubDateFrom(String value) {
-        try {
-            Date date = INPUT_DATE_FORMAT.parse(value);
-            return OUTPUT_DATE_FORMAT.format(date);
-        } catch (ParseException e) {
-            return "";
-        }
     }
 
     public void setThumbnail(Drawable value) {
@@ -50,7 +37,20 @@ public class PodcastVisual {
         }
     }
 
-    private String extractNumberFrom(String value) {
+    private String extractShowNotes(String value) {
+        return value.trim();
+    }
+
+    private String formatPubDate(String value) {
+        try {
+            Date date = INPUT_DATE_FORMAT.parse(value);
+            return OUTPUT_DATE_FORMAT.format(date);
+        } catch (ParseException e) {
+            return "";
+        }
+    }
+
+    private String formatNumber(String value) {
         if (value == null) {
             return "";
         }
