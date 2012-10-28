@@ -34,4 +34,11 @@ public class PodcastItemView extends RelativeLayout {
         TextView view = (TextView) findViewById(id);
         view.setText(value);
     }
+
+    public void populateWith(PodcastVisual pv) {
+        setNumber(pv.number);
+        setPubDate(pv.pubDate);
+        setShowNotes(pv.showNotes);
+        setThumbnail(pv.thumbnail);
+    }
 }

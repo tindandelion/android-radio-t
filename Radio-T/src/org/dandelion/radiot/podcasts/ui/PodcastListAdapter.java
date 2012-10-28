@@ -37,15 +37,8 @@ class PodcastListAdapter extends ArrayAdapter<PodcastVisual> implements Podcasts
         }
 
         PodcastVisual pv = getItem(position);
-        populate(row, pv);
+        row.populateWith(pv);
         return row;
-    }
-
-    private void populate(PodcastItemView row, PodcastVisual pv) {
-        row.setNumber(pv.number);
-        row.setPubDate(pv.pubDate);
-        row.setShowNotes(pv.showNotes);
-        row.setThumbnail(pv.thumbnail);
     }
 
     @Override
@@ -58,8 +51,8 @@ class PodcastListAdapter extends ArrayAdapter<PodcastVisual> implements Podcasts
 
     @Override
     public void updateThumbnail(PodcastItem item, byte[] thumbnail) {
-        PodcastVisual visual = findVisualForItem(item);
-        visual.setThumbnail(createDrawable(thumbnail));
+        PodcastVisual pv = findVisualForItem(item);
+        pv.setThumbnail(createDrawable(thumbnail));
         notifyDataSetChanged();
     }
 
