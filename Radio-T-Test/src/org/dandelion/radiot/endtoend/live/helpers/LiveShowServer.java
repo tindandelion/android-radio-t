@@ -6,6 +6,7 @@ import org.dandelion.radiot.helpers.LiveStreamServer;
 import java.io.IOException;
 
 public class LiveShowServer extends LiveStreamServer {
+    public static final String SHOW_URL = DIRECT_URL;
     private boolean translationActivated = true;
 
     public LiveShowServer(Context context) throws IOException {

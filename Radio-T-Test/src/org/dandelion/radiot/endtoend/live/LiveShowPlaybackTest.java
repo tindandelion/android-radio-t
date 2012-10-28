@@ -76,11 +76,10 @@ public class LiveShowPlaybackTest extends
     }
 
     private void setupTestingApp(final LiveShowStateListener statusDisplayer) {
-        final String url = LiveShowServer.DIRECT_URL;
         getInstrumentation().runOnMainSync(new Runnable() {
             @Override
             public void run() {
-                liveShowStream = new TestableMediaPlayerStream(url);
+                liveShowStream = new TestableMediaPlayerStream(LiveShowServer.SHOW_URL);
                 LiveShowApp.setTestingInstance(new LiveShowApp() {
                     @Override
                     public AudioStream createAudioStream() {
