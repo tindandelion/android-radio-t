@@ -1,7 +1,6 @@
-package org.dandelion.radiot.integration.helpers;
+package org.dandelion.radiot.helpers;
 
 import android.content.Context;
-import org.dandelion.radiot.helpers.HttpServer;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -1,13 +1,14 @@
-package org.dandelion.radiot.accepttest;
+package org.dandelion.radiot.endtoend.live;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
-import org.dandelion.radiot.accepttest.drivers.LiveShowRunner;
+import org.dandelion.radiot.endtoend.live.helpers.LiveShowRunner;
 import org.dandelion.radiot.accepttest.testables.FakeStatusDisplayer;
-import org.dandelion.radiot.accepttest.testables.TestableMediaPlayerStream;
+import org.dandelion.radiot.endtoend.live.helpers.LiveShowServer;
+import org.dandelion.radiot.endtoend.live.helpers.TestableMediaPlayerStream;
 import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.live.core.AudioStream;
 import org.dandelion.radiot.live.core.LiveShowStateListener;
@@ -18,9 +19,10 @@ public class LiveShowPlaybackTest extends
         ActivityInstrumentationTestCase2<LiveShowActivity> {
     private LiveShowRunner runner;
     private TestableMediaPlayerStream liveShowStream;
+    private LiveShowServer backend;
 
     public void testStartStopPlayback() throws Exception {
-        liveShowStream.activateTranslation();
+        backend.activateTranslation();
 
         runner.startTranslation();
         runner.showsTranslationInProgress();
@@ -33,17 +35,17 @@ public class LiveShowPlaybackTest extends
     }
 
     public void testTryToReconnectContinuouslyInWaitingMode() throws Exception {
-        liveShowStream.suppressTranslation();
+        backend.suppressTranslation();
         runner.startTranslation();
         runner.showsWaiting();
 
-        liveShowStream.activateTranslation();
+        backend.activateTranslation();
         signalWaitTimeout();
         runner.showsTranslationInProgress();
     }
 
     public void testStopWaiting() throws Exception {
-        liveShowStream.suppressTranslation();
+        backend.suppressTranslation();
 
         runner.startTranslation();
         runner.showsWaiting();
@@ -62,20 +64,23 @@ public class LiveShowPlaybackTest extends
         FakeStatusDisplayer statusDisplayer = new FakeStatusDisplayer();
         setupTestingApp(statusDisplayer);
         runner = new LiveShowRunner(getInstrumentation(), getActivity(), statusDisplayer);
+        backend = new LiveShowServer(getInstrumentation().getContext());
     }
 
     @Override
     protected void tearDown() throws Exception {
         runner.finish();
         liveShowStream.doRelease();
+        backend.stop();
         super.tearDown();
     }
 
     private void setupTestingApp(final LiveShowStateListener statusDisplayer) {
+        final String url = LiveShowServer.DIRECT_URL;
         getInstrumentation().runOnMainSync(new Runnable() {
             @Override
             public void run() {
-                liveShowStream = new TestableMediaPlayerStream();
+                liveShowStream = new TestableMediaPlayerStream(url);
                 LiveShowApp.setTestingInstance(new LiveShowApp() {
                     @Override
                     public AudioStream createAudioStream() {

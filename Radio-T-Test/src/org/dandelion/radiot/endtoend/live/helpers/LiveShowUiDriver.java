@@ -1,4 +1,4 @@
-package org.dandelion.radiot.accepttest.drivers;
+package org.dandelion.radiot.endtoend.live.helpers;
 
 import android.app.Activity;
 import android.app.Instrumentation;

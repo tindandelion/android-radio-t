@@ -35,5 +35,4 @@ public abstract class HttpServer extends NanoHTTPD {
         requests.append(uri);
         return serveUri(uri);
     }
-
 }

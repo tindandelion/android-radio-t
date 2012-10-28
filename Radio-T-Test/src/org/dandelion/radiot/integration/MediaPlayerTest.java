@@ -3,7 +3,7 @@ package org.dandelion.radiot.integration;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.test.InstrumentationTestCase;
-import org.dandelion.radiot.integration.helpers.LiveStreamServer;
+import org.dandelion.radiot.helpers.LiveStreamServer;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 
