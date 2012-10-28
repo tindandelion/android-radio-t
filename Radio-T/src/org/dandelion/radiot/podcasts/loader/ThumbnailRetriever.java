@@ -22,7 +22,7 @@ public class ThumbnailRetriever {
 
     public void retrieveNext() {
         PodcastItem item = iterator.next();
-        String url = item.getThumbnailUrl();
+        String url = item.thumbnailUrl;
         if (url != null) {
             byte[] thumbnail = provider.thumbnailDataFor(url);
             consumer.updateThumbnail(item, thumbnail);

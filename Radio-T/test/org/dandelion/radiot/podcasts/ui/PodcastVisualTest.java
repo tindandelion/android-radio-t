@@ -38,6 +38,13 @@ public class PodcastVisualTest {
         assertThat(visual.pubDate, equalTo(""));
     }
 
+    @Test
+    public void trimShowNotes() throws Exception {
+        item.showNotes = "    Show notes    ";
+        PodcastVisual visual = newVisual(item);
+        assertThat(visual.showNotes, equalTo("Show notes"));
+    }
+
     private PodcastVisual newVisual(PodcastItem item) {
         final Drawable thumbnail = null;
         return new PodcastVisual(item, thumbnail);

@@ -39,7 +39,7 @@ public class ThumbnailRetrieverTest {
 
     private PodcastItem anItemWithThumbnailUrl(String url) {
         final PodcastItem item = new PodcastItem();
-        item.setThumbnailUrl(url);
+        item.thumbnailUrl = url;
         return item;
     }
 

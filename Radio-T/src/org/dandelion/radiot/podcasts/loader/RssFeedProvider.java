@@ -69,8 +69,7 @@ public class RssFeedProvider implements PodcastsProvider {
 				new StartElementListener() {
 					public void start(Attributes attributes) {
 						if (isAudioEnclosure(attributes)) {
-                            currentItem.setAudioUri(attributes
-                                    .getValue("url"));
+                            currentItem.audioUri = attributes.getValue("url");
                         }
 					}
 
@@ -83,7 +82,7 @@ public class RssFeedProvider implements PodcastsProvider {
                 .setEndTextElementListener(new EndTextElementListener() {
                     @Override
                     public void end(String s) {
-                        currentItem.extractShowNotes(s);
+                        currentItem.showNotes = s;
                     }
                 });
 

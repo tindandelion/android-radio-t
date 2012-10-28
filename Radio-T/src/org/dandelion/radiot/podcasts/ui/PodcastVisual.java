@@ -19,6 +19,7 @@ public class PodcastVisual {
     public final PodcastItem podcast;
     public final String number;
     public final String pubDate;
+    public final String showNotes;
 
     public Drawable thumbnail;
 
@@ -26,7 +27,12 @@ public class PodcastVisual {
         this.podcast = p;
         this.number = extractNumberFrom(p.title);
         this.pubDate = extractPubDateFrom(p.pubDate);
+        this.showNotes = extractShowNotes(p.showNotes);
         this.thumbnail = thumbnail;
+    }
+
+    private String extractShowNotes(String value) {
+        return value.trim();
     }
 
     private String extractPubDateFrom(String value) {

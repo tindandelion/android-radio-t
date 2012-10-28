@@ -10,7 +10,7 @@ public class FakePodcastPlayer implements PodcastAction {
     private SyncValueHolder<String> podcastToPlay = new SyncValueHolder<String>();
 
 	public void perform(Context context, PodcastItem podcast) {
-        podcastToPlay.setValue(podcast.getAudioUri());
+        podcastToPlay.setValue(podcast.audioUri);
 	}
 
 	public void assertIsPlaying(String url) throws Exception {

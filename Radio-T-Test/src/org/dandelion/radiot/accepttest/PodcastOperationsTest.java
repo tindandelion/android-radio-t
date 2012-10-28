@@ -43,7 +43,7 @@ public class PodcastOperationsTest extends
     public void testPlayPodcastFromInternet() throws Exception {
         PodcastListUiDriver driver = gotoPodcastListPage();
         PodcastItem item = driver.selectItemForPlaying(0);
-		player.assertIsPlaying(item.getAudioUri());
+        player.assertIsPlaying(item.audioUri);
 	}
 
     public void testDownloadPodcastFileLocally() throws Exception {

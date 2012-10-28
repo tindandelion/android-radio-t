@@ -62,13 +62,13 @@ public class RssFeedProviderTest extends TestCase {
 	public void testExtractShowNotes() throws Exception {
 		newFeedItem("<itunes:summary>Show notes</itunes:summary>");
 		parseRssFeed();
-		assertEquals("Show notes", firstParsedItem.getShowNotes());
+		assertEquals("Show notes", firstParsedItem.showNotes);
 	}
 
 	public void testExtractPodcastLink() throws Exception {
 		newFeedItem("<enclosure url=\"http://podcast-link\" type=\"audio/mpeg\"/>");
 		parseRssFeed();
-		assertEquals("http://podcast-link",	firstParsedItem.getAudioUri());
+        assertEquals("http://podcast-link", firstParsedItem.audioUri);
 	}
 
 	public void testSkipNonAudioEnsclosures() throws Exception {
@@ -77,7 +77,7 @@ public class RssFeedProviderTest extends TestCase {
 
 		parseRssFeed();
 
-		assertEquals("http://podcast-link",	firstParsedItem.getAudioUri());
+        assertEquals("http://podcast-link", firstParsedItem.audioUri);
 	}
 
     public void testExtractThumbnailUrl() throws Exception {
@@ -85,7 +85,7 @@ public class RssFeedProviderTest extends TestCase {
                 "&lt;p&gt;&lt;img src=\"http://www.radio-t.com/images/radio-t/rt302.jpg\" alt=\"\" /&gt;&lt;/p&gt;\n" +
                 "</description>");
         parseRssFeed();
-        assertEquals("http://www.radio-t.com/images/radio-t/rt302.jpg", firstParsedItem.getThumbnailUrl());
+        assertEquals("http://www.radio-t.com/images/radio-t/rt302.jpg", firstParsedItem.thumbnailUrl);
     }
 
     public void testEnsureStreamIsClosed() throws Exception {

@@ -13,7 +13,7 @@ class ExternalPlayer implements PodcastAction {
     @Override
     public void perform(Context context, PodcastItem podcast) {
 		Intent intent = new Intent(Intent.ACTION_VIEW);
-		intent.setDataAndType(Uri.parse(podcast.getAudioUri()), "audio/mpeg");
+        intent.setDataAndType(Uri.parse(podcast.audioUri), "audio/mpeg");
 		context.startActivity(Intent.createChooser(intent, null));
 	}
 }

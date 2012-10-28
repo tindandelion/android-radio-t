@@ -63,7 +63,7 @@ class PodcastSelectionHandler implements DialogInterface.OnClickListener, Adapte
     }
 
     private void checkPodcastUrl() throws MalformedURLException {
-        new URL(podcast.getAudioUri());
+        new URL(podcast.audioUri);
     }
 
 }

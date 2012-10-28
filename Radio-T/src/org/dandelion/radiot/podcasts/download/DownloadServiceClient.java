@@ -11,7 +11,7 @@ public class DownloadServiceClient implements PodcastAction {
     public void perform(Context context, PodcastItem podcast) {
         new StartCommand(context)
                 .setTitle(podcast.title)
-                .setUrl(podcast.getAudioUri())
+                .setUrl(podcast.audioUri)
                 .submit();
     }
 

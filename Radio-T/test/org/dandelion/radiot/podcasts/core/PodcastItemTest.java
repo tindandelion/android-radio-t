@@ -9,27 +9,20 @@ public class PodcastItemTest {
     private final PodcastItem item = new PodcastItem();
 
     @Test
-    public void trimShowNotes() throws Exception {
-        String notes = "   Note 1 - Note 2   \n\n";
-        item.extractShowNotes(notes);
-        assertEquals("Note 1 - Note 2", item.getShowNotes());
-    }
-
-    @Test
     public void extractThumbnailFromDescription() throws Exception {
         item.extractThumbnailUrl("<img src=\"http://radio-t.com/thumbnail.jpg\" />");
-        assertEquals("http://radio-t.com/thumbnail.jpg", item.getThumbnailUrl());
+        assertEquals("http://radio-t.com/thumbnail.jpg", item.thumbnailUrl);
     }
 
     @Test
     public void noThumbnailUrlInDescription() throws Exception {
         item.extractThumbnailUrl("Blah blah");
-        assertNull(item.getThumbnailUrl());
+        assertNull(item.thumbnailUrl);
     }
 
     @Test
     public void veryMessyThumbnailUrl() throws Exception {
         item.extractThumbnailUrl("<img    src=\"http://radio-t.com/thumbnail.jpg\" alt=\"thumbnail\" width=\"100\"/>");
-        assertEquals("http://radio-t.com/thumbnail.jpg", item.getThumbnailUrl());
+        assertEquals("http://radio-t.com/thumbnail.jpg", item.thumbnailUrl);
     }
 }
