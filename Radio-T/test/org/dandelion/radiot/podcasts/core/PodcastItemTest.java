@@ -9,24 +9,6 @@ public class PodcastItemTest {
     private final PodcastItem item = new PodcastItem();
 
     @Test
-    public void extractPodcastNumberFromTitle() throws Exception {
-        item.setTitle("Radio 100");
-        assertEquals("#100", item.getNumberString());
-    }
-
-    @Test
-    public void podcastNumberInLocalizedString() throws Exception {
-        item.setTitle("Радио-Т 192");
-        assertEquals("#192", item.getNumberString());
-    }
-
-    @Test
-    public void noNumberInTitle() throws Exception {
-        item.setTitle("Blah");
-        assertEquals("Blah", item.getNumberString());
-    }
-
-    @Test
     public void extractPublicationDate() throws Exception {
         item.extractPubDate("Sun, 13 Jun 2010 01:37:22 +0000");
         assertEquals("13.06.2010", item.getPubDate());

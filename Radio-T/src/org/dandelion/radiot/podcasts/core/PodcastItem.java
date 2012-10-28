@@ -10,13 +10,11 @@ import java.util.regex.Pattern;
 
 public class PodcastItem implements Cloneable, Serializable {
     public static final Pattern THUMBNAIL_URL_PATTERN = Pattern.compile("<img\\s+src=\"(\\S+)\".*/>");
-    private static final Pattern NUMBER_PATTERN = Pattern.compile("\\d+");
-	private static SimpleDateFormat INPUT_DATE_FORMAT =
+    private static SimpleDateFormat INPUT_DATE_FORMAT =
             new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);
 	private static SimpleDateFormat OUTPUT_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
 
 
-    private String numberString;
     private String pubDate;
 	private String showNotes;
 	private String audioUri;
@@ -38,31 +36,13 @@ public class PodcastItem implements Cloneable, Serializable {
 		return showNotes;
 	}
 
-	public String getNumberString() {
-		return numberString;
-	}
-
     public String getTitle() {
         return title;
     }
 
     public void setTitle(String value) {
         title = value;
-        String rawNumber = extractPodcastNumber(value);
-        if (rawNumber != null) {
-            numberString = "#" + rawNumber;
-        } else {
-            numberString = title;
-        }
 	}
-
-    private String extractPodcastNumber(String value) {
-        Matcher matcher = NUMBER_PATTERN.matcher(value);
-        if (matcher.find()) {
-            return matcher.group();
-        }
-        return null;
-    }
 
     public void extractPubDate(String value) {
 		try {

@@ -2,6 +2,9 @@ package org.dandelion.radiot.podcasts.ui;
 
 import android.app.Activity;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,7 +42,7 @@ class PodcastListAdapter extends ArrayAdapter<PodcastVisual> implements Podcasts
     }
 
     private View fillRowWithData(View row, PodcastVisual pv) {
-        setElementText(row, R.id.podcast_item_view_number, pv.podcast.getNumberString());
+        setElementText(row, R.id.podcast_item_view_number, pv.number);
         setElementText(row, R.id.podcast_item_view_date, pv.podcast.getPubDate());
         setElementText(row, R.id.podcast_item_view_shownotes, pv.podcast.getShowNotes());
         setPodcastIcon(row, pv);
@@ -58,19 +61,29 @@ class PodcastListAdapter extends ArrayAdapter<PodcastVisual> implements Podcasts
 
     @Override
     public void updateList(PodcastList podcasts) {
-        final Resources res = getContext().getResources();
-
         clear();
         for (PodcastItem item : podcasts) {
-            add(new PodcastVisual(item, defaultThumbnail, res));
+            add(new PodcastVisual(item, defaultThumbnail));
         }
     }
 
     @Override
     public void updateThumbnail(PodcastItem item, byte[] thumbnail) {
         PodcastVisual visual = findVisualForItem(item);
-        visual.setThumbnail(thumbnail);
+        visual.setThumbnail(createDrawable(thumbnail));
         notifyDataSetChanged();
+    }
+
+    private Drawable createDrawable(byte[] thumbnail) {
+        final Resources res = getContext().getResources();
+
+        if (thumbnail != null) {
+            Bitmap bitmap = BitmapFactory.decodeByteArray(thumbnail, 0, thumbnail.length);
+            if (bitmap != null) {
+                return new BitmapDrawable(res, bitmap);
+            }
+        }
+        return null;
     }
 
     private PodcastVisual findVisualForItem(PodcastItem item) {

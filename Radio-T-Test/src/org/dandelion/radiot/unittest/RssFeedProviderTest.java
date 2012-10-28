@@ -47,10 +47,10 @@ public class RssFeedProviderTest extends TestCase {
 		assertNotNull(parsedItems.first());
 	}
 
-	public void testExtractingPodcastNumber() throws Exception {
+	public void testExtractingPodcastTitle() throws Exception {
 		newFeedItem("<title>Radio 192</title>");
 		parseRssFeed();
-		assertEquals("#192", firstParsedItem.getNumberString());
+		assertEquals("Radio 192", firstParsedItem.getTitle());
 	}
 
 	public void testExtractPodcastDate() throws Exception {

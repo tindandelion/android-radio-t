@@ -1,37 +1,35 @@
 package org.dandelion.radiot.podcasts.ui;
 
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class PodcastVisual {
+    private static final Pattern NUMBER_PATTERN = Pattern.compile("\\d+");
+
     public final PodcastItem podcast;
+    public final String number;
     public Drawable thumbnail;
-    private Resources resources;
 
-    public PodcastVisual(PodcastItem p, Drawable thumbnail, Resources res) {
+    public PodcastVisual(PodcastItem p, Drawable thumbnail) {
         this.podcast = p;
+        this.number = extractNumberFrom(p.getTitle());
         this.thumbnail = thumbnail;
-        this.resources = res;
     }
 
-    public void setThumbnail(byte[] data) {
-        Drawable newValue = createBitmapDrawable(data);
-        if (newValue != null) {
-            thumbnail = newValue;
+    public void setThumbnail(Drawable value) {
+        if (value != null) {
+            thumbnail = value;
         }
     }
 
-    private Drawable createBitmapDrawable(byte[] thData) {
-        if (thData != null) {
-            Bitmap bitmap = BitmapFactory.decodeByteArray(thData, 0, thData.length);
-            if (bitmap != null) {
-                return new BitmapDrawable(resources, bitmap);
-            }
+    private String extractNumberFrom(String value) {
+        Matcher matcher = NUMBER_PATTERN.matcher(value);
+        if (matcher.find()) {
+            return "#" + matcher.group();
         }
-        return null;
+        return value;
     }
 }
