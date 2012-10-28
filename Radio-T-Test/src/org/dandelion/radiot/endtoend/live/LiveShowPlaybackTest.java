@@ -5,11 +5,11 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
-import org.dandelion.radiot.endtoend.live.helpers.LiveShowRunner;
 import org.dandelion.radiot.accepttest.testables.FakeStatusDisplayer;
+import org.dandelion.radiot.endtoend.live.helpers.LiveShowRunner;
 import org.dandelion.radiot.endtoend.live.helpers.LiveShowServer;
-import org.dandelion.radiot.endtoend.live.helpers.TestableMediaPlayerStream;
 import org.dandelion.radiot.live.LiveShowApp;
+import org.dandelion.radiot.live.MediaPlayerStream;
 import org.dandelion.radiot.live.core.AudioStream;
 import org.dandelion.radiot.live.core.LiveShowStateListener;
 import org.dandelion.radiot.live.service.TimeoutReceiver;
@@ -18,7 +18,6 @@ import org.dandelion.radiot.live.ui.LiveShowActivity;
 public class LiveShowPlaybackTest extends
         ActivityInstrumentationTestCase2<LiveShowActivity> {
     private LiveShowRunner runner;
-    private TestableMediaPlayerStream liveShowStream;
     private LiveShowServer backend;
 
     public void testStartStopPlayback() throws Exception {
@@ -70,7 +69,6 @@ public class LiveShowPlaybackTest extends
     @Override
     protected void tearDown() throws Exception {
         runner.finish();
-        liveShowStream.doRelease();
         backend.stop();
         super.tearDown();
     }
@@ -79,11 +77,10 @@ public class LiveShowPlaybackTest extends
         getInstrumentation().runOnMainSync(new Runnable() {
             @Override
             public void run() {
-                liveShowStream = new TestableMediaPlayerStream(LiveShowServer.SHOW_URL);
                 LiveShowApp.setTestingInstance(new LiveShowApp() {
                     @Override
                     public AudioStream createAudioStream() {
-                        return liveShowStream;
+                        return new MediaPlayerStream(LiveShowServer.SHOW_URL);
                     }
 
                     @Override
