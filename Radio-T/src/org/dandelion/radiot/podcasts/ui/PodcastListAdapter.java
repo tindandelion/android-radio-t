@@ -10,8 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastList;
@@ -33,35 +31,21 @@ class PodcastListAdapter extends ArrayAdapter<PodcastVisual> implements Podcasts
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View row = convertView;
+        PodcastItemView row = (PodcastItemView) convertView;
         if (row == null) {
-            row = inflater.inflate(R.layout.podcast_list_item, parent, false);
+            row = (PodcastItemView) inflater.inflate(R.layout.podcast_list_item, parent, false);
         }
 
         PodcastVisual pv = getItem(position);
-        return associate(row, pv);
-    }
-
-    private View associate(View row, PodcastVisual pv) {
-        fillRowWithData(row, pv);
+        populate(row, pv);
         return row;
     }
 
-    private void fillRowWithData(View row, PodcastVisual pv) {
-        setElementText(row, R.id.podcast_item_view_number, pv.number);
-        setElementText(row, R.id.podcast_item_view_date, pv.pubDate);
-        setElementText(row, R.id.podcast_item_view_shownotes, pv.showNotes);
-        setThumbnail(row, pv.thumbnail);
-    }
-
-    private void setThumbnail(View row, Drawable thumbnail) {
-        ImageView image = (ImageView) row.findViewById(R.id.podcast_item_icon);
-        image.setImageDrawable(thumbnail);
-    }
-
-    private void setElementText(View row, int resourceId, String value) {
-        TextView view = (TextView) row.findViewById(resourceId);
-        view.setText(value);
+    private void populate(PodcastItemView row, PodcastVisual pv) {
+        row.setNumber(pv.number);
+        row.setPubDate(pv.pubDate);
+        row.setShowNotes(pv.showNotes);
+        row.setThumbnail(pv.thumbnail);
     }
 
     @Override

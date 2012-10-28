@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<org.dandelion.radiot.podcasts.ui.PodcastItemView
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
@@ -38,4 +38,4 @@
 		android:gravity="fill_horizontal"
 		android:maxLines="4"
 		android:textSize="11sp" />
-</RelativeLayout>
+</org.dandelion.radiot.podcasts.ui.PodcastItemView>
