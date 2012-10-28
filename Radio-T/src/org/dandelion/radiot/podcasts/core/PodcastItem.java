@@ -13,9 +13,6 @@ public class PodcastItem implements Cloneable, Serializable {
     public String title = "";
     public String thumbnailUrl = null;
 
-    public PodcastItem() {
-	}
-
     public void extractThumbnailUrl(String description) {
         Matcher matcher = THUMBNAIL_URL_PATTERN.matcher(description);
         if (matcher.find()) {
