@@ -33,7 +33,7 @@ class PodcastSelectionHandler implements DialogInterface.OnClickListener, Adapte
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         podcast = ((PodcastVisual)parent.getAdapter().getItem(position)).podcast;
-        showActionSelector(podcast.getTitle(), this);
+        showActionSelector(podcast.title, this);
     }
 
     private void showActionSelector(String title, DialogInterface.OnClickListener listener) {

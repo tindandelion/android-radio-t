@@ -47,14 +47,14 @@ public class RssFeedProvider implements PodcastsProvider {
 		item.getChild("title").setEndTextElementListener(
 				new EndTextElementListener() {
 					public void end(String body) {
-						currentItem.setTitle(body);
-					}
+                        currentItem.title = body;
+                    }
 				});
 
 		item.getChild("pubDate").setEndTextElementListener(
 				new EndTextElementListener() {
 					public void end(String body) {
-						currentItem.extractPubDate(body);
+						currentItem.pubDate = body;
 					}
 				});
 

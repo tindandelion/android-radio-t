@@ -31,7 +31,7 @@ public class FilePodcastsCacheTest extends InstrumentationTestCase {
         PodcastList cachedList = cache.getData();
 
         PodcastItem restored = cachedList.first();
-        assertThat(restored.getTitle(), equalTo(original.getTitle()));
+        assertThat(restored.title, equalTo(original.title));
     }
 
 

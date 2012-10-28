@@ -50,13 +50,13 @@ public class RssFeedProviderTest extends TestCase {
 	public void testExtractingPodcastTitle() throws Exception {
 		newFeedItem("<title>Radio 192</title>");
 		parseRssFeed();
-		assertEquals("Radio 192", firstParsedItem.getTitle());
+        assertEquals("Radio 192", firstParsedItem.title);
 	}
 
 	public void testExtractPodcastDate() throws Exception {
 		newFeedItem("<pubDate>Sun, 13 Jun 2010 01:37:22 +0000</pubDate>");
 		parseRssFeed();
-		assertEquals("13.06.2010", firstParsedItem.getPubDate());
+		assertEquals("Sun, 13 Jun 2010 01:37:22 +0000", firstParsedItem.pubDate);
 	}
 
 	public void testExtractShowNotes() throws Exception {

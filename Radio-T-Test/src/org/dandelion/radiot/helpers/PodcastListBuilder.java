@@ -16,7 +16,7 @@ public class PodcastListBuilder {
 
     public static PodcastItem aPodcastItem(String title) {
         final PodcastItem pi = new PodcastItem();
-        pi.setTitle(title);
+        pi.title = title;
         return pi;
     }
 }

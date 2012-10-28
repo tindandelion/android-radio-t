@@ -10,7 +10,7 @@ public class DownloadServiceClient implements PodcastAction {
     @Override
     public void perform(Context context, PodcastItem podcast) {
         new StartCommand(context)
-                .setTitle(podcast.getTitle())
+                .setTitle(podcast.title)
                 .setUrl(podcast.getAudioUri())
                 .submit();
     }

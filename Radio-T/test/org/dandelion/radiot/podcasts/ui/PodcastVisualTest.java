@@ -12,16 +12,30 @@ public class PodcastVisualTest {
 
     @Test
     public void whenNumberIsInTitle_extractsIt() throws Exception {
-        item.setTitle("Radio-T 150");
+        item.title = "Radio-T 150";
         PodcastVisual visual = newVisual(item);
         assertThat(visual.number, equalTo("#150"));
     }
 
     @Test
     public void whenNoNumberInTitle_displaysTitleItself() throws Exception {
-        item.setTitle("Blah");
+        item.title = "Blah";
         PodcastVisual visual = newVisual(item);
         assertThat(visual.number, equalTo("Blah"));
+    }
+
+    @Test
+    public void whenDateIsValid_formatsItForDisplay() throws Exception {
+        item.pubDate = "Sun, 13 Jun 2010 01:37:22 +0000";
+        PodcastVisual visual = newVisual(item);
+        assertThat(visual.pubDate, equalTo("13.06.2010"));
+    }
+
+    @Test
+    public void whenDateIsInvalid_displaysEmptyString() throws Exception {
+        item.pubDate = "Blah";
+        PodcastVisual visual = newVisual(item);
+        assertThat(visual.pubDate, equalTo(""));
     }
 
     private PodcastVisual newVisual(PodcastItem item) {

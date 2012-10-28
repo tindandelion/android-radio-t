@@ -43,7 +43,7 @@ class PodcastListAdapter extends ArrayAdapter<PodcastVisual> implements Podcasts
 
     private View fillRowWithData(View row, PodcastVisual pv) {
         setElementText(row, R.id.podcast_item_view_number, pv.number);
-        setElementText(row, R.id.podcast_item_view_date, pv.podcast.getPubDate());
+        setElementText(row, R.id.podcast_item_view_date, pv.pubDate);
         setElementText(row, R.id.podcast_item_view_shownotes, pv.podcast.getShowNotes());
         setPodcastIcon(row, pv);
         return row;

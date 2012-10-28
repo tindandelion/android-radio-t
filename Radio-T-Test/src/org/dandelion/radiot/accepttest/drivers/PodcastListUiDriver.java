@@ -38,7 +38,7 @@ public class PodcastListUiDriver extends Solo {
     public void makeSamplePodcastWithUrl(String title, String url) {
         ListAdapter adapter = activity.getListAdapter();
         PodcastItem item = ((PodcastVisual) adapter.getItem(0)).podcast;
-        item.setTitle(title);
+        item.title = title;
         item.setAudioUri(url);
     }
 }
