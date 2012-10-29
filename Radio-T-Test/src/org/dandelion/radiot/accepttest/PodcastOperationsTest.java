@@ -120,7 +120,7 @@ public class PodcastOperationsTest extends
     private void setupFakeLoader() {
         PodcastListActivity.clientFactory = new PodcastClientPlatform(getInstrumentation().getTargetContext()) {
             @Override
-            protected ThumbnailProvider createThumbnailProvider() {
+            protected ThumbnailProvider newThumbnailProvider(String address) {
                 return new ThumbnailProvider() {
                     @Override
                     public byte[] thumbnailDataFor(String url) {

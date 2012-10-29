@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 public class PodcastClientPlatform implements PodcastClientFactory {
     private static final String THUMBNAIL_HOST = "http://www.radio-t.com";
-    private static final int CACHE_FORMAT_VERSION = 5;
+    private static final int CACHE_FORMAT_VERSION = 1;
 
     private static HashMap<String, PodcastProperties> shows;
     static {
@@ -31,25 +31,29 @@ public class PodcastClientPlatform implements PodcastClientFactory {
     @Override
     public PodcastListClient newClientForShow(String name) {
         PodcastProperties props = propertiesForShow(name);
-        return createPodcastLoader(props);
+        return newLoaderWithProperties(props);
     }
 
     private PodcastProperties propertiesForShow(String name) {
         return shows.get(name);
     }
 
-    private PodcastListClient createPodcastLoader(PodcastProperties props) {
+    private PodcastListClient newLoaderWithProperties(PodcastProperties props) {
         return new PodcastListClient(
-                new RssFeedProvider(props.url),
-                createPodcastsCache(props.name),
-                createThumbnailProvider());
+                newFeedProvider(props.url),
+                newPodcastsCache(props.name),
+                newThumbnailProvider(THUMBNAIL_HOST));
     }
 
-    protected ThumbnailProvider createThumbnailProvider() {
-        return new HttpThumbnailProvider(THUMBNAIL_HOST);
+    private RssFeedProvider newFeedProvider(String address) {
+        return new RssFeedProvider(address);
     }
 
-    private PodcastsCache createPodcastsCache(String name) {
+    protected ThumbnailProvider newThumbnailProvider(String address) {
+        return new HttpThumbnailProvider(address);
+    }
+
+    private PodcastsCache newPodcastsCache(String name) {
         File cacheFile = new File(context.getCacheDir(), name);
         return new FilePodcastsCache(cacheFile, CACHE_FORMAT_VERSION);
     }
