@@ -1,6 +1,9 @@
 package org.dandelion.radiot.podcasts.main;
 
 import android.content.Context;
+import org.dandelion.radiot.podcasts.core.CachingThumbnailProvider;
+import org.dandelion.radiot.podcasts.core.MemoryThumbnailCache;
+import org.dandelion.radiot.podcasts.core.ThumbnailCache;
 import org.dandelion.radiot.podcasts.loader.*;
 import org.dandelion.radiot.podcasts.ui.PodcastClientFactory;
 
@@ -50,7 +53,9 @@ public class PodcastClientPlatform implements PodcastClientFactory {
     }
 
     protected ThumbnailProvider newThumbnailProvider(String address) {
-        return new HttpThumbnailProvider(address);
+        HttpThumbnailProvider provider = new HttpThumbnailProvider(address);
+        ThumbnailCache cache = new MemoryThumbnailCache();
+        return new CachingThumbnailProvider(provider, cache);
     }
 
     private PodcastsCache newPodcastsCache(String name) {
@@ -67,4 +72,5 @@ public class PodcastClientPlatform implements PodcastClientFactory {
             this.url = url;
         }
     }
+
 }
