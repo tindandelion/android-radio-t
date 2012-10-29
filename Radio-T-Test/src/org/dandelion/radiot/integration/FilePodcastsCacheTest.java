@@ -52,7 +52,7 @@ public class FilePodcastsCacheTest extends InstrumentationTestCase {
     public void testCacheHasValidData() throws Exception {
         assertThat(cache, not(hasData()));
         cache.updateWith(aListWith(aPodcastItem()));
-        assertThat(cache, is(hasData()));
+        assertThat(cache, hasData());
     }
 
     public void testWhenFileIsCorrupted_CacheHasNoData() throws Exception {
