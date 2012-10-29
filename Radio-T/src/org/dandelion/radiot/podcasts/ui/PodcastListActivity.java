@@ -58,7 +58,7 @@ public class PodcastListActivity extends CustomTitleActivity {
     }
 
     protected void attachToLoader(String show, PodcastListAdapter la, ProgressIndicator pi) {
-		client = clientFactory.createLoaderForShow(show);
+		client = clientFactory.newClientForShow(show);
 		client.attach(pi, la);
 	}
 

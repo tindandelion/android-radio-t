@@ -175,7 +175,7 @@ public class PodcastListLoadingTests
         }
 
         @Override
-        public PodcastListClient createLoaderForShow(String name) {
+        public PodcastListClient newClientForShow(String name) {
             RssFeedProvider rssProvider = new RssFeedProvider(RSS_URL);
             ThumbnailProvider thumbnails = new HttpThumbnailProvider(THUMBNAIL_URL);
             return new PodcastListClient(rssProvider, localCache, thumbnails);

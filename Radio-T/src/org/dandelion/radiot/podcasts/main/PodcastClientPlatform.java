@@ -29,7 +29,7 @@ public class PodcastClientPlatform implements PodcastClientFactory {
     }
 
     @Override
-    public PodcastListClient createLoaderForShow(String name) {
+    public PodcastListClient newClientForShow(String name) {
         PodcastProperties props = propertiesForShow(name);
         return createPodcastLoader(props);
     }
