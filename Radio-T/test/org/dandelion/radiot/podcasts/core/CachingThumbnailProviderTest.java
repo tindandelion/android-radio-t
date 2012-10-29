@@ -1,5 +1,7 @@
 package org.dandelion.radiot.podcasts.core;
 
+import org.dandelion.radiot.podcasts.loader.CachingThumbnailProvider;
+import org.dandelion.radiot.podcasts.loader.ThumbnailCache;
 import org.dandelion.radiot.podcasts.loader.ThumbnailProvider;
 import org.junit.Test;
 

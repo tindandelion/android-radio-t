@@ -1,6 +1,4 @@
-package org.dandelion.radiot.podcasts.core;
-
-import org.dandelion.radiot.podcasts.loader.ThumbnailProvider;
+package org.dandelion.radiot.podcasts.loader;
 
 public class CachingThumbnailProvider implements ThumbnailProvider {
     private ThumbnailProvider provider;

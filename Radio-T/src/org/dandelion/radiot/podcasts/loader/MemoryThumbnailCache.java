@@ -1,4 +1,4 @@
-package org.dandelion.radiot.podcasts.core;
+package org.dandelion.radiot.podcasts.loader;
 
 import java.util.HashMap;
 
