@@ -31,9 +31,32 @@ public class FileThumbnailCacheTest extends InstrumentationTestCase {
         assertNull(cache.lookup(url));
     }
 
+    public void testWhenReachesTheCacheLimit_DeletesTheOldestThumbnail() throws Exception {
+        cache = new FileThumbnailCache(newCacheDir(), 3);
+        cache.update("/thumbnail1.jpg", THUMBNAIL);
+
+        forceDelay();
+        cache.update("/thumbnail2.jpg", THUMBNAIL);
+
+        forceDelay();
+        cache.update("/thumbnail3.jpg", THUMBNAIL);
+
+        forceDelay();
+        cache.update("/thumbnail4.jpg", THUMBNAIL);
+        assertNull(cache.lookup("/thumbnail1.jpg"));
+
+        forceDelay();
+        cache.update("/thumbnail5.jpg", THUMBNAIL);
+        assertNull(cache.lookup("/thumbnail2.jpg"));
+    }
+
+    private void forceDelay() throws InterruptedException {
+        Thread.sleep(1000);
+    }
+
     protected void setUp() throws Exception {
         super.setUp();
-        cache = new FileThumbnailCache(newCacheDir());
+        cache = new FileThumbnailCache(newCacheDir(), 3);
     }
 
     private File newCacheDir() {

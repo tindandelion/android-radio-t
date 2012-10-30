@@ -12,6 +12,8 @@ public class PodcastClientPlatform implements PodcastClientFactory {
     private static final int CACHE_FORMAT_VERSION = 1;
 
     private static HashMap<String, PodcastProperties> shows;
+    public static final int THUMBNAIL_CACHE_LIMIT = 30;
+
     static {
         shows = new HashMap<String, PodcastProperties>();
         shows.put("main-show",
@@ -51,7 +53,7 @@ public class PodcastClientPlatform implements PodcastClientFactory {
 
     protected ThumbnailProvider newThumbnailProvider(String address) {
         HttpThumbnailProvider provider = new HttpThumbnailProvider(address);
-        ThumbnailCache cache = new FileThumbnailCache(thumbnailCacheDir());
+        ThumbnailCache cache = new FileThumbnailCache(thumbnailCacheDir(), THUMBNAIL_CACHE_LIMIT);
         return new CachingThumbnailProvider(provider, cache);
     }
 
