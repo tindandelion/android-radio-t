@@ -18,13 +18,15 @@ public class FileThumbnailCache implements ThumbnailCache {
     public void update(String url, byte[] thumbnail) {
         makeCacheDir();
         File cached = cachedFileForUrl(url);
-        saveThumbnail(cached, thumbnail);
+        if (cached != null) {
+            saveThumbnail(cached, thumbnail);
+        }
     }
 
     @Override
     public byte[] lookup(String url) {
         File cached = cachedFileForUrl(url);
-        if (cached.exists()) {
+        if (cached != null && cached.exists()) {
             return loadThumbnail(cached);
         } else {
             return null;
@@ -62,7 +64,11 @@ public class FileThumbnailCache implements ThumbnailCache {
 
     private File cachedFileForUrl(String url) {
         Uri uri = Uri.parse(url);
-        return new File(cacheDir, uri.getLastPathSegment());
+        String fname = uri.getLastPathSegment();
+        if (fname != null) {
+            return new File(cacheDir, fname);
+        } else {
+            return null;
+        }
     }
-
 }

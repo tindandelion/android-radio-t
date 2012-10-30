@@ -10,12 +10,12 @@ public class FileThumbnailCacheTest extends InstrumentationTestCase {
     public static final byte[] THUMBNAIL = new byte[] {0x1, 0x2, 0x3};
     private FileThumbnailCache cache;
 
-    public void testLookupFailure() throws Exception {
+    public void testWhenNoThumbnailInCache_ReturnsNull() throws Exception {
         final String url = "http://example.com/thumbnail.jpg";
         assertNull(cache.lookup(url));
     }
 
-    public void testSaveAndLoadThumbnail() throws Exception {
+    public void testWhenHasThumbnailInCache_ReturnItsContent() throws Exception {
         final String url = "http://example.com/thumbnail.jpg";
 
         cache.update(url, THUMBNAIL);
@@ -24,8 +24,11 @@ public class FileThumbnailCacheTest extends InstrumentationTestCase {
         assertTrue(Arrays.equals(THUMBNAIL, cached));
     }
 
-    public void testUnableToGetFilenameFromUrl() throws Exception {
+    public void testWhenUrlIsEmpty_NeitherSaveNorLookItUp() throws Exception {
+        final String url = "";
 
+        cache.update(url, THUMBNAIL);
+        assertNull(cache.lookup(url));
     }
 
     protected void setUp() throws Exception {
