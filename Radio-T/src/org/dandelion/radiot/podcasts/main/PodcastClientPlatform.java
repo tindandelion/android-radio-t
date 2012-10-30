@@ -51,8 +51,12 @@ public class PodcastClientPlatform implements PodcastClientFactory {
 
     protected ThumbnailProvider newThumbnailProvider(String address) {
         HttpThumbnailProvider provider = new HttpThumbnailProvider(address);
-        ThumbnailCache cache = new MemoryThumbnailCache();
+        ThumbnailCache cache = new FileThumbnailCache(thumbnailCacheDir());
         return new CachingThumbnailProvider(provider, cache);
+    }
+
+    private File thumbnailCacheDir() {
+        return new File(context.getCacheDir(), "thumbnails");
     }
 
     private PodcastsCache newPodcastsCache(String name) {
