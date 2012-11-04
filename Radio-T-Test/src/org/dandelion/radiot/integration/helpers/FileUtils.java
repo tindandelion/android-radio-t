@@ -2,9 +2,9 @@ package org.dandelion.radiot.integration.helpers;
 
 import java.io.File;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class FileUtils {
 
-    @SuppressWarnings("ResultOfMethodCallIgnored")
     public static void deleteDir(File dir) {
         if (!dir.exists()) {
             return;
@@ -19,5 +19,9 @@ public class FileUtils {
             }
         }
         dir.delete();
+    }
+
+    public static void mkdir(File dir) {
+        dir.mkdir();
     }
 }

@@ -15,8 +15,9 @@ import java.io.File;
 
 import static org.dandelion.radiot.endtoend.podcasts.helpers.RssFeedBuilder.rssFeed;
 import static org.dandelion.radiot.endtoend.podcasts.helpers.RssFeedBuilder.rssItem;
-import static org.dandelion.radiot.helpers.PodcastListBuilder.aListWith;
-import static org.dandelion.radiot.helpers.PodcastListBuilder.aPodcastItem;
+import static org.dandelion.radiot.helpers.PodcastDataBuilder.aListWith;
+import static org.dandelion.radiot.helpers.PodcastDataBuilder.aPodcastItem;
+import static org.dandelion.radiot.helpers.PodcastDataBuilder.withTitle;
 
 public class PodcastListLoadingTests
         extends ActivityInstrumentationTestCase2<PodcastListActivity> {
@@ -102,7 +103,7 @@ public class PodcastListLoadingTests
     }
 
     public void testWhenHasExpiredCache_ShouldDisplayItPriorToRequestingTheServer() throws Exception {
-        final PodcastList localCachedList = aListWith(aPodcastItem("Радио-Т 140"));
+        final PodcastList localCachedList = aListWith(aPodcastItem(withTitle("Радио-Т 140")));
         final String feedOnServer = rssFeed()
                 .item(rssItem().title("Радио-Т 141"))
                 .done();
@@ -120,7 +121,7 @@ public class PodcastListLoadingTests
     }
 
     public void testWhenHasFreshCache_ShouldDisplayItAndNotRequestTheServer() throws Exception {
-        final PodcastList localCachedList = aListWith(aPodcastItem("Радио-Т 140"));
+        final PodcastList localCachedList = aListWith(aPodcastItem(withTitle("Радио-Т 140")));
 
         platform.saveInLocalCache(localCachedList);
 

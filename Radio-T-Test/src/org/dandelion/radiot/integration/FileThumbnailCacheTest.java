@@ -6,6 +6,7 @@ import org.dandelion.radiot.podcasts.loader.caching.FileThumbnailCache;
 
 import java.io.*;
 import java.util.Arrays;
+import java.util.List;
 
 public class FileThumbnailCacheTest extends InstrumentationTestCase {
     public static final byte[] THUMBNAIL = new byte[] {0x1, 0x2, 0x3};
@@ -32,39 +33,29 @@ public class FileThumbnailCacheTest extends InstrumentationTestCase {
         assertNull(cache.lookup(url));
     }
 
-    public void testWhenReachesTheCacheLimit_DeletesTheOldestThumbnail() throws Exception {
-        cache = new FileThumbnailCache(prepareCacheDir(), 3);
+    public void testWhenCleaningUp_RemovesThumbnailsIfNotListedInCurrentsList() throws Exception {
         cache.update("/thumbnail1.jpg", THUMBNAIL);
-
-        forceDelay();
         cache.update("/thumbnail2.jpg", THUMBNAIL);
-
-        forceDelay();
         cache.update("/thumbnail3.jpg", THUMBNAIL);
 
-        forceDelay();
-        cache.update("/thumbnail4.jpg", THUMBNAIL);
+        List<String> currents = Arrays.asList("/thumbnail2.jpg", "/thumbnail3.jpg");
+        cache.cleanup(currents);
+
         assertNull(cache.lookup("/thumbnail1.jpg"));
-
-        forceDelay();
-        cache.update("/thumbnail5.jpg", THUMBNAIL);
-        assertNull(cache.lookup("/thumbnail2.jpg"));
-    }
-
-    private void forceDelay() throws InterruptedException {
-        Thread.sleep(1000);
+        assertNotNull(cache.lookup("/thumbnail2.jpg"));
+        assertNotNull(cache.lookup("/thumbnail3.jpg"));
     }
 
     protected void setUp() throws Exception {
         super.setUp();
-        cache = new FileThumbnailCache(prepareCacheDir(), 3);
+        cache = new FileThumbnailCache(prepareCacheDir());
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     private File prepareCacheDir() {
         File cacheDir = new File(getInstrumentation().getTargetContext().getCacheDir(), "test-thumbnails-cache");
         FileUtils.deleteDir(cacheDir);
-        cacheDir.mkdir();
+        FileUtils.mkdir(cacheDir);
         return cacheDir;
     }
 }

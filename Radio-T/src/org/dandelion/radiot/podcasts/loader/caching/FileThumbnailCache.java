@@ -3,42 +3,20 @@ package org.dandelion.radiot.podcasts.loader.caching;
 import android.net.Uri;
 import org.dandelion.radiot.podcasts.loader.ThumbnailCache;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Comparator;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class FileThumbnailCache implements ThumbnailCache {
     private File cacheDir;
-    private int limit;
 
-    public FileThumbnailCache(File cacheDir, int limit) {
+    public FileThumbnailCache(File cacheDir) {
         this.cacheDir = cacheDir;
-        this.limit = limit;
     }
 
     @Override
     public void update(String url, byte[] thumbnail) {
-        if (willExceedLimit()) {
-            removeOldestFile();
-        }
-        saveNewThumbnail(url, thumbnail);
-    }
-
-    @SuppressWarnings("ResultOfMethodCallIgnored")
-    private void removeOldestFile() {
-        File[] files = cacheDir.listFiles();
-        Arrays.sort(files, new LastModifiedComparator());
-        files[0].delete();
-    }
-
-    private boolean willExceedLimit() {
-        return cacheDir.list().length == limit;
-    }
-
-    private void saveNewThumbnail(String url, byte[] thumbnail) {
         File cached = cachedFileForUrl(url);
         if (cached != null) {
             saveThumbnail(cached, thumbnail);
@@ -87,10 +65,27 @@ public class FileThumbnailCache implements ThumbnailCache {
         }
     }
 
-    private static class LastModifiedComparator implements Comparator<File> {
-        @Override
-        public int compare(File lhs, File rhs) {
-            return (int) (lhs.lastModified() - rhs.lastModified());
+    public void cleanup(List<String> currentUrls) {
+        List<File> currentFiles = cachedFilesForUrls(currentUrls);
+        for (File f : redundantFiles(currentFiles)) {
+            f.delete();
         }
+    }
+
+    private File[] redundantFiles(final List<File> actualFiles) {
+        return cacheDir.listFiles(new FileFilter() {
+            @Override
+            public boolean accept(File f) {
+                return !actualFiles.contains(f);
+            }
+        });
+    }
+
+    private List<File> cachedFilesForUrls(List<String> urls) {
+        ArrayList<File> result = new ArrayList<File>();
+        for (String url : urls) {
+            result.add(cachedFileForUrl(url));
+        }
+        return result;
     }
 }
