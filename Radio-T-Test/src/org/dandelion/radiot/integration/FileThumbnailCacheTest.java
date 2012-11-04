@@ -1,6 +1,7 @@
 package org.dandelion.radiot.integration;
 
 import android.test.InstrumentationTestCase;
+import org.dandelion.radiot.integration.helpers.FileUtils;
 import org.dandelion.radiot.podcasts.loader.caching.FileThumbnailCache;
 
 import java.io.*;
@@ -62,21 +63,8 @@ public class FileThumbnailCacheTest extends InstrumentationTestCase {
     @SuppressWarnings("ResultOfMethodCallIgnored")
     private File prepareCacheDir() {
         File cacheDir = new File(getInstrumentation().getTargetContext().getCacheDir(), "test-thumbnails-cache");
-        deleteDir(cacheDir);
+        FileUtils.deleteDir(cacheDir);
         cacheDir.mkdir();
         return cacheDir;
-    }
-
-    @SuppressWarnings("ResultOfMethodCallIgnored")
-    private void deleteDir(File dir) {
-        if (!dir.exists()) {
-            return;
-        }
-
-        File[] files = dir.listFiles();
-        for(File f : files) {
-            f.delete();
-        }
-        dir.delete();
     }
 }
