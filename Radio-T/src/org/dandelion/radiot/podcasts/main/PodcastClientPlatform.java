@@ -2,6 +2,7 @@ package org.dandelion.radiot.podcasts.main;
 
 import android.content.Context;
 import org.dandelion.radiot.podcasts.loader.*;
+import org.dandelion.radiot.podcasts.loader.caching.LocalPodcastStorage;
 import org.dandelion.radiot.podcasts.ui.PodcastClientFactory;
 
 import java.util.HashMap;

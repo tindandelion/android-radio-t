@@ -1,6 +1,7 @@
-package org.dandelion.radiot.podcasts.loader;
+package org.dandelion.radiot.podcasts.loader.caching;
 
 import android.net.Uri;
+import org.dandelion.radiot.podcasts.loader.ThumbnailCache;
 
 import java.io.File;
 import java.io.FileInputStream;

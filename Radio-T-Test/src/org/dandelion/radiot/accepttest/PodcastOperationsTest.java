@@ -8,7 +8,7 @@ import org.dandelion.radiot.accepttest.drivers.AppNavigator;
 import org.dandelion.radiot.accepttest.drivers.PodcastListUiDriver;
 import org.dandelion.radiot.accepttest.testables.*;
 import org.dandelion.radiot.home_screen.HomeScreenActivity;
-import org.dandelion.radiot.podcasts.loader.LocalPodcastStorage;
+import org.dandelion.radiot.podcasts.loader.caching.LocalPodcastStorage;
 import org.dandelion.radiot.podcasts.loader.ThumbnailProvider;
 import org.dandelion.radiot.podcasts.main.PodcastClientPlatform;
 import org.dandelion.radiot.podcasts.main.PodcastsApp;

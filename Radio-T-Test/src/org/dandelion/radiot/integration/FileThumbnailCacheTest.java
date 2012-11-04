@@ -1,7 +1,7 @@
 package org.dandelion.radiot.integration;
 
 import android.test.InstrumentationTestCase;
-import org.dandelion.radiot.podcasts.loader.FileThumbnailCache;
+import org.dandelion.radiot.podcasts.loader.caching.FileThumbnailCache;
 
 import java.io.*;
 import java.util.Arrays;

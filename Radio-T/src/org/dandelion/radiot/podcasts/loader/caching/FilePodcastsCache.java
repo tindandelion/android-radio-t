@@ -1,7 +1,8 @@
-package org.dandelion.radiot.podcasts.loader;
+package org.dandelion.radiot.podcasts.loader.caching;
 
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastList;
+import org.dandelion.radiot.podcasts.loader.PodcastsCache;
 
 import java.io.*;
 
