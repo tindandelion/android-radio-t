@@ -24,11 +24,11 @@ public class LocalPodcastStorage {
         thumbnailsCache = new FileThumbnailCache(thumbnailsDir, THUMBNAIL_CACHE_LIMIT);
     }
 
-    public PodcastsCache newPodcastsCache() {
+    public PodcastsCache podcastsCache() {
         return podcastsCache;
     }
 
-    public ThumbnailCache newThumbnailCache() {
+    public ThumbnailCache thumbnailsCache() {
         return thumbnailsCache;
     }
 

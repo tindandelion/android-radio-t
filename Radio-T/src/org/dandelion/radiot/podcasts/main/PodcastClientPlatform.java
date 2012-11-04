@@ -53,13 +53,13 @@ public class PodcastClientPlatform implements PodcastClientFactory {
 
     protected ThumbnailProvider newThumbnailProvider(String address, LocalPodcastStorage localStorage) {
         HttpThumbnailProvider provider = new HttpThumbnailProvider(address);
-        ThumbnailCache cache = localStorage.newThumbnailCache();
+        ThumbnailCache cache = localStorage.thumbnailsCache();
         return new CachingThumbnailProvider(provider, cache);
     }
 
 
     private PodcastsCache newPodcastsCache(LocalPodcastStorage localStorage) {
-        return localStorage.newPodcastsCache();
+        return localStorage.podcastsCache();
     }
 
     private static class PodcastProperties {
