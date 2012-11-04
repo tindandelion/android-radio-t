@@ -76,6 +76,16 @@ public class FilePodcastsCacheTest extends InstrumentationTestCase {
         assertThat(cache, not(hasValidData()));
     }
 
+    public void testWhenUpdatingCache_InvokeListener() throws Exception {
+        FakeListener listener = new FakeListener();
+        cache.setListener(listener);
+
+        PodcastList list = aListWith(aPodcastItem());
+        cache.updateWith(list);
+
+        assertEquals(list, listener.updatedList);
+    }
+
     @SuppressWarnings("ResultOfMethodCallIgnored")
     private void cacheCreated(long timestamp) {
         cacheFile.setLastModified(timestamp);
@@ -146,5 +156,14 @@ public class FilePodcastsCacheTest extends InstrumentationTestCase {
                 mismatchDescription.appendText("a cache with no data");
             }
         };
+    }
+
+    private class FakeListener implements FilePodcastsCache.Listener {
+        public PodcastList updatedList;
+
+        @Override
+        public void onUpdatedWith(PodcastList list) {
+            updatedList = list;
+        }
     }
 }

@@ -10,9 +10,9 @@ public class PodcastDataBuilder {
     }
 
     public static PodcastList aListWith(final PodcastItem item) {
-        return new PodcastList() {{
-            add(item);
-        }};
+        PodcastList list = anEmptyList();
+        list.add(item);
+        return list;
     }
 
     public static PodcastItem aPodcastItem() {

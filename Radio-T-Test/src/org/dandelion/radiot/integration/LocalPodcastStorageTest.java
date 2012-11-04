@@ -25,7 +25,7 @@ public class LocalPodcastStorageTest extends InstrumentationTestCase {
         thumbnailCache.update(url, new byte[0]);
         assertNotNull(thumbnailCache.lookup(url));
 
-        storage.cleanupThumbnails(anEmptyList());
+        podcastsCache.updateWith(anEmptyList());
         assertNull(thumbnailCache.lookup(url));
     }
 

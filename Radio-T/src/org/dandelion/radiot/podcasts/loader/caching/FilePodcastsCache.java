@@ -7,15 +7,25 @@ import org.dandelion.radiot.podcasts.loader.PodcastsCache;
 import java.io.*;
 
 public class FilePodcastsCache implements PodcastsCache {
+
+    public interface Listener {
+        void onUpdatedWith(PodcastList list);
+    }
+
     // A threshold of one day
     private static final long LIFETIME_THRESHOLD = 24 * 3600 * 1000;
 
     private final File file;
     private final int formatVersion;
+    private Listener listener;
 
     public FilePodcastsCache(File file, int formatVersion) {
         this.file = file;
         this.formatVersion = formatVersion;
+    }
+
+    public void setListener(Listener listener) {
+        this.listener = listener;
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
@@ -75,8 +85,15 @@ public class FilePodcastsCache implements PodcastsCache {
     public void updateWith(PodcastList data) {
         try {
             saveObjects(data);
+            invokeListenerWith(data);
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private void invokeListenerWith(PodcastList data) {
+        if (listener != null) {
+            listener.onUpdatedWith(data);
         }
     }
 
@@ -131,4 +148,5 @@ public class FilePodcastsCache implements PodcastsCache {
             in.close();
         }
     }
+
 }

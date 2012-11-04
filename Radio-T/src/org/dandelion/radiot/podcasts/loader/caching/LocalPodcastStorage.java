@@ -6,7 +6,7 @@ import org.dandelion.radiot.podcasts.loader.ThumbnailCache;
 
 import java.io.File;
 
-public class LocalPodcastStorage {
+public class LocalPodcastStorage implements FilePodcastsCache.Listener {
     private static final int CACHE_FORMAT_VERSION = 1;
 
     private FilePodcastsCache podcastsCache;
@@ -20,8 +20,9 @@ public class LocalPodcastStorage {
         ensureDirExists(cacheDir);
         ensureDirExists(thumbnailsDir);
 
-        podcastsCache = new FilePodcastsCache(podcastsFile, CACHE_FORMAT_VERSION);
         thumbnailsCache = new FileThumbnailCache(thumbnailsDir);
+        podcastsCache = new FilePodcastsCache(podcastsFile, CACHE_FORMAT_VERSION);
+        podcastsCache.setListener(this);
     }
 
     public PodcastsCache podcastsCache() {
@@ -39,7 +40,8 @@ public class LocalPodcastStorage {
         }
     }
 
-    public void cleanupThumbnails(PodcastList currentItems) {
-        thumbnailsCache.cleanup(currentItems.collectThumbnails());
+    @Override
+    public void onUpdatedWith(PodcastList list) {
+        thumbnailsCache.cleanup(list.collectThumbnails());
     }
 }
