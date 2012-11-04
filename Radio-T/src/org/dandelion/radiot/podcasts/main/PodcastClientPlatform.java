@@ -4,15 +4,12 @@ import android.content.Context;
 import org.dandelion.radiot.podcasts.loader.*;
 import org.dandelion.radiot.podcasts.ui.PodcastClientFactory;
 
-import java.io.File;
 import java.util.HashMap;
 
 public class PodcastClientPlatform implements PodcastClientFactory {
     private static final String THUMBNAIL_HOST = "http://www.radio-t.com";
-    private static final int CACHE_FORMAT_VERSION = 1;
 
     private static HashMap<String, PodcastProperties> shows;
-    public static final int THUMBNAIL_CACHE_LIMIT = 30;
 
     static {
         shows = new HashMap<String, PodcastProperties>();
@@ -41,29 +38,27 @@ public class PodcastClientPlatform implements PodcastClientFactory {
     }
 
     private PodcastListClient newLoaderWithProperties(PodcastProperties props) {
+        LocalPodcastStorage localStorage = new LocalPodcastStorage(props.name,
+                context.getCacheDir());
         return new PodcastListClient(
                 newFeedProvider(props.url),
-                newPodcastsCache(props.name),
-                newThumbnailProvider(THUMBNAIL_HOST));
+                newPodcastsCache(localStorage),
+                newThumbnailProvider(THUMBNAIL_HOST, localStorage));
     }
 
     private PodcastsProvider newFeedProvider(String address) {
         return new RssFeedProvider(address);
     }
 
-    protected ThumbnailProvider newThumbnailProvider(String address) {
+    protected ThumbnailProvider newThumbnailProvider(String address, LocalPodcastStorage localStorage) {
         HttpThumbnailProvider provider = new HttpThumbnailProvider(address);
-        ThumbnailCache cache = new FileThumbnailCache(thumbnailCacheDir(), THUMBNAIL_CACHE_LIMIT);
+        ThumbnailCache cache = localStorage.newThumbnailCache();
         return new CachingThumbnailProvider(provider, cache);
     }
 
-    private File thumbnailCacheDir() {
-        return new File(context.getCacheDir(), "thumbnails");
-    }
 
-    private PodcastsCache newPodcastsCache(String name) {
-        File cacheFile = new File(context.getCacheDir(), name);
-        return new FilePodcastsCache(cacheFile, CACHE_FORMAT_VERSION);
+    private PodcastsCache newPodcastsCache(LocalPodcastStorage localStorage) {
+        return localStorage.newPodcastsCache();
     }
 
     private static class PodcastProperties {
