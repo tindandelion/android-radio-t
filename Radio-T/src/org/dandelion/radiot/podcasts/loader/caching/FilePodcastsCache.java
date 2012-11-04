@@ -34,6 +34,10 @@ public class FilePodcastsCache implements PodcastsCache {
     }
 
     private PodcastList readItems() throws IOException, ClassNotFoundException {
+        if (!hasData()) {
+            return emptyList();
+        }
+
         ObjectInputStream in = openInputStream();
         try {
             readVersionFrom(in);
@@ -41,6 +45,10 @@ public class FilePodcastsCache implements PodcastsCache {
         } finally {
             in.close();
         }
+    }
+
+    private PodcastList emptyList() {
+        return new PodcastList();
     }
 
     private ObjectInputStream openInputStream() throws IOException {
@@ -94,7 +102,11 @@ public class FilePodcastsCache implements PodcastsCache {
     }
 
     @Override
-    public boolean hasData() {
+    public boolean hasValidData() {
+        return hasData() && !hasExpired();
+    }
+
+    private boolean hasData() {
         try {
             return isValidVersion();
         } catch (Exception ex) {
@@ -102,8 +114,7 @@ public class FilePodcastsCache implements PodcastsCache {
         }
     }
 
-    @Override
-    public boolean hasExpired() {
+    private boolean hasExpired() {
         long lifetime = System.currentTimeMillis() - file.lastModified();
         return lifetime >= LIFETIME_THRESHOLD;
     }
@@ -120,5 +131,4 @@ public class FilePodcastsCache implements PodcastsCache {
             in.close();
         }
     }
-
 }

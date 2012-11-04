@@ -24,6 +24,11 @@ public class FilePodcastsCacheTest extends InstrumentationTestCase {
     private FilePodcastsCache cache;
     private File cacheFile;
 
+    public void testWhenHasNoData_ReturnsEmptyList() throws Exception {
+        PodcastList cachedList = cache.getData();
+        assertThat(cachedList, is(empty()));
+    }
+
     public void testWhenProvidedWithData_ShouldReturnItBack() throws Exception {
         final PodcastItem original = aPodcastItem();
 
@@ -34,43 +39,41 @@ public class FilePodcastsCacheTest extends InstrumentationTestCase {
         assertThat(restored.title, equalTo(original.title));
     }
 
-
     public void testWhenCacheIsReset_ShouldLoseData() throws Exception {
         cache.updateWith(aListWith(aPodcastItem()));
 
         cache.reset();
-
-        assertThat(cache, not(hasData()));
+        assertThat(cache, not(hasValidData()));
     }
 
     public void testResettingCacheWithNoData_IsNotAnError() throws Exception {
         cache.reset();
         cache.reset();
-        assertThat(cache, not(hasData()));
+        assertThat(cache, not(hasValidData()));
     }
 
     public void testCacheHasValidData() throws Exception {
-        assertThat(cache, not(hasData()));
+        assertThat(cache, not(hasValidData()));
         cache.updateWith(aListWith(aPodcastItem()));
-        assertThat(cache, hasData());
+        assertThat(cache, hasValidData());
     }
 
     public void testWhenFileIsCorrupted_CacheHasNoData() throws Exception {
         createValidCacheFile(FORMAT_VERSION);
 
         writeCacheFile("Some junk content");
-        assertThat(cache, not(hasData()));
+        assertThat(cache, not(hasValidData()));
     }
 
     public void testWhenCreatedMoreThanOneDayAgo_ShouldBecomeExpired() throws Exception {
         createValidCacheFile(FORMAT_VERSION);
-        assertThat(cache, not(expired()));
+        assertThat(cache, hasValidData());
 
         cacheCreated(hoursAgo(23));
-        assertThat(cache, not(expired()));
+        assertThat(cache, hasValidData());
 
         cacheCreated(hoursAgo(25));
-        assertThat(cache, is(expired()));
+        assertThat(cache, not(hasValidData()));
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
@@ -96,7 +99,7 @@ public class FilePodcastsCacheTest extends InstrumentationTestCase {
     public void testCacheIsInvalidIfFileIsWrongVersion() throws Exception {
         final int olderVersion = FORMAT_VERSION - 1;
         createValidCacheFile(olderVersion);
-        assertThat(cache, not(hasData()));
+        assertThat(cache, not(hasValidData()));
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
@@ -112,11 +115,25 @@ public class FilePodcastsCacheTest extends InstrumentationTestCase {
         cache = new FilePodcastsCache(cacheFile, FORMAT_VERSION);
     }
 
-    private Matcher<? super FilePodcastsCache> hasData() {
+    private Matcher<PodcastList> empty() {
+        return new TypeSafeMatcher<PodcastList>() {
+            @Override
+            protected boolean matchesSafely(PodcastList podcastItems) {
+                return podcastItems.size() == 0;
+            }
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("an empty podcast list");
+            }
+        };
+    }
+
+    private Matcher<FilePodcastsCache> hasValidData() {
         return new TypeSafeMatcher<FilePodcastsCache>() {
             @Override
             protected boolean matchesSafely(FilePodcastsCache cache) {
-                return cache.hasData();
+                return cache.hasValidData();
             }
 
             @Override
@@ -127,20 +144,6 @@ public class FilePodcastsCacheTest extends InstrumentationTestCase {
             @Override
             protected void describeMismatchSafely(FilePodcastsCache item, Description mismatchDescription) {
                 mismatchDescription.appendText("a cache with no data");
-            }
-        };
-    }
-
-    private Matcher<? super FilePodcastsCache> expired() {
-        return new TypeSafeMatcher<FilePodcastsCache>() {
-            @Override
-            protected boolean matchesSafely(FilePodcastsCache expired) {
-                return expired.hasExpired();
-            }
-
-            @Override
-            public void describeTo(Description description) {
-                description.appendText("a cache that is expired");
             }
         };
     }

@@ -13,48 +13,29 @@ public class PodcastListRetrieverTest {
     private final PodcastsProvider provider = mock(PodcastsProvider.class);
     private final PodcastsCache cache = mock(PodcastsCache.class);
     private final PodcastsConsumer consumer = mock(PodcastsConsumer.class);
-    private final PodcastListRetriever listRetriever = new PodcastListRetriever(provider, cache, consumer);
+    private final PodcastListRetriever retriever = new PodcastListRetriever(provider, cache, consumer);
 
     @Test
-    public void whenCacheHasNoData_ShouldRetrieveListFromRealProvider() throws Exception {
-        cacheHasNoData();
-
-        listRetriever.retrieve();
-
-        verify(consumer).updateList(remoteList);
-    }
-
-
-    @Test
-    public void whenTheCacheHasNoData_ShouldUpdateItWithNewData() throws Exception {
-        cacheHasNoData();
-
-        listRetriever.retrieve();
-        verify(cache).updateWith(remoteList);
-    }
-
-    @Test
-    public void whenCacheHasFreshData_RetrieveDataFromCache() throws Exception {
+    public void whenCacheHasFreshData_RetrieveDataFromCacheAndNotBotherServer() throws Exception {
         cacheHasFreshData();
-
-        listRetriever.retrieve();
+        retriever.retrieve();
         verify(consumer).updateList(cachedList);
+        verifyZeroInteractions(provider);
     }
 
     @Test
-    public void whenCacheHasExpiredData_ShouldPopulateDataFromCacheFirstAndThenFromServer() throws Exception {
-        cacheHasExpiredData();
+    public void whenCacheHasInvalidData_ShouldPopulateDataFromCacheFirstAndThenFromServer() throws Exception {
+        cacheHasInvalidData();
 
-        listRetriever.retrieve();
+        retriever.retrieve();
         verify(consumer).updateList(cachedList);
         verify(consumer).updateList(remoteList);
     }
 
     @Test
-    public void whenCacheHasExpiredData_ShouldRefreshItFromServer() throws Exception {
-        cacheHasExpiredData();
-
-        listRetriever.retrieve();
+    public void whenTheCacheHasInvalidData_ShouldUpdateItWithNewData() throws Exception {
+        cacheHasInvalidData();
+        retriever.retrieve();
         verify(cache).updateWith(remoteList);
     }
 
@@ -63,19 +44,13 @@ public class PodcastListRetrieverTest {
         when(provider.retrieve()).thenReturn(remoteList);
     }
 
-    private void cacheHasNoData() {
-        when(cache.hasData()).thenReturn(false);
-    }
-
-    private void cacheHasFreshData() {
-        when(cache.hasData()).thenReturn(true);
-        when(cache.hasExpired()).thenReturn(false);
+    private void cacheHasInvalidData() {
+        when(cache.hasValidData()).thenReturn(false);
         when(cache.getData()).thenReturn(cachedList);
     }
 
-    private void cacheHasExpiredData() {
-        when(cache.hasData()).thenReturn(true);
-        when(cache.hasExpired()).thenReturn(true);
+    private void cacheHasFreshData() {
+        when(cache.hasValidData()).thenReturn(true);
         when(cache.getData()).thenReturn(cachedList);
     }
 }

@@ -14,21 +14,17 @@ public class PodcastListRetriever {
     }
 
     public void retrieve() throws Exception {
-        if (cache.hasData()) {
-            populateCacheData();
-            refreshCacheIfExpired();
-        } else {
+        populateCachedData();
+        if (shouldRefresh()) {
             obtainNewData();
         }
     }
 
-    private void refreshCacheIfExpired() throws Exception {
-        if (cache.hasExpired()) {
-            obtainNewData();
-        }
+    private boolean shouldRefresh() {
+        return !cache.hasValidData();
     }
 
-    private void populateCacheData() {
+    private void populateCachedData() {
         PodcastList pl = cache.getData();
         consumer.updateList(pl);
     }
