@@ -32,7 +32,7 @@ public class FileThumbnailCacheTest extends InstrumentationTestCase {
     }
 
     public void testWhenReachesTheCacheLimit_DeletesTheOldestThumbnail() throws Exception {
-        cache = new FileThumbnailCache(newCacheDir(), 3);
+        cache = new FileThumbnailCache(prepareCacheDir(), 3);
         cache.update("/thumbnail1.jpg", THUMBNAIL);
 
         forceDelay();
@@ -56,12 +56,14 @@ public class FileThumbnailCacheTest extends InstrumentationTestCase {
 
     protected void setUp() throws Exception {
         super.setUp();
-        cache = new FileThumbnailCache(newCacheDir(), 3);
+        cache = new FileThumbnailCache(prepareCacheDir(), 3);
     }
 
-    private File newCacheDir() {
-        File cacheDir = new File(getInstrumentation().getTargetContext().getCacheDir(), "cache");
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    private File prepareCacheDir() {
+        File cacheDir = new File(getInstrumentation().getTargetContext().getCacheDir(), "test-thumbnails-cache");
         deleteDir(cacheDir);
+        cacheDir.mkdir();
         return cacheDir;
     }
 
@@ -77,6 +79,4 @@ public class FileThumbnailCacheTest extends InstrumentationTestCase {
         }
         dir.delete();
     }
-
-
 }

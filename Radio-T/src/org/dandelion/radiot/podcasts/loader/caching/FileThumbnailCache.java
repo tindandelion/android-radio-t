@@ -21,7 +21,6 @@ public class FileThumbnailCache implements ThumbnailCache {
 
     @Override
     public void update(String url, byte[] thumbnail) {
-        makeCacheDir();
         if (willExceedLimit()) {
             removeOldestFile();
         }
@@ -66,13 +65,6 @@ public class FileThumbnailCache implements ThumbnailCache {
             return buffer;
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }
-    }
-
-    @SuppressWarnings("ResultOfMethodCallIgnored")
-    private void makeCacheDir() {
-        if (!cacheDir.exists()) {
-            cacheDir.mkdir();
         }
     }
 
