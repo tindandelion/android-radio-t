@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 public class PodcastVisual {
     private static final Pattern NUMBER_PATTERN = Pattern.compile("\\d+");
     private static SimpleDateFormat INPUT_DATE_FORMAT =
-            new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);
+            new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
     private static SimpleDateFormat OUTPUT_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
 
     public final PodcastItem podcast;
