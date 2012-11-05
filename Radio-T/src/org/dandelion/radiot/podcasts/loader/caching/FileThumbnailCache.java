@@ -18,41 +18,13 @@ public class FileThumbnailCache implements ThumbnailCache {
     @Override
     public void update(String url, byte[] thumbnail) {
         File cached = cachedFileForUrl(url);
-        if (cached != null) {
-            saveThumbnail(cached, thumbnail);
-        }
+        ThumbnailFile.write(cached, thumbnail);
     }
 
     @Override
     public byte[] lookup(String url) {
         File cached = cachedFileForUrl(url);
-        if (cached != null && cached.exists()) {
-            return loadThumbnail(cached);
-        } else {
-            return null;
-        }
-    }
-
-    @SuppressWarnings("ResultOfMethodCallIgnored")
-    private byte[] loadThumbnail(File cached) {
-        try {
-            FileInputStream stream = new FileInputStream(cached);
-            int available = stream.available();
-            byte[] buffer = new byte[available];
-            stream.read(buffer, 0, available);
-            return buffer;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private void saveThumbnail(File file, byte[] thumbnail) {
-        try {
-            FileOutputStream stream = new FileOutputStream(file);
-            stream.write(thumbnail, 0, thumbnail.length);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        return ThumbnailFile.read(cached);
     }
 
     private File cachedFileForUrl(String url) {
@@ -87,5 +59,65 @@ public class FileThumbnailCache implements ThumbnailCache {
             result.add(cachedFileForUrl(url));
         }
         return result;
+    }
+
+    private static class ThumbnailFile {
+
+        private File file;
+
+        public static byte[] read(File f) {
+            if (f != null && f.exists()) {
+                return new ThumbnailFile(f).read();
+            } else {
+                return null;
+            }
+        }
+
+        public static void write(File f, byte[] data) {
+            if (f != null) {
+                new ThumbnailFile(f).write(data);
+            }
+        }
+
+        private ThumbnailFile(File f) {
+            this.file = f;
+        }
+
+        public byte[] read() {
+            try {
+                return readBytes(file);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        private byte[] readBytes(File f) throws IOException {
+            FileInputStream stream = new FileInputStream(f);
+            try {
+                int available = stream.available();
+                byte[] buffer = new byte[available];
+                stream.read(buffer, 0, available);
+                return buffer;
+            } finally {
+                stream.close();
+            }
+        }
+
+        public void write(byte[] thumbnail) {
+            try {
+                writeBytes(file, thumbnail);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        private void writeBytes(File f, byte[] thumbnail) throws IOException {
+            FileOutputStream stream = new FileOutputStream(f);
+            try {
+                stream.write(thumbnail, 0, thumbnail.length);
+            } finally {
+                stream.close();
+            }
+        }
     }
 }
