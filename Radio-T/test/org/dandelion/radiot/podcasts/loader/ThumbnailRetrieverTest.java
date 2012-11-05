@@ -14,7 +14,7 @@ public class ThumbnailRetrieverTest {
     private final ThumbnailProvider provider = mock(ThumbnailProvider.class);
     private final PodcastsConsumer consumer = mock(PodcastsConsumer.class);
     private final PodcastList list = anEmptyList();
-    private ThumbnailRetriever retriever = new ThumbnailRetriever(list, provider, consumer);
+    private ThumbnailRetriever retriever = new ThumbnailRetriever(provider, consumer);
 
     @Test
     public void feedsThumbnailToConsumer() throws Exception {
@@ -22,7 +22,7 @@ public class ThumbnailRetrieverTest {
         list.add(item);
 
         when(provider.thumbnailDataFor(URL)).thenReturn(THUMBNAIL);
-        retriever.retrieve(noInterrupts());
+        retriever.retrieve(list, noInterrupts());
 
         verify(consumer).updateThumbnail(item, THUMBNAIL);
     }
@@ -31,7 +31,7 @@ public class ThumbnailRetrieverTest {
     public void whenNoThumbnailUrl_skipsItem() throws Exception {
         list.add(aPodcastItem(withThumbnailUrl(null)));
 
-        retriever.retrieve(noInterrupts());
+        retriever.retrieve(list, noInterrupts());
         verifyZeroInteractions(consumer);
     }
 

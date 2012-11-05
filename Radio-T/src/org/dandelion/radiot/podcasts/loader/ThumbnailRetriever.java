@@ -9,19 +9,17 @@ public class ThumbnailRetriever {
         boolean isInterrupted();
     }
 
-    private PodcastList list;
     private ThumbnailProvider provider;
     private PodcastsConsumer consumer;
 
-    public ThumbnailRetriever(PodcastList list, ThumbnailProvider provider, PodcastsConsumer consumer) {
-        this.list = list;
+    public ThumbnailRetriever(ThumbnailProvider provider, PodcastsConsumer consumer) {
         this.provider = provider;
         this.consumer = consumer;
     }
 
-    public void retrieve(Controller controller) {
-        for (PodcastItem item : list) {
-            retrieveNext(item);
+    public void retrieve(PodcastList pl, Controller controller) {
+        for (PodcastItem pi : pl) {
+            retrieveNext(pi);
             if (controller.isInterrupted()) {
                 break;
             }

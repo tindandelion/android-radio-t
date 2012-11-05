@@ -85,8 +85,8 @@ public class PodcastListClient {
         }
 
         private void retrieveThumbnails() {
-            ThumbnailRetriever retriever = new ThumbnailRetriever(list, thumbnails, this);
-            retriever.retrieve(interrupter());
+            ThumbnailRetriever retriever = new ThumbnailRetriever(thumbnails, this);
+            retriever.retrieve(list, interrupter());
         }
 
         private ThumbnailRetriever.Controller interrupter() {
