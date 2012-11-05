@@ -9,7 +9,7 @@ import org.dandelion.radiot.podcasts.loader.caching.LocalPodcastStorage;
 
 import java.io.File;
 
-import static org.dandelion.radiot.helpers.PodcastDataBuilder.*;
+import static org.dandelion.radiot.util.PodcastDataBuilder.*;
 
 public class LocalPodcastStorageTest extends InstrumentationTestCase {
     private File workDir;

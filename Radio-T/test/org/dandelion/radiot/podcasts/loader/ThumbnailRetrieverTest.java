@@ -4,48 +4,43 @@ import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastList;
 import org.junit.Test;
 
+import static org.dandelion.radiot.util.PodcastDataBuilder.*;
 import static org.mockito.Mockito.*;
 
 public class ThumbnailRetrieverTest {
     final static String URL = "http://radio-t.com/thumbnail.jpg";
     final static byte[] THUMBNAIL = new byte[0];
 
-    final ThumbnailProvider provider = mock(ThumbnailProvider.class);
-    final PodcastsConsumer consumer = mock(PodcastsConsumer.class);
+    private final ThumbnailProvider provider = mock(ThumbnailProvider.class);
+    private final PodcastsConsumer consumer = mock(PodcastsConsumer.class);
+    private final PodcastList list = anEmptyList();
+    private ThumbnailRetriever retriever = new ThumbnailRetriever(list, provider, consumer);
 
     @Test
     public void feedsThumbnailToConsumer() throws Exception {
-        final PodcastItem item = anItemWithThumbnailUrl(URL);
-        final PodcastList list = aListWith(item);
+        final PodcastItem item = aPodcastItem(withThumbnailUrl(URL));
+        list.add(item);
 
-        when(provider.thumbnailDataFor(URL))
-                .thenReturn(THUMBNAIL);
+        when(provider.thumbnailDataFor(URL)).thenReturn(THUMBNAIL);
+        retriever.retrieve(noInterrupts());
 
-        final ThumbnailRetriever retriever = new ThumbnailRetriever(list, provider, consumer);
-
-        retriever.retrieveNext();
         verify(consumer).updateThumbnail(item, THUMBNAIL);
     }
 
     @Test
     public void whenNoThumbnailUrl_skipsItem() throws Exception {
-        final PodcastList list = aListWith(anItemWithThumbnailUrl(null));
+        list.add(aPodcastItem(withThumbnailUrl(null)));
 
-        final ThumbnailRetriever retriever = new ThumbnailRetriever(list, provider, consumer);
-
-        retriever.retrieveNext();
+        retriever.retrieve(noInterrupts());
         verifyZeroInteractions(consumer);
     }
 
-    private PodcastItem anItemWithThumbnailUrl(String url) {
-        final PodcastItem item = new PodcastItem();
-        item.thumbnailUrl = url;
-        return item;
-    }
-
-    private static PodcastList aListWith(PodcastItem item) {
-        final PodcastList list = new PodcastList();
-        list.add(item);
-        return list;
+    private ThumbnailRetriever.Controller noInterrupts() {
+        return new ThumbnailRetriever.Controller() {
+            @Override
+            public boolean isInterrupted() {
+                return false;
+            }
+        };
     }
 }

@@ -86,10 +86,17 @@ public class PodcastListClient {
 
         private void retrieveThumbnails() {
             ThumbnailRetriever retriever = new ThumbnailRetriever(list, thumbnails, this);
-            while (retriever.hasNext()) {
-                retriever.retrieveNext();
-                if (isCancelled()) break;
-            }
+            retriever.retrieve(interrupter());
+        }
+
+        private ThumbnailRetriever.Controller interrupter() {
+            return new ThumbnailRetriever.Controller() {
+
+                @Override
+                public boolean isInterrupted() {
+                    return isCancelled();
+                }
+            };
         }
 
         @Override

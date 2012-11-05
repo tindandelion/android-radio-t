@@ -15,9 +15,9 @@ import java.io.File;
 
 import static org.dandelion.radiot.endtoend.podcasts.helpers.RssFeedBuilder.rssFeed;
 import static org.dandelion.radiot.endtoend.podcasts.helpers.RssFeedBuilder.rssItem;
-import static org.dandelion.radiot.helpers.PodcastDataBuilder.aListWith;
-import static org.dandelion.radiot.helpers.PodcastDataBuilder.aPodcastItem;
-import static org.dandelion.radiot.helpers.PodcastDataBuilder.withTitle;
+import static org.dandelion.radiot.util.PodcastDataBuilder.aListWith;
+import static org.dandelion.radiot.util.PodcastDataBuilder.aPodcastItem;
+import static org.dandelion.radiot.util.PodcastDataBuilder.withTitle;
 
 public class PodcastListLoadingTests
         extends ActivityInstrumentationTestCase2<PodcastListActivity> {

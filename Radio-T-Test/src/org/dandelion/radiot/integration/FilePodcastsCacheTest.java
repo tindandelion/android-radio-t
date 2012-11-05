@@ -13,8 +13,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import static org.dandelion.radiot.helpers.PodcastDataBuilder.aListWith;
-import static org.dandelion.radiot.helpers.PodcastDataBuilder.aPodcastItem;
+import static org.dandelion.radiot.util.PodcastDataBuilder.aListWith;
+import static org.dandelion.radiot.util.PodcastDataBuilder.aPodcastItem;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 

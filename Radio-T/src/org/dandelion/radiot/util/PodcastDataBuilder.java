@@ -1,4 +1,4 @@
-package org.dandelion.radiot.helpers;
+package org.dandelion.radiot.util;
 
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastList;
