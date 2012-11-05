@@ -67,14 +67,14 @@ public class PodcastListActivity extends CustomTitleActivity {
 		super.onResume();
 		client.refreshFromCache();
 	}
-	
-	@Override
-	protected void onStop() {
-		super.onStop();
-		client.release();
-	}
 
-	@Override
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        client.release();
+    }
+
+    @Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.podcast_list, menu);
