@@ -16,8 +16,8 @@ public class PodcastClientPlatform implements PodcastClientFactory {
         shows = new HashMap<String, PodcastProperties>();
         shows.put("main-show",
                 new PodcastProperties("main-show",
-                        "http://192.168.5.108:4567/rss"));
-//                        "http://feeds.rucast.net/radio-t"));
+//                        "http://192.168.5.108:4567/rss"));
+                        "http://feeds.rucast.net/radio-t"));
         shows.put("after-show",
                 new PodcastProperties("after-show",
                         "http://feeds.feedburner.com/pirate-radio-t"));
