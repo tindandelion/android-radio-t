@@ -180,21 +180,8 @@ public class PodcastListLoadingTests
         public PodcastListClient newClientForShow(String name) {
             RssFeedProvider rssProvider = new RssFeedProvider(RSS_URL);
             ThumbnailProvider thumbnails = new HttpThumbnailProvider(THUMBNAIL_URL);
-            return new PodcastListClient(rssProvider, localCache, thumbnails, noCache());
-        }
-
-        private ThumbnailCache noCache() {
-            return new ThumbnailCache() {
-                @Override
-                public void update(String url, byte[] thumbnail) {
-
-                }
-
-                @Override
-                public byte[] lookup(String url) {
-                    return null;
-                }
-            };
+            ThumbnailCache thumbnalsCache = new NullThumbnailCache();
+            return new PodcastListClient(rssProvider, localCache, thumbnails, thumbnalsCache);
         }
 
         public void saveInLocalCache(PodcastList pl) {
@@ -204,6 +191,18 @@ public class PodcastListLoadingTests
         @SuppressWarnings("ResultOfMethodCallIgnored")
         public void expireCache() {
             cacheFile().setLastModified(LONG_AGO);
+        }
+
+        private static class NullThumbnailCache implements ThumbnailCache {
+            @Override
+            public void update(String url, byte[] thumbnail) {
+
+            }
+
+            @Override
+            public byte[] lookup(String url) {
+                return null;
+            }
         }
     }
 }

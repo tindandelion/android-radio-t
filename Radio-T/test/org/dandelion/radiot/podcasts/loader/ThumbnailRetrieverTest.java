@@ -3,6 +3,7 @@ package org.dandelion.radiot.podcasts.loader;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastList;
 import org.junit.Test;
+import org.mockito.InOrder;
 
 import static org.dandelion.radiot.util.PodcastDataBuilder.*;
 import static org.mockito.Mockito.*;
@@ -53,6 +54,22 @@ public class ThumbnailRetrieverTest {
 
         verify(provider).thumbnailDataFor(REMOTE_URL);
         verify(cache).update(REMOTE_URL, THUMBNAIL);
+    }
+
+    @Test
+    public void whenRetrievingThumbnails_FirstRetrieveAllCached_ThenDownloadRemotes() throws Exception {
+        final PodcastItem remote = aPodcastItem(withThumbnailUrl(REMOTE_URL));
+        final PodcastItem cached = aPodcastItem(withThumbnailUrl(CACHED_URL));
+        list.add(remote);
+        list.add(cached);
+
+        thumbnailIsRemote(REMOTE_URL, THUMBNAIL);
+        thumbnailIsCached(CACHED_URL, THUMBNAIL);
+        retriever.retrieve(list, noInterrupts());
+
+        InOrder order = inOrder(consumer);
+        order.verify(consumer).updateThumbnail(cached, THUMBNAIL);
+        order.verify(consumer).updateThumbnail(remote, THUMBNAIL);
     }
 
     @Test

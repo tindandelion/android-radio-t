@@ -21,28 +21,42 @@ public class ThumbnailRetriever {
     }
 
     public void retrieve(PodcastList pl, Controller controller) {
-        for (PodcastItem pi : pl) {
-            retrieveThumbnailFor(pi);
+        PodcastList toDownload = retrieveCached(pl);
+        downloadRemote(toDownload, controller);
+    }
+
+    private void downloadRemote(PodcastList items, Controller controller) {
+        for (PodcastItem pi : items) {
+            byte[] thumbnail = downloadByUrl(pi.thumbnailUrl);
+            consumer.updateThumbnail(pi, thumbnail);
             if (controller.isInterrupted()) {
                 break;
             }
         }
     }
 
-    private void retrieveThumbnailFor(PodcastItem pi) {
-        final String url = pi.thumbnailUrl;
-        if (url != null) {
-            byte[] thumbnail = retrieveByUrl(url);
+    private PodcastList retrieveCached(PodcastList pl) {
+        PodcastList cacheMisses = new PodcastList();
+        for (PodcastItem pi : pl) {
+            if (pi.hasThumbnail()) {
+                tryToFetchFromCache(pi, cacheMisses);
+            }
+        }
+        return cacheMisses;
+    }
+
+    private void tryToFetchFromCache(PodcastItem pi, PodcastList cacheMisses) {
+        byte[] thumbnail = cache.lookup(pi.thumbnailUrl);
+        if (thumbnail == null) {
+            cacheMisses.add(pi);
+        } else {
             consumer.updateThumbnail(pi, thumbnail);
         }
     }
 
-    private byte[] retrieveByUrl(String url) {
-        byte[] value = cache.lookup(url);
-        if (value == null) {
-            value = provider.thumbnailDataFor(url);
-            cache.update(url, value);
-        }
+    private byte[] downloadByUrl(String url) {
+        byte[] value = provider.thumbnailDataFor(url);
+        cache.update(url, value);
         return value;
     }
 }

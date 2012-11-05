@@ -20,4 +20,7 @@ public class PodcastItem implements Cloneable, Serializable {
         }
     }
 
+    public boolean hasThumbnail() {
+        return thumbnailUrl != null;
+    }
 }
