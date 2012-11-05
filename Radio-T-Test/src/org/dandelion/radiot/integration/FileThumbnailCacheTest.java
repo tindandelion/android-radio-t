@@ -26,6 +26,13 @@ public class FileThumbnailCacheTest extends InstrumentationTestCase {
         assertTrue(Arrays.equals(THUMBNAIL, cached));
     }
 
+    public void testWhenDataIsNull_DoNotStoreIt() throws Exception {
+        final String url = "http://example.com/thumbnail.jpg";
+
+        cache.update(url, null);
+        assertNull(cache.lookup(url));
+    }
+
     public void testWhenUrlIsEmpty_NeitherSaveNorLookItUp() throws Exception {
         final String url = "";
 

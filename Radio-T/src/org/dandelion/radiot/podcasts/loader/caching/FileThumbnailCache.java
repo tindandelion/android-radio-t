@@ -74,7 +74,7 @@ public class FileThumbnailCache implements ThumbnailCache {
         }
 
         public static void write(File f, byte[] data) {
-            if (f != null) {
+            if (f != null && data != null) {
                 new ThumbnailFile(f).write(data);
             }
         }

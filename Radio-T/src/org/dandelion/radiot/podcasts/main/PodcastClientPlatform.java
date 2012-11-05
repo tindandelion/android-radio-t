@@ -45,7 +45,8 @@ public class PodcastClientPlatform implements PodcastClientFactory {
         return new PodcastListClient(
                 newFeedProvider(props.url),
                 newPodcastsCache(localStorage),
-                newThumbnailProvider(THUMBNAIL_HOST, localStorage));
+                newThumbnailProvider(THUMBNAIL_HOST, localStorage),
+                newThumbnailCache(localStorage));
     }
 
     private PodcastsProvider newFeedProvider(String address) {
@@ -53,11 +54,12 @@ public class PodcastClientPlatform implements PodcastClientFactory {
     }
 
     protected ThumbnailProvider newThumbnailProvider(String address, LocalPodcastStorage localStorage) {
-        HttpThumbnailProvider provider = new HttpThumbnailProvider(address);
-        ThumbnailCache cache = localStorage.thumbnailsCache();
-        return new CachingThumbnailProvider(provider, cache);
+        return new HttpThumbnailProvider(address);
     }
 
+    private ThumbnailCache newThumbnailCache(LocalPodcastStorage localStorage) {
+        return localStorage.thumbnailsCache();
+    }
 
     private PodcastsCache newPodcastsCache(LocalPodcastStorage localStorage) {
         return localStorage.podcastsCache();

@@ -180,7 +180,21 @@ public class PodcastListLoadingTests
         public PodcastListClient newClientForShow(String name) {
             RssFeedProvider rssProvider = new RssFeedProvider(RSS_URL);
             ThumbnailProvider thumbnails = new HttpThumbnailProvider(THUMBNAIL_URL);
-            return new PodcastListClient(rssProvider, localCache, thumbnails);
+            return new PodcastListClient(rssProvider, localCache, thumbnails, noCache());
+        }
+
+        private ThumbnailCache noCache() {
+            return new ThumbnailCache() {
+                @Override
+                public void update(String url, byte[] thumbnail) {
+
+                }
+
+                @Override
+                public byte[] lookup(String url) {
+                    return null;
+                }
+            };
         }
 
         public void saveInLocalCache(PodcastList pl) {

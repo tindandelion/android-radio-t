@@ -8,31 +8,68 @@ import static org.dandelion.radiot.util.PodcastDataBuilder.*;
 import static org.mockito.Mockito.*;
 
 public class ThumbnailRetrieverTest {
-    final static String URL = "http://radio-t.com/thumbnail.jpg";
+    final static String REMOTE_URL = "http://radio-t.com/thumbnail1.jpg";
+    final static String CACHED_URL = "http://radio-t.com/thumbnail2.jpg";
+
     final static byte[] THUMBNAIL = new byte[0];
 
     private final ThumbnailProvider provider = mock(ThumbnailProvider.class);
     private final PodcastsConsumer consumer = mock(PodcastsConsumer.class);
+    private final ThumbnailCache cache = mock(ThumbnailCache.class);
     private final PodcastList list = anEmptyList();
-    private ThumbnailRetriever retriever = new ThumbnailRetriever(provider, consumer);
+    private ThumbnailRetriever retriever = new ThumbnailRetriever(provider, cache, consumer);
 
     @Test
-    public void feedsThumbnailToConsumer() throws Exception {
-        final PodcastItem item = aPodcastItem(withThumbnailUrl(URL));
+    public void whenThumbnailIsCached_WillFetchItFromCache() throws Exception {
+        final PodcastItem item = aPodcastItem(withThumbnailUrl(CACHED_URL));
         list.add(item);
 
-        when(provider.thumbnailDataFor(URL)).thenReturn(THUMBNAIL);
+        thumbnailIsCached(CACHED_URL, THUMBNAIL);
         retriever.retrieve(list, noInterrupts());
 
+        verify(cache).lookup(CACHED_URL);
         verify(consumer).updateThumbnail(item, THUMBNAIL);
     }
 
     @Test
-    public void whenNoThumbnailUrl_skipsItem() throws Exception {
+    public void whenThumbnailIsNotCached_willDownloadIt() throws Exception {
+        final PodcastItem item = aPodcastItem(withThumbnailUrl(REMOTE_URL));
+        list.add(item);
+
+        thumbnailIsRemote(REMOTE_URL, THUMBNAIL);
+        retriever.retrieve(list, noInterrupts());
+
+        verify(provider).thumbnailDataFor(REMOTE_URL);
+        verify(consumer).updateThumbnail(item, THUMBNAIL);
+    }
+
+    @Test
+    public void whenDownloadsThumbnail_WillStoreItInCache() throws Exception {
+        final PodcastItem item = aPodcastItem(withThumbnailUrl(REMOTE_URL));
+        list.add(item);
+
+        thumbnailIsRemote(REMOTE_URL, THUMBNAIL);
+        retriever.retrieve(list, noInterrupts());
+
+        verify(provider).thumbnailDataFor(REMOTE_URL);
+        verify(cache).update(REMOTE_URL, THUMBNAIL);
+    }
+
+    @Test
+    public void whenNoThumbnailUrl_SkipsItemEntirely() throws Exception {
         list.add(aPodcastItem(withThumbnailUrl(null)));
 
         retriever.retrieve(list, noInterrupts());
-        verifyZeroInteractions(consumer);
+        verifyZeroInteractions(cache, provider, consumer);
+    }
+
+    private void thumbnailIsCached(String url, byte[] data) {
+        when(cache.lookup(url)).thenReturn(data);
+    }
+
+    private void thumbnailIsRemote(String url, byte[] data) {
+        when(cache.lookup(url)).thenReturn(null);
+        when(provider.thumbnailDataFor(url)).thenReturn(data);
     }
 
     private ThumbnailRetriever.Controller noInterrupts() {
