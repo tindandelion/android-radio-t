@@ -3,6 +3,7 @@ package org.dandelion.radiot.podcasts.loader;
 import org.dandelion.radiot.podcasts.core.PodcastList;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InOrder;
 
 import static org.mockito.Mockito.*;
 
@@ -28,8 +29,10 @@ public class PodcastListRetrieverTest {
         cacheHasInvalidData();
 
         retriever.retrieve();
-        verify(consumer).updateList(cachedList);
-        verify(consumer).updateList(remoteList);
+
+        InOrder order = inOrder(consumer);
+        order.verify(consumer).updateList(cachedList);
+        order.verify(consumer).updateList(remoteList);
     }
 
     @Test
