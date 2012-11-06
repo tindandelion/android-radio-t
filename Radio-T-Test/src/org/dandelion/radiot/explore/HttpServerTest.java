@@ -1,4 +1,4 @@
-package org.dandelion.radiot.integration;
+package org.dandelion.radiot.explore;
 
 import junit.framework.TestCase;
 import org.apache.http.HttpResponse;

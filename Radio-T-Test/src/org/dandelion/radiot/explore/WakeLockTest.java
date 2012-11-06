@@ -1,4 +1,4 @@
-package org.dandelion.radiot.integration;
+package org.dandelion.radiot.explore;
 
 import android.content.Context;
 import android.os.PowerManager;
