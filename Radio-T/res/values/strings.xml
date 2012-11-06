@@ -57,17 +57,20 @@
     <string name="acknoledgements">
         <b>Автор благодарен</b>
         \n\n
-        <i>Бобуку, Грею, Маринке и Умпутуну</i>
+        <i>Бобуку, Грею, Ксении и Умпутуну</i>
         \nза замечательное познавательное шоу\n\n
         <i>Оляпке</i>
         \nза ценные советы и помощь в тестировании приложения
     </string>
     <string name="download_unsupported_title">Загрузка не поддерживается</string>
-    <string name="implement_download_request">Пожалуйста, реализуй загрузку подкастов для Android младших версий!</string>
+    <string name="implement_download_request">Пожалуйста, реализуй загрузку подкастов для Android младших версий!
+    </string>
     <string name="download_complete_message">Загрузка завершена</string>
     <string name="download_default_message">Ошибка: %s</string>
     <string name="download_unsupported_message">
-        Загрузка подкастов реализована для <b>Android 2.3</b> и старше. Вы можете попросить автора сделать эту функцию и для Вашей версии Android.
+        Загрузка подкастов реализована для
+        <b>Android 2.3</b>
+        и старше. Вы можете попросить автора сделать эту функцию и для Вашей версии Android.
     </string>
     <string name="incorrect_audio_url">Неверная ссылка на аудио-файл подкаста</string>
     <string-array
