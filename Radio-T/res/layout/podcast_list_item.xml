@@ -14,8 +14,8 @@
 		android:layout_alignParentLeft="true"
 		android:layout_centerVertical="true"
 		android:layout_marginRight="5dp"
-		android:padding="5dp"
-		android:background="@drawable/podcast_image_background"
+		android:background="#10FFFFFF"
+        android:padding="1dp"
 		android:src="@drawable/default_podcast_image" />
 	<TextView
 		android:id="@+id/podcast_item_view_number"
