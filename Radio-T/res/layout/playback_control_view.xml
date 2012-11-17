@@ -11,4 +11,15 @@
             />
     <View style="@style/DividerVertical"
           android:layout_toLeftOf="@id/btn_toggle_live_playback"/>
+    <TextView
+            android:id="@+id/playback_state_label"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:typeface="sans"
+            android:textScaleX="1.1"
+            android:gravity="center_horizontal"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@id/btn_toggle_live_playback"/>
 </RelativeLayout>

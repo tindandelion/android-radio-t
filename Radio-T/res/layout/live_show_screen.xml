@@ -29,15 +29,6 @@
 			android:textScaleX="1.1"
 			android:gravity="center_horizontal"
 			android:typeface="sans" />
-		<TextView
-			android:id="@+id/playback_state_label"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:textSize="20sp"
-			android:textStyle="bold"
-			android:typeface="sans"
-			android:textScaleX="1.1"
-			android:gravity="center_horizontal" />
 	</LinearLayout>
 	<TextView
 		android:id="@+id/live_show_hint"

@@ -2,7 +2,6 @@ package org.dandelion.radiot.live.ui;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.live.LiveShowClient;
@@ -11,7 +10,6 @@ import org.dandelion.radiot.util.CustomTitleActivity;
 public class LiveShowActivity extends CustomTitleActivity {
     protected LiveShowClient client;
 
-    private String[] statusLabels;
     private LiveShowPresenter presenter;
     private TimerView timerLabel;
     private PlaybackControlFragment playbackControl;
@@ -27,8 +25,6 @@ public class LiveShowActivity extends CustomTitleActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.live_show_screen);
 		presenter = new LiveShowPresenter(this);
-		statusLabels = getResources().getStringArray(
-				R.array.live_show_status_labels);
         timerLabel = (TimerView) findViewById(R.id.live_timer_label);
         playbackControl = (PlaybackControlFragment) getSupportFragmentManager().findFragmentById(R.id.playback_control);
         playbackControl.setOnClickListener(onTogglePlayback);
@@ -57,8 +53,7 @@ public class LiveShowActivity extends CustomTitleActivity {
     }
 
     public void setStatusLabel(int labelId) {
-		TextView view = (TextView) findViewById(R.id.playback_state_label);
-		view.setText(statusLabels[labelId]);
+        playbackControl.setStatusLabel(labelId);
 	}
 
     public void stopTimer() {
