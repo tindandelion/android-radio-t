@@ -9,6 +9,8 @@ import java.util.Map;
 import static org.dandelion.radiot.live.core.LiveShowState.*;
 
 public class LiveShowPresenter implements LiveShowStateListener {
+    private PlaybackControlFragment control;
+
     private static class VisualState {
         public final int statusLabelId;
         public final Boolean showHelpText;
@@ -25,9 +27,9 @@ public class LiveShowPresenter implements LiveShowStateListener {
             this.timerActive = timerActive;
         }
 
-        public void update(LiveShowActivity activity, long timestamp) {
-            activity.setStatusLabel(statusLabelId);
-            activity.setButtonState(buttonLabelId, buttonEnabled);
+        public void update(LiveShowActivity activity, PlaybackControlFragment control, long timestamp) {
+            control.setStatusLabel(statusLabelId);
+            control.setButtonState(buttonLabelId, buttonEnabled);
             activity.showHelpText(showHelpText);
             if (timerActive) {
                 activity.startTimer(timestamp);
@@ -47,13 +49,14 @@ public class LiveShowPresenter implements LiveShowStateListener {
 
 	private LiveShowActivity activity;
 
-	public LiveShowPresenter(LiveShowActivity activity) {
+	public LiveShowPresenter(LiveShowActivity activity, PlaybackControlFragment control) {
 		this.activity = activity;
+        this.control = control;
 	}
 
     @Override
     public void onStateChanged(LiveShowState state, long timestamp) {
         final VisualState visualState = stateMap.get(state);
-        visualState.update(activity, timestamp);
+        visualState.update(activity, control, timestamp);
     }
 }

@@ -24,10 +24,11 @@ public class LiveShowActivity extends CustomTitleActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.live_show_screen);
-		presenter = new LiveShowPresenter(this);
-        timerLabel = (TimerView) findViewById(R.id.live_timer_label);
         playbackControl = (PlaybackControlFragment) getSupportFragmentManager().findFragmentById(R.id.playback_control);
         playbackControl.setOnClickListener(onTogglePlayback);
+
+        presenter = new LiveShowPresenter(this, playbackControl);
+        timerLabel = (TimerView) findViewById(R.id.live_timer_label);
 	}
 
     @Override
@@ -46,14 +47,6 @@ public class LiveShowActivity extends CustomTitleActivity {
         client.removeListener(presenter);
         timerLabel.stop();
 		super.onStop();
-	}
-
-    public void setButtonState(int labelId, boolean enabled) {
-        playbackControl.setButtonState(labelId, enabled);
-    }
-
-    public void setStatusLabel(int labelId) {
-        playbackControl.setStatusLabel(labelId);
 	}
 
     public void stopTimer() {
