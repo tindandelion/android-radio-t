@@ -107,6 +107,11 @@ public class PodcastOperationsTest extends
 
     private PodcastListUiDriver gotoPodcastListPage() throws InterruptedException {
         appDriver.goToPodcastsScreen();
+        return waitForPodcastListToBeShown();
+    }
+
+    private PodcastListUiDriver waitForPodcastListToBeShown() throws InterruptedException {
+        Thread.sleep(1000);
         PodcastListActivity activity = (PodcastListActivity) appDriver.getCurrentActivity();
         PodcastListUiDriver driver = new PodcastListUiDriver(getInstrumentation(), activity);
         assertTrue(driver.waitForView(ListView.class));

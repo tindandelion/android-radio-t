@@ -15,6 +15,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class PodcastListRunner {
+    public static final int LIST_DISPLAY_TIMEOUT_MS = 1000;
     private Solo solo;
     private Activity activity;
 
@@ -78,7 +79,13 @@ public class PodcastListRunner {
     }
 
     private void waitForListToDisplay() {
-        assertThat(solo.waitForView(ListView.class), is(true));
+        // TODO: I think I need a poller here to check the list is displayed
+        try {
+            Thread.sleep(LIST_DISPLAY_TIMEOUT_MS);
+            assertThat(solo.waitForView(ListView.class), is(true));
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private Matcher<? super ListView> has(final Matcher<View> itemMatcher) {
