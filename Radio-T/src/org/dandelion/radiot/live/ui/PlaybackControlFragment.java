@@ -14,6 +14,7 @@ public class PlaybackControlFragment extends Fragment {
     private String[] buttonLabels;
     private String[] statusLabels;
     private TextView status;
+    private TimerView timer;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -24,7 +25,14 @@ public class PlaybackControlFragment extends Fragment {
                 R.array.live_show_status_labels);
         button = (Button) view.findViewById(R.id.btn_toggle_live_playback);
         status = (TextView) view.findViewById(R.id.playback_state_label);
+        timer = (TimerView) view.findViewById(R.id.live_timer_label);
         return view;
+    }
+
+    @Override
+    public void onStop() {
+        timer.stop();
+        super.onStop();
     }
 
     public void setButtonState(int id, boolean enabled) {
@@ -38,5 +46,13 @@ public class PlaybackControlFragment extends Fragment {
 
     public void setStatusLabel(int id) {
         status.setText(statusLabels[id]);
+    }
+
+    public void startTimer(long timestamp) {
+        timer.start(timestamp);
+    }
+
+    public void stopTimer() {
+        timer.stop();
     }
 }

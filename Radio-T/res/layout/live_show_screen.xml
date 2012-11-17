@@ -20,15 +20,6 @@
 		android:layout_height="wrap_content"
 		android:orientation="vertical"
 		android:layout_centerInParent="true">
-		<org.dandelion.radiot.live.ui.TimerView
-			android:id="@+id/live_timer_label"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:textStyle="bold"
-			android:textSize="72dp"
-			android:textScaleX="1.1"
-			android:gravity="center_horizontal"
-			android:typeface="sans" />
 	</LinearLayout>
 	<TextView
 		android:id="@+id/live_show_hint"

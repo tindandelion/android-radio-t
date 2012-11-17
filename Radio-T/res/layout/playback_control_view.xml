@@ -11,6 +11,18 @@
             />
     <View style="@style/DividerVertical"
           android:layout_toLeftOf="@id/btn_toggle_live_playback"/>
+    <org.dandelion.radiot.live.ui.TimerView
+            android:id="@+id/live_timer_label"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="36dp"
+            android:textScaleX="1.1"
+            android:gravity="center_horizontal"
+            android:typeface="sans"
+            android:layout_toLeftOf="@id/btn_toggle_live_playback"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"/>
     <TextView
             android:id="@+id/playback_state_label"
             android:layout_width="fill_parent"

@@ -32,9 +32,9 @@ public class LiveShowPresenter implements LiveShowStateListener {
             control.setButtonState(buttonLabelId, buttonEnabled);
             activity.showHelpText(showHelpText);
             if (timerActive) {
-                activity.startTimer(timestamp);
+                control.startTimer(timestamp);
             } else {
-                activity.stopTimer();
+                control.stopTimer();
             }
         }
     }

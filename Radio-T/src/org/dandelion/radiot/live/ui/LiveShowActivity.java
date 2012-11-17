@@ -11,7 +11,6 @@ public class LiveShowActivity extends CustomTitleActivity {
     protected LiveShowClient client;
 
     private LiveShowPresenter presenter;
-    private TimerView timerLabel;
     private PlaybackControlFragment playbackControl;
     private View.OnClickListener onTogglePlayback = new View.OnClickListener() {
         @Override
@@ -28,8 +27,7 @@ public class LiveShowActivity extends CustomTitleActivity {
         playbackControl.setOnClickListener(onTogglePlayback);
 
         presenter = new LiveShowPresenter(this, playbackControl);
-        timerLabel = (TimerView) findViewById(R.id.live_timer_label);
-	}
+    }
 
     @Override
 	protected void onStart() {
@@ -45,19 +43,10 @@ public class LiveShowActivity extends CustomTitleActivity {
     @Override
 	protected void onStop() {
         client.removeListener(presenter);
-        timerLabel.stop();
 		super.onStop();
 	}
 
-    public void stopTimer() {
-        timerLabel.stop();
-    }
-
-    public void startTimer(long timestamp) {
-        timerLabel.start(timestamp);
-    }
-
-	public void showHelpText(boolean visible) {
+    public void showHelpText(boolean visible) {
 		View view = findViewById(R.id.live_show_hint);
 		int visibility = (visible) ? View.VISIBLE : View.INVISIBLE;
 		view.setVisibility(visibility);
