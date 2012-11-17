@@ -2,7 +2,6 @@ package org.dandelion.radiot.live.ui;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.live.LiveShowApp;
@@ -13,9 +12,15 @@ public class LiveShowActivity extends CustomTitleActivity {
     protected LiveShowClient client;
 
     private String[] statusLabels;
-	private CharSequence[] buttonLabels;
-	private LiveShowPresenter presenter;
+    private LiveShowPresenter presenter;
     private TimerView timerLabel;
+    private PlaybackControlFragment playbackControl;
+    private View.OnClickListener onTogglePlayback = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            client.togglePlayback();
+        }
+    };
 
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -24,9 +29,9 @@ public class LiveShowActivity extends CustomTitleActivity {
 		presenter = new LiveShowPresenter(this);
 		statusLabels = getResources().getStringArray(
 				R.array.live_show_status_labels);
-		buttonLabels = getResources().getStringArray(
-				R.array.live_show_button_labels);
         timerLabel = (TimerView) findViewById(R.id.live_timer_label);
+        playbackControl = (PlaybackControlFragment) getSupportFragmentManager().findFragmentById(R.id.playback_control);
+        playbackControl.setOnClickListener(onTogglePlayback);
 	}
 
     @Override
@@ -47,18 +52,11 @@ public class LiveShowActivity extends CustomTitleActivity {
 		super.onStop();
 	}
 
-	@SuppressWarnings("UnusedParameters")
-    public void onButtonPressed(View v) {
-        client.togglePlayback();
+    public void setButtonState(int labelId, boolean enabled) {
+        playbackControl.setButtonState(labelId, enabled);
     }
 
-    public void setButtonState(int labelId, boolean enabled) {
-		Button button = (Button) findViewById(R.id.live_show_action_button);
-		button.setText(buttonLabels[labelId]);
-		button.setEnabled(enabled);
-	}
-
-	public void setStatusLabel(int labelId) {
+    public void setStatusLabel(int labelId) {
 		TextView view = (TextView) findViewById(R.id.playback_state_label);
 		view.setText(statusLabels[labelId]);
 	}

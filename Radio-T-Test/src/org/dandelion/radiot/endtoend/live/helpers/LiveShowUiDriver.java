@@ -11,15 +11,12 @@ public class LiveShowUiDriver extends Solo {
         super(instrumentation, activity);
     }
 
-    public void clickConnect() {
-        clickOnButton("Подключиться");
+    public void togglePlayback() {
+        clickOnButton(0);
     }
 
     public void showsTranslationStatus(String statusText) {
         assertTrue(waitForText(statusText));
     }
 
-    public void clickStop() {
-        clickOnButton("Остановить");
-    }
 }

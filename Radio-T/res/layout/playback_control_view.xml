@@ -6,7 +6,7 @@
         android:background="@color/actionbar_background">
     <Button android:id="@+id/btn_toggle_live_playback"
             android:layout_height="fill_parent"
-            android:layout_width="144dp"
+            android:layout_width="192dp"
             android:layout_alignParentRight="true"
             />
     <View style="@style/DividerVertical"

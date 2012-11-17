@@ -30,7 +30,7 @@ public class LiveShowRunner {
     }
 
     public void startTranslation() {
-        uiDriver.clickConnect();
+        uiDriver.togglePlayback();
     }
 
     public void showsTranslationInProgress() {
@@ -39,7 +39,7 @@ public class LiveShowRunner {
     }
 
     public void stopTranslation() {
-        uiDriver.clickStop();
+        uiDriver.togglePlayback();
     }
 
     public void showsTranslationStopped() {
