@@ -12,11 +12,11 @@ public class LiveShowPresenter implements LiveShowStateListener {
     private PlaybackControlFragment control;
 
     private static class VisualState {
-        public final int statusLabelId;
-        public final Boolean showHelpText;
-        public final int buttonLabelId;
-        public final Boolean buttonEnabled;
-        public final Boolean timerActive;
+        private final int statusLabelId;
+        private final Boolean showHelpText;
+        private final int buttonLabelId;
+        private final Boolean buttonEnabled;
+        private final Boolean timerActive;
 
         private VisualState(int statusLabelId, Boolean showHelpText,
                             int buttonLabelId, Boolean buttonEnabled, Boolean timerActive) {
@@ -27,10 +27,10 @@ public class LiveShowPresenter implements LiveShowStateListener {
             this.timerActive = timerActive;
         }
 
-        public void update(LiveShowActivity activity, PlaybackControlFragment control, long timestamp) {
+        public void update(PlaybackControlFragment control, long timestamp) {
             control.setStatusLabel(statusLabelId);
             control.setButtonState(buttonLabelId, buttonEnabled);
-            activity.showHelpText(showHelpText);
+            control.showHelpText(showHelpText);
             if (timerActive) {
                 control.startTimer(timestamp);
             } else {
@@ -47,16 +47,13 @@ public class LiveShowPresenter implements LiveShowStateListener {
         stateMap.put(Waiting, new VisualState(4, true, 0, true, true));
     }
 
-	private LiveShowActivity activity;
-
-	public LiveShowPresenter(LiveShowActivity activity, PlaybackControlFragment control) {
-		this.activity = activity;
+    public LiveShowPresenter(PlaybackControlFragment control) {
         this.control = control;
 	}
 
     @Override
     public void onStateChanged(LiveShowState state, long timestamp) {
         final VisualState visualState = stateMap.get(state);
-        visualState.update(activity, control, timestamp);
+        visualState.update(control, timestamp);
     }
 }
