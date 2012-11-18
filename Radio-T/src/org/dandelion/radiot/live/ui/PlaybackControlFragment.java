@@ -1,7 +1,6 @@
 package org.dandelion.radiot.live.ui;
 
-import android.content.res.Resources;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import org.dandelion.radiot.R;
 import android.os.Bundle;
@@ -13,8 +12,8 @@ import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.live.LiveShowClient;
 
 public class PlaybackControlFragment extends Fragment {
-    private StringResources strings;
-    private Button button;
+    private VisualResources strings;
+    private ImageButton button;
     private TextView status;
     private TimerView timer;
     private TextView hint;
@@ -31,13 +30,13 @@ public class PlaybackControlFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        strings = new StringResources(getResources());
+        strings = new VisualResources(getResources());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.playback_control_view, container, false);
-        button = (Button) view.findViewById(R.id.btn_toggle_live_playback);
+        button = (ImageButton) view.findViewById(R.id.btn_toggle_live_playback);
         status = (TextView) view.findViewById(R.id.playback_state_label);
         timer = (TimerView) view.findViewById(R.id.live_timer_label);
         hint = (TextView) view.findViewById(R.id.live_hint_label);
@@ -63,7 +62,7 @@ public class PlaybackControlFragment extends Fragment {
     }
 
     public void setButtonState(int id, boolean enabled) {
-        button.setText(strings.buttonLabelForId(id));
+        button.setImageResource(strings.buttonLabelForId(id));
         button.setEnabled(enabled);
     }
 
@@ -92,16 +91,18 @@ public class PlaybackControlFragment extends Fragment {
         }
     }
 
-    private static class StringResources {
-        private String[] buttonLabels;
+    private static class VisualResources {
+        private int[] buttonLabels = new int[] {
+                R.drawable.ic_media_stop,
+                R.drawable.ic_media_play
+        };
         private String[] statusLabels;
 
-        public StringResources(Resources resources) {
-            buttonLabels = resources.getStringArray(R.array.live_show_button_labels);
+        public VisualResources(android.content.res.Resources resources) {
             statusLabels = resources.getStringArray(R.array.live_show_status_labels);
         }
 
-        public String buttonLabelForId(int id) {
+        public int buttonLabelForId(int id) {
             return buttonLabels[id];
         }
 

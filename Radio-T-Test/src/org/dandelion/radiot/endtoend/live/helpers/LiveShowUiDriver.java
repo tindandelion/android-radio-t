@@ -12,7 +12,7 @@ public class LiveShowUiDriver extends Solo {
     }
 
     public void togglePlayback() {
-        clickOnButton(0);
+        clickOnImageButton(0);
     }
 
     public void showsTranslationStatus(String statusText) {
