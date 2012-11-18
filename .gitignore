@@ -1,5 +1,6 @@
 out
 gen
+temp
 */bin
 *.iws
 .metadata
