@@ -93,8 +93,8 @@ public class PlaybackControlFragment extends Fragment {
 
     private static class VisualResources {
         private int[] buttonLabels = new int[] {
-                R.drawable.ic_media_stop,
-                R.drawable.ic_media_play
+                R.drawable.ic_stop,
+                R.drawable.ic_play
         };
         private String[] statusLabels;
 
