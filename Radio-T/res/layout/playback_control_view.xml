@@ -1,43 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-        android:background="@color/actionbar_background">
-    <ImageButton android:id="@+id/btn_toggle_live_playback"
-            android:layout_height="fill_parent"
-            android:layout_width="96dp"
-            android:layout_alignParentRight="true"/>
-    <View style="@style/DividerVertical"
-          android:layout_toLeftOf="@id/btn_toggle_live_playback"/>
-    <org.dandelion.radiot.live.ui.TimerView
-            android:id="@+id/live_timer_label"
-            android:layout_width="144dp"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="36dp"
-            android:gravity="center_horizontal"
-            android:typeface="sans"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"/>
-    <TextView
-            android:id="@+id/playback_state_label"
-            android:layout_width="144dp"
-            android:layout_height="wrap_content"
-            android:textAppearance="@android:style/TextAppearance.Small"
-            android:gravity="center_horizontal"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentBottom="true"/>
-    <View style="@style/DividerVertical"
-          android:layout_toRightOf="@id/live_timer_label" />
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:background="@color/actionbar_background">
     <TextView android:id="@+id/live_hint_label"
               android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:layout_toRightOf="@id/live_timer_label"
-              android:layout_toLeftOf="@id/btn_toggle_live_playback"
+              android:layout_height="72dp"
               android:text="@string/live_show_info"
               android:textAppearance="@android:style/TextAppearance.Small"
               android:paddingLeft="8dp"
               android:paddingRight="8dp"
               android:gravity="center"/>
-</RelativeLayout>
+    <View style="@style/DividerHorizontal"/>
+    <LinearLayout android:layout_width="fill_parent"
+                  android:layout_height="72dp"
+                  android:orientation="horizontal">
+        <LinearLayout android:id="@+id/playback_status"
+                      android:layout_width="fill_parent"
+                      android:layout_height="fill_parent"
+                      android:orientation="vertical"
+                      android:layout_weight="1">
+            <org.dandelion.radiot.live.ui.TimerView
+                    android:id="@+id/live_timer_label"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="36dp"
+                    android:gravity="center_horizontal"
+                    android:typeface="sans"/>
+            <TextView
+                    android:id="@+id/playback_state_label"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@android:style/TextAppearance.Small"
+                    android:gravity="center_horizontal"/>
+        </LinearLayout>
+        <View style="@style/DividerVertical"/>
+        <ImageButton android:id="@+id/btn_toggle_live_playback"
+                     android:layout_height="fill_parent"
+                     android:layout_width="fill_parent"
+                     android:layout_weight="1"/>
+    </LinearLayout>
+</LinearLayout>
