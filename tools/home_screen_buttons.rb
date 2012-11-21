@@ -1,7 +1,9 @@
 require 'rexml/document'
 require 'pry'
 
-DENSITY_RES = {
+require_relative 'drawables_common'
+
+HOME_BTN_DENSITY_MAP = {
   ldpi: 45,
   mdpi: 60,
   hdpi: 90,
@@ -15,15 +17,12 @@ BUTTON_STATES = {
   selected: DEFAULT_LAYERS + ['Selected']
 }
 
-INKSCAPE_PATH = "/Applications/Inkscape.app/Contents/Resources/bin/inkscape"
-
 def create_home_screen_buttons(src_dir, drawable_dir)
-  DENSITY_RES.each_pair do |density, dpi|
-    dest_dir = drawable_dir + ('drawable' + '-' + density.to_s)
+  each_density HOME_BTN_DENSITY_MAP, drawable_dir do |dest_dir, dpi|
     Dir.glob(src_dir + "*.svg") do |svg_file|
       create_home_screen_button(Pathname(svg_file), dest_dir, dpi)
     end
-  end
+  end    
 end
 
 def create_home_screen_button(svg_source, dest_dir, dpi)
@@ -37,7 +36,7 @@ end
 def export_png(src_svg, dest_png, dpi, visible_layers)
   transform_file(src_svg) do |temp_svg|
     setup_visible_layers(temp_svg, visible_layers)
-    invoke_inkscape "--file #{temp_svg} --export-png #{dest_png} --export-dpi #{dpi}"
+    Inkscape.export(temp_svg, dest_png, dpi)
   end
 end
 
@@ -62,9 +61,3 @@ def setup_visible_layers(svg_path, visible_layers)
   end
   svg_path.open('w') { |io| doc.write(io) }
 end
-
-def invoke_inkscape(cmdline_args)
-  system "#{INKSCAPE_PATH} #{cmdline_args}"
-end
-
-
