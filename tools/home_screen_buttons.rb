@@ -3,13 +3,6 @@ require 'pry'
 
 require_relative 'drawables_common'
 
-# HOME_BTN_DENSITY_MAP = {
-#   ldpi: 45,
-#   mdpi: 60,
-#   hdpi: 90,
-#   xhdpi: 120
-# }
-
 HOME_BTN_DENSITY_MAP = DensityMap.default(60)
 
 DEFAULT_LAYERS = ['Main', 'Background']
