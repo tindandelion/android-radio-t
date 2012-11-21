@@ -12,11 +12,30 @@ module Inkscape
   end
 end
 
-def each_density(density_map, res_dir, &block)
-  density_map.each_pair do |density, dpi|
-    dest_dir = res_dir + ('drawable' + '-' + density.to_s)
-    block.call(dest_dir, dpi)
+class DensityMap
+
+  def self.default(mdpi_res)
+    self.new(ldpi: mdpi_res * 120 / 160,
+             mdpi: mdpi_res,
+             hdpi: mdpi_res * 240 / 160,
+             xhdpi: mdpi_res * 320 / 160)
   end
+  
+  def initialize(denisty_resolution_map = {})
+    @map = denisty_resolution_map
+  end
+
+  def each_density(resources_dir, &block)
+    @map.each_pair do |density, dpi|
+      dest_dir = resources_dir + ('drawable' + '-' + density.to_s)
+      block.call(dest_dir, dpi)
+    end
+  end
+end
+
+
+def each_density(density_map, res_dir, &block)
+  DensityMap.new(density_map).each_density res_dir, &block 
 end
 
 def png_path_from(svg_path, dest_dir)

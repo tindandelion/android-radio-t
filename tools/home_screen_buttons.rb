@@ -3,12 +3,14 @@ require 'pry'
 
 require_relative 'drawables_common'
 
-HOME_BTN_DENSITY_MAP = {
-  ldpi: 45,
-  mdpi: 60,
-  hdpi: 90,
-  xhdpi: 120
-}
+# HOME_BTN_DENSITY_MAP = {
+#   ldpi: 45,
+#   mdpi: 60,
+#   hdpi: 90,
+#   xhdpi: 120
+# }
+
+HOME_BTN_DENSITY_MAP = DensityMap.default(60)
 
 DEFAULT_LAYERS = ['Main', 'Background']
 BUTTON_STATES = {
@@ -17,8 +19,8 @@ BUTTON_STATES = {
   selected: DEFAULT_LAYERS + ['Selected']
 }
 
-def create_home_screen_buttons(src_dir, drawable_dir)
-  each_density HOME_BTN_DENSITY_MAP, drawable_dir do |dest_dir, dpi|
+def create_home_screen_buttons(src_dir, resource_dir)
+  HOME_BTN_DENSITY_MAP.each_density resource_dir do |dest_dir, dpi|
     Dir.glob(src_dir + "*.svg") do |svg_file|
       create_home_screen_button(Pathname(svg_file), dest_dir, dpi)
     end
