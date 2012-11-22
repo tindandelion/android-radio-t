@@ -44,6 +44,19 @@ ensure
 end
 
 class SvgImage
+  class Layer
+    attr_reader :el
+    def initialize(el)
+      @el = el
+    end
+
+    def name
+      @el.attribute('inkscape:label').value
+    end
+
+    
+  end
+      
   def self.open(path)
     root = REXML::Document.new(path.read)
     self.new(root)
@@ -54,7 +67,8 @@ class SvgImage
   end
 
   def layers
-    REXML::XPath.match(@root, "//g[@inkscape:groupmode='layer']")
+    els = REXML::XPath.match(@root, "//g[@inkscape:groupmode='layer']")
+    els.collect { |el| Layer.new(el) }
   end
 
   def write(path)
@@ -65,12 +79,12 @@ end
 def setup_visible_layers(svg_path, visible_layers)
   svg = SvgImage.open(svg_path)
   svg.layers.each do |l|
-    style_value = if visible_layers.include?(l.attribute('inkscape:label').value)
+    style_value = if visible_layers.include?(l.name)
                     "display:inline"
                   else
                     "display:none"
                   end
-    l.add_attribute('style', style_value)
+    l.el.add_attribute('style', style_value)
   end
   svg.write(svg_path)
 end
