@@ -40,3 +40,47 @@ def png_path_from(svg_path, dest_dir)
   base_name = svg_path.basename(".*")
   dest_png = dest_dir + "#{base_name}.png"
 end
+
+class SvgImage
+  class Layer
+    def initialize(el)
+      @el = el
+    end
+
+    def name
+      @el.attribute('inkscape:label').value
+    end
+
+    def show
+      set_style "display:inline"
+    end
+
+    def hide
+      set_style "display:none"
+    end
+
+    private
+    
+    def set_style(value)
+      @el.add_attribute('style', value)
+    end
+  end
+      
+  def self.open(path)
+    root = REXML::Document.new(path.read)
+    self.new(root)
+  end
+
+  def initialize(root)
+    @root = root
+  end
+
+  def layers
+    els = REXML::XPath.match(@root, "//g[@inkscape:groupmode='layer']")
+    els.collect { |el| Layer.new(el) }
+  end
+
+  def write(path)
+    path.open('w') { |io| @root.write(io) }
+  end
+end
