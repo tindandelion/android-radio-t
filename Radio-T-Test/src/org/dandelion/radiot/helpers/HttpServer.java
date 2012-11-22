@@ -16,8 +16,13 @@ public abstract class HttpServer extends NanoHTTPD {
         this.requests = new NotificationTrace<String>();
     }
 
+
     public static String addressForUrl(String part) {
-        return String.format("http://localhost:%d", PORT) + part;
+        return baseUrl() + part;
+    }
+
+    public static String baseUrl() {
+        return String.format("http://localhost:%d", PORT);
     }
 
     public void hasReceivedRequest(Matcher<String> matcher) throws InterruptedException {

@@ -2,6 +2,8 @@ package org.dandelion.radiot.endtoend.live;
 
 import android.test.ActivityInstrumentationTestCase2;
 import org.dandelion.radiot.helpers.HttpServer;
+import org.dandelion.radiot.live.ui.HttpChatTranslation;
+import org.dandelion.radiot.live.ui.ChatTranslationFragment;
 import org.dandelion.radiot.live.ui.LiveShowActivity;
 
 import java.io.IOException;
@@ -28,6 +30,8 @@ public class ChatTranslationTest extends ActivityInstrumentationTestCase2<LiveSh
     public void setUp() throws Exception {
         super.setUp();
         backend = new LiveChatTranslationServer();
+        ChatTranslationFragment.chat = new HttpChatTranslation(
+                LiveChatTranslationServer.baseUrl());
     }
 
     @Override

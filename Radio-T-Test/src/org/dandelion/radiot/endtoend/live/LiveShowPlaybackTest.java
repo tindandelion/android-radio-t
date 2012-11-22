@@ -13,6 +13,8 @@ import org.dandelion.radiot.live.MediaPlayerStream;
 import org.dandelion.radiot.live.core.AudioStream;
 import org.dandelion.radiot.live.core.LiveShowStateListener;
 import org.dandelion.radiot.live.service.TimeoutReceiver;
+import org.dandelion.radiot.live.ui.ChatTranslation;
+import org.dandelion.radiot.live.ui.ChatTranslationFragment;
 import org.dandelion.radiot.live.ui.LiveShowActivity;
 
 public class LiveShowPlaybackTest extends
@@ -62,6 +64,8 @@ public class LiveShowPlaybackTest extends
         super.setUp();
         FakeStatusDisplayer statusDisplayer = new FakeStatusDisplayer();
         setupTestingApp(statusDisplayer);
+
+        ChatTranslationFragment.chat = new NullChatTranlation();
         runner = new LiveShowRunner(getInstrumentation(), getActivity(), statusDisplayer);
         backend = new LiveShowServer(getInstrumentation().getContext());
     }
@@ -109,5 +113,11 @@ public class LiveShowPlaybackTest extends
 
     private Context context() {
         return getInstrumentation().getTargetContext().getApplicationContext();
+    }
+
+    private static class NullChatTranlation implements ChatTranslation {
+        @Override
+        public void connect() {
+        }
     }
 }
