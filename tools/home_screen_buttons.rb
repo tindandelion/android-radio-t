@@ -43,10 +43,28 @@ ensure
   tmp_path.delete if tmp_path.exist?
 end
 
+class SvgImage
+  def self.open(path)
+    root = REXML::Document.new(path.read)
+    self.new(root)
+  end
+
+  def initialize(root)
+    @root = root
+  end
+
+  def layers
+    REXML::XPath.match(@root, "//g[@inkscape:groupmode='layer']")
+  end
+
+  def write(path)
+    path.open('w') { |io| @root.write(io) }
+  end
+end
+
 def setup_visible_layers(svg_path, visible_layers)
-  doc = REXML::Document.new(svg_path.read)
-  layers = REXML::XPath.match(doc, "//g[@inkscape:groupmode='layer']")
-  layers.each do |l|
+  svg = SvgImage.open(svg_path)
+  svg.layers.each do |l|
     style_value = if visible_layers.include?(l.attribute('inkscape:label').value)
                     "display:inline"
                   else
@@ -54,5 +72,5 @@ def setup_visible_layers(svg_path, visible_layers)
                   end
     l.add_attribute('style', style_value)
   end
-  svg_path.open('w') { |io| doc.write(io) }
+  svg.write(svg_path)
 end
