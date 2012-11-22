@@ -8,7 +8,7 @@ import java.util.Map;
 
 import static org.dandelion.radiot.live.core.LiveShowState.*;
 
-public class LiveShowPresenter implements LiveShowStateListener {
+public class PlaybackControlPresenter implements LiveShowStateListener {
     private PlaybackControlFragment control;
 
     private static class VisualState {
@@ -47,7 +47,7 @@ public class LiveShowPresenter implements LiveShowStateListener {
         stateMap.put(Waiting, new VisualState(4, true, 0, true, true));
     }
 
-    public LiveShowPresenter(PlaybackControlFragment control) {
+    public PlaybackControlPresenter(PlaybackControlFragment control) {
         this.control = control;
 	}
 

@@ -17,7 +17,7 @@ public class PlaybackControlFragment extends Fragment {
     private TextView status;
     private TimerView timer;
     private TextView hint;
-    private LiveShowPresenter presenter;
+    private PlaybackControlPresenter presenter;
     private LiveShowClient client;
 
     private View.OnClickListener onTogglePlayback = new View.OnClickListener() {
@@ -50,7 +50,7 @@ public class PlaybackControlFragment extends Fragment {
     public void onStart() {
         super.onStart();
         client = LiveShowApp.getInstance().createClient(getActivity());
-        presenter = new LiveShowPresenter(this);
+        presenter = new PlaybackControlPresenter(this);
         client.addListener(presenter);
     }
 

@@ -17,7 +17,7 @@ public class ChatTranslationTest extends ActivityInstrumentationTestCase2<LiveSh
 
     public void testAtStartup_ConnectsToChatTranslation() throws Exception {
         openScreen();
-        backend.hasReceivedRequest(equalTo("/data/jsonp?mode=last&recs=10"));
+        backend.hasReceivedRequest(equalTo("/data/jsonp"));
     }
 
     private void openScreen() {
