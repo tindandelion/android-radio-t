@@ -45,7 +45,6 @@ end
 
 class SvgImage
   class Layer
-    attr_reader :el
     def initialize(el)
       @el = el
     end
@@ -54,7 +53,9 @@ class SvgImage
       @el.attribute('inkscape:label').value
     end
 
-    
+    def set_style(value)
+      @el.add_attribute('style', value)
+    end
   end
       
   def self.open(path)
@@ -84,7 +85,7 @@ def setup_visible_layers(svg_path, visible_layers)
                   else
                     "display:none"
                   end
-    l.el.add_attribute('style', style_value)
+    l.set_style(style_value)
   end
   svg.write(svg_path)
 end
