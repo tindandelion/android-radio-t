@@ -53,6 +53,16 @@ class SvgImage
       @el.attribute('inkscape:label').value
     end
 
+    def show
+      set_style "display:inline"
+    end
+
+    def hide
+      set_style "display:none"
+    end
+
+    private
+    
     def set_style(value)
       @el.add_attribute('style', value)
     end
@@ -80,12 +90,11 @@ end
 def setup_visible_layers(svg_path, visible_layers)
   svg = SvgImage.open(svg_path)
   svg.layers.each do |l|
-    style_value = if visible_layers.include?(l.name)
-                    "display:inline"
-                  else
-                    "display:none"
-                  end
-    l.set_style(style_value)
+    if visible_layers.include?(l.name)
+      l.show
+    else
+      l.hide
+    end
   end
   svg.write(svg_path)
 end
