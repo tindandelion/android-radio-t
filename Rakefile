@@ -23,8 +23,9 @@ end
 
 desc "Create button drawables"
 task :buttons do
-  create_button_drawables(SVG_DIR + 'ic_play.svg', RESOURCE_DIR)
-  create_button_drawables(SVG_DIR + 'ic_stop.svg', RESOURCE_DIR)
+  ['ic_play.svg', 'ic_stop.svg'].each do |fn|
+    create_button_drawables(SVG_DIR + fn, RESOURCE_DIR)
+  end
 end
 
 desc "Run audio server"
