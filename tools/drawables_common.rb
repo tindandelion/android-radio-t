@@ -66,6 +66,12 @@ class SvgImage
     self.new(root)
   end
 
+  def self.transform_file(path, &block)
+    svg = open(path)
+    block.call(svg)
+    svg.write(path)
+  end
+
   def initialize(root)
     @root = root
   end
@@ -80,7 +86,35 @@ class SvgImage
   end
 end
 
-def transform_file(orig_path, &block)
+class ImageLayout
+  def self.with_layers(*layers)
+    self.new(layers)
+  end
+  
+  def initialize(layers)
+    @layers = layers
+  end
+
+  def add_layers(*more_layers)
+    self.class.new(@layers + more_layers)
+  end
+
+  def apply_to(svg_image)
+    svg_image.layers.each do |l|
+      if visible?(l.name)
+        l.show
+      else
+        l.hide
+      end
+    end
+  end
+
+  def visible?(name)
+    @layers.include?(name)
+  end
+end
+
+def with_tempfile(orig_path, &block)
   tmp_path = Pathname.getwd + 'tempfile.svg'
   FileUtils.cp orig_path, tmp_path
   block.call(tmp_path)
