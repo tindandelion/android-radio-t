@@ -36,11 +36,6 @@ class DensityMap
   end
 end
 
-def png_path_from(svg_path, dest_dir)
-  base_name = svg_path.basename(".*")
-  dest_png = dest_dir + "#{base_name}.png"
-end
-
 class SvgImage
   class Layer
     def initialize(el)
