@@ -84,3 +84,12 @@ class SvgImage
     path.open('w') { |io| @root.write(io) }
   end
 end
+
+def transform_file(orig_path, &block)
+  tmp_path = Pathname.getwd + 'tempfile.svg'
+  FileUtils.cp orig_path, tmp_path
+  block.call(tmp_path)
+ensure
+  tmp_path.delete if tmp_path.exist?
+end
+

@@ -35,13 +35,6 @@ def export_png(src_svg, dest_png, dpi, visible_layers)
   end
 end
 
-def transform_file(orig_path, &block)
-  tmp_path = Pathname.getwd + 'tempfile.svg'
-  FileUtils.cp orig_path, tmp_path
-  block.call(tmp_path)
-ensure
-  tmp_path.delete if tmp_path.exist?
-end
 
 def setup_visible_layers(svg_path, visible_layers)
   svg = SvgImage.open(svg_path)
