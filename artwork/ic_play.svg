@@ -28,7 +28,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="23.233333"
-     inkscape:cx="15"
+     inkscape:cx="7.3816355"
      inkscape:cy="15"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -55,18 +55,20 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <g
-     inkscape:label="Layer 1"
+     inkscape:label="Disabled"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-1022.3622)">
+     transform="translate(0,-1022.3622)"
+     style="display:none"
+     sodipodi:insensitive="true">
     <path
        sodipodi:type="star"
-       style="fill:#bebebe;fill-opacity:1;stroke:none"
+       style="opacity:0.4;fill:#bebebe;fill-opacity:1;stroke:none"
        id="path2987"
        sodipodi:sides="3"
        sodipodi:cx="15"
@@ -81,5 +83,30 @@
        d="M 32,15 19.25,22.361216 6.5,29.722432 6.5,15 6.5,0.27756814 19.25,7.6387843 z"
        transform="matrix(0.98039216,0,0,1,-4.372549,1022.3622)"
        inkscape:transform-center-x="-4.1666667" />
+  </g>
+  <g
+     transform="translate(0,-1022.3622)"
+     id="g2984"
+     inkscape:groupmode="layer"
+     inkscape:label="Default"
+     style="display:inline"
+     sodipodi:insensitive="true">
+    <path
+       inkscape:transform-center-x="-4.1666667"
+       transform="matrix(0.98039216,0,0,1,-4.372549,1022.3622)"
+       d="M 32,15 19.25,22.361216 6.5,29.722432 6.5,15 6.5,0.27756814 19.25,7.6387843 z"
+       inkscape:randomized="0"
+       inkscape:rounded="0"
+       inkscape:flatsided="false"
+       sodipodi:arg2="1.0471976"
+       sodipodi:arg1="0"
+       sodipodi:r2="8.5"
+       sodipodi:r1="17"
+       sodipodi:cy="15"
+       sodipodi:cx="15"
+       sodipodi:sides="3"
+       id="path2986"
+       style="fill:#bebebe;fill-opacity:1;stroke:none"
+       sodipodi:type="star" />
   </g>
 </svg>
