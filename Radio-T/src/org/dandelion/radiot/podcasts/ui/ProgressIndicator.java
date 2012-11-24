@@ -3,6 +3,7 @@ package org.dandelion.radiot.podcasts.ui;
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import org.dandelion.radiot.R;
@@ -22,18 +23,25 @@ abstract class ProgressIndicator extends DialogErrorDisplayer implements Progres
         }
     }
 
-    public abstract void setActionItem(MenuItem item);
+    public abstract void onPostCreate(Activity activity);
+
+    public abstract void onCreateOptionsMenu(Menu menu);
 
     private static class SimpleProgressIndicator extends ProgressIndicator {
         private View indicator;
 
         public SimpleProgressIndicator(Activity activity) {
             super(activity);
+        }
+
+        @Override
+        public void onPostCreate(Activity activity) {
             this.indicator = activity.findViewById(R.id.titlebar_progress);
         }
 
         @Override
-        public void setActionItem(MenuItem item) {
+        public void onCreateOptionsMenu(Menu menu) {
+
         }
 
         @Override
@@ -49,43 +57,52 @@ abstract class ProgressIndicator extends DialogErrorDisplayer implements Progres
 
     private static class ActionItemIndicator extends ProgressIndicator {
         private boolean inProgress = false;
-        private MenuItem refreshItem;
-        private final View progressView;
+        private MenuItem menuItem;
+        private View progressView;
 
         public ActionItemIndicator(Activity context) {
             super(context);
-            LayoutInflater inflater = context.getLayoutInflater();
-            progressView = inflater.inflate(R.layout.progress_view, null);
         }
 
         @Override
-        public void setActionItem(MenuItem item) {
-            this.refreshItem = item;
-            updateItem();
+        public void onPostCreate(Activity activity) {
+            LayoutInflater inflater = activity.getLayoutInflater();
+            progressView = inflater.inflate(R.layout.progress_view, null);
+            updateProgress();
+        }
+
+        @Override
+        public void onCreateOptionsMenu(Menu menu) {
+            menuItem = menu.findItem(R.id.refresh);
+            updateProgress();
         }
 
         @Override
         public void onStarted() {
             inProgress = true;
-            updateItem();
+            updateProgress();
         }
 
         @Override
         public void onFinished() {
             inProgress = false;
-            updateItem();
+            updateProgress();
         }
 
-        private void updateItem() {
-            if (refreshItem == null) {
+        private void updateProgress() {
+            if (!isReady()) {
                 return;
             }
 
             if (inProgress) {
-                refreshItem.setActionView(progressView);
+                menuItem.setActionView(progressView);
             } else {
-                refreshItem.setActionView(null);
+                menuItem.setActionView(null);
             }
+        }
+
+        private boolean isReady() {
+            return (menuItem != null) && (progressView != null);
         }
 
     }
