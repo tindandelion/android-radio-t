@@ -28,6 +28,9 @@ task :buttons do
   end
 end
 
+desc "Export all resources"
+task resources: [:buttons, :home_screen_buttons]
+
 desc "Run audio server"
 task :audio_server do
   ruby "test-server/server.rb"
