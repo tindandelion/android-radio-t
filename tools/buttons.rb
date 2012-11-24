@@ -15,9 +15,7 @@ end
 
 def export_button_drawables(svg_path, dest_dir, dpi)
   LAYOUTS.each_pair do |name, layout|
-    svg = SvgImage.open(svg_path)
-    layout.apply_to(svg)
-    Inkscape.export_image svg, png_path_from(svg_path, dest_dir, name), dpi     
+    Inkscape.export_png svg_path, png_path_from(svg_path, dest_dir, name), dpi, layout     
   end
 end
 

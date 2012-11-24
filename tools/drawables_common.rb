@@ -7,6 +7,12 @@ module Inkscape
     system "#{INKSCAPE_PATH} #{args}"
   end
 
+  def export_png(src_svg, dest_png, dpi, layout)
+    svg = SvgImage.open(src_svg)
+    layout.apply_to svg
+    Inkscape.export_image svg, dest_png, dpi
+  end
+
   def export_image(svg_image, png_path, dpi)
     tempfile = Pathname("tempfile.svg")
     begin
@@ -122,13 +128,5 @@ class ImageLayout
   def visible?(name)
     @layers.include?(name)
   end
-end
-
-def with_tempfile(orig_path, &block)
-  tmp_path = Pathname.getwd + 'tempfile.svg'
-  FileUtils.cp orig_path, tmp_path
-  block.call(tmp_path)
-ensure
-  tmp_path.delete if tmp_path.exist?
 end
 
