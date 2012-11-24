@@ -7,6 +7,16 @@ module Inkscape
     system "#{INKSCAPE_PATH} #{args}"
   end
 
+  def export_image(svg_image, png_path, dpi)
+    tempfile = Pathname("tempfile.svg")
+    begin
+      svg_image.write tempfile
+      export tempfile, png_path, dpi
+    ensure
+      tempfile.delete
+    end
+  end
+
   def export(svg_path, png_path, dpi)
     Inkscape.invoke "--file #{svg_path} --export-png #{png_path} --export-dpi #{dpi}"
   end
