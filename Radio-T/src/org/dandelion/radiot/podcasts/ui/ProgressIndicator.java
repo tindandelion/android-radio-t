@@ -24,8 +24,8 @@ abstract class ProgressIndicator extends DialogErrorDisplayer implements Progres
     }
 
     public abstract void onPostCreate(Activity activity);
-
     public abstract void onCreateOptionsMenu(Menu menu);
+
 
     private static class SimpleProgressIndicator extends ProgressIndicator {
         private View indicator;
@@ -54,6 +54,7 @@ abstract class ProgressIndicator extends DialogErrorDisplayer implements Progres
             indicator.setVisibility(View.INVISIBLE);
         }
     }
+
 
     private static class ActionItemIndicator extends ProgressIndicator {
         private boolean inProgress = false;
@@ -90,7 +91,7 @@ abstract class ProgressIndicator extends DialogErrorDisplayer implements Progres
         }
 
         private void updateProgress() {
-            if (!isReady()) {
+            if (!isConstructed()) {
                 return;
             }
 
@@ -101,7 +102,7 @@ abstract class ProgressIndicator extends DialogErrorDisplayer implements Progres
             }
         }
 
-        private boolean isReady() {
+        private boolean isConstructed() {
             return (menuItem != null) && (progressView != null);
         }
 
