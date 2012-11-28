@@ -78,7 +78,12 @@ public class PodcastListRunner {
     }
 
     private void waitForListToDisplay() {
-        assertThat(solo.waitForView(ListView.class), is(true));
+        try {
+            Thread.sleep(1000);
+            assertThat(solo.waitForView(ListView.class), is(true));
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private Matcher<? super ListView> has(final Matcher<View> itemMatcher) {

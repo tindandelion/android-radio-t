@@ -3,17 +3,16 @@ package org.dandelion.radiot.accepttest;
 
 import android.os.Environment;
 import android.test.ActivityInstrumentationTestCase2;
-import android.widget.ListView;
 import org.dandelion.radiot.accepttest.drivers.AppNavigator;
 import org.dandelion.radiot.accepttest.drivers.PodcastListUiDriver;
 import org.dandelion.radiot.accepttest.testables.*;
 import org.dandelion.radiot.home_screen.HomeScreenActivity;
-import org.dandelion.radiot.podcasts.loader.caching.LocalPodcastStorage;
-import org.dandelion.radiot.podcasts.loader.ThumbnailProvider;
-import org.dandelion.radiot.podcasts.main.PodcastClientPlatform;
-import org.dandelion.radiot.podcasts.main.PodcastsApp;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.download.FakeDownloaderActivity;
+import org.dandelion.radiot.podcasts.loader.ThumbnailProvider;
+import org.dandelion.radiot.podcasts.loader.caching.LocalPodcastStorage;
+import org.dandelion.radiot.podcasts.main.PodcastClientPlatform;
+import org.dandelion.radiot.podcasts.main.PodcastsApp;
 import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
 
 import java.io.File;
@@ -107,10 +106,10 @@ public class PodcastOperationsTest extends
 
     private PodcastListUiDriver gotoPodcastListPage() throws InterruptedException {
         appDriver.goToPodcastsScreen();
+        assertTrue(appDriver.waitForActivity(PodcastListActivity.class.getSimpleName()));
+        Thread.sleep(1000);
         PodcastListActivity activity = (PodcastListActivity) appDriver.getCurrentActivity();
-        PodcastListUiDriver driver = new PodcastListUiDriver(getInstrumentation(), activity);
-        assertTrue(driver.waitForView(ListView.class));
-        return driver;
+        return new PodcastListUiDriver(getInstrumentation(), activity);
     }
 
     private void setupEnvironment() {
