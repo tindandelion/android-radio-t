@@ -9,29 +9,10 @@ Backlog:
  * Android 4.0 UI
    * New icon with ICS guidelines
 
-Version 1.5:
- DONE Live show urls
- DONE Testing: file to download already exists
- DONE Cache podcast list locally
-   DONE Optimize garbage collection for podcast list
-   DONE Load local podcast cache first, if it exists, and then
-     refresh from server in background
+Version 1.6
+ * Why there are 12 KB left after clearing the cache?
+ * Cache cleanup handling
 
- DONE Android 4.0 UI
-   DONE New status bar icons
-   DONE Button background styling
-   DONE Larger screens
-     DONE Logo 54x54 (108x108)
-     DONE Icon 48x48 (96x96)
-     DONE Status live 24x24 (48x48)
-     DONE Status dl complete 24x24 (48x48)
-     DONE Default podcast image 72x72 (144x144)
-     DONE Refresh 32x32 (64x64)
-     DONE Center logo text
-     DONE Home screen buttons
- DONE Testing: podcast loading performance
-   DONE Memory usage
-   DONE Time to load from cache
 
 * Debt:
  * Podcast type "audo/mpeg" appears in lots of places
