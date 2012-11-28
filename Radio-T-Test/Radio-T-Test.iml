@@ -50,10 +50,12 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/libs/robotium-solo-3.5.1.1-SNAPSHOT.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/robotium-solo-3.6.jar!/" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/../../play/robotium/robotium-solo/src/main/java" />
+        </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library">

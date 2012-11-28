@@ -27,13 +27,13 @@ public class PodcastListActivity extends CustomTitleActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.podcast_screen);
+        progress = ProgressIndicator.create(this);
     }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        progress = ProgressIndicator.create(this);
-
+        progress.onPostCreate(this);
         StartParams params = StartParams.fromIntent(getIntent());
         setTitle(params.title());
         PodcastListAdapter pa = new PodcastListAdapter(this);
@@ -78,7 +78,7 @@ public class PodcastListActivity extends CustomTitleActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.podcast_list, menu);
-        progress.setActionItem(menu.findItem(R.id.refresh));
+        progress.onCreateOptionsMenu(menu);
 		return super.onCreateOptionsMenu(menu);
 	}
 
