@@ -74,7 +74,7 @@ public class PodcastListRunner {
 
     private void assertPodcastList(Matcher<? super ListView> matcher) {
         try {
-            ListView view = waitForListToDisplay();
+            ListView view = waitForListToAppear();
             Thread.sleep(LIST_DISPLAY_TIMEOUT_MS);
             assertThat(view, matcher);
         } catch (InterruptedException e) {
@@ -82,7 +82,7 @@ public class PodcastListRunner {
         }
     }
 
-    private ListView waitForListToDisplay() {
+    private ListView waitForListToAppear() {
         assertThat(solo.waitForView(ListView.class), is(true));
         return solo.getCurrentListViews().get(0);
     }
