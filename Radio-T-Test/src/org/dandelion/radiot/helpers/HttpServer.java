@@ -1,6 +1,6 @@
 package org.dandelion.radiot.helpers;
 
-import org.dandelion.radiot.integration.helpers.NotificationTrace;
+import org.dandelion.radiot.helpers.async.NotificationTrace;
 import org.hamcrest.Matcher;
 
 import java.io.File;

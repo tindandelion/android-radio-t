@@ -3,7 +3,6 @@ Backlog:
  * Live show: graceful process termination
  * Downloading: Respect background data loading settings
  * Downloading: Warn a user if a file already exists
- * Podcast list: do not clear cache if download error occurs
  * Podcast list: Better error explanation?
  * User topics
  * Android 4.0 UI
@@ -11,6 +10,7 @@ Backlog:
 
 Version 1.6
  * Why there are 12 KB left after clearing the cache?
+ * Podcast list: do not clear cache if download error occurs
  * Cache cleanup handling
 
 
