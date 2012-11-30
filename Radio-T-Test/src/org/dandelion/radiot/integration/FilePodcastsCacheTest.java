@@ -82,8 +82,7 @@ public class FilePodcastsCacheTest extends InstrumentationTestCase {
 
         PodcastList list = aListWith(aPodcastItem());
         cache.updateWith(list);
-
-        assertEquals(list, listener.updatedList);
+        assertThat(listener.updatedList, equalTo(list));
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
@@ -128,8 +127,8 @@ public class FilePodcastsCacheTest extends InstrumentationTestCase {
     private Matcher<PodcastList> empty() {
         return new TypeSafeMatcher<PodcastList>() {
             @Override
-            protected boolean matchesSafely(PodcastList podcastItems) {
-                return podcastItems.size() == 0;
+            protected boolean matchesSafely(PodcastList pl) {
+                return pl.size() == 0;
             }
 
             @Override
