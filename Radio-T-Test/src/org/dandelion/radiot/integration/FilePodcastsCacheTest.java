@@ -114,9 +114,7 @@ public class FilePodcastsCacheTest extends CacheDirTestCase {
     public void setUp() throws Exception {
         super.setUp();
         cacheFile = new File(cacheDir(), "test-cache");
-        if (cacheFile.exists()) {
-            cacheFile.delete();
-        }
+        cacheFile.delete();
 
         cache = new FilePodcastsCache(cacheFile, FORMAT_VERSION);
     }
