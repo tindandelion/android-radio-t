@@ -1,10 +1,8 @@
 package org.dandelion.radiot.integration;
 
-import android.content.Context;
-import android.test.InstrumentationTestCase;
-import org.dandelion.radiot.podcasts.loader.caching.FilePodcastsCache;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastList;
+import org.dandelion.radiot.podcasts.loader.caching.FilePodcastsCache;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
@@ -18,7 +16,7 @@ import static org.dandelion.radiot.util.PodcastDataBuilder.aPodcastItem;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class FilePodcastsCacheTest extends InstrumentationTestCase {
+public class FilePodcastsCacheTest extends CacheDirTestCase {
     private static final int FORMAT_VERSION = 42;
 
     private FilePodcastsCache cache;
@@ -115,8 +113,7 @@ public class FilePodcastsCacheTest extends InstrumentationTestCase {
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        Context context = getInstrumentation().getTargetContext();
-        cacheFile = new File(context.getCacheDir(), "test-cache");
+        cacheFile = new File(cacheDir(), "test-cache");
         if (cacheFile.exists()) {
             cacheFile.delete();
         }
