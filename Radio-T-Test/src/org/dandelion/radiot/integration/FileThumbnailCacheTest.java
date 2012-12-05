@@ -1,6 +1,7 @@
 package org.dandelion.radiot.integration;
 
 import org.dandelion.radiot.integration.helpers.FileUtils;
+import org.dandelion.radiot.podcasts.loader.caching.CacheDirectory;
 import org.dandelion.radiot.podcasts.loader.caching.FileThumbnailCache;
 
 import java.io.File;
@@ -58,10 +59,10 @@ public class FileThumbnailCacheTest extends CacheDirTestCase {
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    private File prepareCacheDir() {
+    private CacheDirectory prepareCacheDir() {
         File cacheDir = new File(cacheDir(), "test-thumbnails-cache");
         FileUtils.deleteDir(cacheDir);
         FileUtils.mkdir(cacheDir);
-        return cacheDir;
+        return new CacheDirectory(cacheDir);
     }
 }

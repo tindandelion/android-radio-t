@@ -4,6 +4,7 @@ import org.dandelion.radiot.util.ProgrammerError;
 
 import java.io.*;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class CacheFile {
     protected final File file;
 
@@ -23,7 +24,6 @@ public class CacheFile {
         return new FileInputStream(file);
     }
 
-    @SuppressWarnings("ResultOfMethodCallIgnored")
     public void delete() {
         file.delete();
     }
@@ -37,8 +37,33 @@ public class CacheFile {
         }
     }
 
-    @SuppressWarnings("ResultOfMethodCallIgnored")
     private void createPathTo(File file) {
         file.getParentFile().mkdirs();
+    }
+
+
+    public void write(byte[] bytes) throws IOException {
+        OutputStream stream = openOutputStream();
+        try {
+            stream.write(bytes, 0, bytes.length);
+        } finally {
+            stream.close();
+        }
+    }
+
+    public byte[] read() throws IOException {
+        InputStream stream = openInputStream();
+        try {
+            int available = stream.available();
+            byte[] buffer = new byte[available];
+            stream.read(buffer, 0, available);
+            return buffer;
+        } finally {
+            stream.close();
+        }
+    }
+
+    public boolean exists() {
+        return file.exists();
     }
 }

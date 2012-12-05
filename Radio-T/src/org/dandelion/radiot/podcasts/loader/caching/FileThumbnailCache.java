@@ -9,29 +9,35 @@ import java.util.List;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public class FileThumbnailCache implements ThumbnailCache {
-    private File cacheDir;
+    private final CacheDirectory cacheDir;
 
-    public FileThumbnailCache(File cacheDir) {
+    public FileThumbnailCache(CacheDirectory cacheDir) {
         this.cacheDir = cacheDir;
     }
 
     @Override
     public void update(String url, byte[] thumbnail) {
         File cached = cachedFileForUrl(url);
-        ThumbnailFile.write(cached, thumbnail);
+        if (cached != null) {
+            ThumbnailFile.write(new CacheFile(cached), thumbnail);
+        }
     }
 
     @Override
     public byte[] lookup(String url) {
         File cached = cachedFileForUrl(url);
-        return ThumbnailFile.read(cached);
+        if (cached != null) {
+            return ThumbnailFile.read(new CacheFile(cached));
+        } else {
+            return null;
+        }
     }
 
     private File cachedFileForUrl(String url) {
         Uri uri = Uri.parse(url);
         String fname = uri.getLastPathSegment();
         if (fname != null) {
-            return new File(cacheDir, fname);
+            return cacheDir.join(fname);
         } else {
             return null;
         }
@@ -62,61 +68,25 @@ public class FileThumbnailCache implements ThumbnailCache {
     }
 
     private static class ThumbnailFile {
-
-        private File file;
-
-        public static byte[] read(File f) {
-            if (f != null && f.exists()) {
-                return new ThumbnailFile(f).read();
+        public static byte[] read(CacheFile f) {
+            if (f.exists()) {
+                try {
+                    return f.read();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             } else {
                 return null;
             }
         }
 
-        public static void write(File f, byte[] data) {
-            if (f != null && data != null) {
-                new ThumbnailFile(f).write(data);
-            }
-        }
-
-        private ThumbnailFile(File f) {
-            this.file = f;
-        }
-
-        public byte[] read() {
-            try {
-                return readBytes(file);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        private byte[] readBytes(File f) throws IOException {
-            FileInputStream stream = new FileInputStream(f);
-            try {
-                int available = stream.available();
-                byte[] buffer = new byte[available];
-                stream.read(buffer, 0, available);
-                return buffer;
-            } finally {
-                stream.close();
-            }
-        }
-
-        public void write(byte[] thumbnail) {
-            try {
-                writeBytes(file, thumbnail);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        private void writeBytes(File f, byte[] thumbnail) throws IOException {
-            FileOutputStream stream = new FileOutputStream(f);
-            try {
-                stream.write(thumbnail, 0, thumbnail.length);
-            } finally {
-                stream.close();
+        public static void write(CacheFile f, byte[] data) {
+            if (data != null) {
+                try {
+                    f.write(data);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }

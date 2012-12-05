@@ -1,6 +1,5 @@
 package org.dandelion.radiot.integration;
 
-import android.test.InstrumentationTestCase;
 import org.dandelion.radiot.integration.helpers.FileUtils;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.loader.PodcastsCache;
@@ -11,7 +10,7 @@ import java.io.File;
 
 import static org.dandelion.radiot.util.PodcastDataBuilder.*;
 
-public class LocalPodcastStorageTest extends InstrumentationTestCase {
+public class LocalPodcastStorageTest extends CacheDirTestCase {
     private File workDir;
     private LocalPodcastStorage storage;
 
@@ -31,7 +30,7 @@ public class LocalPodcastStorageTest extends InstrumentationTestCase {
 
     protected void setUp() throws Exception {
         super.setUp();
-        workDir = new File(getInstrumentation().getTargetContext().getCacheDir(), "work-dir");
+        workDir = new File(cacheDir(), "work-dir");
         FileUtils.deleteDir(workDir);
         FileUtils.mkdir(workDir);
         storage = new LocalPodcastStorage("test-show", workDir);
