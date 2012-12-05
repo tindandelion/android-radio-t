@@ -15,12 +15,12 @@ public class FilePodcastsCache implements PodcastsCache {
     // A threshold of one day
     private static final long LIFETIME_THRESHOLD = 24 * 3600 * 1000;
 
-    private final File file;
+    private CacheFile cacheFile;
     private final int formatVersion;
     private Listener listener;
 
-    public FilePodcastsCache(File file, int formatVersion) {
-        this.file = file;
+    public FilePodcastsCache(CacheFile cacheFile, int formatVersion) {
+        this.cacheFile = cacheFile;
         this.formatVersion = formatVersion;
     }
 
@@ -28,10 +28,9 @@ public class FilePodcastsCache implements PodcastsCache {
         this.listener = listener;
     }
 
-    @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
     public void reset() {
-        file.delete();
+        cacheFile.delete();
     }
 
     @Override
@@ -62,7 +61,7 @@ public class FilePodcastsCache implements PodcastsCache {
     }
 
     private ObjectInputStream openInputStream() throws IOException {
-        return new ObjectInputStream(new FileInputStream(file));
+        return new ObjectInputStream(cacheFile.openInputStream());
     }
 
     private int readVersionFrom(ObjectInputStream in) throws IOException {
@@ -98,7 +97,7 @@ public class FilePodcastsCache implements PodcastsCache {
     }
 
     private void saveObjects(PodcastList data) throws IOException {
-        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+        ObjectOutputStream out = new ObjectOutputStream(cacheFile.openOutputStream());
         try {
             writeVersionInto(out);
             writeItemsInto(out, data);
@@ -132,7 +131,7 @@ public class FilePodcastsCache implements PodcastsCache {
     }
 
     private boolean hasExpired() {
-        long lifetime = System.currentTimeMillis() - file.lastModified();
+        long lifetime = cacheFile.age();
         return lifetime >= LIFETIME_THRESHOLD;
     }
 

@@ -1,15 +1,12 @@
 package org.dandelion.radiot.integration;
 
+import org.dandelion.radiot.helpers.TestableCacheFile;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastList;
 import org.dandelion.radiot.podcasts.loader.caching.FilePodcastsCache;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 
 import static org.dandelion.radiot.util.PodcastDataBuilder.aListWith;
 import static org.dandelion.radiot.util.PodcastDataBuilder.aPodcastItem;
@@ -20,7 +17,7 @@ public class FilePodcastsCacheTest extends CacheDirTestCase {
     private static final int FORMAT_VERSION = 42;
 
     private FilePodcastsCache cache;
-    private File cacheFile;
+    private TestableCacheFile cacheFile;
 
     public void testWhenHasNoData_ReturnsEmptyList() throws Exception {
         PodcastList cachedList = cache.getData();
@@ -59,7 +56,7 @@ public class FilePodcastsCacheTest extends CacheDirTestCase {
     public void testWhenFileIsCorrupted_CacheHasNoData() throws Exception {
         createValidCacheFile(FORMAT_VERSION);
 
-        writeCacheFile("Some junk content");
+        cacheFile.write("Some junk content");
         assertThat(cache, not(hasValidData()));
     }
 
@@ -95,12 +92,11 @@ public class FilePodcastsCacheTest extends CacheDirTestCase {
     }
 
     private void createValidCacheFile(int formatVersion) {
-        new FilePodcastsCache(cacheFile, formatVersion).updateWith(aListWith(aPodcastItem()));
+        newCacheInstance(formatVersion).updateWith(aListWith(aPodcastItem()));
     }
 
-    private void writeCacheFile(String content) throws IOException {
-        FileWriter out = new FileWriter(cacheFile);
-        out.write(content);
+    private FilePodcastsCache newCacheInstance(int formatVersion) {
+        return new FilePodcastsCache(cacheFile, formatVersion);
     }
 
     public void testCacheIsInvalidIfFileIsWrongVersion() throws Exception {
@@ -113,10 +109,10 @@ public class FilePodcastsCacheTest extends CacheDirTestCase {
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        cacheFile = new File(cacheDir(), "test-cache");
+        cacheFile = new TestableCacheFile(cacheDir(), "test-cache");
         cacheFile.delete();
 
-        cache = new FilePodcastsCache(cacheFile, FORMAT_VERSION);
+        cache = newCacheInstance(FORMAT_VERSION);
     }
 
     private Matcher<PodcastList> empty() {
@@ -160,4 +156,5 @@ public class FilePodcastsCacheTest extends CacheDirTestCase {
             updatedList = list;
         }
     }
+
 }

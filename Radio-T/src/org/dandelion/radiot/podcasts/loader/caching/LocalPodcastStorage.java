@@ -14,7 +14,7 @@ public class LocalPodcastStorage implements FilePodcastsCache.Listener {
 
     public LocalPodcastStorage(String showName, File baseCacheDir) {
         File cacheDir = new File(baseCacheDir, showName);
-        File podcastsFile = new File(cacheDir, "podcasts.dat");
+        CacheFile podcastsFile = new CacheFile(cacheDir, "podcasts.dat");
         File thumbnailsDir = new File(cacheDir, "thumbnails");
 
         ensureDirExists(cacheDir);
