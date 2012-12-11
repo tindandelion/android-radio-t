@@ -43,6 +43,8 @@ public class CacheFile {
 
 
     public void write(byte[] bytes) throws IOException {
+        if (bytes == null) return;
+
         OutputStream stream = openOutputStream();
         try {
             stream.write(bytes, 0, bytes.length);
@@ -52,6 +54,8 @@ public class CacheFile {
     }
 
     public byte[] read() throws IOException {
+        if (!exists()) return null;
+
         InputStream stream = openInputStream();
         try {
             int available = stream.available();

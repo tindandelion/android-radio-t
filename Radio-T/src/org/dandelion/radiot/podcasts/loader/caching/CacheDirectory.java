@@ -2,6 +2,7 @@ package org.dandelion.radiot.podcasts.loader.caching;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.util.ArrayList;
 
 public class CacheDirectory {
     private final File directory;
@@ -14,15 +15,35 @@ public class CacheDirectory {
         this(new File(basedir, name));
     }
 
-    public File[] listFiles(FileFilter filter) {
-        File[] result = directory.listFiles(filter);
+    public CacheFile join(String fname) {
+        return new CacheFile(directory, fname);
+    }
+
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    public void deleteFilesExcluding(ArrayList<String> current) {
+        for (File f : listFilesExcluding(current)) {
+            f.delete();
+        }
+    }
+
+    private File[] listFilesExcluding(final ArrayList<String> exclusions) {
+        File[] result = directory.listFiles(new ExclusionFilter(exclusions));
         if (result == null) {
             result = new File[] {};
         }
         return result;
     }
 
-    public File join(String fname) {
-        return new File(directory, fname);
+    private static class ExclusionFilter implements FileFilter {
+        private final ArrayList<String> exclusions;
+
+        public ExclusionFilter(ArrayList<String> exclusions) {
+            this.exclusions = exclusions;
+        }
+
+        @Override
+        public boolean accept(File f) {
+            return !exclusions.contains(f.getName());
+        }
     }
 }

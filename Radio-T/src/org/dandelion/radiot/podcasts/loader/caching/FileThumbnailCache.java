@@ -17,25 +17,40 @@ public class FileThumbnailCache implements ThumbnailCache {
 
     @Override
     public void update(String url, byte[] thumbnail) {
-        File cached = cachedFileForUrl(url);
+        CacheFile cached = cachedFileForUrl(url);
         if (cached != null) {
-            ThumbnailFile.write(new CacheFile(cached), thumbnail);
+            writeThumbnail(cached, thumbnail);
+        }
+    }
+
+    private void writeThumbnail(CacheFile file, byte[] thumbnail) {
+        try {
+            file.write(thumbnail);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
     @Override
     public byte[] lookup(String url) {
-        File cached = cachedFileForUrl(url);
+        CacheFile cached = cachedFileForUrl(url);
         if (cached != null) {
-            return ThumbnailFile.read(new CacheFile(cached));
+            return readThumbnail(cached);
         } else {
             return null;
         }
     }
 
-    private File cachedFileForUrl(String url) {
-        Uri uri = Uri.parse(url);
-        String fname = uri.getLastPathSegment();
+    private byte[] readThumbnail(CacheFile file) {
+        try {
+            return file.read();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private CacheFile cachedFileForUrl(String url) {
+        String fname = fileNameForUrl(url);
         if (fname != null) {
             return cacheDir.join(fname);
         } else {
@@ -43,51 +58,16 @@ public class FileThumbnailCache implements ThumbnailCache {
         }
     }
 
+    private String fileNameForUrl(String url) {
+        Uri uri = Uri.parse(url);
+        return uri.getLastPathSegment();
+    }
+
     public void cleanup(List<String> currentUrls) {
-        List<File> currentFiles = cachedFilesForUrls(currentUrls);
-        for (File f : redundantFiles(currentFiles)) {
-            f.delete();
+        ArrayList<String> current = new ArrayList<String>();
+        for (String url : currentUrls) {
+            current.add(fileNameForUrl(url));
         }
-    }
-
-    private File[] redundantFiles(final List<File> actualFiles) {
-        return cacheDir.listFiles(new FileFilter() {
-            @Override
-            public boolean accept(File f) {
-                return !actualFiles.contains(f);
-            }
-        });
-    }
-
-    private List<File> cachedFilesForUrls(List<String> urls) {
-        ArrayList<File> result = new ArrayList<File>();
-        for (String url : urls) {
-            result.add(cachedFileForUrl(url));
-        }
-        return result;
-    }
-
-    private static class ThumbnailFile {
-        public static byte[] read(CacheFile f) {
-            if (f.exists()) {
-                try {
-                    return f.read();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            } else {
-                return null;
-            }
-        }
-
-        public static void write(CacheFile f, byte[] data) {
-            if (data != null) {
-                try {
-                    f.write(data);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
+        cacheDir.deleteFilesExcluding(current);
     }
 }
