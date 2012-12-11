@@ -13,7 +13,7 @@ import static org.dandelion.radiot.util.PodcastDataBuilder.aPodcastItem;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class FilePodcastsCacheTest extends CacheDirTestCase {
+public class FilePodcastsCacheTest extends FilesystemTestCase {
     private static final int FORMAT_VERSION = 42;
 
     private FilePodcastsCache cache;

@@ -10,7 +10,7 @@ import java.io.File;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class CacheFileTest extends CacheDirTestCase {
+public class CacheFileTest extends FilesystemTestCase {
     public void testWhenWritingFile_CreatesDirectoryStructure() throws Exception {
         File subdir = new File(cacheDir(), "subdir");
         CacheFile cacheFile = new CacheFile(subdir, "cache-file");

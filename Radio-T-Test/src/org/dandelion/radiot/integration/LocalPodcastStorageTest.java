@@ -10,7 +10,7 @@ import java.io.File;
 
 import static org.dandelion.radiot.util.PodcastDataBuilder.*;
 
-public class LocalPodcastStorageTest extends CacheDirTestCase {
+public class LocalPodcastStorageTest extends FilesystemTestCase {
     private File workDir;
     private LocalPodcastStorage storage;
 

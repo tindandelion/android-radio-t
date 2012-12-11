@@ -8,7 +8,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-public class FileThumbnailCacheTest extends CacheDirTestCase {
+public class FileThumbnailCacheTest extends FilesystemTestCase {
     public static final byte[] THUMBNAIL = new byte[] {0x1, 0x2, 0x3};
     private FileThumbnailCache cache;
 
