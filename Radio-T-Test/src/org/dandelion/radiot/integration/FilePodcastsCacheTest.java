@@ -71,6 +71,12 @@ public class FilePodcastsCacheTest extends FilesystemTestCase {
         assertThat(cache, not(hasValidData()));
     }
 
+    public void testWhenVersionIsDifferent_CacheHasNoData() throws Exception {
+        final int olderVersion = FORMAT_VERSION - 1;
+        createValidCacheFile(olderVersion);
+        assertThat(cache, not(hasValidData()));
+    }
+
     public void testWhenUpdatingCache_InvokeListener() throws Exception {
         FakeListener listener = new FakeListener();
         cache.setListener(listener);
@@ -99,19 +105,12 @@ public class FilePodcastsCacheTest extends FilesystemTestCase {
         return new FilePodcastsCache(cacheFile, formatVersion);
     }
 
-    public void testCacheIsInvalidIfFileIsWrongVersion() throws Exception {
-        final int olderVersion = FORMAT_VERSION - 1;
-        createValidCacheFile(olderVersion);
-        assertThat(cache, not(hasValidData()));
-    }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        cacheFile = new TestableCacheFile(cacheDir(), "test-cache");
-        cacheFile.delete();
-
+        cacheFile = new TestableCacheFile(workDir, "test-cache");
         cache = newCacheInstance(FORMAT_VERSION);
     }
 
@@ -139,11 +138,6 @@ public class FilePodcastsCacheTest extends FilesystemTestCase {
             @Override
             public void describeTo(Description description) {
                 description.appendText("a cache with valid data");
-            }
-
-            @Override
-            protected void describeMismatchSafely(FilePodcastsCache item, Description mismatchDescription) {
-                mismatchDescription.appendText("a cache with no data");
             }
         };
     }
