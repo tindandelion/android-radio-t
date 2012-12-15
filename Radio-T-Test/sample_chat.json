@@ -1,0 +1,2 @@
+callback_fn({"records": [{"time":"Sat Dec 8 22:06:49 UTC 2012","seq":1318,"from":"espro","msg":"Valsor: на парковках пустых самое оно. Вот ей богу, дослушаю радиот и поеду покатаюсь чуток)))"},{"time":"Sat Dec 8 22:07:05 UTC 2012","seq":1319,"from":"alexoff","msg":"espro: у знакомого на передном приводе получилось 360 сделать)"}]});
+callback_fn({"records": [{"msg":"Lorem ipsum"},{"msg":"Dolor sit amet"}]});
