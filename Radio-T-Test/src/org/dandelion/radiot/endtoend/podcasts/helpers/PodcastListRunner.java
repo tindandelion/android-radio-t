@@ -25,7 +25,7 @@ public class PodcastListRunner {
     }
 
     public void showsPodcastItem(String number, String date, String description) {
-        podcastList(has(anItemWith(number, date, description)));
+        assertPodcastList(has(anItemWith(number, date, description)));
     }
 
     public void pressBack() {
@@ -38,7 +38,7 @@ public class PodcastListRunner {
 
 
     public void showsEmptyList() {
-        podcastList(isEmpty());
+        assertPodcastList(isEmpty());
     }
 
     public void showsErrorMessage() {
@@ -72,20 +72,19 @@ public class PodcastListRunner {
         };
     }
 
-    private void podcastList(Matcher<? super ListView> matcher) {
-        waitForListToDisplay();
-        ListView view = solo.getCurrentListViews().get(0);
-        assertThat(view, matcher);
-    }
-
-    private void waitForListToDisplay() {
-        // TODO: I think I need a poller here to check the list is displayed
+    private void assertPodcastList(Matcher<? super ListView> matcher) {
         try {
+            ListView view = waitForListToAppear();
             Thread.sleep(LIST_DISPLAY_TIMEOUT_MS);
-            assertThat(solo.waitForView(ListView.class), is(true));
+            assertThat(view, matcher);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private ListView waitForListToAppear() {
+        assertThat(solo.waitForView(ListView.class), is(true));
+        return solo.getCurrentListViews().get(0);
     }
 
     private Matcher<? super ListView> has(final Matcher<View> itemMatcher) {
@@ -144,5 +143,4 @@ public class PodcastListRunner {
             }
         };
     }
-
 }

@@ -17,7 +17,7 @@
    inkscape:export-filename="/home/moshse/Desktop/android-radio-t/Radio-T/res/drawable-ldpi/ic_stop.png"
    inkscape:export-xdpi="66"
    inkscape:export-ydpi="66"
-   sodipodi:docname="New document 1">
+   sodipodi:docname="ic_stop.svg">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -28,7 +28,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="23.233333"
-     inkscape:cx="14.354376"
+     inkscape:cx="6.7360115"
      inkscape:cy="15"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -55,21 +55,38 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <g
-     inkscape:label="Layer 1"
+     inkscape:label="Disabled"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-1022.3622)">
+     transform="translate(0,-1022.3622)"
+     sodipodi:insensitive="true"
+     style="display:none">
     <rect
-       style="fill:#bebebe;fill-opacity:1;stroke:none"
+       style="opacity:0.4;fill:#bebebe;fill-opacity:1;stroke:none"
        id="rect3039"
        width="26"
        height="26.000017"
        x="2"
        y="1024.3622" />
+  </g>
+  <g
+     transform="translate(0,-1022.3622)"
+     id="g2984"
+     inkscape:groupmode="layer"
+     inkscape:label="Default"
+     sodipodi:insensitive="true"
+     style="display:inline">
+    <rect
+       y="1024.3622"
+       x="2"
+       height="26.000017"
+       width="26"
+       id="rect2986"
+       style="fill:#bebebe;fill-opacity:1;stroke:none" />
   </g>
 </svg>

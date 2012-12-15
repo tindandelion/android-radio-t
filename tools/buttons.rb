@@ -2,8 +2,24 @@ require_relative 'drawables_common'
 
 DEFAULT_DENSITY_MAP = DensityMap.default(90)
 
-def create_button_drawables(svg_file_path, resource_dir)
+LAYOUTS = {
+  default: ImageLayout.with_layers('Default'),
+  disabled: ImageLayout.with_layers('Disabled')
+}
+
+def create_button_drawables(svg_path, resource_dir)
   DEFAULT_DENSITY_MAP.each_density(resource_dir) do |dest_dir, dpi|
-    Inkscape.export svg_file_path, png_path_from(svg_file_path, dest_dir), dpi
+    export_button_drawables svg_path, dest_dir, dpi
   end
+end
+
+def export_button_drawables(svg_path, dest_dir, dpi)
+  LAYOUTS.each_pair do |name, layout|
+    Inkscape.export_png svg_path, png_path_from(svg_path, dest_dir, name), dpi, layout     
+  end
+end
+
+def png_path_from(svg_path, dest_dir, suffix)
+  base_name = svg_path.basename(".*")
+  dest_png = dest_dir + "#{base_name}_#{suffix}.png"
 end

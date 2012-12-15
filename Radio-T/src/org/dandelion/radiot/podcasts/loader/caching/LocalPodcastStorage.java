@@ -14,11 +14,8 @@ public class LocalPodcastStorage implements FilePodcastsCache.Listener {
 
     public LocalPodcastStorage(String showName, File baseCacheDir) {
         File cacheDir = new File(baseCacheDir, showName);
-        File podcastsFile = new File(cacheDir, "podcasts.dat");
-        File thumbnailsDir = new File(cacheDir, "thumbnails");
-
-        ensureDirExists(cacheDir);
-        ensureDirExists(thumbnailsDir);
+        CacheFile podcastsFile = new CacheFile(cacheDir, "podcasts.dat");
+        CacheDirectory thumbnailsDir = new CacheDirectory(cacheDir, "thumbnails");
 
         thumbnailsCache = new FileThumbnailCache(thumbnailsDir);
         podcastsCache = new FilePodcastsCache(podcastsFile, CACHE_FORMAT_VERSION);
@@ -31,13 +28,6 @@ public class LocalPodcastStorage implements FilePodcastsCache.Listener {
 
     public ThumbnailCache thumbnailsCache() {
         return thumbnailsCache;
-    }
-
-    @SuppressWarnings("ResultOfMethodCallIgnored")
-    private void ensureDirExists(File dir) {
-        if (!dir.exists()) {
-            dir.mkdir();
-        }
     }
 
     @Override

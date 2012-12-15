@@ -7,6 +7,22 @@ module Inkscape
     system "#{INKSCAPE_PATH} #{args}"
   end
 
+  def export_png(src_svg, dest_png, dpi, layout)
+    svg = SvgImage.open(src_svg)
+    layout.apply_to svg
+    Inkscape.export_image svg, dest_png, dpi
+  end
+
+  def export_image(svg_image, png_path, dpi)
+    tempfile = Pathname("tempfile.svg")
+    begin
+      svg_image.write tempfile
+      export tempfile, png_path, dpi
+    ensure
+      tempfile.delete
+    end
+  end
+
   def export(svg_path, png_path, dpi)
     Inkscape.invoke "--file #{svg_path} --export-png #{png_path} --export-dpi #{dpi}"
   end
@@ -36,7 +52,81 @@ class DensityMap
   end
 end
 
-def png_path_from(svg_path, dest_dir)
-  base_name = svg_path.basename(".*")
-  dest_png = dest_dir + "#{base_name}.png"
+class SvgImage
+  class Layer
+    def initialize(el)
+      @el = el
+    end
+
+    def name
+      @el.attribute('inkscape:label').value
+    end
+
+    def show
+      set_style "display:inline"
+    end
+
+    def hide
+      set_style "display:none"
+    end
+
+    private
+    
+    def set_style(value)
+      @el.add_attribute('style', value)
+    end
+  end
+      
+  def self.open(path)
+    root = REXML::Document.new(path.read)
+    self.new(root)
+  end
+
+  def self.transform_file(path, &block)
+    svg = open(path)
+    block.call(svg)
+    svg.write(path)
+  end
+
+  def initialize(root)
+    @root = root
+  end
+
+  def layers
+    els = REXML::XPath.match(@root, "//g[@inkscape:groupmode='layer']")
+    els.collect { |el| Layer.new(el) }
+  end
+
+  def write(path)
+    path.open('w') { |io| @root.write(io) }
+  end
 end
+
+class ImageLayout
+  def self.with_layers(*layers)
+    self.new(layers)
+  end
+  
+  def initialize(layers)
+    @layers = layers
+  end
+
+  def add_layers(*more_layers)
+    self.class.new(@layers + more_layers)
+  end
+
+  def apply_to(svg_image)
+    svg_image.layers.each do |l|
+      if visible?(l.name)
+        l.show
+      else
+        l.hide
+      end
+    end
+  end
+
+  def visible?(name)
+    @layers.include?(name)
+  end
+end
+

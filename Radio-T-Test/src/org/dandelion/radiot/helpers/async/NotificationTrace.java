@@ -1,4 +1,4 @@
-package org.dandelion.radiot.integration.helpers;
+package org.dandelion.radiot.helpers.async;
 
 import org.hamcrest.Matcher;
 import org.hamcrest.StringDescription;
@@ -41,7 +41,7 @@ public class NotificationTrace<T> {
     }
 
     private boolean containsNotification(Matcher<? super T> criteria) throws InterruptedException {
-        NotificationTimeout timeout = new NotificationTimeout(timeoutMs);
+        Timeout timeout = new Timeout(timeoutMs);
         synchronized (traceLock) {
             NotificationStream<T> stream = new NotificationStream<T>(trace, criteria);
             while(!stream.hasMatched()) {
@@ -70,46 +70,4 @@ public class NotificationTrace<T> {
         return description.toString();
     }
 
-
-
-    static class NotificationStream<T> {
-        private List<T> notifications;
-        private Matcher<? super T> criteria;
-        private int next = 0;
-
-        public NotificationStream(List<T> notifications, Matcher<? super T> criteria) {
-            this.notifications = notifications;
-            this.criteria = criteria;
-        }
-
-        public boolean hasMatched() {
-            while (next < notifications.size()) {
-                if (criteria.matches(notifications.get(next)))
-                    return true;
-                next++;
-            }
-            return false;
-        }
-    }
-
-    static class NotificationTimeout {
-        private final long endTime;
-
-        public NotificationTimeout(long duration) {
-            this.endTime = System.currentTimeMillis() + duration;
-        }
-
-        public boolean hasTimedOut() {
-            return timeRemaining() <= 0;
-        }
-
-        public void waitOn(Object lock) throws InterruptedException {
-            long waitTime = timeRemaining();
-            if (waitTime > 0) lock.wait(waitTime);
-        }
-
-        private long timeRemaining() {
-            return endTime - System.currentTimeMillis();
-        }
-    }
 }

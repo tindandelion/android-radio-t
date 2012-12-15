@@ -23,8 +23,13 @@ end
 
 desc "Create button drawables"
 task :buttons do
-  create_button_drawables(SVG_DIR + 'ic_play.svg', RESOURCE_DIR)
+  ['ic_play.svg', 'ic_stop.svg'].each do |fn|
+    create_button_drawables(SVG_DIR + fn, RESOURCE_DIR)
+  end
 end
+
+desc "Export all resources"
+task resources: [:buttons, :home_screen_buttons]
 
 desc "Run audio server"
 task :audio_server do

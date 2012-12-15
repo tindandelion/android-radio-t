@@ -1,14 +1,12 @@
 package org.dandelion.radiot.integration;
 
-import android.test.InstrumentationTestCase;
-import org.dandelion.radiot.integration.helpers.FileUtils;
+import org.dandelion.radiot.podcasts.loader.caching.CacheDirectory;
 import org.dandelion.radiot.podcasts.loader.caching.FileThumbnailCache;
 
-import java.io.*;
 import java.util.Arrays;
 import java.util.List;
 
-public class FileThumbnailCacheTest extends InstrumentationTestCase {
+public class FileThumbnailCacheTest extends FilesystemTestCase {
     public static final byte[] THUMBNAIL = new byte[] {0x1, 0x2, 0x3};
     private FileThumbnailCache cache;
 
@@ -53,16 +51,18 @@ public class FileThumbnailCacheTest extends InstrumentationTestCase {
         assertNotNull(cache.lookup("/thumbnail3.jpg"));
     }
 
-    protected void setUp() throws Exception {
+    public void testCleaningUpAnEmptyDir_IsNotError() throws Exception {
+        List<String> currents = Arrays.asList("/thumbnail2.jpg", "/thumbnail3.jpg");
+        cache.cleanup(currents);
+    }
+
+    public void setUp() throws Exception {
         super.setUp();
         cache = new FileThumbnailCache(prepareCacheDir());
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    private File prepareCacheDir() {
-        File cacheDir = new File(getInstrumentation().getTargetContext().getCacheDir(), "test-thumbnails-cache");
-        FileUtils.deleteDir(cacheDir);
-        FileUtils.mkdir(cacheDir);
-        return cacheDir;
+    private CacheDirectory prepareCacheDir() {
+        return new CacheDirectory(workDir);
     }
 }

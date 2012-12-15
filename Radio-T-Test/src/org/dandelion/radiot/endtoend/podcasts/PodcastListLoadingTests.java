@@ -5,13 +5,12 @@ import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import org.dandelion.radiot.endtoend.podcasts.helpers.PodcastListRunner;
 import org.dandelion.radiot.endtoend.podcasts.helpers.TestRssServer;
+import org.dandelion.radiot.helpers.TestableCacheFile;
 import org.dandelion.radiot.podcasts.core.*;
 import org.dandelion.radiot.podcasts.loader.*;
 import org.dandelion.radiot.podcasts.loader.caching.FilePodcastsCache;
 import org.dandelion.radiot.podcasts.ui.PodcastClientFactory;
 import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
-
-import java.io.File;
 
 import static org.dandelion.radiot.endtoend.podcasts.helpers.RssFeedBuilder.rssFeed;
 import static org.dandelion.radiot.endtoend.podcasts.helpers.RssFeedBuilder.rssItem;
@@ -172,8 +171,8 @@ public class PodcastListLoadingTests
             localCache.reset();
         }
 
-        private File cacheFile() {
-            return new File(context.getCacheDir(), CACHE_FILENAME);
+        private TestableCacheFile cacheFile() {
+            return new TestableCacheFile(context.getCacheDir(), CACHE_FILENAME);
         }
 
         @Override
