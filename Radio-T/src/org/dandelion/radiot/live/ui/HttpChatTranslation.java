@@ -1,10 +1,14 @@
 package org.dandelion.radiot.live.ui;
 
 import android.os.AsyncTask;
+import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Arrays;
+import java.util.List;
 
 public class HttpChatTranslation implements ChatTranslation {
     private String baseUrl;
@@ -14,31 +18,64 @@ public class HttpChatTranslation implements ChatTranslation {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public void connect() {
-        new ConnectTask(connectUrl()).execute();
+    public void requestLastRecords(MessageConsumer consumer) {
+        new ConnectTask(connectUrl(), consumer).execute();
     }
 
     private String connectUrl() {
         return baseUrl + "/data/jsonp?mode=last&recs=10";
     }
 
-    private static class ConnectTask extends AsyncTask<Void, Void, Void> {
-        private String url;
+    private static class ResponseParser {
+        private final InputStream stream;
 
-        public ConnectTask(String url) {
+        public static List<String> parse(InputStream content) {
+            return new ResponseParser(content).parse();
+        }
+
+        private ResponseParser(InputStream stream) {
+            this.stream = stream;
+        }
+
+        private List<String> parse() {
+            return Arrays.asList("Lorem ipsum");
+        }
+    }
+
+    private static class ConnectTask extends AsyncTask<Void, Void, List<String>> {
+        private final String url;
+        private final MessageConsumer consumer;
+
+        public ConnectTask(String url, MessageConsumer consumer) {
             this.url = url;
+            this.consumer = consumer;
         }
 
         @Override
-        protected Void doInBackground(Void... params) {
-            DefaultHttpClient client = new DefaultHttpClient();
+        protected List<String> doInBackground(Void... params) {
+            return parseMessages(requestMessages());
+        }
+
+        private List<String> parseMessages(HttpResponse response) {
             try {
-                client.execute(new HttpGet(url));
+                return ResponseParser.parse(response.getEntity().getContent());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            return null;
+        }
+
+        private HttpResponse requestMessages() {
+            DefaultHttpClient client = new DefaultHttpClient();
+            try {
+                return client.execute(new HttpGet(url));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        @Override
+        protected void onPostExecute(List<String> messages) {
+            consumer.addMessages(messages);
         }
     }
 }

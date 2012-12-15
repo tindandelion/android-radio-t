@@ -1,22 +1,39 @@
 package org.dandelion.radiot.live.ui;
 
-import org.dandelion.radiot.R;
+import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
+import android.support.v4.app.ListFragment;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 
-public class ChatTranslationFragment extends Fragment {
+import java.util.List;
+
+public class ChatTranslationFragment extends ListFragment {
     public static ChatTranslation chat;
+    private ChatListAdapter adapter;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.chat_translation, container, false);
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        adapter = new ChatListAdapter(getActivity());
+        setListAdapter(adapter);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        chat.connect();
+        chat.requestLastRecords(adapter);
+    }
+
+    private static class ChatListAdapter extends ArrayAdapter<String>
+            implements ChatTranslation.MessageConsumer {
+        public ChatListAdapter(Context context) {
+            super(context, android.R.layout.simple_list_item_1);
+        }
+
+        @Override
+        public void addMessages(List<String> messages) {
+            addAll(messages);
+        }
     }
 }
