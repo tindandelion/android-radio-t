@@ -6,7 +6,7 @@ import android.test.ActivityInstrumentationTestCase2;
 import com.jayway.android.robotium.solo.Solo;
 import org.dandelion.radiot.helpers.HttpServer;
 import org.dandelion.radiot.live.ui.ChatTranslationFragment;
-import org.dandelion.radiot.live.ui.HttpChatTranslation;
+import org.dandelion.radiot.live.chat.HttpChatTranslation;
 import org.dandelion.radiot.live.ui.LiveShowActivity;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;

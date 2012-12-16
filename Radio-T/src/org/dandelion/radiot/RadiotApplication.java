@@ -2,7 +2,7 @@ package org.dandelion.radiot;
 
 import android.app.Application;
 import org.dandelion.radiot.live.ui.ChatTranslationFragment;
-import org.dandelion.radiot.live.ui.HttpChatTranslation;
+import org.dandelion.radiot.live.chat.HttpChatTranslation;
 import org.dandelion.radiot.podcasts.main.PodcastsApp;
 
 public class RadiotApplication extends Application {

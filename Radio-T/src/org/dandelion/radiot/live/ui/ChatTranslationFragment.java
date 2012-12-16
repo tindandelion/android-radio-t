@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import org.dandelion.radiot.live.chat.ChatTranslation;
 
 import java.util.List;
 

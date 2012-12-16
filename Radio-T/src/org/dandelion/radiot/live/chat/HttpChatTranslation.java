@@ -1,4 +1,4 @@
-package org.dandelion.radiot.live.ui;
+package org.dandelion.radiot.live.chat;
 
 import android.os.AsyncTask;
 import org.apache.http.HttpResponse;

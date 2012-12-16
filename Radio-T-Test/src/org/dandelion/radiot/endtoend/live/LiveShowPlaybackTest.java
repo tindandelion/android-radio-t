@@ -13,7 +13,7 @@ import org.dandelion.radiot.live.MediaPlayerStream;
 import org.dandelion.radiot.live.core.AudioStream;
 import org.dandelion.radiot.live.core.LiveShowStateListener;
 import org.dandelion.radiot.live.service.TimeoutReceiver;
-import org.dandelion.radiot.live.ui.ChatTranslation;
+import org.dandelion.radiot.live.chat.ChatTranslation;
 import org.dandelion.radiot.live.ui.ChatTranslationFragment;
 import org.dandelion.radiot.live.ui.LiveShowActivity;
 
