@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.util.List;
@@ -38,14 +39,15 @@ public class HttpChatTranslation implements ChatTranslation {
             return parseMessages(requestMessages());
         }
 
-        private List<String> parseMessages(HttpResponse response) {
-            return ResponseParser.parse();
+        private List<String> parseMessages(String json) {
+            return ResponseParser.parse(json);
         }
 
-        private HttpResponse requestMessages() {
+        private String requestMessages() {
             DefaultHttpClient client = new DefaultHttpClient();
             try {
-                return client.execute(new HttpGet(url));
+                HttpResponse response = client.execute(new HttpGet(url));
+                return EntityUtils.toString(response.getEntity());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
