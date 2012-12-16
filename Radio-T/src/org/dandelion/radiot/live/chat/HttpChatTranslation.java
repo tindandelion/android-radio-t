@@ -6,8 +6,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Arrays;
 import java.util.List;
 
 public class HttpChatTranslation implements ChatTranslation {
@@ -26,22 +24,6 @@ public class HttpChatTranslation implements ChatTranslation {
         return baseUrl + "/data/jsonp?mode=last&recs=10";
     }
 
-    private static class ResponseParser {
-        private final InputStream stream;
-
-        public static List<String> parse(InputStream content) {
-            return new ResponseParser(content).parse();
-        }
-
-        private ResponseParser(InputStream stream) {
-            this.stream = stream;
-        }
-
-        private List<String> parse() {
-            return Arrays.asList("Lorem ipsum");
-        }
-    }
-
     private static class ConnectTask extends AsyncTask<Void, Void, List<String>> {
         private final String url;
         private final MessageConsumer consumer;
@@ -57,11 +39,7 @@ public class HttpChatTranslation implements ChatTranslation {
         }
 
         private List<String> parseMessages(HttpResponse response) {
-            try {
-                return ResponseParser.parse(response.getEntity().getContent());
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            return ResponseParser.parse();
         }
 
         private HttpResponse requestMessages() {
