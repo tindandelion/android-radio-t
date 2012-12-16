@@ -33,7 +33,7 @@ public class LiveShowRunner {
         uiDriver.togglePlayback();
     }
 
-    public void showsTranslationInProgress() {
+    public void showsTranslationInProgress() throws InterruptedException {
         uiDriver.showsTranslationStatus("Трансляция");
         statusNotifier.showsStatusFor(LiveShowState.Playing);
     }
@@ -42,7 +42,7 @@ public class LiveShowRunner {
         uiDriver.togglePlayback();
     }
 
-    public void showsTranslationStopped() {
+    public void showsTranslationStopped() throws InterruptedException {
         uiDriver.showsTranslationStatus("Остановлено");
         statusNotifier.showsStatusFor(LiveShowState.Idle);
     }
