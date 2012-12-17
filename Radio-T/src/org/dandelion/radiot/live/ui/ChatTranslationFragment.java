@@ -1,13 +1,9 @@
 package org.dandelion.radiot.live.ui;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import org.dandelion.radiot.live.chat.ChatTranslation;
-
-import java.util.List;
 
 public class ChatTranslationFragment extends ListFragment {
     public static ChatTranslation chat;
@@ -26,15 +22,4 @@ public class ChatTranslationFragment extends ListFragment {
         chat.requestLastRecords(adapter);
     }
 
-    private static class ChatListAdapter extends ArrayAdapter<String>
-            implements ChatTranslation.MessageConsumer {
-        public ChatListAdapter(Context context) {
-            super(context, android.R.layout.simple_list_item_1);
-        }
-
-        @Override
-        public void addMessages(List<String> messages) {
-            addAll(messages);
-        }
-    }
 }
