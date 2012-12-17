@@ -1,42 +1,24 @@
 package org.dandelion.radiot.endtoend.podcasts.helpers;
 
-import org.dandelion.radiot.helpers.HttpServer;
+import org.dandelion.radiot.helpers.ResponsiveHttpServer;
 
 import java.io.IOException;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingDeque;
 
 import static org.hamcrest.CoreMatchers.any;
 import static org.hamcrest.CoreMatchers.equalTo;
 
-public class TestRssServer extends HttpServer {
-    private BlockingQueue<Response> responseHolder = new LinkedBlockingDeque<Response>();
+public class TestRssServer extends ResponsiveHttpServer {
 
     public TestRssServer() throws IOException {
         super();
     }
 
-    @Override
-    protected Response serveUri(String uri) {
-        try {
-            return responseHolder.take();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public void respondSuccessWith(String body) {
-        responseHolder.add(new Response(HTTP_OK, MIME_XML, body));
+        respondSuccessWith(body, MIME_XML);
     }
 
     public void respondNotFoundError() {
-        responseHolder.add(new Response(HTTP_NOTFOUND, MIME_HTML, ""));
-    }
-
-    @Override
-    public void stop() {
-        respondSuccessWith("");
-        super.stop();
+        respondWith(new Response(HTTP_NOTFOUND, MIME_HTML, ""));
     }
 
     public void hasReceivedRequestForRss() throws InterruptedException {
