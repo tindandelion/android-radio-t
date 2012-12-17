@@ -22,7 +22,7 @@
 		<item name="android:layout_width">fill_parent</item>
         <item name="android:layout_marginLeft">@dimen/divider_margin</item>
         <item name="android:layout_marginRight">@dimen/divider_margin</item>
-        <item name="android:background">@color/divider_color</item>
+        <item name="android:background">@color/divider</item>
 	</style>
 
     <style name="DividerVertical">
@@ -30,7 +30,7 @@
         <item name="android:layout_width">1px</item>
         <item name="android:layout_marginTop">@dimen/divider_margin</item>
         <item name="android:layout_marginBottom">@dimen/divider_margin</item>
-        <item name="android:background">@color/divider_color</item>
+        <item name="android:background">@color/divider</item>
     </style>
 
     <style name="DashboardButton">
@@ -44,4 +44,13 @@
         <item name="android:textColor">@color/button_text_color</item>
         <item name="android:background">@null</item>
     </style>
+
+    <style name="ChatMessageBody">
+        <item name="android:singleLine">false</item>
+        <item name="android:textColor">@color/foreground_dark</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:background">@color/background_light</item>
+    </style>
+
 </resources>
