@@ -6,11 +6,9 @@ import org.dandelion.radiot.endtoend.live.helpers.LiveChatTranslationServer;
 import org.dandelion.radiot.live.chat.HttpChatTranslation;
 import org.dandelion.radiot.live.ui.ChatTranslationFragment;
 import org.dandelion.radiot.live.ui.LiveShowActivity;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import static org.dandelion.radiot.endtoend.live.ChatStreamBuilder.*;
+import static org.dandelion.radiot.util.ChatStreamBuilder.chatStream;
+import static org.dandelion.radiot.util.ChatStreamBuilder.withMessages;
 import static org.hamcrest.CoreMatchers.equalTo;
 
 public class ChatTranslationTest extends ActivityInstrumentationTestCase2<LiveShowActivity> {
@@ -45,28 +43,6 @@ public class ChatTranslationTest extends ActivityInstrumentationTestCase2<LiveSh
     public void tearDown() throws Exception {
         backend.stop();
         super.tearDown();
-    }
-}
-
-class ChatStreamBuilder {
-    public static JSONObject chatStream(JSONArray messages) throws JSONException {
-        JSONObject result = new JSONObject();
-        result.put("records", messages);
-        return result;
-    }
-
-    public static JSONArray withMessages(String... msgs) throws JSONException {
-        JSONArray array = new JSONArray();
-        for (String msg : msgs) {
-            array.put(messageWithBody(msg));
-        }
-        return array;
-    }
-
-    public static JSONObject messageWithBody(String body) throws JSONException {
-        JSONObject message = new JSONObject();
-        message.put("msg", body);
-        return message;
     }
 }
 

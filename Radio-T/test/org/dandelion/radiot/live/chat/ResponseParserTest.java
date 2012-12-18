@@ -1,11 +1,14 @@
 package org.dandelion.radiot.live.chat;
 
 import org.hamcrest.Description;
+import org.json.JSONArray;
 import org.junit.Test;
 import org.junit.internal.matchers.TypeSafeMatcher;
 
 import java.util.List;
 
+import static org.dandelion.radiot.util.ChatStreamBuilder.chatStream;
+import static org.dandelion.radiot.util.ChatStreamBuilder.withMessages;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.matchers.JUnitMatchers.hasItem;
@@ -13,20 +16,21 @@ import static org.junit.matchers.JUnitMatchers.hasItem;
 public class ResponseParserTest {
     @Test
     public void parseEmptyRecordList() throws Exception {
-        String strJson = "callback_fn({\"records\": []})";
+        String strJson = chatStream(new JSONArray());
         List<ChatMessage> messages = ResponseParser.parse(strJson);
         assertTrue(messages.isEmpty());
     }
 
     @Test
     public void extractMessageList() throws Exception {
-        String strJson = "callback_fn({\"records\": [{\"msg\": \"Lorem ipsum\"}, {\"msg\": \"Dolor sit amet\"}, {\"msg\": \"Consectur\"}]})";
+        String strJson = chatStream(withMessages("Lorem ipsum", "Dolor sit amet", "Consectur"));
         List<ChatMessage> messages = ResponseParser.parse(strJson);
 
         assertThat(messages, hasItem(withBody("Lorem ipsum")));
         assertThat(messages, hasItem(withBody("Dolor sit amet")));
         assertThat(messages, hasItem(withBody("Consectur")));
     }
+
 
     private MessageBodyMatcher withBody(String body) {
         return new MessageBodyMatcher(body);
