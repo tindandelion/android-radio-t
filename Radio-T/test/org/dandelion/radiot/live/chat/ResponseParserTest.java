@@ -1,19 +1,15 @@
 package org.dandelion.radiot.live.chat;
 
-import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.json.JSONArray;
 import org.junit.Test;
-import org.junit.internal.matchers.TypeSafeMatcher;
 
 import java.util.List;
 
-import static org.dandelion.radiot.util.ChatStreamBuilder.chatMessage;
-import static org.dandelion.radiot.util.ChatStreamBuilder.chatStream;
-import static org.dandelion.radiot.util.ChatStreamBuilder.withMessages;
+import static org.dandelion.radiot.util.ChatStreamBuilder.*;
+import static org.hamcrest.CoreMatchers.hasItem;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.junit.matchers.JUnitMatchers.hasItem;
 
 public class ResponseParserTest {
     @Test
@@ -36,30 +32,7 @@ public class ResponseParserTest {
         assertThat(messages, hasMessage(new ChatMessage("sender3", "Consectur")));
     }
 
-    private Matcher<Iterable<ChatMessage>> hasMessage(ChatMessage message) {
-        return hasItem(new ChatMessageMatcher(message));
-    }
-
-    private class ChatMessageMatcher extends TypeSafeMatcher<ChatMessage> {
-        private final ChatMessage expected;
-
-        public ChatMessageMatcher(ChatMessage expected) {
-            this.expected = expected;
-        }
-
-        @Override
-        public boolean matchesSafely(ChatMessage actual) {
-            return actual.body.equals(expected.body) &&
-                    actual.sender.equals(expected.sender);
-        }
-
-        @Override
-        public void describeTo(Description description) {
-            description
-                    .appendText("a chat message with sender: ")
-                    .appendValue(expected.sender)
-                    .appendText(" and body: ")
-                    .appendValue(expected.body);
-        }
+    private Matcher<? super List<ChatMessage>> hasMessage(ChatMessage expected) {
+        return hasItem(expected);
     }
 }
