@@ -6,7 +6,11 @@ import org.dandelion.radiot.endtoend.live.helpers.LiveChatTranslationServer;
 import org.dandelion.radiot.live.chat.HttpChatTranslation;
 import org.dandelion.radiot.live.ui.ChatTranslationFragment;
 import org.dandelion.radiot.live.ui.LiveShowActivity;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import static org.dandelion.radiot.endtoend.live.ChatStreamBuilder.*;
 import static org.hamcrest.CoreMatchers.equalTo;
 
 public class ChatTranslationTest extends ActivityInstrumentationTestCase2<LiveShowActivity> {
@@ -19,16 +23,10 @@ public class ChatTranslationTest extends ActivityInstrumentationTestCase2<LiveSh
     public void testAtStartup_RequestsChatContent() throws Exception {
         ChatTranslationRunner app = openScreen();
         backend.hasReceivedRequest(equalTo("/data/jsonp"));
-        backend.respondSuccessWith(chatJsonWithMessages("Lorem ipsum", "Dolor sit amet"));
+        backend.respondWithChatStream(chatStream(withMessages("Lorem ipsum", "Dolor sit amet")));
 
         app.showsChatMessage("Lorem ipsum");
         app.showsChatMessage("Dolor sit amet");
-    }
-
-    private String chatJsonWithMessages(String msg1, String msg2) {
-        return String.format(
-                "callback_fn({\"records\": [{\"msg\":\"%s\"},{\"msg\":\"%s\"}]});",
-                msg1, msg2);
     }
 
     private ChatTranslationRunner openScreen() {
@@ -48,6 +46,27 @@ public class ChatTranslationTest extends ActivityInstrumentationTestCase2<LiveSh
         backend.stop();
         super.tearDown();
     }
+}
 
+class ChatStreamBuilder {
+    public static JSONObject chatStream(JSONArray messages) throws JSONException {
+        JSONObject result = new JSONObject();
+        result.put("records", messages);
+        return result;
+    }
+
+    public static JSONArray withMessages(String... msgs) throws JSONException {
+        JSONArray array = new JSONArray();
+        for (String msg : msgs) {
+            array.put(messageWithBody(msg));
+        }
+        return array;
+    }
+
+    public static JSONObject messageWithBody(String body) throws JSONException {
+        JSONObject message = new JSONObject();
+        message.put("msg", body);
+        return message;
+    }
 }
 
