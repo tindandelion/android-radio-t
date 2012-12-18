@@ -18,13 +18,22 @@ public class ChatStreamBuilder {
     public static JSONArray withMessages(String... msgs) throws JSONException {
         JSONArray array = new JSONArray();
         for (String msg : msgs) {
-            array.put(messageWithBody(msg));
+            array.put(chatMessage("", msg));
         }
         return array;
     }
 
-    public static JSONObject messageWithBody(String body) throws JSONException {
+    public static JSONArray withMessages(JSONObject... messages) {
+        JSONArray array = new JSONArray();
+        for (JSONObject msg : messages) {
+            array.put(msg);
+        }
+        return array;
+    }
+
+    public static JSONObject chatMessage(String sender, String body) throws JSONException {
         JSONObject message = new JSONObject();
+        message.put("from", sender);
         message.put("msg", body);
         return message;
     }
