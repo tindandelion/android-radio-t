@@ -21,7 +21,6 @@ class ResponseParser {
         }
     }
 
-
     ResponseParser(String strJson) {
         this.source = strJson;
     }
@@ -36,7 +35,7 @@ class ResponseParser {
     }
 
     private ChatMessage newMessage(JSONObject record) throws JSONException {
-        return new ChatMessage("", record.getString("msg"));
+        return new ChatMessage(record.getString("from"), record.getString("msg"));
     }
 
     private JSONArray getRecords() throws JSONException {
