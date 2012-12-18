@@ -9,6 +9,11 @@ Backlog:
    * New icon with ICS guidelines
 
 Version 1.6
+ * Chat translation
+     * Landscape orientation ?
+     * Different sizes for tablets / phones
+     * Transient notifications / errors
+
  * Why there are 12 KB left after clearing the cache?
  * Podcast list: do not clear cache if download error occurs
  * Cache cleanup handling
