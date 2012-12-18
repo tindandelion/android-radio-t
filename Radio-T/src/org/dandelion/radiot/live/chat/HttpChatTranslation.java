@@ -8,7 +8,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class HttpChatTranslation implements ChatTranslation {
@@ -42,12 +41,7 @@ public class HttpChatTranslation implements ChatTranslation {
         }
 
         private List<ChatMessage> parseMessages(String json) {
-            ArrayList<ChatMessage> messages = new ArrayList<ChatMessage>();
-            List<String> bodies = ResponseParser.parse(json);
-            for (String body : bodies) {
-                messages.add(new ChatMessage(body));
-            }
-            return messages;
+            return ResponseParser.parse(json);
         }
 
         private String requestMessages() {

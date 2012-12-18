@@ -2,9 +2,10 @@ package org.dandelion.radiot.live.chat;
 
 public class ChatMessage {
     public final String body;
-    public final String sender = "anonymous";
+    public final String sender;
 
-    public ChatMessage(String body) {
+    public ChatMessage(String sender, String body) {
         this.body = body;
+        this.sender = sender;
     }
 }

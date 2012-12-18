@@ -12,7 +12,7 @@ class ResponseParser {
 
     private final String source;
 
-    public static List<String> parse(String strJson) {
+    public static List<ChatMessage> parse(String strJson) {
         try {
             ResponseParser parser = new ResponseParser(strJson);
             return parser.getMessages();
@@ -21,17 +21,22 @@ class ResponseParser {
         }
     }
 
+
     ResponseParser(String strJson) {
         this.source = strJson;
     }
 
-    private List<String> getMessages() throws JSONException {
-        List<String> messages = new ArrayList<String>();
+    private List<ChatMessage> getMessages() throws JSONException {
+        ArrayList<ChatMessage> messages = new ArrayList<ChatMessage>();
         JSONArray records = getRecords();
         for (int i = 0; i < records.length(); i++) {
-            messages.add(getMessageText(records, i));
+            messages.add(newMessage(records.getJSONObject(i)));
         }
         return messages;
+    }
+
+    private ChatMessage newMessage(JSONObject record) throws JSONException {
+        return new ChatMessage("", record.getString("msg"));
     }
 
     private JSONArray getRecords() throws JSONException {
@@ -39,11 +44,6 @@ class ResponseParser {
         tokener.skipTo('{');
         JSONObject json = new JSONObject(tokener);
         return json.getJSONArray("records");
-    }
-
-    private String getMessageText(JSONArray records, int index) throws JSONException {
-        JSONObject record = records.getJSONObject(index);
-        return record.getString("msg");
     }
 
 }
