@@ -6,11 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import org.dandelion.radiot.live.chat.ChatMessage;
 import org.dandelion.radiot.live.chat.ChatTranslation;
 
 import java.util.List;
 
-class ChatListAdapter extends ArrayAdapter<String>
+class ChatListAdapter extends ArrayAdapter<ChatMessage>
         implements ChatTranslation.MessageConsumer {
 
     private final LayoutInflater inflater;
@@ -31,7 +32,7 @@ class ChatListAdapter extends ArrayAdapter<String>
     }
 
     @Override
-    public void addMessages(List<String> messages) {
+    public void addMessages(List<ChatMessage> messages) {
         addAll(messages);
     }
 }

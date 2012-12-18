@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface ChatTranslation {
     public interface MessageConsumer {
-        void addMessages(List<String> messages);
+        void addMessages(List<ChatMessage> messages);
     }
     void requestLastRecords(MessageConsumer consumer);
 }

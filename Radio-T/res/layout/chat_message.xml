@@ -11,7 +11,6 @@
     <TextView android:id="@+id/sender"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="anonymous"
         android:layout_alignParentTop="true"
         style="@style/ChatMessageSender" />
     <TextView

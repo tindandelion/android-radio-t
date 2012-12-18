@@ -8,6 +8,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class HttpChatTranslation implements ChatTranslation {
@@ -26,7 +27,7 @@ public class HttpChatTranslation implements ChatTranslation {
         return baseUrl + "/data/jsonp?mode=last&recs=10";
     }
 
-    private static class ConnectTask extends AsyncTask<Void, Void, List<String>> {
+    private static class ConnectTask extends AsyncTask<Void, Void, List<ChatMessage>> {
         private final String url;
         private final MessageConsumer consumer;
 
@@ -36,12 +37,17 @@ public class HttpChatTranslation implements ChatTranslation {
         }
 
         @Override
-        protected List<String> doInBackground(Void... params) {
+        protected List<ChatMessage> doInBackground(Void... params) {
             return parseMessages(requestMessages());
         }
 
-        private List<String> parseMessages(String json) {
-            return ResponseParser.parse(json);
+        private List<ChatMessage> parseMessages(String json) {
+            ArrayList<ChatMessage> messages = new ArrayList<ChatMessage>();
+            List<String> bodies = ResponseParser.parse(json);
+            for (String body : bodies) {
+                messages.add(new ChatMessage(body));
+            }
+            return messages;
         }
 
         private String requestMessages() {
@@ -57,7 +63,7 @@ public class HttpChatTranslation implements ChatTranslation {
         }
 
         @Override
-        protected void onPostExecute(List<String> messages) {
+        protected void onPostExecute(List<ChatMessage> messages) {
             consumer.addMessages(messages);
         }
     }
