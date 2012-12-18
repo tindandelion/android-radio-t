@@ -7,7 +7,7 @@ import org.dandelion.radiot.live.chat.ChatTranslation;
 
 public class ChatTranslationFragment extends ListFragment {
     public static ChatTranslation chat;
-    private ChatListAdapter adapter;
+    private ChatStreamAdapter adapter;
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -15,7 +15,7 @@ public class ChatTranslationFragment extends ListFragment {
 
         getListView().setDivider(null);
 
-        adapter = new ChatListAdapter(getActivity());
+        adapter = new ChatStreamAdapter(getActivity());
         setListAdapter(adapter);
     }
 

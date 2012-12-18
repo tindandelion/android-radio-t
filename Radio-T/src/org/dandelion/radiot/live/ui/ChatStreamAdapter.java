@@ -11,12 +11,12 @@ import org.dandelion.radiot.live.chat.ChatTranslation;
 
 import java.util.List;
 
-class ChatListAdapter extends ArrayAdapter<ChatMessage>
+class ChatStreamAdapter extends ArrayAdapter<ChatMessage>
         implements ChatTranslation.MessageConsumer {
 
     private final LayoutInflater inflater;
 
-    public ChatListAdapter(Context context) {
+    public ChatStreamAdapter(Context context) {
         super(context, 0);
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -33,6 +33,9 @@ class ChatListAdapter extends ArrayAdapter<ChatMessage>
 
     @Override
     public void addMessages(List<ChatMessage> messages) {
-        addAll(messages);
+        clear();
+        for (ChatMessage msg : messages) {
+            add(msg);
+        }
     }
 }
