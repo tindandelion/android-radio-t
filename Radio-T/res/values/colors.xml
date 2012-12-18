@@ -2,7 +2,7 @@
     <color name="background_dark">#333</color>
     <color name="background_light">#e2e2e2</color>
     <color name="background_darkest">#222</color>
-    <color name="foreground_dark">#333</color>
+    <color name="foreground_dark">#555</color>
     <color name="actionbar_text">#fff</color>
     <color name="divider">#616161</color>
 </resources>

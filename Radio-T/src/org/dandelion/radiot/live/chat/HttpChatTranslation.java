@@ -1,6 +1,7 @@
 package org.dandelion.radiot.live.chat;
 
 import android.os.AsyncTask;
+import android.util.Log;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -46,9 +47,11 @@ public class HttpChatTranslation implements ChatTranslation {
         private String requestMessages() {
             DefaultHttpClient client = new DefaultHttpClient();
             try {
+                Log.d("CHAT", "Connecting to chat...");
                 HttpResponse response = client.execute(new HttpGet(url));
                 return EntityUtils.toString(response.getEntity());
             } catch (IOException e) {
+                Log.d("CHAT", "Exception getting chat", e);
                 throw new RuntimeException(e);
             }
         }
