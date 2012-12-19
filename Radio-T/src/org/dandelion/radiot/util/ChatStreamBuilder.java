@@ -18,7 +18,7 @@ public class ChatStreamBuilder {
     public static JSONArray withMessages(String... msgs) throws JSONException {
         JSONArray array = new JSONArray();
         for (String msg : msgs) {
-            array.put(chatMessage("", msg));
+            array.put(chatMessage("", msg, "Sat Dec 15 22:19:27 UTC 2012"));
         }
         return array;
     }
@@ -31,10 +31,11 @@ public class ChatStreamBuilder {
         return array;
     }
 
-    public static JSONObject chatMessage(String sender, String body) throws JSONException {
+    public static JSONObject chatMessage(String sender, String body, String timestamp) throws JSONException {
         JSONObject message = new JSONObject();
         message.put("from", sender);
         message.put("msg", body);
+        message.put("time", timestamp);
         return message;
     }
 }

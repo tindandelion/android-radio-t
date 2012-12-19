@@ -1,6 +1,5 @@
 package org.dandelion.radiot.live.chat;
 
-import org.hamcrest.Matcher;
 import org.json.JSONArray;
 import org.junit.Test;
 
@@ -22,17 +21,13 @@ public class ResponseParserTest {
     @Test
     public void extractMessageList() throws Exception {
         String strJson = chatStream(withMessages(
-                chatMessage("sender1", "Lorem ipsum"),
-                chatMessage("sender2", "Dolor sit amet"),
-                chatMessage("sender3","Consectur")));
+                chatMessage("sender1", "Lorem ipsum", "Sat Dec 15 22:19:27 UTC 2012"),
+                chatMessage("sender2", "Dolor sit amet", "Sat Dec 15 00:15:27 UTC 2012"),
+                chatMessage("sender3","Consectur", "")));
         List<ChatMessage> messages = ResponseParser.parse(strJson);
 
-        assertThat(messages, hasMessage(new ChatMessage("sender1", "Lorem ipsum")));
-        assertThat(messages, hasMessage(new ChatMessage("sender2", "Dolor sit amet")));
-        assertThat(messages, hasMessage(new ChatMessage("sender3", "Consectur")));
-    }
-
-    private Matcher<? super List<ChatMessage>> hasMessage(ChatMessage expected) {
-        return hasItem(expected);
+        assertThat(messages, hasItem(new ChatMessage("sender1", "Lorem ipsum", "01:19")));
+        assertThat(messages, hasItem(new ChatMessage("sender2", "Dolor sit amet", "03:15")));
+        assertThat(messages, hasItem(new ChatMessage("sender3", "Consectur", "")));
     }
 }
