@@ -14,6 +14,7 @@ Version 1.6
      * Different sizes for tablets / phones
      * Transient notifications / errors
      * Testing for incorrect incoming data
+     * Chat list performance testing
 
  * Why there are 12 KB left after clearing the cache?
  * Podcast list: do not clear cache if download error occurs
