@@ -5,8 +5,6 @@ import android.media.MediaPlayer;
 import android.test.InstrumentationTestCase;
 import org.dandelion.radiot.helpers.LiveStreamServer;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-
 public class MediaPlayerTest extends InstrumentationTestCase {
     private MediaPlayer player;
     private LiveStreamServer backend;
@@ -14,7 +12,7 @@ public class MediaPlayerTest extends InstrumentationTestCase {
     public void testWhenGivenDirectUrl_PlaysIt() throws Exception {
         player.setDataSource(LiveStreamServer.DIRECT_URL);
         player.prepare();
-        backend.hasReceivedRequest(equalTo(LiveStreamServer.DIRECT_RESOURCE));
+        backend.hasReceivedRequest(LiveStreamServer.DIRECT_RESOURCE);
 
         player.start();
         playSomeTime();
@@ -25,8 +23,8 @@ public class MediaPlayerTest extends InstrumentationTestCase {
     public void testWhenGivenRedirectUrl_FollowsRedirection() throws Exception {
         player.setDataSource(LiveStreamServer.REDIRECT_URL);
         player.prepare();
-        backend.hasReceivedRequest(equalTo(LiveStreamServer.REDIRECT_RESOURCE));
-        backend.hasReceivedRequest(equalTo(LiveStreamServer.DIRECT_RESOURCE));
+        backend.hasReceivedRequest(LiveStreamServer.REDIRECT_RESOURCE);
+        backend.hasReceivedRequest(LiveStreamServer.DIRECT_RESOURCE);
 
         player.start();
         playSomeTime();

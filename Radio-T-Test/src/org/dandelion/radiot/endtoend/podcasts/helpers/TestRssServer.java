@@ -4,9 +4,6 @@ import org.dandelion.radiot.helpers.ResponsiveHttpServer;
 
 import java.io.IOException;
 
-import static org.hamcrest.CoreMatchers.any;
-import static org.hamcrest.CoreMatchers.equalTo;
-
 public class TestRssServer extends ResponsiveHttpServer {
 
     public TestRssServer() throws IOException {
@@ -22,14 +19,11 @@ public class TestRssServer extends ResponsiveHttpServer {
     }
 
     public void hasReceivedRequestForRss() throws InterruptedException {
-        hasReceivedRequest(equalTo("/rss"));
+        hasReceivedRequest("/rss");
     }
 
     public void hasReceivedRequestForUrl(String url) throws InterruptedException {
-        hasReceivedRequest(equalTo(url));
+        hasReceivedRequest(url);
     }
 
-    public void hasNotReceivedAnyRequest() throws InterruptedException {
-        hasNotReceivedRequest(any(String.class));
-    }
 }

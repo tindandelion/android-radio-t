@@ -9,8 +9,6 @@ import org.dandelion.radiot.helpers.HttpServer;
 
 import java.io.IOException;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-
 public class HttpServerTest extends TestCase {
     public static final String URL = HttpServer.addressForUrl("/");
     private MyHttpServer server;
@@ -18,7 +16,7 @@ public class HttpServerTest extends TestCase {
 
     public void testExecuteGetRequest() throws Exception {
         HttpResponse response = client.execute(new HttpGet(URL));
-        server.hasReceivedRequest(equalTo("/"));
+        server.hasReceivedRequest("/");
         assertEquals(200, response.getStatusLine().getStatusCode());
     }
 

@@ -9,7 +9,6 @@ import org.dandelion.radiot.live.ui.LiveShowActivity;
 
 import static org.dandelion.radiot.util.ChatStreamBuilder.chatStream;
 import static org.dandelion.radiot.util.ChatStreamBuilder.withMessages;
-import static org.hamcrest.CoreMatchers.equalTo;
 
 public class ChatTranslationTest extends ActivityInstrumentationTestCase2<LiveShowActivity> {
     private LiveChatTranslationServer backend;
@@ -20,7 +19,7 @@ public class ChatTranslationTest extends ActivityInstrumentationTestCase2<LiveSh
 
     public void testAtStartup_RequestsChatContent() throws Exception {
         ChatTranslationRunner app = openScreen();
-        backend.hasReceivedRequest(equalTo("/data/jsonp"));
+        backend.hasReceivedRequest("/data/jsonp", "mode=last&recs=10");
         backend.respondWithChatStream(chatStream(withMessages("Lorem ipsum", "Dolor sit amet")));
 
         app.showsChatMessage("Lorem ipsum");
