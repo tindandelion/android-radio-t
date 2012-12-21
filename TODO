@@ -10,6 +10,7 @@ Backlog:
 
 Version 1.6
  * Chat translation
+     * Handling cookies
      * Landscape orientation ?
      * Different sizes for tablets / phones
      * Transient notifications / errors
