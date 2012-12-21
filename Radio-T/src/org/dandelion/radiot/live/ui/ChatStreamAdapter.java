@@ -32,8 +32,13 @@ class ChatStreamAdapter extends ArrayAdapter<ChatMessage>
     }
 
     @Override
-    public void addMessages(List<ChatMessage> messages) {
+    public void initWithMessages(List<ChatMessage> messages) {
         clear();
+        appendMessages(messages);
+    }
+
+    @Override
+    public void appendMessages(List<ChatMessage> messages) {
         for (ChatMessage msg : messages) {
             add(msg);
         }

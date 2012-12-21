@@ -19,16 +19,21 @@ public class HttpChatTranslation implements ChatTranslation {
 
     @Override
     public void requestLastRecords(MessageConsumer consumer) {
-        new ConnectTask(connectUrl(), consumer).execute();
+        new LastRecordsRequest(chatStreamUrl("last"), consumer).execute();
     }
 
-    private String connectUrl() {
-        return baseUrl + "/data/jsonp?mode=last&recs=10";
+    @Override
+    public void requestNextRecords(MessageConsumer consumer) {
+        new NextRecordsRequest(chatStreamUrl("next"), consumer).execute();
+    }
+
+    private String chatStreamUrl(String mode) {
+        return baseUrl + "/data/jsonp?mode=" + mode + "&recs=10";
     }
 
     private static class ConnectTask extends AsyncTask<Void, Void, List<ChatMessage>> {
         private final String url;
-        private final MessageConsumer consumer;
+        protected final MessageConsumer consumer;
 
         public ConnectTask(String url, MessageConsumer consumer) {
             this.url = url;
@@ -55,10 +60,27 @@ public class HttpChatTranslation implements ChatTranslation {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    private static class LastRecordsRequest extends ConnectTask {
+        public LastRecordsRequest(String url, MessageConsumer consumer) {
+            super(url, consumer);
+        }
 
         @Override
         protected void onPostExecute(List<ChatMessage> messages) {
-            consumer.addMessages(messages);
+            consumer.initWithMessages(messages);
+        }
+    }
+
+    private static class NextRecordsRequest extends ConnectTask {
+        public NextRecordsRequest(String url, MessageConsumer consumer) {
+            super(url, consumer);
+        }
+
+        @Override
+        protected void onPostExecute(List<ChatMessage> messages) {
+            consumer.appendMessages(messages);
         }
     }
 }

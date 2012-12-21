@@ -25,4 +25,7 @@ public class ChatTranslationFragment extends ListFragment {
         chat.requestLastRecords(adapter);
     }
 
+    public void refreshChat() {
+        chat.requestNextRecords(adapter);
+    }
 }

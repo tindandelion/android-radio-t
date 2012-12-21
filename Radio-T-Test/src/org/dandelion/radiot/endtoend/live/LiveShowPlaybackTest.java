@@ -119,5 +119,10 @@ public class LiveShowPlaybackTest extends
         @Override
         public void requestLastRecords(MessageConsumer consumer) {
         }
+
+        @Override
+        public void requestNextRecords(MessageConsumer consumer) {
+
+        }
     }
 }

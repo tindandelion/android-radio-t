@@ -52,11 +52,11 @@
         <item name="android:paddingRight">8dp</item>
         <item name="android:paddingTop">8dp</item>
         <item name="android:paddingBottom">8dp</item>
-        <item name="android:background">@color/background_light</item>
+        <item name="android:background">@color/background_light_blueish</item>
     </style>
 
     <style name="ChatMessageHeader">
-        <item name="android:background">#0d69df</item>
+        <item name="android:background">@color/blue</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:gravity">center_vertical</item>
     </style>
