@@ -12,19 +12,21 @@ import java.util.List;
 
 public class HttpChatTranslation implements ChatTranslation {
     private String baseUrl;
+    private final DefaultHttpClient httpClient;
 
     public HttpChatTranslation(String baseUrl) {
         this.baseUrl = baseUrl;
+        this.httpClient = new DefaultHttpClient();
     }
 
     @Override
     public void requestLastRecords(MessageConsumer consumer) {
-        new LastRecordsRequest(chatStreamUrl("last"), consumer).execute();
+        new LastRecordsRequest(chatStreamUrl("last"), consumer, httpClient).execute();
     }
 
     @Override
     public void requestNextRecords(MessageConsumer consumer) {
-        new NextRecordsRequest(chatStreamUrl("next"), consumer).execute();
+        new NextRecordsRequest(chatStreamUrl("next"), consumer, httpClient).execute();
     }
 
     private String chatStreamUrl(String mode) {
@@ -34,10 +36,12 @@ public class HttpChatTranslation implements ChatTranslation {
     private static class ConnectTask extends AsyncTask<Void, Void, List<ChatMessage>> {
         private final String url;
         protected final MessageConsumer consumer;
+        private DefaultHttpClient httpClient;
 
-        public ConnectTask(String url, MessageConsumer consumer) {
+        public ConnectTask(String url, MessageConsumer consumer, DefaultHttpClient httpClient) {
             this.url = url;
             this.consumer = consumer;
+            this.httpClient = httpClient;
         }
 
         @Override
@@ -50,10 +54,9 @@ public class HttpChatTranslation implements ChatTranslation {
         }
 
         private String requestMessages() {
-            DefaultHttpClient client = new DefaultHttpClient();
             try {
                 Log.d("CHAT", "Connecting to chat...");
-                HttpResponse response = client.execute(new HttpGet(url));
+                HttpResponse response = httpClient.execute(new HttpGet(url));
                 return EntityUtils.toString(response.getEntity());
             } catch (IOException e) {
                 Log.d("CHAT", "Exception getting chat", e);
@@ -63,8 +66,8 @@ public class HttpChatTranslation implements ChatTranslation {
     }
 
     private static class LastRecordsRequest extends ConnectTask {
-        public LastRecordsRequest(String url, MessageConsumer consumer) {
-            super(url, consumer);
+        public LastRecordsRequest(String url, MessageConsumer consumer, DefaultHttpClient httpClient) {
+            super(url, consumer, httpClient);
         }
 
         @Override
@@ -74,8 +77,8 @@ public class HttpChatTranslation implements ChatTranslation {
     }
 
     private static class NextRecordsRequest extends ConnectTask {
-        public NextRecordsRequest(String url, MessageConsumer consumer) {
-            super(url, consumer);
+        public NextRecordsRequest(String url, MessageConsumer consumer, DefaultHttpClient httpClient) {
+            super(url, consumer, httpClient);
         }
 
         @Override

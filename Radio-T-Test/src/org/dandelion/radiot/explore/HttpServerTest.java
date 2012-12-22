@@ -3,13 +3,12 @@ package org.dandelion.radiot.explore;
 import junit.framework.TestCase;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.dandelion.radiot.helpers.HttpServer;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.Properties;
 
 public class HttpServerTest extends TestCase {
     public static final String URL = HttpServer.addressForUrl("/");
@@ -31,12 +30,11 @@ public class HttpServerTest extends TestCase {
     public void testSettingCookies() throws Exception {
         server.setCookie("TestCookie", "TestCookieValue");
         sendGetRequest();
-        List<Cookie> cookies = client.getCookieStore().getCookies();
-        assertEquals(1, cookies.size());
 
-        Cookie cookie = cookies.get(0);
-        assertEquals("TestCookie", cookie.getName());
-        assertEquals("TestCookieValue", cookie.getValue());
+        sendGetRequest();
+        Properties expectedCookies = new Properties();
+        expectedCookies.put("TestCookie", "TestCookieValue");
+        server.hasReceivedRequest("/", HttpServer.NO_PARAMS, expectedCookies);
     }
 
     @Override
