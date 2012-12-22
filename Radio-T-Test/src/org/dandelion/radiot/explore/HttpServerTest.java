@@ -9,9 +9,7 @@ import org.apache.http.util.EntityUtils;
 import org.dandelion.radiot.helpers.HttpServer;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class HttpServerTest extends TestCase {
     public static final String URL = HttpServer.addressForUrl("/");
@@ -61,32 +59,13 @@ public class HttpServerTest extends TestCase {
     private static class MyHttpServer extends HttpServer {
         public static final String BODY_TEXT = "Hello world!";
 
-        private final Map<String, String> cookies = new HashMap<String, String>();
-
         public MyHttpServer() throws IOException {
             super();
         }
 
         @Override
         protected Response serveUri(String uri) {
-            return createResponse();
-        }
-
-        private Response createResponse() {
-            Response response = new Response(HTTP_OK, MIME_HTML, BODY_TEXT);
-            addCookiesTo(response);
-            return response;
-        }
-
-        private void addCookiesTo(Response response) {
-            for (String name : cookies.keySet()) {
-                String value = cookies.get(name);
-                response.addHeader("Set-Cookie", String.format("%s=%s", name, value));
-            }
-        }
-
-        public void setCookie(String name, String value) {
-            cookies.put(name, value);
+            return new Response(HTTP_OK, MIME_HTML, BODY_TEXT);
         }
     }
 }

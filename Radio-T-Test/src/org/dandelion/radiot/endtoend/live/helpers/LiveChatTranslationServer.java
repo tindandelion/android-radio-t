@@ -14,4 +14,12 @@ public class LiveChatTranslationServer extends ResponsiveHttpServer {
     public void respondWithChatStream(String content) {
         respondSuccessWith(content, MIME_JSON);
     }
+
+    public void hasReceivedInitialRequest() throws InterruptedException {
+        hasReceivedRequest("/data/jsonp", "mode=last&recs=10");
+    }
+
+    public void hasReceivedContinuationRequest() throws InterruptedException {
+        hasReceivedRequest("/data/jsonp", "mode=next&recs=10");
+    }
 }

@@ -19,7 +19,7 @@ public class ChatTranslationTest extends ActivityInstrumentationTestCase2<LiveSh
 
     public void testAtStartup_RequestsChatContent() throws Exception {
         ChatTranslationRunner app = openScreen();
-        backend.hasReceivedRequest("/data/jsonp", "mode=last&recs=10");
+        backend.hasReceivedInitialRequest();
         backend.respondWithChatStream(chatStream(withMessages("Lorem ipsum", "Dolor sit amet")));
 
         app.showsChatMessage("Lorem ipsum");
@@ -29,12 +29,12 @@ public class ChatTranslationTest extends ActivityInstrumentationTestCase2<LiveSh
     public void testRequestNextMessagesWhenRefreshing() throws Exception {
         ChatTranslationRunner app = openScreen();
 
-        backend.hasReceivedRequest("/data/jsonp", "mode=last&recs=10");
+        backend.hasReceivedInitialRequest();
         backend.respondWithChatStream(chatStream(withMessages("Lorem ipsum")));
         app.showsChatMessage("Lorem ipsum");
 
         app.refreshChat();
-        backend.hasReceivedRequest("/data/jsonp", "mode=next&recs=10");
+        backend.hasReceivedContinuationRequest();
         backend.respondWithChatStream(chatStream(withMessages("Dolor sit amet")));
         app.showsChatMessage("Lorem ipsum");
         app.showsChatMessage("Dolor sit amet");

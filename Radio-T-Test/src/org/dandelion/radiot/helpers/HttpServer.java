@@ -7,6 +7,8 @@ import org.hamcrest.TypeSafeMatcher;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import static org.dandelion.radiot.helpers.HttpServer.RequestMatcher.atUrl;
@@ -15,6 +17,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 
 public abstract class HttpServer extends NanoHTTPD {
     public static int PORT = 32768;
+    protected final Map<String, String> cookies = new HashMap<String, String>();
     protected NotificationTrace<ReceivedRequest> requests;
 
     public HttpServer() throws IOException {
@@ -62,7 +65,19 @@ public abstract class HttpServer extends NanoHTTPD {
     @Override
     public Response serve(String uri, String method, Properties header, Properties parms, Properties files) {
         requests.append(new ReceivedRequest(uri, parms));
-        return serveUri(uri);
+        return addCookiesTo(serveUri(uri));
+    }
+
+    public void setCookie(String name, String value) {
+        cookies.put(name, value);
+    }
+
+    private Response addCookiesTo(Response response) {
+        for (String name : cookies.keySet()) {
+            String value = cookies.get(name);
+            response.addHeader("Set-Cookie", String.format("%s=%s", name, value));
+        }
+        return response;
     }
 
 
