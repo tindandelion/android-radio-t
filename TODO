@@ -10,10 +10,12 @@ Backlog:
 
 Version 1.6
  * Chat translation
-     * Handling cookies
+     DONE Handling cookies
+     * Refreshing chat
+     * Visualize refresh progress
      * Landscape orientation ?
      * Different sizes for tablets / phones
-     * Transient notifications / errors
+     * Enlarge chat list space
      * Testing for incorrect incoming data
      * Chat list performance testing
 
