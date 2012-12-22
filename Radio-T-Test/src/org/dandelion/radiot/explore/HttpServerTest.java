@@ -8,7 +8,6 @@ import org.apache.http.util.EntityUtils;
 import org.dandelion.radiot.helpers.HttpServer;
 
 import java.io.IOException;
-import java.util.Properties;
 
 public class HttpServerTest extends TestCase {
     public static final String URL = HttpServer.addressForUrl("/");
@@ -32,9 +31,8 @@ public class HttpServerTest extends TestCase {
         sendGetRequest();
 
         sendGetRequest();
-        Properties expectedCookies = new Properties();
-        expectedCookies.put("TestCookie", "TestCookieValue");
-        server.hasReceivedRequest("/", HttpServer.NO_PARAMS, expectedCookies);
+        String[] expectedCookie = new String[]{"TestCookie", "TestCookieValue"};
+        server.hasReceivedRequest("/", HttpServer.NO_PARAMS, expectedCookie);
     }
 
     @Override

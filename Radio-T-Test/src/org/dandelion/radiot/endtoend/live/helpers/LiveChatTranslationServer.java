@@ -3,7 +3,6 @@ package org.dandelion.radiot.endtoend.live.helpers;
 import org.dandelion.radiot.helpers.ResponsiveHttpServer;
 
 import java.io.IOException;
-import java.util.Properties;
 
 public class LiveChatTranslationServer extends ResponsiveHttpServer {
     private static final String MIME_JSON = "application/json";
@@ -24,9 +23,7 @@ public class LiveChatTranslationServer extends ResponsiveHttpServer {
     }
 
     public void hasReceivedContinuationRequest() throws InterruptedException {
-        Properties expectedCookies = new Properties();
-        expectedCookies.put(SESSION_COOKIE, SESSION_ID);
-        hasReceivedRequest("/data/jsonp", "mode=next&recs=10", expectedCookies);
+        String[] expectedCookie = new String[]{SESSION_COOKIE, SESSION_ID};
+        hasReceivedRequest("/data/jsonp", "mode=next&recs=10", expectedCookie);
     }
-
 }

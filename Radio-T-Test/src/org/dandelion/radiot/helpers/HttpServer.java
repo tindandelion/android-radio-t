@@ -7,6 +7,7 @@ import org.hamcrest.TypeSafeMatcher;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Properties;
 
 import static org.dandelion.radiot.helpers.HttpServer.RequestMatcher.atUrl;
@@ -35,19 +36,23 @@ public abstract class HttpServer extends NanoHTTPD {
     }
 
     public void hasReceivedRequest(String url) throws InterruptedException {
-        requests.receivedNotification(atUrl(equalTo(url), anyParams(), anyParams()));
+        requests.receivedNotification(atUrl(equalTo(url), anyParams(), anyCookie()));
     }
 
     public void hasReceivedRequest(String url, String params) throws InterruptedException {
-        requests.receivedNotification(atUrl(equalTo(url), withParams(params), anyParams()));
+        requests.receivedNotification(atUrl(equalTo(url), withParams(params), anyCookie()));
     }
 
-    public void hasReceivedRequest(String url, String params, Properties cookies) throws InterruptedException {
-        requests.receivedNotification(atUrl(equalTo(url), withParams(params), withCookies(cookies)));
+    public void hasReceivedRequest(String url, String params, String[] cookie) throws InterruptedException {
+        requests.receivedNotification(atUrl(equalTo(url), withParams(params), withCookie(cookie)));
     }
 
-    private Matcher<Properties> withCookies(Properties cookies) {
-        return equalTo(cookies);
+    private Matcher<String[]> withCookie(String[] cookie) {
+        return equalTo(cookie);
+    }
+
+    private Matcher<String[]> anyCookie() {
+        return any(String[].class);
     }
 
     private Matcher<Properties> anyParams() {
@@ -80,17 +85,17 @@ public abstract class HttpServer extends NanoHTTPD {
 
     @Override
     public Response serve(String uri, String method, Properties header, Properties parms, Properties files) {
-        requests.append(new ReceivedRequest(uri, parms, extractCookies(header)));
+        requests.append(new ReceivedRequest(uri, parms, extractCookie(header)));
         return addCookiesTo(serveUri(uri));
     }
 
-    private Properties extractCookies(Properties header) {
+    private String[] extractCookie(Properties header) {
         final String COOKIE_KEY = "cookie";
         if (header.containsKey(COOKIE_KEY)) {
             String cookieStr = header.getProperty(COOKIE_KEY);
-            return toProperties(cookieStr);
+            return cookieStr.split("=");
         }
-        return new Properties();
+        return new String[]{};
     }
 
     public void setCookie(String name, String value) {
@@ -109,30 +114,31 @@ public abstract class HttpServer extends NanoHTTPD {
     private static class ReceivedRequest {
         public final String url;
         public final Properties parameters;
-        public final Properties cookies;
+        public final String[] cookie;
 
-        private ReceivedRequest(String url, Properties parms, Properties cookies) {
+        private ReceivedRequest(String url, Properties parms, String[] cookies) {
             this.url = url;
             this.parameters = parms;
-            this.cookies = cookies;
+            this.cookie = cookies;
         }
 
         @Override
         public String toString() {
-            return String.format("ReceivedRequest(url=%s, params=%s, cookies=%s)", url, parameters, cookies);
+            return String.format("ReceivedRequest(url=%s, params=%s, cookie=%s)", url, parameters,
+                    Arrays.toString(cookie));
         }
     }
 
     public static class RequestMatcher extends TypeSafeMatcher<ReceivedRequest> {
         private final Matcher<String> urlMatcher;
         private final Matcher<Properties> paramMatcher;
-        private final Matcher<Properties> cookieMatcher;
+        private final Matcher<String[]> cookieMatcher;
 
-        public static Matcher<? super ReceivedRequest> atUrl(Matcher<String> urlMatcher, Matcher<Properties> paramMatcher, Matcher<Properties> cookieMatcher) {
+        public static Matcher<? super ReceivedRequest> atUrl(Matcher<String> urlMatcher, Matcher<Properties> paramMatcher, Matcher<String[]> cookieMatcher) {
             return new RequestMatcher(urlMatcher, paramMatcher, cookieMatcher);
         }
 
-        public RequestMatcher(Matcher<String> urlMatcher, Matcher<Properties> paramMatcher, Matcher<Properties> cookieMatcher) {
+        public RequestMatcher(Matcher<String> urlMatcher, Matcher<Properties> paramMatcher, Matcher<String[]> cookieMatcher) {
             this.urlMatcher = urlMatcher;
             this.paramMatcher = paramMatcher;
             this.cookieMatcher = cookieMatcher;
@@ -142,7 +148,7 @@ public abstract class HttpServer extends NanoHTTPD {
         protected boolean matchesSafely(ReceivedRequest request) {
             return urlMatcher.matches(request.url) &&
                     paramMatcher.matches(request.parameters) &&
-                    cookieMatcher.matches(request.cookies);
+                    cookieMatcher.matches(request.cookie);
         }
 
         @Override
@@ -152,7 +158,7 @@ public abstract class HttpServer extends NanoHTTPD {
                     .appendDescriptionOf(urlMatcher)
                     .appendText(", parameters ")
                     .appendDescriptionOf(paramMatcher)
-                    .appendText(", cookies ")
+                    .appendText(", cookie ")
                     .appendDescriptionOf(cookieMatcher);
         }
 
