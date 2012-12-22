@@ -11,8 +11,8 @@ Backlog:
 Version 1.6
  * Chat translation
      DONE Handling cookies
-     * Refreshing chat
      * Visualize refresh progress
+     * Refreshing chat
      * Landscape orientation ?
      * Different sizes for tablets / phones
      * Enlarge chat list space
