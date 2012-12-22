@@ -33,6 +33,12 @@ task resources: [:buttons, :home_screen_buttons]
 
 desc "Run audio server"
 task :audio_server do
-  ruby "test-server/server.rb"
+  ruby "test-server/audio-server.rb"
 end
+
+desc "Run chat server"
+task :chat_server do
+  ruby "test-server/chat-server.rb"
+end
+
 

@@ -3,6 +3,9 @@ GEM
   specs:
     daemons (1.1.9)
     eventmachine (1.0.0)
+    faker (1.1.2)
+      i18n (~> 0.5)
+    i18n (0.6.1)
     rack (1.4.1)
     rack-protection (1.2.0)
       rack
@@ -20,5 +23,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  faker
   sinatra
   thin
