@@ -17,6 +17,7 @@ public class PlaybackControlFragment extends Fragment {
     private TextView status;
     private TimerView timer;
     private TextView hint;
+    private PlaybackControlView control;
     private PlaybackControlPresenter presenter;
     private LiveShowClient client;
 
@@ -35,10 +36,11 @@ public class PlaybackControlFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.playback_control_view, container, false);
-        button = (ImageButton) view.findViewById(R.id.btn_toggle_live_playback);
-        status = (TextView) view.findViewById(R.id.playback_state_label);
-        timer = (TimerView) view.findViewById(R.id.live_timer_label);
+        View view = inflater.inflate(R.layout.live_playback_control, container, false);
+        control = (PlaybackControlView) view.findViewById(R.id.playback_control);
+        button = control.button();
+        status = control.status();
+        timer = control.timer();
         hint = (TextView) view.findViewById(R.id.live_hint_label);
 
         button.setOnClickListener(onTogglePlayback);
