@@ -27,14 +27,14 @@ public class PlaybackControlPresenter implements LiveShowStateListener {
             this.timerActive = timerActive;
         }
 
-        public void update(PlaybackControlFragment control, long timestamp) {
-            control.setStatusLabel(statusLabelId);
-            control.setButtonState(buttonLabelId, buttonEnabled);
-            control.showHelpText(showHelpText);
+        public void update(PlaybackControlFragment visual, long timestamp) {
+            visual.setStatusLabel(statusLabelId);
+            visual.setButtonState(buttonLabelId, buttonEnabled);
+            visual.showHelpText(showHelpText);
             if (timerActive) {
-                control.startTimer(timestamp);
+                visual.startTimer(timestamp);
             } else {
-                control.stopTimer();
+                visual.stopTimer();
             }
         }
     }

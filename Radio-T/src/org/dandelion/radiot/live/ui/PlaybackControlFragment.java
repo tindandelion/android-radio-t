@@ -1,6 +1,5 @@
 package org.dandelion.radiot.live.ui;
 
-import android.widget.ImageButton;
 import android.widget.TextView;
 import org.dandelion.radiot.R;
 import android.os.Bundle;
@@ -12,10 +11,6 @@ import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.live.LiveShowClient;
 
 public class PlaybackControlFragment extends Fragment {
-    private VisualResources strings;
-    private ImageButton button;
-    private TextView status;
-    private TimerView timer;
     private TextView hint;
     private PlaybackControlView control;
     private PlaybackControlPresenter presenter;
@@ -31,19 +26,15 @@ public class PlaybackControlFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        strings = new VisualResources(getResources());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.live_playback_control, container, false);
         control = (PlaybackControlView) view.findViewById(R.id.playback_control);
-        button = control.button();
-        status = control.status();
-        timer = control.timer();
         hint = (TextView) view.findViewById(R.id.live_hint_label);
 
-        button.setOnClickListener(onTogglePlayback);
+        control.setButtonListener(onTogglePlayback);
 
         return view;
     }
@@ -58,26 +49,25 @@ public class PlaybackControlFragment extends Fragment {
 
     @Override
     public void onStop() {
-        timer.stop();
+        control.stopTimer();
         client.removeListener(presenter);
         super.onStop();
     }
 
     public void setButtonState(int id, boolean enabled) {
-        button.setImageResource(strings.buttonLabelForId(id));
-        button.setEnabled(enabled);
+        control.setButtonState(id, enabled);
     }
 
     public void setStatusLabel(int id) {
-        status.setText(strings.statusLabelForId(id));
+        control.setStatusLabel(id);
     }
 
     public void startTimer(long timestamp) {
-        timer.start(timestamp);
+        control.startTimer(timestamp);
     }
 
     public void stopTimer() {
-        timer.stop();
+        control.stopTimer();
     }
 
     public void showHelpText(boolean visible) {
@@ -93,23 +83,4 @@ public class PlaybackControlFragment extends Fragment {
         }
     }
 
-    private static class VisualResources {
-        private int[] buttonLabels = new int[] {
-                R.drawable.ic_stop,
-                R.drawable.ic_play
-        };
-        private String[] statusLabels;
-
-        public VisualResources(android.content.res.Resources resources) {
-            statusLabels = resources.getStringArray(R.array.live_show_status_labels);
-        }
-
-        public int buttonLabelForId(int id) {
-            return buttonLabels[id];
-        }
-
-        public String statusLabelForId(int id) {
-            return statusLabels[id];
-        }
-    }
 }
