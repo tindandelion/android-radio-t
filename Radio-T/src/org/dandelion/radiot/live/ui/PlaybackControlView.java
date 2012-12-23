@@ -20,8 +20,9 @@ public class PlaybackControlView extends LinearLayout implements LiveShowStateLi
 
     public PlaybackControlView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        inflateView(context);
         statusLabels = initStatusLabels();
+
+        inflateView(context);
         button = (ImageButton) findViewById(R.id.btn_toggle_live_playback);
         status = (TextView) findViewById(R.id.playback_state_label);
         timer = (TimerView) findViewById(R.id.live_timer_label);

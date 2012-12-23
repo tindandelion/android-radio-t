@@ -1,6 +1,8 @@
 package org.dandelion.radiot.live.ui;
 
+import android.os.Handler;
 import android.widget.TextView;
+import android.widget.ViewFlipper;
 import org.dandelion.radiot.R;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,7 +15,10 @@ import org.dandelion.radiot.live.core.LiveShowState;
 import org.dandelion.radiot.live.core.LiveShowStateListener;
 
 public class PlaybackControlFragment extends Fragment implements LiveShowStateListener {
-    private TextView hint;
+    private static final int HELP_TEXT_INDEX = 1;
+    private static final int PLAYBACK_CONTROL_INDEX = 0;
+    private static final long HELP_DISPLAY_DELAY = 3000;
+    private Handler handler = new Handler();
     private PlaybackControlView control;
     private LiveShowClient client;
 
@@ -23,6 +28,8 @@ public class PlaybackControlFragment extends Fragment implements LiveShowStateLi
             client.togglePlayback();
         }
     };
+    private ViewFlipper flipper;
+    private TextView helpHint;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,8 +39,9 @@ public class PlaybackControlFragment extends Fragment implements LiveShowStateLi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.live_playback_control, container, false);
+        flipper = (ViewFlipper) view.findViewById(R.id.flipper);
         control = (PlaybackControlView) view.findViewById(R.id.playback_control);
-        hint = (TextView) view.findViewById(R.id.live_hint_label);
+        helpHint = (TextView) view.findViewById(R.id.live_hint_label);
 
         control.setButtonListener(onTogglePlayback);
 
@@ -55,21 +63,21 @@ public class PlaybackControlFragment extends Fragment implements LiveShowStateLi
         super.onStop();
     }
 
-    public void showHelpText(boolean visible) {
-        int text = getHelpText(visible);
-        hint.setText(text);
-    }
-
-    private int getHelpText(boolean visible) {
-        if (visible) {
-            return R.string.live_show_waiting_hint;
-        } else {
-            return R.string.live_show_info;
-        }
+    private void showHelpHint(int resourceId) {
+        helpHint.setText(resourceId);
+        flipper.setDisplayedChild(HELP_TEXT_INDEX);
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                flipper.setDisplayedChild(PLAYBACK_CONTROL_INDEX);
+            }
+        }, HELP_DISPLAY_DELAY);
     }
 
     @Override
     public void onStateChanged(LiveShowState state, long timestamp) {
-        showHelpText(state == LiveShowState.Waiting);
+        if (state == LiveShowState.Waiting) {
+            showHelpHint(R.string.live_show_waiting_hint);
+        }
     }
 }
