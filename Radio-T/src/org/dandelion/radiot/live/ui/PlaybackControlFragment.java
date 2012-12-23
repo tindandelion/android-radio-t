@@ -49,7 +49,6 @@ public class PlaybackControlFragment extends Fragment {
 
     @Override
     public void onStop() {
-        control.stopTimer();
         client.removeListener(presenter);
         super.onStop();
     }

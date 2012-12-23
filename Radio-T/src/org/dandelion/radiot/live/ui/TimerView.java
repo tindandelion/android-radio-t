@@ -4,9 +4,9 @@ import android.content.Context;
 import android.os.Handler;
 import android.text.format.DateUtils;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.TextView;
 
-// TODO: Is it ticking when the activity is paused?
 public class TimerView extends TextView {
     private long startTimestamp;
     private Handler handler;
@@ -22,6 +22,14 @@ public class TimerView extends TextView {
     public TimerView(Context context, AttributeSet attrs) {
         super(context, attrs);
         handler = new Handler();
+    }
+
+    @Override
+    protected void onWindowVisibilityChanged(int visibility) {
+        super.onWindowVisibilityChanged(visibility);
+        if (visibility != View.VISIBLE) {
+            deactivate();
+        }
     }
 
     public void start(long startTimestamp) {

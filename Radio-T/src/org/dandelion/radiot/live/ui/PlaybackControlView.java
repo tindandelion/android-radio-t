@@ -14,7 +14,7 @@ public class PlaybackControlView extends LinearLayout {
             R.drawable.ic_play
     };
 
-    private final String [] statusLabels;
+    private final String[] statusLabels;
 
     private final ImageButton button;
     private final TextView status;
