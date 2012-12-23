@@ -1,5 +1,6 @@
 package org.dandelion.radiot.live.ui;
 
+import android.view.LayoutInflater;
 import android.widget.TextView;
 import org.dandelion.radiot.R;
 import android.content.Context;
@@ -10,6 +11,12 @@ import android.widget.LinearLayout;
 public class PlaybackControlView extends LinearLayout {
     public PlaybackControlView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        inflateView(context);
+    }
+
+    private void inflateView(Context context) {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater.inflate(R.layout.playback_control_view, this);
     }
 
     public ImageButton button() {

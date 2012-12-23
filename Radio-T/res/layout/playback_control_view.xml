@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       android:layout_width="fill_parent"
+       android:layout_height="fill_parent"
+       android:orientation="horizontal">
+
+    <LinearLayout
+        android:id="@+id/playback_status"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:layout_weight="1">
+
+        <org.dandelion.radiot.live.ui.TimerView
+            android:id="@+id/live_timer_label"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="36dp"
+            android:gravity="center_horizontal"
+            android:typeface="sans"/>
+
+        <TextView
+            android:id="@+id/playback_state_label"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@android:style/TextAppearance.Small"
+            android:gravity="center_horizontal"/>
+    </LinearLayout>
+
+    <View style="@style/DividerVertical"/>
+
+    <ImageButton
+        android:id="@+id/btn_toggle_live_playback"
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent"
+        android:layout_weight="1"/>
+</merge>
