@@ -9,11 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.live.LiveShowClient;
+import org.dandelion.radiot.live.core.LiveShowState;
+import org.dandelion.radiot.live.core.LiveShowStateListener;
 
-public class PlaybackControlFragment extends Fragment {
+public class PlaybackControlFragment extends Fragment implements LiveShowStateListener {
     private TextView hint;
     private PlaybackControlView control;
-    private PlaybackControlPresenter presenter;
     private LiveShowClient client;
 
     private View.OnClickListener onTogglePlayback = new View.OnClickListener() {
@@ -43,30 +44,15 @@ public class PlaybackControlFragment extends Fragment {
     public void onStart() {
         super.onStart();
         client = LiveShowApp.getInstance().createClient(getActivity());
-        presenter = new PlaybackControlPresenter(this);
-        client.addListener(presenter);
+        client.addListener(this);
+        client.addListener(control);
     }
 
     @Override
     public void onStop() {
-        client.removeListener(presenter);
+        client.removeListener(control);
+        client.removeListener(this);
         super.onStop();
-    }
-
-    public void setButtonState(int id, boolean enabled) {
-        control.setButtonState(id, enabled);
-    }
-
-    public void setStatusLabel(int id) {
-        control.setStatusLabel(id);
-    }
-
-    public void startTimer(long timestamp) {
-        control.startTimer(timestamp);
-    }
-
-    public void stopTimer() {
-        control.stopTimer();
     }
 
     public void showHelpText(boolean visible) {
@@ -82,4 +68,8 @@ public class PlaybackControlFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onStateChanged(LiveShowState state, long timestamp) {
+        showHelpText(state == LiveShowState.Waiting);
+    }
 }
