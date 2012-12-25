@@ -11,11 +11,11 @@ Backlog:
 Version 1.6
  * Chat translation
      DONE Handling cookies
+     DONE Enlarge chat list space
      * Visualize refresh progress
      * Refreshing chat
      * Landscape orientation ?
      * Different sizes for tablets / phones
-     * Enlarge chat list space
      * Testing for incorrect incoming data
      * Chat list performance testing
 
