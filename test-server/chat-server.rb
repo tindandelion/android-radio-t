@@ -3,13 +3,8 @@ require 'json'
 require 'faker'
 require 'pry'
 
-MESSAGE_TEXT = <<-EOM
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-Phasellus laoreet tincidunt ligula, at feugiat lectus ultricies et. 
-Donec odio ligula, congue vel venenatis non, scelerisque et ipsum
-EOM
-
 get '/data/jsonp' do
+  binding.pry
   content_type 'application/json'
   msg_count = (request.params['mode'] == 'last') ? 10 : rand(5)
   wrap_into_callback compose_chat_json(msg_count)
