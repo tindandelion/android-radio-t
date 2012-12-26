@@ -117,11 +117,11 @@ public class LiveShowPlaybackTest extends
 
     private static class NullChatTranlation implements ChatTranslation {
         @Override
-        public void requestLastRecords(MessageConsumer consumer) {
+        public void start(MessageConsumer consumer) {
         }
 
         @Override
-        public void requestNextRecords(MessageConsumer consumer) {
+        public void refresh() {
 
         }
     }

@@ -7,6 +7,6 @@ public interface ChatTranslation {
         void initWithMessages(List<ChatMessage> messages);
         void appendMessages(List<ChatMessage> messages);
     }
-    void requestLastRecords(MessageConsumer consumer);
-    void requestNextRecords(MessageConsumer consumer);
+    void start(MessageConsumer consumer);
+    void refresh();
 }

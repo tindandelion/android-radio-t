@@ -13,6 +13,7 @@ import java.util.List;
 public class HttpChatTranslation implements ChatTranslation {
     private String baseUrl;
     private final DefaultHttpClient httpClient;
+    private MessageConsumer consumer;
 
     public HttpChatTranslation(String baseUrl) {
         this.baseUrl = baseUrl;
@@ -20,12 +21,17 @@ public class HttpChatTranslation implements ChatTranslation {
     }
 
     @Override
-    public void requestLastRecords(MessageConsumer consumer) {
+    public void start(MessageConsumer consumer) {
+        this.consumer = consumer;
+        requestLastRecords();
+    }
+
+    private void requestLastRecords() {
         new LastRecordsRequest(chatStreamUrl("last"), consumer, httpClient).execute();
     }
 
     @Override
-    public void requestNextRecords(MessageConsumer consumer) {
+    public void refresh() {
         new NextRecordsRequest(chatStreamUrl("next"), consumer, httpClient).execute();
     }
 

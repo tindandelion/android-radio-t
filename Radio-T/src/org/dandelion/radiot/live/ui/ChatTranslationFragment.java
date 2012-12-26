@@ -22,10 +22,6 @@ public class ChatTranslationFragment extends ListFragment {
     @Override
     public void onStart() {
         super.onStart();
-        chat.requestLastRecords(adapter);
-    }
-
-    public void refreshChat() {
-        chat.requestNextRecords(adapter);
+        chat.start(adapter);
     }
 }

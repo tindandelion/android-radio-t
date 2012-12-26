@@ -12,6 +12,7 @@ import static org.dandelion.radiot.util.ChatStreamBuilder.withMessages;
 
 public class ChatTranslationTest extends ActivityInstrumentationTestCase2<LiveShowActivity> {
     private LiveChatTranslationServer backend;
+    private HttpChatTranslation translation;
 
     public ChatTranslationTest() {
         super(LiveShowActivity.class);
@@ -41,15 +42,16 @@ public class ChatTranslationTest extends ActivityInstrumentationTestCase2<LiveSh
     }
 
     private ChatTranslationRunner openScreen() {
-        return new ChatTranslationRunner(getInstrumentation(), getActivity());
+        return new ChatTranslationRunner(getInstrumentation(), getActivity(), translation);
     }
 
     @Override
     public void setUp() throws Exception {
         super.setUp();
         backend = new LiveChatTranslationServer();
-        ChatTranslationFragment.chat = new HttpChatTranslation(
+        translation = new HttpChatTranslation(
                 LiveChatTranslationServer.baseUrl());
+        ChatTranslationFragment.chat = translation;
     }
 
     @Override
