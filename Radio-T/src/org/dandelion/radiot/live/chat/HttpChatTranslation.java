@@ -39,7 +39,7 @@ public class HttpChatTranslation implements ChatTranslation {
         return baseUrl + "/data/jsonp?mode=" + mode + "&recs=10";
     }
 
-    private static class ConnectTask extends AsyncTask<Void, Void, List<ChatMessage>> {
+    private static class ConnectTask extends AsyncTask<Void, Void, List<Message>> {
         private final String url;
         protected final MessageConsumer consumer;
         private DefaultHttpClient httpClient;
@@ -51,11 +51,11 @@ public class HttpChatTranslation implements ChatTranslation {
         }
 
         @Override
-        protected List<ChatMessage> doInBackground(Void... params) {
+        protected List<Message> doInBackground(Void... params) {
             return parseMessages(requestMessages());
         }
 
-        private List<ChatMessage> parseMessages(String json) {
+        private List<Message> parseMessages(String json) {
             return ResponseParser.parse(json);
         }
 
@@ -77,7 +77,7 @@ public class HttpChatTranslation implements ChatTranslation {
         }
 
         @Override
-        protected void onPostExecute(List<ChatMessage> messages) {
+        protected void onPostExecute(List<Message> messages) {
             consumer.initWithMessages(messages);
         }
     }
@@ -88,7 +88,7 @@ public class HttpChatTranslation implements ChatTranslation {
         }
 
         @Override
-        protected void onPostExecute(List<ChatMessage> messages) {
+        protected void onPostExecute(List<Message> messages) {
             consumer.appendMessages(messages);
         }
     }

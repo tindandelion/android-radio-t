@@ -5,14 +5,14 @@ import android.util.AttributeSet;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import org.dandelion.radiot.R;
-import org.dandelion.radiot.live.chat.ChatMessage;
+import org.dandelion.radiot.live.chat.Message;
 
 public class ChatMessageView extends RelativeLayout {
     public ChatMessageView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public void setMessage(ChatMessage message) {
+    public void setMessage(Message message) {
         setSender(message.sender);
         setBody(message.body);
         setTime(message.time);

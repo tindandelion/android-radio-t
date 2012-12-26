@@ -18,7 +18,7 @@ class ResponseParser {
     private static final SimpleDateFormat TIMESTAMP_FORMAT =
             new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy");
 
-    public static List<ChatMessage> parse(String strJson) {
+    public static List<Message> parse(String strJson) {
         try {
             ResponseParser parser = new ResponseParser(strJson);
             return parser.getMessages();
@@ -31,8 +31,8 @@ class ResponseParser {
         this.source = strJson;
     }
 
-    private List<ChatMessage> getMessages() throws JSONException {
-        ArrayList<ChatMessage> messages = new ArrayList<ChatMessage>();
+    private List<Message> getMessages() throws JSONException {
+        ArrayList<Message> messages = new ArrayList<Message>();
         JSONArray records = getRecords();
         for (int i = 0; i < records.length(); i++) {
             messages.add(newMessage(records.getJSONObject(i)));
@@ -40,8 +40,8 @@ class ResponseParser {
         return messages;
     }
 
-    private ChatMessage newMessage(JSONObject record) throws JSONException {
-        return new ChatMessage(record.getString("from"), record.getString("msg"),
+    private Message newMessage(JSONObject record) throws JSONException {
+        return new Message(record.getString("from"), record.getString("msg"),
                 formatTime(record.getString("time")));
     }
 

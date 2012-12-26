@@ -14,7 +14,7 @@ public class ResponseParserTest {
     @Test
     public void parseEmptyRecordList() throws Exception {
         String strJson = chatStream(new JSONArray());
-        List<ChatMessage> messages = ResponseParser.parse(strJson);
+        List<Message> messages = ResponseParser.parse(strJson);
         assertTrue(messages.isEmpty());
     }
 
@@ -24,10 +24,10 @@ public class ResponseParserTest {
                 chatMessage("sender1", "Lorem ipsum", "Sat Dec 15 22:19:27 UTC 2012"),
                 chatMessage("sender2", "Dolor sit amet", "Sat Dec 15 00:15:27 UTC 2012"),
                 chatMessage("sender3","Consectur", "")));
-        List<ChatMessage> messages = ResponseParser.parse(strJson);
+        List<Message> messages = ResponseParser.parse(strJson);
 
-        assertThat(messages, hasItem(new ChatMessage("sender1", "Lorem ipsum", "01:19")));
-        assertThat(messages, hasItem(new ChatMessage("sender2", "Dolor sit amet", "03:15")));
-        assertThat(messages, hasItem(new ChatMessage("sender3", "Consectur", "")));
+        assertThat(messages, hasItem(new Message("sender1", "Lorem ipsum", "01:19")));
+        assertThat(messages, hasItem(new Message("sender2", "Dolor sit amet", "03:15")));
+        assertThat(messages, hasItem(new Message("sender3", "Consectur", "")));
     }
 }

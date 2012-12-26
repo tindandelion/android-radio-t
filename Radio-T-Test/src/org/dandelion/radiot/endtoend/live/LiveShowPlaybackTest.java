@@ -10,6 +10,7 @@ import org.dandelion.radiot.endtoend.live.helpers.LiveShowRunner;
 import org.dandelion.radiot.endtoend.live.helpers.LiveShowServer;
 import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.live.MediaPlayerStream;
+import org.dandelion.radiot.live.chat.MessageConsumer;
 import org.dandelion.radiot.live.core.AudioStream;
 import org.dandelion.radiot.live.core.LiveShowStateListener;
 import org.dandelion.radiot.live.service.TimeoutReceiver;
