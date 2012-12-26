@@ -5,6 +5,7 @@ import org.dandelion.radiot.endtoend.live.helpers.ChatTranslationRunner;
 import org.dandelion.radiot.endtoend.live.helpers.LiveChatTranslationServer;
 import org.dandelion.radiot.live.chat.HttpChatTranslation;
 import org.dandelion.radiot.live.chat.PollingChatTranslation;
+import org.dandelion.radiot.live.schedule.Scheduler;
 import org.dandelion.radiot.live.ui.ChatTranslationFragment;
 import org.dandelion.radiot.live.ui.LiveShowActivity;
 
@@ -52,7 +53,23 @@ public class ChatTranslationTest extends ActivityInstrumentationTestCase2<LiveSh
         backend = new LiveChatTranslationServer();
         translation = new HttpChatTranslation(
                 LiveChatTranslationServer.baseUrl());
-        ChatTranslationFragment.chat = new PollingChatTranslation(translation);
+        ChatTranslationFragment.chat = new PollingChatTranslation(translation, fakeScheduler());
+    }
+
+    private Scheduler fakeScheduler() {
+        return new Scheduler() {
+            @Override
+            public void setPerformer(Performer performer) {
+            }
+
+            @Override
+            public void scheduleNextAttempt() {
+            }
+
+            @Override
+            public void cancelAttempts() {
+            }
+        };
     }
 
     @Override

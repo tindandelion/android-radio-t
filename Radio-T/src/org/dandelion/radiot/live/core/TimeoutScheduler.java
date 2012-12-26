@@ -1,5 +1,7 @@
 package org.dandelion.radiot.live.core;
 
+import org.dandelion.radiot.live.schedule.Scheduler;
+
 public class TimeoutScheduler implements Scheduler {
     public static int WAIT_TIMEOUT = 60 * 1000;
 

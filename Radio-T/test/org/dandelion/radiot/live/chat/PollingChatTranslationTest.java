@@ -1,5 +1,6 @@
 package org.dandelion.radiot.live.chat;
 
+import org.dandelion.radiot.live.schedule.Scheduler;
 import org.junit.Test;
 
 import java.util.List;
@@ -9,14 +10,20 @@ import static org.mockito.Mockito.verify;
 
 public class PollingChatTranslationTest {
     private ChatTranslation realTranslation = mock(ChatTranslation.class);
-    private PollingChatTranslation pollingTranslation = new PollingChatTranslation(realTranslation);
+    private Scheduler scheduler = mock(Scheduler.class);
+    private PollingChatTranslation pollingTranslation = new PollingChatTranslation(realTranslation, scheduler);
     private MessageConsumer consumer = new FakeMessageConsumer();
-
 
     @Test
     public void startTranslation_DelegatesToRealTranslation() throws Exception {
         pollingTranslation.start(consumer);
         verify(realTranslation).start(consumer);
+    }
+
+    @Test
+    public void startTranslation_SchedulesRefresh() throws Exception {
+        pollingTranslation.start(consumer);
+        verify(scheduler).scheduleNextAttempt();
     }
 
     @Test

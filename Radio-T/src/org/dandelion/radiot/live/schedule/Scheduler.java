@@ -1,4 +1,4 @@
-package org.dandelion.radiot.live.core;
+package org.dandelion.radiot.live.schedule;
 
 public interface Scheduler {
     public interface Performer {
