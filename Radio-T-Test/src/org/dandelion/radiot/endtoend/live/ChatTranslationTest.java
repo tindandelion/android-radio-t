@@ -5,7 +5,7 @@ import org.dandelion.radiot.endtoend.live.helpers.ChatTranslationRunner;
 import org.dandelion.radiot.endtoend.live.helpers.LiveChatTranslationServer;
 import org.dandelion.radiot.live.chat.HttpChatTranslation;
 import org.dandelion.radiot.live.chat.PollingChatTranslation;
-import org.dandelion.radiot.live.schedule.Scheduler;
+import org.dandelion.radiot.live.schedule.DeterministicScheduler;
 import org.dandelion.radiot.live.ui.ChatTranslationFragment;
 import org.dandelion.radiot.live.ui.LiveShowActivity;
 
@@ -14,7 +14,7 @@ import static org.dandelion.radiot.util.ChatStreamBuilder.withMessages;
 
 public class ChatTranslationTest extends ActivityInstrumentationTestCase2<LiveShowActivity> {
     private LiveChatTranslationServer backend;
-    private HttpChatTranslation translation;
+    private DeterministicScheduler scheduler;
 
     public ChatTranslationTest() {
         super(LiveShowActivity.class);
@@ -44,32 +44,17 @@ public class ChatTranslationTest extends ActivityInstrumentationTestCase2<LiveSh
     }
 
     private ChatTranslationRunner openScreen() {
-        return new ChatTranslationRunner(getInstrumentation(), getActivity(), translation);
+        return new ChatTranslationRunner(getInstrumentation(), getActivity(), scheduler);
     }
 
     @Override
     public void setUp() throws Exception {
         super.setUp();
         backend = new LiveChatTranslationServer();
-        translation = new HttpChatTranslation(
+        HttpChatTranslation translation = new HttpChatTranslation(
                 LiveChatTranslationServer.baseUrl());
-        ChatTranslationFragment.chat = new PollingChatTranslation(translation, fakeScheduler());
-    }
-
-    private Scheduler fakeScheduler() {
-        return new Scheduler() {
-            @Override
-            public void setPerformer(Performer performer) {
-            }
-
-            @Override
-            public void scheduleNext() {
-            }
-
-            @Override
-            public void cancel() {
-            }
-        };
+        scheduler = new DeterministicScheduler();
+        ChatTranslationFragment.chat = new PollingChatTranslation(translation, scheduler);
     }
 
     @Override
@@ -77,5 +62,6 @@ public class ChatTranslationTest extends ActivityInstrumentationTestCase2<LiveSh
         backend.stop();
         super.tearDown();
     }
+
 }
 

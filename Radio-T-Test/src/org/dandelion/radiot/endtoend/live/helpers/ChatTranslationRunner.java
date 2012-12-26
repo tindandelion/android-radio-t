@@ -2,18 +2,18 @@ package org.dandelion.radiot.endtoend.live.helpers;
 
 import android.app.Instrumentation;
 import com.jayway.android.robotium.solo.Solo;
-import org.dandelion.radiot.live.chat.HttpChatTranslation;
+import org.dandelion.radiot.live.schedule.DeterministicScheduler;
 import org.dandelion.radiot.live.ui.LiveShowActivity;
 
 import static org.dandelion.radiot.endtoend.live.RobotiumMatchers.showsText;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ChatTranslationRunner extends Solo {
-    private final HttpChatTranslation translation;
+    private final DeterministicScheduler scheduler;
 
-    public ChatTranslationRunner(Instrumentation instrumentation, LiveShowActivity activity, HttpChatTranslation translation) {
+    public ChatTranslationRunner(Instrumentation instrumentation, LiveShowActivity activity, DeterministicScheduler scheduler) {
         super(instrumentation, activity);
-        this.translation = translation;
+        this.scheduler = scheduler;
     }
 
     public void showsChatMessage(String message) {
@@ -21,6 +21,6 @@ public class ChatTranslationRunner extends Solo {
     }
 
     public void refreshChat() {
-        translation.refresh();
+        scheduler.performAction();
     }
 }
