@@ -13,17 +13,17 @@ public class TimeoutScheduler implements Scheduler {
     }
 
     @Override
-    public void scheduleNextAttempt() {
+    public void scheduleNext() {
         timeout.set(WAIT_TIMEOUT);
     }
 
     @Override
-    public void cancelAttempts() {
+    public void cancel() {
         timeout.reset();
     }
 
     public void timeoutElapsed() {
-        performer.performNextAttempt();
+        performer.performAction();
     }
 
     public void setPerformer(Performer performer) {

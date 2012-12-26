@@ -20,13 +20,13 @@ public class LiveShowPlayer implements AudioStream.Listener, Scheduler.Performer
     }
 
     @Override
-    public void performNextAttempt() {
+    public void performAction() {
         beConnecting();
     }
 
     public void beIdle() {
         setState(LiveShowState.Idle);
-        scheduler.cancelAttempts();
+        scheduler.cancel();
         notifyDeactivated();
     }
 
@@ -53,7 +53,7 @@ public class LiveShowPlayer implements AudioStream.Listener, Scheduler.Performer
 
     public void beWaiting() {
         setState(LiveShowState.Waiting);
-        scheduler.scheduleNextAttempt();
+        scheduler.scheduleNext();
         notifyDeactivated();
     }
 

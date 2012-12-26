@@ -19,19 +19,19 @@ public class TimeoutSchedulerTest {
 
     @Test
     public void scheduleNextAttempt() throws Exception {
-        scheduler.scheduleNextAttempt();
+        scheduler.scheduleNext();
         verify(timeout).set(TimeoutScheduler.WAIT_TIMEOUT);
     }
 
     @Test
     public void cancelAttempts() throws Exception {
-        scheduler.cancelAttempts();
+        scheduler.cancel();
         verify(timeout).reset();
     }
 
     @Test
     public void callsPlayerWhenTimeoutElapses() throws Exception {
         scheduler.timeoutElapsed();
-        verify(performer).performNextAttempt();
+        verify(performer).performAction();
     }
 }

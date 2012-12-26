@@ -63,11 +63,11 @@ public class ChatTranslationTest extends ActivityInstrumentationTestCase2<LiveSh
             }
 
             @Override
-            public void scheduleNextAttempt() {
+            public void scheduleNext() {
             }
 
             @Override
-            public void cancelAttempts() {
+            public void cancel() {
             }
         };
     }

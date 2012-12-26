@@ -14,7 +14,7 @@ public class PollingChatTranslation implements ChatTranslation {
     @Override
     public void start(MessageConsumer consumer) {
         translation.start(consumer);
-        scheduler.scheduleNextAttempt();
+        scheduler.scheduleNext();
     }
 
     @Override

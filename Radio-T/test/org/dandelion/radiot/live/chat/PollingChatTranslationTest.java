@@ -23,7 +23,7 @@ public class PollingChatTranslationTest {
     @Test
     public void startTranslation_SchedulesRefresh() throws Exception {
         pollingTranslation.start(consumer);
-        verify(scheduler).scheduleNextAttempt();
+        verify(scheduler).scheduleNext();
     }
 
     @Test

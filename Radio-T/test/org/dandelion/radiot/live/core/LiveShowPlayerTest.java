@@ -15,7 +15,7 @@ import static org.mockito.Mockito.*;
 public class LiveShowPlayerTest {
     private final LiveShowStateHolder stateHolder = LiveShowStateHolder.initial();
     private final AudioStream audioStream = mock(AudioStream.class);
-    private final Scheduler schedule = mock(Scheduler.class);
+    private final Scheduler scheduler = mock(Scheduler.class);
     private final PlayerActivityListener activityListener = mock(PlayerActivityListener.class);
 
     private LiveShowPlayer player;
@@ -32,7 +32,7 @@ public class LiveShowPlayerTest {
             }
         }).when(audioStream).setStateListener(any(AudioStream.Listener.class));
 
-        player = new LiveShowPlayer(audioStream, stateHolder, schedule);
+        player = new LiveShowPlayer(audioStream, stateHolder, scheduler);
         player.setActivityListener(activityListener);
     }
 
@@ -61,7 +61,7 @@ public class LiveShowPlayerTest {
         player.beConnecting();
         streamListener.onError();
         assertCurrentStateIs(LiveShowState.Waiting);
-        verify(schedule).scheduleNextAttempt();
+        verify(scheduler).scheduleNext();
     }
 
     @Test
@@ -82,7 +82,7 @@ public class LiveShowPlayerTest {
     @Test
     public void performNextConnectionAttempt() throws Exception {
         player.beWaiting();
-        player.performNextAttempt();
+        player.performAction();
         assertIsConnecting();
     }
 
@@ -95,7 +95,7 @@ public class LiveShowPlayerTest {
     @Test
     public void cancelsConnectionAttemptsWhenGoesIdle() throws Exception {
         player.beIdle();
-        verify(schedule).cancelAttempts();
+        verify(scheduler).cancel();
     }
 
     @Test
