@@ -12,8 +12,9 @@ Version 1.6
  * Chat translation
      DONE Handling cookies
      DONE Enlarge chat list space
-     * Visualize refresh progress
      * Refreshing chat
+     * Close chat connections when stopping chat fragment
+     * Visualize refresh progress
      * Landscape orientation ?
      * Different sizes for tablets / phones
      * Testing for incorrect incoming data
