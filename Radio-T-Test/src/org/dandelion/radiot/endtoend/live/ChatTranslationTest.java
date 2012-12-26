@@ -4,6 +4,7 @@ import android.test.ActivityInstrumentationTestCase2;
 import org.dandelion.radiot.endtoend.live.helpers.ChatTranslationRunner;
 import org.dandelion.radiot.endtoend.live.helpers.LiveChatTranslationServer;
 import org.dandelion.radiot.live.chat.HttpChatTranslation;
+import org.dandelion.radiot.live.chat.PollingChatTranslation;
 import org.dandelion.radiot.live.ui.ChatTranslationFragment;
 import org.dandelion.radiot.live.ui.LiveShowActivity;
 
@@ -51,7 +52,7 @@ public class ChatTranslationTest extends ActivityInstrumentationTestCase2<LiveSh
         backend = new LiveChatTranslationServer();
         translation = new HttpChatTranslation(
                 LiveChatTranslationServer.baseUrl());
-        ChatTranslationFragment.chat = translation;
+        ChatTranslationFragment.chat = new PollingChatTranslation(translation);
     }
 
     @Override
