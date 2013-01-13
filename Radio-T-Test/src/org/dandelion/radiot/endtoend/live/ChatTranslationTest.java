@@ -25,8 +25,7 @@ public class ChatTranslationTest extends ActivityInstrumentationTestCase2<LiveSh
         backend.hasReceivedInitialRequest();
         backend.respondWithChatStream(chatStream(withMessages("Lorem ipsum", "Dolor sit amet")));
 
-        app.showsChatMessage("Lorem ipsum");
-        app.showsChatMessage("Dolor sit amet");
+        app.showsChatMessages("Lorem ipsum", "Dolor sit amet");
     }
 
     public void testRequestNextMessagesWhenRefreshing() throws Exception {
@@ -34,13 +33,22 @@ public class ChatTranslationTest extends ActivityInstrumentationTestCase2<LiveSh
 
         backend.hasReceivedInitialRequest();
         backend.respondWithChatStream(chatStream(withMessages("Lorem ipsum")));
-        app.showsChatMessage("Lorem ipsum");
+        app.showsChatMessages("Lorem ipsum");
 
         app.refreshChat();
         backend.hasReceivedContinuationRequest();
         backend.respondWithChatStream(chatStream(withMessages("Dolor sit amet")));
-        app.showsChatMessage("Lorem ipsum");
-        app.showsChatMessage("Dolor sit amet");
+        app.showsChatMessages(
+                "Lorem ipsum",
+                "Dolor sit amet");
+
+        app.refreshChat();
+        backend.hasReceivedContinuationRequest();
+        backend.respondWithChatStream(chatStream(withMessages("Consectetur adipiscing elit")));
+        app.showsChatMessages(
+                "Lorem ipsum",
+                "Dolor sit amet",
+                "Consectetur adipiscing elit");
     }
 
     private ChatTranslationRunner openScreen() {

@@ -16,11 +16,13 @@ public class ChatTranslationRunner extends Solo {
         this.scheduler = scheduler;
     }
 
-    public void showsChatMessage(String message) {
-        assertThat(this, showsText(message));
-    }
-
     public void refreshChat() {
         scheduler.performAction();
+    }
+
+    public void showsChatMessages(String... messages) {
+        for (String msg: messages) {
+            assertThat(this, showsText(msg));
+        }
     }
 }
