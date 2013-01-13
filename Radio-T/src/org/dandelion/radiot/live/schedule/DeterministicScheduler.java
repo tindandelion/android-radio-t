@@ -21,9 +21,9 @@ public class DeterministicScheduler implements Scheduler {
 
     public void performAction() {
         if (isScheduled && performer != null) {
+            isScheduled = false;
             performer.performAction();
         }
-        isScheduled = false;
     }
 
 }
