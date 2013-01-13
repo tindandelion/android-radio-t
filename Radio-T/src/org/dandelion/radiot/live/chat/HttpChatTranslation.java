@@ -35,6 +35,11 @@ public class HttpChatTranslation implements ChatTranslation {
         new NextRecordsRequest(chatStreamUrl("next"), consumer, httpClient).execute();
     }
 
+    @Override
+    public void stop() {
+        // TODO: What to do here?
+    }
+
     private String chatStreamUrl(String mode) {
         return baseUrl + "/data/jsonp?mode=" + mode + "&recs=10";
     }

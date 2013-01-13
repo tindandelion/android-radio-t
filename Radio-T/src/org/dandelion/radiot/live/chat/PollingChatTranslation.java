@@ -28,6 +28,13 @@ public class PollingChatTranslation implements ChatTranslation, Scheduler.Perfor
     }
 
     @Override
+    public void stop() {
+        consumer = null;
+        translation.stop();
+        scheduler.cancel();
+    }
+
+    @Override
     public void performAction() {
         translation.refresh();
     }

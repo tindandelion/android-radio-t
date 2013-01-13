@@ -26,4 +26,7 @@ public class DeterministicScheduler implements Scheduler {
         }
     }
 
+    public boolean isScheduled() {
+        return isScheduled;
+    }
 }

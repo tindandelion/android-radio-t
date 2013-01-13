@@ -1,12 +1,12 @@
 package org.dandelion.radiot.live.chat;
 
 import org.dandelion.radiot.live.schedule.DeterministicScheduler;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Collections;
 import java.util.List;
 
+import static org.junit.Assert.assertFalse;
 import static org.mockito.Mockito.*;
 
 public class PollingChatTranslationTest {
@@ -15,7 +15,7 @@ public class PollingChatTranslationTest {
 
     private DeterministicScheduler scheduler = new DeterministicScheduler();
     private MessageConsumer consumer = mock(MessageConsumer.class);
-    private PollingChatTranslation pollingTranslation = new PollingChatTranslation(new FakeChatTranslation(), scheduler);
+    private ChatTranslation pollingTranslation = new PollingChatTranslation(new FakeChatTranslation(), scheduler);
 
     @Test
     public void startTranslation_DelegatesToRealTranslation() throws Exception {
@@ -41,8 +41,12 @@ public class PollingChatTranslationTest {
         verify(consumer).appendMessages(SUBSEQUENT_MESSAGES);
     }
 
-    @Test @Ignore
+    @Test
     public void refreshIsCancelled() throws Exception {
+        pollingTranslation.start(consumer);
+        pollingTranslation.stop();
+
+        assertFalse(scheduler.isScheduled());
     }
 
     private static class FakeChatTranslation implements ChatTranslation {
@@ -57,6 +61,10 @@ public class PollingChatTranslationTest {
         @Override
         public void refresh() {
             consumer.appendMessages(SUBSEQUENT_MESSAGES);
+        }
+
+        @Override
+        public void stop() {
         }
     }
 }

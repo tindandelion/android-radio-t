@@ -24,4 +24,10 @@ public class ChatTranslationFragment extends ListFragment {
         super.onStart();
         chat.start(adapter);
     }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+//        chat.stop();
+    }
 }
