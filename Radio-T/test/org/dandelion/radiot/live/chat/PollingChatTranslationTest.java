@@ -1,39 +1,62 @@
 package org.dandelion.radiot.live.chat;
 
 import org.dandelion.radiot.live.schedule.DeterministicScheduler;
+import org.junit.Ignore;
 import org.junit.Test;
 
+import java.util.Collections;
 import java.util.List;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 public class PollingChatTranslationTest {
-    private ChatTranslation realTranslation = mock(ChatTranslation.class);
+    private ChatTranslation realTranslation = new FakeChatTranslation();
     private DeterministicScheduler scheduler = new DeterministicScheduler();
+    private MessageConsumer consumer = mock(MessageConsumer.class);
     private PollingChatTranslation pollingTranslation = new PollingChatTranslation(realTranslation, scheduler);
-    private MessageConsumer consumer = new FakeMessageConsumer();
 
     @Test
     public void startTranslation_DelegatesToRealTranslation() throws Exception {
         pollingTranslation.start(consumer);
-        verify(realTranslation).start(consumer);
+        verify(consumer).initWithMessages(FakeChatTranslation.INITIAL_MESSAGES);
     }
 
     @Test
     public void startTranslation_SchedulesRefresh() throws Exception {
         pollingTranslation.start(consumer);
         scheduler.performAction();
-        verify(realTranslation).refresh();
+        verify(consumer).appendMessages(FakeChatTranslation.SUBSEQUENT_MESSAGES);
     }
 
-    private static class FakeMessageConsumer implements MessageConsumer {
+    @Test
+    public void refreshIsScheduledRepeatedly() throws Exception {
+        pollingTranslation.start(consumer);
+        scheduler.performAction();
+        verify(consumer).appendMessages(FakeChatTranslation.SUBSEQUENT_MESSAGES);
+
+        reset(consumer);
+        scheduler.performAction();
+        verify(consumer).appendMessages(FakeChatTranslation.SUBSEQUENT_MESSAGES);
+    }
+
+    @Test @Ignore
+    public void refreshIsCancelled() throws Exception {
+    }
+
+    private static class FakeChatTranslation implements ChatTranslation {
+        private static final List<Message> INITIAL_MESSAGES = Collections.emptyList();
+        private static final List<Message> SUBSEQUENT_MESSAGES = Collections.emptyList();
+        private MessageConsumer consumer;
+
         @Override
-        public void initWithMessages(List<Message> messages) {
+        public void start(MessageConsumer consumer) {
+            this.consumer = consumer;
+            consumer.initWithMessages(INITIAL_MESSAGES);
         }
 
         @Override
-        public void appendMessages(List<Message> messages) {
+        public void refresh() {
+            consumer.appendMessages(SUBSEQUENT_MESSAGES);
         }
     }
 }
