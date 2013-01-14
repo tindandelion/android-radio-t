@@ -37,7 +37,7 @@ public class HttpChatTranslation implements ChatTranslation {
 
     @Override
     public void stop() {
-        // TODO: What to do here?
+        // TODO: Properly close connections
     }
 
     private String chatStreamUrl(String mode) {
