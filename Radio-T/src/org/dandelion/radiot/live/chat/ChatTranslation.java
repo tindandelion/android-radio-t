@@ -4,4 +4,8 @@ public interface ChatTranslation {
     void start(MessageConsumer consumer);
     void refresh();
     void stop();
+
+    public interface Factory {
+        ChatTranslation create();
+    }
 }

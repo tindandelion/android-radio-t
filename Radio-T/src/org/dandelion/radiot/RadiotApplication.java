@@ -21,12 +21,13 @@ public class RadiotApplication extends Application {
     }
 
     private void setupChatTranslation() {
-        ChatTranslationFragment.chat = createChatTranslation();
-    }
-
-    private ChatTranslation createChatTranslation() {
-        HttpChatTranslation httpTranslation = new HttpChatTranslation(CHAT_URL);
-        return new PollingChatTranslation(httpTranslation, new HandlerScheduler());
+        ChatTranslationFragment.chatFactory = new ChatTranslation.Factory() {
+            @Override
+            public ChatTranslation create() {
+                HttpChatTranslation httpTranslation = new HttpChatTranslation(CHAT_URL);
+                return new PollingChatTranslation(httpTranslation, new HandlerScheduler());
+            }
+        };
     }
 
     @Override

@@ -3,6 +3,7 @@ package org.dandelion.radiot.endtoend.live;
 import android.test.ActivityInstrumentationTestCase2;
 import org.dandelion.radiot.endtoend.live.helpers.ChatTranslationRunner;
 import org.dandelion.radiot.endtoend.live.helpers.LiveChatTranslationServer;
+import org.dandelion.radiot.live.chat.ChatTranslation;
 import org.dandelion.radiot.live.chat.HttpChatTranslation;
 import org.dandelion.radiot.live.chat.PollingChatTranslation;
 import org.dandelion.radiot.live.schedule.DeterministicScheduler;
@@ -59,10 +60,15 @@ public class ChatTranslationTest extends ActivityInstrumentationTestCase2<LiveSh
     public void setUp() throws Exception {
         super.setUp();
         backend = new LiveChatTranslationServer();
-        HttpChatTranslation translation = new HttpChatTranslation(
-                LiveChatTranslationServer.baseUrl());
         scheduler = new DeterministicScheduler();
-        ChatTranslationFragment.chat = new PollingChatTranslation(translation, scheduler);
+        ChatTranslationFragment.chatFactory = new ChatTranslation.Factory() {
+            @Override
+            public ChatTranslation create() {
+                HttpChatTranslation translation = new HttpChatTranslation(
+                        LiveChatTranslationServer.baseUrl());
+                return new PollingChatTranslation(translation, scheduler);
+            }
+        };
     }
 
     @Override
@@ -70,6 +76,5 @@ public class ChatTranslationTest extends ActivityInstrumentationTestCase2<LiveSh
         backend.stop();
         super.tearDown();
     }
-
 }
 

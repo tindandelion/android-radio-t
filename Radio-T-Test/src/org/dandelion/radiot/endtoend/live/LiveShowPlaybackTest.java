@@ -66,7 +66,7 @@ public class LiveShowPlaybackTest extends
         FakeStatusDisplayer statusDisplayer = new FakeStatusDisplayer();
         setupTestingApp(statusDisplayer);
 
-        ChatTranslationFragment.chat = new NullChatTranlation();
+        ChatTranslationFragment.chatFactory = new NullChatTranlation();
         runner = new LiveShowRunner(getInstrumentation(), getActivity(), statusDisplayer);
         backend = new LiveShowServer(getInstrumentation().getContext());
     }
@@ -116,7 +116,7 @@ public class LiveShowPlaybackTest extends
         return getInstrumentation().getTargetContext().getApplicationContext();
     }
 
-    private static class NullChatTranlation implements ChatTranslation {
+    private static class NullChatTranlation implements ChatTranslation, ChatTranslation.Factory {
         @Override
         public void start(MessageConsumer consumer) {
         }
@@ -129,6 +129,11 @@ public class LiveShowPlaybackTest extends
         @Override
         public void stop() {
 
+        }
+
+        @Override
+        public ChatTranslation create() {
+            return this;
         }
     }
 }
