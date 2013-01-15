@@ -25,4 +25,8 @@ public class ChatTranslationRunner extends Solo {
             assertThat(this, showsText(msg));
         }
     }
+
+    public void showsErrorMessage() {
+        assertThat(this, showsText("Ошибка"));
+    }
 }

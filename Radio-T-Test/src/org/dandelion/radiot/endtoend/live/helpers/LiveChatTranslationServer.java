@@ -26,4 +26,8 @@ public class LiveChatTranslationServer extends ResponsiveHttpServer {
         String[] expectedCookie = new String[]{SESSION_COOKIE, SESSION_ID};
         hasReceivedRequest("/data/jsonp", "mode=next&recs=10", expectedCookie);
     }
+
+    public void respondWithError() {
+        respondWith(new Response(HTTP_NOTFOUND, MIME_HTML, ""));
+    }
 }
