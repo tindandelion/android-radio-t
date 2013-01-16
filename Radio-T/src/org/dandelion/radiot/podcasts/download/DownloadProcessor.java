@@ -2,7 +2,7 @@ package org.dandelion.radiot.podcasts.download;
 
 import java.io.File;
 
-class DownloadProcessor {
+public class DownloadProcessor {
 
     private MediaScanner mediaScanner;
     private NotificationManager notificationManager;
