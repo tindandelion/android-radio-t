@@ -1,7 +1,6 @@
 package org.dandelion.radiot.live.chat;
 
 import android.os.AsyncTask;
-import android.util.Log;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -44,10 +43,11 @@ public class HttpChatTranslation implements ChatTranslation {
         return baseUrl + "/data/jsonp?mode=" + mode + "&recs=10";
     }
 
-    private static class ConnectTask extends AsyncTask<Void, Void, List<Message>> {
+    private static abstract class ConnectTask extends AsyncTask<Void, Void, List<Message>> {
         private final String url;
         protected final MessageConsumer consumer;
         private DefaultHttpClient httpClient;
+        private Exception error;
 
         public ConnectTask(String url, MessageConsumer consumer, DefaultHttpClient httpClient) {
             this.url = url;
@@ -57,22 +57,36 @@ public class HttpChatTranslation implements ChatTranslation {
 
         @Override
         protected List<Message> doInBackground(Void... params) {
-            return parseMessages(requestMessages());
+            try {
+                return parseMessages(requestMessages());
+            } catch (Exception e) {
+                error = e;
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(List<Message> messages) {
+            if (error != null) {
+                consumeError(error);
+            } else {
+                consumeMessages(messages);
+            }
+        }
+
+        protected abstract void consumeMessages(List<Message> messages);
+
+        private void consumeError(Exception e) {
+
         }
 
         private List<Message> parseMessages(String json) {
             return ResponseParser.parse(json);
         }
 
-        private String requestMessages() {
-            try {
-                Log.d("CHAT", "Connecting to chat...");
-                HttpResponse response = httpClient.execute(new HttpGet(url));
-                return EntityUtils.toString(response.getEntity());
-            } catch (IOException e) {
-                Log.d("CHAT", "Exception getting chat", e);
-                throw new RuntimeException(e);
-            }
+        private String requestMessages() throws IOException {
+            HttpResponse response = httpClient.execute(new HttpGet(url));
+            return EntityUtils.toString(response.getEntity());
         }
     }
 
@@ -82,7 +96,7 @@ public class HttpChatTranslation implements ChatTranslation {
         }
 
         @Override
-        protected void onPostExecute(List<Message> messages) {
+        protected void consumeMessages(List<Message> messages) {
             consumer.initWithMessages(messages);
         }
     }
@@ -93,7 +107,7 @@ public class HttpChatTranslation implements ChatTranslation {
         }
 
         @Override
-        protected void onPostExecute(List<Message> messages) {
+        protected void consumeMessages(List<Message> messages) {
             consumer.appendMessages(messages);
         }
     }

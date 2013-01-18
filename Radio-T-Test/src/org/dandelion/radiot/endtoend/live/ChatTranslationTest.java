@@ -52,7 +52,7 @@ public class ChatTranslationTest extends ActivityInstrumentationTestCase2<LiveSh
                 "Consectetur adipiscing elit");
     }
 
-    public void _testDisplayingErrorWhenUnableToGetMessages() throws Exception {
+    public void testDisplayingErrorWhenUnableToGetMessages() throws Exception {
         ChatTranslationRunner app = openScreen();
 
         backend.hasReceivedInitialRequest();
