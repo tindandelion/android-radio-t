@@ -10,13 +10,11 @@ import java.io.IOException;
 import java.util.List;
 
 public class HttpChatTranslation implements ChatTranslation {
-    private String baseUrl;
-    private final DefaultHttpClient httpClient;
     private MessageConsumer consumer;
+    private final HttpChatClient chatClient;
 
     public HttpChatTranslation(String baseUrl) {
-        this.baseUrl = baseUrl;
-        this.httpClient = new DefaultHttpClient();
+        this.chatClient = new HttpChatClient(baseUrl);
     }
 
     @Override
@@ -26,12 +24,12 @@ public class HttpChatTranslation implements ChatTranslation {
     }
 
     private void requestLastRecords() {
-        new LastRecordsRequest(chatStreamUrl("last"), consumer, httpClient).execute();
+        new LastRecordsRequest(chatClient, consumer).execute();
     }
 
     @Override
     public void refresh() {
-        new NextRecordsRequest(chatStreamUrl("next"), consumer, httpClient).execute();
+        new NextRecordsRequest(chatClient, consumer).execute();
     }
 
     @Override
@@ -39,26 +37,20 @@ public class HttpChatTranslation implements ChatTranslation {
         // TODO: Properly close connections
     }
 
-    private String chatStreamUrl(String mode) {
-        return baseUrl + "/data/jsonp?mode=" + mode + "&recs=10";
-    }
-
     private static abstract class ConnectTask extends AsyncTask<Void, Void, List<Message>> {
-        private final String url;
         protected final MessageConsumer consumer;
-        private DefaultHttpClient httpClient;
         private Exception error;
+        private final HttpChatClient chatClient;
 
-        public ConnectTask(String url, MessageConsumer consumer, DefaultHttpClient httpClient) {
-            this.url = url;
+        public ConnectTask(HttpChatClient chatClient, MessageConsumer consumer) {
             this.consumer = consumer;
-            this.httpClient = httpClient;
+            this.chatClient = chatClient;
         }
 
         @Override
         protected List<Message> doInBackground(Void... params) {
             try {
-                return parseMessages(requestMessages());
+                return parseMessages(chatClient.requestMessages(mode()));
             } catch (Exception e) {
                 error = e;
                 return null;
@@ -75,6 +67,7 @@ public class HttpChatTranslation implements ChatTranslation {
         }
 
         protected abstract void consumeMessages(List<Message> messages);
+        protected abstract String mode();
 
         private void consumeError(Exception e) {
 
@@ -83,32 +76,58 @@ public class HttpChatTranslation implements ChatTranslation {
         private List<Message> parseMessages(String json) {
             return ResponseParser.parse(json);
         }
-
-        private String requestMessages() throws IOException {
-            HttpResponse response = httpClient.execute(new HttpGet(url));
-            return EntityUtils.toString(response.getEntity());
-        }
     }
 
     private static class LastRecordsRequest extends ConnectTask {
-        public LastRecordsRequest(String url, MessageConsumer consumer, DefaultHttpClient httpClient) {
-            super(url, consumer, httpClient);
+
+        public LastRecordsRequest(HttpChatClient chatClient, MessageConsumer consumer) {
+            super(chatClient, consumer);
         }
 
         @Override
         protected void consumeMessages(List<Message> messages) {
             consumer.initWithMessages(messages);
         }
+
+        @Override
+        protected String mode() {
+            return "last";
+        }
     }
 
     private static class NextRecordsRequest extends ConnectTask {
-        public NextRecordsRequest(String url, MessageConsumer consumer, DefaultHttpClient httpClient) {
-            super(url, consumer, httpClient);
+
+        private NextRecordsRequest(HttpChatClient chatClient, MessageConsumer consumer) {
+            super(chatClient, consumer);
         }
 
         @Override
         protected void consumeMessages(List<Message> messages) {
             consumer.appendMessages(messages);
+        }
+
+        @Override
+        protected String mode() {
+            return "next";
+        }
+    }
+
+    private static class HttpChatClient {
+        private final String baseUrl;
+        private final DefaultHttpClient httpClient;
+
+        public HttpChatClient(String baseUrl) {
+            this.baseUrl = baseUrl;
+            this.httpClient = new DefaultHttpClient();
+        }
+
+        public String requestMessages(String mode) throws IOException {
+            HttpResponse response = httpClient.execute(new HttpGet(chatStreamUrl(mode)));
+            return EntityUtils.toString(response.getEntity());
+        }
+
+        private String chatStreamUrl(String mode) {
+            return baseUrl + "/data/jsonp?mode=" + mode + "&recs=10";
         }
     }
 }
