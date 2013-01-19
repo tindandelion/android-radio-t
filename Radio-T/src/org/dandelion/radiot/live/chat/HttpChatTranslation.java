@@ -5,7 +5,8 @@ import android.os.AsyncTask;
 import java.util.List;
 
 public class HttpChatTranslation implements ChatTranslation {
-    private MessageConsumer consumer;
+    private MessageConsumer messageConsumer;
+    private ErrorListener errorListener;
     private final HttpChatClient chatClient;
 
     public HttpChatTranslation(String baseUrl) {
@@ -18,17 +19,18 @@ public class HttpChatTranslation implements ChatTranslation {
 
     @Override
     public void start(MessageConsumer consumer, ErrorListener errorListener) {
-        this.consumer = consumer;
+        this.messageConsumer = consumer;
+        this.errorListener = errorListener;
         requestLastRecords();
     }
 
     private void requestLastRecords() {
-        new LastRecordsRequest(chatClient, consumer).execute();
+        new LastRecordsRequest(chatClient, messageConsumer, errorListener).execute();
     }
 
     @Override
     public void refresh() {
-        new NextRecordsRequest(chatClient, consumer).execute();
+        new NextRecordsRequest(chatClient, messageConsumer, errorListener).execute();
     }
 
     @Override
@@ -36,13 +38,15 @@ public class HttpChatTranslation implements ChatTranslation {
         // TODO: Properly close connections
     }
 
-    private static abstract class ConnectTask extends AsyncTask<Void, Void, List<Message>> {
+    private static abstract class ChatTranslationTask extends AsyncTask<Void, Void, List<Message>> {
         protected final MessageConsumer consumer;
         private Exception error;
         private final HttpChatClient chatClient;
+        private final ErrorListener errorListener;
 
-        public ConnectTask(HttpChatClient chatClient, MessageConsumer consumer) {
+        public ChatTranslationTask(HttpChatClient chatClient, MessageConsumer consumer, ErrorListener errorListener) {
             this.consumer = consumer;
+            this.errorListener = errorListener;
             this.chatClient = chatClient;
         }
 
@@ -59,7 +63,7 @@ public class HttpChatTranslation implements ChatTranslation {
         @Override
         protected void onPostExecute(List<Message> messages) {
             if (error != null) {
-                consumeError(error);
+                consumeError();
             } else {
                 consumeMessages(messages);
             }
@@ -68,14 +72,14 @@ public class HttpChatTranslation implements ChatTranslation {
         protected abstract void consumeMessages(List<Message> messages);
         protected abstract String mode();
 
-        private void consumeError(Exception e) {
-
+        private void consumeError() {
+            errorListener.onError();
         }
     }
 
-    private static class LastRecordsRequest extends ConnectTask {
-        public LastRecordsRequest(HttpChatClient chatClient, MessageConsumer consumer) {
-            super(chatClient, consumer);
+    private static class LastRecordsRequest extends ChatTranslationTask {
+        public LastRecordsRequest(HttpChatClient chatClient, MessageConsumer consumer, ErrorListener errorListener) {
+            super(chatClient, consumer, errorListener);
         }
 
         @Override
@@ -89,9 +93,9 @@ public class HttpChatTranslation implements ChatTranslation {
         }
     }
 
-    private static class NextRecordsRequest extends ConnectTask {
-        private NextRecordsRequest(HttpChatClient chatClient, MessageConsumer consumer) {
-            super(chatClient, consumer);
+    private static class NextRecordsRequest extends ChatTranslationTask {
+        private NextRecordsRequest(HttpChatClient chatClient, MessageConsumer consumer, ErrorListener errorListener) {
+            super(chatClient, consumer, errorListener);
         }
 
         @Override

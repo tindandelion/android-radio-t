@@ -6,6 +6,7 @@ public interface ChatTranslation {
     void stop();
 
     public interface ErrorListener {
+        void onError();
     }
 
     public interface Factory {

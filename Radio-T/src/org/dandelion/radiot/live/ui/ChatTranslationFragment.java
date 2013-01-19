@@ -29,6 +29,9 @@ public class ChatTranslationFragment extends ListFragment {
 
     private ChatTranslation.ErrorListener errorListener() {
         return new ChatTranslation.ErrorListener() {
+            @Override
+            public void onError() {
+            }
         };
     }
 

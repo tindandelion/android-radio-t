@@ -7,9 +7,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @SuppressWarnings("unchecked")
 @RunWith(RadiotRobolectricRunner.class)
@@ -38,8 +36,23 @@ public class HttpChatTranslationTest {
     }
 
     @Test
-    public void onError_CallsErrorListener() throws Exception {
+    public void onStart_WhenErrorOccurs_CallsErrorListener() throws Exception {
         when(chatClient.retrieveMessages("last")).thenThrow(IOException.class);
         translation.start(consumer, errorListener);
+
+        verify(errorListener).onError();
+        verifyZeroInteractions(consumer);
+    }
+
+    @Test
+    public void onRefresh_WhenErrorOccurs_CallsErrorListener() throws Exception {
+        translation.start(consumer, errorListener);
+
+        reset(consumer);
+        when(chatClient.retrieveMessages("next")).thenThrow(IOException.class);
+        translation.refresh();
+
+        verify(errorListener).onError();
+        verifyZeroInteractions(consumer);
     }
 }

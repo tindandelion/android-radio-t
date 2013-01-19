@@ -16,7 +16,8 @@ public class PollingChatTranslationTest {
     private DeterministicScheduler scheduler = new DeterministicScheduler();
     private MessageConsumer consumer = mock(MessageConsumer.class);
     private ChatTranslation.ErrorListener errorListener = mock(ChatTranslation.ErrorListener.class);
-    private ChatTranslation pollingTranslation = new PollingChatTranslation(new FakeChatTranslation(), scheduler);
+    private final FakeChatTranslation realTranslation = new FakeChatTranslation();
+    private ChatTranslation pollingTranslation = new PollingChatTranslation(realTranslation, scheduler);
 
     @Test
     public void startTranslation_DelegatesToRealTranslation() throws Exception {
@@ -50,13 +51,28 @@ public class PollingChatTranslationTest {
         assertFalse(scheduler.isScheduled());
     }
 
+    @Test
+    public void onError_callsListenerAndCancelsRefresh() throws Exception {
+        realTranslation.throwsError = true;
+        pollingTranslation.start(consumer, errorListener);
+
+        verify(errorListener).onError();
+        assertFalse(scheduler.isScheduled());
+    }
+
     private static class FakeChatTranslation implements ChatTranslation {
         private MessageConsumer consumer;
+        public boolean throwsError = false;
 
         @Override
         public void start(MessageConsumer consumer, ErrorListener errorListener) {
             this.consumer = consumer;
-            consumer.initWithMessages(INITIAL_MESSAGES);
+            if (throwsError) {
+                errorListener.onError();
+            } else {
+                consumer.initWithMessages(INITIAL_MESSAGES);
+            }
+
         }
 
         @Override
