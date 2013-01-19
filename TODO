@@ -15,6 +15,7 @@ Version 1.6
      DONE Refreshing chat
      * Close chat connections when stopping chat fragment
      * Testing: How chat behaves when pausing/restarting it?
+     * Deal with pause/resume
      * Visualize refresh progress
      * Landscape orientation ?
      * Different sizes for tablets / phones

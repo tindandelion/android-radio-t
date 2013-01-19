@@ -2,7 +2,6 @@ package org.dandelion.radiot.live.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.View;
 import org.dandelion.radiot.live.chat.ChatTranslation;
 
@@ -23,16 +22,14 @@ public class ChatTranslationFragment extends ListFragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        Log.d("CHAT", String.format("Start chat translation for: %d", hashCode()));
+    public void onStart() {
+        super.onStart();
         myChat.start(adapter);
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        Log.d("CHAT", String.format("Stop chat translation for: %d", hashCode()));
+    public void onStop() {
+        super.onStop();
         myChat.stop();
     }
 }
