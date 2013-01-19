@@ -15,24 +15,25 @@ public class PollingChatTranslationTest {
 
     private DeterministicScheduler scheduler = new DeterministicScheduler();
     private MessageConsumer consumer = mock(MessageConsumer.class);
+    private ChatTranslation.ErrorListener errorListener = mock(ChatTranslation.ErrorListener.class);
     private ChatTranslation pollingTranslation = new PollingChatTranslation(new FakeChatTranslation(), scheduler);
 
     @Test
     public void startTranslation_DelegatesToRealTranslation() throws Exception {
-        pollingTranslation.start(consumer);
+        pollingTranslation.start(consumer, errorListener);
         verify(consumer).initWithMessages(INITIAL_MESSAGES);
     }
 
     @Test
     public void startTranslation_SchedulesRefresh() throws Exception {
-        pollingTranslation.start(consumer);
+        pollingTranslation.start(consumer, errorListener);
         scheduler.performAction();
         verify(consumer).appendMessages(SUBSEQUENT_MESSAGES);
     }
 
     @Test
     public void refreshIsScheduledRepeatedly() throws Exception {
-        pollingTranslation.start(consumer);
+        pollingTranslation.start(consumer, errorListener);
         scheduler.performAction();
         verify(consumer).appendMessages(SUBSEQUENT_MESSAGES);
 
@@ -43,7 +44,7 @@ public class PollingChatTranslationTest {
 
     @Test
     public void refreshIsCancelled() throws Exception {
-        pollingTranslation.start(consumer);
+        pollingTranslation.start(consumer, errorListener);
         pollingTranslation.stop();
 
         assertFalse(scheduler.isScheduled());
@@ -53,7 +54,7 @@ public class PollingChatTranslationTest {
         private MessageConsumer consumer;
 
         @Override
-        public void start(MessageConsumer consumer) {
+        public void start(MessageConsumer consumer, ErrorListener errorListener) {
             this.consumer = consumer;
             consumer.initWithMessages(INITIAL_MESSAGES);
         }

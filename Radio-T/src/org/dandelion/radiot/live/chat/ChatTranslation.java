@@ -1,9 +1,12 @@
 package org.dandelion.radiot.live.chat;
 
 public interface ChatTranslation {
-    void start(MessageConsumer consumer);
+    void start(MessageConsumer consumer, ErrorListener errorListener);
     void refresh();
     void stop();
+
+    public interface ErrorListener {
+    }
 
     public interface Factory {
         ChatTranslation create();

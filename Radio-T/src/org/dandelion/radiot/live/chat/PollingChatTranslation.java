@@ -17,9 +17,10 @@ public class PollingChatTranslation implements ChatTranslation, Scheduler.Perfor
     }
 
     @Override
-    public void start(MessageConsumer consumer) {
+    public void start(MessageConsumer consumer, ErrorListener errorListener) {
+        // TODO: Deal with errors
         this.consumer = consumer;
-        translation.start(this);
+        translation.start(this, errorListener);
     }
 
     @Override

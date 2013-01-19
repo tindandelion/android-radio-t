@@ -17,7 +17,7 @@ public class HttpChatTranslation implements ChatTranslation {
     }
 
     @Override
-    public void start(MessageConsumer consumer) {
+    public void start(MessageConsumer consumer, ErrorListener errorListener) {
         this.consumer = consumer;
         requestLastRecords();
     }
@@ -71,11 +71,9 @@ public class HttpChatTranslation implements ChatTranslation {
         private void consumeError(Exception e) {
 
         }
-
     }
 
     private static class LastRecordsRequest extends ConnectTask {
-
         public LastRecordsRequest(HttpChatClient chatClient, MessageConsumer consumer) {
             super(chatClient, consumer);
         }

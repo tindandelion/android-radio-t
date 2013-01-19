@@ -24,7 +24,12 @@ public class ChatTranslationFragment extends ListFragment {
     @Override
     public void onStart() {
         super.onStart();
-        myChat.start(adapter);
+        myChat.start(adapter, errorListener());
+    }
+
+    private ChatTranslation.ErrorListener errorListener() {
+        return new ChatTranslation.ErrorListener() {
+        };
     }
 
     @Override

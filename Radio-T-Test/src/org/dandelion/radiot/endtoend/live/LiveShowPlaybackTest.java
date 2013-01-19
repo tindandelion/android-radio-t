@@ -118,7 +118,8 @@ public class LiveShowPlaybackTest extends
 
     private static class NullChatTranlation implements ChatTranslation, ChatTranslation.Factory {
         @Override
-        public void start(MessageConsumer consumer) {
+        public void start(MessageConsumer consumer, ErrorListener errorListener) {
+
         }
 
         @Override
