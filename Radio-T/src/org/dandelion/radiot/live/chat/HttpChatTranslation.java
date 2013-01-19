@@ -1,12 +1,7 @@
 package org.dandelion.radiot.live.chat;
 
 import android.os.AsyncTask;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 
-import java.io.IOException;
 import java.util.List;
 
 public class HttpChatTranslation implements ChatTranslation {
@@ -14,7 +9,11 @@ public class HttpChatTranslation implements ChatTranslation {
     private final HttpChatClient chatClient;
 
     public HttpChatTranslation(String baseUrl) {
-        this.chatClient = new HttpChatClient(baseUrl);
+        this(new HttpChatClient(baseUrl));
+    }
+
+    public HttpChatTranslation(HttpChatClient chatClient) {
+        this.chatClient = chatClient;
     }
 
     @Override
@@ -50,7 +49,7 @@ public class HttpChatTranslation implements ChatTranslation {
         @Override
         protected List<Message> doInBackground(Void... params) {
             try {
-                return parseMessages(chatClient.requestMessages(mode()));
+                return chatClient.retrieveMessages(mode());
             } catch (Exception e) {
                 error = e;
                 return null;
@@ -73,9 +72,6 @@ public class HttpChatTranslation implements ChatTranslation {
 
         }
 
-        private List<Message> parseMessages(String json) {
-            return ResponseParser.parse(json);
-        }
     }
 
     private static class LastRecordsRequest extends ConnectTask {
@@ -96,7 +92,6 @@ public class HttpChatTranslation implements ChatTranslation {
     }
 
     private static class NextRecordsRequest extends ConnectTask {
-
         private NextRecordsRequest(HttpChatClient chatClient, MessageConsumer consumer) {
             super(chatClient, consumer);
         }
@@ -109,25 +104,6 @@ public class HttpChatTranslation implements ChatTranslation {
         @Override
         protected String mode() {
             return "next";
-        }
-    }
-
-    private static class HttpChatClient {
-        private final String baseUrl;
-        private final DefaultHttpClient httpClient;
-
-        public HttpChatClient(String baseUrl) {
-            this.baseUrl = baseUrl;
-            this.httpClient = new DefaultHttpClient();
-        }
-
-        public String requestMessages(String mode) throws IOException {
-            HttpResponse response = httpClient.execute(new HttpGet(chatStreamUrl(mode)));
-            return EntityUtils.toString(response.getEntity());
-        }
-
-        private String chatStreamUrl(String mode) {
-            return baseUrl + "/data/jsonp?mode=" + mode + "&recs=10";
         }
     }
 }
