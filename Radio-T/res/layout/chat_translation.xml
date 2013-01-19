@@ -2,5 +2,21 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="fill_parent"
-              android:layout_height="fill_parent">
+              android:layout_height="fill_parent"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/chat_error_text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:padding="6dp"
+        android:gravity="center"
+        android:text="@string/chat_error_text"/>
+
+    <ListView
+        android:id="@id/android:list"
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent"
+        android:divider="@null"/>
 </LinearLayout>

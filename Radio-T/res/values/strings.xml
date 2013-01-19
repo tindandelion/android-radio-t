@@ -73,6 +73,7 @@
         и старше. Вы можете попросить автора сделать эту функцию и для Вашей версии Android.
     </string>
     <string name="incorrect_audio_url">Неверная ссылка на аудио-файл подкаста</string>
+    <string name="chat_error_text">Трансляция чата недоступна</string>
     <string-array
             name="live_show_notification_labels">
         <item>Прямой эфир: Подключение</item>

@@ -27,6 +27,6 @@ public class ChatTranslationRunner extends Solo {
     }
 
     public void showsErrorMessage() {
-        assertThat(this, showsText("Ошибка"));
+        assertThat(this, showsText("Трансляция чата недоступна"));
     }
 }
