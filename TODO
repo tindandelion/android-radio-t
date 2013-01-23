@@ -14,11 +14,12 @@ Version 1.6
      DONE Enlarge chat list space
      DONE Refreshing chat
      DONE Close chat connections when stopping chat fragment
-     * Testing for incorrect incoming data
+     DONE Testing for incorrect incoming data
      * Visualize refresh progress
      * Testing: leaking activity instance when starting/stopping?
      * Testing: How chat behaves when pausing/restarting it?
      * Testing: chat list performance?
+     * Discard incorrect messages?
      * Deal with pause/resume
      * Landscape orientation ?
      * Different sizes for tablets / phones

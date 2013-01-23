@@ -12,19 +12,14 @@ import java.util.Date;
 import java.util.List;
 
 class ResponseParser {
-
     private final String source;
     private static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm");
     private static final SimpleDateFormat TIMESTAMP_FORMAT =
             new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy");
 
-    public static List<Message> parse(String strJson) {
-        try {
-            ResponseParser parser = new ResponseParser(strJson);
-            return parser.getMessages();
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+    public static List<Message> parse(String strJson) throws JSONException {
+        ResponseParser parser = new ResponseParser(strJson);
+        return parser.getMessages();
     }
 
     ResponseParser(String strJson) {
