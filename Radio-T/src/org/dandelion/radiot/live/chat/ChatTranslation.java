@@ -5,10 +5,6 @@ public interface ChatTranslation {
     void refresh();
     void stop();
 
-    public interface ErrorListener {
-        void onError();
-    }
-
     public interface Factory {
         ChatTranslation create();
     }

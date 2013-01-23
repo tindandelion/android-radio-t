@@ -7,8 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import org.dandelion.radiot.live.chat.ChatTranslation;
+import org.dandelion.radiot.live.chat.ErrorListener;
 
-public class ChatTranslationFragment extends ListFragment implements ChatTranslation.ErrorListener {
+public class ChatTranslationFragment extends ListFragment implements ErrorListener {
     public static ChatTranslation.Factory chatFactory;
     private ChatStreamAdapter adapter;
     private ChatTranslation myChat;

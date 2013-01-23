@@ -16,7 +16,7 @@ public class HttpChatTranslationTest {
     private final HttpChatClient chatClient = mock(HttpChatClient.class);
     private final HttpChatTranslation translation = new HttpChatTranslation(chatClient);
     private final MessageConsumer consumer = mock(MessageConsumer.class);
-    private final ChatTranslation.ErrorListener errorListener = mock(ChatTranslation.ErrorListener.class);
+    private final ErrorListener errorListener = mock(ErrorListener.class);
 
     @Test
     public void onStart_RequestsLastMessages() throws Exception {

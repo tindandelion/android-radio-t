@@ -15,7 +15,7 @@ public class PollingChatTranslationTest {
 
     private DeterministicScheduler scheduler = new DeterministicScheduler();
     private MessageConsumer consumer = mock(MessageConsumer.class);
-    private ChatTranslation.ErrorListener errorListener = mock(ChatTranslation.ErrorListener.class);
+    private ErrorListener errorListener = mock(ErrorListener.class);
     private final FakeChatTranslation realTranslation = new FakeChatTranslation();
     private ChatTranslation pollingTranslation = new PollingChatTranslation(realTranslation, scheduler);
 
