@@ -55,4 +55,12 @@ public class HttpChatTranslationTest {
         verify(errorListener).onError();
         verifyZeroInteractions(consumer);
     }
+
+    @Test
+    public void whenStopping_ShutsDownHttpConnection() throws Exception {
+        translation.stop();
+        verify(chatClient).shutdown();
+    }
+
+
 }

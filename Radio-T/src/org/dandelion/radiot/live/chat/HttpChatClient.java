@@ -34,4 +34,7 @@ public class HttpChatClient {
         return ResponseParser.parse(json);
     }
 
+    public void shutdown() {
+        httpClient.getConnectionManager().shutdown();
+    }
 }

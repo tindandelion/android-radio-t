@@ -35,7 +35,7 @@ public class HttpChatTranslation implements ChatTranslation {
 
     @Override
     public void stop() {
-        // TODO: Properly close connections
+        chatClient.shutdown();
     }
 
     private static abstract class ChatTranslationTask extends AsyncTask<Void, Void, List<Message>> {
