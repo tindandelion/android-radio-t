@@ -25,7 +25,7 @@ Version 1.6
      * Different sizes for tablets / phones
  * Update support library
 
- * Why there are 12 KB left after clearing the cache?
+ DONE Why there are 12 KB left after clearing the cache?
  * Podcast list: do not clear cache if download error occurs
  * Cache cleanup handling
 
