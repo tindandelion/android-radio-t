@@ -1,6 +1,5 @@
 package org.dandelion.radiot.live.ui;
 
-import android.widget.ListView;
 import org.dandelion.radiot.live.chat.Message;
 import org.dandelion.radiot.live.chat.MessageConsumer;
 import org.junit.Test;
@@ -13,8 +12,8 @@ import static org.mockito.Mockito.*;
 public class ChatScrollerTest {
     public static final List<Message> MESSAGES = Arrays.asList(new Message("", "", ""));
     private final MessageConsumer consumer = mock(MessageConsumer.class);
-    private final ListView listView = mock(ListView.class);
-    private final ChatScroller scroller = new ChatScroller(consumer, listView);
+    private final ChatView chatView = mock(ChatView.class);
+    private final ChatScroller scroller = new ChatScroller(consumer, chatView);
 
     @Test
     public void initWithMessages_DelegatesToConsumer() throws Exception {
@@ -30,33 +29,22 @@ public class ChatScrollerTest {
 
     @Test
     public void initWithMessages_ScrollsToBottom() throws Exception {
-        final int countAfter = MESSAGES.size();
-        when(listView.getCount()).thenReturn(countAfter);
-
         scroller.initWithMessages(MESSAGES);
-        verify(listView).smoothScrollToPosition(MESSAGES.size());
+        verify(chatView).scrollToBottom();
     }
 
     @Test
     public void whenAtBottomOfList_ScrollsDownAfterAppending() throws Exception {
-        final int countBefore = 1;
-        final int countAfter = countBefore + MESSAGES.size();
-        when(listView.getLastVisiblePosition()).thenReturn(countBefore - 1);
-        when(listView.getCount())
-                .thenReturn(countBefore)
-                .thenReturn(countAfter);
+        when(chatView.atBottom()).thenReturn(true);
 
         scroller.appendMessages(MESSAGES);
-        verify(listView).smoothScrollToPosition(countAfter);
+        verify(chatView).scrollToBottom();
     }
 
     @Test
     public void whenNotAtBottomOfList_KeepScrollPositionUnchanged() throws Exception {
-        final int countBefore = 10;
-        when(listView.getLastVisiblePosition()).thenReturn(countBefore - 3);
-        when(listView.getCount()).thenReturn(countBefore);
-
+        when(chatView.atBottom()).thenReturn(false);
         scroller.appendMessages(MESSAGES);
-        verify(listView, never()).smoothScrollToPosition(anyInt());
+        verify(chatView, never()).scrollToBottom();
     }
 }

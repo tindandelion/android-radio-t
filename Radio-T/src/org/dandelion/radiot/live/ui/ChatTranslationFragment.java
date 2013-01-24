@@ -36,7 +36,7 @@ public class ChatTranslationFragment extends ListFragment implements ErrorListen
     @Override
     public void onStart() {
         super.onStart();
-        myChat.start(new ChatScroller(adapter, getListView()), this);
+        myChat.start(new ChatScroller(adapter, (ChatView) getListView()), this);
     }
 
     @Override
