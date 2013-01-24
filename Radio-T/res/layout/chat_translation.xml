@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:orientation="vertical">
+              android:layout_height="fill_parent">
+    <ListView
+        android:id="@id/android:list"
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent"
+        android:divider="@null"/>
 
     <TextView
         android:id="@+id/chat_error_text"
@@ -12,11 +16,7 @@
         android:visibility="gone"
         android:padding="6dp"
         android:gravity="center"
+        android:background="@color/red"
+        android:textColor="@android:color/white"
         android:text="@string/chat_error_text"/>
-
-    <ListView
-        android:id="@id/android:list"
-        android:layout_height="fill_parent"
-        android:layout_width="fill_parent"
-        android:divider="@null"/>
-</LinearLayout>
+</FrameLayout>

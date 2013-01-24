@@ -1,5 +1,7 @@
 package org.dandelion.radiot.live.ui;
 
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import org.dandelion.radiot.R;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -45,6 +47,8 @@ public class ChatTranslationFragment extends ListFragment implements ErrorListen
 
     @Override
     public void onError() {
+        Animation animation = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_in_down);
         errorView.setVisibility(View.VISIBLE);
+        errorView.startAnimation(animation);
     }
 }
