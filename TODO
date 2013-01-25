@@ -15,7 +15,7 @@ Version 1.6
      DONE Refreshing chat
      DONE Close chat connections when stopping chat fragment
      DONE Testing for incorrect incoming data
-     * Error when restoring chat from background
+     DONE Error when restoring chat from background
      * Deal with pause/resume
      * Testing: How chat behaves when pausing/restarting it?
      * Visualize refresh progress

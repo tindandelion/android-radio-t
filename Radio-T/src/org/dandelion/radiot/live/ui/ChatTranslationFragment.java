@@ -14,7 +14,7 @@ import org.dandelion.radiot.live.chat.ErrorListener;
 public class ChatTranslationFragment extends ListFragment implements ErrorListener {
     public static ChatTranslation.Factory chatFactory;
     private ChatStreamAdapter adapter;
-    private ChatTranslation myChat;
+    private ChatTranslation chat;
     private View errorView;
 
     @Override
@@ -27,8 +27,6 @@ public class ChatTranslationFragment extends ListFragment implements ErrorListen
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        myChat = chatFactory.create();
-
         adapter = new ChatStreamAdapter(getActivity());
         setListAdapter(adapter);
     }
@@ -36,13 +34,17 @@ public class ChatTranslationFragment extends ListFragment implements ErrorListen
     @Override
     public void onStart() {
         super.onStart();
-        myChat.start(new ChatScroller(adapter, (ChatView) getListView()), this);
+
+        errorView.setVisibility(View.GONE);
+
+        chat = chatFactory.create();
+        chat.start(new ChatScroller(adapter, (ChatView) getListView()), this);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        myChat.stop();
+        chat.stop();
     }
 
     @Override
