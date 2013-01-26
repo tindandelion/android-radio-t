@@ -18,7 +18,6 @@ public class ChatScroller implements MessageConsumer {
     public void initWithMessages(List<Message> messages) {
         consumer.initWithMessages(messages);
         view.scrollToBottom();
-
     }
 
     @Override
