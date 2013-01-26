@@ -27,7 +27,6 @@ public class ChatScroller implements MessageConsumer {
         consumer.appendMessages(messages);
         if (willScroll) {
             view.scrollToBottom();
-
         }
     }
 }
