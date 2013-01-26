@@ -5,7 +5,7 @@ require 'pry'
 
 get '/data/jsonp' do
   content_type 'application/json'
-  msg_count = (request.params['mode'] == 'last') ? 10 : rand(5)
+  msg_count = (request.params['mode'] == 'last') ? 10 : 5
   wrap_into_callback compose_chat_json(msg_count)
 end
 
