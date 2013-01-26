@@ -46,7 +46,6 @@ class ChatStreamAdapter extends ArrayAdapter<Message>
             add(msg);
         }
         limitGuard.shrink();
-        Log.d("CHAT", String.format("List size is: %d", getCount()));
     }
 
     private static class ListSizeGuard {
