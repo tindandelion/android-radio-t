@@ -16,9 +16,8 @@ Version 1.6
      DONE Close chat connections when stopping chat fragment
      DONE Testing for incorrect incoming data
      DONE Error when restoring chat from background
+     DONE Testing: chat list performance?
      * Deal with pause/resume
-     * Testing: How chat behaves when pausing/restarting it?
-     * Testing: chat list performance?
      * Visualize refresh progress
      * Testing: leaking activity instance when starting/stopping?
      * Discard incorrect messages?
