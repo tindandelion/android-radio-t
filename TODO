@@ -18,9 +18,9 @@ Version 1.6
      DONE Error when restoring chat from background
      * Deal with pause/resume
      * Testing: How chat behaves when pausing/restarting it?
+     * Testing: chat list performance?
      * Visualize refresh progress
      * Testing: leaking activity instance when starting/stopping?
-     * Testing: chat list performance?
      * Discard incorrect messages?
      * Landscape orientation ?
      * Different sizes for tablets / phones

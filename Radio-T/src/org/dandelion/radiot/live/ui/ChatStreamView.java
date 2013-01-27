@@ -4,8 +4,8 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ListView;
 
-public class ChatView extends ListView {
-    public ChatView(Context context, AttributeSet attrs) {
+public class ChatStreamView extends ListView {
+    public ChatStreamView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 

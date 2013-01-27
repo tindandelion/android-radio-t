@@ -40,7 +40,7 @@ public class ChatTranslationFragment extends ListFragment implements ErrorListen
         errorView.setVisibility(View.GONE);
 
         chat = chatFactory.create();
-        chat.start(new ChatScroller(adapter, (ChatView) getListView()), this);
+        chat.start(new ChatScroller(adapter, (ChatStreamView) getListView()), this);
     }
 
     @Override

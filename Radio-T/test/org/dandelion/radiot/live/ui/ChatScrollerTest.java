@@ -12,7 +12,7 @@ import static org.mockito.Mockito.*;
 public class ChatScrollerTest {
     public static final List<Message> MESSAGES = Arrays.asList(new Message("", "", ""));
     private final MessageConsumer consumer = mock(MessageConsumer.class);
-    private final ChatView chatView = mock(ChatView.class);
+    private final ChatStreamView chatView = mock(ChatStreamView.class);
     private final ChatScroller scroller = new ChatScroller(consumer, chatView);
 
     @Test

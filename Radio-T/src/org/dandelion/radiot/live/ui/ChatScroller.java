@@ -7,9 +7,9 @@ import java.util.List;
 
 public class ChatScroller implements MessageConsumer {
     private final MessageConsumer consumer;
-    private final ChatView view;
+    private final ChatStreamView view;
 
-    public ChatScroller(MessageConsumer consumer, ChatView view) {
+    public ChatScroller(MessageConsumer consumer, ChatStreamView view) {
         this.consumer = consumer;
         this.view = view;
     }
