@@ -17,8 +17,9 @@ Version 1.6
      DONE Testing for incorrect incoming data
      DONE Error when restoring chat from background
      DONE Testing: chat list performance?
-     * Deal with pause/resume
+     DONE Deal with pause/resume
      * Visualize refresh progress
+     * NullPointerException in PollingChatTranslation.appendMessages()
      * Testing: leaking activity instance when starting/stopping?
      * Discard incorrect messages?
      * Landscape orientation ?
