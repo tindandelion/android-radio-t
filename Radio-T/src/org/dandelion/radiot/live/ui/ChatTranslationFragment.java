@@ -34,9 +34,8 @@ public class ChatTranslationFragment extends ListFragment implements ErrorListen
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-
+    public void onResume() {
+        super.onResume();
         errorView.setVisibility(View.GONE);
 
         chat = chatFactory.create();
@@ -44,8 +43,8 @@ public class ChatTranslationFragment extends ListFragment implements ErrorListen
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
+    public void onPause() {
+        super.onPause();
         chat.stop();
     }
 
