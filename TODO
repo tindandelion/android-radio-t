@@ -23,6 +23,7 @@ Version 1.6
      * Testing: leaking activity instance when starting/stopping?
      * Visualize refresh progress
      * NullPointerException in PollingChatTranslation.appendMessages()
+     * Lock screen when translating chat (?)
      * Discard incorrect messages?
      * Landscape orientation ?
      * Different sizes for tablets / phones
