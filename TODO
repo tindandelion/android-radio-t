@@ -4,6 +4,7 @@ Backlog:
  * Downloading: Respect background data loading settings
  * Downloading: Warn a user if a file already exists
  * Podcast list: Better error explanation?
+ * Podcast list: do not clear cache if download error occurs
  * User topics
  * Android 4.0 UI
    * New icon with ICS guidelines
@@ -18,16 +19,17 @@ Version 1.6
      DONE Error when restoring chat from background
      DONE Testing: chat list performance?
      DONE Deal with pause/resume
+     * Handle "disconnect" hangs
+     * Testing: leaking activity instance when starting/stopping?
      * Visualize refresh progress
      * NullPointerException in PollingChatTranslation.appendMessages()
-     * Testing: leaking activity instance when starting/stopping?
      * Discard incorrect messages?
      * Landscape orientation ?
      * Different sizes for tablets / phones
+ * Podcast list UI to be consistent with chat UI
  * Update support library
 
  DONE Why there are 12 KB left after clearing the cache?
- * Podcast list: do not clear cache if download error occurs
  * Cache cleanup handling
 
 * Debt:
