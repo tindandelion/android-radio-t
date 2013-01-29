@@ -19,7 +19,7 @@ Version 1.6
      DONE Error when restoring chat from background
      DONE Testing: chat list performance?
      DONE Deal with pause/resume
-     * Handle "disconnect" hangs
+     DONE Handle "disconnect" hangs
      * Testing: leaking activity instance when starting/stopping?
      * Visualize refresh progress
      * NullPointerException in PollingChatTranslation.appendMessages()
