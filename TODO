@@ -10,6 +10,8 @@ Backlog:
    * New icon with ICS guidelines
 
 Version 1.6
+ DONE Update support library
+ DONE Why there are 12 KB left after clearing the cache?
  * Chat translation
      DONE Handling cookies
      DONE Enlarge chat list space
@@ -28,9 +30,6 @@ Version 1.6
      * Landscape orientation ?
      * Different sizes for tablets / phones
  * Podcast list UI to be consistent with chat UI
- * Update support library
-
- DONE Why there are 12 KB left after clearing the cache?
  * Cache cleanup handling
 
 * Debt:
