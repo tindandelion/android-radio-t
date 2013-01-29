@@ -2,6 +2,7 @@ package org.dandelion.radiot.live;
 
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
+import android.os.Handler;
 import org.dandelion.radiot.live.core.AudioStream;
 
 import java.io.IOException;
@@ -10,7 +11,6 @@ public class MediaPlayerStream implements MediaPlayer.OnPreparedListener, MediaP
         MediaPlayer.OnCompletionListener, AudioStream {
     private MediaPlayer player;
     private Listener listener;
-    private StopTask stopTask;
     private String url;
 
     public MediaPlayerStream(String url) {
@@ -51,15 +51,8 @@ public class MediaPlayerStream implements MediaPlayer.OnPreparedListener, MediaP
     @Override
     @SuppressWarnings("unchecked")
     public void stop() {
-        ensureNoStopTasksExecuting();
-        stopTask = new StopTask();
-        stopTask.execute();
-    }
-
-    private void ensureNoStopTasksExecuting() {
-        if (stopTask != null) {
-            throw new RuntimeException("Previous stop task hasn't finished yet");
-        }
+        final Handler handler = new Handler();
+        new StopperThread(handler).start();
     }
 
     @Override
@@ -85,19 +78,6 @@ public class MediaPlayerStream implements MediaPlayer.OnPreparedListener, MediaP
         player.setOnCompletionListener(this);
     }
 
-    private class StopTask extends AsyncTask<Void, Void, Void> {
-        @Override
-        protected Void doInBackground(Void... voids) {
-            player.reset();
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            listener.onStopped();
-            stopTask = null;
-        }
-    }
     private static class NullStateListener implements Listener {
         @Override
         public void onStarted() {
@@ -109,6 +89,25 @@ public class MediaPlayerStream implements MediaPlayer.OnPreparedListener, MediaP
 
         @Override
         public void onStopped() {
+        }
+    }
+
+    private class StopperThread extends Thread {
+        private final Handler handler;
+
+        public StopperThread(Handler handler) {
+            this.handler = handler;
+        }
+
+        @Override
+        public void run() {
+            player.stop();
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    listener.onStopped();
+                }
+            });
         }
     }
 }

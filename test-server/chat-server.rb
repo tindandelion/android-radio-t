@@ -4,6 +4,7 @@ require 'faker'
 require 'pry'
 
 get '/data/jsonp' do
+  binding.pry
   content_type 'application/json'
   msg_count = (request.params['mode'] == 'last') ? 10 : 5
   wrap_into_callback compose_chat_json(msg_count)
