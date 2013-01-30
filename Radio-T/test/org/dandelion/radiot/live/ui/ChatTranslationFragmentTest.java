@@ -2,6 +2,7 @@ package org.dandelion.radiot.live.ui;
 
 import android.app.Activity;
 import org.dandelion.radiot.live.chat.*;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -17,8 +18,13 @@ public class ChatTranslationFragmentTest {
         ChatTranslation translation = new HttpChatTranslation(mock(HttpChatClient.class));
 
         adapter.add(new Message("", "", ""));
-        ChatTranslationFragment.doResume(translation, adapter, mock(ChatStreamView.class), null);
+        ErrorListener listener = new ChatProgressListener(adapter, null);
+        ChatTranslationFragment.doResume(translation, adapter, mock(ChatStreamView.class), listener);
 
         assertThat(adapter.getCount(), equalTo(0));
+    }
+
+    @Test @Ignore
+    public void showsErrorOnError() throws Exception {
     }
 }

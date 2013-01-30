@@ -39,10 +39,11 @@ public class ChatTranslationFragment extends ListFragment implements ErrorListen
         errorView.setVisibility(View.GONE);
 
         chat = chatFactory.create();
-        doResume(chat, adapter, (ChatStreamView) getListView(), this);
+        ChatProgressListener progressListener = new ChatProgressListener(adapter, this);
+        doResume(chat, adapter, (ChatStreamView) getListView(), progressListener);
     }
 
-    public static void doResume(ChatTranslation translation, ChatStreamAdapter adapter, ChatStreamView listView, ChatTranslationFragment errorListener) {
+    public static void doResume(ChatTranslation translation, ChatStreamAdapter adapter, ChatStreamView listView, ErrorListener errorListener) {
         translation.start(new ChatScroller(adapter, listView), errorListener);
     }
 
@@ -57,5 +58,10 @@ public class ChatTranslationFragment extends ListFragment implements ErrorListen
         Animation animation = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_in_down);
         errorView.setVisibility(View.VISIBLE);
         errorView.startAnimation(animation);
+    }
+
+    @Override
+    public void onStarting() {
+
     }
 }

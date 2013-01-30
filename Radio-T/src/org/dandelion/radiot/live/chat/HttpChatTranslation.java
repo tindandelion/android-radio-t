@@ -6,7 +6,7 @@ import java.util.List;
 
 public class HttpChatTranslation implements ChatTranslation {
     private MessageConsumer messageConsumer;
-    private ErrorListener errorListener;
+    private ErrorListener listener;
     private final HttpChatClient chatClient;
 
     public HttpChatTranslation(String baseUrl) {
@@ -18,19 +18,19 @@ public class HttpChatTranslation implements ChatTranslation {
     }
 
     @Override
-    public void start(MessageConsumer consumer, ErrorListener errorListener) {
+    public void start(MessageConsumer consumer, ErrorListener listener) {
         this.messageConsumer = consumer;
-        this.errorListener = errorListener;
+        this.listener = listener;
         requestLastRecords();
     }
 
     private void requestLastRecords() {
-        new LastRecordsRequest(chatClient, messageConsumer, errorListener).execute();
+        new LastRecordsRequest(chatClient, messageConsumer, listener).execute();
     }
 
     @Override
     public void refresh() {
-        new NextRecordsRequest(chatClient, messageConsumer, errorListener).execute();
+        new NextRecordsRequest(chatClient, messageConsumer, listener).execute();
     }
 
     @Override
@@ -40,13 +40,13 @@ public class HttpChatTranslation implements ChatTranslation {
 
     private static abstract class ChatTranslationTask extends AsyncTask<Void, Void, List<Message>> {
         protected final MessageConsumer consumer;
+        protected final ErrorListener listener;
         private Exception error;
         private final HttpChatClient chatClient;
-        private final ErrorListener errorListener;
 
-        public ChatTranslationTask(HttpChatClient chatClient, MessageConsumer consumer, ErrorListener errorListener) {
+        public ChatTranslationTask(HttpChatClient chatClient, MessageConsumer consumer, ErrorListener listener) {
             this.consumer = consumer;
-            this.errorListener = errorListener;
+            this.listener = listener;
             this.chatClient = chatClient;
         }
 
@@ -73,13 +73,18 @@ public class HttpChatTranslation implements ChatTranslation {
         protected abstract String mode();
 
         private void consumeError() {
-            errorListener.onError();
+            listener.onError();
         }
     }
 
     private static class LastRecordsRequest extends ChatTranslationTask {
-        public LastRecordsRequest(HttpChatClient chatClient, MessageConsumer consumer, ErrorListener errorListener) {
-            super(chatClient, consumer, errorListener);
+        public LastRecordsRequest(HttpChatClient chatClient, MessageConsumer consumer, ErrorListener listener) {
+            super(chatClient, consumer, listener);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            listener.onStarting();
         }
 
         @Override

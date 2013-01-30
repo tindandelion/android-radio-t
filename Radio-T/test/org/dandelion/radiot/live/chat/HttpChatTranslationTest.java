@@ -27,6 +27,14 @@ public class HttpChatTranslationTest {
     }
 
     @Test
+    public void onStart_NotifiesListener() throws Exception {
+        when(chatClient.retrieveMessages("last")).thenReturn(MESSAGE_LIST);
+        translation.start(consumer, errorListener);
+
+        verify(errorListener).onStarting();
+    }
+
+    @Test
     public void onRefresh_RequestsNextMessages() throws Exception {
         when(chatClient.retrieveMessages("next")).thenReturn(MESSAGE_LIST);
         translation.start(consumer, errorListener);

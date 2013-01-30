@@ -35,7 +35,6 @@ class ChatStreamAdapter extends ArrayAdapter<Message>
 
     @Override
     public void initWithMessages(List<Message> messages) {
-        clear();
         appendMessages(messages);
     }
 
