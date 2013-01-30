@@ -16,28 +16,30 @@ public class HttpChatTranslationTest {
     private final HttpChatClient chatClient = mock(HttpChatClient.class);
     private final HttpChatTranslation translation = new HttpChatTranslation(chatClient);
     private final MessageConsumer consumer = mock(MessageConsumer.class);
-    private final ErrorListener errorListener = mock(ErrorListener.class);
+    private final ErrorListener listener = mock(ErrorListener.class);
 
     @Test
     public void onStart_RequestsLastMessages() throws Exception {
         when(chatClient.retrieveMessages("last")).thenReturn(MESSAGE_LIST);
-        translation.start(consumer, errorListener);
+        translation.start(consumer, listener);
 
-        verify(consumer).initWithMessages(MESSAGE_LIST);
+        verify(consumer).appendMessages(MESSAGE_LIST);
     }
 
     @Test
     public void onStart_NotifiesListener() throws Exception {
         when(chatClient.retrieveMessages("last")).thenReturn(MESSAGE_LIST);
-        translation.start(consumer, errorListener);
+        translation.start(consumer, listener);
 
-        verify(errorListener).onStarting();
+        verify(listener).onStarting();
     }
 
     @Test
     public void onRefresh_RequestsNextMessages() throws Exception {
         when(chatClient.retrieveMessages("next")).thenReturn(MESSAGE_LIST);
-        translation.start(consumer, errorListener);
+        translation.start(consumer, listener);
+
+        reset(consumer);
         translation.refresh();
 
         verify(consumer).appendMessages(MESSAGE_LIST);
@@ -46,21 +48,21 @@ public class HttpChatTranslationTest {
     @Test
     public void onStart_WhenErrorOccurs_CallsErrorListener() throws Exception {
         when(chatClient.retrieveMessages("last")).thenThrow(IOException.class);
-        translation.start(consumer, errorListener);
+        translation.start(consumer, listener);
 
-        verify(errorListener).onError();
+        verify(listener).onError();
         verifyZeroInteractions(consumer);
     }
 
     @Test
     public void onRefresh_WhenErrorOccurs_CallsErrorListener() throws Exception {
-        translation.start(consumer, errorListener);
+        translation.start(consumer, listener);
 
         reset(consumer);
         when(chatClient.retrieveMessages("next")).thenThrow(IOException.class);
         translation.refresh();
 
-        verify(errorListener).onError();
+        verify(listener).onError();
         verifyZeroInteractions(consumer);
     }
 

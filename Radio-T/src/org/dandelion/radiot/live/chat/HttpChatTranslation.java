@@ -63,18 +63,13 @@ public class HttpChatTranslation implements ChatTranslation {
         @Override
         protected void onPostExecute(List<Message> messages) {
             if (error != null) {
-                consumeError();
+                listener.onError();
             } else {
-                consumeMessages(messages);
+                consumer.appendMessages(messages);
             }
         }
 
-        protected abstract void consumeMessages(List<Message> messages);
         protected abstract String mode();
-
-        private void consumeError() {
-            listener.onError();
-        }
     }
 
     private static class LastRecordsRequest extends ChatTranslationTask {
@@ -88,24 +83,14 @@ public class HttpChatTranslation implements ChatTranslation {
         }
 
         @Override
-        protected void consumeMessages(List<Message> messages) {
-            consumer.initWithMessages(messages);
-        }
-
-        @Override
         protected String mode() {
             return "last";
         }
     }
 
     private static class NextRecordsRequest extends ChatTranslationTask {
-        private NextRecordsRequest(HttpChatClient chatClient, MessageConsumer consumer, ErrorListener errorListener) {
-            super(chatClient, consumer, errorListener);
-        }
-
-        @Override
-        protected void consumeMessages(List<Message> messages) {
-            consumer.appendMessages(messages);
+        private NextRecordsRequest(HttpChatClient chatClient, MessageConsumer consumer, ErrorListener listener) {
+            super(chatClient, consumer, listener);
         }
 
         @Override
