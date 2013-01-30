@@ -19,7 +19,7 @@ public class ChatStreamAdapterTest {
         final int shrinkSize = 5;
         ChatStreamAdapter adapter = new ChatStreamAdapter(new Activity(), messageLimit, shrinkSize);
 
-        adapter.initWithMessages(messages(5));
+        adapter.appendMessages(messages(5));
         assertThat(adapter.getCount(), equalTo(5));
 
         adapter.appendMessages(messages(3));

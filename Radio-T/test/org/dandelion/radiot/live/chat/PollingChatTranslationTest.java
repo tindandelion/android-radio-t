@@ -22,12 +22,14 @@ public class PollingChatTranslationTest {
     @Test
     public void startTranslation_DelegatesToRealTranslation() throws Exception {
         pollingTranslation.start(consumer, errorListener);
-        verify(consumer).initWithMessages(INITIAL_MESSAGES);
+        verify(consumer).appendMessages(INITIAL_MESSAGES);
     }
 
     @Test
     public void startTranslation_SchedulesRefresh() throws Exception {
         pollingTranslation.start(consumer, errorListener);
+
+        reset(consumer);
         scheduler.performAction();
         verify(consumer).appendMessages(SUBSEQUENT_MESSAGES);
     }
@@ -35,6 +37,8 @@ public class PollingChatTranslationTest {
     @Test
     public void refreshIsScheduledRepeatedly() throws Exception {
         pollingTranslation.start(consumer, errorListener);
+
+        reset(consumer);
         scheduler.performAction();
         verify(consumer).appendMessages(SUBSEQUENT_MESSAGES);
 
@@ -70,7 +74,7 @@ public class PollingChatTranslationTest {
             if (throwsError) {
                 errorListener.onError();
             } else {
-                consumer.initWithMessages(INITIAL_MESSAGES);
+                consumer.appendMessages(INITIAL_MESSAGES);
             }
 
         }

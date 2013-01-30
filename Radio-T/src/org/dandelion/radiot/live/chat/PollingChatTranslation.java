@@ -41,12 +41,6 @@ public class PollingChatTranslation implements ChatTranslation, Scheduler.Perfor
     }
 
     @Override
-    public void initWithMessages(List<Message> messages) {
-        consumer.initWithMessages(messages);
-        scheduler.scheduleNext();
-    }
-
-    @Override
     public void appendMessages(List<Message> messages) {
         consumer.appendMessages(messages);
         scheduler.scheduleNext();

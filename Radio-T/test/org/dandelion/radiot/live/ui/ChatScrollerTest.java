@@ -16,21 +16,9 @@ public class ChatScrollerTest {
     private final ChatScroller scroller = new ChatScroller(consumer, chatView);
 
     @Test
-    public void initWithMessages_DelegatesToConsumer() throws Exception {
-        scroller.initWithMessages(MESSAGES);
-        verify(consumer).initWithMessages(MESSAGES);
-    }
-
-    @Test
     public void appendMessages_DelegatesToConsumer() throws Exception {
         scroller.appendMessages(MESSAGES);
         verify(consumer).appendMessages(MESSAGES);
-    }
-
-    @Test
-    public void initWithMessages_ScrollsToBottom() throws Exception {
-        scroller.initWithMessages(MESSAGES);
-        verify(chatView).scrollToBottom();
     }
 
     @Test
