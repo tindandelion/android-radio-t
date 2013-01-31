@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import org.dandelion.radiot.live.chat.ChatTranslation;
 import org.dandelion.radiot.live.chat.ErrorListener;
+import org.dandelion.radiot.live.chat.MessageConsumer;
 
 public class ChatTranslationFragment extends ListFragment implements ErrorListener {
     public static ChatTranslation.Factory chatFactory;
@@ -39,12 +40,9 @@ public class ChatTranslationFragment extends ListFragment implements ErrorListen
         errorView.setVisibility(View.GONE);
 
         chat = chatFactory.create();
-        ChatProgressListener progressListener = new ChatProgressListener(adapter, this);
-        doResume(chat, adapter, (ChatStreamView) getListView(), progressListener);
-    }
-
-    public static void doResume(ChatTranslation translation, ChatStreamAdapter adapter, ChatStreamView listView, ErrorListener errorListener) {
-        translation.start(new ChatScroller(adapter, listView), errorListener);
+        ChatProgressController progressController = new ChatProgressController(adapter, this);
+        MessageConsumer consumer = new ChatScroller(adapter, (ChatStreamView) getListView());
+        chat.start(consumer, progressController);
     }
 
     @Override
