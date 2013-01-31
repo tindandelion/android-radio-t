@@ -15,8 +15,8 @@ class ChatProgressController implements ProgressListener {
     @Override
     public void onConnecting() {
         view.hideError();
-        adapter.clear();
         view.showProgress();
+        adapter.clear();
     }
 
     @Override

@@ -52,7 +52,7 @@ public class ChatTranslationFragment extends ListFragment {
     }
 
     public void showError() {
-        Animation animation = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_in_down);
+        Animation animation = loadAnimation(R.anim.slide_in_down);
         errorView.setVisibility(View.VISIBLE);
         errorView.startAnimation(animation);
     }
@@ -62,10 +62,16 @@ public class ChatTranslationFragment extends ListFragment {
     }
 
     public void showProgress() {
+        progressView.startAnimation(loadAnimation(android.R.anim.fade_in));
         progressView.setVisibility(View.VISIBLE);
     }
 
+    private Animation loadAnimation(int id) {
+        return AnimationUtils.loadAnimation(getActivity(), id);
+    }
+
     public void hideProgress() {
+        progressView.startAnimation(loadAnimation(android.R.anim.fade_out));
         progressView.setVisibility(View.GONE);
     }
 }
