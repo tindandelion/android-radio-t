@@ -10,7 +10,7 @@ import org.dandelion.radiot.endtoend.live.helpers.LiveShowRunner;
 import org.dandelion.radiot.endtoend.live.helpers.LiveShowServer;
 import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.live.MediaPlayerStream;
-import org.dandelion.radiot.live.chat.ErrorListener;
+import org.dandelion.radiot.live.chat.ProgressListener;
 import org.dandelion.radiot.live.chat.MessageConsumer;
 import org.dandelion.radiot.live.core.AudioStream;
 import org.dandelion.radiot.live.core.LiveShowStateListener;
@@ -119,7 +119,7 @@ public class LiveShowPlaybackTest extends
 
     private static class NullChatTranlation implements ChatTranslation, ChatTranslation.Factory {
         @Override
-        public void start(MessageConsumer consumer, ErrorListener errorListener) {
+        public void start(MessageConsumer consumer, ProgressListener progressListener) {
 
         }
 

@@ -1,24 +1,25 @@
 package org.dandelion.radiot.live.ui;
 
 import android.widget.ArrayAdapter;
-import org.dandelion.radiot.live.chat.ErrorListener;
+import org.dandelion.radiot.live.chat.ProgressListener;
 
-class ChatProgressController implements ErrorListener {
+class ChatProgressController implements ProgressListener {
     private final ArrayAdapter adapter;
-    private final ErrorListener errorListener;
+    private final ChatTranslationFragment view;
 
-    public ChatProgressController(ArrayAdapter adapter, ErrorListener errorListener) {
+    public ChatProgressController(ArrayAdapter adapter, ChatTranslationFragment view) {
         this.adapter = adapter;
-        this.errorListener = errorListener;
+        this.view = view;
     }
 
     @Override
-    public void onStarting() {
+    public void onConnecting() {
+        view.hideError();
         adapter.clear();
     }
 
     @Override
     public void onError() {
-        errorListener.onError();
+        view.showError();
     }
 }

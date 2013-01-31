@@ -15,19 +15,19 @@ public class PollingChatTranslationTest {
 
     private DeterministicScheduler scheduler = new DeterministicScheduler();
     private MessageConsumer consumer = mock(MessageConsumer.class);
-    private ErrorListener errorListener = mock(ErrorListener.class);
+    private ProgressListener progressListener = mock(ProgressListener.class);
     private final FakeChatTranslation realTranslation = new FakeChatTranslation();
     private ChatTranslation pollingTranslation = new PollingChatTranslation(realTranslation, scheduler);
 
     @Test
     public void startTranslation_DelegatesToRealTranslation() throws Exception {
-        pollingTranslation.start(consumer, errorListener);
+        pollingTranslation.start(consumer, progressListener);
         verify(consumer).appendMessages(INITIAL_MESSAGES);
     }
 
     @Test
     public void startTranslation_SchedulesRefresh() throws Exception {
-        pollingTranslation.start(consumer, errorListener);
+        pollingTranslation.start(consumer, progressListener);
 
         reset(consumer);
         scheduler.performAction();
@@ -36,7 +36,7 @@ public class PollingChatTranslationTest {
 
     @Test
     public void refreshIsScheduledRepeatedly() throws Exception {
-        pollingTranslation.start(consumer, errorListener);
+        pollingTranslation.start(consumer, progressListener);
 
         reset(consumer);
         scheduler.performAction();
@@ -49,7 +49,7 @@ public class PollingChatTranslationTest {
 
     @Test
     public void refreshIsCancelled() throws Exception {
-        pollingTranslation.start(consumer, errorListener);
+        pollingTranslation.start(consumer, progressListener);
         pollingTranslation.stop();
 
         assertFalse(scheduler.isScheduled());
@@ -58,9 +58,9 @@ public class PollingChatTranslationTest {
     @Test
     public void onError_callsListenerAndCancelsRefresh() throws Exception {
         realTranslation.throwsError = true;
-        pollingTranslation.start(consumer, errorListener);
+        pollingTranslation.start(consumer, progressListener);
 
-        verify(errorListener).onError();
+        verify(progressListener).onError();
         assertFalse(scheduler.isScheduled());
     }
 
@@ -69,10 +69,10 @@ public class PollingChatTranslationTest {
         public boolean throwsError = false;
 
         @Override
-        public void start(MessageConsumer consumer, ErrorListener errorListener) {
+        public void start(MessageConsumer consumer, ProgressListener progressListener) {
             this.consumer = consumer;
             if (throwsError) {
-                errorListener.onError();
+                progressListener.onError();
             } else {
                 consumer.appendMessages(INITIAL_MESSAGES);
             }

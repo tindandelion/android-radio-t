@@ -1,6 +1,6 @@
 package org.dandelion.radiot.live.chat;
 
-public interface ErrorListener {
+public interface ProgressListener {
+    void onConnecting();
     void onError();
-    void onStarting();
 }

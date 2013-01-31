@@ -1,18 +1,17 @@
 package org.dandelion.radiot.live.ui;
 
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import org.dandelion.radiot.R;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import org.dandelion.radiot.R;
 import org.dandelion.radiot.live.chat.ChatTranslation;
-import org.dandelion.radiot.live.chat.ErrorListener;
 import org.dandelion.radiot.live.chat.MessageConsumer;
 
-public class ChatTranslationFragment extends ListFragment implements ErrorListener {
+public class ChatTranslationFragment extends ListFragment {
     public static ChatTranslation.Factory chatFactory;
     private static final int MESSAGE_LIMIT = 60;
     private static final int SHRINK_SIZE = 30;
@@ -37,7 +36,6 @@ public class ChatTranslationFragment extends ListFragment implements ErrorListen
     @Override
     public void onResume() {
         super.onResume();
-        errorView.setVisibility(View.GONE);
 
         chat = chatFactory.create();
         ChatProgressController progressController = new ChatProgressController(adapter, this);
@@ -51,15 +49,13 @@ public class ChatTranslationFragment extends ListFragment implements ErrorListen
         chat.stop();
     }
 
-    @Override
-    public void onError() {
+    public void showError() {
         Animation animation = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_in_down);
         errorView.setVisibility(View.VISIBLE);
         errorView.startAnimation(animation);
     }
 
-    @Override
-    public void onStarting() {
-
+    public void hideError() {
+        errorView.setVisibility(View.GONE);
     }
 }

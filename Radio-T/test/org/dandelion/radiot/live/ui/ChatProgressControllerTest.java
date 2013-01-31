@@ -1,29 +1,32 @@
 package org.dandelion.radiot.live.ui;
 
 import android.widget.ArrayAdapter;
-import org.dandelion.radiot.live.chat.ErrorListener;
-import org.dandelion.radiot.live.chat.RadiotRobolectricRunner;
+import org.dandelion.radiot.live.chat.ProgressListener;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-@RunWith(RadiotRobolectricRunner.class)
 public class ChatProgressControllerTest {
     private ArrayAdapter adapter = mock(ArrayAdapter.class);
     private ChatTranslationFragment view = mock(ChatTranslationFragment.class);
-    private ErrorListener controller = new ChatProgressController(adapter, view);
+    private ProgressListener controller = new ChatProgressController(adapter, view);
 
     @Test
     public void onConnecting_clearsMessageView() throws Exception {
-        controller.onStarting();
+        controller.onConnecting();
         verify(adapter).clear();
     }
 
     @Test
-    public void showsErrorOnError() throws Exception {
+    public void onConnecting_hidesErrorMessage() throws Exception {
+        controller.onConnecting();
+        verify(view).hideError();
+    }
+
+    @Test
+    public void onError_showsErrorMessage() throws Exception {
         controller.onError();
-        verify(view).onError();
+        verify(view).showError();
     }
 }

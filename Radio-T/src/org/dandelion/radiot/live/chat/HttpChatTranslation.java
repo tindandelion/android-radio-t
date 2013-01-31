@@ -6,7 +6,7 @@ import java.util.List;
 
 public class HttpChatTranslation implements ChatTranslation {
     private MessageConsumer messageConsumer;
-    private ErrorListener listener;
+    private ProgressListener listener;
     private final HttpChatClient chatClient;
 
     public HttpChatTranslation(String baseUrl) {
@@ -18,7 +18,7 @@ public class HttpChatTranslation implements ChatTranslation {
     }
 
     @Override
-    public void start(MessageConsumer consumer, ErrorListener listener) {
+    public void start(MessageConsumer consumer, ProgressListener listener) {
         this.messageConsumer = consumer;
         this.listener = listener;
         requestLastRecords();
@@ -40,11 +40,11 @@ public class HttpChatTranslation implements ChatTranslation {
 
     private static abstract class ChatTranslationTask extends AsyncTask<Void, Void, List<Message>> {
         protected final MessageConsumer consumer;
-        protected final ErrorListener listener;
+        protected final ProgressListener listener;
         private Exception error;
         private final HttpChatClient chatClient;
 
-        public ChatTranslationTask(HttpChatClient chatClient, MessageConsumer consumer, ErrorListener listener) {
+        public ChatTranslationTask(HttpChatClient chatClient, MessageConsumer consumer, ProgressListener listener) {
             this.consumer = consumer;
             this.listener = listener;
             this.chatClient = chatClient;
@@ -73,13 +73,13 @@ public class HttpChatTranslation implements ChatTranslation {
     }
 
     private static class LastRecordsRequest extends ChatTranslationTask {
-        public LastRecordsRequest(HttpChatClient chatClient, MessageConsumer consumer, ErrorListener listener) {
+        public LastRecordsRequest(HttpChatClient chatClient, MessageConsumer consumer, ProgressListener listener) {
             super(chatClient, consumer, listener);
         }
 
         @Override
         protected void onPreExecute() {
-            listener.onStarting();
+            listener.onConnecting();
         }
 
         @Override
@@ -89,7 +89,7 @@ public class HttpChatTranslation implements ChatTranslation {
     }
 
     private static class NextRecordsRequest extends ChatTranslationTask {
-        private NextRecordsRequest(HttpChatClient chatClient, MessageConsumer consumer, ErrorListener listener) {
+        private NextRecordsRequest(HttpChatClient chatClient, MessageConsumer consumer, ProgressListener listener) {
             super(chatClient, consumer, listener);
         }
 

@@ -16,7 +16,7 @@ public class HttpChatTranslationTest {
     private final HttpChatClient chatClient = mock(HttpChatClient.class);
     private final HttpChatTranslation translation = new HttpChatTranslation(chatClient);
     private final MessageConsumer consumer = mock(MessageConsumer.class);
-    private final ErrorListener listener = mock(ErrorListener.class);
+    private final ProgressListener listener = mock(ProgressListener.class);
 
     @Test
     public void onStart_RequestsLastMessages() throws Exception {
@@ -31,7 +31,7 @@ public class HttpChatTranslationTest {
         when(chatClient.retrieveMessages("last")).thenReturn(MESSAGE_LIST);
         translation.start(consumer, listener);
 
-        verify(listener).onStarting();
+        verify(listener).onConnecting();
     }
 
     @Test
