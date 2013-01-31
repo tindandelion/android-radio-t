@@ -6,7 +6,7 @@ import java.util.List;
 
 public class HttpChatTranslation implements ChatTranslation {
     private MessageConsumer messageConsumer;
-    private ProgressListener listener;
+    private ProgressListener progressListener;
     private final HttpChatClient chatClient;
 
     public HttpChatTranslation(String baseUrl) {
@@ -20,17 +20,17 @@ public class HttpChatTranslation implements ChatTranslation {
     @Override
     public void start(MessageConsumer consumer, ProgressListener listener) {
         this.messageConsumer = consumer;
-        this.listener = listener;
+        this.progressListener = listener;
         requestLastRecords();
     }
 
     private void requestLastRecords() {
-        new LastRecordsRequest(chatClient, messageConsumer, listener).execute();
+        new LastRecordsRequest(chatClient, messageConsumer, progressListener).execute();
     }
 
     @Override
     public void refresh() {
-        new NextRecordsRequest(chatClient, messageConsumer, listener).execute();
+        new NextRecordsRequest(chatClient, messageConsumer, progressListener).execute();
     }
 
     @Override
@@ -63,10 +63,19 @@ public class HttpChatTranslation implements ChatTranslation {
         @Override
         protected void onPostExecute(List<Message> messages) {
             if (error != null) {
-                listener.onError();
+                reportError();
             } else {
+                reportSuccess();
                 consumer.appendMessages(messages);
             }
+        }
+
+        private void reportError() {
+            listener.onError();
+        }
+
+        protected void reportSuccess() {
+
         }
 
         protected abstract String mode();
@@ -80,6 +89,11 @@ public class HttpChatTranslation implements ChatTranslation {
         @Override
         protected void onPreExecute() {
             listener.onConnecting();
+        }
+
+        @Override
+        protected void reportSuccess() {
+            listener.onConnected();
         }
 
         @Override

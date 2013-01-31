@@ -32,6 +32,7 @@ public class HttpChatTranslationTest {
         translation.start(consumer, listener);
 
         verify(listener).onConnecting();
+        verify(listener).onConnected();
     }
 
     @Test
@@ -46,7 +47,7 @@ public class HttpChatTranslationTest {
     }
 
     @Test
-    public void onStart_WhenErrorOccurs_CallsErrorListener() throws Exception {
+    public void onStart_whenErrorOccurs_notifiesListener() throws Exception {
         when(chatClient.retrieveMessages("last")).thenThrow(IOException.class);
         translation.start(consumer, listener);
 
@@ -55,7 +56,7 @@ public class HttpChatTranslationTest {
     }
 
     @Test
-    public void onRefresh_WhenErrorOccurs_CallsErrorListener() throws Exception {
+    public void onRefresh_whenErrorOccurs_NotifiesListener() throws Exception {
         translation.start(consumer, listener);
 
         reset(consumer);
