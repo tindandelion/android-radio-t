@@ -18,11 +18,13 @@ public class ChatTranslationFragment extends ListFragment {
     private ChatStreamAdapter adapter;
     private ChatTranslation chat;
     private View errorView;
+    private View progressView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.chat_translation, container, false);
         errorView = view.findViewById(R.id.chat_error_text);
+        progressView = view.findViewById(R.id.progress_container);
         return view;
     }
 
@@ -57,5 +59,13 @@ public class ChatTranslationFragment extends ListFragment {
 
     public void hideError() {
         errorView.setVisibility(View.GONE);
+    }
+
+    public void showProgress() {
+        progressView.setVisibility(View.VISIBLE);
+    }
+
+    public void hideProgress() {
+        progressView.setVisibility(View.GONE);
     }
 }

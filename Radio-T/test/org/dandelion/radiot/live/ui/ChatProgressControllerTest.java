@@ -25,8 +25,26 @@ public class ChatProgressControllerTest {
     }
 
     @Test
+    public void onConnecting_showsProgressIndicator() throws Exception {
+        controller.onConnecting();
+        verify(view).showProgress();
+    }
+
+    @Test
+    public void onConnected_hidesProgressIndicator() throws Exception {
+        controller.onConnected();
+        verify(view).hideProgress();
+    }
+
+    @Test
     public void onError_showsErrorMessage() throws Exception {
         controller.onError();
         verify(view).showError();
+    }
+
+    @Test
+    public void onError_hidesProgressIndicator() throws Exception {
+        controller.onError();
+        verify(view).hideProgress();
     }
 }
