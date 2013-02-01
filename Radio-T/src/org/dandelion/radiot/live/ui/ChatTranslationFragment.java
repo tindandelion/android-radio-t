@@ -62,8 +62,8 @@ public class ChatTranslationFragment extends ListFragment {
     }
 
     public void showProgress() {
-        progressView.startAnimation(loadAnimation(android.R.anim.fade_in));
-        progressView.setVisibility(View.VISIBLE);
+        showViewAnimated(progressView);
+        hideViewAnimated(getListView());
     }
 
     private Animation loadAnimation(int id) {
@@ -71,7 +71,21 @@ public class ChatTranslationFragment extends ListFragment {
     }
 
     public void hideProgress() {
-        progressView.startAnimation(loadAnimation(android.R.anim.fade_out));
-        progressView.setVisibility(View.GONE);
+        hideViewAnimated(progressView);
+        showViewAnimated(getListView());
+    }
+
+    private void hideViewAnimated(View view) {
+        if (view.getVisibility() == View.VISIBLE) {
+            view.startAnimation(loadAnimation(android.R.anim.fade_out));
+            view.setVisibility(View.GONE);
+        }
+    }
+
+    private void showViewAnimated(View view) {
+        if (view.getVisibility() != View.VISIBLE) {
+            view.startAnimation(loadAnimation(android.R.anim.fade_in));
+            view.setVisibility(View.VISIBLE);
+        }
     }
 }
