@@ -5,6 +5,11 @@ Backlog:
  * Downloading: Warn a user if a file already exists
  * Podcast list: Better error explanation?
  * Podcast list: do not clear cache if download error occurs
+ * Chat translation:
+     * Lock screen when translating chat (?)
+     * Discard incorrect messages?
+     * Landscape orientation ?
+     * Different sizes for tablets / phones
  * User topics
  * Android 4.0 UI
    * New icon with ICS guidelines
@@ -12,7 +17,7 @@ Backlog:
 Version 1.6
  DONE Update support library
  DONE Why there are 12 KB left after clearing the cache?
- * Chat translation
+ DONE Chat translation
      DONE Handling cookies
      DONE Enlarge chat list space
      DONE Refreshing chat
@@ -24,13 +29,9 @@ Version 1.6
      DONE Handle "disconnect" hangs
      DONE Testing: leaking activity instance when starting/stopping?
      DONE Visualize refresh progress
-     * NullPointerException in PollingChatTranslation.appendMessages()
-     * Lock screen when translating chat (?)
-     * Discard incorrect messages?
-     * Landscape orientation ?
-     * Different sizes for tablets / phones
- * ListView.smoothScrollToPosition() in Android 2.1?
  * Podcast list UI to be consistent with chat UI
+ * ListView.smoothScrollToPosition() in Android 2.1?
+ * NullPointerException in PollingChatTranslation.appendMessages()
  * Cache cleanup handling
 
 * Debt:
