@@ -22,13 +22,14 @@ Version 1.6
      DONE Testing: chat list performance?
      DONE Deal with pause/resume
      DONE Handle "disconnect" hangs
-     * Testing: leaking activity instance when starting/stopping?
-     * Visualize refresh progress
+     DONE Testing: leaking activity instance when starting/stopping?
+     DONE Visualize refresh progress
      * NullPointerException in PollingChatTranslation.appendMessages()
      * Lock screen when translating chat (?)
      * Discard incorrect messages?
      * Landscape orientation ?
      * Different sizes for tablets / phones
+ * ListView.smoothScrollToPosition() in Android 2.1?
  * Podcast list UI to be consistent with chat UI
  * Cache cleanup handling
 
