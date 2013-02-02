@@ -45,6 +45,26 @@
         <item name="android:background">@null</item>
     </style>
 
+    <style name="Header">
+        <item name="android:background">@color/blue</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Header.Small">
+        <item name="android:paddingRight">6dp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textAppearance">@android:style/TextAppearance.Small</item>
+    </style>
+
+    <style name="Header.Padded" parent="Header">
+        <item name="android:paddingLeft">6dp</item>
+        <item name="android:paddingTop">1dp</item>
+        <item name="android:paddingBottom">2dp</item>
+    </style>
+
+
     <style name="ChatMessageBody">
         <item name="android:singleLine">false</item>
         <item name="android:textColor">@color/foreground_dark</item>
@@ -55,21 +75,11 @@
         <item name="android:background">@color/background_light_blueish</item>
     </style>
 
-    <style name="ChatMessageHeader">
-        <item name="android:background">@color/blue</item>
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:gravity">center_vertical</item>
+    <style name="PodcastDescription">
+        <item name="android:textColor">@color/foreground_dark</item>
+        <item name="android:background">@color/background_light_blueish</item>
+        <item name="android:textSize">11sp</item>
     </style>
 
-    <style name="ChatMessageHeader.Sender" parent="ChatMessageHeader">
-        <item name="android:paddingLeft">6dp</item>
-        <item name="android:paddingTop">1dp</item>
-        <item name="android:paddingBottom">2dp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
 
-    <style name="ChatMessageHeader.Time">
-        <item name="android:paddingRight">6dp</item>
-        <item name="android:textAppearance">@android:style/TextAppearance.Small</item>
-    </style>
 </resources>

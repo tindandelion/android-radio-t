@@ -1,41 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <org.dandelion.radiot.podcasts.ui.PodcastItemView
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:paddingLeft="0dp"
-	android:paddingTop="5dp"
-	android:paddingBottom="5dp"
-	android:paddingRight="5dp">
-	<ImageView
-		android:id="@+id/podcast_item_icon"
-		android:layout_width="72dp"
-		android:layout_height="72dp"
-		android:layout_alignParentLeft="true"
-		android:layout_centerVertical="true"
-		android:layout_marginRight="5dp"
-		android:background="#10FFFFFF"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingLeft="0dp"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    android:paddingRight="5dp">
+
+    <TextView
+        android:id="@+id/podcast_item_view_number"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        style="@style/Header.Padded"/>
+
+    <TextView
+        android:id="@+id/podcast_item_view_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignBottom="@id/podcast_item_view_number"
+        style="@style/Header.Small"/>
+
+    <ImageView
+        android:id="@+id/podcast_item_icon"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/podcast_item_view_number"
+        android:layout_centerVertical="true"
+        android:background="@color/background_light_blueish"
         android:padding="1dp"
-		android:src="@drawable/default_podcast_image" />
-	<TextView
-		android:id="@+id/podcast_item_view_number"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_toRightOf="@id/podcast_item_icon"
-		android:textStyle="bold" />
-	<TextView
-		android:id="@+id/podcast_item_view_date"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_alignParentRight="true"
-		android:textStyle="bold" />
-	<TextView
-		android:id="@+id/podcast_item_view_shownotes"
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent"
-		android:layout_below="@id/podcast_item_view_number"
-		android:layout_toRightOf="@id/podcast_item_icon"
-		android:gravity="fill_horizontal"
-		android:maxLines="4"
-		android:textSize="11sp" />
+        android:src="@drawable/default_podcast_image"/>
+
+    <TextView
+        android:id="@+id/podcast_item_view_shownotes"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_toRightOf="@id/podcast_item_icon"
+        android:layout_alignTop="@id/podcast_item_icon"
+        android:layout_alignBottom="@id/podcast_item_icon"
+        android:paddingLeft="5dp"
+        android:gravity="fill_horizontal"
+        android:maxLines="4"
+        style="@style/PodcastDescription"/>
 </org.dandelion.radiot.podcasts.ui.PodcastItemView>
