@@ -49,4 +49,11 @@
         android:gravity="fill_horizontal"
         android:maxLines="4"
         style="@style/PodcastDescription"/>
+
+    <View
+        style="@style/DividerHorizontal"
+        android:layout_below="@id/podcast_item_icon"
+        android:background="@color/blue"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"/>
 </org.dandelion.radiot.podcasts.ui.PodcastItemView>
