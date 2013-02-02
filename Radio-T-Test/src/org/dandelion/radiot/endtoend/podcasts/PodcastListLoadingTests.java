@@ -45,8 +45,8 @@ public class PodcastListLoadingTests
         backend.hasReceivedRequestForRss();
         backend.respondSuccessWith(feed);
 
-        app.showsPodcastItem("#140", "13.06.2010", "Lorem ipsum dolor sit amet");
-        app.showsPodcastItem("#141", "19.06.2010", "consectetur adipiscing elit");
+        app.showsPodcastItem("● 140", "13.06.2010", "Lorem ipsum dolor sit amet");
+        app.showsPodcastItem("● 141", "19.06.2010", "consectetur adipiscing elit");
     }
 
     public void testPressingbackButtonWhileLoading_ShouldCloseActivity() throws Exception {
@@ -70,7 +70,7 @@ public class PodcastListLoadingTests
         backend.hasReceivedRequestForRss();
         backend.respondSuccessWith(feed);
 
-        app.showsPodcastItem("#140", "13.06.2010", "");
+        app.showsPodcastItem("● 140", "13.06.2010", "");
         backend.hasReceivedRequestForUrl(thumbnailUrl);
     }
 
@@ -92,7 +92,7 @@ public class PodcastListLoadingTests
         backend.hasReceivedRequestForRss();
         backend.respondSuccessWith(updatedFeed);
 
-        app.showsPodcastItem("#140", "13.06.2010", "Lorem ipsum dolor sit amet");
+        app.showsPodcastItem("● 140", "13.06.2010", "Lorem ipsum dolor sit amet");
     }
 
     public void testWhenServerRespondsWithError_ShouldDisplayItOnScreen() throws Exception {
@@ -111,12 +111,12 @@ public class PodcastListLoadingTests
         platform.expireCache();
 
         app = startApplication();
-        app.showsPodcastItem("#140", "", "");
+        app.showsPodcastItem("● 140", "", "");
 
         backend.hasReceivedRequestForRss();
         backend.respondSuccessWith(feedOnServer);
 
-        app.showsPodcastItem("#141", "", "");
+        app.showsPodcastItem("● 141", "", "");
     }
 
     public void testWhenHasFreshCache_ShouldDisplayItAndNotRequestTheServer() throws Exception {
@@ -125,7 +125,7 @@ public class PodcastListLoadingTests
         platform.saveInLocalCache(localCachedList);
 
         app = startApplication();
-        app.showsPodcastItem("#140", "", "");
+        app.showsPodcastItem("● 140", "", "");
         backend.hasNotReceivedAnyRequest();
     }
 

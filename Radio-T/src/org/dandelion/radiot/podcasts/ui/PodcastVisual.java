@@ -61,7 +61,7 @@ public class PodcastVisual {
 
         Matcher matcher = NUMBER_PATTERN.matcher(value);
         if (matcher.find()) {
-            return "#" + matcher.group();
+            return "● " + matcher.group();
         }
         return value;
     }
