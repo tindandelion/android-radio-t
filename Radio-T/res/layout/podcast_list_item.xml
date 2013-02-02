@@ -3,10 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:paddingLeft="0dp"
-    android:paddingTop="5dp"
-    android:paddingBottom="5dp"
-    android:paddingRight="5dp">
+    android:paddingLeft="6dp"
+    android:paddingRight="6dp"
+    android:paddingTop="3dp"
+    android:paddingBottom="3dp">
 
     <TextView
         android:id="@+id/podcast_item_view_number"
@@ -42,7 +42,10 @@
         android:layout_toRightOf="@id/podcast_item_icon"
         android:layout_alignTop="@id/podcast_item_icon"
         android:layout_alignBottom="@id/podcast_item_icon"
-        android:paddingLeft="5dp"
+        android:paddingLeft="6dp"
+        android:paddingRight="6dp"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
         android:gravity="fill_horizontal"
         android:maxLines="4"
         style="@style/PodcastDescription"/>
