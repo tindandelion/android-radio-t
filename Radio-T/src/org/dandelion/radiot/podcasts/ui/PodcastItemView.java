@@ -14,19 +14,19 @@ public class PodcastItemView extends RelativeLayout {
     }
 
     public void setNumber(String value) {
-        setElementText(R.id.podcast_item_view_number, value);
+        setElementText(R.id.number, value);
     }
 
     public void setPubDate(String value) {
-        setElementText(R.id.podcast_item_view_date, value);
+        setElementText(R.id.pub_date, value);
     }
 
     public void setShowNotes(String value) {
-        setElementText(R.id.podcast_item_view_shownotes, value);
+        setElementText(R.id.show_notes, value);
     }
 
     public void setThumbnail(Drawable thumbnail) {
-        ImageView image = (ImageView) findViewById(R.id.podcast_item_icon);
+        ImageView image = (ImageView) findViewById(R.id.icon);
         image.setImageDrawable(thumbnail);
     }
 

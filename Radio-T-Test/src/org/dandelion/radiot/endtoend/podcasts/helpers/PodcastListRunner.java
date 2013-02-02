@@ -115,9 +115,9 @@ public class PodcastListRunner {
 
     public Matcher<View> anItemWith(String number, String date, String notes) {
         return allOf(
-                textField(R.id.podcast_item_view_number, equalTo(number)),
-                textField(R.id.podcast_item_view_date, equalTo(date)),
-                textField(R.id.podcast_item_view_shownotes, equalTo(notes)));
+                textField(R.id.number, equalTo(number)),
+                textField(R.id.pub_date, equalTo(date)),
+                textField(R.id.show_notes, equalTo(notes)));
     }
 
     private Matcher<? super View> textField(final int id, Matcher<String> matcher) {

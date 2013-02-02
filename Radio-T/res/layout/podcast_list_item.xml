@@ -9,39 +9,39 @@
     android:paddingBottom="3dp">
 
     <TextView
-        android:id="@+id/podcast_item_view_number"
+        android:id="@+id/number"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         style="@style/Header.Padded"/>
 
     <TextView
-        android:id="@+id/podcast_item_view_date"
+        android:id="@+id/pub_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_alignBottom="@id/podcast_item_view_number"
+        android:layout_alignBottom="@id/number"
         style="@style/Header.Small"/>
 
     <ImageView
-        android:id="@+id/podcast_item_icon"
+        android:id="@+id/icon"
         android:layout_width="72dp"
         android:layout_height="72dp"
         android:layout_alignParentLeft="true"
-        android:layout_below="@id/podcast_item_view_number"
+        android:layout_below="@id/number"
         android:layout_centerVertical="true"
         android:background="@color/background_light_blueish"
         android:padding="1dp"
         android:src="@drawable/default_podcast_image"/>
 
     <TextView
-        android:id="@+id/podcast_item_view_shownotes"
+        android:id="@+id/show_notes"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_toRightOf="@id/podcast_item_icon"
-        android:layout_alignTop="@id/podcast_item_icon"
-        android:layout_alignBottom="@id/podcast_item_icon"
+        android:layout_toRightOf="@id/icon"
+        android:layout_alignTop="@id/icon"
+        android:layout_alignBottom="@id/icon"
         android:paddingLeft="6dp"
         android:paddingRight="6dp"
         android:paddingTop="3dp"
@@ -52,7 +52,7 @@
 
     <View
         style="@style/DividerHorizontal"
-        android:layout_below="@id/podcast_item_icon"
+        android:layout_below="@id/icon"
         android:background="@color/blue"
         android:layout_marginLeft="0dp"
         android:layout_marginRight="0dp"/>
