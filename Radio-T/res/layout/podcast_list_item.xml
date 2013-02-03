@@ -31,8 +31,8 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@id/number"
         android:layout_centerVertical="true"
-        android:background="@color/background_light_blueish"
-        android:padding="1dp"
+        android:background="#afd4ec"
+        android:padding="3dp"
         android:src="@drawable/default_podcast_image"/>
 
     <TextView
