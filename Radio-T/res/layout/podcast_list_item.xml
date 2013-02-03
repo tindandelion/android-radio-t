@@ -27,7 +27,7 @@
     <ImageView
         android:id="@+id/icon"
         android:layout_width="72dp"
-        android:layout_height="72dp"
+        android:layout_height="76dp"
         android:layout_alignParentLeft="true"
         android:layout_below="@id/number"
         android:layout_centerVertical="true"
@@ -47,7 +47,7 @@
         android:paddingTop="3dp"
         android:paddingBottom="3dp"
         android:gravity="fill_horizontal"
-        android:maxLines="4"
+        android:maxLines="5"
         style="@style/PodcastDescription"/>
 
     <View
