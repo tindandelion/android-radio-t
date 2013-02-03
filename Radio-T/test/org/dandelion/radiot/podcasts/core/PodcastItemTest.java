@@ -21,8 +21,15 @@ public class PodcastItemTest {
     }
 
     @Test
-    public void veryMessyThumbnailUrl() throws Exception {
-        item.extractThumbnailUrl("<img    src=\"http://radio-t.com/thumbnail.jpg\" alt=\"thumbnail\" width=\"100\"/>");
+    public void thumbnailUrlWithObsoleteClosingTag() throws Exception {
+        item.extractThumbnailUrl("<img src=\"http://radio-t.com/thumbnail.jpg\" >");
         assertEquals("http://radio-t.com/thumbnail.jpg", item.thumbnailUrl);
+    }
+
+    @Test
+    public void veryMessyThumbnailUrl() throws Exception {
+        String value = "<img class=\"right\" src=\"http://www.radio-t.com/images/radio-t/rt326.jpg\" width=\"150\">";
+        item.extractThumbnailUrl(value);
+        assertEquals("http://www.radio-t.com/images/radio-t/rt326.jpg", item.thumbnailUrl);
     }
 }
