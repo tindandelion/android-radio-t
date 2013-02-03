@@ -1,7 +1,6 @@
 package org.dandelion.radiot.live;
 
 import android.media.MediaPlayer;
-import android.os.AsyncTask;
 import android.os.Handler;
 import org.dandelion.radiot.live.core.AudioStream;
 
@@ -101,7 +100,7 @@ public class MediaPlayerStream implements MediaPlayer.OnPreparedListener, MediaP
 
         @Override
         public void run() {
-            player.stop();
+            player.reset();
             handler.post(new Runnable() {
                 @Override
                 public void run() {
