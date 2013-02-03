@@ -5,7 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class PodcastItem implements Cloneable, Serializable {
-    public static final Pattern THUMBNAIL_URL_PATTERN = Pattern.compile("<img\\s+src=\"(\\S+)\".*/>");
+    public static final Pattern THUMBNAIL_URL_PATTERN = Pattern.compile("<img.+src=\"(\\S+)\".*/?>");
 
     public String pubDate = "";
 	public String showNotes = "";

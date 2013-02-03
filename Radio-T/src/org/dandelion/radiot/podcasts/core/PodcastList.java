@@ -30,7 +30,9 @@ public class PodcastList implements Iterable<PodcastItem> {
     public List<String> collectThumbnails() {
         List<String> result = new ArrayList<String>();
         for (PodcastItem item : this) {
-            result.add(item.thumbnailUrl);
+            if (item.thumbnailUrl != null) {
+                result.add(item.thumbnailUrl);
+            }
         }
         return result;
     }
