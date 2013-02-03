@@ -7,5 +7,6 @@
     <color name="actionbar_text">#fff</color>
     <color name="divider">#616161</color>
     <color name="blue">#2b83cf</color>
+    <color name="light_blue">#afd4ec</color>
     <color name="red">#b7414d</color>
 </resources>
