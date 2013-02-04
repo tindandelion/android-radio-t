@@ -47,6 +47,6 @@ public class PodcastVisualTest {
 
     private PodcastVisual newVisual(PodcastItem item) {
         final Drawable thumbnail = null;
-        return new PodcastVisual(item, thumbnail);
+        return new PodcastVisual(item);
     }
 }

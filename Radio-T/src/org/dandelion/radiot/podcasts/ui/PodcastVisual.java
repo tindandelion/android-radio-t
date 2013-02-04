@@ -24,12 +24,12 @@ public class PodcastVisual {
     public Drawable thumbnail;
     private PodcastItemView assocView;
 
-    public PodcastVisual(PodcastItem p, Drawable thumbnail) {
+    public PodcastVisual(PodcastItem p) {
         this.podcast = p;
         this.number = formatNumber(p.title);
         this.pubDate = formatPubDate(p.pubDate);
         this.showNotes = extractShowNotes(p.showNotes);
-        this.thumbnail = thumbnail;
+        this.thumbnail = null;
     }
 
     public void updateThumbnail(Drawable value) {

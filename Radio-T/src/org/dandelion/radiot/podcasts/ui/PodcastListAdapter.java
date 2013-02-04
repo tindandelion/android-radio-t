@@ -16,17 +16,11 @@ import org.dandelion.radiot.podcasts.core.PodcastList;
 import org.dandelion.radiot.podcasts.loader.PodcastsConsumer;
 
 class PodcastListAdapter extends ArrayAdapter<PodcastVisual> implements PodcastsConsumer {
-    private final Drawable defaultThumbnail;
     private LayoutInflater inflater;
 
     public PodcastListAdapter(Activity activity) {
         super(activity, 0);
         this.inflater = activity.getLayoutInflater();
-        defaultThumbnail = loadDefaultThumbnail();
-    }
-
-    private Drawable loadDefaultThumbnail() {
-        return getContext().getResources().getDrawable(R.drawable.default_podcast_image);
     }
 
     @Override
@@ -62,7 +56,7 @@ class PodcastListAdapter extends ArrayAdapter<PodcastVisual> implements Podcasts
     public void updateList(PodcastList podcasts) {
         clear();
         for (PodcastItem item : podcasts) {
-            add(new PodcastVisual(item, defaultThumbnail));
+            add(new PodcastVisual(item));
         }
     }
 
