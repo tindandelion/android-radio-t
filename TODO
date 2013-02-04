@@ -30,9 +30,9 @@ Version 1.6
      DONE Testing: leaking activity instance when starting/stopping?
      DONE Visualize refresh progress
  DONE Podcast list UI to be consistent with chat UI
- * ListView.smoothScrollToPosition() in Android 2.1?
+ DONE ListView.smoothScrollToPosition() in Android 2.1?
+ DONE Cache cleanup handling
  * NullPointerException in PollingChatTranslation.appendMessages()
- * Cache cleanup handling
 
 * Debt:
  * Podcast type "audo/mpeg" appears in lots of places
