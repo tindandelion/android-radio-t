@@ -29,7 +29,7 @@ Version 1.6
      DONE Handle "disconnect" hangs
      DONE Testing: leaking activity instance when starting/stopping?
      DONE Visualize refresh progress
- * Podcast list UI to be consistent with chat UI
+ DONE Podcast list UI to be consistent with chat UI
  * ListView.smoothScrollToPosition() in Android 2.1?
  * NullPointerException in PollingChatTranslation.appendMessages()
  * Cache cleanup handling
