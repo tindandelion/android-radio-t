@@ -2,6 +2,8 @@ package org.dandelion.radiot.live.chat;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -73,5 +75,17 @@ public class HttpChatTranslationTest {
         verify(chatClient).shutdown();
     }
 
+    @Test
+    public void whenStoppedWhileRunning_DoNotNotifyListenerOfErrors() throws Exception {
+        when(chatClient.retrieveMessages("last")).then(new Answer<Void>() {
+            @Override
+            public Void answer(InvocationOnMock invocation) throws Throwable {
+                translation.stop();
+                throw new IOException();
+            }
+        });
 
+        translation.start(consumer, listener);
+        verify(listener, never()).onError();
+    }
 }
