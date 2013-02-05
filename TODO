@@ -32,8 +32,7 @@ Version 1.6
  DONE Podcast list UI to be consistent with chat UI
  DONE ListView.smoothScrollToPosition() in Android 2.1?
  DONE Cache cleanup handling
- * Connection not closing properly in Android 2.2 and lower
- * NullPointerException in PollingChatTranslation.appendMessages()
+ DONE Connection not closing properly in Android 2.2 and lower
 
 * Debt:
  * Podcast type "audo/mpeg" appears in lots of places
