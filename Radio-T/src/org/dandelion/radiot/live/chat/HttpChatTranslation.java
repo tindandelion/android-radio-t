@@ -10,22 +10,22 @@ public class HttpChatTranslation implements ChatTranslation {
     private ProgressListener progressListener;
     private final HttpChatClient chatClient;
     private boolean isActive;
-    public Scheduler pollScheduler;
-    public Scheduler.Performer poller = new Scheduler.Performer() {
+    public Scheduler refreshScheduler;
+    public Scheduler.Performer nextMessagePoller = new Scheduler.Performer() {
         @Override
         public void performAction() {
-            refresh();
+            requestNextMessages();
         }
     };
 
-    public HttpChatTranslation(String baseUrl, Scheduler pollScheduler) {
-        this(new HttpChatClient(baseUrl), pollScheduler);
+    public HttpChatTranslation(String baseUrl, Scheduler refreshScheduler) {
+        this(new HttpChatClient(baseUrl), refreshScheduler);
     }
 
-    public HttpChatTranslation(HttpChatClient chatClient, Scheduler pollScheduler) {
+    public HttpChatTranslation(HttpChatClient chatClient, Scheduler refreshScheduler) {
         this.chatClient = chatClient;
-        this.pollScheduler = pollScheduler;
-        pollScheduler.setPerformer(poller);
+        this.refreshScheduler = refreshScheduler;
+        refreshScheduler.setPerformer(nextMessagePoller);
     }
 
     @Override
@@ -33,28 +33,27 @@ public class HttpChatTranslation implements ChatTranslation {
         this.messageConsumer = consumer;
         this.progressListener = listener;
         isActive = true;
-        requestLastRecords();
+        requestLastMessages();
     }
 
-    private void requestLastRecords() {
+    private void requestLastMessages() {
         new LastRecordsRequest(this).execute();
     }
 
-    @Override
-    public void refresh() {
+    private void requestNextMessages() {
         new NextRecordsRequest(this).execute();
     }
 
     @Override
     public void stop() {
         isActive = false;
-        pollScheduler.cancel();
+        refreshScheduler.cancel();
         chatClient.shutdown();
     }
 
     private void consumeMessages(List<Message> messages) {
         messageConsumer.appendMessages(messages);
-        pollScheduler.scheduleNext();
+        refreshScheduler.scheduleNext();
     }
 
     private static abstract class ChatTranslationTask extends AsyncTask<Void, Void, List<Message>> {

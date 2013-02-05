@@ -124,11 +124,6 @@ public class LiveShowPlaybackTest extends
         }
 
         @Override
-        public void refresh() {
-
-        }
-
-        @Override
         public void stop() {
 
         }

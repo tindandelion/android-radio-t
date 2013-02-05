@@ -18,8 +18,8 @@ import static org.mockito.Mockito.*;
 public class HttpChatTranslationTest {
     private static final List<Message> MESSAGE_LIST = Collections.emptyList();
     private final HttpChatClient chatClient = mock(HttpChatClient.class);
-    private final DeterministicScheduler pollScheduler = new DeterministicScheduler();
-    private final HttpChatTranslation translation = new HttpChatTranslation(chatClient, pollScheduler);
+    private final DeterministicScheduler refreshScheduler = new DeterministicScheduler();
+    private final HttpChatTranslation translation = new HttpChatTranslation(chatClient, refreshScheduler);
     private final MessageConsumer consumer = mock(MessageConsumer.class);
     private final ProgressListener listener = mock(ProgressListener.class);
 
@@ -37,7 +37,7 @@ public class HttpChatTranslationTest {
         translation.start(consumer, listener);
 
         reset(consumer);
-        pollScheduler.performAction();
+        refreshScheduler.performAction();
         verify(consumer).appendMessages(MESSAGE_LIST);
     }
 
@@ -60,28 +60,17 @@ public class HttpChatTranslationTest {
     }
 
     @Test
-    public void onRefresh_RequestsNextMessages() throws Exception {
-        when(chatClient.retrieveMessages("next")).thenReturn(MESSAGE_LIST);
-        translation.start(consumer, listener);
-
-        reset(consumer);
-        translation.refresh();
-
-        verify(consumer).appendMessages(MESSAGE_LIST);
-    }
-
-    @Test
     public void onRefresh_SchedulesNextRefresh() throws Exception {
         when(chatClient.retrieveMessages("next")).thenReturn(MESSAGE_LIST);
 
         translation.start(consumer, listener);
 
         reset(consumer);
-        pollScheduler.performAction();
+        refreshScheduler.performAction();
         verify(consumer).appendMessages(MESSAGE_LIST);
 
         reset(consumer);
-        pollScheduler.performAction();
+        refreshScheduler.performAction();
         verify(consumer).appendMessages(MESSAGE_LIST);
     }
 
@@ -91,7 +80,7 @@ public class HttpChatTranslationTest {
 
         reset(consumer);
         when(chatClient.retrieveMessages("next")).thenThrow(IOException.class);
-        translation.refresh();
+        refreshScheduler.performAction();
 
         verify(listener).onError();
         verifyZeroInteractions(consumer);
@@ -108,7 +97,7 @@ public class HttpChatTranslationTest {
         translation.start(consumer, listener);
         translation.stop();
 
-        assertFalse(pollScheduler.isScheduled());
+        assertFalse(refreshScheduler.isScheduled());
     }
 
     @Test
@@ -134,7 +123,7 @@ public class HttpChatTranslationTest {
         translation.start(consumer, listener);
         reset(consumer);
 
-        translation.refresh();
+        refreshScheduler.performAction();
         verify(consumer, never()).appendMessages(MESSAGE_LIST);
     }
 
