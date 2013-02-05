@@ -1,6 +1,8 @@
 package org.dandelion.radiot.live.chat;
 
 import android.os.AsyncTask;
+import org.dandelion.radiot.live.schedule.Scheduler;
+
 import java.util.List;
 
 public class HttpChatTranslation implements ChatTranslation {
@@ -8,13 +10,22 @@ public class HttpChatTranslation implements ChatTranslation {
     private ProgressListener progressListener;
     private final HttpChatClient chatClient;
     private boolean isActive;
+    public Scheduler pollScheduler;
+    public Scheduler.Performer poller = new Scheduler.Performer() {
+        @Override
+        public void performAction() {
+            refresh();
+        }
+    };
 
-    public HttpChatTranslation(String baseUrl) {
-        this(new HttpChatClient(baseUrl));
+    public HttpChatTranslation(String baseUrl, Scheduler pollScheduler) {
+        this(new HttpChatClient(baseUrl), pollScheduler);
     }
 
-    public HttpChatTranslation(HttpChatClient chatClient) {
+    public HttpChatTranslation(HttpChatClient chatClient, Scheduler pollScheduler) {
         this.chatClient = chatClient;
+        this.pollScheduler = pollScheduler;
+        pollScheduler.setPerformer(poller);
     }
 
     @Override
@@ -37,7 +48,13 @@ public class HttpChatTranslation implements ChatTranslation {
     @Override
     public void stop() {
         isActive = false;
+        pollScheduler.cancel();
         chatClient.shutdown();
+    }
+
+    private void consumeMessages(List<Message> messages) {
+        messageConsumer.appendMessages(messages);
+        pollScheduler.scheduleNext();
     }
 
     private static abstract class ChatTranslationTask extends AsyncTask<Void, Void, List<Message>> {
@@ -75,7 +92,8 @@ public class HttpChatTranslation implements ChatTranslation {
         }
 
         private void consumeMessages(List<Message> messages) {
-            translation.messageConsumer.appendMessages(messages);
+            translation.consumeMessages(messages);
+
         }
 
         private void reportError() {
@@ -87,6 +105,7 @@ public class HttpChatTranslation implements ChatTranslation {
         }
 
     }
+
 
     private static class LastRecordsRequest extends ChatTranslationTask {
         public LastRecordsRequest(HttpChatTranslation translation) {

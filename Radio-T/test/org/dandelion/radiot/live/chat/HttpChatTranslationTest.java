@@ -1,5 +1,6 @@
 package org.dandelion.radiot.live.chat;
 
+import org.dandelion.radiot.live.schedule.DeterministicScheduler;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.invocation.InvocationOnMock;
@@ -9,6 +10,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
+import static org.junit.Assert.assertFalse;
 import static org.mockito.Mockito.*;
 
 @SuppressWarnings("unchecked")
@@ -16,7 +18,8 @@ import static org.mockito.Mockito.*;
 public class HttpChatTranslationTest {
     private static final List<Message> MESSAGE_LIST = Collections.emptyList();
     private final HttpChatClient chatClient = mock(HttpChatClient.class);
-    private final HttpChatTranslation translation = new HttpChatTranslation(chatClient);
+    private final DeterministicScheduler pollScheduler = new DeterministicScheduler();
+    private final HttpChatTranslation translation = new HttpChatTranslation(chatClient, pollScheduler);
     private final MessageConsumer consumer = mock(MessageConsumer.class);
     private final ProgressListener listener = mock(ProgressListener.class);
 
@@ -29,12 +32,31 @@ public class HttpChatTranslationTest {
     }
 
     @Test
+    public void onStart_SchedulesRefresh() throws Exception {
+        when(chatClient.retrieveMessages("next")).thenReturn(MESSAGE_LIST);
+        translation.start(consumer, listener);
+
+        reset(consumer);
+        pollScheduler.performAction();
+        verify(consumer).appendMessages(MESSAGE_LIST);
+    }
+
+    @Test
     public void onStart_NotifiesListener() throws Exception {
         when(chatClient.retrieveMessages("last")).thenReturn(MESSAGE_LIST);
         translation.start(consumer, listener);
 
         verify(listener).onConnecting();
         verify(listener).onConnected();
+    }
+
+    @Test
+    public void onStart_whenErrorOccurs_notifiesListener() throws Exception {
+        when(chatClient.retrieveMessages("last")).thenThrow(IOException.class);
+        translation.start(consumer, listener);
+
+        verify(listener).onError();
+        verifyZeroInteractions(consumer);
     }
 
     @Test
@@ -49,12 +71,18 @@ public class HttpChatTranslationTest {
     }
 
     @Test
-    public void onStart_whenErrorOccurs_notifiesListener() throws Exception {
-        when(chatClient.retrieveMessages("last")).thenThrow(IOException.class);
+    public void onRefresh_SchedulesNextRefresh() throws Exception {
+        when(chatClient.retrieveMessages("next")).thenReturn(MESSAGE_LIST);
+
         translation.start(consumer, listener);
 
-        verify(listener).onError();
-        verifyZeroInteractions(consumer);
+        reset(consumer);
+        pollScheduler.performAction();
+        verify(consumer).appendMessages(MESSAGE_LIST);
+
+        reset(consumer);
+        pollScheduler.performAction();
+        verify(consumer).appendMessages(MESSAGE_LIST);
     }
 
     @Test
@@ -70,9 +98,17 @@ public class HttpChatTranslationTest {
     }
 
     @Test
-    public void whenStopping_ShutsDownHttpConnection() throws Exception {
+    public void onStop_ShutsDownHttpConnection() throws Exception {
         translation.stop();
         verify(chatClient).shutdown();
+    }
+
+    @Test
+    public void onStop_CancelsScheduledRefresh() throws Exception {
+        translation.start(consumer, listener);
+        translation.stop();
+
+        assertFalse(pollScheduler.isScheduled());
     }
 
     @Test
