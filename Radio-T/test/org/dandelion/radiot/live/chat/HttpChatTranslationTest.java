@@ -76,16 +76,49 @@ public class HttpChatTranslationTest {
     }
 
     @Test
-    public void whenStoppedWhileRunning_DoNotNotifyListenerOfErrors() throws Exception {
-        when(chatClient.retrieveMessages("last")).then(new Answer<Void>() {
+    public void whenStoppedWhileStarting_DoNotNotifyListenerOfErrors() throws Exception {
+        when(chatClient.retrieveMessages("last")).then(stopAndThrowException());
+
+        translation.start(consumer, listener);
+        verify(listener, never()).onError();
+    }
+
+    @Test
+    public void whenStoppedWhileStarting_SuppressAllNotifications() throws Exception {
+        when(chatClient.retrieveMessages("last")).then(stopAndReturnMessages(MESSAGE_LIST));
+
+        translation.start(consumer, listener);
+        verify(listener, never()).onConnected();
+        verify(consumer, never()).appendMessages(MESSAGE_LIST);
+    }
+
+    @Test
+    public void whenStoppedWhileRefreshing_SuppressMessageConsuming() throws Exception {
+        when(chatClient.retrieveMessages("next")).then(stopAndReturnMessages(MESSAGE_LIST));
+        translation.start(consumer, listener);
+        reset(consumer);
+
+        translation.refresh();
+        verify(consumer, never()).appendMessages(MESSAGE_LIST);
+    }
+
+    private Answer<Void> stopAndThrowException() {
+        return new Answer<Void>() {
             @Override
             public Void answer(InvocationOnMock invocation) throws Throwable {
                 translation.stop();
                 throw new IOException();
             }
-        });
+        };
+    }
 
-        translation.start(consumer, listener);
-        verify(listener, never()).onError();
+    private Answer<List<Message>> stopAndReturnMessages(final List<Message> messages) {
+        return new Answer<List<Message>>() {
+            @Override
+            public List<Message> answer(InvocationOnMock invocation) throws Throwable {
+                translation.stop();
+                return messages;
+            }
+        };
     }
 }
