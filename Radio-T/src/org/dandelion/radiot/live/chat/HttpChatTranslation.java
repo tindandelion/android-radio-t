@@ -49,6 +49,9 @@ public class HttpChatTranslation implements ChatTranslation {
         isActive = false;
         refreshScheduler.cancel();
         chatClient.shutdown();
+
+        messageConsumer = null;
+        progressListener = null;
     }
 
     private void consumeMessages(List<Message> messages) {
