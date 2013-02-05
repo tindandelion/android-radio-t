@@ -3,6 +3,8 @@ package org.dandelion.radiot.live.chat;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 
@@ -10,12 +12,21 @@ import java.io.IOException;
 import java.util.List;
 
 public class HttpChatClient {
+    private static final int READ_TIMEOUT_MS = 20 * 1000;
+
     private final String baseUrl;
     private final DefaultHttpClient httpClient;
 
     public HttpChatClient(String baseUrl) {
         this.baseUrl = baseUrl;
-        this.httpClient = new DefaultHttpClient();
+        this.httpClient = createHttpClient();
+    }
+
+    private DefaultHttpClient createHttpClient() {
+        DefaultHttpClient client = new DefaultHttpClient();
+        HttpParams params = client.getParams();
+        HttpConnectionParams.setSoTimeout(params, READ_TIMEOUT_MS);
+        return client;
     }
 
     public List<Message> retrieveMessages(String mode) throws IOException, JSONException {
