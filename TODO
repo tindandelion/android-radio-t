@@ -9,12 +9,13 @@ Backlog:
      * Lock screen when translating chat (?)
      * Discard incorrect messages?
      * Landscape orientation ?
-     * Different sizes for tablets / phones
+
  * User topics
  * Android 4.0 UI
    * New icon with ICS guidelines
 
 Version 1.6
+ * Chat: Different font sizes for tablets / phones
  DONE Update support library
  DONE Why there are 12 KB left after clearing the cache?
  DONE Chat translation
