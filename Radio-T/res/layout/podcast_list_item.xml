@@ -13,7 +13,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        style="@style/Header.Padded"/>
+        style="@style/Header.Medium"/>
 
     <TextView
         android:id="@+id/pub_date"
@@ -22,7 +22,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignBottom="@id/number"
-        style="@style/Header.Small"/>
+        style="@style/Header.Micro"/>
 
     <ImageView
         android:id="@+id/icon"

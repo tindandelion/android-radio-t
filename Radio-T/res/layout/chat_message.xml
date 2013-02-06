@@ -15,7 +15,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        style="@style/Header.Padded"/>
+        android:textStyle="bold"
+        style="@style/Header.Small"/>
 
     <TextView
         android:id="@+id/time"
@@ -24,7 +25,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignBottom="@id/sender"
-        style="@style/Header.Small"/>
+        style="@style/Header.Micro"/>
 
     <TextView
         android:id="@+id/message"

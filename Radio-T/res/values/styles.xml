@@ -46,24 +46,30 @@
     </style>
 
     <style name="Header">
+        <item name="android:paddingLeft">6dp</item>
+        <item name="android:paddingRight">6dp</item>
+        <item name="android:gravity">center_vertical</item>
         <item name="android:background">@color/blue</item>
         <item name="android:textColor">@android:color/white</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="Header.Small">
-        <item name="android:paddingRight">6dp</item>
         <item name="android:textStyle">normal</item>
+        <item name="android:paddingBottom">1dp</item>
         <item name="android:textAppearance">@android:style/TextAppearance.Small</item>
     </style>
 
-    <style name="Header.Padded" parent="Header">
-        <item name="android:paddingLeft">6dp</item>
-        <item name="android:paddingTop">1dp</item>
-        <item name="android:paddingBottom">2dp</item>
+    <style name="Header.Micro">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
+    <style name="Header.Medium" parent="Header">
+        <item name="android:paddingTop">1dp</item>
+        <item name="android:paddingBottom">2dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAppearance">@android:style/TextAppearance.Medium</item>
+    </style>
 
     <style name="ChatMessageBody">
         <item name="android:singleLine">false</item>
