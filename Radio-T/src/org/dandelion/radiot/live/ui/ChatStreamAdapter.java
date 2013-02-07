@@ -34,6 +34,16 @@ class ChatStreamAdapter extends ArrayAdapter<Message>
     }
 
     @Override
+    public boolean areAllItemsEnabled() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled(int position) {
+        return false;
+    }
+
+    @Override
     public void appendMessages(List<Message> messages) {
         for (Message msg : messages) {
             add(msg);
