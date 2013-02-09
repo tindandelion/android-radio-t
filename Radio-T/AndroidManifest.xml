@@ -18,9 +18,7 @@
             android:name="RadiotApplication">
         <activity
                 android:name=".podcasts.ui.PodcastListActivity"
-                android:screenOrientation="portrait"
-                android:theme="@style/Theme.Radiot"
-                android:configChanges="orientation|keyboardHidden"/>
+                android:theme="@style/Theme.Radiot"/>
         <activity
                 android:name=".podcasts.download.FakeDownloaderActivity"
                 android:screenOrientation="portrait"
