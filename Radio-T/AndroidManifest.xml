@@ -33,7 +33,6 @@
         <activity
                 android:name=".home_screen.AboutAppActivity"
                 android:label="@string/about_app_title"
-                android:screenOrientation="portrait"
                 android:theme="@style/Theme.Radiot"/>
         <activity
                 android:name=".home_screen.HomeScreenActivity"

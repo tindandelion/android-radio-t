@@ -14,7 +14,9 @@ Backlog:
 
 Version 1.7:
  * Landscape orientation
-   * Tagline on a main screen should show single-line if possible
+   * Main screen: Tagline should show single-line if possible
+   * About screen: The layout is corrupted badly
+   * About screen: Feedback button should not stretch so widely
  * Podcast list: do not clear cache if download error occurs
  * Podcast list: Better error explanation?
  * Explore Google Analytics
