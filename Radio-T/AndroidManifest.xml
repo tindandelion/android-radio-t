@@ -28,7 +28,6 @@
         <activity
                 android:name=".live.ui.LiveShowActivity"
                 android:label="@string/live_show_title"
-                android:screenOrientation="portrait"
                 android:theme="@style/Theme.Radiot"/>
         <activity
                 android:name=".home_screen.AboutAppActivity"
