@@ -3,37 +3,20 @@ Backlog:
  * Live show: graceful process termination
  * Downloading: Respect background data loading settings
  * Downloading: Warn a user if a file already exists
- * Podcast list: Better error explanation?
- * Podcast list: do not clear cache if download error occurs
  * Chat translation:
      * Lock screen when translating chat (?)
      * Discard incorrect messages?
-     * Landscape orientation ?
      * Different font sizes for tablets / phones
 
  * User topics
  * Android 4.0 UI
    * New icon with ICS guidelines
 
-Version 1.6
- DONE Update support library
- DONE Why there are 12 KB left after clearing the cache?
- DONE Chat translation
-     DONE Handling cookies
-     DONE Enlarge chat list space
-     DONE Refreshing chat
-     DONE Close chat connections when stopping chat fragment
-     DONE Testing for incorrect incoming data
-     DONE Error when restoring chat from background
-     DONE Testing: chat list performance?
-     DONE Deal with pause/resume
-     DONE Handle "disconnect" hangs
-     DONE Testing: leaking activity instance when starting/stopping?
-     DONE Visualize refresh progress
- DONE Podcast list UI to be consistent with chat UI
- DONE ListView.smoothScrollToPosition() in Android 2.1?
- DONE Cache cleanup handling
- DONE Connection not closing properly in Android 2.2 and lower
+Version 1.7:
+ * Landscape orientation
+ * Podcast list: do not clear cache if download error occurs
+ * Podcast list: Better error explanation?
+ * Explore Google Analytics
 
 * Debt:
  * Podcast type "audo/mpeg" appears in lots of places
