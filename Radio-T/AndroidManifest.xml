@@ -38,7 +38,6 @@
         <activity
                 android:name=".home_screen.HomeScreenActivity"
                 android:theme="@style/Theme.RadiotHome"
-                android:screenOrientation="portrait"
                 android:launchMode="singleTask">
             <intent-filter>
                 <action
