@@ -6,8 +6,9 @@
 
     <RelativeLayout
         android:id="@+id/app_info"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="fill_parent"
+        android:layout_centerInParent="true"
         android:layout_above="@+id/feedback_button">
 
         <LinearLayout

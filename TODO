@@ -17,9 +17,8 @@ Version 1.6.1:
 
 Version 1.7:
  * Landscape orientation
+    DONE About screen: The layout is corrupted badly
    * Main screen: Tagline should show single-line if possible
-   * About screen: The layout is corrupted badly
-   * About screen: Feedback button should not stretch so widely
    * Live show: Exception in ViewFlipper for Android 2.1 (only?)
    * Live show: Playback control must be narrower
    * Live show: Chat must not reconnect when changing orientation
