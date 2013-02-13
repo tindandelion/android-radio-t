@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+    <org.dandelion.radiot.live.ui.TimerView
+        android:id="@+id/live_timer_label"
+        android:layout_width="144dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:textStyle="bold"
+        android:textSize="36dp"
+        android:gravity="center"
+        android:typeface="sans"/>
+
+    <View
+        style="@style/DividerVertical"
+        android:layout_toRightOf="@id/live_timer_label"/>
+
+
+    <ImageButton
+        android:id="@+id/btn_toggle_live_playback"
+        android:layout_width="144dp"
+        android:layout_height="fill_parent"
+        android:layout_alignParentRight="true"/>
+
+    <View
+        style="@style/DividerVertical"
+        android:layout_toLeftOf="@id/btn_toggle_live_playback"/>
+
+    <TextView
+        android:id="@+id/playback_state_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/live_timer_label"
+        android:layout_toLeftOf="@id/btn_toggle_live_playback"
+        android:layout_centerVertical="true"
+        android:textAppearance="@android:style/TextAppearance.Medium"
+        android:gravity="center_horizontal"/>
+
+</RelativeLayout>
