@@ -5,4 +5,5 @@
     <dimen name="button_text_size">25sp</dimen>
     <dimen name="divider_margin">7dp</dimen>
     <dimen name="logo_text_padding_bottom">5dp</dimen>
+    <dimen name="playback_control_height">72dp</dimen>
 </resources>
