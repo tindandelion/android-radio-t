@@ -15,10 +15,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@id/central_divider"
-        android:textStyle="bold"
-        android:textSize="36dp"
-        android:gravity="center_horizontal"
-        android:typeface="sans"/>
+        android:textSize="42dp"
+        android:includeFontPadding="false"
+        android:gravity="center"/>
 
     <TextView
         android:id="@+id/playback_state_label"

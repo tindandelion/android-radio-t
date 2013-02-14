@@ -1,6 +1,7 @@
 package org.dandelion.radiot.live.ui;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.ImageButton;
@@ -26,6 +27,15 @@ public class PlaybackControlView extends RelativeLayout implements LiveShowState
         button = (ImageButton) findViewById(R.id.btn_toggle_live_playback);
         status = (TextView) findViewById(R.id.playback_state_label);
         timer = (TimerView) findViewById(R.id.live_timer_label);
+        initViews();
+    }
+
+    private void initViews() {
+        timer.setTypeface(robotoLight());
+    }
+
+    private Typeface robotoLight() {
+        return Typeface.createFromAsset(getContext().getAssets(), "fonts/Roboto-Light.ttf");
     }
 
     private String[] initStatusLabels() {

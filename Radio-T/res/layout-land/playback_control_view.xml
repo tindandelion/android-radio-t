@@ -10,10 +10,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:textStyle="bold"
-        android:textSize="36dp"
-        android:gravity="center"
-        android:typeface="sans"/>
+        android:textSize="42dp"
+        android:includeFontPadding="false"
+        android:lineSpacingExtra="0dp"
+        android:gravity="center"/>
 
     <View
         style="@style/DividerVertical"
