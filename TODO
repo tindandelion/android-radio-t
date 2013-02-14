@@ -12,8 +12,19 @@ Backlog:
  * Android 4.0 UI
    * New icon with ICS guidelines
 
+Version 1.6.1:
+ * Bug: Chat reconnects when changing screen orientation
+
 Version 1.7:
  * Landscape orientation
+   DONE About screen: The layout is corrupted badly
+   DONE Live show: Playback control must be narrower
+   DONE Live show: Fonts
+   DONE Live show: Exception in ViewFlipper for Android 2.1 (only?)
+   * Live show: Chat must not reconnect when changing orientation
+   * Podcast list: Flickers when changing orientation (due to loading all stuff)
+   * Main screen: Tagline should show single-line if possible
+
  * Podcast list: do not clear cache if download error occurs
  * Podcast list: Better error explanation?
  * Explore Google Analytics

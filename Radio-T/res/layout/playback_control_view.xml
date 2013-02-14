@@ -1,39 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-       android:layout_width="fill_parent"
-       android:layout_height="fill_parent"
-       android:orientation="horizontal">
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
 
-    <LinearLayout
-        android:id="@+id/playback_status"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical"
-        android:layout_weight="1">
+    <View
+        style="@style/DividerVertical"
+        android:id="@+id/central_divider"
+        android:layout_centerHorizontal="true"/>
 
-        <org.dandelion.radiot.live.ui.TimerView
-            android:id="@+id/live_timer_label"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="36dp"
-            android:gravity="center_horizontal"
-            android:typeface="sans"/>
+    <org.dandelion.radiot.live.ui.TimerView
+        android:id="@+id/live_timer_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@id/central_divider"
+        android:textSize="42dp"
+        android:includeFontPadding="false"
+        android:gravity="center"/>
 
-        <TextView
-            android:id="@+id/playback_state_label"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="@android:style/TextAppearance.Small"
-            android:gravity="center_horizontal"/>
-    </LinearLayout>
-
-    <View style="@style/DividerVertical"/>
+    <TextView
+        android:id="@+id/playback_state_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/live_timer_label"
+        android:layout_toLeftOf="@id/central_divider"
+        android:textAppearance="@android:style/TextAppearance.Small"
+        android:gravity="center_horizontal"/>
 
     <ImageButton
         android:id="@+id/btn_toggle_live_playback"
+        android:layout_width="wrap_content"
         android:layout_height="fill_parent"
-        android:layout_width="fill_parent"
-        android:layout_weight="1"/>
+        android:layout_toRightOf="@id/central_divider"
+        android:layout_alignParentRight="true"/>
 </merge>

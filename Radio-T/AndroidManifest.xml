@@ -18,28 +18,21 @@
             android:name="RadiotApplication">
         <activity
                 android:name=".podcasts.ui.PodcastListActivity"
-                android:screenOrientation="portrait"
-                android:theme="@style/Theme.Radiot"
-                android:configChanges="orientation|keyboardHidden"/>
+                android:theme="@style/Theme.Radiot"/>
         <activity
                 android:name=".podcasts.download.FakeDownloaderActivity"
-                android:screenOrientation="portrait"
                 android:theme="@style/Theme.RadiotHome"/>
         <activity
                 android:name=".live.ui.LiveShowActivity"
                 android:label="@string/live_show_title"
-                android:screenOrientation="portrait"
-                android:configChanges="orientation|keyboardHidden"
                 android:theme="@style/Theme.Radiot"/>
         <activity
                 android:name=".home_screen.AboutAppActivity"
                 android:label="@string/about_app_title"
-                android:screenOrientation="portrait"
                 android:theme="@style/Theme.Radiot"/>
         <activity
                 android:name=".home_screen.HomeScreenActivity"
                 android:theme="@style/Theme.RadiotHome"
-                android:screenOrientation="portrait"
                 android:launchMode="singleTask">
             <intent-filter>
                 <action

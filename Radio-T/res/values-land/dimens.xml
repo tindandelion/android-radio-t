@@ -1,0 +1,3 @@
+<resources>
+    <dimen name="playback_control_height">50dp</dimen>
+</resources>
