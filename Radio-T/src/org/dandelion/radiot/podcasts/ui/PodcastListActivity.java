@@ -65,7 +65,7 @@ public class PodcastListActivity extends CustomTitleActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		client.refreshFromCache();
+		client.populateData();
 	}
 
     @Override
@@ -86,7 +86,7 @@ public class PodcastListActivity extends CustomTitleActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.refresh:
-            client.refreshFromServer();
+            client.refreshData();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

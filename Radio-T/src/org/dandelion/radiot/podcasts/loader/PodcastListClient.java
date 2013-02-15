@@ -23,12 +23,12 @@ public class PodcastListClient {
         this.podcastsCache = podcastsCache;
     }
 
-    public void refreshFromServer() {
+    public void refreshData() {
         podcastsCache.reset();
         startRefreshTask();
     }
 
-    public void refreshFromCache() {
+    public void populateData() {
         startRefreshTask();
     }
 
