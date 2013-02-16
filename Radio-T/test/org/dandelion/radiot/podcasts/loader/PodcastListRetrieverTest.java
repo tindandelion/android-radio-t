@@ -8,8 +8,8 @@ import org.mockito.InOrder;
 import static org.mockito.Mockito.*;
 
 public class PodcastListRetrieverTest {
-    private final PodcastList cachedList = mock(PodcastList.class, "Cached list");
-    private final PodcastList remoteList = mock(PodcastList.class, "Remote list");
+    private final PodcastList cachedList = mock(PodcastList.class, "cached list");
+    private final PodcastList remoteList = mock(PodcastList.class, "remote list");
 
     private final PodcastsProvider provider = mock(PodcastsProvider.class);
     private final PodcastsCache cache = mock(PodcastsCache.class);
@@ -19,7 +19,7 @@ public class PodcastListRetrieverTest {
     @Test
     public void whenCacheHasFreshData_retrievesDataFromCacheAndNotBotherServer() throws Exception {
         cacheHasFreshData();
-        retriever.retrieveTo(consumer);
+        retriever.retrieveTo(consumer, false);
         verify(consumer).updateList(cachedList);
         verify(provider, never()).retrieve();
     }
@@ -28,7 +28,7 @@ public class PodcastListRetrieverTest {
     public void whenCacheHasInvalidData_populatesDataFromCacheFirstAndThenFromServer() throws Exception {
         cacheHasInvalidData();
 
-        retriever.retrieveTo(consumer);
+        retriever.retrieveTo(consumer, false);
 
         InOrder order = inOrder(consumer);
         order.verify(consumer).updateList(cachedList);
@@ -38,7 +38,7 @@ public class PodcastListRetrieverTest {
     @Test
     public void whenTheCacheHasInvalidData_updatesItWithNewData() throws Exception {
         cacheHasInvalidData();
-        retriever.retrieveTo(consumer);
+        retriever.retrieveTo(consumer, false);
         verify(cache).updateWith(remoteList);
     }
 
@@ -49,6 +49,7 @@ public class PodcastListRetrieverTest {
         retriever.retrieveTo(consumer, true);
 
         verify(cache).updateWith(remoteList);
+        verify(consumer, never()).updateList(cachedList);
         verify(consumer).updateList(remoteList);
     }
 

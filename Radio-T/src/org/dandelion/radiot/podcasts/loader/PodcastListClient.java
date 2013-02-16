@@ -12,15 +12,13 @@ public class PodcastListClient {
     private ThumbnailProvider thumbnails;
 
     private UpdateTask task;
-    private PodcastsCache podcastsCache;
-    private PodcastsProvider podcasts;
     private ThumbnailCache thumbnailsCache;
+    private final PodcastListRetriever podcastRetriever;
 
     public PodcastListClient(PodcastsProvider podcasts, PodcastsCache podcastsCache, ThumbnailProvider thumbnails, ThumbnailCache thumbnalsCache) {
         this.thumbnails = thumbnails;
         this.thumbnailsCache = thumbnalsCache;
-        this.podcasts = podcasts;
-        this.podcastsCache = podcastsCache;
+        this.podcastRetriever = new PodcastListRetriever(podcasts, podcastsCache);
     }
 
     public void refreshData() {
@@ -82,7 +80,7 @@ public class PodcastListClient {
         }
 
         private void retrievePodcastList(Boolean forceRefresh) throws Exception {
-            new PodcastListRetriever(podcasts, podcastsCache).retrieveTo(this, forceRefresh);
+            podcastRetriever.retrieveTo(this, forceRefresh);
         }
 
         private void retrieveThumbnails() {

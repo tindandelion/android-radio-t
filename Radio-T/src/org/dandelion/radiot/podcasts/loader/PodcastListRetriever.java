@@ -26,13 +26,6 @@ public class PodcastListRetriever {
         consumer.updateList(pl);
     }
 
-    public void retrieveTo(PodcastsConsumer consumer) throws Exception {
-        populateCachedDataTo(consumer);
-        if (mustRefresh()) {
-            obtainNewDataTo(consumer);
-        }
-    }
-
     public void retrieveTo(PodcastsConsumer consumer, Boolean forceRefresh) throws Exception {
         if (!forceRefresh) {
             populateCachedDataTo(consumer);
