@@ -66,7 +66,7 @@ public class PodcastListClientTest {
 
         client.refreshData();
 
-        assertThat(podcastsCache.cachedData, equalTo(serverList));
+        assertThat(podcastsCache.cachedData, equalTo(cachedList));
     }
 
     @Before

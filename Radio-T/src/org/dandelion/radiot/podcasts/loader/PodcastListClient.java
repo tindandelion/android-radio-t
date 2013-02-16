@@ -24,12 +24,11 @@ public class PodcastListClient {
     }
 
     public void refreshData() {
-        podcastsCache.reset();
-        startRefreshTask();
+        startRefreshTask(true);
     }
 
     public void populateData() {
-        startRefreshTask();
+        startRefreshTask(false);
     }
 
     public void taskFinished() {
@@ -58,23 +57,23 @@ public class PodcastListClient {
         return task != null;
     }
 
-    protected void startRefreshTask() {
+    protected void startRefreshTask(boolean forceRefresh) {
         if (!isInProgress()) {
             task = new UpdateTask();
-            task.execute();
+            task.execute(forceRefresh);
         }
     }
 
-    class UpdateTask extends AsyncTask<Void, Runnable, Exception> implements PodcastsConsumer {
+    class UpdateTask extends AsyncTask<Boolean, Runnable, Exception> implements PodcastsConsumer {
         private PodcastList list;
 
         public UpdateTask() {
         }
 
         @Override
-        protected Exception doInBackground(Void... params) {
+        protected Exception doInBackground(Boolean... params) {
             try {
-                retrievePodcastList();
+                retrievePodcastList(params[0]);
                 retrieveThumbnails();
             } catch (Exception e) {
                 return e;
@@ -82,7 +81,10 @@ public class PodcastListClient {
             return null;
         }
 
-        private void retrievePodcastList() throws Exception {
+        private void retrievePodcastList(Boolean forceRefresh) throws Exception {
+            if (forceRefresh) {
+                podcastsCache.reset();
+            }
             new PodcastListRetriever(podcasts, podcastsCache, this).retrieve();
         }
 
