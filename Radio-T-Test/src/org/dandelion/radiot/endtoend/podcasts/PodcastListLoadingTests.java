@@ -162,13 +162,13 @@ public class PodcastListLoadingTests
         private static final String THUMBNAIL_URL = TestRssServer.addressForUrl("");
         private static final int CACHE_FORMAT_VERSION = 0;
         private static final int LONG_AGO = 0;
-        private PodcastsCache localCache;
+        private FilePodcastsCache localCache;
         private Context context;
 
         public TestPodcastsPlatform(Context context) {
             this.context = context;
             localCache = new FilePodcastsCache(cacheFile(), CACHE_FORMAT_VERSION);
-            localCache.reset();
+            localCache.clear();
         }
 
         private TestableCacheFile cacheFile() {

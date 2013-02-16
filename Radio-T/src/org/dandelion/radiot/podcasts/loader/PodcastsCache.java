@@ -6,5 +6,4 @@ public interface PodcastsCache {
     boolean hasValidData();
     PodcastList getData();
     void updateWith(PodcastList data);
-    void reset();
 }

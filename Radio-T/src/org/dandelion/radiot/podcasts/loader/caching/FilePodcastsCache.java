@@ -28,8 +28,7 @@ public class FilePodcastsCache implements PodcastsCache {
         this.listener = listener;
     }
 
-    @Override
-    public void reset() {
+    public void clear() {
         cacheFile.delete();
     }
 

@@ -34,16 +34,10 @@ public class FilePodcastsCacheTest extends FilesystemTestCase {
         assertThat(restored.title, equalTo(original.title));
     }
 
-    public void testWhenCacheIsReset_ShouldLoseData() throws Exception {
+    public void testWhenCacheIsCleared_ShouldLoseData() throws Exception {
         cache.updateWith(aListWith(aPodcastItem()));
 
-        cache.reset();
-        assertThat(cache, not(hasValidData()));
-    }
-
-    public void testResettingCacheWithNoData_IsNotAnError() throws Exception {
-        cache.reset();
-        cache.reset();
+        cache.clear();
         assertThat(cache, not(hasValidData()));
     }
 
