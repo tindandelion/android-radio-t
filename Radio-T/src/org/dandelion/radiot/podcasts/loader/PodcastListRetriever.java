@@ -5,33 +5,41 @@ import org.dandelion.radiot.podcasts.core.PodcastList;
 public class PodcastListRetriever {
     private final PodcastsProvider provider;
     private PodcastsCache cache;
-    private PodcastsConsumer consumer;
 
-    public PodcastListRetriever(PodcastsProvider provider, PodcastsCache cache, PodcastsConsumer consumer) {
+    public PodcastListRetriever(PodcastsProvider provider, PodcastsCache cache) {
         this.provider = provider;
         this.cache = cache;
-        this.consumer = consumer;
     }
 
-    public void retrieve() throws Exception {
-        populateCachedData();
-        if (shouldRefresh()) {
-            obtainNewData();
-        }
-    }
-
-    private boolean shouldRefresh() {
+    private boolean mustRefresh() {
         return !cache.hasValidData();
     }
 
-    private void populateCachedData() {
+    private void populateCachedDataTo(PodcastsConsumer consumer) {
         PodcastList pl = cache.getData();
         consumer.updateList(pl);
     }
 
-    private void obtainNewData() throws Exception {
+    private void obtainNewDataTo(PodcastsConsumer consumer) throws Exception {
         PodcastList pl = provider.retrieve();
         cache.updateWith(pl);
         consumer.updateList(pl);
+    }
+
+    public void retrieveTo(PodcastsConsumer consumer) throws Exception {
+        populateCachedDataTo(consumer);
+        if (mustRefresh()) {
+            obtainNewDataTo(consumer);
+        }
+    }
+
+    public void retrieveTo(PodcastsConsumer consumer, Boolean forceRefresh) throws Exception {
+        if (!forceRefresh) {
+            populateCachedDataTo(consumer);
+        }
+
+        if (forceRefresh || mustRefresh()) {
+            obtainNewDataTo(consumer);
+        }
     }
 }

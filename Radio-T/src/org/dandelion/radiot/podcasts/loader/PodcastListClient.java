@@ -82,10 +82,7 @@ public class PodcastListClient {
         }
 
         private void retrievePodcastList(Boolean forceRefresh) throws Exception {
-            if (forceRefresh) {
-                podcastsCache.reset();
-            }
-            new PodcastListRetriever(podcasts, podcastsCache, this).retrieve();
+            new PodcastListRetriever(podcasts, podcastsCache).retrieveTo(this, forceRefresh);
         }
 
         private void retrieveThumbnails() {

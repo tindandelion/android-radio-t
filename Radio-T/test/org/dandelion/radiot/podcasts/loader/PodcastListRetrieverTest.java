@@ -14,21 +14,21 @@ public class PodcastListRetrieverTest {
     private final PodcastsProvider provider = mock(PodcastsProvider.class);
     private final PodcastsCache cache = mock(PodcastsCache.class);
     private final PodcastsConsumer consumer = mock(PodcastsConsumer.class);
-    private final PodcastListRetriever retriever = new PodcastListRetriever(provider, cache, consumer);
+    private final PodcastListRetriever retriever = new PodcastListRetriever(provider, cache);
 
     @Test
-    public void whenCacheHasFreshData_RetrieveDataFromCacheAndNotBotherServer() throws Exception {
+    public void whenCacheHasFreshData_retrievesDataFromCacheAndNotBotherServer() throws Exception {
         cacheHasFreshData();
-        retriever.retrieve();
+        retriever.retrieveTo(consumer);
         verify(consumer).updateList(cachedList);
-        verifyZeroInteractions(provider);
+        verify(provider, never()).retrieve();
     }
 
     @Test
-    public void whenCacheHasInvalidData_ShouldPopulateDataFromCacheFirstAndThenFromServer() throws Exception {
+    public void whenCacheHasInvalidData_populatesDataFromCacheFirstAndThenFromServer() throws Exception {
         cacheHasInvalidData();
 
-        retriever.retrieve();
+        retriever.retrieveTo(consumer);
 
         InOrder order = inOrder(consumer);
         order.verify(consumer).updateList(cachedList);
@@ -36,10 +36,20 @@ public class PodcastListRetrieverTest {
     }
 
     @Test
-    public void whenTheCacheHasInvalidData_ShouldUpdateItWithNewData() throws Exception {
+    public void whenTheCacheHasInvalidData_updatesItWithNewData() throws Exception {
         cacheHasInvalidData();
-        retriever.retrieve();
+        retriever.retrieveTo(consumer);
         verify(cache).updateWith(remoteList);
+    }
+
+    @Test
+    public void whenForcedToRefreshFromServer_bypassesCachedData() throws Exception {
+        cacheHasFreshData();
+
+        retriever.retrieveTo(consumer, true);
+
+        verify(cache).updateWith(remoteList);
+        verify(consumer).updateList(remoteList);
     }
 
     @Before
