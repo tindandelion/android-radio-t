@@ -28,10 +28,6 @@ public class FilePodcastsCache implements PodcastsCache {
         this.listener = listener;
     }
 
-    public void clear() {
-        cacheFile.delete();
-    }
-
     @Override
     public PodcastList getData() {
         try {

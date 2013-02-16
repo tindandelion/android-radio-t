@@ -162,34 +162,30 @@ public class PodcastListLoadingTests
         private static final String THUMBNAIL_URL = TestRssServer.addressForUrl("");
         private static final int CACHE_FORMAT_VERSION = 0;
         private static final int LONG_AGO = 0;
+        private final TestableCacheFile cacheFile;
         private FilePodcastsCache localCache;
-        private Context context;
 
         public TestPodcastsPlatform(Context context) {
-            this.context = context;
-            localCache = new FilePodcastsCache(cacheFile(), CACHE_FORMAT_VERSION);
-            localCache.clear();
-        }
-
-        private TestableCacheFile cacheFile() {
-            return new TestableCacheFile(context.getCacheDir(), CACHE_FILENAME);
+            cacheFile = new TestableCacheFile(context.getCacheDir(), CACHE_FILENAME);
+            cacheFile.delete();
+            localCache = new FilePodcastsCache(cacheFile, CACHE_FORMAT_VERSION);
         }
 
         @Override
         public PodcastListClient newClientForShow(String name) {
-            RssFeedProvider rssProvider = new RssFeedProvider(RSS_URL);
-            ThumbnailProvider thumbnails = new HttpThumbnailProvider(THUMBNAIL_URL);
-            ThumbnailCache thumbnalsCache = new NullThumbnailCache();
-            return new PodcastListClient(rssProvider, localCache, thumbnails, thumbnalsCache);
+            return new PodcastListClient(
+                    new RssFeedProvider(RSS_URL),
+                    localCache,
+                    new HttpThumbnailProvider(THUMBNAIL_URL),
+                    new NullThumbnailCache());
         }
 
         public void saveInLocalCache(PodcastList pl) {
             localCache.updateWith(pl);
         }
 
-        @SuppressWarnings("ResultOfMethodCallIgnored")
         public void expireCache() {
-            cacheFile().setLastModified(LONG_AGO);
+            cacheFile.setLastModified(LONG_AGO);
         }
 
         private static class NullThumbnailCache implements ThumbnailCache {
