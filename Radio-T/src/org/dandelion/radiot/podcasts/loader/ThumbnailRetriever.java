@@ -12,20 +12,18 @@ public class ThumbnailRetriever {
 
     private ThumbnailCache cache;
     private ThumbnailProvider provider;
-    private PodcastsConsumer consumer;
 
-    public ThumbnailRetriever(ThumbnailProvider provider, ThumbnailCache cache, PodcastsConsumer consumer) {
+    public ThumbnailRetriever(ThumbnailProvider provider, ThumbnailCache cache) {
         this.provider = provider;
         this.cache = cache;
-        this.consumer = consumer;
     }
 
-    public void retrieve(PodcastList pl, Controller controller) {
-        PodcastList toDownload = retrieveCached(pl);
-        downloadRemote(toDownload, controller);
+    public void retrieve(PodcastList pl, PodcastsConsumer consumer, Controller controller) {
+        PodcastList toDownload = retrieveCached(pl, consumer);
+        downloadRemote(toDownload, controller, consumer);
     }
 
-    private void downloadRemote(PodcastList items, Controller controller) {
+    private void downloadRemote(PodcastList items, Controller controller, PodcastsConsumer consumer) {
         for (PodcastItem pi : items) {
             byte[] thumbnail = downloadByUrl(pi.thumbnailUrl);
             consumer.updateThumbnail(pi, thumbnail);
@@ -35,17 +33,17 @@ public class ThumbnailRetriever {
         }
     }
 
-    private PodcastList retrieveCached(PodcastList pl) {
+    private PodcastList retrieveCached(PodcastList pl, PodcastsConsumer consumer) {
         PodcastList cacheMisses = new PodcastList();
         for (PodcastItem pi : pl) {
             if (pi.hasThumbnail()) {
-                tryToFetchFromCache(pi, cacheMisses);
+                tryToFetchFromCache(pi, cacheMisses, consumer);
             }
         }
         return cacheMisses;
     }
 
-    private void tryToFetchFromCache(PodcastItem pi, PodcastList cacheMisses) {
+    private void tryToFetchFromCache(PodcastItem pi, PodcastList cacheMisses, PodcastsConsumer consumer) {
         byte[] thumbnail = cache.lookup(pi.thumbnailUrl);
         if (thumbnail == null) {
             cacheMisses.add(pi);

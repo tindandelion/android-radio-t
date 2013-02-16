@@ -18,15 +18,15 @@ public class ThumbnailRetrieverTest {
     private final PodcastsConsumer consumer = mock(PodcastsConsumer.class);
     private final ThumbnailCache cache = mock(ThumbnailCache.class);
     private final PodcastList list = anEmptyList();
-    private ThumbnailRetriever retriever = new ThumbnailRetriever(provider, cache, consumer);
+    private ThumbnailRetriever retriever = new ThumbnailRetriever(provider, cache);
 
     @Test
-    public void whenThumbnailIsCached_WillFetchItFromCache() throws Exception {
+    public void whenThumbnailIsCached_willFetchItFromCache() throws Exception {
         final PodcastItem item = aPodcastItem(withThumbnailUrl(CACHED_URL));
         list.add(item);
 
         thumbnailIsCached(CACHED_URL, THUMBNAIL);
-        retriever.retrieve(list, noInterrupts());
+        retriever.retrieve(list, consumer, noInterrupts());
 
         verify(cache).lookup(CACHED_URL);
         verify(consumer).updateThumbnail(item, THUMBNAIL);
@@ -38,26 +38,26 @@ public class ThumbnailRetrieverTest {
         list.add(item);
 
         thumbnailIsRemote(REMOTE_URL, THUMBNAIL);
-        retriever.retrieve(list, noInterrupts());
+        retriever.retrieve(list, consumer, noInterrupts());
 
         verify(provider).thumbnailDataFor(REMOTE_URL);
         verify(consumer).updateThumbnail(item, THUMBNAIL);
     }
 
     @Test
-    public void whenDownloadsThumbnail_WillStoreItInCache() throws Exception {
+    public void whenDownloadsThumbnail_willStoreItInCache() throws Exception {
         final PodcastItem item = aPodcastItem(withThumbnailUrl(REMOTE_URL));
         list.add(item);
 
         thumbnailIsRemote(REMOTE_URL, THUMBNAIL);
-        retriever.retrieve(list, noInterrupts());
+        retriever.retrieve(list, consumer, noInterrupts());
 
         verify(provider).thumbnailDataFor(REMOTE_URL);
         verify(cache).update(REMOTE_URL, THUMBNAIL);
     }
 
     @Test
-    public void whenRetrievingThumbnails_FirstRetrieveAllCached_ThenDownloadRemotes() throws Exception {
+    public void whenRetrievingThumbnails_firstRetrieveAllCached_thenDownloadRemotes() throws Exception {
         final PodcastItem remote = aPodcastItem(withThumbnailUrl(REMOTE_URL));
         final PodcastItem cached = aPodcastItem(withThumbnailUrl(CACHED_URL));
         list.add(remote);
@@ -65,7 +65,7 @@ public class ThumbnailRetrieverTest {
 
         thumbnailIsRemote(REMOTE_URL, THUMBNAIL);
         thumbnailIsCached(CACHED_URL, THUMBNAIL);
-        retriever.retrieve(list, noInterrupts());
+        retriever.retrieve(list, consumer, noInterrupts());
 
         InOrder order = inOrder(consumer);
         order.verify(consumer).updateThumbnail(cached, THUMBNAIL);
@@ -73,10 +73,10 @@ public class ThumbnailRetrieverTest {
     }
 
     @Test
-    public void whenNoThumbnailUrl_SkipsItemEntirely() throws Exception {
+    public void whenNoThumbnailUrl_skipsItemEntirely() throws Exception {
         list.add(aPodcastItem(withThumbnailUrl(null)));
 
-        retriever.retrieve(list, noInterrupts());
+        retriever.retrieve(list, consumer, noInterrupts());
         verifyZeroInteractions(cache, provider, consumer);
     }
 

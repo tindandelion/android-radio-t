@@ -9,16 +9,13 @@ public class PodcastListClient {
     private ProgressListener progressListener = ProgressListener.Null;
     private PodcastsConsumer consumer = PodcastsConsumer.Null;
 
-    private ThumbnailProvider thumbnails;
-
     private UpdateTask task;
-    private ThumbnailCache thumbnailsCache;
     private final PodcastListRetriever podcastRetriever;
+    private final ThumbnailRetriever thumbnailRetriever;
 
-    public PodcastListClient(PodcastsProvider podcasts, PodcastsCache podcastsCache, ThumbnailProvider thumbnails, ThumbnailCache thumbnalsCache) {
-        this.thumbnails = thumbnails;
-        this.thumbnailsCache = thumbnalsCache;
-        this.podcastRetriever = new PodcastListRetriever(podcasts, podcastsCache);
+    public PodcastListClient(PodcastsProvider podcasts, PodcastsCache podcastCache, ThumbnailProvider thumbnails, ThumbnailCache thumbnailCache) {
+        podcastRetriever = new PodcastListRetriever(podcasts, podcastCache);
+        thumbnailRetriever = new ThumbnailRetriever(thumbnails, thumbnailCache);
     }
 
     public void refreshData() {
@@ -84,8 +81,7 @@ public class PodcastListClient {
         }
 
         private void retrieveThumbnails() {
-            ThumbnailRetriever retriever = new ThumbnailRetriever(thumbnails, thumbnailsCache, this);
-            retriever.retrieve(list, interrupter());
+            thumbnailRetriever.retrieve(list, this, interrupter());
         }
 
         private ThumbnailRetriever.Controller interrupter() {
