@@ -1,6 +1,5 @@
 package org.dandelion.radiot.podcasts.loader;
 
-import android.net.Uri;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -10,15 +9,10 @@ import java.io.IOException;
 
 public class HttpThumbnailProvider implements ThumbnailProvider {
     public static final int HTTP_OK = 200;
-    private String defaultHost;
-
-    public HttpThumbnailProvider(String host) {
-        this.defaultHost = host;
-    }
 
     @Override
     public byte[] thumbnailDataFor(String url) {
-        return retrieveDataFrom(constructFullUrl(url));
+        return retrieveDataFrom(url);
     }
 
 
@@ -44,12 +38,4 @@ public class HttpThumbnailProvider implements ThumbnailProvider {
         return client.execute(new HttpGet(fullUrl));
     }
 
-    private String constructFullUrl(String url) {
-        Uri uri = Uri.parse(url);
-        if (uri.isAbsolute()) {
-            return url;
-        } else {
-            return defaultHost + url;
-        }
-    }
 }

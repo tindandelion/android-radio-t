@@ -54,7 +54,7 @@ public class PodcastClientPlatform implements PodcastClientFactory {
     }
 
     protected ThumbnailProvider newThumbnailProvider(String address, LocalPodcastStorage localStorage) {
-        return new HttpThumbnailProvider(address);
+        return new HttpThumbnailProvider();
     }
 
     private ThumbnailCache newThumbnailCache(LocalPodcastStorage localStorage) {

@@ -13,7 +13,7 @@ public class HttpThumbnailProviderTest extends TestCase {
 
     @Override
     public void setUp() throws Exception {
-        thumbnails = new HttpThumbnailProvider("http://www.radio-t.com");
+        thumbnails = new HttpThumbnailProvider();
     }
 
     public void testDownloadPodcastByFullUrl() throws Exception {
@@ -21,13 +21,8 @@ public class HttpThumbnailProviderTest extends TestCase {
         assertThat(thumbnails.thumbnailDataFor(fullUrl), is(notNullValue()));
     }
 
-    public void testDownloadPodcastByPartialUrl() throws Exception {
-        final String partialUrl = "/images/radio-t/rt302.jpg";
-        assertThat(thumbnails.thumbnailDataFor(partialUrl), is(notNullValue()));
-    }
-
     public void testReturnNullIfUnableToLoadThumbnail() throws Exception {
-        final String nonExistentUrl = "/non-existent/thumbnail.jpg";
+        final String nonExistentUrl = "http://www.radio-t.com/non-existent/thumbnail.jpg";
         assertThat(thumbnails.thumbnailDataFor(nonExistentUrl), is(nullValue()));
     }
 

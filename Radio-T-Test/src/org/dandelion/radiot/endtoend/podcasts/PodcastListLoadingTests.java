@@ -59,11 +59,12 @@ public class PodcastListLoadingTests
 
     public void testGivenAFeedItemWithThumbnailLink_ShouldFirstDisplayAnItemAndThenRetrieveTheThumbnail() throws Exception {
         final String thumbnailUrl = "/images/radio-t/rt307.jpg";
+        final String fullThumbnailUrl = TestRssServer.addressForUrl(thumbnailUrl);
         final String feed = rssFeed()
                 .item(rssItem()
                         .title("Радио-Т 140")
                         .pubDate("Sun, 13 Jun 2010 01:37:22 +0000")
-                        .thumbnailUrl(thumbnailUrl))
+                        .thumbnailUrl(fullThumbnailUrl))
                 .done();
 
         app = startApplication();
@@ -159,7 +160,6 @@ public class PodcastListLoadingTests
     private static class TestPodcastsPlatform implements PodcastClientFactory {
         private static String CACHE_FILENAME = "test-show";
         private static final String RSS_URL = TestRssServer.addressForUrl("/rss");
-        private static final String THUMBNAIL_URL = TestRssServer.addressForUrl("");
         private static final int CACHE_FORMAT_VERSION = 0;
         private static final int LONG_AGO = 0;
         private final TestableCacheFile cacheFile;
@@ -176,7 +176,7 @@ public class PodcastListLoadingTests
             return new PodcastListClient(
                     new RssFeedProvider(RSS_URL),
                     localCache,
-                    new HttpThumbnailProvider(THUMBNAIL_URL),
+                    new HttpThumbnailProvider(),
                     new NullThumbnailCache());
         }
 
