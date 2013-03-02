@@ -1,5 +1,6 @@
 package org.dandelion.radiot.http;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -13,27 +14,26 @@ public class ApacheHttpClient implements HttpClient {
 
     @Override
     public String getStringContent(String url) throws IOException {
-        HttpResponse response = client.execute(new HttpGet(url));
-        checkSuccess(response);
-        return EntityUtils.toString(response.getEntity());
+        HttpEntity entity = executeRequestFor(url);
+        return EntityUtils.toString(entity);
     }
 
+
     public byte[] getByteContent(String fullUrl) throws IOException {
-        HttpResponse response = client.execute(new HttpGet(fullUrl));
-        checkSuccess(response);
-        return EntityUtils.toByteArray(response.getEntity());
+        HttpEntity entity = executeRequestFor(fullUrl);
+        return EntityUtils.toByteArray(entity);
+    }
+
+    private HttpEntity executeRequestFor(String url) throws IOException {
+        HttpResponse response = client.execute(new HttpGet(url));
+        if (!isSuccessful(response)) {
+            throw new IOException(response.getStatusLine().getReasonPhrase());
+        }
+        return response.getEntity();
     }
 
     private boolean isSuccessful(HttpResponse response) {
         return (response.getStatusLine().getStatusCode() == HTTP_OK) &&
                 (response.getEntity() != null);
     }
-
-    private void checkSuccess(HttpResponse response) throws IOException {
-        if (isSuccessful(response)) {
-            return;
-        }
-        throw new IOException();
-    }
-
 }
