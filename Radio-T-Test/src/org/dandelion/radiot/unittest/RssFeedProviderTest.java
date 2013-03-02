@@ -96,6 +96,11 @@ public class RssFeedProviderTest extends TestCase {
             return getCompleteFeed();
         }
 
+        @Override
+        public byte[] getByteContent(String url) throws IOException {
+            throw new RuntimeException("Should not implement");
+        }
+
         public void newFeedItem(String itemContent) {
             feedContent = feedContent + "<item>" + itemContent + "</item>";
         }

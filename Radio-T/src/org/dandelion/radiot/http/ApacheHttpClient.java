@@ -18,7 +18,7 @@ public class ApacheHttpClient implements HttpClient {
         return EntityUtils.toString(entity);
     }
 
-
+    @Override
     public byte[] getByteContent(String fullUrl) throws IOException {
         HttpEntity entity = executeRequestFor(fullUrl);
         return EntityUtils.toByteArray(entity);
