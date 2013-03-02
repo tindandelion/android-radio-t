@@ -10,7 +10,6 @@ import org.dandelion.radiot.home_screen.HomeScreenActivity;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.download.FakeDownloaderActivity;
 import org.dandelion.radiot.podcasts.loader.ThumbnailProvider;
-import org.dandelion.radiot.podcasts.loader.caching.LocalPodcastStorage;
 import org.dandelion.radiot.podcasts.main.PodcastClientPlatform;
 import org.dandelion.radiot.podcasts.main.PodcastsApp;
 import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
@@ -120,7 +119,7 @@ public class PodcastOperationsTest extends
     private void setupFakeLoader() {
         PodcastListActivity.clientFactory = new PodcastClientPlatform(getInstrumentation().getTargetContext()) {
             @Override
-            protected ThumbnailProvider newThumbnailProvider(String address, LocalPodcastStorage localStorage) {
+            protected ThumbnailProvider newThumbnailProvider() {
                 return new ThumbnailProvider() {
                     @Override
                     public byte[] thumbnailDataFor(String url) {

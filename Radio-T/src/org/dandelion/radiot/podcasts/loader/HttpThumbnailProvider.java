@@ -1,10 +1,13 @@
 package org.dandelion.radiot.podcasts.loader;
 
-import org.dandelion.radiot.http.ApacheHttpClient;
 import org.dandelion.radiot.http.HttpClient;
 
 public class HttpThumbnailProvider implements ThumbnailProvider {
-    private final HttpClient httpClient = new ApacheHttpClient();
+    private HttpClient httpClient;
+
+    public HttpThumbnailProvider(HttpClient httpClient) {
+        this.httpClient = httpClient;
+    }
 
     @Override
     public byte[] thumbnailDataFor(String url) {

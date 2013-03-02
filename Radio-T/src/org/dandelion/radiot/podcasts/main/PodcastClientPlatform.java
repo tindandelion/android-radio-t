@@ -1,6 +1,8 @@
 package org.dandelion.radiot.podcasts.main;
 
 import android.content.Context;
+import org.dandelion.radiot.http.ApacheHttpClient;
+import org.dandelion.radiot.http.HttpClient;
 import org.dandelion.radiot.podcasts.loader.*;
 import org.dandelion.radiot.podcasts.loader.caching.LocalPodcastStorage;
 import org.dandelion.radiot.podcasts.ui.PodcastClientFactory;
@@ -8,7 +10,6 @@ import org.dandelion.radiot.podcasts.ui.PodcastClientFactory;
 import java.util.HashMap;
 
 public class PodcastClientPlatform implements PodcastClientFactory {
-    private static final String THUMBNAIL_HOST = "http://www.radio-t.com";
 
     private static HashMap<String, PodcastProperties> shows;
 
@@ -16,7 +17,6 @@ public class PodcastClientPlatform implements PodcastClientFactory {
         shows = new HashMap<String, PodcastProperties>();
         shows.put("main-show",
                 new PodcastProperties("main-show",
-//                        "http://192.168.5.108:4567/rss"));
                         "http://feeds.rucast.net/radio-t"));
         shows.put("after-show",
                 new PodcastProperties("after-show",
@@ -45,7 +45,7 @@ public class PodcastClientPlatform implements PodcastClientFactory {
         return new PodcastListClient(
                 newFeedProvider(props.url),
                 newPodcastsCache(localStorage),
-                newThumbnailProvider(THUMBNAIL_HOST, localStorage),
+                newThumbnailProvider(),
                 newThumbnailCache(localStorage));
     }
 
@@ -53,8 +53,12 @@ public class PodcastClientPlatform implements PodcastClientFactory {
         return new RssFeedProvider(address);
     }
 
-    protected ThumbnailProvider newThumbnailProvider(String address, LocalPodcastStorage localStorage) {
-        return new HttpThumbnailProvider();
+    protected ThumbnailProvider newThumbnailProvider() {
+        return new HttpThumbnailProvider(newThumbnailClient());
+    }
+
+    private HttpClient newThumbnailClient() {
+        return new ApacheHttpClient();
     }
 
     private ThumbnailCache newThumbnailCache(LocalPodcastStorage localStorage) {

@@ -1,5 +1,6 @@
 package org.dandelion.radiot.podcasts.loader;
 
+import org.dandelion.radiot.http.HttpClient;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastList;
 
@@ -12,6 +13,10 @@ public class ThumbnailRetriever {
 
     private ThumbnailCache cache;
     private ThumbnailProvider provider;
+
+    public ThumbnailRetriever(HttpClient httpClient, ThumbnailCache cache) {
+        this(new HttpThumbnailProvider(httpClient), cache);
+    }
 
     public ThumbnailRetriever(ThumbnailProvider provider, ThumbnailCache cache) {
         this.provider = provider;

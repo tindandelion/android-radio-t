@@ -1,9 +1,12 @@
 package org.dandelion.radiot.podcasts.loader;
 
+import org.dandelion.radiot.http.HttpClient;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastList;
 import org.junit.Test;
 import org.mockito.InOrder;
+
+import java.io.IOException;
 
 import static org.dandelion.radiot.util.PodcastDataBuilder.*;
 import static org.mockito.Mockito.*;
@@ -14,11 +17,11 @@ public class ThumbnailRetrieverTest {
 
     final static byte[] THUMBNAIL = new byte[0];
 
-    private final ThumbnailProvider provider = mock(ThumbnailProvider.class);
+    private final HttpClient httpClient = mock(HttpClient.class);
     private final PodcastsConsumer consumer = mock(PodcastsConsumer.class);
     private final ThumbnailCache cache = mock(ThumbnailCache.class);
     private final PodcastList list = anEmptyList();
-    private ThumbnailRetriever retriever = new ThumbnailRetriever(provider, cache);
+    private ThumbnailRetriever retriever = new ThumbnailRetriever(httpClient, cache);
 
     @Test
     public void whenThumbnailIsCached_willFetchItFromCache() throws Exception {
@@ -40,7 +43,7 @@ public class ThumbnailRetrieverTest {
         thumbnailIsRemote(REMOTE_URL, THUMBNAIL);
         retriever.retrieve(list, consumer, noInterrupts());
 
-        verify(provider).thumbnailDataFor(REMOTE_URL);
+        verify(httpClient).getByteContent(REMOTE_URL);
         verify(consumer).updateThumbnail(item, THUMBNAIL);
     }
 
@@ -52,7 +55,7 @@ public class ThumbnailRetrieverTest {
         thumbnailIsRemote(REMOTE_URL, THUMBNAIL);
         retriever.retrieve(list, consumer, noInterrupts());
 
-        verify(provider).thumbnailDataFor(REMOTE_URL);
+        verify(httpClient).getByteContent(REMOTE_URL);
         verify(cache).update(REMOTE_URL, THUMBNAIL);
     }
 
@@ -77,16 +80,16 @@ public class ThumbnailRetrieverTest {
         list.add(aPodcastItem(withThumbnailUrl(null)));
 
         retriever.retrieve(list, consumer, noInterrupts());
-        verifyZeroInteractions(cache, provider, consumer);
+        verifyZeroInteractions(cache, httpClient, consumer);
     }
 
     private void thumbnailIsCached(String url, byte[] data) {
         when(cache.lookup(url)).thenReturn(data);
     }
 
-    private void thumbnailIsRemote(String url, byte[] data) {
+    private void thumbnailIsRemote(String url, byte[] data) throws IOException {
         when(cache.lookup(url)).thenReturn(null);
-        when(provider.thumbnailDataFor(url)).thenReturn(data);
+        when(httpClient.getByteContent(url)).thenReturn(data);
     }
 
     private ThumbnailRetriever.Controller noInterrupts() {

@@ -1,6 +1,7 @@
 package org.dandelion.radiot.integration;
 
 import junit.framework.TestCase;
+import org.dandelion.radiot.http.ApacheHttpClient;
 import org.dandelion.radiot.podcasts.loader.HttpThumbnailProvider;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -13,7 +14,7 @@ public class HttpThumbnailProviderTest extends TestCase {
 
     @Override
     public void setUp() throws Exception {
-        thumbnails = new HttpThumbnailProvider();
+        thumbnails = new HttpThumbnailProvider(new ApacheHttpClient());
     }
 
     public void testDownloadPodcastByFullUrl() throws Exception {
