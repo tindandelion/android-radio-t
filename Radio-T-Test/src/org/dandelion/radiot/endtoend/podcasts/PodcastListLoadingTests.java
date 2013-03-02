@@ -177,8 +177,8 @@ public class PodcastListLoadingTests
             return new PodcastListClient(
                     new RssFeedProvider(RSS_URL),
                     localCache,
-                    new HttpThumbnailProvider(new ApacheHttpClient()),
-                    new NullThumbnailCache());
+                    new ApacheHttpClient(), new NullThumbnailCache()
+            );
         }
 
         public void saveInLocalCache(PodcastList pl) {

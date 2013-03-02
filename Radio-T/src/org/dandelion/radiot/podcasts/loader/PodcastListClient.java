@@ -1,6 +1,7 @@
 package org.dandelion.radiot.podcasts.loader;
 
 import android.os.AsyncTask;
+import org.dandelion.radiot.http.HttpClient;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastList;
 
@@ -13,9 +14,9 @@ public class PodcastListClient {
     private final PodcastListRetriever podcastRetriever;
     private final ThumbnailRetriever thumbnailRetriever;
 
-    public PodcastListClient(PodcastsProvider podcasts, PodcastsCache podcastCache, ThumbnailProvider thumbnails, ThumbnailCache thumbnailCache) {
+    public PodcastListClient(PodcastsProvider podcasts, PodcastsCache podcastCache, HttpClient thumbnailClient, ThumbnailCache thumbnailCache) {
         podcastRetriever = new PodcastListRetriever(podcasts, podcastCache);
-        thumbnailRetriever = new ThumbnailRetriever(thumbnails, thumbnailCache);
+        thumbnailRetriever = new ThumbnailRetriever(thumbnailClient, thumbnailCache);
     }
 
     public void refreshData() {

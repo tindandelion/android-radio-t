@@ -45,19 +45,15 @@ public class PodcastClientPlatform implements PodcastClientFactory {
         return new PodcastListClient(
                 newFeedProvider(props.url),
                 newPodcastsCache(localStorage),
-                newThumbnailProvider(),
-                newThumbnailCache(localStorage));
+                newThumbnailClient(), newThumbnailCache(localStorage)
+        );
     }
 
     private PodcastsProvider newFeedProvider(String address) {
         return new RssFeedProvider(address);
     }
 
-    protected ThumbnailProvider newThumbnailProvider() {
-        return new HttpThumbnailProvider(newThumbnailClient());
-    }
-
-    private HttpClient newThumbnailClient() {
+    protected HttpClient newThumbnailClient() {
         return new ApacheHttpClient();
     }
 

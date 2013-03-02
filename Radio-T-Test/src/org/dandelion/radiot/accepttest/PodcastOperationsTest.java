@@ -7,14 +7,15 @@ import org.dandelion.radiot.accepttest.drivers.AppNavigator;
 import org.dandelion.radiot.accepttest.drivers.PodcastListUiDriver;
 import org.dandelion.radiot.accepttest.testables.*;
 import org.dandelion.radiot.home_screen.HomeScreenActivity;
+import org.dandelion.radiot.http.HttpClient;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.download.FakeDownloaderActivity;
-import org.dandelion.radiot.podcasts.loader.ThumbnailProvider;
 import org.dandelion.radiot.podcasts.main.PodcastClientPlatform;
 import org.dandelion.radiot.podcasts.main.PodcastsApp;
 import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
 
 import java.io.File;
+import java.io.IOException;
 
 public class PodcastOperationsTest extends
         ActivityInstrumentationTestCase2<HomeScreenActivity> {
@@ -119,11 +120,24 @@ public class PodcastOperationsTest extends
     private void setupFakeLoader() {
         PodcastListActivity.clientFactory = new PodcastClientPlatform(getInstrumentation().getTargetContext()) {
             @Override
-            protected ThumbnailProvider newThumbnailProvider() {
-                return new ThumbnailProvider() {
+            protected HttpClient newThumbnailClient() {
+                return new HttpClient() {
                     @Override
-                    public byte[] thumbnailDataFor(String url) {
+                    public void setReadTimeout(int millis) {
+                    }
+
+                    @Override
+                    public String getStringContent(String url) throws IOException {
+                        return null;
+                    }
+
+                    @Override
+                    public byte[] getByteContent(String url) throws IOException {
                         return new byte[0];
+                    }
+
+                    @Override
+                    public void shutdown() {
                     }
                 };
             }

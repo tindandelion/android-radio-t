@@ -15,11 +15,7 @@ public class ThumbnailRetriever {
     private ThumbnailProvider provider;
 
     public ThumbnailRetriever(HttpClient httpClient, ThumbnailCache cache) {
-        this(new HttpThumbnailProvider(httpClient), cache);
-    }
-
-    public ThumbnailRetriever(ThumbnailProvider provider, ThumbnailCache cache) {
-        this.provider = provider;
+        this.provider = new HttpThumbnailProvider(httpClient);
         this.cache = cache;
     }
 
