@@ -6,16 +6,15 @@ import org.dandelion.radiot.podcasts.core.PodcastList;
 
 public class ThumbnailRetriever {
 
-
     public interface Controller {
         boolean isInterrupted();
     }
 
+    private final HttpClient httpClient;
     private ThumbnailCache cache;
-    private HttpThumbnailProvider provider;
 
     public ThumbnailRetriever(HttpClient httpClient, ThumbnailCache cache) {
-        this.provider = new HttpThumbnailProvider(httpClient);
+        this.httpClient = httpClient;
         this.cache = cache;
     }
 
@@ -54,8 +53,13 @@ public class ThumbnailRetriever {
     }
 
     private byte[] downloadByUrl(String url) {
-        byte[] value = provider.thumbnailDataFor(url);
-        cache.update(url, value);
-        return value;
+        byte[] result;
+        try {
+            result = httpClient.getByteContent(url);
+        } catch (Exception ex) {
+            result = null;
+        }
+        cache.update(url, result);
+        return result;
     }
 }
