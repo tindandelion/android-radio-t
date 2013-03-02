@@ -33,6 +33,7 @@ public class ThumbnailRetrieverTest {
         retriever.retrieve(list, consumer, noInterrupts());
 
         verify(cache).lookup(CACHED_URL);
+        verify(httpClient, never()).getByteContent(CACHED_URL);
         verify(consumer).updateThumbnail(item, THUMBNAIL);
     }
 
@@ -85,7 +86,7 @@ public class ThumbnailRetrieverTest {
     }
 
     @Test
-    public void whenFailsToRetrieveThumbnail_setsDataToNull() throws Exception {
+    public void whenFailsToRetrieveThumbnail_doesNotProcessItem() throws Exception {
         final PodcastItem item = aPodcastItem(withThumbnailUrl(REMOTE_URL));
         list.add(item);
 
@@ -94,8 +95,8 @@ public class ThumbnailRetrieverTest {
 
         retriever.retrieve(list, consumer, noInterrupts());
 
-        verify(cache).update(REMOTE_URL, null);
-        verify(consumer).updateThumbnail(item, null);
+        verify(cache, never()).update(eq(REMOTE_URL), any(byte[].class));
+        verify(consumer, never()).updateThumbnail(eq(item), any(byte[].class));
     }
 
     private void thumbnailIsCached(String url, byte[] data) {
