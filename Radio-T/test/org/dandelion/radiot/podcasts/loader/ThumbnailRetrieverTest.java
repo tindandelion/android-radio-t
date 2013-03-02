@@ -11,6 +11,7 @@ import java.io.IOException;
 import static org.dandelion.radiot.util.PodcastDataBuilder.*;
 import static org.mockito.Mockito.*;
 
+@SuppressWarnings("unchecked")
 public class ThumbnailRetrieverTest {
     final static String REMOTE_URL = "http://radio-t.com/thumbnail1.jpg";
     final static String CACHED_URL = "http://radio-t.com/thumbnail2.jpg";
@@ -81,6 +82,20 @@ public class ThumbnailRetrieverTest {
 
         retriever.retrieve(list, consumer, noInterrupts());
         verifyZeroInteractions(cache, httpClient, consumer);
+    }
+
+    @Test
+    public void whenFailsToRetrieveThumbnail_setsDataToNull() throws Exception {
+        final PodcastItem item = aPodcastItem(withThumbnailUrl(REMOTE_URL));
+        list.add(item);
+
+        when(cache.lookup(REMOTE_URL)).thenReturn(null);
+        when(httpClient.getByteContent(REMOTE_URL)).thenThrow(IOException.class);
+
+        retriever.retrieve(list, consumer, noInterrupts());
+
+        verify(cache).update(REMOTE_URL, null);
+        verify(consumer).updateThumbnail(item, null);
     }
 
     private void thumbnailIsCached(String url, byte[] data) {
