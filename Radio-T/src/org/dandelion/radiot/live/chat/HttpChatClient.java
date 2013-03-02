@@ -1,11 +1,7 @@
 package org.dandelion.radiot.live.chat;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
-import org.apache.http.util.EntityUtils;
+import org.dandelion.radiot.http.ApacheHttpClient;
+import org.dandelion.radiot.http.HttpClient;
 import org.json.JSONException;
 
 import java.io.IOException;
@@ -15,18 +11,12 @@ public class HttpChatClient {
     private static final int READ_TIMEOUT_MS = 20 * 1000;
 
     private final String baseUrl;
-    private final DefaultHttpClient httpClient;
+    private final HttpClient client;
 
     public HttpChatClient(String baseUrl) {
         this.baseUrl = baseUrl;
-        this.httpClient = createHttpClient();
-    }
-
-    private DefaultHttpClient createHttpClient() {
-        DefaultHttpClient client = new DefaultHttpClient();
-        HttpParams params = client.getParams();
-        HttpConnectionParams.setSoTimeout(params, READ_TIMEOUT_MS);
-        return client;
+        client = new ApacheHttpClient();
+        client.setReadTimeout(READ_TIMEOUT_MS);
     }
 
     public List<Message> retrieveMessages(String mode) throws IOException, JSONException {
@@ -34,8 +24,7 @@ public class HttpChatClient {
     }
 
     private String requestMessages(String mode) throws IOException {
-        HttpResponse response = httpClient.execute(new HttpGet(chatStreamUrl(mode)));
-        return EntityUtils.toString(response.getEntity());
+        return client.getStringContent(chatStreamUrl(mode));
     }
 
     private String chatStreamUrl(String mode) {
@@ -47,6 +36,6 @@ public class HttpChatClient {
     }
 
     public void shutdown() {
-        httpClient.getConnectionManager().shutdown();
+        client.shutdown();
     }
 }

@@ -92,13 +92,23 @@ public class RssFeedProviderTest extends TestCase {
         private String feedContent = "";
 
         @Override
+        public void setReadTimeout(int millis) {
+
+        }
+
+        @Override
         public String getStringContent(String url) throws IOException {
             return getCompleteFeed();
         }
 
         @Override
         public byte[] getByteContent(String url) throws IOException {
-            throw new RuntimeException("Should not implement");
+            return null;
+        }
+
+        @Override
+        public void shutdown() {
+
         }
 
         public void newFeedItem(String itemContent) {

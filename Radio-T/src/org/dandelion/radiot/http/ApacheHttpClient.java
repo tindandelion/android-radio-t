@@ -4,13 +4,22 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 
 public class ApacheHttpClient implements HttpClient {
     private static final int HTTP_OK = 200;
-    private final DefaultHttpClient client = new DefaultHttpClient();
+
+    private DefaultHttpClient client = new DefaultHttpClient();
+
+    @Override
+    public void setReadTimeout(int millis) {
+        HttpParams params = client.getParams();
+        HttpConnectionParams.setSoTimeout(params, millis);
+    }
 
     @Override
     public String getStringContent(String url) throws IOException {
@@ -22,6 +31,11 @@ public class ApacheHttpClient implements HttpClient {
     public byte[] getByteContent(String fullUrl) throws IOException {
         HttpEntity entity = executeRequestFor(fullUrl);
         return EntityUtils.toByteArray(entity);
+    }
+
+    @Override
+    public void shutdown() {
+        client.getConnectionManager().shutdown();
     }
 
     private HttpEntity executeRequestFor(String url) throws IOException {
