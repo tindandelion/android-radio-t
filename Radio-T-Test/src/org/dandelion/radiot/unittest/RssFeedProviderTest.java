@@ -5,16 +5,13 @@ import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastList;
 import org.dandelion.radiot.podcasts.loader.RssFeedProvider;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 public class RssFeedProviderTest extends TestCase {
 	private RssFeedProvider provider;
 	private String feedContent;
 	private PodcastList parsedItems;
 	private PodcastItem firstParsedItem;
-	protected boolean streamClosed;
 
     @Override
 	protected void setUp() throws Exception {
@@ -25,17 +22,11 @@ public class RssFeedProviderTest extends TestCase {
 
 	protected RssFeedProvider createProvider() {
 		return new RssFeedProvider(null) {
-			@Override
-			protected InputStream openContentStream() throws IOException {
-				return new ByteArrayInputStream(getCompleteFeed().getBytes()) {
-					@Override
-					public void close() throws IOException {
-						super.close();
-						streamClosed = true;
-					}
-				};
-			}
-		};
+            @Override
+            protected String retrieveRssContent() throws IOException {
+                return getCompleteFeed();
+            }
+        };
 	}
 
 	public void testCreateAppropriateNumberOfPodcastItems() throws Exception {
@@ -87,12 +78,6 @@ public class RssFeedProviderTest extends TestCase {
         parseRssFeed();
         assertEquals("http://www.radio-t.com/images/radio-t/rt302.jpg", firstParsedItem.thumbnailUrl);
     }
-
-    public void testEnsureStreamIsClosed() throws Exception {
-		streamClosed = false;
-		parseRssFeed();
-		assertTrue(streamClosed);
-	}
 
 	public void testHandleParsingErrors() throws Exception {
 		newFeedItem("<number>102");

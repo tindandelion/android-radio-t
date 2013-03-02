@@ -2,14 +2,16 @@ package org.dandelion.radiot.podcasts.loader;
 
 import android.sax.*;
 import android.util.Xml;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastList;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 
 public class RssFeedProvider implements PodcastsProvider {
     private PodcastList items;
@@ -22,16 +24,18 @@ public class RssFeedProvider implements PodcastsProvider {
 
     public PodcastList retrieve() throws Exception {
 		items = new PodcastList();
-		Xml.parse(openContentStream(), Xml.Encoding.UTF_8, getContentHandler());
+        Xml.parse(retrieveRssContent(), contentHandler());
 		return items;
 	}
 
-	protected InputStream openContentStream() throws IOException {
-		URL url = new URL(address);
-		return url.openStream();
-	}
+    protected String retrieveRssContent() throws IOException {
+        DefaultHttpClient client = new DefaultHttpClient();
+        HttpGet request = new HttpGet(address);
+        HttpResponse response = client.execute(request);
+        return EntityUtils.toString(response.getEntity());
+    }
 
-	private ContentHandler getContentHandler() {
+    private ContentHandler contentHandler() {
 		RootElement root = new RootElement("rss");
 		Element channel = root.getChild("channel");
 		Element item = channel.getChild("item");
