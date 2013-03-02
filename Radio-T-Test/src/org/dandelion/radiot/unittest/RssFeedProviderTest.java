@@ -1,6 +1,7 @@
 package org.dandelion.radiot.unittest;
 
 import junit.framework.TestCase;
+import org.dandelion.radiot.http.HttpClient;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastList;
 import org.dandelion.radiot.podcasts.loader.RssFeedProvider;
@@ -8,71 +9,64 @@ import org.dandelion.radiot.podcasts.loader.RssFeedProvider;
 import java.io.IOException;
 
 public class RssFeedProviderTest extends TestCase {
-	private RssFeedProvider provider;
-	private String feedContent;
-	private PodcastList parsedItems;
+    public static final String ADDRESS = "";
+    private RssFeedProvider provider;
+    private PodcastList parsedItems;
 	private PodcastItem firstParsedItem;
+    private FakeRssClient rssClient;
+
 
     @Override
 	protected void setUp() throws Exception {
 		super.setUp();
-        provider = createProvider();
-		feedContent = "";
+        rssClient = new FakeRssClient();
+        provider = new RssFeedProvider(ADDRESS, rssClient);
 	}
 
-	protected RssFeedProvider createProvider() {
-		return new RssFeedProvider(null) {
-            @Override
-            protected String retrieveRssContent() throws IOException {
-                return getCompleteFeed();
-            }
-        };
-	}
+    public void testCreateAppropriateNumberOfPodcastItems() throws Exception {
+        rssClient.newFeedItem("");
+        rssClient.newFeedItem("");
 
-	public void testCreateAppropriateNumberOfPodcastItems() throws Exception {
-		newFeedItem("");
-		newFeedItem("");
-
-		parseRssFeed();
+        parseRssFeed();
 		assertEquals(2, parsedItems.size());
 		assertNotNull(parsedItems.first());
 	}
 
 	public void testExtractingPodcastTitle() throws Exception {
-		newFeedItem("<title>Radio 192</title>");
-		parseRssFeed();
+        rssClient.newFeedItem("<title>Radio 192</title>");
+        parseRssFeed();
         assertEquals("Radio 192", firstParsedItem.title);
 	}
 
 	public void testExtractPodcastDate() throws Exception {
-		newFeedItem("<pubDate>Sun, 13 Jun 2010 01:37:22 +0000</pubDate>");
-		parseRssFeed();
+        rssClient.newFeedItem("<pubDate>Sun, 13 Jun 2010 01:37:22 +0000</pubDate>");
+        parseRssFeed();
 		assertEquals("Sun, 13 Jun 2010 01:37:22 +0000", firstParsedItem.pubDate);
 	}
 
 	public void testExtractShowNotes() throws Exception {
-		newFeedItem("<itunes:summary>Show notes</itunes:summary>");
-		parseRssFeed();
+        rssClient.newFeedItem("<itunes:summary>Show notes</itunes:summary>");
+        parseRssFeed();
 		assertEquals("Show notes", firstParsedItem.showNotes);
 	}
 
 	public void testExtractPodcastLink() throws Exception {
-		newFeedItem("<enclosure url=\"http://podcast-link\" type=\"audio/mpeg\"/>");
-		parseRssFeed();
+        rssClient.newFeedItem("<enclosure url=\"http://podcast-link\" type=\"audio/mpeg\"/>");
+        parseRssFeed();
         assertEquals("http://podcast-link", firstParsedItem.audioUri);
 	}
 
 	public void testSkipNonAudioEnsclosures() throws Exception {
-		newFeedItem("<enclosure url=\"http://podcast-link\" type=\"audio/mpeg\"/>"
+        rssClient.newFeedItem("<enclosure url=\"http://podcast-link\" type=\"audio/mpeg\"/>"
 				+ "<enclosure url=\"http://yet-another-link\" type=\"text/xml\"/>");
 
-		parseRssFeed();
+        parseRssFeed();
 
         assertEquals("http://podcast-link", firstParsedItem.audioUri);
 	}
 
     public void testExtractThumbnailUrl() throws Exception {
-        newFeedItem("<description>" +
+        rssClient.newFeedItem("<description>" +
                 "&lt;p&gt;&lt;img src=\"http://www.radio-t.com/images/radio-t/rt302.jpg\" alt=\"\" /&gt;&lt;/p&gt;\n" +
                 "</description>");
         parseRssFeed();
@@ -80,8 +74,8 @@ public class RssFeedProviderTest extends TestCase {
     }
 
 	public void testHandleParsingErrors() throws Exception {
-		newFeedItem("<number>102");
-		try {
+        rssClient.newFeedItem("<number>102");
+        try {
 			parseRssFeed();
 		} catch (Exception e) {
 			return;
@@ -89,19 +83,27 @@ public class RssFeedProviderTest extends TestCase {
 		fail("Should have raised the exception");
 	}
 
-	private void newFeedItem(String itemContent) {
-		feedContent = feedContent + "<item>" + itemContent + "</item>";
-	}
-
-	private void parseRssFeed() throws Exception {
+    private void parseRssFeed() throws Exception {
 		parsedItems = provider.retrieve();
         firstParsedItem = parsedItems.first();
 	}
 
-	private String getCompleteFeed() {
-		return "<rss xmlns:media=\"http://search.yahoo.com/mrss/\" " +
-                "xmlns:itunes=\"http://www.itunes.com/dtds/podcast-1.0.dtd\"><channel>"
-				+ feedContent + "</channel></rss>";
-	}
+    private static class FakeRssClient implements HttpClient {
+        private String feedContent = "";
 
+        @Override
+        public String getStringContent(String url) throws IOException {
+            return getCompleteFeed();
+        }
+
+        public void newFeedItem(String itemContent) {
+            feedContent = feedContent + "<item>" + itemContent + "</item>";
+        }
+
+        public String getCompleteFeed() {
+            return "<rss xmlns:media=\"http://search.yahoo.com/mrss/\" " +
+                    "xmlns:itunes=\"http://www.itunes.com/dtds/podcast-1.0.dtd\"><channel>"
+                    + feedContent + "</channel></rss>";
+        }
+    }
 }

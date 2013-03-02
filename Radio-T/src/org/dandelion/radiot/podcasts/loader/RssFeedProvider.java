@@ -2,10 +2,8 @@ package org.dandelion.radiot.podcasts.loader;
 
 import android.sax.*;
 import android.util.Xml;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
+import org.dandelion.radiot.http.ApacheHttpClient;
+import org.dandelion.radiot.http.HttpClient;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastList;
 import org.xml.sax.Attributes;
@@ -17,9 +15,15 @@ public class RssFeedProvider implements PodcastsProvider {
     private PodcastList items;
 	private PodcastItem currentItem;
 	private String address;
+    private final HttpClient client;
 
     public RssFeedProvider(String address) {
+        this(address, new ApacheHttpClient());
+    }
+
+    public RssFeedProvider(String address, HttpClient client) {
         this.address = address;
+        this.client = client;
     }
 
     public PodcastList retrieve() throws Exception {
@@ -29,10 +33,7 @@ public class RssFeedProvider implements PodcastsProvider {
 	}
 
     protected String retrieveRssContent() throws IOException {
-        DefaultHttpClient client = new DefaultHttpClient();
-        HttpGet request = new HttpGet(address);
-        HttpResponse response = client.execute(request);
-        return EntityUtils.toString(response.getEntity());
+        return client.getStringContent(address);
     }
 
     private ContentHandler contentHandler() {
