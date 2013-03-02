@@ -16,9 +16,8 @@ Version 1.6.1:
  * Bug: Chat reconnects when changing screen orientation
 
 Version 1.7:
- * Podcast list: Better error explanation?
  * Unify HTTP data fetching (?)
- DONE Podcast list: do not clear cache if download error occurs
+ * Podcast list: Better error explanation?
  * Landscape orientation
    DONE About screen: The layout is corrupted badly
    DONE Live show: Playback control must be narrower
@@ -29,6 +28,7 @@ Version 1.7:
    * Main screen: Tagline should show single-line if possible
 
  * Explore Google Analytics
+ DONE Podcast list: do not clear cache if download error occurs
 
 * Debt:
  * Podcast type "audo/mpeg" appears in lots of places
