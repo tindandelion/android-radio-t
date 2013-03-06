@@ -22,6 +22,7 @@ Version 1.7:
    * Watch the reports
    * Check min sdk is 2.1
    * Make sure it only tracks the release versions
+   * Remove debug tag from analytics.xml
    * What's next?
 
  * Landscape orientation
