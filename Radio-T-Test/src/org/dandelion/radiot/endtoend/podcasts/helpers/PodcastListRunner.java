@@ -84,7 +84,7 @@ public class PodcastListRunner {
 
     private ListView waitForListToAppear() {
         assertThat(solo.waitForView(ListView.class), is(true));
-        return solo.getCurrentListViews().get(0);
+        return solo.getView(ListView.class, 0);
     }
 
     private Matcher<? super ListView> has(final Matcher<View> itemMatcher) {
