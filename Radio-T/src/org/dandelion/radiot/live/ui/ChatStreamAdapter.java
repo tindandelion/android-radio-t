@@ -15,12 +15,12 @@ class ChatStreamAdapter extends ArrayAdapter<Message>
         implements MessageConsumer {
 
     private final LayoutInflater inflater;
-    private final ListSizeGuard limitGuard;
+    private final int messageLimit;
 
-    public ChatStreamAdapter(Context context, int messageLimit, int shrinkSize) {
+    public ChatStreamAdapter(Context context, int messageLimit) {
         super(context, 0);
+        this.messageLimit = messageLimit;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        limitGuard = new ListSizeGuard(this, messageLimit, shrinkSize);
     }
 
     @Override
@@ -48,35 +48,22 @@ class ChatStreamAdapter extends ArrayAdapter<Message>
         for (Message msg : messages) {
             add(msg);
         }
-        limitGuard.shrink();
+        shrinkList();
     }
 
-    private static class ListSizeGuard {
-        private final ArrayAdapter adapter;
-        private final int limit;
-        private final int normalSize;
-
-        public ListSizeGuard(ArrayAdapter adapter, int limit, int normalSize) {
-            this.adapter = adapter;
-            this.limit = limit;
-            this.normalSize = normalSize;
+    private void shrinkList() {
+        if (exceedsMessageLimit()) {
+            shrinkToNormalSize();
         }
+    }
 
-        public void shrink() {
-            if (exceedsLimit()) {
-                shrinkToNormalSize();
-            }
+    private void shrinkToNormalSize() {
+        for (int shrinkCount = getCount()-messageLimit; shrinkCount > 0; shrinkCount--) {
+            remove(getItem(0));
         }
+    }
 
-        private boolean exceedsLimit() {
-            return adapter.getCount() > limit;
-        }
-
-        @SuppressWarnings("unchecked")
-        private void shrinkToNormalSize() {
-            for (int shrinkCount = adapter.getCount() - normalSize; shrinkCount > 0; shrinkCount--) {
-                adapter.remove(adapter.getItem(0));
-            }
-        }
+    private boolean exceedsMessageLimit() {
+        return getCount() > (messageLimit * 2);
     }
 }

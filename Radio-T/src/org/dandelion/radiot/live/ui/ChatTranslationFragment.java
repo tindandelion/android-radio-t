@@ -13,8 +13,7 @@ import org.dandelion.radiot.live.chat.MessageConsumer;
 
 public class ChatTranslationFragment extends ListFragment {
     public static ChatTranslation.Factory chatFactory;
-    private static final int MESSAGE_LIMIT = 60;
-    private static final int SHRINK_SIZE = 30;
+    private static final int MESSAGE_LIMIT = 30;
     private ChatStreamAdapter adapter;
     private ChatTranslation chat;
     private View errorView;
@@ -31,7 +30,7 @@ public class ChatTranslationFragment extends ListFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        adapter = new ChatStreamAdapter(getActivity(), MESSAGE_LIMIT, SHRINK_SIZE);
+        adapter = new ChatStreamAdapter(getActivity(), MESSAGE_LIMIT);
         setListAdapter(adapter);
     }
 

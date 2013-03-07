@@ -14,10 +14,9 @@ import static org.hamcrest.Matchers.equalTo;
 @RunWith(RadiotRobolectricRunner.class)
 public class ChatStreamAdapterTest {
     @Test
-    public void shrinkListWhenItOutgrowsTheLimit() throws Exception {
-        final int messageLimit = 10;
-        final int shrinkSize = 5;
-        ChatStreamAdapter adapter = new ChatStreamAdapter(new Activity(), messageLimit, shrinkSize);
+    public void whenListReachesTwiceLimitSize_shrinksListToLimit() throws Exception {
+        final int messageLimit = 5;
+        ChatStreamAdapter adapter = new ChatStreamAdapter(new Activity(), messageLimit);
 
         adapter.appendMessages(messages(5));
         assertThat(adapter.getCount(), equalTo(5));
@@ -26,7 +25,7 @@ public class ChatStreamAdapterTest {
         assertThat(adapter.getCount(), equalTo(8));
 
         adapter.appendMessages(messages(3));
-        assertThat(adapter.getCount(), equalTo(shrinkSize));
+        assertThat(adapter.getCount(), equalTo(messageLimit));
     }
 
 
