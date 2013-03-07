@@ -20,6 +20,12 @@ public class ChatTranslationFragment extends ListFragment {
     private View progressView;
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        chat = chatFactory.create();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.chat_translation, container, false);
         errorView = view.findViewById(R.id.chat_error_text);
@@ -32,16 +38,20 @@ public class ChatTranslationFragment extends ListFragment {
         super.onViewCreated(view, savedInstanceState);
         adapter = new ChatStreamAdapter(getActivity(), MESSAGE_LIMIT);
         setListAdapter(adapter);
+        chat.setProgressListener(new ChatProgressController(adapter, this));
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        chat.setProgressListener(null);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
-        chat = chatFactory.create();
-        ChatProgressController progressController = new ChatProgressController(adapter, this);
         MessageConsumer consumer = new ChatScroller(adapter, (ChatStreamView) getListView());
-        chat.start(consumer, progressController);
+        chat.start(consumer);
     }
 
     @Override

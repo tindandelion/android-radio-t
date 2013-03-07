@@ -23,6 +23,7 @@ Version 1.7:
    DONE Live show: Fonts
    DONE Live show: Exception in ViewFlipper for Android 2.1 (only?)
    * Live show: Chat must not reconnect when changing orientation
+     * NullPointerException when refreshing?
    * Podcast list: Flickers when changing orientation (due to loading all stuff)
    * Main screen: Tagline should show single-line if possible
 

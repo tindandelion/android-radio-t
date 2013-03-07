@@ -29,9 +29,13 @@ public class HttpChatTranslation implements ChatTranslation {
     }
 
     @Override
-    public void start(MessageConsumer consumer, ProgressListener listener) {
-        this.messageConsumer = consumer;
+    public void setProgressListener(ProgressListener listener) {
         this.progressListener = listener;
+    }
+
+    @Override
+    public void start(MessageConsumer consumer) {
+        this.messageConsumer = consumer;
         isActive = true;
         requestLastMessages();
     }

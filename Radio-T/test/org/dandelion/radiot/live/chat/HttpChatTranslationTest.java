@@ -1,6 +1,7 @@
 package org.dandelion.radiot.live.chat;
 
 import org.dandelion.radiot.live.schedule.DeterministicScheduler;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.invocation.InvocationOnMock;
@@ -26,7 +27,7 @@ public class HttpChatTranslationTest {
     @Test
     public void onStart_RequestsLastMessages() throws Exception {
         when(chatClient.retrieveMessages("last")).thenReturn(MESSAGE_LIST);
-        translation.start(consumer, listener);
+        translation.start(consumer);
 
         verify(consumer).appendMessages(MESSAGE_LIST);
     }
@@ -34,7 +35,7 @@ public class HttpChatTranslationTest {
     @Test
     public void onStart_SchedulesRefresh() throws Exception {
         when(chatClient.retrieveMessages("next")).thenReturn(MESSAGE_LIST);
-        translation.start(consumer, listener);
+        translation.start(consumer);
 
         reset(consumer);
         refreshScheduler.performAction();
@@ -44,7 +45,7 @@ public class HttpChatTranslationTest {
     @Test
     public void onStart_NotifiesListener() throws Exception {
         when(chatClient.retrieveMessages("last")).thenReturn(MESSAGE_LIST);
-        translation.start(consumer, listener);
+        translation.start(consumer);
 
         verify(listener).onConnecting();
         verify(listener).onConnected();
@@ -53,7 +54,7 @@ public class HttpChatTranslationTest {
     @Test
     public void onStart_whenErrorOccurs_notifiesListener() throws Exception {
         when(chatClient.retrieveMessages("last")).thenThrow(IOException.class);
-        translation.start(consumer, listener);
+        translation.start(consumer);
 
         verify(listener).onError();
         verifyZeroInteractions(consumer);
@@ -63,7 +64,7 @@ public class HttpChatTranslationTest {
     public void onRefresh_SchedulesNextRefresh() throws Exception {
         when(chatClient.retrieveMessages("next")).thenReturn(MESSAGE_LIST);
 
-        translation.start(consumer, listener);
+        translation.start(consumer);
 
         reset(consumer);
         refreshScheduler.performAction();
@@ -76,7 +77,7 @@ public class HttpChatTranslationTest {
 
     @Test
     public void onRefresh_whenErrorOccurs_NotifiesListener() throws Exception {
-        translation.start(consumer, listener);
+        translation.start(consumer);
 
         reset(consumer);
         when(chatClient.retrieveMessages("next")).thenThrow(IOException.class);
@@ -94,7 +95,7 @@ public class HttpChatTranslationTest {
 
     @Test
     public void onStop_CancelsScheduledRefresh() throws Exception {
-        translation.start(consumer, listener);
+        translation.start(consumer);
         translation.stop();
 
         assertFalse(refreshScheduler.isScheduled());
@@ -104,7 +105,7 @@ public class HttpChatTranslationTest {
     public void whenStoppedWhileStarting_DoNotNotifyListenerOfErrors() throws Exception {
         when(chatClient.retrieveMessages("last")).then(stopAndThrowException());
 
-        translation.start(consumer, listener);
+        translation.start(consumer);
         verify(listener, never()).onError();
     }
 
@@ -112,7 +113,7 @@ public class HttpChatTranslationTest {
     public void whenStoppedWhileStarting_SuppressAllNotifications() throws Exception {
         when(chatClient.retrieveMessages("last")).then(stopAndReturnMessages(MESSAGE_LIST));
 
-        translation.start(consumer, listener);
+        translation.start(consumer);
         verify(listener, never()).onConnected();
         verify(consumer, never()).appendMessages(MESSAGE_LIST);
     }
@@ -120,11 +121,16 @@ public class HttpChatTranslationTest {
     @Test
     public void whenStoppedWhileRefreshing_SuppressMessageConsuming() throws Exception {
         when(chatClient.retrieveMessages("next")).then(stopAndReturnMessages(MESSAGE_LIST));
-        translation.start(consumer, listener);
+        translation.start(consumer);
         reset(consumer);
 
         refreshScheduler.performAction();
         verify(consumer, never()).appendMessages(MESSAGE_LIST);
+    }
+
+    @Before
+    public void setUp() throws Exception {
+        translation.setProgressListener(listener);
     }
 
     private Answer<Void> stopAndThrowException() {
