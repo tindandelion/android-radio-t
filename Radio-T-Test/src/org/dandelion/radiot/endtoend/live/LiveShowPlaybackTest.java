@@ -123,7 +123,12 @@ public class LiveShowPlaybackTest extends
         }
 
         @Override
-        public void start(MessageConsumer consumer) {
+        public void setMessageConsumer(MessageConsumer consumer) {
+
+        }
+
+        @Override
+        public void start() {
         }
 
         @Override
