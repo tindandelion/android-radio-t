@@ -21,7 +21,7 @@ Version 1.7:
    DONE Add Analytics code into Home screen
    DONE Check min sdk is 2.1
    DONE Watch the reports
-   * Testing with Android 2.3
+   DONE Testing with Android 2.3
    * Make sure it only tracks the release versions
    * Remove debug tag from analytics.xml
    * What's next?
