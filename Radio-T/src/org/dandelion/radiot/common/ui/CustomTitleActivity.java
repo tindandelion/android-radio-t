@@ -1,10 +1,9 @@
-package org.dandelion.radiot.util;
+package org.dandelion.radiot.common.ui;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.view.MenuItem;
 
-public class CustomTitleActivity extends FragmentActivity {
+public class CustomTitleActivity extends TrackedActivity {
     private ActivityHelper helper;
 
     @Override

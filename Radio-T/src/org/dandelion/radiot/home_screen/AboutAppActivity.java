@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.util.AppInfo;
-import org.dandelion.radiot.util.CustomTitleActivity;
+import org.dandelion.radiot.common.ui.CustomTitleActivity;
 import org.dandelion.radiot.util.FeedbackEmail;
 
 public class AboutAppActivity extends CustomTitleActivity {

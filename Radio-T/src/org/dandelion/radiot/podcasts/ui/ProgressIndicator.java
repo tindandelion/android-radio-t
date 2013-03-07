@@ -8,7 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.podcasts.loader.ProgressListener;
-import org.dandelion.radiot.util.ActivityHelper;
+import org.dandelion.radiot.common.ui.ActivityHelper;
 
 abstract class ProgressIndicator extends DialogErrorDisplayer implements ProgressListener {
     public ProgressIndicator(Context context) {

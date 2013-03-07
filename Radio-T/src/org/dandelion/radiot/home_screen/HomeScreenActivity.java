@@ -4,29 +4,17 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import com.google.analytics.tracking.android.EasyTracker;
 import org.dandelion.radiot.R;
+import org.dandelion.radiot.common.ui.TrackedActivity;
 import org.dandelion.radiot.live.ui.LiveShowActivity;
 import org.dandelion.radiot.podcasts.main.PodcastsApp;
 
-public class HomeScreenActivity extends Activity {
+public class HomeScreenActivity extends TrackedActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_screen);
         initDashboardItems();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        EasyTracker.getInstance().activityStart(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        EasyTracker.getInstance().activityStop(this);
     }
 
     private void initDashboardItems() {
