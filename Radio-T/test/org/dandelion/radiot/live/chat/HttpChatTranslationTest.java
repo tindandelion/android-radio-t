@@ -101,16 +101,16 @@ public class HttpChatTranslationTest {
     }
 
     @Test
-    public void whenStoppedWhileStarting_DoNotNotifyListenerOfErrors() throws Exception {
-        when(chatClient.retrieveMessages("last")).then(stopAndThrowException());
+    public void whenShutdownWhileStarting_DoNotNotifyListenerOfErrors() throws Exception {
+        when(chatClient.retrieveMessages("last")).then(shutdownAndThrowError());
 
         translation.start();
         verify(listener, never()).onError();
     }
 
     @Test
-    public void whenStoppedWhileStarting_SuppressAllNotifications() throws Exception {
-        when(chatClient.retrieveMessages("last")).then(stopAndReturnMessages(MESSAGE_LIST));
+    public void whenShutdownWhileStarting_SuppressAllNotifications() throws Exception {
+        when(chatClient.retrieveMessages("last")).then(shutdownAndReturnMessages(MESSAGE_LIST));
 
         translation.start();
         verify(listener, never()).onConnected();
@@ -119,7 +119,7 @@ public class HttpChatTranslationTest {
 
     @Test
     public void whenStoppedWhileRefreshing_SuppressMessageConsuming() throws Exception {
-        when(chatClient.retrieveMessages("next")).then(stopAndReturnMessages(MESSAGE_LIST));
+        when(chatClient.retrieveMessages("next")).then(shutdownAndReturnMessages(MESSAGE_LIST));
         translation.start();
         reset(consumer);
 
@@ -133,21 +133,21 @@ public class HttpChatTranslationTest {
         translation.setMessageConsumer(consumer);
     }
 
-    private Answer<Void> stopAndThrowException() {
+    private Answer<Void> shutdownAndThrowError() {
         return new Answer<Void>() {
             @Override
             public Void answer(InvocationOnMock invocation) throws Throwable {
-                translation.stop();
+                translation.shutdown();
                 throw new IOException();
             }
         };
     }
 
-    private Answer<List<Message>> stopAndReturnMessages(final List<Message> messages) {
+    private Answer<List<Message>> shutdownAndReturnMessages(final List<Message> messages) {
         return new Answer<List<Message>>() {
             @Override
             public List<Message> answer(InvocationOnMock invocation) throws Throwable {
-                translation.stop();
+                translation.shutdown();
                 return messages;
             }
         };

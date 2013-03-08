@@ -1,22 +1,16 @@
 package org.dandelion.radiot.live.chat;
 
 import android.os.AsyncTask;
+import org.dandelion.radiot.common.ui.Announcer;
 import org.dandelion.radiot.live.schedule.Scheduler;
 
 import java.util.List;
 
 public class HttpChatTranslation implements ChatTranslation {
-    private MessageConsumer messageConsumer;
-    private ProgressListener progressListener;
+    private final Announcer<ProgressListener> progressAnnouncer = new Announcer<ProgressListener>(ProgressListener.class);
+    private final Announcer<MessageConsumer> messageAnnouncer = new Announcer<MessageConsumer>(MessageConsumer.class);
     private final HttpChatClient chatClient;
-    private boolean isActive;
-    public Scheduler refreshScheduler;
-    public Scheduler.Performer nextMessagePoller = new Scheduler.Performer() {
-        @Override
-        public void performAction() {
-            requestNextMessages();
-        }
-    };
+    private final Scheduler refreshScheduler;
 
     public HttpChatTranslation(String baseUrl, Scheduler refreshScheduler) {
         this(new HttpChatClient(baseUrl), refreshScheduler);
@@ -25,22 +19,26 @@ public class HttpChatTranslation implements ChatTranslation {
     public HttpChatTranslation(HttpChatClient chatClient, Scheduler refreshScheduler) {
         this.chatClient = chatClient;
         this.refreshScheduler = refreshScheduler;
-        refreshScheduler.setPerformer(nextMessagePoller);
+        refreshScheduler.setPerformer(new Scheduler.Performer() {
+                @Override
+                public void performAction() {
+                    requestNextMessages();
+                }
+            });
     }
 
     @Override
     public void setProgressListener(ProgressListener listener) {
-        progressListener = listener;
+        progressAnnouncer.setTarget(listener);
     }
 
     @Override
     public void setMessageConsumer(MessageConsumer consumer) {
-        messageConsumer = consumer;
+        messageAnnouncer.setTarget(consumer);
     }
 
     @Override
     public void start() {
-        isActive = true;
         requestLastMessages();
     }
 
@@ -54,18 +52,23 @@ public class HttpChatTranslation implements ChatTranslation {
 
     @Override
     public void stop() {
-        isActive = false;
         refreshScheduler.cancel();
     }
 
     @Override
     public void shutdown() {
+        setMessageConsumer(null);
+        setProgressListener(null);
         chatClient.shutdown();
     }
 
     private void consumeMessages(List<Message> messages) {
-        messageConsumer.appendMessages(messages);
+        messageAnnouncer.announce().appendMessages(messages);
         refreshScheduler.scheduleNext();
+    }
+
+    private ProgressListener announceProgress() {
+        return progressAnnouncer.announce();
     }
 
     private static abstract class ChatTranslationTask extends AsyncTask<Void, Void, List<Message>> {
@@ -90,10 +93,6 @@ public class HttpChatTranslation implements ChatTranslation {
 
         @Override
         protected void onPostExecute(List<Message> messages) {
-            if (!translation.isActive) {
-                return;
-            }
-
             if (error != null) {
                 reportError();
             } else {
@@ -108,11 +107,10 @@ public class HttpChatTranslation implements ChatTranslation {
         }
 
         private void reportError() {
-            translation.progressListener.onError();
+            translation.announceProgress().onError();
         }
 
         protected void reportSuccess() {
-
         }
 
     }
@@ -125,12 +123,12 @@ public class HttpChatTranslation implements ChatTranslation {
 
         @Override
         protected void onPreExecute() {
-            translation.progressListener.onConnecting();
+            translation.announceProgress().onConnecting();
         }
 
         @Override
         protected void reportSuccess() {
-            translation.progressListener.onConnected();
+            translation.announceProgress().onConnected();
         }
     }
 
