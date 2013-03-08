@@ -1,4 +1,4 @@
-package org.dandelion.radiot.util;
+package org.dandelion.radiot.common.ui;
 
 import android.content.Intent;
 import android.view.MenuItem;
@@ -44,6 +44,7 @@ public abstract class ActivityHelper {
         }
     }
 
+    // TODO: Remove direct reference to HomeScreenActivity
     public void startHomeActivity() {
         Intent intent = new Intent(activity, HomeScreenActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

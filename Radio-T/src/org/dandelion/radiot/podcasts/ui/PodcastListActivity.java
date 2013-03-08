@@ -11,7 +11,7 @@ import android.widget.ListView;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.podcasts.loader.PodcastListClient;
 import org.dandelion.radiot.podcasts.main.PodcastsApp;
-import org.dandelion.radiot.util.CustomTitleActivity;
+import org.dandelion.radiot.common.ui.CustomTitleActivity;
 
 public class PodcastListActivity extends CustomTitleActivity {
     public static PodcastClientFactory clientFactory = null;

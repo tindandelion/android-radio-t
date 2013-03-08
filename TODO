@@ -1,5 +1,4 @@
 Backlog:
- * Google Analytics
  * Podcast list: Better error explanation
  * Live show: graceful process termination
  * Downloading: Respect background data loading settings
@@ -17,6 +16,7 @@ Version 1.6.1:
  * Bug: Chat reconnects when changing screen orientation
 
 Version 1.7:
+
  * Landscape orientation
    DONE About screen: The layout is corrupted badly
    DONE Live show: Playback control must be narrower
@@ -27,10 +27,11 @@ Version 1.7:
    * Podcast list: Flickers when changing orientation (due to loading all stuff)
    * Main screen: Tagline should show single-line if possible
 
- * Explore Google Analytics
+ DONE Explore Google Analytics
  DONE Podcast list: do not clear cache if download error occurs
  DONE Unify HTTP data fetching (?)
  DONE Remove HttpThumbnailProvider (?)
+
 
 * Debt:
  * Podcast type "audo/mpeg" appears in lots of places
