@@ -22,9 +22,8 @@ Version 1.7:
    DONE Check min sdk is 2.1
    DONE Watch the reports
    DONE Testing with Android 2.3
-   * Make sure it only tracks the release versions
-   * Remove debug tag from analytics.xml
-   * What's next?
+   DONE Make sure it only tracks the release versions
+   DONE Remove debug tag from analytics.xml
 
  * Landscape orientation
    DONE About screen: The layout is corrupted badly
