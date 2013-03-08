@@ -59,6 +59,11 @@ public class HttpChatTranslation implements ChatTranslation {
         chatClient.shutdown();
     }
 
+    @Override
+    public void shutdown() {
+        chatClient.shutdown();
+    }
+
     private void consumeMessages(List<Message> messages) {
         messageConsumer.appendMessages(messages);
         refreshScheduler.scheduleNext();

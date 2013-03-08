@@ -87,8 +87,8 @@ public class HttpChatTranslationTest {
     }
 
     @Test
-    public void onStop_ShutsDownHttpConnection() throws Exception {
-        translation.stop();
+    public void onShutDown_ShutsDownHttpConnection() throws Exception {
+        translation.shutdown();
         verify(chatClient).shutdown();
     }
 

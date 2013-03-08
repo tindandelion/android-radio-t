@@ -69,6 +69,12 @@ public class ChatTranslationFragment extends ListFragment {
         chat.stop();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        chat.shutdown();
+    }
+
     public void showError() {
         Animation animation = loadAnimation(R.anim.slide_in_down);
         errorView.setVisibility(View.VISIBLE);

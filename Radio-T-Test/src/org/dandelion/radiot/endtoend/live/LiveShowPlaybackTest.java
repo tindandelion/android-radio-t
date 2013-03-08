@@ -124,7 +124,6 @@ public class LiveShowPlaybackTest extends
 
         @Override
         public void setMessageConsumer(MessageConsumer consumer) {
-
         }
 
         @Override
@@ -133,6 +132,10 @@ public class LiveShowPlaybackTest extends
 
         @Override
         public void stop() {
+        }
+
+        @Override
+        public void shutdown() {
         }
 
         @Override
