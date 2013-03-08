@@ -16,16 +16,17 @@ public class ChatStreamAdapterTest {
     @Test
     public void whenListReachesTwiceLimitSize_shrinksListToLimit() throws Exception {
         final int messageLimit = 5;
-        ChatStreamAdapter adapter = new ChatStreamAdapter(new Activity(), messageLimit);
+        final ArrayList<Message> messages = new ArrayList<Message>();
+        ChatStreamAdapter adapter = new ChatStreamAdapter(new Activity(), messages, messageLimit);
 
         adapter.appendMessages(messages(5));
-        assertThat(adapter.getCount(), equalTo(5));
+        assertThat(messages.size(), equalTo(5));
 
         adapter.appendMessages(messages(3));
-        assertThat(adapter.getCount(), equalTo(8));
+        assertThat(messages.size(), equalTo(8));
 
         adapter.appendMessages(messages(3));
-        assertThat(adapter.getCount(), equalTo(messageLimit));
+        assertThat(messages.size(), equalTo(messageLimit));
     }
 
 

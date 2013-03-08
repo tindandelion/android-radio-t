@@ -9,6 +9,9 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.live.chat.ChatTranslation;
+import org.dandelion.radiot.live.chat.Message;
+
+import java.util.ArrayList;
 
 public class ChatTranslationFragment extends ListFragment {
     public static ChatTranslation.Factory chatFactory;
@@ -16,11 +19,13 @@ public class ChatTranslationFragment extends ListFragment {
     private ChatTranslation chat;
     private View errorView;
     private View progressView;
+    private ArrayList<Message> messages;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         chat = chatFactory.create();
+        messages = new ArrayList<Message>();
     }
 
     @Override
@@ -34,7 +39,7 @@ public class ChatTranslationFragment extends ListFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ChatStreamAdapter adapter = new ChatStreamAdapter(getActivity(), MESSAGE_LIMIT);
+        ChatStreamAdapter adapter = new ChatStreamAdapter(getActivity(), messages, MESSAGE_LIMIT);
         setListAdapter(adapter);
         chat.setProgressListener(new ChatProgressController(adapter, this));
         chat.setMessageConsumer(new ChatScroller(adapter, getListView()));

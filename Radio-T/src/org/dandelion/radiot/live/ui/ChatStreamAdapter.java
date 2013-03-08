@@ -17,8 +17,8 @@ class ChatStreamAdapter extends ArrayAdapter<Message>
     private final LayoutInflater inflater;
     private final int messageLimit;
 
-    public ChatStreamAdapter(Context context, int messageLimit) {
-        super(context, 0);
+    public ChatStreamAdapter(Context context, List<Message> messages, int messageLimit) {
+        super(context, 0, messages);
         this.messageLimit = messageLimit;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
