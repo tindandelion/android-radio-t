@@ -1,5 +1,4 @@
 Backlog:
- * Google Analytics
  * Podcast list: Better error explanation
  * Live show: graceful process termination
  * Downloading: Respect background data loading settings
@@ -17,13 +16,6 @@ Version 1.6.1:
  * Bug: Chat reconnects when changing screen orientation
 
 Version 1.7:
- * Explore Google Analytics
-   DONE Add Analytics code into Home screen
-   DONE Check min sdk is 2.1
-   DONE Watch the reports
-   DONE Testing with Android 2.3
-   DONE Make sure it only tracks the release versions
-   DONE Remove debug tag from analytics.xml
 
  * Landscape orientation
    DONE About screen: The layout is corrupted badly
@@ -34,6 +26,7 @@ Version 1.7:
    * Podcast list: Flickers when changing orientation (due to loading all stuff)
    * Main screen: Tagline should show single-line if possible
 
+ DONE Explore Google Analytics
  DONE Podcast list: do not clear cache if download error occurs
  DONE Unify HTTP data fetching (?)
  DONE Remove HttpThumbnailProvider (?)
