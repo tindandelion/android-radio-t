@@ -60,18 +60,6 @@ public class HttpChatTranslationTest {
     }
 
     @Test
-    public void onStart_whenAlreadyStarted_doesNothing() throws Exception {
-        translation.start();
-
-        reset(consumer, listener, chatClient);
-        translation.start();
-
-        verifyZeroInteractions(chatClient);
-        verifyZeroInteractions(consumer);
-        verifyZeroInteractions(listener);
-    }
-
-    @Test
     public void onRefresh_SchedulesNextRefresh() throws Exception {
         when(chatClient.retrieveMessages("next")).thenReturn(MESSAGE_LIST);
 
