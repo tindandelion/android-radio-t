@@ -56,7 +56,6 @@ public class HttpChatTranslation implements ChatTranslation {
     public void stop() {
         isActive = false;
         refreshScheduler.cancel();
-        chatClient.shutdown();
     }
 
     @Override
