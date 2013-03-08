@@ -2,26 +2,25 @@ package org.dandelion.radiot.common.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import com.google.analytics.tracking.android.EasyTracker;
 
 public class TrackedActivity extends FragmentActivity {
-    private EasyTracker tracker;
+    private ActivityTracker tracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        tracker = EasyTracker.getInstance();
+        tracker = ActivityTracker.create();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        tracker.activityStart(this);
+        tracker.activityStarted(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        tracker.activityStop(this);
+        tracker.activityStopped(this);
     }
 }
