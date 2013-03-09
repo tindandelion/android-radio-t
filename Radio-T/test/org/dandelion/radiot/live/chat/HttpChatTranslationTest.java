@@ -117,6 +117,16 @@ public class HttpChatTranslationTest {
     }
 
     @Test
+    public void whenRestarting_whileConnecting_callsListenerTwice() throws Exception {
+        when(chatClient.retrieveMessages("last"))
+                .then(restartAndReturnMessages(MESSAGE_LIST));
+
+        translation.start();
+        verify(listener, times(2)).onConnecting();
+        verify(listener, times(1)).onConnected();
+    }
+
+    @Test
     public void whenStopping_cancelsScheduledRefresh() throws Exception {
         translation.start();
         translation.stop();

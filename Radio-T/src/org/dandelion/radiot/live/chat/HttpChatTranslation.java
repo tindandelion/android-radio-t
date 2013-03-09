@@ -7,7 +7,7 @@ import org.dandelion.radiot.live.schedule.Scheduler;
 import java.util.List;
 
 public class HttpChatTranslation implements ChatTranslation {
-    private enum TranslationState { DISCONNECTED, CONNECTING, LISTENING }
+    private enum TranslationState {DISCONNECTED, CONNECTING, CONNECTED}
 
     private final Announcer<ProgressListener> progressAnnouncer = new Announcer<ProgressListener>(ProgressListener.class);
     private final Announcer<MessageConsumer> messageAnnouncer = new Announcer<MessageConsumer>(MessageConsumer.class);
@@ -44,11 +44,23 @@ public class HttpChatTranslation implements ChatTranslation {
     public void start() {
         if (state == TranslationState.DISCONNECTED) {
             requestLastMessages();
-        } else {
-            if (state == TranslationState.LISTENING) {
-                scheduleRefresh();
-            }
+        } else if (state == TranslationState.CONNECTING) {
+            progressAnnouncer.announce().onConnecting();
+        } else if (state == TranslationState.CONNECTED) {
+            scheduleRefresh();
         }
+    }
+
+    @Override
+    public void shutdown() {
+        setMessageConsumer(null);
+        setProgressListener(null);
+        chatClient.shutdown();
+    }
+
+    @Override
+    public void stop() {
+        refreshScheduler.cancel();
     }
 
     private void requestLastMessages() {
@@ -60,25 +72,13 @@ public class HttpChatTranslation implements ChatTranslation {
         new NextRecordsRequest(this).execute();
     }
 
-    @Override
-    public void stop() {
-        refreshScheduler.cancel();
-    }
-
-    @Override
-    public void shutdown() {
-        setMessageConsumer(null);
-        setProgressListener(null);
-        chatClient.shutdown();
-    }
-
     private void consumeMessages(List<Message> messages) {
         messageAnnouncer.announce().processMessages(messages);
         scheduleRefresh();
     }
 
     private void scheduleRefresh() {
-        state = TranslationState.LISTENING;
+        state = TranslationState.CONNECTED;
         refreshScheduler.scheduleNext();
     }
 
