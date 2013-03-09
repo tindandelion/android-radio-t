@@ -1,7 +1,11 @@
-package org.dandelion.radiot.live.chat;
+package org.dandelion.radiot.live.chat.http;
 
 import android.os.AsyncTask;
 import org.dandelion.radiot.common.ui.Announcer;
+import org.dandelion.radiot.live.chat.ChatTranslation;
+import org.dandelion.radiot.live.chat.Message;
+import org.dandelion.radiot.live.chat.MessageConsumer;
+import org.dandelion.radiot.live.chat.ProgressListener;
 import org.dandelion.radiot.live.schedule.Scheduler;
 
 import java.util.List;

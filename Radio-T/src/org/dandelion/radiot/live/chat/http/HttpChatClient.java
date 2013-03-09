@@ -1,7 +1,8 @@
-package org.dandelion.radiot.live.chat;
+package org.dandelion.radiot.live.chat.http;
 
 import org.dandelion.radiot.http.ApacheHttpClient;
 import org.dandelion.radiot.http.HttpClient;
+import org.dandelion.radiot.live.chat.Message;
 import org.json.JSONException;
 
 import java.io.IOException;
@@ -32,7 +33,7 @@ public class HttpChatClient {
     }
 
     private List<Message> parseMessages(String json) throws JSONException {
-        return ResponseParser.parse(json);
+        return HttpResponseParser.parse(json);
     }
 
     public void shutdown() {

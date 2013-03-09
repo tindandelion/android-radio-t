@@ -1,5 +1,7 @@
 package org.dandelion.radiot.live.chat;
 
+import org.dandelion.radiot.live.chat.http.HttpChatClient;
+import org.dandelion.radiot.live.chat.http.HttpChatTranslation;
 import org.dandelion.radiot.live.schedule.DeterministicScheduler;
 import org.junit.Before;
 import org.junit.Test;

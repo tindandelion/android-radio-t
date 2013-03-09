@@ -4,7 +4,7 @@ import android.test.ActivityInstrumentationTestCase2;
 import org.dandelion.radiot.endtoend.live.helpers.ChatTranslationRunner;
 import org.dandelion.radiot.endtoend.live.helpers.LiveChatTranslationServer;
 import org.dandelion.radiot.live.chat.ChatTranslation;
-import org.dandelion.radiot.live.chat.HttpChatTranslation;
+import org.dandelion.radiot.live.chat.http.HttpChatTranslation;
 import org.dandelion.radiot.live.schedule.DeterministicScheduler;
 import org.dandelion.radiot.live.ui.ChatTranslationFragment;
 import org.dandelion.radiot.live.ui.LiveShowActivity;

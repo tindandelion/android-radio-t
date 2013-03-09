@@ -1,5 +1,6 @@
-package org.dandelion.radiot.live.chat;
+package org.dandelion.radiot.live.chat.http;
 
+import org.dandelion.radiot.live.chat.Message;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,18 +12,18 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-class ResponseParser {
+public class HttpResponseParser {
     private final String source;
     private static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm");
     private static final SimpleDateFormat TIMESTAMP_FORMAT =
             new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy");
 
     public static List<Message> parse(String strJson) throws JSONException {
-        ResponseParser parser = new ResponseParser(strJson);
+        HttpResponseParser parser = new HttpResponseParser(strJson);
         return parser.getMessages();
     }
 
-    ResponseParser(String strJson) {
+    HttpResponseParser(String strJson) {
         this.source = strJson;
     }
 
