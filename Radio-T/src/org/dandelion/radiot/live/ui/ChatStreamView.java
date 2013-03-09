@@ -2,6 +2,7 @@ package org.dandelion.radiot.live.ui;
 
 import android.content.Context;
 import android.os.Build;
+import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.widget.ListView;
 
@@ -15,16 +16,44 @@ public class ChatStreamView extends ListView {
         super(context, attrs);
     }
 
+    @Override
+    public Parcelable onSaveInstanceState() {
+        Parcelable superState = super.onSaveInstanceState();
+        SavedState myState = new SavedState(superState);
+        myState.atBottom = atBottom();
+        return myState;
+    }
+
+    @Override
+    public void onRestoreInstanceState(Parcelable state) {
+        SavedState myState = (SavedState) state;
+        super.onRestoreInstanceState(myState.getSuperState());
+        if (myState.atBottom) {
+            setSelection(lastPosition());
+        }
+    }
+
     public boolean atBottom() {
-        return getLastVisiblePosition() == (getCount() - 1);
+        return getLastVisiblePosition() == (lastPosition());
     }
 
     public void scrollToBottom() {
-        int lastPosition = getCount() - 1;
         if (useSmoothScroll) {
-            smoothScrollToPosition(lastPosition);
+            smoothScrollToPosition(lastPosition());
         } else {
-            setSelection(lastPosition);
+            setSelection(lastPosition());
+        }
+    }
+
+    private int lastPosition() {
+        return getCount() - 1;
+    }
+
+    private static class SavedState extends BaseSavedState {
+        public boolean atBottom;
+
+        public SavedState(Parcelable superState) {
+            super(superState);
         }
     }
 }

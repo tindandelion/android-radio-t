@@ -25,9 +25,10 @@ Version 1.7:
    * Live show: Chat must not reconnect when changing orientation
      DONE Testing: memory leaks
      DONE Progress wheel disappears when rotating while first connect
+     DONE ListView: scroll to bottom if it was at bottom initially
      * Testing: rotating in different states
      * Testing: pausing/restarting activity
-     * ListView: scroll to bottom if it was at bottom initially
+     * Testing: Android 2.1 and later
      * Bug: When first connection fails, it should retry when rotating the device
      * Bug: Rotating while requesting next messages causes redundant schedule
 
