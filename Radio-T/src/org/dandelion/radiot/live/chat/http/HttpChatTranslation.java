@@ -1,6 +1,5 @@
 package org.dandelion.radiot.live.chat.http;
 
-import android.os.AsyncTask;
 import org.dandelion.radiot.common.ui.Announcer;
 import org.dandelion.radiot.live.chat.ChatTranslation;
 import org.dandelion.radiot.live.chat.Message;
@@ -15,7 +14,7 @@ public class HttpChatTranslation implements ChatTranslation {
 
     private final Announcer<ProgressListener> progressAnnouncer = new Announcer<ProgressListener>(ProgressListener.class);
     private final Announcer<MessageConsumer> messageAnnouncer = new Announcer<MessageConsumer>(MessageConsumer.class);
-    private final HttpChatClient chatClient;
+    final HttpChatClient chatClient;
     private final Scheduler refreshScheduler;
     private TranslationState state = TranslationState.DISCONNECTED;
 
@@ -69,14 +68,14 @@ public class HttpChatTranslation implements ChatTranslation {
 
     private void requestLastMessages() {
         state = TranslationState.CONNECTING;
-        new LastRecordsRequest(this).execute();
+        new HttpChatRequest.Last(this).execute();
     }
 
     private void requestNextMessages() {
-        new NextRecordsRequest(this).execute();
+        new HttpChatRequest.Next(this).execute();
     }
 
-    private void consumeMessages(List<Message> messages) {
+    void consumeMessages(List<Message> messages) {
         messageAnnouncer.announce().processMessages(messages);
         scheduleRefresh();
     }
@@ -86,74 +85,9 @@ public class HttpChatTranslation implements ChatTranslation {
         refreshScheduler.scheduleNext();
     }
 
-    private ProgressListener announceProgress() {
+    ProgressListener announceProgress() {
         return progressAnnouncer.announce();
     }
 
-    private static abstract class ChatTranslationTask extends AsyncTask<Void, Void, List<Message>> {
-        protected final HttpChatTranslation translation;
-        private Exception error;
-        private String mode;
 
-        protected ChatTranslationTask(HttpChatTranslation translation, String mode) {
-            this.translation = translation;
-            this.mode = mode;
-        }
-
-        @Override
-        protected List<Message> doInBackground(Void... params) {
-            try {
-                return translation.chatClient.retrieveMessages(mode);
-            } catch (Exception e) {
-                error = e;
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(List<Message> messages) {
-            if (error != null) {
-                reportError();
-            } else {
-                reportSuccess();
-                consumeMessages(messages);
-            }
-        }
-
-        private void consumeMessages(List<Message> messages) {
-            translation.consumeMessages(messages);
-
-        }
-
-        private void reportError() {
-            translation.announceProgress().onError();
-        }
-
-        protected void reportSuccess() {
-        }
-
-    }
-
-
-    private static class LastRecordsRequest extends ChatTranslationTask {
-        public LastRecordsRequest(HttpChatTranslation translation) {
-            super(translation, "last");
-        }
-
-        @Override
-        protected void onPreExecute() {
-            translation.announceProgress().onConnecting();
-        }
-
-        @Override
-        protected void reportSuccess() {
-            translation.announceProgress().onConnected();
-        }
-    }
-
-    private static class NextRecordsRequest extends ChatTranslationTask {
-        private NextRecordsRequest(HttpChatTranslation translation) {
-            super(translation, "next");
-        }
-    }
 }
