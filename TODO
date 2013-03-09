@@ -23,9 +23,10 @@ Version 1.7:
    DONE Live show: Fonts
    DONE Live show: Exception in ViewFlipper for Android 2.1 (only?)
    * Live show: Chat must not reconnect when changing orientation
-     * Testing: memory leaks
+     DONE Testing: memory leaks
      * Testing: rotating in different states
      * Testing: scheduling
+     * ListView: scroll to bottom if it was at bottom initially
    * Podcast list: Flickers when changing orientation (due to loading all stuff)
    * Main screen: Tagline should show single-line if possible
 
