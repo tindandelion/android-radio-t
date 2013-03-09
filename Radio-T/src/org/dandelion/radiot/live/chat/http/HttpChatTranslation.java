@@ -9,7 +9,8 @@ import org.dandelion.radiot.live.schedule.Scheduler;
 
 import java.util.List;
 
-public class HttpChatTranslation implements ChatTranslation {
+public class HttpChatTranslation implements ChatTranslation, MessageConsumer {
+
     private enum TranslationState {DISCONNECTED, CONNECTING, CONNECTED}
 
     private final Announcer<ProgressListener> progressAnnouncer = new Announcer<ProgressListener>(ProgressListener.class);
@@ -68,11 +69,11 @@ public class HttpChatTranslation implements ChatTranslation {
 
     private void requestLastMessages() {
         state = TranslationState.CONNECTING;
-        new HttpChatRequest.Last(this).execute();
+        new HttpChatRequest.Last(chatClient, progressAnnouncer.announce(), this).execute();
     }
 
     private void requestNextMessages() {
-        new HttpChatRequest.Next(this).execute();
+        new HttpChatRequest.Next(chatClient, progressAnnouncer.announce(), this).execute();
     }
 
     void consumeMessages(List<Message> messages) {
@@ -85,9 +86,8 @@ public class HttpChatTranslation implements ChatTranslation {
         refreshScheduler.scheduleNext();
     }
 
-    ProgressListener announceProgress() {
-        return progressAnnouncer.announce();
+    @Override
+    public void processMessages(List<Message> messages) {
+        consumeMessages(messages);
     }
-
-
 }
