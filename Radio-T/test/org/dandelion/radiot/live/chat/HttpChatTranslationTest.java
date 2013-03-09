@@ -11,7 +11,9 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 @SuppressWarnings("unchecked")
@@ -25,14 +27,14 @@ public class HttpChatTranslationTest {
     private final ProgressListener listener = mock(ProgressListener.class);
 
     @Test
-    public void onStart_RequestsLastMessages() throws Exception {
+    public void whenStartingFirstTime_requestsLastMessages() throws Exception {
         when(chatClient.retrieveMessages("last")).thenReturn(MESSAGE_LIST);
         translation.start();
         verify(consumer).processMessages(MESSAGE_LIST);
     }
 
     @Test
-    public void onStart_SchedulesRefresh() throws Exception {
+    public void whenStarted_schedulesRefresh() throws Exception {
         when(chatClient.retrieveMessages("next")).thenReturn(MESSAGE_LIST);
         translation.start();
 
@@ -42,7 +44,7 @@ public class HttpChatTranslationTest {
     }
 
     @Test
-    public void onStart_NotifiesListener() throws Exception {
+    public void whenStarting_notifiesListenerOfProgress() throws Exception {
         when(chatClient.retrieveMessages("last")).thenReturn(MESSAGE_LIST);
         translation.start();
 
@@ -51,7 +53,7 @@ public class HttpChatTranslationTest {
     }
 
     @Test
-    public void onStart_whenErrorOccurs_notifiesListener() throws Exception {
+    public void whenStatring_butErrorOccurs_notifiesListener() throws Exception {
         when(chatClient.retrieveMessages("last")).thenThrow(IOException.class);
         translation.start();
 
@@ -60,7 +62,7 @@ public class HttpChatTranslationTest {
     }
 
     @Test
-    public void onRefresh_SchedulesNextRefresh() throws Exception {
+    public void whenRefreshing_schedulesNextRefresh() throws Exception {
         when(chatClient.retrieveMessages("next")).thenReturn(MESSAGE_LIST);
 
         translation.start();
@@ -68,14 +70,11 @@ public class HttpChatTranslationTest {
         reset(consumer);
         refreshScheduler.performAction();
         verify(consumer).processMessages(MESSAGE_LIST);
-
-        reset(consumer);
-        refreshScheduler.performAction();
-        verify(consumer).processMessages(MESSAGE_LIST);
+        assertTrue(refreshScheduler.isScheduled());
     }
 
     @Test
-    public void onRefresh_whenErrorOccurs_NotifiesListener() throws Exception {
+    public void whenRefreshing_butErrorOccurs_notifiesListener() throws Exception {
         translation.start();
 
         reset(consumer);
@@ -87,18 +86,50 @@ public class HttpChatTranslationTest {
     }
 
     @Test
-    public void onShutDown_ShutsDownHttpConnection() throws Exception {
-        translation.shutdown();
-        verify(chatClient).shutdown();
+    public void whenRestarting_doNotRequestLastMessages() throws Exception {
+        when(chatClient.retrieveMessages("last")).thenReturn(MESSAGE_LIST);
+
+        translation.start();
+        translation.stop();
+        translation.start();
+
+        verify(chatClient, times(1)).retrieveMessages("last");
     }
 
     @Test
-    public void onStop_CancelsScheduledRefresh() throws Exception {
+    public void whenRestarting_reschedulesRefresh() throws Exception {
+        when(chatClient.retrieveMessages("last")).thenReturn(MESSAGE_LIST);
+
+        translation.start();
+        translation.stop();
+        translation.start();
+
+        assertTrue(refreshScheduler.isScheduled());
+    }
+
+    @Test
+    public void whenRestarting_whileConnecting_doesNotScheduleRefreshTwice() throws Exception {
+        when(chatClient.retrieveMessages("last"))
+                .then(restartAndReturnMessages(MESSAGE_LIST));
+
+        translation.start();
+        assertEquals(1, refreshScheduler.scheduleCount());
+    }
+
+    @Test
+    public void whenStopping_cancelsScheduledRefresh() throws Exception {
         translation.start();
         translation.stop();
 
         assertFalse(refreshScheduler.isScheduled());
     }
+
+    @Test
+    public void whenShutsDown_closesHttpConnection() throws Exception {
+        translation.shutdown();
+        verify(chatClient).shutdown();
+    }
+
 
     @Test
     public void whenShutdownWhileStarting_DoNotNotifyListenerOfErrors() throws Exception {
@@ -148,6 +179,16 @@ public class HttpChatTranslationTest {
             @Override
             public List<Message> answer(InvocationOnMock invocation) throws Throwable {
                 translation.shutdown();
+                return messages;
+            }
+        };
+    }
+
+    private Answer<?> restartAndReturnMessages(final List<Message> messages) {
+        return new Answer<List<Message>>() {
+            @Override
+            public List<Message> answer(InvocationOnMock invocation) throws Throwable {
+                translation.start();
                 return messages;
             }
         };

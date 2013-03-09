@@ -10,7 +10,6 @@
             android:id="@id/android:list"
             android:layout_height="fill_parent"
             android:layout_width="fill_parent"
-            android:visibility="gone"
             android:cacheColorHint="@color/background_dark"
             android:divider="@null"/>
 

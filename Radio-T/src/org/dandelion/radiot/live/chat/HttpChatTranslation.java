@@ -11,6 +11,8 @@ public class HttpChatTranslation implements ChatTranslation {
     private final Announcer<MessageConsumer> messageAnnouncer = new Announcer<MessageConsumer>(MessageConsumer.class);
     private final HttpChatClient chatClient;
     private final Scheduler refreshScheduler;
+    private boolean isStarted = false;
+    private boolean isListening = false;
 
     public HttpChatTranslation(String baseUrl, Scheduler refreshScheduler) {
         this(new HttpChatClient(baseUrl), refreshScheduler);
@@ -20,11 +22,11 @@ public class HttpChatTranslation implements ChatTranslation {
         this.chatClient = chatClient;
         this.refreshScheduler = refreshScheduler;
         refreshScheduler.setPerformer(new Scheduler.Performer() {
-                @Override
-                public void performAction() {
-                    requestNextMessages();
-                }
-            });
+            @Override
+            public void performAction() {
+                requestNextMessages();
+            }
+        });
     }
 
     @Override
@@ -39,7 +41,14 @@ public class HttpChatTranslation implements ChatTranslation {
 
     @Override
     public void start() {
-        requestLastMessages();
+        if (!isStarted) {
+            isStarted = true;
+            requestLastMessages();
+        } else {
+            if (isListening) {
+                scheduleRefresh();
+            }
+        }
     }
 
     private void requestLastMessages() {
@@ -64,6 +73,11 @@ public class HttpChatTranslation implements ChatTranslation {
 
     private void consumeMessages(List<Message> messages) {
         messageAnnouncer.announce().processMessages(messages);
+        scheduleRefresh();
+    }
+
+    private void scheduleRefresh() {
+        isListening = true;
         refreshScheduler.scheduleNext();
     }
 

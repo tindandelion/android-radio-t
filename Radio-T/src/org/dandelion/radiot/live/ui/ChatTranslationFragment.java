@@ -24,6 +24,7 @@ public class ChatTranslationFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
         chat = chatFactory.create();
         messages = new ArrayList<Message>();
     }

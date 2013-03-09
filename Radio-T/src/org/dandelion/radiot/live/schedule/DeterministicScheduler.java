@@ -1,8 +1,8 @@
 package org.dandelion.radiot.live.schedule;
 
 public class DeterministicScheduler implements Scheduler {
-    private boolean isScheduled = false;
     private Performer performer;
+    private int scheduleCount = 0;
 
     @Override
     public void setPerformer(Performer performer) {
@@ -11,22 +11,26 @@ public class DeterministicScheduler implements Scheduler {
 
     @Override
     public void scheduleNext() {
-        isScheduled = true;
+        scheduleCount++;
     }
 
     @Override
     public void cancel() {
-        isScheduled = false;
+        scheduleCount--;
     }
 
     public void performAction() {
-        if (isScheduled && performer != null) {
-            isScheduled = false;
+        if (isScheduled() && performer != null) {
+            scheduleCount--;
             performer.performAction();
         }
     }
 
     public boolean isScheduled() {
-        return isScheduled;
+        return scheduleCount > 0;
+    }
+
+    public int scheduleCount() {
+        return scheduleCount;
     }
 }
