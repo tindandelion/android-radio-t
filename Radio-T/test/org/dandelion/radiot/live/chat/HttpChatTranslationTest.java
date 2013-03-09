@@ -28,7 +28,7 @@ public class HttpChatTranslationTest {
     public void onStart_RequestsLastMessages() throws Exception {
         when(chatClient.retrieveMessages("last")).thenReturn(MESSAGE_LIST);
         translation.start();
-        verify(consumer).appendMessages(MESSAGE_LIST);
+        verify(consumer).processMessages(MESSAGE_LIST);
     }
 
     @Test
@@ -38,7 +38,7 @@ public class HttpChatTranslationTest {
 
         reset(consumer);
         refreshScheduler.performAction();
-        verify(consumer).appendMessages(MESSAGE_LIST);
+        verify(consumer).processMessages(MESSAGE_LIST);
     }
 
     @Test
@@ -67,11 +67,11 @@ public class HttpChatTranslationTest {
 
         reset(consumer);
         refreshScheduler.performAction();
-        verify(consumer).appendMessages(MESSAGE_LIST);
+        verify(consumer).processMessages(MESSAGE_LIST);
 
         reset(consumer);
         refreshScheduler.performAction();
-        verify(consumer).appendMessages(MESSAGE_LIST);
+        verify(consumer).processMessages(MESSAGE_LIST);
     }
 
     @Test
@@ -114,7 +114,7 @@ public class HttpChatTranslationTest {
 
         translation.start();
         verify(listener, never()).onConnected();
-        verify(consumer, never()).appendMessages(MESSAGE_LIST);
+        verify(consumer, never()).processMessages(MESSAGE_LIST);
     }
 
     @Test
@@ -124,7 +124,7 @@ public class HttpChatTranslationTest {
         reset(consumer);
 
         refreshScheduler.performAction();
-        verify(consumer, never()).appendMessages(MESSAGE_LIST);
+        verify(consumer, never()).processMessages(MESSAGE_LIST);
     }
 
     @Before

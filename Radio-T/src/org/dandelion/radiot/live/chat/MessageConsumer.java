@@ -3,5 +3,5 @@ package org.dandelion.radiot.live.chat;
 import java.util.List;
 
 public interface MessageConsumer {
-    void appendMessages(List<Message> messages);
+    void processMessages(List<Message> messages);
 }

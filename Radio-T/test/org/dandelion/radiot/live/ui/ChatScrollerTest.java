@@ -17,22 +17,22 @@ public class ChatScrollerTest {
 
     @Test
     public void appendMessages_DelegatesToConsumer() throws Exception {
-        scroller.appendMessages(MESSAGES);
-        verify(consumer).appendMessages(MESSAGES);
+        scroller.processMessages(MESSAGES);
+        verify(consumer).processMessages(MESSAGES);
     }
 
     @Test
     public void whenAtBottomOfList_ScrollsDownAfterAppending() throws Exception {
         when(chatView.atBottom()).thenReturn(true);
 
-        scroller.appendMessages(MESSAGES);
+        scroller.processMessages(MESSAGES);
         verify(chatView).scrollToBottom();
     }
 
     @Test
     public void whenNotAtBottomOfList_KeepScrollPositionUnchanged() throws Exception {
         when(chatView.atBottom()).thenReturn(false);
-        scroller.appendMessages(MESSAGES);
+        scroller.processMessages(MESSAGES);
         verify(chatView, never()).scrollToBottom();
     }
 }

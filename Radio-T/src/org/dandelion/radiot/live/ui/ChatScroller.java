@@ -15,9 +15,9 @@ public class ChatScroller implements MessageConsumer {
     }
 
     @Override
-    public void appendMessages(List<Message> messages) {
+    public void processMessages(List<Message> messages) {
         boolean willScroll = view.atBottom();
-        consumer.appendMessages(messages);
+        consumer.processMessages(messages);
         if (willScroll) {
             view.scrollToBottom();
         }

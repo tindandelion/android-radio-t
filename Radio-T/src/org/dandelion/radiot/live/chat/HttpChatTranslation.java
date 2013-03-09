@@ -63,7 +63,7 @@ public class HttpChatTranslation implements ChatTranslation {
     }
 
     private void consumeMessages(List<Message> messages) {
-        messageAnnouncer.announce().appendMessages(messages);
+        messageAnnouncer.announce().processMessages(messages);
         refreshScheduler.scheduleNext();
     }
 

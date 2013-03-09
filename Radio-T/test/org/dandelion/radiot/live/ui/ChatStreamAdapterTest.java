@@ -19,13 +19,13 @@ public class ChatStreamAdapterTest {
         final ArrayList<Message> messages = new ArrayList<Message>();
         ChatStreamAdapter adapter = new ChatStreamAdapter(new Activity(), messages, messageLimit);
 
-        adapter.appendMessages(messages(5));
+        adapter.processMessages(messages(5));
         assertThat(messages.size(), equalTo(5));
 
-        adapter.appendMessages(messages(3));
+        adapter.processMessages(messages(3));
         assertThat(messages.size(), equalTo(8));
 
-        adapter.appendMessages(messages(3));
+        adapter.processMessages(messages(3));
         assertThat(messages.size(), equalTo(messageLimit));
     }
 
