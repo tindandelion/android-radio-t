@@ -7,7 +7,7 @@ import org.dandelion.radiot.live.chat.ProgressListener;
 
 import java.util.List;
 
-public abstract class HttpChatRequest extends AsyncTask<Void, Void, List<Message>> {
+public class HttpChatRequest extends AsyncTask<Void, Void, List<Message>> {
     protected final ProgressListener progressListener;
     private final HttpChatClient chatClient;
     private final MessageConsumer messageConsumer;
@@ -48,17 +48,5 @@ public abstract class HttpChatRequest extends AsyncTask<Void, Void, List<Message
 
     private void reportError() {
         progressListener.onError();
-    }
-
-    static class Last extends HttpChatRequest {
-        Last(HttpChatClient chatClient, ProgressListener progressListener, MessageConsumer messageConsumer) {
-            super("last", chatClient, progressListener, messageConsumer);
-        }
-    }
-
-    static class Next extends HttpChatRequest {
-        Next(HttpChatClient chatClient, ProgressListener progressListener, MessageConsumer messageConsumer) {
-            super("next", chatClient, progressListener, messageConsumer);
-        }
     }
 }

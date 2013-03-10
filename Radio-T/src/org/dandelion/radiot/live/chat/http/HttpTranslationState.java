@@ -62,11 +62,11 @@ public class HttpTranslationState {
         @Override
         public void enter() {
             progressListener.onConnecting();
-            requestLastMessages();
+            requestMessages();
         }
 
-        private void requestLastMessages() {
-            new HttpChatRequest.Last(chatClient, progressListener, this).execute();
+        private void requestMessages() {
+            new HttpChatRequest("last", chatClient, progressListener, this).execute();
         }
 
         @Override
@@ -114,7 +114,7 @@ public class HttpTranslationState {
 
         @Override
         public void performAction() {
-            new HttpChatRequest.Next(chatClient, progressListener, this).execute();
+            new HttpChatRequest("next", chatClient, progressListener, this).execute();
         }
 
         @Override
