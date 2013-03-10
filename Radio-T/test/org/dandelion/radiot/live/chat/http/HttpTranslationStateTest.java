@@ -24,15 +24,16 @@ public class HttpTranslationStateTest {
 
     private final DeterministicScheduler scheduler  = new DeterministicScheduler();
     private final HttpChatClient chatClient = mock(HttpChatClient.class);
-    private final HttpChatTranslation translation = new HttpChatTranslation(chatClient, scheduler);
     private final MessageConsumer consumer = mock(MessageConsumer.class);
     private final ProgressListener listener = mock(ProgressListener.class);
-    private final HttpChatTranslation stateHolder = mock(HttpChatTranslation.class);
+    private final HttpTranslationState.StateHolder stateHolder = mock(HttpTranslationState.StateHolder.class);
+    private final HttpTranslationState.StateFactory stateFactory = new HttpTranslationState.StateFactory(
+            chatClient, consumer, listener, scheduler);
     private HttpTranslationState state;
 
     @Test
     public void disconnectedState_onStart_switchesToConnecting() throws Exception {
-        state = new HttpTranslationState.Disconnected(stateHolder, chatClient, consumer, listener);
+        state = stateFactory.disconnected(stateHolder);
 
         state.onStart();
 
@@ -41,7 +42,7 @@ public class HttpTranslationStateTest {
 
     @Test
     public void connectingState_whenEntered_requestsLastMessages() throws Exception {
-        state = new HttpTranslationState.Connecting(translation, chatClient, consumer, listener);
+        state = stateFactory.connecting(stateHolder);
 
         when(chatClient.retrieveMessages("last")).thenReturn(MESSAGES);
         state.enter();
@@ -51,7 +52,7 @@ public class HttpTranslationStateTest {
 
     @Test
     public void connectingState_whenEntered_reportsProgress() throws Exception {
-        state = new HttpTranslationState.Connecting(translation, chatClient, consumer, listener);
+        state = stateFactory.connecting(stateHolder);
 
         when(chatClient.retrieveMessages("last")).thenReturn(MESSAGES);
         state.enter();
@@ -62,7 +63,7 @@ public class HttpTranslationStateTest {
 
     @Test
     public void connectingState_whenEntered_reportsErrors() throws Exception {
-        state = new HttpTranslationState.Connecting(translation, chatClient, consumer, listener);
+        state = stateFactory.connecting(stateHolder);
 
         when(chatClient.retrieveMessages("last")).thenThrow(IOException.class);
         state.enter();
@@ -72,7 +73,7 @@ public class HttpTranslationStateTest {
 
     @Test
     public void connectingState_whenConnected_switchesToConnected() throws Exception {
-        state = new HttpTranslationState.Connecting(stateHolder, chatClient, consumer, listener);
+        state = stateFactory.connecting(stateHolder);
 
         when(chatClient.retrieveMessages("last")).thenReturn(MESSAGES);
         state.enter();
@@ -82,7 +83,7 @@ public class HttpTranslationStateTest {
 
     @Test
     public void connectedState_whenEntered_schedulesRefresh() throws Exception {
-        state = new HttpTranslationState.Connected(translation, chatClient, consumer, listener);
+        state = stateFactory.connected(stateHolder);
 
         when(chatClient.retrieveMessages("next")).thenReturn(MESSAGES);
         state.enter();
@@ -93,7 +94,7 @@ public class HttpTranslationStateTest {
 
     @Test
     public void connectedState_whenRefreshed_schedulesNextRefresh() throws Exception {
-        state = new HttpTranslationState.Connected(translation, chatClient, consumer, listener);
+        state = stateFactory.connected(stateHolder);
 
         when(chatClient.retrieveMessages("next")).thenReturn(MESSAGES);
 
@@ -106,7 +107,7 @@ public class HttpTranslationStateTest {
 
     @Test
     public void connectedState_whenRefreshing_reportsErrors() throws Exception {
-        state = new HttpTranslationState.Connected(translation, chatClient, consumer, listener);
+        state = stateFactory.connected(stateHolder);
 
         when(chatClient.retrieveMessages("next")).thenThrow(IOException.class);
 
@@ -118,7 +119,7 @@ public class HttpTranslationStateTest {
 
     @Test
     public void connectedState_onStop_cancelsScheduledRefresh() throws Exception {
-        state = new HttpTranslationState.Connected(translation, chatClient, consumer, listener);
+        state = stateFactory.connected(stateHolder);
 
         state.enter();
         state.onStop();
@@ -129,7 +130,7 @@ public class HttpTranslationStateTest {
 
     @Test
     public void connectedState_onStart_schedulesRefresh() throws Exception {
-        state = new HttpTranslationState.Connected(translation, chatClient, consumer, listener);
+        state = stateFactory.connected(stateHolder);
 
         state.onStart();
 

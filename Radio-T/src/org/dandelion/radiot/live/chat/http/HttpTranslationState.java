@@ -8,17 +8,12 @@ import org.dandelion.radiot.live.schedule.Scheduler;
 import java.util.List;
 
 public class HttpTranslationState {
-    protected final HttpChatTranslation translation;
-    protected final ProgressListener progressListener;
-    protected final HttpChatClient chatClient;
-    protected final MessageConsumer consumer;
+    protected final StateFactory stateFactory;
+    protected final StateHolder stateHolder;
 
-
-    public HttpTranslationState(HttpChatTranslation translation, HttpChatClient chatClient, MessageConsumer consumer, ProgressListener progressListener) {
-        this.translation = translation;
-        this.progressListener = progressListener;
-        this.chatClient = chatClient;
-        this.consumer = consumer;
+    public HttpTranslationState(StateHolder stateHolder, StateFactory stateFactory) {
+        this.stateFactory = stateFactory;
+        this.stateHolder = stateHolder;
     }
 
     public void onStart() {
@@ -31,36 +26,37 @@ public class HttpTranslationState {
 
     }
 
-    protected Connecting connecting() {
-        return new Connecting(translation, chatClient, consumer, progressListener);
-    }
-
-    protected Connected connected() {
-        return new Connected(translation, chatClient, consumer, progressListener);
+    protected void changeToState(HttpTranslationState newState) {
+        stateHolder.changeState(newState);
     }
 
     static class Disconnected extends HttpTranslationState {
-
-        public Disconnected(HttpChatTranslation translation, HttpChatClient chatClient, MessageConsumer consumer, ProgressListener progressListener) {
-            super(translation, chatClient, consumer, progressListener);
+        public Disconnected(StateHolder stateHolder, StateFactory stateFactory) {
+            super(stateHolder, stateFactory);
         }
 
         @Override
         public void onStart() {
-            Connecting newState = connecting();
-            translation.changeState(newState);
+            changeToState(stateFactory.connecting(stateHolder));
         }
 
     }
 
     static class Connecting extends HttpTranslationState implements MessageConsumer {
-        public Connecting(HttpChatTranslation translation, HttpChatClient chatClient, MessageConsumer consumer, ProgressListener progressListener) {
-            super(translation, chatClient, consumer, progressListener);
+        private final MessageConsumer consumer;
+        private final ProgressListener progressListener;
+        private final HttpChatClient chatClient;
+
+        public Connecting(StateHolder stateHolder, StateFactory stateFactory, HttpChatClient chatClient, MessageConsumer consumer, ProgressListener progressListener) {
+            super(stateHolder, stateFactory);
+            this.chatClient = chatClient;
+            this.progressListener = progressListener;
+            this.consumer = consumer;
         }
 
         @Override
         public void onStart() {
-            this.translation.progressAnnouncer.announce().onConnecting();
+            progressListener.onConnecting();
         }
 
         @Override
@@ -75,8 +71,7 @@ public class HttpTranslationState {
 
         @Override
         public void processMessages(List<Message> messages) {
-            Connected newState = connected();
-            translation.changeState(newState);
+            changeToState(stateFactory.connected(stateHolder));
             progressListener.onConnected();
             consumer.processMessages(messages);
         }
@@ -84,23 +79,37 @@ public class HttpTranslationState {
 
 
     static class Connected extends HttpTranslationState implements Scheduler.Performer, MessageConsumer {
-        Connected(HttpChatTranslation translation, HttpChatClient chatClient, MessageConsumer consumer, ProgressListener progressListener) {
-            super(translation, chatClient, consumer, progressListener);
+        private final MessageConsumer consumer;
+        private final ProgressListener progressListener;
+        private final HttpChatClient chatClient;
+        private final Scheduler scheduler;
+
+        Connected(StateHolder stateHolder, StateFactory stateFactory, HttpChatClient chatClient, MessageConsumer consumer, ProgressListener progressListener, Scheduler scheduler) {
+            super(stateHolder, stateFactory);
+            this.chatClient = chatClient;
+            this.progressListener = progressListener;
+            this.consumer = consumer;
+            this.scheduler = scheduler;
         }
 
         @Override
         public void onStart() {
-            translation.scheduleNext(this);
+            scheduleNext();
+        }
+
+        private void scheduleNext() {
+            scheduler.setPerformer(this);
+            scheduler.scheduleNext();
         }
 
         @Override
         public void enter() {
-            translation.scheduleNext(this);
+            scheduleNext();
         }
 
         @Override
         public void onStop() {
-            translation.refreshScheduler.cancel();
+            scheduler.cancel();
         }
 
         @Override
@@ -111,7 +120,37 @@ public class HttpTranslationState {
         @Override
         public void processMessages(List<Message> messages) {
             consumer.processMessages(messages);
-            translation.scheduleNext(this);
+            scheduleNext();
+        }
+    }
+
+    public interface StateHolder {
+        void changeState(HttpTranslationState newState);
+    }
+
+    public static class StateFactory {
+        private final HttpChatClient chatClient;
+        private final MessageConsumer consumer;
+        private final ProgressListener progressListener;
+        private final Scheduler scheduler;
+
+        public StateFactory(HttpChatClient chatClient, MessageConsumer consumer, ProgressListener progressListener, Scheduler scheduler) {
+            this.chatClient = chatClient;
+            this.consumer = consumer;
+            this.progressListener = progressListener;
+            this.scheduler = scheduler;
+        }
+
+        public HttpTranslationState disconnected(StateHolder stateHolder) {
+            return new Disconnected(stateHolder, this);
+        }
+
+        public HttpTranslationState connecting(StateHolder stateHolder) {
+            return new Connecting(stateHolder, this, chatClient, consumer, progressListener);
+        }
+
+        public HttpTranslationState connected(StateHolder stateHolder) {
+            return new Connected(stateHolder, this, chatClient, consumer, progressListener, scheduler);
         }
     }
 }
