@@ -1,4 +1,4 @@
-package org.dandelion.radiot.live.chat;
+package org.dandelion.radiot.robolectric;
 
 import com.xtremelabs.robolectric.RobolectricTestRunner;
 import org.junit.runners.model.InitializationError;

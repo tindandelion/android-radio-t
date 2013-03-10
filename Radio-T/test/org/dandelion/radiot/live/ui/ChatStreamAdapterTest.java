@@ -2,7 +2,7 @@ package org.dandelion.radiot.live.ui;
 
 import android.app.Activity;
 import org.dandelion.radiot.live.chat.Message;
-import org.dandelion.radiot.live.chat.RadiotRobolectricRunner;
+import org.dandelion.radiot.robolectric.RadiotRobolectricRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
