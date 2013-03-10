@@ -40,7 +40,7 @@ public class HttpTranslationState {
 
     static class Disconnected extends HttpTranslationState {
 
-        public Disconnected(HttpChatTranslation translation, MessageConsumer consumer, HttpChatClient chatClient, ProgressListener progressListener) {
+        public Disconnected(HttpChatTranslation translation, HttpChatClient chatClient, MessageConsumer consumer, ProgressListener progressListener) {
             super(translation, chatClient, consumer, progressListener);
         }
 
@@ -83,26 +83,27 @@ public class HttpTranslationState {
 
 
     static class Connected extends HttpTranslationState {
-        public Connected(HttpChatTranslation translation) {
-            super(translation, translation.chatClient, null, translation.progressAnnouncer.announce());
-        }
-
         Connected(HttpChatTranslation translation, HttpChatClient chatClient, MessageConsumer consumer, ProgressListener progressListener) {
             super(translation, chatClient, consumer, progressListener);
         }
 
+        public Connected(HttpChatTranslation translation, HttpChatClient chatClient, MessageConsumer consumer) {
+            super(translation, chatClient, consumer, translation.progressAnnouncer.announce());
+        }
+
         @Override
         public void onStart() {
-            translation.scheduleRefresh();
+            translation.refreshScheduler.scheduleNext();
         }
 
         @Override
         public void enter() {
+            translation.refreshScheduler.scheduleNext();
         }
 
         @Override
         public void onStop() {
-            translation.cancelRefresh();
+            translation.refreshScheduler.cancel();
         }
     }
 }

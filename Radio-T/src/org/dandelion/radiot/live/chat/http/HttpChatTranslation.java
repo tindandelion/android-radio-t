@@ -9,12 +9,12 @@ import org.dandelion.radiot.live.schedule.Scheduler;
 
 import java.util.List;
 
-public class HttpChatTranslation implements ChatTranslation, MessageConsumer {
+public class HttpChatTranslation implements ChatTranslation {
 
     final Announcer<ProgressListener> progressAnnouncer = new Announcer<ProgressListener>(ProgressListener.class);
     private final Announcer<MessageConsumer> messageAnnouncer = new Announcer<MessageConsumer>(MessageConsumer.class);
     final HttpChatClient chatClient;
-    private final Scheduler refreshScheduler;
+    final Scheduler refreshScheduler;
     private HttpTranslationState currentState;
 
     public HttpChatTranslation(String baseUrl, Scheduler refreshScheduler) {
@@ -31,7 +31,7 @@ public class HttpChatTranslation implements ChatTranslation, MessageConsumer {
             }
         });
         currentState = new HttpTranslationState.Disconnected(
-                this, this, chatClient, progressAnnouncer.announce());
+                this, chatClient, messageAnnouncer.announce(), progressAnnouncer.announce());
     }
 
     @Override
@@ -54,10 +54,6 @@ public class HttpChatTranslation implements ChatTranslation, MessageConsumer {
         currentState.onStop();
     }
 
-    void cancelRefresh() {
-        refreshScheduler.cancel();
-    }
-
     @Override
     public void shutdown() {
         setMessageConsumer(null);
@@ -72,21 +68,14 @@ public class HttpChatTranslation implements ChatTranslation, MessageConsumer {
     }
 
     private void requestNextMessages() {
-        new HttpChatRequest.Next(chatClient, progressAnnouncer.announce(), this).execute();
-    }
+        MessageConsumer nextMessageProcessor = new MessageConsumer() {
 
-    void consumeMessages(List<Message> messages) {
-        messageAnnouncer.announce().processMessages(messages);
-        scheduleRefresh();
-    }
-
-    void scheduleRefresh() {
-        changeState(new HttpTranslationState.Connected(this));
-        refreshScheduler.scheduleNext();
-    }
-
-    @Override
-    public void processMessages(List<Message> messages) {
-        consumeMessages(messages);
+            @Override
+            public void processMessages(List<Message> messages) {
+                messageAnnouncer.announce().processMessages(messages);
+                refreshScheduler.scheduleNext();
+            }
+        };
+        new HttpChatRequest.Next(chatClient, progressAnnouncer.announce(), nextMessageProcessor).execute();
     }
 }

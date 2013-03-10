@@ -3,7 +3,7 @@ package org.dandelion.radiot.live.chat.http;
 import org.dandelion.radiot.live.chat.Message;
 import org.dandelion.radiot.live.chat.MessageConsumer;
 import org.dandelion.radiot.live.chat.ProgressListener;
-import org.dandelion.radiot.live.schedule.Scheduler;
+import org.dandelion.radiot.live.schedule.DeterministicScheduler;
 import org.dandelion.radiot.robolectric.RadiotRobolectricRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,9 +20,9 @@ import static org.mockito.Mockito.*;
 public class HttpTranslationStateTest {
     private static final List<Message> MESSAGES = Collections.emptyList();
 
-    private Scheduler scheduler  = mock(Scheduler.class);
-    private final HttpChatTranslation translation = new HttpChatTranslation((HttpChatClient) null, scheduler);
+    private final DeterministicScheduler scheduler  = new DeterministicScheduler();
     private final HttpChatClient chatClient = mock(HttpChatClient.class);
+    private final HttpChatTranslation translation = new HttpChatTranslation(chatClient, scheduler);
     private final MessageConsumer consumer = mock(MessageConsumer.class);
     private final ProgressListener listener = mock(ProgressListener.class);
     private final HttpChatTranslation stateHolder = mock(HttpChatTranslation.class);
@@ -30,7 +30,7 @@ public class HttpTranslationStateTest {
 
     @Test
     public void disconnectedState_onStart_switchesToConnecting() throws Exception {
-        state = new HttpTranslationState.Disconnected(stateHolder, consumer, chatClient, listener);
+        state = new HttpTranslationState.Disconnected(stateHolder, chatClient, consumer, listener);
 
         state.onStart();
 
@@ -77,4 +77,18 @@ public class HttpTranslationStateTest {
 
         verify(stateHolder).changeState(isA(HttpTranslationState.Connected.class));
     }
+
+    @Test
+    public void whenStarted_schedulesRefresh() throws Exception {
+        translation.setMessageConsumer(consumer);
+
+        state = new HttpTranslationState.Connected(translation, chatClient, consumer);
+
+        when(chatClient.retrieveMessages("next")).thenReturn(MESSAGES);
+        state.enter();
+        scheduler.performAction();
+
+        verify(consumer).processMessages(MESSAGES);
+    }
+
 }
