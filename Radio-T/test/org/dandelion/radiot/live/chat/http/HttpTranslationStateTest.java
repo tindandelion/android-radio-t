@@ -12,8 +12,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.*;
 
@@ -145,5 +144,26 @@ public class HttpTranslationStateTest {
         state.onStart();
 
         assertTrue(scheduler.isScheduled());
+    }
+
+    @Test
+    public void connectedState_onStart_requestsNextMessages() throws Exception {
+        state = stateFactory.connected(stateHolder);
+
+        when(chatClient.retrieveMessages("next")).thenReturn(MESSAGES);
+        state.onStart();
+
+        verify(chatClient).retrieveMessages("next");
+        verify(consumer).processMessages(MESSAGES);
+    }
+
+    @Test
+    public void connectedState_whenProcessingMessages_doesNotScheduleRefresh_ifAlreadyScheduled() throws Exception {
+        state = stateFactory.connected(stateHolder);
+
+        state.enter();
+        ((MessageConsumer) state).processMessages(MESSAGES);
+
+        assertEquals(1, scheduler.scheduleCount());
     }
 }

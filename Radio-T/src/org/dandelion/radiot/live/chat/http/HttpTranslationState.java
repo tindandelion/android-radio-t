@@ -83,6 +83,7 @@ public class HttpTranslationState {
         private final ProgressListener progressListener;
         private final HttpChatClient chatClient;
         private final Scheduler scheduler;
+        private boolean isScheduled = false;
 
         Connected(StateHolder stateHolder, StateFactory stateFactory, HttpChatClient chatClient, MessageConsumer consumer, ProgressListener progressListener, Scheduler scheduler) {
             super(stateHolder, stateFactory);
@@ -94,33 +95,42 @@ public class HttpTranslationState {
 
         @Override
         public void onStart() {
-            scheduleNext();
+            requestMessages();
         }
 
-        private void scheduleNext() {
+        private void scheduleUpdate() {
+            if (isScheduled) return;
+
+            isScheduled = true;
             scheduler.setPerformer(this);
             scheduler.scheduleNext();
         }
 
         @Override
         public void enter() {
-            scheduleNext();
+            scheduleUpdate();
         }
 
         @Override
         public void onStop() {
             scheduler.cancel();
+            isScheduled = false;
         }
 
         @Override
         public void performAction() {
+            isScheduled = false;
+            requestMessages();
+        }
+
+        private void requestMessages() {
             new HttpChatRequest("next", chatClient, progressListener, this).execute();
         }
 
         @Override
         public void processMessages(List<Message> messages) {
             consumer.processMessages(messages);
-            scheduleNext();
+            scheduleUpdate();
         }
     }
 
