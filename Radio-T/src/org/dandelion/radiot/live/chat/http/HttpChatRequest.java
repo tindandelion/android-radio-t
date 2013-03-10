@@ -60,11 +60,6 @@ public abstract class HttpChatRequest extends AsyncTask<Void, Void, List<Message
         }
 
         @Override
-        protected void onPreExecute() {
-            progressListener.onConnecting();
-        }
-
-        @Override
         protected void reportSuccess() {
             progressListener.onConnected();
         }
