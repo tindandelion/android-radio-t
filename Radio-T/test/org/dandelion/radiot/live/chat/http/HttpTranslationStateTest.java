@@ -81,6 +81,16 @@ public class HttpTranslationStateTest {
     }
 
     @Test
+    public void connectingState_whenError_switchesToDisconnected() throws Exception {
+        state = stateFactory.connecting(stateHolder);
+
+        when(chatClient.retrieveMessages("last")).thenThrow(IOException.class);
+        state.enter();
+
+        verify(stateHolder).changeState(isA(HttpTranslationState.Disconnected.class));
+    }
+
+    @Test
     public void connectingState_onStart_onlyReportsToListener() throws Exception {
         state = stateFactory.connecting(stateHolder);
 

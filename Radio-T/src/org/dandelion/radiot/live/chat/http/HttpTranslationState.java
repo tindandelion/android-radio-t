@@ -42,7 +42,7 @@ public class HttpTranslationState {
 
     }
 
-    static class Connecting extends HttpTranslationState implements MessageConsumer {
+    static class Connecting extends HttpTranslationState implements MessageConsumer, HttpChatRequest.ErrorListener {
         private final MessageConsumer consumer;
         private final ProgressListener progressListener;
         private final HttpChatClient chatClient;
@@ -66,7 +66,7 @@ public class HttpTranslationState {
         }
 
         private void requestMessages() {
-            new HttpChatRequest("last", chatClient, progressListener, this).execute();
+            new HttpChatRequest("last", chatClient, this, this).execute();
         }
 
         @Override
@@ -75,10 +75,16 @@ public class HttpTranslationState {
             progressListener.onConnected();
             consumer.processMessages(messages);
         }
+
+        @Override
+        public void onError() {
+            progressListener.onError();
+            changeToState(stateFactory.disconnected(stateHolder));
+        }
     }
 
 
-    static class Connected extends HttpTranslationState implements Scheduler.Performer, MessageConsumer {
+    static class Connected extends HttpTranslationState implements Scheduler.Performer, MessageConsumer, HttpChatRequest.ErrorListener {
         private final MessageConsumer consumer;
         private final ProgressListener progressListener;
         private final HttpChatClient chatClient;
@@ -124,13 +130,18 @@ public class HttpTranslationState {
         }
 
         private void requestMessages() {
-            new HttpChatRequest("next", chatClient, progressListener, this).execute();
+            new HttpChatRequest("next", chatClient, this, this).execute();
         }
 
         @Override
         public void processMessages(List<Message> messages) {
             consumer.processMessages(messages);
             scheduleUpdate();
+        }
+
+        @Override
+        public void onError() {
+            progressListener.onError();
         }
     }
 

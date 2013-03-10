@@ -3,20 +3,24 @@ package org.dandelion.radiot.live.chat.http;
 import android.os.AsyncTask;
 import org.dandelion.radiot.live.chat.Message;
 import org.dandelion.radiot.live.chat.MessageConsumer;
-import org.dandelion.radiot.live.chat.ProgressListener;
 
 import java.util.List;
 
 @SuppressWarnings("unchecked")
 public class HttpChatRequest extends AsyncTask<Void, Void, Object> {
-    protected final ProgressListener progressListener;
+
+    public interface ErrorListener {
+        void onError();
+    }
+
     private final HttpChatClient chatClient;
+    private final ErrorListener errorListener;
     private final MessageConsumer messageConsumer;
     private String mode;
 
-    protected HttpChatRequest(String mode, HttpChatClient chatClient, ProgressListener progressListener, MessageConsumer messageConsumer) {
-        this.progressListener = progressListener;
+    protected HttpChatRequest(String mode, HttpChatClient chatClient, MessageConsumer messageConsumer, ErrorListener errorListener) {
         this.chatClient = chatClient;
+        this.errorListener = errorListener;
         this.messageConsumer = messageConsumer;
         this.mode = mode;
     }
@@ -33,7 +37,7 @@ public class HttpChatRequest extends AsyncTask<Void, Void, Object> {
     @Override
     protected void onPostExecute(Object result) {
         if (result instanceof Exception) {
-            progressListener.onError();
+            errorListener.onError();
         } else {
             messageConsumer.processMessages((List<Message>) result);
         }

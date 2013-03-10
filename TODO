@@ -27,7 +27,7 @@ Version 1.7:
      DONE Progress wheel disappears when rotating while first connect
      DONE ListView: scroll to bottom if it was at bottom initially
      DONE Bug: Rotating while requesting next messages causes redundant schedule
-     * Bug: When first connection fails, it should retry when rotating the device
+     DONE Bug: When first connection fails, it should retry when rotating the device
      * Testing: rotating in different states
      * Testing: pausing/restarting activity
      * Testing: Android 2.1 and later
