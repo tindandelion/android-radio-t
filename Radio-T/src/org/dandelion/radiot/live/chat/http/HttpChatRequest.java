@@ -7,12 +7,11 @@ import org.dandelion.radiot.live.chat.ProgressListener;
 
 import java.util.List;
 
-public class HttpChatRequest extends AsyncTask<Void, Void, List<Message>> {
+@SuppressWarnings("unchecked")
+public class HttpChatRequest extends AsyncTask<Void, Void, Object> {
     protected final ProgressListener progressListener;
     private final HttpChatClient chatClient;
     private final MessageConsumer messageConsumer;
-
-    private Exception error;
     private String mode;
 
     protected HttpChatRequest(String mode, HttpChatClient chatClient, ProgressListener progressListener, MessageConsumer messageConsumer) {
@@ -23,30 +22,20 @@ public class HttpChatRequest extends AsyncTask<Void, Void, List<Message>> {
     }
 
     @Override
-    protected List<Message> doInBackground(Void... params) {
+    protected Object doInBackground(Void... params) {
         try {
             return chatClient.retrieveMessages(mode);
         } catch (Exception e) {
-            error = e;
-            return null;
+            return e;
         }
     }
 
     @Override
-    protected void onPostExecute(List<Message> messages) {
-        if (error != null) {
-            reportError();
+    protected void onPostExecute(Object result) {
+        if (result instanceof Exception) {
+            progressListener.onError();
         } else {
-            consumeMessages(messages);
+            messageConsumer.processMessages((List<Message>) result);
         }
-    }
-
-    private void consumeMessages(List<Message> messages) {
-        messageConsumer.processMessages(messages);
-
-    }
-
-    private void reportError() {
-        progressListener.onError();
     }
 }
