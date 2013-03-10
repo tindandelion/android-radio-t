@@ -69,10 +69,6 @@ public class HttpChatTranslation implements ChatTranslation, MessageConsumer {
         this.currentState = state;
     }
 
-    void requestLastMessages(MessageConsumer messageConsumer, HttpChatClient client) {
-        new HttpChatRequest.Last(client, progressAnnouncer.announce(), messageConsumer).execute();
-    }
-
     private void requestNextMessages() {
         new HttpChatRequest.Next(chatClient, progressAnnouncer.announce(), this).execute();
     }

@@ -1,6 +1,7 @@
 package org.dandelion.radiot.live.chat.http;
 
 import org.dandelion.radiot.live.chat.MessageConsumer;
+import org.dandelion.radiot.live.chat.ProgressListener;
 
 public class HttpTranslationState {
     protected final HttpChatTranslation translation;
@@ -18,22 +19,28 @@ public class HttpTranslationState {
     static class Disconnected extends HttpTranslationState {
         private final MessageConsumer messageConsumer;
         private final HttpChatClient chatClient;
+        private final ProgressListener progressListener;
 
         public Disconnected(HttpChatTranslation translation) {
-            this(translation, translation, translation.chatClient);
+            this(translation, translation, translation.chatClient, translation.progressAnnouncer.announce());
         }
 
-        public Disconnected(HttpChatTranslation translation, MessageConsumer consumer, HttpChatClient chatClient) {
+        public Disconnected(HttpChatTranslation translation, MessageConsumer consumer, HttpChatClient chatClient, ProgressListener progressListener) {
             super(translation);
             this.messageConsumer = consumer;
             this.chatClient = chatClient;
+            this.progressListener = progressListener;
         }
 
         @Override
         public void onStart() {
             this.translation.setCurrentState(new Connecting(this.translation));
-            this.translation.progressAnnouncer.announce().onConnecting();
-            this.translation.requestLastMessages(messageConsumer, chatClient);
+            progressListener.onConnecting();
+            requestLastMessages();
+        }
+
+        private void requestLastMessages() {
+            new HttpChatRequest.Last(chatClient, progressListener, messageConsumer).execute();
         }
     }
 

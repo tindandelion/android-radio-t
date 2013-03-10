@@ -38,12 +38,23 @@ public class HttpChatTranslationTest {
     }
 
     @Test
+    // TODO: Moved to HttpTranslationStateTest
     public void whenStarting_notifiesListenerOfProgress() throws Exception {
         when(chatClient.retrieveMessages("last")).thenReturn(MESSAGE_LIST);
         translation.start();
 
         verify(listener).onConnecting();
         verify(listener).onConnected();
+    }
+
+    @Test
+    // TODO: Moved to HttpTranslationStateTest
+    public void whenStatring_butErrorOccurs_notifiesListener() throws Exception {
+        when(chatClient.retrieveMessages("last")).thenThrow(IOException.class);
+        translation.start();
+
+        verify(listener).onError();
+        verifyZeroInteractions(consumer);
     }
 
     @Test
@@ -54,16 +65,6 @@ public class HttpChatTranslationTest {
         reset(consumer);
         refreshScheduler.performAction();
         verify(consumer).processMessages(MESSAGE_LIST);
-    }
-
-
-    @Test
-    public void whenStatring_butErrorOccurs_notifiesListener() throws Exception {
-        when(chatClient.retrieveMessages("last")).thenThrow(IOException.class);
-        translation.start();
-
-        verify(listener).onError();
-        verifyZeroInteractions(consumer);
     }
 
     @Test
