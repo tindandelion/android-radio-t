@@ -9,7 +9,7 @@ import org.dandelion.radiot.live.schedule.Scheduler;
 
 import java.util.List;
 
-public class HttpChatTranslation implements ChatTranslation {
+public class HttpChatTranslation implements ChatTranslation, Scheduler.Performer {
 
     final Announcer<ProgressListener> progressAnnouncer = new Announcer<ProgressListener>(ProgressListener.class);
     private final Announcer<MessageConsumer> messageAnnouncer = new Announcer<MessageConsumer>(MessageConsumer.class);
@@ -24,12 +24,7 @@ public class HttpChatTranslation implements ChatTranslation {
     public HttpChatTranslation(HttpChatClient chatClient, Scheduler refreshScheduler) {
         this.chatClient = chatClient;
         this.refreshScheduler = refreshScheduler;
-        refreshScheduler.setPerformer(new Scheduler.Performer() {
-            @Override
-            public void performAction() {
-                requestNextMessages();
-            }
-        });
+        refreshScheduler.setPerformer(this);
         currentState = new HttpTranslationState.Disconnected(
                 this, chatClient, messageAnnouncer.announce(), progressAnnouncer.announce());
     }
@@ -67,15 +62,25 @@ public class HttpChatTranslation implements ChatTranslation {
         newState.enter();
     }
 
-    private void requestNextMessages() {
+    void requestNextMessages(final MessageConsumer messageConsumer) {
         MessageConsumer nextMessageProcessor = new MessageConsumer() {
 
             @Override
             public void processMessages(List<Message> messages) {
-                messageAnnouncer.announce().processMessages(messages);
+                messageConsumer.processMessages(messages);
                 refreshScheduler.scheduleNext();
             }
         };
         new HttpChatRequest.Next(chatClient, progressAnnouncer.announce(), nextMessageProcessor).execute();
+    }
+
+    @Override
+    public void performAction() {
+        requestNextMessages(messageAnnouncer.announce());
+    }
+
+    public void scheduleNext(Scheduler.Performer performer) {
+        refreshScheduler.setPerformer(performer);
+        refreshScheduler.scheduleNext();
     }
 }

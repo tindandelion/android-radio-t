@@ -58,6 +58,7 @@ public class HttpChatTranslationTest {
     }
 
     @Test
+    // TODO: Moved to HttpTranslationStateTest
     public void whenStarted_schedulesRefresh() throws Exception {
         when(chatClient.retrieveMessages("next")).thenReturn(MESSAGE_LIST);
         translation.start();
@@ -68,6 +69,7 @@ public class HttpChatTranslationTest {
     }
 
     @Test
+    // TODO: Moved to HttpTranslationStateTest
     public void whenRefreshing_schedulesNextRefresh() throws Exception {
         when(chatClient.retrieveMessages("next")).thenReturn(MESSAGE_LIST);
 

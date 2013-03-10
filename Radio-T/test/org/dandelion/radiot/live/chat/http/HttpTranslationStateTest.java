@@ -79,9 +79,7 @@ public class HttpTranslationStateTest {
     }
 
     @Test
-    public void whenStarted_schedulesRefresh() throws Exception {
-        translation.setMessageConsumer(consumer);
-
+    public void connectedState_whenEntered_schedulesRefresh() throws Exception {
         state = new HttpTranslationState.Connected(translation, chatClient, consumer);
 
         when(chatClient.retrieveMessages("next")).thenReturn(MESSAGES);
@@ -91,4 +89,19 @@ public class HttpTranslationStateTest {
         verify(consumer).processMessages(MESSAGES);
     }
 
+    @Test
+    public void connectedState_whenRefreshed_schedulesNextRefresh() throws Exception {
+
+        state = new HttpTranslationState.Connected(translation, chatClient, consumer);
+
+        when(chatClient.retrieveMessages("next")).thenReturn(MESSAGES);
+        state.enter();
+
+        scheduler.performAction();
+        scheduler.performAction();
+
+        verify(consumer, times(2)).processMessages(MESSAGES);
+
+
+    }
 }

@@ -3,6 +3,7 @@ package org.dandelion.radiot.live.chat.http;
 import org.dandelion.radiot.live.chat.Message;
 import org.dandelion.radiot.live.chat.MessageConsumer;
 import org.dandelion.radiot.live.chat.ProgressListener;
+import org.dandelion.radiot.live.schedule.Scheduler;
 
 import java.util.List;
 
@@ -82,7 +83,7 @@ public class HttpTranslationState {
     }
 
 
-    static class Connected extends HttpTranslationState {
+    static class Connected extends HttpTranslationState implements Scheduler.Performer {
         Connected(HttpChatTranslation translation, HttpChatClient chatClient, MessageConsumer consumer, ProgressListener progressListener) {
             super(translation, chatClient, consumer, progressListener);
         }
@@ -93,17 +94,22 @@ public class HttpTranslationState {
 
         @Override
         public void onStart() {
-            translation.refreshScheduler.scheduleNext();
+            translation.scheduleNext(this);
         }
 
         @Override
         public void enter() {
-            translation.refreshScheduler.scheduleNext();
+            translation.scheduleNext(this);
         }
 
         @Override
         public void onStop() {
             translation.refreshScheduler.cancel();
+        }
+
+        @Override
+        public void performAction() {
+            translation.requestNextMessages(consumer);
         }
     }
 }
