@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.*;
 
@@ -80,7 +82,7 @@ public class HttpTranslationStateTest {
 
     @Test
     public void connectedState_whenEntered_schedulesRefresh() throws Exception {
-        state = new HttpTranslationState.Connected(translation, chatClient, consumer);
+        state = new HttpTranslationState.Connected(translation, chatClient, consumer, listener);
 
         when(chatClient.retrieveMessages("next")).thenReturn(MESSAGES);
         state.enter();
@@ -91,17 +93,46 @@ public class HttpTranslationStateTest {
 
     @Test
     public void connectedState_whenRefreshed_schedulesNextRefresh() throws Exception {
-
-        state = new HttpTranslationState.Connected(translation, chatClient, consumer);
+        state = new HttpTranslationState.Connected(translation, chatClient, consumer, listener);
 
         when(chatClient.retrieveMessages("next")).thenReturn(MESSAGES);
-        state.enter();
 
+        state.enter();
         scheduler.performAction();
         scheduler.performAction();
 
         verify(consumer, times(2)).processMessages(MESSAGES);
+    }
 
+    @Test
+    public void connectedState_whenRefreshing_reportsErrors() throws Exception {
+        state = new HttpTranslationState.Connected(translation, chatClient, consumer, listener);
 
+        when(chatClient.retrieveMessages("next")).thenThrow(IOException.class);
+
+        state.enter();
+        scheduler.performAction();
+
+        verify(listener).onError();
+    }
+
+    @Test
+    public void connectedState_onStop_cancelsScheduledRefresh() throws Exception {
+        state = new HttpTranslationState.Connected(translation, chatClient, consumer, listener);
+
+        state.enter();
+        state.onStop();
+
+        assertFalse(scheduler.isScheduled());
+
+    }
+
+    @Test
+    public void connectedState_onStart_schedulesRefresh() throws Exception {
+        state = new HttpTranslationState.Connected(translation, chatClient, consumer, listener);
+
+        state.onStart();
+
+        assertTrue(scheduler.isScheduled());
     }
 }

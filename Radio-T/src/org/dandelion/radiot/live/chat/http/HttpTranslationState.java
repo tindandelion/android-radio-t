@@ -83,13 +83,9 @@ public class HttpTranslationState {
     }
 
 
-    static class Connected extends HttpTranslationState implements Scheduler.Performer {
+    static class Connected extends HttpTranslationState implements Scheduler.Performer, MessageConsumer {
         Connected(HttpChatTranslation translation, HttpChatClient chatClient, MessageConsumer consumer, ProgressListener progressListener) {
             super(translation, chatClient, consumer, progressListener);
-        }
-
-        public Connected(HttpChatTranslation translation, HttpChatClient chatClient, MessageConsumer consumer) {
-            super(translation, chatClient, consumer, translation.progressAnnouncer.announce());
         }
 
         @Override
@@ -109,7 +105,13 @@ public class HttpTranslationState {
 
         @Override
         public void performAction() {
-            translation.requestNextMessages(consumer);
+            new HttpChatRequest.Next(chatClient, progressListener, this).execute();
+        }
+
+        @Override
+        public void processMessages(List<Message> messages) {
+            consumer.processMessages(messages);
+            translation.scheduleNext(this);
         }
     }
 }

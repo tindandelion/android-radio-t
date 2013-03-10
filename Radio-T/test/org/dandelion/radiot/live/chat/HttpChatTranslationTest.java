@@ -94,6 +94,7 @@ public class HttpChatTranslationTest {
     }
 
     @Test
+    // TODO: Moved to HttpTranslationStateTest
     public void whenRestarting_doNotRequestLastMessages() throws Exception {
         when(chatClient.retrieveMessages("last")).thenReturn(MESSAGE_LIST);
 
@@ -105,6 +106,16 @@ public class HttpChatTranslationTest {
     }
 
     @Test
+    // TODO: Moved to HttpTranslationStateTest
+    public void whenStopping_cancelsScheduledRefresh() throws Exception {
+        translation.start();
+        translation.stop();
+
+        assertFalse(refreshScheduler.isScheduled());
+    }
+
+    @Test
+    // TODO: Moved to HttpTranslationStateTest
     public void whenRestarting_reschedulesRefresh() throws Exception {
         when(chatClient.retrieveMessages("last")).thenReturn(MESSAGE_LIST);
 
@@ -132,14 +143,6 @@ public class HttpChatTranslationTest {
         translation.start();
         verify(listener, times(2)).onConnecting();
         verify(listener, times(1)).onConnected();
-    }
-
-    @Test
-    public void whenStopping_cancelsScheduledRefresh() throws Exception {
-        translation.start();
-        translation.stop();
-
-        assertFalse(refreshScheduler.isScheduled());
     }
 
     @Test
