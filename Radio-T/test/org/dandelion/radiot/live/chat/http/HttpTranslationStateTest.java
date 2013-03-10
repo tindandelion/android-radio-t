@@ -22,27 +22,24 @@ public class HttpTranslationStateTest {
 
     private Scheduler scheduler  = mock(Scheduler.class);
     private final HttpChatTranslation translation = new HttpChatTranslation((HttpChatClient) null, scheduler);
+    private final HttpChatClient chatClient = mock(HttpChatClient.class);
+    private final MessageConsumer consumer = mock(MessageConsumer.class);
+    private final ProgressListener listener = mock(ProgressListener.class);
+    private final HttpChatTranslation stateHolder = mock(HttpChatTranslation.class);
+    private HttpTranslationState state;
 
     @Test
     public void disconnectedState_onStart_switchesToConnecting() throws Exception {
-        HttpChatClient chatClient = mock(HttpChatClient.class);
-        MessageConsumer consumer = mock(MessageConsumer.class);
-        ProgressListener listener = mock(ProgressListener.class);
-        HttpChatTranslation translation1 = mock(HttpChatTranslation.class);
-        HttpTranslationState.Disconnected state = new HttpTranslationState.Disconnected(
-                translation1, consumer, chatClient, listener);
+        state = new HttpTranslationState.Disconnected(stateHolder, consumer, chatClient, listener);
 
         state.onStart();
 
-        verify(translation1).changeState(isA(HttpTranslationState.Connecting.class));
+        verify(stateHolder).changeState(isA(HttpTranslationState.Connecting.class));
     }
 
     @Test
     public void connectingState_whenEntered_requestsLastMessages() throws Exception {
-        HttpChatClient chatClient = mock(HttpChatClient.class);
-        MessageConsumer consumer = mock(MessageConsumer.class);
-        ProgressListener listener = mock(ProgressListener.class);
-        HttpTranslationState.Connecting state = new HttpTranslationState.Connecting(translation, chatClient, consumer, listener);
+        state = new HttpTranslationState.Connecting(translation, chatClient, consumer, listener);
 
         when(chatClient.retrieveMessages("last")).thenReturn(MESSAGES);
         state.enter();
@@ -52,11 +49,7 @@ public class HttpTranslationStateTest {
 
     @Test
     public void connectingState_whenEntered_reportsProgress() throws Exception {
-        HttpChatClient chatClient = mock(HttpChatClient.class);
-        MessageConsumer consumer = mock(MessageConsumer.class);
-        ProgressListener listener = mock(ProgressListener.class);
-        HttpTranslationState.Connecting state = new HttpTranslationState.Connecting(
-                translation, chatClient, consumer, listener);
+        state = new HttpTranslationState.Connecting(translation, chatClient, consumer, listener);
 
         when(chatClient.retrieveMessages("last")).thenReturn(MESSAGES);
         state.enter();
@@ -67,15 +60,21 @@ public class HttpTranslationStateTest {
 
     @Test
     public void connectingState_whenEntered_reportsErrors() throws Exception {
-        HttpChatClient chatClient = mock(HttpChatClient.class);
-        MessageConsumer consumer = mock(MessageConsumer.class);
-        ProgressListener listener = mock(ProgressListener.class);
-        HttpTranslationState.Connecting state = new HttpTranslationState.Connecting(
-                translation, chatClient, consumer, listener);
+        state = new HttpTranslationState.Connecting(translation, chatClient, consumer, listener);
 
         when(chatClient.retrieveMessages("last")).thenThrow(IOException.class);
         state.enter();
 
         verify(listener).onError();
+    }
+
+    @Test
+    public void connectingState_whenConnected_switchesToConnected() throws Exception {
+        state = new HttpTranslationState.Connecting(stateHolder, chatClient, consumer, listener);
+
+        when(chatClient.retrieveMessages("last")).thenReturn(MESSAGES);
+        state.enter();
+
+        verify(stateHolder).changeState(isA(HttpTranslationState.Connected.class));
     }
 }
