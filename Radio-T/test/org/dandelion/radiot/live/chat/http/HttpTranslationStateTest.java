@@ -82,6 +82,16 @@ public class HttpTranslationStateTest {
     }
 
     @Test
+    public void connectingState_onStart_onlyReportsToListener() throws Exception {
+        state = stateFactory.connecting(stateHolder);
+
+        state.onStart();
+
+        verify(chatClient, never()).retrieveMessages("last");
+        verify(listener).onConnecting();
+    }
+
+    @Test
     public void connectedState_whenEntered_schedulesRefresh() throws Exception {
         state = stateFactory.connected(stateHolder);
 
