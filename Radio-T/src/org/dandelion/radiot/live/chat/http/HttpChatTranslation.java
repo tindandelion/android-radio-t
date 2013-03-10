@@ -15,7 +15,7 @@ public class HttpChatTranslation implements ChatTranslation, MessageConsumer {
     private final Announcer<MessageConsumer> messageAnnouncer = new Announcer<MessageConsumer>(MessageConsumer.class);
     final HttpChatClient chatClient;
     private final Scheduler refreshScheduler;
-    private HttpTranslationState currentState = new HttpTranslationState.Disconnected(this);
+    private HttpTranslationState currentState;
 
     public HttpChatTranslation(String baseUrl, Scheduler refreshScheduler) {
         this(new HttpChatClient(baseUrl), refreshScheduler);
@@ -30,6 +30,7 @@ public class HttpChatTranslation implements ChatTranslation, MessageConsumer {
                 requestNextMessages();
             }
         });
+        currentState = new HttpTranslationState.Disconnected(this);
     }
 
     @Override
@@ -68,8 +69,8 @@ public class HttpChatTranslation implements ChatTranslation, MessageConsumer {
         this.currentState = state;
     }
 
-    void requestLastMessages() {
-        new HttpChatRequest.Last(chatClient, progressAnnouncer.announce(), this).execute();
+    void requestLastMessages(MessageConsumer messageConsumer, HttpChatClient client) {
+        new HttpChatRequest.Last(client, progressAnnouncer.announce(), messageConsumer).execute();
     }
 
     private void requestNextMessages() {

@@ -30,10 +30,20 @@ public class HttpChatTranslationTest {
     private final ProgressListener listener = mock(ProgressListener.class);
 
     @Test
+    // TODO: Moved to HttpTranslationStateTest
     public void whenStartingFirstTime_requestsLastMessages() throws Exception {
         when(chatClient.retrieveMessages("last")).thenReturn(MESSAGE_LIST);
         translation.start();
         verify(consumer).processMessages(MESSAGE_LIST);
+    }
+
+    @Test
+    public void whenStarting_notifiesListenerOfProgress() throws Exception {
+        when(chatClient.retrieveMessages("last")).thenReturn(MESSAGE_LIST);
+        translation.start();
+
+        verify(listener).onConnecting();
+        verify(listener).onConnected();
     }
 
     @Test
@@ -46,14 +56,6 @@ public class HttpChatTranslationTest {
         verify(consumer).processMessages(MESSAGE_LIST);
     }
 
-    @Test
-    public void whenStarting_notifiesListenerOfProgress() throws Exception {
-        when(chatClient.retrieveMessages("last")).thenReturn(MESSAGE_LIST);
-        translation.start();
-
-        verify(listener).onConnecting();
-        verify(listener).onConnected();
-    }
 
     @Test
     public void whenStatring_butErrorOccurs_notifiesListener() throws Exception {
