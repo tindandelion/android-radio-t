@@ -30,7 +30,8 @@ public class HttpChatTranslation implements ChatTranslation, MessageConsumer {
                 requestNextMessages();
             }
         });
-        currentState = new HttpTranslationState.Disconnected(this);
+        currentState = new HttpTranslationState.Disconnected(
+                this, this, chatClient, progressAnnouncer.announce());
     }
 
     @Override
@@ -65,8 +66,9 @@ public class HttpChatTranslation implements ChatTranslation, MessageConsumer {
     }
 
 
-    void setCurrentState(HttpTranslationState state) {
-        this.currentState = state;
+    void changeState(HttpTranslationState newState) {
+        this.currentState = newState;
+        newState.enter();
     }
 
     private void requestNextMessages() {
@@ -79,7 +81,7 @@ public class HttpChatTranslation implements ChatTranslation, MessageConsumer {
     }
 
     void scheduleRefresh() {
-        setCurrentState(new HttpTranslationState.Connected(this));
+        changeState(new HttpTranslationState.Connected(this));
         refreshScheduler.scheduleNext();
     }
 

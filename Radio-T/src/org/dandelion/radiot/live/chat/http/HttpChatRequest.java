@@ -37,7 +37,6 @@ public abstract class HttpChatRequest extends AsyncTask<Void, Void, List<Message
         if (error != null) {
             reportError();
         } else {
-            reportSuccess();
             consumeMessages(messages);
         }
     }
@@ -51,17 +50,9 @@ public abstract class HttpChatRequest extends AsyncTask<Void, Void, List<Message
         progressListener.onError();
     }
 
-    protected void reportSuccess() {
-    }
-
     static class Last extends HttpChatRequest {
         Last(HttpChatClient chatClient, ProgressListener progressListener, MessageConsumer messageConsumer) {
             super("last", chatClient, progressListener, messageConsumer);
-        }
-
-        @Override
-        protected void reportSuccess() {
-            progressListener.onConnected();
         }
     }
 

@@ -1,13 +1,27 @@
 package org.dandelion.radiot.live.chat.http;
 
+import org.dandelion.radiot.live.chat.Message;
 import org.dandelion.radiot.live.chat.MessageConsumer;
 import org.dandelion.radiot.live.chat.ProgressListener;
 
+import java.util.List;
+
 public class HttpTranslationState {
     protected final HttpChatTranslation translation;
+    protected final ProgressListener progressListener;
+    protected final HttpChatClient chatClient;
+    protected final MessageConsumer consumer;
 
-    HttpTranslationState(HttpChatTranslation translation) {
+
+    private HttpTranslationState(HttpChatTranslation translation) {
+        this(translation, translation.progressAnnouncer.announce(), translation.chatClient, null);
+    }
+
+    public HttpTranslationState(HttpChatTranslation translation, ProgressListener progressListener, HttpChatClient chatClient, MessageConsumer consumer) {
         this.translation = translation;
+        this.progressListener = progressListener;
+        this.chatClient = chatClient;
+        this.consumer = consumer;
     }
 
     public void onStart() {
@@ -16,43 +30,47 @@ public class HttpTranslationState {
     public void onStop() {
     }
 
-    static class Disconnected extends HttpTranslationState {
-        private final MessageConsumer messageConsumer;
-        private final HttpChatClient chatClient;
-        private final ProgressListener progressListener;
+    public void enter() {
 
-        public Disconnected(HttpChatTranslation translation) {
-            this(translation, translation, translation.chatClient, translation.progressAnnouncer.announce());
-        }
+    }
+
+    static class Disconnected extends HttpTranslationState {
 
         public Disconnected(HttpChatTranslation translation, MessageConsumer consumer, HttpChatClient chatClient, ProgressListener progressListener) {
-            super(translation);
-            this.messageConsumer = consumer;
-            this.chatClient = chatClient;
-            this.progressListener = progressListener;
+            super(translation, progressListener, chatClient, consumer);
         }
 
         @Override
         public void onStart() {
-            this.translation.setCurrentState(new Connecting(this.translation));
+            Connecting newState = new Connecting(translation, chatClient, consumer, progressListener);
+            translation.changeState(newState);
+        }
+    }
+
+    static class Connecting extends HttpTranslationState implements MessageConsumer {
+        public Connecting(HttpChatTranslation translation, HttpChatClient chatClient, MessageConsumer consumer, ProgressListener progressListener) {
+            super(translation, progressListener, chatClient, consumer);
+        }
+
+        @Override
+        public void onStart() {
+            this.translation.progressAnnouncer.announce().onConnecting();
+        }
+
+        @Override
+        public void enter() {
             progressListener.onConnecting();
             requestLastMessages();
         }
 
         private void requestLastMessages() {
-            new HttpChatRequest.Last(chatClient, progressListener, messageConsumer).execute();
-        }
-    }
-
-    static class Connecting extends HttpTranslationState {
-        public Connecting(HttpChatTranslation translation) {
-            super(translation);
+            new HttpChatRequest.Last(chatClient, progressListener, this).execute();
         }
 
         @Override
-        public void onStart() {
-            this.translation.setCurrentState(this);
-            this.translation.progressAnnouncer.announce().onConnecting();
+        public void processMessages(List<Message> messages) {
+            progressListener.onConnected();
+            consumer.processMessages(messages);
         }
     }
 
@@ -63,7 +81,6 @@ public class HttpTranslationState {
 
         @Override
         public void onStart() {
-            this.translation.setCurrentState(this);
             this.translation.scheduleRefresh();
         }
 
