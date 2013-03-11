@@ -28,9 +28,11 @@ Version 1.7:
      DONE ListView: scroll to bottom if it was at bottom initially
      DONE Bug: Rotating while requesting next messages causes redundant schedule
      DONE Bug: When first connection fails, it should retry when rotating the device
-     * Testing: rotating in different states
-     * Testing: pausing/restarting activity
-     * Testing: Android 2.1 and later
+     DONE Testing: Android 2.1 and later
+     DONE Testing: rotating in different states
+     DONE Testing: pausing/restarting activity
+     * Bug: Socket closed in Android 2.3
+     * Bug: No wrapped connection in Android 2.1
 
    * Podcast list: Flickers when changing orientation (due to loading all stuff)
    * Main screen: Tagline should show single-line if possible
