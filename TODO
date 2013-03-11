@@ -31,8 +31,9 @@ Version 1.7:
      DONE Testing: Android 2.1 and later
      DONE Testing: rotating in different states
      DONE Testing: pausing/restarting activity
+     DONE Bug: No wrapped connection in Android 2.1 (Only in emulator)
      * Bug: Socket closed in Android 2.3
-     * Bug: No wrapped connection in Android 2.1
+     * Testing: Final check for memory leaks
 
    * Podcast list: Flickers when changing orientation (due to loading all stuff)
    * Main screen: Tagline should show single-line if possible
