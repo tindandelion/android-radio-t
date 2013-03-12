@@ -7,6 +7,8 @@ import org.dandelion.radiot.live.schedule.DeterministicScheduler;
 import org.dandelion.radiot.robolectric.RadiotRobolectricRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -168,12 +170,18 @@ public class HttpTranslationStateTest {
     }
 
     @Test
-    public void connectedState_whenProcessingMessages_doesNotScheduleRefresh_ifAlreadyScheduled() throws Exception {
+    public void connectedState_whenRequestAlreadyInProgress_doesNotMakeNewRequest() throws Exception {
         state = stateFactory.connected(stateHolder);
+        when(chatClient.retrieveMessages("next")).then(new Answer<Object>() {
+            @Override
+            public Object answer(InvocationOnMock invocation) throws Throwable {
+                state.onStart();
+                return MESSAGES;
+            }
+        });
 
-        state.enter();
-        ((MessageConsumer) state).processMessages(MESSAGES);
+        state.onStart();
 
-        assertEquals(1, scheduler.scheduleCount());
+        verify(chatClient, times(1)).retrieveMessages("next");
     }
 }

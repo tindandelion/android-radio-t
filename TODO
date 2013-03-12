@@ -32,7 +32,7 @@ Version 1.7:
      DONE Testing: rotating in different states
      DONE Testing: pausing/restarting activity
      DONE Bug: No wrapped connection in Android 2.1 (Only in emulator)
-     * Bug: Socket closed in Android 2.3
+     DONE Bug: Socket closed in Android 2.3
      * Testing: Final check for memory leaks
 
    * Podcast list: Flickers when changing orientation (due to loading all stuff)
