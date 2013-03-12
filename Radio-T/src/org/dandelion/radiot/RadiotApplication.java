@@ -7,6 +7,7 @@ import org.dandelion.radiot.live.chat.http.HttpChatTranslation;
 import org.dandelion.radiot.live.schedule.Scheduler;
 import org.dandelion.radiot.live.ui.ChatTranslationFragment;
 import org.dandelion.radiot.podcasts.main.PodcastsApp;
+import org.dandelion.radiot.util.ProgrammerError;
 
 public class RadiotApplication extends Application {
     // private static final String CHAT_URL = "http://chat.radio-t.com:18000";
@@ -36,13 +37,15 @@ public class RadiotApplication extends Application {
 
     private static class HandlerScheduler implements Scheduler {
         private Handler handler = new Handler();
+        private Performer performer;
+        private boolean isScheduled = false;
         private Runnable action = new Runnable() {
             @Override
             public void run() {
                 performer.performAction();
+                isScheduled = false;
             }
         };
-        private Performer performer;
 
         @Override
         public void setPerformer(Performer performer) {
@@ -51,12 +54,18 @@ public class RadiotApplication extends Application {
 
         @Override
         public void scheduleNext() {
+            if (isScheduled) {
+                throw new ProgrammerError("The previous action hasn't finished yet");
+            }
+
+            isScheduled = true;
             handler.postDelayed(action, 5000);
         }
 
         @Override
         public void cancel() {
             handler.removeCallbacks(action);
+            isScheduled = false;
         }
     }
 }
