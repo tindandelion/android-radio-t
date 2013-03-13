@@ -8,6 +8,11 @@ Backlog:
      * Discard incorrect messages?
      * Different font sizes for tablets / phones
 
+ * Landscape orientation
+   * Podcast list: Activity leak in PodcastSelectionHandler
+   * Podcast list: Flickers when changing orientation (due to loading all stuff)
+   * Main screen: Tagline should show single-line if possible
+
  * User topics
  * Android 4.0 UI
    * New icon with ICS guidelines
@@ -17,12 +22,12 @@ Version 1.6.1:
 
 Version 1.7:
 
- * Landscape orientation
+ DONE Landscape orientation
    DONE About screen: The layout is corrupted badly
    DONE Live show: Playback control must be narrower
    DONE Live show: Fonts
    DONE Live show: Exception in ViewFlipper for Android 2.1 (only?)
-   * Live show: Chat must not reconnect when changing orientation
+   DONE Live show: Chat must not reconnect when changing orientation
      DONE Testing: memory leaks
      DONE Progress wheel disappears when rotating while first connect
      DONE ListView: scroll to bottom if it was at bottom initially
@@ -33,23 +38,15 @@ Version 1.7:
      DONE Testing: pausing/restarting activity
      DONE Bug: No wrapped connection in Android 2.1 (Only in emulator)
      DONE Bug: Socket closed in Android 2.3
-     * Bug: Activity leak in PodcastSelectionHandler
-     * Testing: Final check for memory leaks
-
-   * Podcast list: Flickers when changing orientation (due to loading all stuff)
-   * Main screen: Tagline should show single-line if possible
 
  DONE Explore Google Analytics
  DONE Podcast list: do not clear cache if download error occurs
  DONE Unify HTTP data fetching (?)
  DONE Remove HttpThumbnailProvider (?)
 
-
 * Debt:
  * Podcast type "audo/mpeg" appears in lots of places
  * Duplication between playback start from podcast list and from download notification
 
-
 Development:
- * Explore AndroidMock
  * Build and test all in one click
