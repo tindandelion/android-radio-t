@@ -27,7 +27,7 @@ public class AppNavigationTest extends ActivityInstrumentationTestCase2<HomeScre
 
     public void testNavigateToMainShowScreenAndBack() throws Exception {
         driver.goToPodcastsScreen();
-        driver.showsPodcastsScreen("Подкасты");
+        driver.showsPodcastsScreen("Выпуски");
 
         driver.clickActivityTitle();
         driver.showsHomeScreen();

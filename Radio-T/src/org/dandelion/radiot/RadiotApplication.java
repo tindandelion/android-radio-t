@@ -10,8 +10,8 @@ import org.dandelion.radiot.podcasts.main.PodcastsApp;
 import org.dandelion.radiot.util.ProgrammerError;
 
 public class RadiotApplication extends Application {
-    // private static final String CHAT_URL = "http://chat.radio-t.com:18000";
-    private static final String CHAT_URL = "http://192.168.5.206:4567";
+    private static final String CHAT_URL = "http://chat.radio-t.com:18000";
+    // private static final String CHAT_URL = "http://192.168.5.206:4567";
 
     @Override
     public void onCreate() {

@@ -31,7 +31,7 @@ public class AppNavigator extends Solo {
     }
 
     public void goToPodcastsScreen() {
-        clickOnText("Подкасты");
+        clickOnText("Выпуски");
     }
 
     public void showsPodcastsScreen(CharSequence title) {

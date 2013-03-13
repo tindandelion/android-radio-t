@@ -1,57 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string
-            name="refresh_menu_item">Обновить
-    </string>
-    <string
-            name="home_menu_item">Домой
-    </string>
-    <string
-            name="loading_message">Загрузка подкастов
-    </string>
+    <string name="refresh_menu_item">Обновить</string>
+    <string name="home_menu_item">Домой</string>
     <string name="error_title">Ошибка</string>
+    <string name="logo_text">Импровизации\nна Hi-Tech темы</string>
+    <string name="main_title">Радио</string>
+    <string name="app_name">Радио-Т</string>
+    <string name="main_show_title">Выпуски</string>
+    <string name="after_show_title">После-шоу</string>
+    <string name="live_show_title">Прямой эфир</string>
+    <string name="about_app_title">О программе</string>
+    <string name="version_label">Версия %s</string>
+    <string name="feedback_label">Обратная связь</string>
     <string
-            name="logo_text">Импровизации\nна Hi-Tech темы
-    </string>
-    <string
-            name="main_title">Радио
-    </string>
-    <string
-            name="app_name">Радио-Т
-    </string>
-    <string
-            name="main_show_title">Подкасты
-    </string>
-    <string
-            name="after_show_title">После-шоу
-    </string>
-    <string
-            name="live_show_title">Прямой эфир
-    </string>
-    <string
-            name="about_app_title">О программе
-    </string>
-    <string
-            name="version_label">Версия %s
-    </string>
-    <string
-            name="feedback_label">Обратная связь
-    </string>
-    <string
-            name="live_show_info">
+        name="live_show_info">
         Прямая трансляция ведется по субботам с
         <b>23:00</b>
         по московскому времени
     </string>
     <string
-            name="live_show_waiting_hint">При подключении к прямому эфиру произошла ошибка. Приложение
+        name="live_show_waiting_hint">При подключении к прямому эфиру произошла ошибка. Приложение
         повторит попытку через некоторое время
     </string>
     <string
-            name="listen_label">Слушать сейчас
+        name="listen_label">Слушать сейчас
     </string>
     <string
-            name="live_show_playback_button_title">Прямой эфир
+        name="live_show_playback_button_title">Прямой эфир
     </string>
     <string name="podcast_actions_title">Радио-Т %s</string>
     <string name="acknoledgements">
@@ -76,14 +51,14 @@
     <string name="chat_error">Трансляция чата недоступна</string>
     <string name="chat_loading">Подключение к чату</string>
     <string-array
-            name="live_show_notification_labels">
+        name="live_show_notification_labels">
         <item>Прямой эфир: Подключение</item>
         <item>Прямой эфир: Идет трансляция</item>
         <item>Прямой эфир: Остановка</item>
         <item>Прямой эфир: Ожидание</item>
     </string-array>
     <string-array
-            name="live_show_status_labels">
+        name="live_show_status_labels">
         <item>Остановлено</item>
         <item>Подключение</item>
         <item>Трансляция</item>
@@ -91,12 +66,12 @@
         <item>Ожидание</item>
     </string-array>
     <string-array
-            name="live_show_button_labels">
+        name="live_show_button_labels">
         <item>Остановить</item>
         <item>Подключиться</item>
     </string-array>
     <string-array
-            name="podcast_actions">
+        name="podcast_actions">
         <item>Загрузить</item>
         <item>Играть</item>
     </string-array>
