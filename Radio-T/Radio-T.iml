@@ -86,11 +86,11 @@
     <orderEntry type="module-library" scope="TEST">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/libs/test/robolectric-1.2-20130205.195600-198-jar-with-dependencies.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/test/robolectric-1.2-jar-with-dependencies.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$MODULE_DIR$/libs/test/robolectric-1.2-20130205.195600-198-jar-with-dependencies.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/test/robolectric-1.2-jar-with-dependencies.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
