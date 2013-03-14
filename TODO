@@ -20,6 +20,8 @@ Version 1.8:
  * Lock screen when translating chat (?)
  * Podcast list: Activity leak in PodcastSelectionHandler
  * Podcast list: Better error explanation
+ * Bug: ANR with MediaPlayer setDataSource()
+
 
 * Debt:
  * Podcast type "audo/mpeg" appears in lots of places
@@ -27,3 +29,6 @@ Version 1.8:
 
 Development:
  * Build and test all in one click
+
+Notes:
+ * Audio stream url: http://listen.radionomy.com/radio-mozart
