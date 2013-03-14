@@ -1,15 +1,12 @@
 Backlog:
- * Podcast list: Better error explanation
  * Live show: graceful process termination
  * Downloading: Respect background data loading settings
  * Downloading: Warn a user if a file already exists
  * Chat translation:
-     * Lock screen when translating chat (?)
      * Discard incorrect messages?
      * Different font sizes for tablets / phones
 
  * Landscape orientation
-   * Podcast list: Activity leak in PodcastSelectionHandler
    * Podcast list: Flickers when changing orientation (due to loading all stuff)
    * Main screen: Tagline should show single-line if possible
 
@@ -17,32 +14,12 @@ Backlog:
  * Android 4.0 UI
    * New icon with ICS guidelines
 
-Version 1.6.1:
- * Bug: Chat reconnects when changing screen orientation
-
-Version 1.7:
-
- DONE Landscape orientation
-   DONE About screen: The layout is corrupted badly
-   DONE Live show: Playback control must be narrower
-   DONE Live show: Fonts
-   DONE Live show: Exception in ViewFlipper for Android 2.1 (only?)
-   DONE Live show: Chat must not reconnect when changing orientation
-     DONE Testing: memory leaks
-     DONE Progress wheel disappears when rotating while first connect
-     DONE ListView: scroll to bottom if it was at bottom initially
-     DONE Bug: Rotating while requesting next messages causes redundant schedule
-     DONE Bug: When first connection fails, it should retry when rotating the device
-     DONE Testing: Android 2.1 and later
-     DONE Testing: rotating in different states
-     DONE Testing: pausing/restarting activity
-     DONE Bug: No wrapped connection in Android 2.1 (Only in emulator)
-     DONE Bug: Socket closed in Android 2.3
-
- DONE Explore Google Analytics
- DONE Podcast list: do not clear cache if download error occurs
- DONE Unify HTTP data fetching (?)
- DONE Remove HttpThumbnailProvider (?)
+Version 1.8:
+ * Use Jabber to connect to chat
+ * Follow links in chat
+ * Lock screen when translating chat (?)
+ * Podcast list: Activity leak in PodcastSelectionHandler
+ * Podcast list: Better error explanation
 
 * Debt:
  * Podcast type "audo/mpeg" appears in lots of places
