@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
+import static org.junit.Assert.assertFalse;
 import static org.mockito.Mockito.*;
 
 @SuppressWarnings("unchecked")
@@ -21,10 +22,40 @@ import static org.mockito.Mockito.*;
 public class HttpChatTranslationTest {
     private static final List<Message> MESSAGE_LIST = Collections.emptyList();
     private final HttpChatClient chatClient = mock(HttpChatClient.class);
-    private final DeterministicScheduler refreshScheduler = new DeterministicScheduler();
-    private final HttpChatTranslation translation = new HttpChatTranslation(chatClient, refreshScheduler);
+    private final DeterministicScheduler pollScheduler = new DeterministicScheduler();
+    private final HttpChatTranslation translation = new HttpChatTranslation(chatClient, pollScheduler);
     private final MessageConsumer consumer = mock(MessageConsumer.class);
     private final ProgressListener listener = mock(ProgressListener.class);
+
+    @Test
+    public void whenStoppedWhileConnecting_doesNotStartPolling() throws Exception {
+        when(chatClient.retrieveMessages("last")).thenAnswer(new Answer<Object>() {
+            @Override
+            public Object answer(InvocationOnMock invocation) throws Throwable {
+                translation.stop();
+                return null;
+            }
+        });
+        translation.start();
+        assertFalse(pollScheduler.isScheduled());
+    }
+
+    @Test
+    public void whenStoppedWhileRefreshing_stopsPolling() throws Exception {
+        translation.start();
+
+        when(chatClient.retrieveMessages("next")).thenAnswer(new Answer<Object>() {
+            @Override
+            public Object answer(InvocationOnMock invocation) throws Throwable {
+                translation.stop();
+                return null;
+            }
+        });
+
+        pollScheduler.performAction();
+        assertFalse(pollScheduler.isScheduled());
+    }
+
 
 
     @Test
@@ -56,7 +87,7 @@ public class HttpChatTranslationTest {
         translation.start();
         reset(consumer);
 
-        refreshScheduler.performAction();
+        pollScheduler.performAction();
         verify(consumer, never()).processMessages(MESSAGE_LIST);
     }
 

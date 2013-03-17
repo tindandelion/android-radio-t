@@ -39,13 +39,24 @@ public class HttpTranslationState {
         public void onStart() {
             changeToState(stateFactory.connecting(stateHolder));
         }
+    }
 
+    static class Paused extends HttpTranslationState {
+        public Paused(StateHolder stateHolder, StateFactory stateFactory) {
+            super(stateHolder, stateFactory);
+        }
+
+        @Override
+        public void onStart() {
+            stateHolder.changeState(stateFactory.listening(stateHolder));
+        }
     }
 
     static class Connecting extends HttpTranslationState implements MessageConsumer, HttpChatRequest.ErrorListener {
         private final MessageConsumer consumer;
         private final ProgressListener progressListener;
         private final HttpChatClient chatClient;
+        private boolean isStopped = false;
 
         public Connecting(StateHolder stateHolder, StateFactory stateFactory, HttpChatClient chatClient, MessageConsumer consumer, ProgressListener progressListener) {
             super(stateHolder, stateFactory);
@@ -60,6 +71,11 @@ public class HttpTranslationState {
         }
 
         @Override
+        public void onStop() {
+            isStopped = true;
+        }
+
+        @Override
         public void enter() {
             progressListener.onConnecting();
             requestMessages();
@@ -71,9 +87,17 @@ public class HttpTranslationState {
 
         @Override
         public void processMessages(List<Message> messages) {
-            changeToState(stateFactory.connected(stateHolder));
+            changeToState(newState());
             progressListener.onConnected();
             consumer.processMessages(messages);
+        }
+
+        private HttpTranslationState newState() {
+            if (isStopped) {
+                return stateFactory.paused(stateHolder);
+            } else {
+                return stateFactory.listening(stateHolder);
+            }
         }
 
         @Override
@@ -84,14 +108,15 @@ public class HttpTranslationState {
     }
 
 
-    static class Connected extends HttpTranslationState implements Scheduler.Performer, MessageConsumer, HttpChatRequest.ErrorListener {
+    static class Listening extends HttpTranslationState implements Scheduler.Performer, MessageConsumer, HttpChatRequest.ErrorListener {
         private final MessageConsumer consumer;
         private final ProgressListener progressListener;
         private final HttpChatClient chatClient;
         private final Scheduler scheduler;
         private boolean inProgress = false;
+        private boolean isStopped = false;
 
-        Connected(StateHolder stateHolder, StateFactory stateFactory, HttpChatClient chatClient, MessageConsumer consumer, ProgressListener progressListener, Scheduler scheduler) {
+        Listening(StateHolder stateHolder, StateFactory stateFactory, HttpChatClient chatClient, MessageConsumer consumer, ProgressListener progressListener, Scheduler scheduler) {
             super(stateHolder, stateFactory);
             this.chatClient = chatClient;
             this.progressListener = progressListener;
@@ -116,6 +141,7 @@ public class HttpTranslationState {
 
         @Override
         public void onStop() {
+            isStopped = true;
             scheduler.cancel();
         }
 
@@ -134,7 +160,11 @@ public class HttpTranslationState {
         @Override
         public void processMessages(List<Message> messages) {
             consumer.processMessages(messages);
-            scheduleUpdate();
+            if (isStopped) {
+                stateHolder.changeState(stateFactory.paused(stateHolder));
+            } else {
+                scheduleUpdate();
+            }
             inProgress = false;
         }
 
@@ -170,8 +200,13 @@ public class HttpTranslationState {
             return new Connecting(stateHolder, this, chatClient, consumer, progressListener);
         }
 
-        public HttpTranslationState connected(StateHolder stateHolder) {
-            return new Connected(stateHolder, this, chatClient, consumer, progressListener, scheduler);
+        public HttpTranslationState listening(StateHolder stateHolder) {
+            return new Listening(stateHolder, this, chatClient, consumer, progressListener, scheduler);
+        }
+
+        public HttpTranslationState paused(StateHolder stateHolder) {
+            return new Paused(stateHolder, this);
         }
     }
+
 }

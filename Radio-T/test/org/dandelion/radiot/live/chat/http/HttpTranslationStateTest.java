@@ -73,13 +73,29 @@ public class HttpTranslationStateTest {
     }
 
     @Test
-    public void connectingState_whenConnected_switchesToConnected() throws Exception {
+    public void connectingState_whenConnected_switchesToListening() throws Exception {
         state = stateFactory.connecting(stateHolder);
 
         when(chatClient.retrieveMessages("last")).thenReturn(MESSAGES);
         state.enter();
 
-        verify(stateHolder).changeState(isA(HttpTranslationState.Connected.class));
+        verify(stateHolder).changeState(isA(HttpTranslationState.Listening.class));
+    }
+
+    @Test
+    public void connectingState_whenInterrupted_switchesToPaused() throws Exception {
+        state = stateFactory.connecting(stateHolder);
+        when(chatClient.retrieveMessages("last")).thenAnswer(new Answer<Object>() {
+            @Override
+            public Object answer(InvocationOnMock invocation) throws Throwable {
+                state.onStop();
+                return null;
+            }
+        });
+
+        state.enter();
+
+        verify(stateHolder).changeState(isA(HttpTranslationState.Paused.class));
     }
 
     @Test
@@ -103,8 +119,8 @@ public class HttpTranslationStateTest {
     }
 
     @Test
-    public void connectedState_whenEntered_schedulesRefresh() throws Exception {
-        state = stateFactory.connected(stateHolder);
+    public void listeningState_whenEntered_schedulesRefresh() throws Exception {
+        state = stateFactory.listening(stateHolder);
 
         when(chatClient.retrieveMessages("next")).thenReturn(MESSAGES);
         state.enter();
@@ -114,8 +130,8 @@ public class HttpTranslationStateTest {
     }
 
     @Test
-    public void connectedState_whenRefreshed_schedulesNextRefresh() throws Exception {
-        state = stateFactory.connected(stateHolder);
+    public void listeningState_whenRefreshed_schedulesNextRefresh() throws Exception {
+        state = stateFactory.listening(stateHolder);
 
         when(chatClient.retrieveMessages("next")).thenReturn(MESSAGES);
 
@@ -127,8 +143,8 @@ public class HttpTranslationStateTest {
     }
 
     @Test
-    public void connectedState_whenRefreshing_reportsErrors() throws Exception {
-        state = stateFactory.connected(stateHolder);
+    public void listeningState_whenRefreshing_reportsErrors() throws Exception {
+        state = stateFactory.listening(stateHolder);
 
         when(chatClient.retrieveMessages("next")).thenThrow(IOException.class);
 
@@ -139,8 +155,8 @@ public class HttpTranslationStateTest {
     }
 
     @Test
-    public void connectedState_onStop_cancelsScheduledRefresh() throws Exception {
-        state = stateFactory.connected(stateHolder);
+    public void listeningState_onStop_cancelsScheduledRefresh() throws Exception {
+        state = stateFactory.listening(stateHolder);
 
         state.enter();
         state.onStop();
@@ -150,28 +166,20 @@ public class HttpTranslationStateTest {
     }
 
     @Test
-    public void connectedState_onStart_schedulesRefresh() throws Exception {
-        state = stateFactory.connected(stateHolder);
-
-        state.onStart();
-
-        assertTrue(scheduler.isScheduled());
-    }
-
-    @Test
-    public void connectedState_onStart_requestsNextMessages() throws Exception {
-        state = stateFactory.connected(stateHolder);
+    public void listeningState_onStart_requestsNextMessages() throws Exception {
+        state = stateFactory.listening(stateHolder);
 
         when(chatClient.retrieveMessages("next")).thenReturn(MESSAGES);
         state.onStart();
 
         verify(chatClient).retrieveMessages("next");
         verify(consumer).processMessages(MESSAGES);
+        assertTrue(scheduler.isScheduled());
     }
 
     @Test
-    public void connectedState_whenRequestAlreadyInProgress_doesNotMakeNewRequest() throws Exception {
-        state = stateFactory.connected(stateHolder);
+    public void listeningState_whenRequestAlreadyInProgress_doesNotMakeNewRequest() throws Exception {
+        state = stateFactory.listening(stateHolder);
         when(chatClient.retrieveMessages("next")).then(new Answer<Object>() {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
@@ -183,5 +191,29 @@ public class HttpTranslationStateTest {
         state.onStart();
 
         verify(chatClient, times(1)).retrieveMessages("next");
+    }
+
+    @Test
+    public void listeningState_whenInterrupted_SwitchesToPaused() throws Exception {
+        state = stateFactory.listening(stateHolder);
+        when(chatClient.retrieveMessages("next")).then(new Answer<Object>() {
+            @Override
+            public Object answer(InvocationOnMock invocation) throws Throwable {
+                state.onStop();
+                return MESSAGES;
+            }
+        });
+
+        state.onStart();
+        verify(stateHolder).changeState(isA(HttpTranslationState.Paused.class));
+    }
+
+    @Test
+    public void pausedState_onStart_switchesToConnected() throws Exception {
+        state = stateFactory.paused(stateHolder);
+
+        state.onStart();
+        verify(stateHolder).changeState(isA(HttpTranslationState.Listening.class));
+
     }
 }

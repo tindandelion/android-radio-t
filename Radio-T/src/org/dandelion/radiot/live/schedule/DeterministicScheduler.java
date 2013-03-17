@@ -16,7 +16,9 @@ public class DeterministicScheduler implements Scheduler {
 
     @Override
     public void cancel() {
-        scheduleCount--;
+        if (isScheduled()) {
+            scheduleCount--;
+        }
     }
 
     public void performAction() {
@@ -30,7 +32,4 @@ public class DeterministicScheduler implements Scheduler {
         return scheduleCount > 0;
     }
 
-    public int scheduleCount() {
-        return scheduleCount;
-    }
 }
