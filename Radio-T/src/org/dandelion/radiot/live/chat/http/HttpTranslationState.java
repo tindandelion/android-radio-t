@@ -8,12 +8,10 @@ import org.dandelion.radiot.live.schedule.Scheduler;
 import java.util.List;
 
 public class HttpTranslationState {
-    protected final StateFactory stateFactory;
-    protected final StateHolder stateHolder;
+    protected final HttpTranslationEngine engine;
 
-    public HttpTranslationState(StateHolder stateHolder, StateFactory stateFactory) {
-        this.stateFactory = stateFactory;
-        this.stateHolder = stateHolder;
+    public HttpTranslationState(HttpTranslationEngine engine) {
+        this.engine = engine;
     }
 
     public void onStart() {
@@ -26,29 +24,25 @@ public class HttpTranslationState {
 
     }
 
-    protected void changeToState(HttpTranslationState newState) {
-        stateHolder.changeState(newState);
-    }
-
     static class Disconnected extends HttpTranslationState {
-        public Disconnected(StateHolder stateHolder, StateFactory stateFactory) {
-            super(stateHolder, stateFactory);
+        public Disconnected(HttpTranslationEngine httpTranslationEngine) {
+            super(httpTranslationEngine);
         }
 
         @Override
         public void onStart() {
-            changeToState(stateFactory.connecting(stateHolder));
+            engine.beConnecting();
         }
     }
 
     static class Paused extends HttpTranslationState {
-        public Paused(StateHolder stateHolder, StateFactory stateFactory) {
-            super(stateHolder, stateFactory);
+        public Paused(HttpTranslationEngine engine) {
+            super(engine);
         }
 
         @Override
         public void onStart() {
-            stateHolder.changeState(stateFactory.listening(stateHolder));
+            engine.beListening();
         }
     }
 
@@ -58,8 +52,8 @@ public class HttpTranslationState {
         private final HttpChatClient chatClient;
         private boolean isStopped = false;
 
-        public Connecting(StateHolder stateHolder, StateFactory stateFactory, HttpChatClient chatClient, MessageConsumer consumer, ProgressListener progressListener) {
-            super(stateHolder, stateFactory);
+        public Connecting(HttpTranslationEngine engine, HttpChatClient chatClient, MessageConsumer consumer, ProgressListener progressListener) {
+            super(engine);
             this.chatClient = chatClient;
             this.progressListener = progressListener;
             this.consumer = consumer;
@@ -87,23 +81,20 @@ public class HttpTranslationState {
 
         @Override
         public void processMessages(List<Message> messages) {
-            changeToState(newState());
+            if (isStopped) {
+                engine.bePaused();
+            } else {
+                engine.beListening();
+            }
+
             progressListener.onConnected();
             consumer.processMessages(messages);
-        }
-
-        private HttpTranslationState newState() {
-            if (isStopped) {
-                return stateFactory.paused(stateHolder);
-            } else {
-                return stateFactory.listening(stateHolder);
-            }
         }
 
         @Override
         public void onError() {
             progressListener.onError();
-            changeToState(stateFactory.disconnected(stateHolder));
+            engine.beDisconnected();
         }
     }
 
@@ -116,8 +107,8 @@ public class HttpTranslationState {
         private boolean inProgress = false;
         private boolean isStopped = false;
 
-        Listening(StateHolder stateHolder, StateFactory stateFactory, HttpChatClient chatClient, MessageConsumer consumer, ProgressListener progressListener, Scheduler scheduler) {
-            super(stateHolder, stateFactory);
+        public Listening(HttpTranslationEngine engine, HttpChatClient chatClient, MessageConsumer consumer, ProgressListener progressListener, Scheduler scheduler) {
+            super(engine);
             this.chatClient = chatClient;
             this.progressListener = progressListener;
             this.consumer = consumer;
@@ -161,7 +152,7 @@ public class HttpTranslationState {
         public void processMessages(List<Message> messages) {
             consumer.processMessages(messages);
             if (isStopped) {
-                stateHolder.changeState(stateFactory.paused(stateHolder));
+                engine.bePaused();
             } else {
                 scheduleUpdate();
             }
@@ -177,36 +168,6 @@ public class HttpTranslationState {
 
     public interface StateHolder {
         void changeState(HttpTranslationState newState);
-    }
-
-    public static class StateFactory {
-        private final HttpChatClient chatClient;
-        private final MessageConsumer consumer;
-        private final ProgressListener progressListener;
-        private final Scheduler scheduler;
-
-        public StateFactory(HttpChatClient chatClient, MessageConsumer consumer, ProgressListener progressListener, Scheduler scheduler) {
-            this.chatClient = chatClient;
-            this.consumer = consumer;
-            this.progressListener = progressListener;
-            this.scheduler = scheduler;
-        }
-
-        public HttpTranslationState disconnected(StateHolder stateHolder) {
-            return new Disconnected(stateHolder, this);
-        }
-
-        public HttpTranslationState connecting(StateHolder stateHolder) {
-            return new Connecting(stateHolder, this, chatClient, consumer, progressListener);
-        }
-
-        public HttpTranslationState listening(StateHolder stateHolder) {
-            return new Listening(stateHolder, this, chatClient, consumer, progressListener, scheduler);
-        }
-
-        public HttpTranslationState paused(StateHolder stateHolder) {
-            return new Paused(stateHolder, this);
-        }
     }
 
 }

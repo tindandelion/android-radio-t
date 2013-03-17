@@ -17,12 +17,12 @@ public class HttpChatTranslation implements ChatTranslation, HttpTranslationStat
         this(new HttpChatClient(baseUrl), refreshScheduler);
     }
 
-    public HttpChatTranslation(HttpChatClient chatClient, Scheduler refreshScheduler) {
+    public HttpChatTranslation(HttpChatClient chatClient, Scheduler pollScheduler) {
         this.chatClient = chatClient;
-        HttpTranslationState.StateFactory stateFactory = new HttpTranslationState.StateFactory(chatClient, messageAnnouncer.announce(),
-                progressAnnouncer.announce(), refreshScheduler);
 
-        currentState = new HttpTranslationState.Disconnected(this, stateFactory);
+        HttpTranslationEngine engine = new HttpTranslationEngine(
+                this, chatClient, messageAnnouncer.announce(), progressAnnouncer.announce(), pollScheduler);
+        currentState = new HttpTranslationState.Disconnected(engine);
     }
 
     @Override
@@ -58,4 +58,5 @@ public class HttpChatTranslation implements ChatTranslation, HttpTranslationStat
         this.currentState = newState;
         newState.enter();
     }
+
 }
