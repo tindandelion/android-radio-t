@@ -12,6 +12,7 @@ public class HttpChatTranslation implements ChatTranslation, HttpTranslationStat
     private final Announcer<MessageConsumer> messageAnnouncer = new Announcer<MessageConsumer>(MessageConsumer.class);
     private final HttpChatClient chatClient;
     private HttpTranslationState currentState;
+    private HttpTranslationEngine engine;
 
     public HttpChatTranslation(String baseUrl, Scheduler refreshScheduler) {
         this(new HttpChatClient(baseUrl), refreshScheduler);
@@ -20,7 +21,7 @@ public class HttpChatTranslation implements ChatTranslation, HttpTranslationStat
     public HttpChatTranslation(HttpChatClient chatClient, Scheduler pollScheduler) {
         this.chatClient = chatClient;
 
-        HttpTranslationEngine engine = new HttpTranslationEngine(
+        engine = new HttpTranslationEngine(
                 this, chatClient, messageAnnouncer.announce(), progressAnnouncer.announce(), pollScheduler);
         currentState = new HttpTranslationState.Disconnected(engine);
     }

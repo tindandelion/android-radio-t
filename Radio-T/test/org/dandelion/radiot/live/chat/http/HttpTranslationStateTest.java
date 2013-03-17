@@ -14,8 +14,8 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
+import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.*;
 
 @SuppressWarnings("unchecked")
@@ -27,8 +27,8 @@ public class HttpTranslationStateTest {
     private final HttpChatClient chatClient = mock(HttpChatClient.class);
     private final MessageConsumer consumer = mock(MessageConsumer.class);
     private final ProgressListener listener = mock(ProgressListener.class);
-    private final HttpTranslationState.StateHolder stateHolder = mock(HttpTranslationState.StateHolder.class);
-    private HttpTranslationEngine engine = new HttpTranslationEngine(stateHolder, chatClient, consumer, listener, scheduler);
+    private HttpTranslationEngine engine = new HttpTranslationEngine(mock(HttpTranslationState.StateHolder.class), chatClient, consumer, listener, scheduler);
+
     private HttpTranslationState state;
 
     @Test
@@ -37,7 +37,7 @@ public class HttpTranslationStateTest {
 
         state.onStart();
 
-        verify(stateHolder).changeState(isA(HttpTranslationState.Connecting.class));
+        assertThat(engine.currentState(), instanceOf(HttpTranslationState.Connecting.class));
     }
 
     @Test
@@ -78,7 +78,7 @@ public class HttpTranslationStateTest {
         when(chatClient.retrieveMessages("last")).thenReturn(MESSAGES);
         state.enter();
 
-        verify(stateHolder).changeState(isA(HttpTranslationState.Listening.class));
+        assertThat(engine.currentState(), instanceOf(HttpTranslationState.Listening.class));
     }
 
     @Test
@@ -94,7 +94,7 @@ public class HttpTranslationStateTest {
 
         state.enter();
 
-        verify(stateHolder).changeState(isA(HttpTranslationState.Paused.class));
+        assertThat(engine.currentState(), instanceOf(HttpTranslationState.Paused.class));
     }
 
     @Test
@@ -104,7 +104,7 @@ public class HttpTranslationStateTest {
         when(chatClient.retrieveMessages("last")).thenThrow(IOException.class);
         state.enter();
 
-        verify(stateHolder).changeState(isA(HttpTranslationState.Disconnected.class));
+        assertThat(engine.currentState(), instanceOf(HttpTranslationState.Disconnected.class));
     }
 
     @Test
@@ -205,7 +205,8 @@ public class HttpTranslationStateTest {
         });
 
         state.onStart();
-        verify(stateHolder).changeState(isA(HttpTranslationState.Paused.class));
+
+        assertThat(engine.currentState(), instanceOf(HttpTranslationState.Paused.class));
     }
 
     @Test
@@ -213,7 +214,7 @@ public class HttpTranslationStateTest {
         state = new HttpTranslationState.Paused(engine);
 
         state.onStart();
-        verify(stateHolder).changeState(isA(HttpTranslationState.Listening.class));
 
+        assertThat(engine.currentState(), instanceOf(HttpTranslationState.Listening.class));
     }
 }
