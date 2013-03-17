@@ -27,17 +27,18 @@ public class HttpTranslationStateTest {
     private final HttpChatClient chatClient = mock(HttpChatClient.class);
     private final MessageConsumer consumer = mock(MessageConsumer.class);
     private final ProgressListener listener = mock(ProgressListener.class);
-    private HttpTranslationEngine engine = new HttpTranslationEngine(mock(HttpTranslationState.StateHolder.class), chatClient, consumer, listener, scheduler);
+    private HttpTranslationEngine engine = new HttpTranslationEngine(chatClient, consumer, listener, scheduler);
+    private HttpTranslationEngine mockEngine = mock(HttpTranslationEngine.class);
 
     private HttpTranslationState state;
 
     @Test
     public void disconnectedState_onStart_switchesToConnecting() throws Exception {
-        state = new HttpTranslationState.Disconnected(engine);
+        state = new HttpTranslationState.Disconnected(mockEngine);
 
         state.onStart();
 
-        assertThat(engine.currentState(), instanceOf(HttpTranslationState.Connecting.class));
+        verify(mockEngine).beConnecting();
     }
 
     @Test

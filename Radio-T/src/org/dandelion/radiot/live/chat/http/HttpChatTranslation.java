@@ -6,12 +6,11 @@ import org.dandelion.radiot.live.chat.MessageConsumer;
 import org.dandelion.radiot.live.chat.ProgressListener;
 import org.dandelion.radiot.live.schedule.Scheduler;
 
-public class HttpChatTranslation implements ChatTranslation, HttpTranslationState.StateHolder {
+public class HttpChatTranslation implements ChatTranslation {
 
     private final Announcer<ProgressListener> progressAnnouncer = new Announcer<ProgressListener>(ProgressListener.class);
     private final Announcer<MessageConsumer> messageAnnouncer = new Announcer<MessageConsumer>(MessageConsumer.class);
     private final HttpChatClient chatClient;
-    private HttpTranslationState currentState;
     private HttpTranslationEngine engine;
 
     public HttpChatTranslation(String baseUrl, Scheduler refreshScheduler) {
@@ -22,8 +21,7 @@ public class HttpChatTranslation implements ChatTranslation, HttpTranslationStat
         this.chatClient = chatClient;
 
         engine = new HttpTranslationEngine(
-                this, chatClient, messageAnnouncer.announce(), progressAnnouncer.announce(), pollScheduler);
-        currentState = new HttpTranslationState.Disconnected(engine);
+                chatClient, messageAnnouncer.announce(), progressAnnouncer.announce(), pollScheduler);
     }
 
     @Override
@@ -38,12 +36,12 @@ public class HttpChatTranslation implements ChatTranslation, HttpTranslationStat
 
     @Override
     public void start() {
-        currentState.onStart();
+        engine.currentState().onStart();
     }
 
     @Override
     public void stop() {
-        currentState.onStop();
+        engine.currentState().onStop();
     }
 
     @Override
@@ -52,12 +50,4 @@ public class HttpChatTranslation implements ChatTranslation, HttpTranslationStat
         setProgressListener(null);
         chatClient.shutdown();
     }
-
-
-    @Override
-    public void changeState(HttpTranslationState newState) {
-        this.currentState = newState;
-        newState.enter();
-    }
-
 }

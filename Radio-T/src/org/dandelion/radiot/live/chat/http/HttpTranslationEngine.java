@@ -4,20 +4,18 @@ import org.dandelion.radiot.live.chat.MessageConsumer;
 import org.dandelion.radiot.live.chat.ProgressListener;
 import org.dandelion.radiot.live.schedule.Scheduler;
 
-public class HttpTranslationEngine implements HttpTranslationState.StateHolder {
-    private final HttpTranslationState.StateHolder stateHolder;
+public class HttpTranslationEngine {
     private final HttpChatClient chatClient;
     private final MessageConsumer consumer;
     private final ProgressListener progressListener;
     private final Scheduler pollScheduler;
     private HttpTranslationState currentState;
 
-    public HttpTranslationEngine(HttpTranslationState.StateHolder stateHolder, HttpChatClient chatClient, MessageConsumer consumer, ProgressListener progressListener, Scheduler pollScheduler) {
+    public HttpTranslationEngine(HttpChatClient chatClient, MessageConsumer consumer, ProgressListener progressListener, Scheduler pollScheduler) {
         this.chatClient = chatClient;
         this.consumer = consumer;
         this.progressListener = progressListener;
         this.pollScheduler = pollScheduler;
-        this.stateHolder = stateHolder;
         this.currentState = new HttpTranslationState.Disconnected(this);
     }
 
@@ -48,9 +46,8 @@ public class HttpTranslationEngine implements HttpTranslationState.StateHolder {
         return currentState;
     }
 
-    @Override
     public void changeState(HttpTranslationState newState) {
         currentState = newState;
-        stateHolder.changeState(newState);
+        newState.enter();
     }
 }

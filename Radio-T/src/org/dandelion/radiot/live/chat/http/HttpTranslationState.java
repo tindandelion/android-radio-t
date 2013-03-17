@@ -165,9 +165,4 @@ public class HttpTranslationState {
             inProgress = false;
         }
     }
-
-    public interface StateHolder {
-        void changeState(HttpTranslationState newState);
-    }
-
 }
