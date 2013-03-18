@@ -105,16 +105,14 @@ public class HttpTranslationState {
         private final MessageConsumer consumer;
         private final ProgressListener progressListener;
         private final HttpChatClient chatClient;
-        private final Scheduler scheduler;
         private boolean inProgress = false;
         private boolean isStopped = false;
 
-        public Listening(HttpTranslationEngine engine, HttpChatClient chatClient, MessageConsumer consumer, ProgressListener progressListener, Scheduler scheduler) {
+        public Listening(HttpTranslationEngine engine, HttpChatClient chatClient, MessageConsumer consumer, ProgressListener progressListener) {
             super(engine);
             this.chatClient = chatClient;
             this.progressListener = progressListener;
             this.consumer = consumer;
-            this.scheduler = scheduler;
         }
 
         // TODO: This method should never be called at all
@@ -124,8 +122,7 @@ public class HttpTranslationState {
         }
 
         private void scheduleUpdate() {
-            scheduler.setPerformer(this);
-            scheduler.scheduleNext();
+            engine.schedulePoll(this);
         }
 
         @Override
@@ -137,7 +134,7 @@ public class HttpTranslationState {
         @Override
         public void onStop() {
             isStopped = true;
-            scheduler.cancel();
+            engine.cancelPoll();
             engine.bePaused();
         }
 

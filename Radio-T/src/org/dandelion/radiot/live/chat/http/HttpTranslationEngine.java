@@ -26,7 +26,7 @@ public class HttpTranslationEngine {
     }
 
     public void beListening() {
-        HttpTranslationState.Listening listening = new HttpTranslationState.Listening(this, chatClient, consumer, progressListener, pollScheduler);
+        HttpTranslationState.Listening listening = new HttpTranslationState.Listening(this, chatClient, consumer, progressListener);
         changeState(listening);
     }
 
@@ -49,5 +49,14 @@ public class HttpTranslationEngine {
     public void changeState(HttpTranslationState newState) {
         currentState = newState;
         newState.enter();
+    }
+
+    public void schedulePoll(Scheduler.Performer performer) {
+        pollScheduler.setPerformer(performer);
+        pollScheduler.scheduleNext();
+    }
+
+    public void cancelPoll() {
+        pollScheduler.cancel();
     }
 }
