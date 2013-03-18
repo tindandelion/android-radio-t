@@ -38,7 +38,7 @@ public class HttpTranslationStateTest {
 
         state.onStart();
 
-        verify(mockEngine).beConnecting();
+        verify(mockEngine).connectToChat();
     }
 
     @Test
@@ -59,17 +59,6 @@ public class HttpTranslationStateTest {
 
         verify(chatClient, never()).retrieveMessages("last");
         verify(listener).onConnecting();
-    }
-
-    @Test
-    public void listeningState_whenEntered_schedulesPoll() throws Exception {
-        state = new HttpTranslationState.Listening(engine);
-
-        when(chatClient.retrieveMessages("next")).thenReturn(MESSAGES);
-        state.enter();
-        scheduler.performAction();
-
-        verify(consumer).processMessages(MESSAGES);
     }
 
     @Test

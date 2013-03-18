@@ -36,7 +36,7 @@ public class HttpTranslationState {
 
         @Override
         public void onStart() {
-            engine.beConnecting();
+            engine.connectToChat();
         }
     }
 
@@ -47,7 +47,7 @@ public class HttpTranslationState {
 
         @Override
         public void onStart() {
-            engine.beListening();
+            engine.startListening();
         }
     }
 
@@ -77,7 +77,7 @@ public class HttpTranslationState {
 
         @Override
         public void onError() {
-            engine.beDisconnected();
+            engine.disconnect();
         }
     }
 
@@ -102,7 +102,7 @@ public class HttpTranslationState {
         @Override
         public void onStop() {
             engine.isStopped = true;
-            engine.bePaused();
+            engine.stopListening();
             engine.cancelPoll();
         }
 

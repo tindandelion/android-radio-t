@@ -33,29 +33,20 @@ public class HttpTranslationEngineTest {
             new HttpTranslationEngine(chatClient, consumer, listener, scheduler);
 
     @Test
-    public void schedulePolling() throws Exception {
-        Scheduler.Performer performer = mock(Scheduler.Performer.class);
-        engine.schedulePoll(performer);
-
-        verify(scheduler).setPerformer(performer);
-        verify(scheduler).scheduleNext();
-    }
-
-    @Test
     public void cancelPolling() throws Exception {
         engine.cancelPoll();
         verify(scheduler).cancel();
     }
 
     @Test
-    public void beDisconnected() throws Exception {
-        engine.beDisconnected();
+    public void disconnect() throws Exception {
+        engine.disconnect();
         assertThat(engine, isInState(HttpTranslationState.Disconnected.class));
     }
 
     @Test
-    public void bePaused() throws Exception {
-        engine.bePaused();
+    public void stopListening() throws Exception {
+        engine.stopListening();
         assertThat(engine, isInState(HttpTranslationState.Paused.class));
     }
 
@@ -70,7 +61,7 @@ public class HttpTranslationEngineTest {
                 return messages;
             }
         });
-        engine.beConnecting();
+        engine.connectToChat();
 
         verify(consumer).processMessages(messages);
         assertThat(engine, isInState(HttpTranslationState.Listening.class));
@@ -85,18 +76,19 @@ public class HttpTranslationEngineTest {
                 return null;
             }
         });
-        engine.beConnecting();
+        engine.connectToChat();
 
         verify(listener).onConnected();
     }
 
     @Test
-    public void whenConnecting_reportsError() throws Exception {
+    public void whenConnecting_reportsError_andGoesDisconnected() throws Exception {
         when(chatClient.retrieveMessages("last")).thenThrow(IOException.class);
 
-        engine.beConnecting();
+        engine.connectToChat();
 
         verify(listener).onError();
+        assertThat(engine, isInState(HttpTranslationState.Disconnected.class));
     }
 
     @Test
@@ -108,9 +100,18 @@ public class HttpTranslationEngineTest {
                 return null;
             }
         });
-        engine.beConnecting();
+        engine.connectToChat();
 
         assertThat(engine, isInState(HttpTranslationState.Paused.class));
+    }
+
+    @Test
+    public void whenListening_schedulesPolling() throws Exception {
+        engine.startListening();
+
+        assertThat(engine, isInState(HttpTranslationState.Listening.class));
+        verify(scheduler).setPerformer((HttpTranslationState.Listening)engine.currentState());
+        verify(scheduler).scheduleNext();
     }
 
     private Matcher<? super HttpTranslationEngine> isInState(final Class<? extends HttpTranslationState> aClass) {

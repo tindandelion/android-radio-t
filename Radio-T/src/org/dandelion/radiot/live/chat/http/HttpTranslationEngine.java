@@ -24,35 +24,28 @@ public class HttpTranslationEngine implements HttpChatRequest.ErrorListener {
         this.currentState = new HttpTranslationState.Disconnected(this);
     }
 
-    public void beConnecting() {
-        HttpTranslationState.Connecting connecting = new HttpTranslationState.Connecting(this,
-                progressListener);
-        currentState = connecting;
+    public void connectToChat() {
         progressListener.onConnecting();
-        requestLastMessages(connecting);
+        currentState = new HttpTranslationState.Connecting(this, progressListener);
+        requestLastMessages(currentState);
     }
 
-    public void beListening() {
+    public void startListening() {
         HttpTranslationState.Listening listening = new HttpTranslationState.Listening(this);
-        changeState(listening);
+        currentState = listening;
+        listening.enter();
     }
 
-    public void bePaused() {
+    public void stopListening() {
         currentState = new HttpTranslationState.Paused(this);
-
     }
 
-    public void beDisconnected() {
+    public void disconnect() {
         currentState = new HttpTranslationState.Disconnected(this);
     }
 
     public HttpTranslationState currentState() {
         return currentState;
-    }
-
-    public void changeState(HttpTranslationState newState) {
-        currentState = newState;
-        newState.enter();
     }
 
     public void schedulePoll(Scheduler.Performer performer) {
@@ -96,9 +89,9 @@ public class HttpTranslationEngine implements HttpChatRequest.ErrorListener {
 
     public void continueListening() {
         if (isStopped) {
-            bePaused();
+            stopListening();
         } else {
-            beListening();
+            startListening();
         }
     }
 }
