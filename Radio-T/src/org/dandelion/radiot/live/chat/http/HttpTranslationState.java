@@ -1,5 +1,6 @@
 package org.dandelion.radiot.live.chat.http;
 
+import android.util.Log;
 import org.dandelion.radiot.live.chat.Message;
 import org.dandelion.radiot.live.chat.MessageConsumer;
 import org.dandelion.radiot.live.chat.ProgressListener;
@@ -116,6 +117,7 @@ public class HttpTranslationState {
             this.scheduler = scheduler;
         }
 
+        // TODO: This method should never be called at all
         @Override
         public void onStart() {
             requestMessages();
@@ -128,6 +130,7 @@ public class HttpTranslationState {
 
         @Override
         public void enter() {
+            Log.d("CHAT", "Scheduling update from in " + this.toString());
             scheduleUpdate();
         }
 

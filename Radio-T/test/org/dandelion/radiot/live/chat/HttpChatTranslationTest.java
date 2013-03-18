@@ -60,22 +60,6 @@ public class HttpChatTranslationTest {
     }
 
     @Test
-    public void whenRestartedWhileRefreshing() throws Exception {
-        translation.start();
-
-        when(chatClient.retrieveMessages("next")).thenAnswer(new Answer<Object>() {
-            @Override
-            public Object answer(InvocationOnMock invocation) throws Throwable {
-                translation.stop();
-                translation.start();
-                return null;
-            }
-        });
-
-        assertTrue("restarted", pollScheduler.isScheduled());
-    }
-
-    @Test
     public void whenStoppedWhileRefreshing_stopsPolling() throws Exception {
         translation.start();
 
