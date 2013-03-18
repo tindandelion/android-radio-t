@@ -50,4 +50,8 @@ public class HttpChatTranslation implements ChatTranslation {
         setProgressListener(null);
         chatClient.shutdown();
     }
+
+    public HttpTranslationState currentState() {
+        return engine.currentState();
+    }
 }

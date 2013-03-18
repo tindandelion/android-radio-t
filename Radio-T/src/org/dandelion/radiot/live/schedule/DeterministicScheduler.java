@@ -1,8 +1,10 @@
 package org.dandelion.radiot.live.schedule;
 
+import org.dandelion.radiot.util.ProgrammerError;
+
 public class DeterministicScheduler implements Scheduler {
     private Performer performer;
-    private int scheduleCount = 0;
+    private boolean isScheduled = false;
 
     @Override
     public void setPerformer(Performer performer) {
@@ -11,25 +13,26 @@ public class DeterministicScheduler implements Scheduler {
 
     @Override
     public void scheduleNext() {
-        scheduleCount++;
+        if (isScheduled()) {
+            throw new ProgrammerError("Previous task hasn't finished yet");
+        }
+        isScheduled = true;
     }
 
     @Override
     public void cancel() {
-        if (isScheduled()) {
-            scheduleCount--;
-        }
+        isScheduled = false;
     }
 
     public void performAction() {
-        if (isScheduled() && performer != null) {
-            scheduleCount--;
+        if (isScheduled && performer != null) {
+            isScheduled = false;
             performer.performAction();
         }
     }
 
     public boolean isScheduled() {
-        return scheduleCount > 0;
+        return isScheduled;
     }
 
 }

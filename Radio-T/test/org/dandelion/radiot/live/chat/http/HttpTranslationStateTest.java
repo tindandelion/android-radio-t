@@ -162,7 +162,7 @@ public class HttpTranslationStateTest {
         state.onStop();
 
         assertFalse(scheduler.isScheduled());
-
+        assertThat(engine.currentState(), instanceOf(HttpTranslationState.Paused.class));
     }
 
     @Test

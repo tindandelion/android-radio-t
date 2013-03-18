@@ -16,11 +16,14 @@ Backlog:
 
 Version 1.7.1:
  * Problem with re-entrant scheduling
-   * Testing: pause/restart
-   * Testing: orienttation change
-   * Testing: lock/unlock
-   * Testing: orientation change while locked
+   DONE Testing: pause/restart
+   DONE Testing: orientation change
+   DONE Testing: lock/unlock
+   DONE Testing: orientation change while locked
+   * Testing: orientation change while requesting
+   * Testing: locking/unlocking while requesting
 
+ * Chat translation goes available while application is paused - should restart
  * java.lang.ClassCastException: android.view.View$BaseSavedState cannot be cast to org.dandelion.radiot.live.ui.ChatStreamView$SavedState
 
 Version 1.8:

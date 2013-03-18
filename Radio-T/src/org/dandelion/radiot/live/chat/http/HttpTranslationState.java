@@ -35,7 +35,7 @@ public class HttpTranslationState {
         }
     }
 
-    static class Paused extends HttpTranslationState {
+    public static class Paused extends HttpTranslationState {
         public Paused(HttpTranslationEngine engine) {
             super(engine);
         }
@@ -61,6 +61,7 @@ public class HttpTranslationState {
 
         @Override
         public void onStart() {
+            isStopped = false;
             progressListener.onConnecting();
         }
 
@@ -99,7 +100,7 @@ public class HttpTranslationState {
     }
 
 
-    static class Listening extends HttpTranslationState implements Scheduler.Performer, MessageConsumer, HttpChatRequest.ErrorListener {
+    public static class Listening extends HttpTranslationState implements Scheduler.Performer, MessageConsumer, HttpChatRequest.ErrorListener {
         private final MessageConsumer consumer;
         private final ProgressListener progressListener;
         private final HttpChatClient chatClient;
@@ -134,6 +135,7 @@ public class HttpTranslationState {
         public void onStop() {
             isStopped = true;
             scheduler.cancel();
+            engine.bePaused();
         }
 
         @Override
