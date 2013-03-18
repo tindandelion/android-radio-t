@@ -42,63 +42,6 @@ public class HttpTranslationStateTest {
     }
 
     @Test
-    public void connectingState_whenEntered_requestsLastMessages() throws Exception {
-        state = new HttpTranslationState.Connecting(engine, listener);
-
-        when(chatClient.retrieveMessages("last")).thenReturn(MESSAGES);
-        state.enter();
-
-        verify(consumer).processMessages(MESSAGES);
-    }
-
-    @Test
-    public void connectingState_whenEntered_reportsProgress() throws Exception {
-        state = new HttpTranslationState.Connecting(engine, listener);
-
-        when(chatClient.retrieveMessages("last")).thenReturn(MESSAGES);
-        state.enter();
-
-        verify(listener).onConnecting();
-        verify(listener).onConnected();
-    }
-
-    @Test
-    public void connectingState_whenEntered_reportsErrors() throws Exception {
-        state = new HttpTranslationState.Connecting(engine, listener);
-
-        when(chatClient.retrieveMessages("last")).thenThrow(IOException.class);
-        state.enter();
-
-        verify(listener).onError();
-    }
-
-    @Test
-    public void connectingState_whenConnected_switchesToListening() throws Exception {
-        state = new HttpTranslationState.Connecting(engine, listener);
-
-        when(chatClient.retrieveMessages("last")).thenReturn(MESSAGES);
-        state.enter();
-
-        assertThat(engine.currentState(), instanceOf(HttpTranslationState.Listening.class));
-    }
-
-    @Test
-    public void connectingState_whenInterrupted_switchesToPaused() throws Exception {
-        state = new HttpTranslationState.Connecting(engine, listener);
-        when(chatClient.retrieveMessages("last")).thenAnswer(new Answer<Object>() {
-            @Override
-            public Object answer(InvocationOnMock invocation) throws Throwable {
-                state.onStop();
-                return null;
-            }
-        });
-
-        state.enter();
-
-        assertThat(engine.currentState(), instanceOf(HttpTranslationState.Paused.class));
-    }
-
-    @Test
     public void connectingState_whenError_switchesToDisconnected() throws Exception {
         state = new HttpTranslationState.Connecting(engine, listener);
 

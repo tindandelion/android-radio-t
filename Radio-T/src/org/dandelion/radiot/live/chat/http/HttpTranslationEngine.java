@@ -27,7 +27,9 @@ public class HttpTranslationEngine implements HttpChatRequest.ErrorListener {
     public void beConnecting() {
         HttpTranslationState.Connecting connecting = new HttpTranslationState.Connecting(this,
                 progressListener);
-        changeState(connecting);
+        currentState = connecting;
+        progressListener.onConnecting();
+        requestLastMessages(connecting);
     }
 
     public void beListening() {
@@ -36,14 +38,12 @@ public class HttpTranslationEngine implements HttpChatRequest.ErrorListener {
     }
 
     public void bePaused() {
-        HttpTranslationState.Paused paused = new HttpTranslationState.Paused(this);
-        changeState(paused);
+        currentState = new HttpTranslationState.Paused(this);
+
     }
 
     public void beDisconnected() {
-        HttpTranslationState disconnected =
-                new HttpTranslationState.Disconnected(this);
-        changeState(disconnected);
+        currentState = new HttpTranslationState.Disconnected(this);
     }
 
     public HttpTranslationState currentState() {

@@ -71,12 +71,6 @@ public class HttpTranslationState {
         }
 
         @Override
-        public void enter() {
-            progressListener.onConnecting();
-            engine.requestLastMessages(this);
-        }
-
-        @Override
         public void onRequestCompleted() {
             progressListener.onConnected();
         }
