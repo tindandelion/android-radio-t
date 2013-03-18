@@ -43,7 +43,7 @@ public class HttpTranslationStateTest {
 
     @Test
     public void connectingState_whenEntered_requestsLastMessages() throws Exception {
-        state = new HttpTranslationState.Connecting(engine, chatClient, consumer, listener);
+        state = new HttpTranslationState.Connecting(engine, listener);
 
         when(chatClient.retrieveMessages("last")).thenReturn(MESSAGES);
         state.enter();
@@ -53,7 +53,7 @@ public class HttpTranslationStateTest {
 
     @Test
     public void connectingState_whenEntered_reportsProgress() throws Exception {
-        state = new HttpTranslationState.Connecting(engine, chatClient, consumer, listener);
+        state = new HttpTranslationState.Connecting(engine, listener);
 
         when(chatClient.retrieveMessages("last")).thenReturn(MESSAGES);
         state.enter();
@@ -64,7 +64,7 @@ public class HttpTranslationStateTest {
 
     @Test
     public void connectingState_whenEntered_reportsErrors() throws Exception {
-        state = new HttpTranslationState.Connecting(engine, chatClient, consumer, listener);
+        state = new HttpTranslationState.Connecting(engine, listener);
 
         when(chatClient.retrieveMessages("last")).thenThrow(IOException.class);
         state.enter();
@@ -74,7 +74,7 @@ public class HttpTranslationStateTest {
 
     @Test
     public void connectingState_whenConnected_switchesToListening() throws Exception {
-        state = new HttpTranslationState.Connecting(engine, chatClient, consumer, listener);
+        state = new HttpTranslationState.Connecting(engine, listener);
 
         when(chatClient.retrieveMessages("last")).thenReturn(MESSAGES);
         state.enter();
@@ -84,7 +84,7 @@ public class HttpTranslationStateTest {
 
     @Test
     public void connectingState_whenInterrupted_switchesToPaused() throws Exception {
-        state = new HttpTranslationState.Connecting(engine, chatClient, consumer, listener);
+        state = new HttpTranslationState.Connecting(engine, listener);
         when(chatClient.retrieveMessages("last")).thenAnswer(new Answer<Object>() {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
@@ -100,7 +100,7 @@ public class HttpTranslationStateTest {
 
     @Test
     public void connectingState_whenError_switchesToDisconnected() throws Exception {
-        state = new HttpTranslationState.Connecting(engine, chatClient, consumer, listener);
+        state = new HttpTranslationState.Connecting(engine, listener);
 
         when(chatClient.retrieveMessages("last")).thenThrow(IOException.class);
         state.enter();
@@ -110,7 +110,7 @@ public class HttpTranslationStateTest {
 
     @Test
     public void connectingState_onStart_onlyReportsToListener() throws Exception {
-        state = new HttpTranslationState.Connecting(engine, chatClient, consumer, listener);
+        state = new HttpTranslationState.Connecting(engine, listener);
 
         state.onStart();
 
@@ -120,7 +120,7 @@ public class HttpTranslationStateTest {
 
     @Test
     public void listeningState_whenEntered_schedulesPoll() throws Exception {
-        state = new HttpTranslationState.Listening(engine, chatClient, consumer, listener);
+        state = new HttpTranslationState.Listening(engine);
 
         when(chatClient.retrieveMessages("next")).thenReturn(MESSAGES);
         state.enter();
@@ -131,7 +131,7 @@ public class HttpTranslationStateTest {
 
     @Test
     public void listeningState_whenRefreshed_schedulesNextRefresh() throws Exception {
-        state = new HttpTranslationState.Listening(engine, chatClient, consumer, listener);
+        state = new HttpTranslationState.Listening(engine);
 
         when(chatClient.retrieveMessages("next")).thenReturn(MESSAGES);
 
@@ -144,7 +144,7 @@ public class HttpTranslationStateTest {
 
     @Test
     public void listeningState_whenRefreshing_reportsErrors() throws Exception {
-        state = new HttpTranslationState.Listening(engine, chatClient, consumer, listener);
+        state = new HttpTranslationState.Listening(engine);
 
         when(chatClient.retrieveMessages("next")).thenThrow(IOException.class);
 
@@ -156,7 +156,7 @@ public class HttpTranslationStateTest {
 
     @Test
     public void listeningState_onStop_cancelsScheduledRefresh() throws Exception {
-        state = new HttpTranslationState.Listening(engine, chatClient, consumer, listener);
+        state = new HttpTranslationState.Listening(engine);
 
         state.enter();
         state.onStop();
@@ -167,7 +167,7 @@ public class HttpTranslationStateTest {
 
     @Test
     public void listeningState_onStart_requestsNextMessages() throws Exception {
-        state = new HttpTranslationState.Listening(engine, chatClient, consumer, listener);
+        state = new HttpTranslationState.Listening(engine);
 
         when(chatClient.retrieveMessages("next")).thenReturn(MESSAGES);
         state.onStart();
@@ -179,7 +179,7 @@ public class HttpTranslationStateTest {
 
     @Test
     public void listeningState_whenRequestAlreadyInProgress_doesNotMakeNewRequest() throws Exception {
-        state = new HttpTranslationState.Listening(engine, chatClient, consumer, listener);
+        state = new HttpTranslationState.Listening(engine);
         when(chatClient.retrieveMessages("next")).then(new Answer<Object>() {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
@@ -195,7 +195,7 @@ public class HttpTranslationStateTest {
 
     @Test
     public void listeningState_whenInterrupted_SwitchesToPaused() throws Exception {
-        state = new HttpTranslationState.Listening(engine, chatClient, consumer, listener);
+        state = new HttpTranslationState.Listening(engine);
 
         when(chatClient.retrieveMessages("next")).then(new Answer<Object>() {
             @Override

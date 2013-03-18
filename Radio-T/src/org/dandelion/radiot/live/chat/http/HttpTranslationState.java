@@ -1,12 +1,7 @@
 package org.dandelion.radiot.live.chat.http;
 
-import android.util.Log;
-import org.dandelion.radiot.live.chat.Message;
-import org.dandelion.radiot.live.chat.MessageConsumer;
 import org.dandelion.radiot.live.chat.ProgressListener;
 import org.dandelion.radiot.live.schedule.Scheduler;
-
-import java.util.List;
 
 public class HttpTranslationState {
     protected final HttpTranslationEngine engine;
@@ -22,6 +17,14 @@ public class HttpTranslationState {
     }
 
     public void enter() {
+
+    }
+
+    public void onError() {
+
+    }
+
+    public void onRequestCompleted() {
 
     }
 
@@ -47,17 +50,13 @@ public class HttpTranslationState {
         }
     }
 
-    static class Connecting extends HttpTranslationState implements MessageConsumer, HttpChatRequest.ErrorListener {
-        private final MessageConsumer consumer;
+    static class Connecting extends HttpTranslationState  {
         private final ProgressListener progressListener;
-        private final HttpChatClient chatClient;
         private boolean isStopped = false;
 
-        public Connecting(HttpTranslationEngine engine, HttpChatClient chatClient, MessageConsumer consumer, ProgressListener progressListener) {
+        public Connecting(HttpTranslationEngine engine, ProgressListener progressListener) {
             super(engine);
-            this.chatClient = chatClient;
             this.progressListener = progressListener;
-            this.consumer = consumer;
         }
 
         @Override
@@ -74,15 +73,11 @@ public class HttpTranslationState {
         @Override
         public void enter() {
             progressListener.onConnecting();
-            requestMessages();
-        }
-
-        private void requestMessages() {
-            new HttpChatRequest("last", chatClient, this, this).execute();
+            engine.requestLastMessages(this);
         }
 
         @Override
-        public void processMessages(List<Message> messages) {
+        public void onRequestCompleted() {
             if (isStopped) {
                 engine.bePaused();
             } else {
@@ -90,35 +85,26 @@ public class HttpTranslationState {
             }
 
             progressListener.onConnected();
-            consumer.processMessages(messages);
         }
 
         @Override
         public void onError() {
-            progressListener.onError();
             engine.beDisconnected();
         }
     }
 
 
-    public static class Listening extends HttpTranslationState implements Scheduler.Performer, MessageConsumer, HttpChatRequest.ErrorListener {
-        private final MessageConsumer consumer;
-        private final ProgressListener progressListener;
-        private final HttpChatClient chatClient;
-        private boolean inProgress = false;
+    public static class Listening extends HttpTranslationState implements Scheduler.Performer {
         private boolean isStopped = false;
 
-        public Listening(HttpTranslationEngine engine, HttpChatClient chatClient, MessageConsumer consumer, ProgressListener progressListener) {
+        public Listening(HttpTranslationEngine engine) {
             super(engine);
-            this.chatClient = chatClient;
-            this.progressListener = progressListener;
-            this.consumer = consumer;
         }
 
         // TODO: This method should never be called at all
         @Override
         public void onStart() {
-            requestMessages();
+            engine.requestNextMessages(this);
         }
 
         private void scheduleUpdate() {
@@ -127,7 +113,6 @@ public class HttpTranslationState {
 
         @Override
         public void enter() {
-            Log.d("CHAT", "Scheduling update from in " + this.toString());
             scheduleUpdate();
         }
 
@@ -140,31 +125,16 @@ public class HttpTranslationState {
 
         @Override
         public void performAction() {
-            requestMessages();
-        }
-
-        public void requestMessages() {
-            if (inProgress) return;
-
-            inProgress = true;
-            new HttpChatRequest("next", chatClient, this, this).execute();
+            engine.requestNextMessages(this);
         }
 
         @Override
-        public void processMessages(List<Message> messages) {
-            consumer.processMessages(messages);
+        public void onRequestCompleted() {
             if (isStopped) {
                 engine.bePaused();
             } else {
-                scheduleUpdate();
+                engine.schedulePoll(this);
             }
-            inProgress = false;
-        }
-
-        @Override
-        public void onError() {
-            progressListener.onError();
-            inProgress = false;
         }
     }
 }
