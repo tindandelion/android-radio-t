@@ -10,7 +10,6 @@ import org.junit.runner.RunWith;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
-import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
@@ -43,54 +42,36 @@ public class HttpTranslationStateTest {
 
     @Test
     public void connectingState_whenError_switchesToDisconnected() throws Exception {
-        state = new HttpTranslationState.Connecting(engine, listener);
+        state = new HttpTranslationState.Connecting(mockEngine, listener);
 
-        when(chatClient.retrieveMessages("last")).thenThrow(IOException.class);
-        state.enter();
+        state.onError();
 
-        assertThat(engine.currentState(), instanceOf(HttpTranslationState.Disconnected.class));
+        verify(mockEngine).disconnect();
     }
 
     @Test
     public void connectingState_onStart_onlyReportsToListener() throws Exception {
-        state = new HttpTranslationState.Connecting(engine, listener);
+        state = new HttpTranslationState.Connecting(mockEngine, listener);
 
         state.onStart();
 
-        verify(chatClient, never()).retrieveMessages("last");
+        verify(mockEngine, never()).connectToChat();
         verify(listener).onConnecting();
     }
 
     @Test
-    public void listeningState_whenRefreshed_schedulesNextRefresh() throws Exception {
-        state = new HttpTranslationState.Listening(engine);
+    public void connectingState_onRequestCompleted_notifiesListener() throws Exception {
+        state = new HttpTranslationState.Connecting(mockEngine, listener);
 
-        when(chatClient.retrieveMessages("next")).thenReturn(MESSAGES);
+        state.onRequestCompleted();
 
-        state.enter();
-        scheduler.performAction();
-        scheduler.performAction();
-
-        verify(consumer, times(2)).processMessages(MESSAGES);
-    }
-
-    @Test
-    public void listeningState_whenRefreshing_reportsErrors() throws Exception {
-        state = new HttpTranslationState.Listening(engine);
-
-        when(chatClient.retrieveMessages("next")).thenThrow(IOException.class);
-
-        state.enter();
-        scheduler.performAction();
-
-        verify(listener).onError();
+        verify(listener).onConnected();
     }
 
     @Test
     public void listeningState_onStop_cancelsScheduledRefresh() throws Exception {
         state = new HttpTranslationState.Listening(engine);
 
-        state.enter();
         state.onStop();
 
         assertFalse(scheduler.isScheduled());
@@ -98,31 +79,19 @@ public class HttpTranslationStateTest {
     }
 
     @Test
-    public void listeningState_onStart_requestsNextMessages() throws Exception {
+    public void listeningState_onStart_schedulesPolling() throws Exception {
         state = new HttpTranslationState.Listening(engine);
 
         when(chatClient.retrieveMessages("next")).thenReturn(MESSAGES);
+
         state.onStart();
+        assertTrue(scheduler.isScheduled());
+
+        scheduler.performAction();
 
         verify(chatClient).retrieveMessages("next");
         verify(consumer).processMessages(MESSAGES);
         assertTrue(scheduler.isScheduled());
-    }
-
-    @Test
-    public void listeningState_whenRequestAlreadyInProgress_doesNotMakeNewRequest() throws Exception {
-        state = new HttpTranslationState.Listening(engine);
-        when(chatClient.retrieveMessages("next")).then(new Answer<Object>() {
-            @Override
-            public Object answer(InvocationOnMock invocation) throws Throwable {
-                state.onStart();
-                return MESSAGES;
-            }
-        });
-
-        state.onStart();
-
-        verify(chatClient, times(1)).retrieveMessages("next");
     }
 
     @Test
@@ -132,18 +101,19 @@ public class HttpTranslationStateTest {
         when(chatClient.retrieveMessages("next")).then(new Answer<Object>() {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
-                state.onStop();
                 return MESSAGES;
             }
         });
 
+        engine.currentState = state;
         state.onStart();
+        state.onStop();
 
         assertThat(engine.currentState(), instanceOf(HttpTranslationState.Paused.class));
     }
 
     @Test
-    public void pausedState_onStart_switchesToConnected() throws Exception {
+    public void pausedState_onStart_switchesToListening() throws Exception {
         state = new HttpTranslationState.Paused(engine);
 
         state.onStart();

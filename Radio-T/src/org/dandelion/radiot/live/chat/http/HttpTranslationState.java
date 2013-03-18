@@ -1,7 +1,6 @@
 package org.dandelion.radiot.live.chat.http;
 
 import org.dandelion.radiot.live.chat.ProgressListener;
-import org.dandelion.radiot.live.schedule.Scheduler;
 import org.dandelion.radiot.util.ProgrammerError;
 
 public class HttpTranslationState {
@@ -15,10 +14,6 @@ public class HttpTranslationState {
     }
 
     public void onStop() {
-    }
-
-    public void enter() {
-
     }
 
     public void onError() {
@@ -82,7 +77,7 @@ public class HttpTranslationState {
     }
 
 
-    public static class Listening extends HttpTranslationState implements Scheduler.Performer {
+    public static class Listening extends HttpTranslationState {
 
         public Listening(HttpTranslationEngine engine) {
             super(engine);
@@ -91,12 +86,7 @@ public class HttpTranslationState {
         // TODO: This method should never be called at all
         @Override
         public void onStart() {
-            engine.requestNextMessages(this);
-        }
-
-        @Override
-        public void enter() {
-            engine.schedulePoll(this);
+            engine.startListening();
         }
 
         @Override
@@ -104,11 +94,6 @@ public class HttpTranslationState {
             engine.isStopped = true;
             engine.stopListening();
             engine.cancelPoll();
-        }
-
-        @Override
-        public void performAction() {
-            engine.requestNextMessages(this);
         }
 
         @Override

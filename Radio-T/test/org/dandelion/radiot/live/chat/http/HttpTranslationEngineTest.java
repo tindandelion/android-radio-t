@@ -3,11 +3,12 @@ package org.dandelion.radiot.live.chat.http;
 import org.dandelion.radiot.live.chat.Message;
 import org.dandelion.radiot.live.chat.MessageConsumer;
 import org.dandelion.radiot.live.chat.ProgressListener;
-import org.dandelion.radiot.live.schedule.Scheduler;
+import org.dandelion.radiot.live.schedule.DeterministicScheduler;
 import org.dandelion.radiot.robolectric.RadiotRobolectricRunner;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.invocation.InvocationOnMock;
@@ -18,25 +19,18 @@ import java.util.ArrayList;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.*;
 
 @SuppressWarnings("unchecked")
 @RunWith(RadiotRobolectricRunner.class)
 public class HttpTranslationEngineTest {
-    private final Scheduler scheduler  = mock(Scheduler.class);
+    private final DeterministicScheduler scheduler  = new DeterministicScheduler();
     private final HttpChatClient chatClient = mock(HttpChatClient.class);
     private final MessageConsumer consumer = mock(MessageConsumer.class);
     private final ProgressListener listener = mock(ProgressListener.class);
     private final HttpTranslationEngine engine =
             new HttpTranslationEngine(chatClient, consumer, listener, scheduler);
-
-    @Test
-    public void cancelPolling() throws Exception {
-        engine.cancelPoll();
-        verify(scheduler).cancel();
-    }
 
     @Test
     public void disconnect() throws Exception {
@@ -110,8 +104,21 @@ public class HttpTranslationEngineTest {
         engine.startListening();
 
         assertThat(engine, isInState(HttpTranslationState.Listening.class));
-        verify(scheduler).setPerformer((HttpTranslationState.Listening)engine.currentState());
-        verify(scheduler).scheduleNext();
+        assertTrue(scheduler.isScheduled());
+    }
+
+
+
+    @Test @Ignore
+    public void reschedulePolling() throws Exception {
+    }
+
+    @Test @Ignore
+    public void reportErrorsWhileRefreshing() throws Exception {
+    }
+
+    @Test @Ignore
+    public void stopPolling() throws Exception {
     }
 
     private Matcher<? super HttpTranslationEngine> isInState(final Class<? extends HttpTranslationState> aClass) {
