@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
@@ -39,12 +40,6 @@ public class HttpTranslationEngineTest {
     }
 
     @Test
-    public void stopListening() throws Exception {
-        engine.stopListening();
-        assertThat(engine, isInState(HttpTranslationState.Paused.class));
-    }
-
-    @Test
     public void whenConnecting_switchesToConnectingState_whileRetrievingMessages() throws Exception {
         final ArrayList<Message> messages = new ArrayList<Message>();
 
@@ -55,7 +50,7 @@ public class HttpTranslationEngineTest {
                 return messages;
             }
         });
-        engine.connectToChat();
+        engine.connect();
 
         verify(consumer).processMessages(messages);
         assertThat(engine, isInState(HttpTranslationState.Listening.class));
@@ -70,7 +65,7 @@ public class HttpTranslationEngineTest {
                 return null;
             }
         });
-        engine.connectToChat();
+        engine.connect();
 
         verify(listener).onConnected();
     }
@@ -79,7 +74,7 @@ public class HttpTranslationEngineTest {
     public void whenConnecting_reportsError_andGoesDisconnected() throws Exception {
         when(chatClient.retrieveMessages("last")).thenThrow(IOException.class);
 
-        engine.connectToChat();
+        engine.connect();
 
         verify(listener).onError();
         assertThat(engine, isInState(HttpTranslationState.Disconnected.class));
@@ -94,7 +89,7 @@ public class HttpTranslationEngineTest {
                 return null;
             }
         });
-        engine.connectToChat();
+        engine.connect();
 
         assertThat(engine, isInState(HttpTranslationState.Paused.class));
     }
@@ -107,19 +102,40 @@ public class HttpTranslationEngineTest {
         assertTrue(scheduler.isScheduled());
     }
 
+    @Test
+    public void whenListening_pollsForNextMessages() throws Exception {
+        ArrayList<Message> nextMessages = new ArrayList<Message>();
+        when(chatClient.retrieveMessages("next")).thenReturn(nextMessages);
 
+        engine.startListening();
+        scheduler.performAction();
 
-    @Test @Ignore
-    public void reschedulePolling() throws Exception {
+        verify(chatClient).retrieveMessages("next");
+        verify(consumer).processMessages(nextMessages);
     }
+
+    @Test
+    public void whenListening_afterPolling_schedulesNextPoll() throws Exception {
+        engine.startListening();
+        scheduler.performAction();
+
+        assertTrue(scheduler.isScheduled());
+    }
+
+    @Test
+    public void whenStopsListening_cancelsPolling_andGoesToPaused() throws Exception {
+        engine.startListening();
+        engine.stopListening();
+
+        assertFalse(scheduler.isScheduled());
+        assertThat(engine, isInState(HttpTranslationState.Paused.class));
+    }
+
 
     @Test @Ignore
     public void reportErrorsWhileRefreshing() throws Exception {
     }
 
-    @Test @Ignore
-    public void stopPolling() throws Exception {
-    }
 
     private Matcher<? super HttpTranslationEngine> isInState(final Class<? extends HttpTranslationState> aClass) {
         return new TypeSafeMatcher<HttpTranslationEngine>() {

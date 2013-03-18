@@ -31,7 +31,7 @@ public class HttpTranslationState {
 
         @Override
         public void onStart() {
-            engine.connectToChat();
+            engine.connect();
         }
     }
 
@@ -83,22 +83,14 @@ public class HttpTranslationState {
             super(engine);
         }
 
-        // TODO: This method should never be called at all
-        @Override
-        public void onStart() {
-            engine.startListening();
-        }
-
         @Override
         public void onStop() {
             engine.isStopped = true;
             engine.stopListening();
-            engine.cancelPoll();
         }
 
         @Override
         public void onRequestCompleted() {
-
         }
     }
 }
