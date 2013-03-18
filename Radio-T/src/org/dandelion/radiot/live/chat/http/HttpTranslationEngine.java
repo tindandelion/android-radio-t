@@ -14,6 +14,7 @@ public class HttpTranslationEngine implements HttpChatRequest.ErrorListener {
     private final Scheduler pollScheduler;
     private HttpTranslationState currentState;
     private boolean requestInProgress = false;
+    public boolean isStopped = false;
 
     public HttpTranslationEngine(HttpChatClient chatClient, MessageConsumer consumer, ProgressListener progressListener, Scheduler pollScheduler) {
         this.chatClient = chatClient;
@@ -35,8 +36,7 @@ public class HttpTranslationEngine implements HttpChatRequest.ErrorListener {
     }
 
     public void bePaused() {
-        HttpTranslationState.Paused paused =
-                new HttpTranslationState.Paused(this);
+        HttpTranslationState.Paused paused = new HttpTranslationState.Paused(this);
         changeState(paused);
     }
 
@@ -78,6 +78,7 @@ public class HttpTranslationEngine implements HttpChatRequest.ErrorListener {
         MessageConsumer consumerWrapper = new MessageConsumer() {
             @Override
             public void processMessages(List<Message> messages) {
+                continueListening();
                 state.onRequestCompleted();
                 consumer.processMessages(messages);
                 requestInProgress = false;
@@ -93,4 +94,11 @@ public class HttpTranslationEngine implements HttpChatRequest.ErrorListener {
         currentState.onError();
     }
 
+    public void continueListening() {
+        if (isStopped) {
+            bePaused();
+        } else {
+            beListening();
+        }
+    }
 }

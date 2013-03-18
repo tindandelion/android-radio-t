@@ -2,6 +2,7 @@ package org.dandelion.radiot.live.chat.http;
 
 import org.dandelion.radiot.live.chat.ProgressListener;
 import org.dandelion.radiot.live.schedule.Scheduler;
+import org.dandelion.radiot.util.ProgrammerError;
 
 public class HttpTranslationState {
     protected final HttpTranslationEngine engine;
@@ -25,7 +26,7 @@ public class HttpTranslationState {
     }
 
     public void onRequestCompleted() {
-
+        throw new ProgrammerError("Should never be called");
     }
 
     static class Disconnected extends HttpTranslationState {
@@ -52,7 +53,6 @@ public class HttpTranslationState {
 
     static class Connecting extends HttpTranslationState  {
         private final ProgressListener progressListener;
-        private boolean isStopped = false;
 
         public Connecting(HttpTranslationEngine engine, ProgressListener progressListener) {
             super(engine);
@@ -61,13 +61,13 @@ public class HttpTranslationState {
 
         @Override
         public void onStart() {
-            isStopped = false;
+            engine.isStopped = false;
             progressListener.onConnecting();
         }
 
         @Override
         public void onStop() {
-            isStopped = true;
+            engine.isStopped = true;
         }
 
         @Override
@@ -78,12 +78,6 @@ public class HttpTranslationState {
 
         @Override
         public void onRequestCompleted() {
-            if (isStopped) {
-                engine.bePaused();
-            } else {
-                engine.beListening();
-            }
-
             progressListener.onConnected();
         }
 
@@ -95,7 +89,6 @@ public class HttpTranslationState {
 
 
     public static class Listening extends HttpTranslationState implements Scheduler.Performer {
-        private boolean isStopped = false;
 
         public Listening(HttpTranslationEngine engine) {
             super(engine);
@@ -107,20 +100,16 @@ public class HttpTranslationState {
             engine.requestNextMessages(this);
         }
 
-        private void scheduleUpdate() {
+        @Override
+        public void enter() {
             engine.schedulePoll(this);
         }
 
         @Override
-        public void enter() {
-            scheduleUpdate();
-        }
-
-        @Override
         public void onStop() {
-            isStopped = true;
-            engine.cancelPoll();
+            engine.isStopped = true;
             engine.bePaused();
+            engine.cancelPoll();
         }
 
         @Override
@@ -130,11 +119,7 @@ public class HttpTranslationState {
 
         @Override
         public void onRequestCompleted() {
-            if (isStopped) {
-                engine.bePaused();
-            } else {
-                engine.schedulePoll(this);
-            }
+
         }
     }
 }
