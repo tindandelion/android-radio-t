@@ -16,6 +16,11 @@ Backlog:
 
 Version 1.7.1:
  * Problem with re-entrant scheduling
+   * Testing: pause/restart
+   * Testing: orienttation change
+   * Testing: lock/unlock
+   * Testing: orientation change while locked
+
  * java.lang.ClassCastException: android.view.View$BaseSavedState cannot be cast to org.dandelion.radiot.live.ui.ChatStreamView$SavedState
 
 Version 1.8:
