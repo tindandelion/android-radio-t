@@ -58,7 +58,7 @@ public class HttpTranslationState {
 
         @Override
         public void onStop() {
-            engine.stopConnecting();
+            engine.pauseConnecting();
         }
 
         @Override

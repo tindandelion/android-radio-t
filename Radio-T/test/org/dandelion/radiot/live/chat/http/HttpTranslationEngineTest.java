@@ -57,7 +57,7 @@ public class HttpTranslationEngineTest {
                 return messages;
             }
         });
-        engine.startConnecting();
+        engine.currentState().onStart();
 
         verify(consumer).processMessages(messages);
         assertThat(engine, isInState(HttpTranslationState.Listening.class));
@@ -72,7 +72,7 @@ public class HttpTranslationEngineTest {
                 return null;
             }
         });
-        engine.startConnecting();
+        engine.currentState().onStart();
 
         verify(listener).onConnected();
     }
@@ -81,7 +81,7 @@ public class HttpTranslationEngineTest {
     public void whenConnecting_onError_notifiesListener_andGoesDisconnected() throws Exception {
         when(chatClient.retrieveMessages("last")).thenThrow(IOException.class);
 
-        engine.startConnecting();
+        engine.currentState().onStart();
 
         verify(listener).onError();
         assertThat(engine, isInState(HttpTranslationState.Disconnected.class));
@@ -97,12 +97,12 @@ public class HttpTranslationEngineTest {
                 return null;
             }
         });
-        engine.startConnecting();
+        engine.currentState().onStart();
     }
 
     @Test
-    public void whenPausedConnecting_andNetworkRequestCompletes_notifiesListener_andSwitchesToPausedListening() throws Exception {
-        engine.stopConnecting();
+    public void whenPausedConnecting_andPreviousNetworkRequestCompletes_notifiesListener_andSwitchesToPausedListening() throws Exception {
+        engine.pauseConnecting();
         engine.processMessages(Collections.<Message>emptyList());
 
         verify(listener).onConnected();
@@ -111,7 +111,9 @@ public class HttpTranslationEngineTest {
 
     @Test
     public void whenResumesConnecting_restoresConnectingState_andNotifiesListener() throws Exception {
-        engine.resumeConnecting();
+        engine.pauseConnecting();
+
+        engine.currentState().onStart();
 
         verify(listener).onConnecting();
         assertThat(engine, isInState(HttpTranslationState.Connecting.class));
@@ -140,6 +142,7 @@ public class HttpTranslationEngineTest {
     @Test
     public void whenListening_afterPolling_schedulesNextPoll() throws Exception {
         engine.startListening();
+
         scheduler.performAction();
 
         assertTrue(scheduler.isScheduled());
@@ -157,7 +160,7 @@ public class HttpTranslationEngineTest {
     }
 
     @Test
-    public void whenStopsListening_cancelsPolling_andGoesToPausedListening() throws Exception {
+    public void whenPauseListening_cancelsPolling_andGoesToPausedListening() throws Exception {
         engine.startListening();
         engine.currentState().onStop();
 
@@ -168,6 +171,7 @@ public class HttpTranslationEngineTest {
     @Test
     public void whenPausedListening_onStart_schedulesNextPoll() throws Exception {
         engine.stopListening();
+
         engine.currentState().onStart();
 
         assertTrue(scheduler.isScheduled());

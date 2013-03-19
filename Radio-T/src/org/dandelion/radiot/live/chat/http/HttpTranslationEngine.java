@@ -64,7 +64,7 @@ public class HttpTranslationEngine implements HttpChatRequest.ErrorListener, Mes
         requestMessages("last");
     }
 
-    public void stopConnecting() {
+    public void pauseConnecting() {
         setCurrentState(new HttpTranslationState.PausedConnecting(this, progressListener));
     }
 
