@@ -1,8 +1,6 @@
 package org.dandelion.radiot.live.chat.http;
 
-import android.util.Log;
 import org.dandelion.radiot.live.chat.ProgressListener;
-import org.dandelion.radiot.util.ProgrammerError;
 
 public abstract class HttpTranslationState {
     protected final HttpTranslationEngine engine;
@@ -11,27 +9,10 @@ public abstract class HttpTranslationState {
         this.engine = engine;
     }
 
-    public void onStart() {
-        unexpectedCall("onStart");
-    }
-
-    public void onStop() {
-        unexpectedCall("onStop");
-    }
-
-    public void onError() {
-        unexpectedCall("onError");
-    }
-
-    public void onRequestCompleted() {
-        unexpectedCall("onRequestCompleted");
-    }
-
-    private void unexpectedCall(String method) {
-        String message = "Unexpectedly called " + this.getClass().getSimpleName() + "." + method + "()";
-        Log.e("CHAT", message);
-        throw new ProgrammerError(message);
-    }
+    abstract public void onStart();
+    abstract public void onStop();
+    abstract public void onError();
+    abstract public void onRequestCompleted();
 
     static class Disconnected extends HttpTranslationState {
         public Disconnected(HttpTranslationEngine httpTranslationEngine) {
@@ -62,6 +43,10 @@ public abstract class HttpTranslationState {
         public Connecting(HttpTranslationEngine engine, ProgressListener progressListener) {
             super(engine);
             this.progressListener = progressListener;
+        }
+
+        @Override
+        public void onStart() {
         }
 
         @Override
