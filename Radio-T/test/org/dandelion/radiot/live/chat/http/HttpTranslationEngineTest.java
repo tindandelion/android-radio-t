@@ -14,7 +14,6 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -34,12 +33,7 @@ public class HttpTranslationEngineTest {
     private final HttpTranslationEngine engine =
             new HttpTranslationEngine(chatClient, consumer, listener, scheduler);
 
-    @Test
-    public void disconnect() throws Exception {
-        engine.disconnect();
-        assertThat(engine, isInState(HttpTranslationState.Disconnected.class));
-    }
-
+    // TODO: 'Does nothing' should literally mean no interactions with the outer world
     @Test
     public void whenDisconnected_onStop_doesNothing() throws Exception {
         engine.disconnect();
@@ -47,20 +41,99 @@ public class HttpTranslationEngineTest {
     }
 
     @Test
-    public void whenConnecting_switchesToConnectingState_whileRetrievingMessages() throws Exception {
-        final List<Message> messages = Collections.emptyList();
-
+    public void whenDisconnected_onStart_startsConnecting() throws Exception {
+        engine.disconnect();
         when(chatClient.retrieveMessages("last")).thenAnswer(new Answer<Object>() {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 assertThat(engine, isInState(HttpTranslationState.Connecting.class));
-                return messages;
+                return messageList();
+            }
+        });
+
+        engine.currentState().onStart();
+
+        verify(chatClient).retrieveMessages("last");
+    }
+
+    @Test
+    public void whenDisconnected_andPreviousNetworkRequestCompletes_doesNothing() throws Exception {
+        engine.disconnect();
+        engine.processMessages(messageList());
+    }
+
+    @Test
+    public void whenDisconnected_andPreviousNetworkRequestFails_doesNothing() throws Exception {
+        engine.disconnect();
+        engine.onError();
+    }
+
+    @Test
+    public void whenDisconnected_andPollScheduleEventOccures_doesNothing() throws Exception {
+        engine.disconnect();
+        scheduler.performAction();
+        assertFalse(scheduler.isScheduled());
+    }
+
+    @Test
+    public void whenConnecting_onStart_switchesToConnectingStateWhileRetrievingMessages() throws Exception {
+        when(chatClient.retrieveMessages("last")).thenAnswer(new Answer<Object>() {
+            @Override
+            public Object answer(InvocationOnMock invocation) throws Throwable {
+                assertThat(engine, isInState(HttpTranslationState.Connecting.class));
+                return messageList();
+            }
+        });
+
+        engine.startConnecting();
+    }
+
+    @Test
+    public void whenConnecting_onStop_switchesToPausedConnecting() throws Exception {
+        when(chatClient.retrieveMessages("last")).thenAnswer(new Answer<Object>() {
+            @Override
+            public Object answer(InvocationOnMock invocation) throws Throwable {
+                engine.currentState().onStop();
+                assertThat(engine, isInState(HttpTranslationState.PausedConnecting.class));
+                return messageList();
             }
         });
         engine.currentState().onStart();
+    }
+
+    @Test
+    public void whenConnecting_andPreviousNetworkRequestCompletes_feedsMessagesToConsumerAndGoesToListening() throws Exception {
+        final List<Message> messages = messageList();
+
+        when(chatClient.retrieveMessages("last")).thenReturn(messages);
+        engine.startConnecting();
 
         verify(consumer).processMessages(messages);
         assertThat(engine, isInState(HttpTranslationState.Listening.class));
+    }
+
+    @Test
+    public void whenConnecting_andPreviousNetworkRequestFails_NotifiesListenerAndGoesToDisconnected() throws Exception {
+        when(chatClient.retrieveMessages("last")).thenThrow(IOException.class);
+
+        engine.startConnecting();
+
+        verify(listener).onError();
+        assertThat(engine, isInState(HttpTranslationState.Disconnected.class));
+    }
+
+    @Test
+    public void whenConnecting_andPollScheduleEventOccures_doesNothing() throws Exception {
+        when(chatClient.retrieveMessages("last")).thenAnswer(new Answer<Object>() {
+            @Override
+            public Object answer(InvocationOnMock invocation) throws Throwable {
+                scheduler.performAction();
+                assertFalse(scheduler.isScheduled());
+                return messageList();
+            }
+        });
+
+        engine.startConnecting();
     }
 
     @Test
@@ -78,30 +151,23 @@ public class HttpTranslationEngineTest {
     }
 
     @Test
-    public void whenConnecting_onError_notifiesListener_andGoesDisconnected() throws Exception {
-        when(chatClient.retrieveMessages("last")).thenThrow(IOException.class);
+    public void whenPausedConnecting_onStart_notifiesListenerAndGoesToConnecting() throws Exception {
+        engine.pauseConnecting();
 
         engine.currentState().onStart();
 
-        verify(listener).onError();
-        assertThat(engine, isInState(HttpTranslationState.Disconnected.class));
+        verify(listener).onConnecting();
+        assertThat(engine, isInState(HttpTranslationState.Connecting.class));
     }
 
     @Test
-    public void whenConnecting_butInterrupted_switchesToPausedConnecting() throws Exception {
-        when(chatClient.retrieveMessages("last")).thenAnswer(new Answer<Object>() {
-            @Override
-            public Object answer(InvocationOnMock invocation) throws Throwable {
-                engine.currentState().onStop();
-                assertThat(engine, isInState(HttpTranslationState.PausedConnecting.class));
-                return null;
-            }
-        });
-        engine.currentState().onStart();
+    public void whenPausedConnecting_onStop_doesNothing() throws Exception {
+        engine.pauseConnecting();
+        engine.currentState().onStop();
     }
 
     @Test
-    public void whenPausedConnecting_andPreviousNetworkRequestCompletes_notifiesListener_andSwitchesToPausedListening() throws Exception {
+    public void whenPausedConnecting_andPreviousNetworkRequestCompletes_notifiesListenerAndGoesToPausedListening() throws Exception {
         engine.pauseConnecting();
         engine.processMessages(Collections.<Message>emptyList());
 
@@ -110,13 +176,19 @@ public class HttpTranslationEngineTest {
     }
 
     @Test
-    public void whenResumesConnecting_restoresConnectingState_andNotifiesListener() throws Exception {
+    public void whenPausedConnecting_andPreviousNetworkRequestFails_notifiesListenerAndGoesToDisconnected() throws Exception {
         engine.pauseConnecting();
+        engine.onError();
 
-        engine.currentState().onStart();
+        verify(listener).onError();
+        assertThat(engine, isInState(HttpTranslationState.Disconnected.class));
+    }
 
-        verify(listener).onConnecting();
-        assertThat(engine, isInState(HttpTranslationState.Connecting.class));
+    @Test
+    public void whenPausedConnecting_andPollScheduleEventOccures_doesNothing() throws Exception {
+        engine.pauseConnecting();
+        scheduler.performAction();
+        assertFalse(scheduler.isScheduled());
     }
 
     @Test
@@ -128,11 +200,28 @@ public class HttpTranslationEngineTest {
     }
 
     @Test
+    public void whenListening_onStart_doesNothing() throws Exception {
+        engine.startListening();
+        engine.currentState().onStart();
+    }
+
+
+    @Test
+    public void whenListening_onStop_cancelsPollingAndGoesToPausedListening() throws Exception {
+        engine.startListening();
+        engine.currentState().onStop();
+
+        assertFalse(scheduler.isScheduled());
+        assertThat(engine, isInState(HttpTranslationState.PausedListening.class));
+    }
+
+    @Test
     public void whenListening_pollsForNextMessages_onSchedule() throws Exception {
-        ArrayList<Message> nextMessages = new ArrayList<Message>();
+        engine.startListening();
+
+        List<Message> nextMessages = messageList();
         when(chatClient.retrieveMessages("next")).thenReturn(nextMessages);
 
-        engine.startListening();
         scheduler.performAction();
 
         verify(chatClient).retrieveMessages("next");
@@ -149,7 +238,7 @@ public class HttpTranslationEngineTest {
     }
 
     @Test
-    public void whenListening_reportsError_andGoesDisconnected() throws Exception {
+    public void whenListening_andNetworkRequestFails_notifiesListenerAndGoesDisconnected() throws Exception {
         engine.startListening();
         when(chatClient.retrieveMessages("next")).thenThrow(IOException.class);
 
@@ -160,17 +249,8 @@ public class HttpTranslationEngineTest {
     }
 
     @Test
-    public void whenPauseListening_cancelsPolling_andGoesToPausedListening() throws Exception {
-        engine.startListening();
-        engine.currentState().onStop();
-
-        assertFalse(scheduler.isScheduled());
-        assertThat(engine, isInState(HttpTranslationState.PausedListening.class));
-    }
-
-    @Test
     public void whenPausedListening_onStart_schedulesNextPoll() throws Exception {
-        engine.stopListening();
+        engine.pauseListening();
 
         engine.currentState().onStart();
 
@@ -179,8 +259,15 @@ public class HttpTranslationEngineTest {
     }
 
     @Test
+    public void whenPausedListening_onStop_doesNothing() throws Exception {
+        engine.pauseListening();
+
+        engine.currentState().onStop();
+    }
+
+    @Test
     public void whenPausedListening_andNetworkRequestCompletes_doesNotScheduleNextPoll() throws Exception {
-        engine.stopListening();
+        engine.pauseListening();
         engine.processMessages(Collections.<Message>emptyList());
 
         assertFalse(scheduler.isScheduled());
@@ -189,10 +276,17 @@ public class HttpTranslationEngineTest {
 
     @Test
     public void whenPausedListening_andNetworkRequestFails_goesDisconnected() throws Exception {
-        engine.stopListening();
+        engine.pauseListening();
         engine.onError();
 
         assertThat(engine, isInState(HttpTranslationState.Disconnected.class));
+    }
+
+    @Test
+    public void whenPausedListening_andPollScheduleEventOccures_doesNothing() throws Exception {
+        engine.pauseListening();
+        engine.performAction();
+        assertFalse(scheduler.isScheduled());
     }
 
     private Matcher<? super HttpTranslationEngine> isInState(final Class<? extends HttpTranslationState> aClass) {
@@ -213,4 +307,9 @@ public class HttpTranslationEngineTest {
             }
         };
     }
+
+    private List<Message> messageList() {
+        return Collections.emptyList();
+    }
+
 }

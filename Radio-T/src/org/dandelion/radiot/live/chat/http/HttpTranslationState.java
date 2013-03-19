@@ -46,6 +46,14 @@ public class HttpTranslationState {
         @Override
         public void onStop() {
         }
+
+        @Override
+        public void onRequestCompleted() {
+        }
+
+        @Override
+        public void onError() {
+        }
     }
 
     static class Connecting extends HttpTranslationState  {
@@ -87,9 +95,18 @@ public class HttpTranslationState {
         }
 
         @Override
+        public void onStop() {
+        }
+
+        @Override
+        public void onError() {
+            engine.disconnect();
+        }
+
+        @Override
         public void onRequestCompleted() {
             progressListener.onConnected();
-            engine.stopListening();
+            engine.pauseListening();
         }
     }
 
@@ -101,6 +118,10 @@ public class HttpTranslationState {
         @Override
         public void onStart() {
             engine.resumeListening();
+        }
+
+        @Override
+        public void onStop() {
         }
 
         @Override
@@ -121,8 +142,12 @@ public class HttpTranslationState {
         }
 
         @Override
+        public void onStart() {
+        }
+
+        @Override
         public void onStop() {
-            engine.stopListening();
+            engine.pauseListening();
         }
 
         @Override

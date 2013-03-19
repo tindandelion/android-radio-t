@@ -78,7 +78,7 @@ public class HttpTranslationEngine implements HttpChatRequest.ErrorListener, Mes
         pollScheduler.scheduleNext();
     }
 
-    public void stopListening() {
+    public void pauseListening() {
         setCurrentState(new HttpTranslationState.PausedListening(this));
         pollScheduler.cancel();
     }
