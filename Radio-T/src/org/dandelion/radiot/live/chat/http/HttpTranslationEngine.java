@@ -24,24 +24,6 @@ public class HttpTranslationEngine implements HttpChatRequest.ErrorListener, Mes
         this.currentState = new HttpTranslationState.Disconnected(this);
     }
 
-    public void connect() {
-        progressListener.onConnecting();
-        setCurrentState(new HttpTranslationState.Connecting(this, progressListener));
-        requestMessages("last");
-    }
-
-    public void startListening() {
-        Log.d("CHAT", "Start listening from " + this.currentState.getClass().getSimpleName());
-        setCurrentState(new HttpTranslationState.Listening(this));
-        pollScheduler.scheduleNext();
-    }
-
-    public void stopListening() {
-        Log.d("CHAT", "Stop listening from " + this.currentState.getClass().getSimpleName());
-        setCurrentState(new HttpTranslationState.Paused(this));
-        pollScheduler.cancel();
-    }
-
     public void disconnect() {
         setCurrentState(new HttpTranslationState.Disconnected(this));
     }
@@ -74,5 +56,35 @@ public class HttpTranslationEngine implements HttpChatRequest.ErrorListener, Mes
     public void setCurrentState(HttpTranslationState newState) {
         Log.d("CHAT", "Changing state " + this.currentState.getClass().getSimpleName() + " -> " + newState.getClass().getSimpleName());
         this.currentState = newState;
+    }
+
+    public void startConnecting() {
+        progressListener.onConnecting();
+        setCurrentState(new HttpTranslationState.Connecting(this, progressListener));
+        requestMessages("last");
+    }
+
+    public void stopConnecting() {
+        setCurrentState(new HttpTranslationState.PausedConnecting(this));
+    }
+
+    public void resumeConnecting() {
+        progressListener.onConnecting();
+        setCurrentState(new HttpTranslationState.Connecting(this, progressListener));
+    }
+
+    public void startListening() {
+        setCurrentState(new HttpTranslationState.Listening(this));
+        pollScheduler.scheduleNext();
+    }
+
+    public void stopListening() {
+        setCurrentState(new HttpTranslationState.PausedListening(this));
+        pollScheduler.cancel();
+    }
+
+    public void resumeListening() {
+        setCurrentState(new HttpTranslationState.Listening(this));
+        pollScheduler.scheduleNext();
     }
 }

@@ -81,7 +81,7 @@ public class HttpChatTranslationTest {
         assertThat(translation.currentState(), instanceOf(HttpTranslationState.Listening.class));
 
         translation.stop();
-        assertThat(translation.currentState(), instanceOf(HttpTranslationState.Paused.class));
+        assertThat(translation.currentState(), instanceOf(HttpTranslationState.PausedListening.class));
         assertFalse("stopped", pollScheduler.isScheduled());
 
         translation.start();

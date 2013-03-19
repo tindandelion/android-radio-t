@@ -33,7 +33,6 @@ public class HttpTranslationState {
         throw new ProgrammerError(message);
     }
 
-
     static class Disconnected extends HttpTranslationState {
         public Disconnected(HttpTranslationEngine httpTranslationEngine) {
             super(httpTranslationEngine);
@@ -41,22 +40,11 @@ public class HttpTranslationState {
 
         @Override
         public void onStart() {
-            engine.connect();
-        }
-    }
-
-    public static class Paused extends HttpTranslationState {
-        public Paused(HttpTranslationEngine engine) {
-            super(engine);
+            engine.startConnecting();
         }
 
         @Override
-        public void onStart() {
-            engine.startListening();
-        }
-
-        @Override
-        public void onRequestCompleted() {
+        public void onStop() {
         }
     }
 
@@ -69,19 +57,50 @@ public class HttpTranslationState {
         }
 
         @Override
-        public void onStart() {
-            progressListener.onConnecting();
-        }
-
-        @Override
         public void onStop() {
-            engine.stopListening();
+            engine.stopConnecting();
         }
 
         @Override
         public void onRequestCompleted() {
             progressListener.onConnected();
             engine.startListening();
+        }
+
+        @Override
+        public void onError() {
+            engine.disconnect();
+        }
+    }
+
+    public static class PausedConnecting extends HttpTranslationState {
+        public PausedConnecting(HttpTranslationEngine engine) {
+            super(engine);
+        }
+
+        @Override
+        public void onStart() {
+            engine.resumeConnecting();
+        }
+
+        @Override
+        public void onRequestCompleted() {
+            engine.stopListening();
+        }
+    }
+
+    public static class PausedListening extends HttpTranslationState {
+        public PausedListening(HttpTranslationEngine engine) {
+            super(engine);
+        }
+
+        @Override
+        public void onStart() {
+            engine.resumeListening();
+        }
+
+        @Override
+        public void onRequestCompleted() {
         }
 
         @Override

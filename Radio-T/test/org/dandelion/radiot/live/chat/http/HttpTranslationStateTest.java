@@ -16,10 +16,10 @@ public class HttpTranslationStateTest {
     private HttpTranslationState state;
 
     @Test
-    public void disconnectedState_onStart_commandsEngineToConnect() throws Exception {
+    public void disconnectedState_onStart_commandsEngineToStartConnecting() throws Exception {
         state = new HttpTranslationState.Disconnected(mockEngine);
         state.onStart();
-        verify(mockEngine).connect();
+        verify(mockEngine).startConnecting();
     }
 
     @Test
@@ -27,15 +27,6 @@ public class HttpTranslationStateTest {
         state = new HttpTranslationState.Connecting(mockEngine, listener);
         state.onError();
         verify(mockEngine).disconnect();
-    }
-
-    @Test
-    public void connectingState_onStart_onlyReportsToListener() throws Exception {
-        state = new HttpTranslationState.Connecting(mockEngine, listener);
-        state.onStart();
-
-        verify(mockEngine, never()).connect();
-        verify(listener).onConnecting();
     }
 
     @Test
@@ -53,9 +44,17 @@ public class HttpTranslationStateTest {
     }
 
     @Test
-    public void pausedState_onStart_commandsEngineToStartListening() throws Exception {
-        state = new HttpTranslationState.Paused(mockEngine);
+    public void pausedListeningState_onStart_commandsEngineToResumeListening() throws Exception {
+        state = new HttpTranslationState.PausedListening(mockEngine);
         state.onStart();
-        verify(mockEngine).startListening();
+        verify(mockEngine).resumeListening();
+    }
+
+    @Test
+    public void pausedConnectingState_onStart_commandsEngineToResumeConnecting() throws Exception {
+        state = new HttpTranslationState.PausedConnecting(mockEngine);
+        state.onStart();
+
+        verify(mockEngine).resumeConnecting();
     }
 }
