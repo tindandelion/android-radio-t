@@ -3,7 +3,7 @@ package org.dandelion.radiot;
 import android.app.Application;
 import android.os.Handler;
 import org.dandelion.radiot.live.chat.ChatTranslation;
-import org.dandelion.radiot.live.chat.http.HttpChatTranslation;
+import org.dandelion.radiot.live.chat.http.HttpTranslationEngine;
 import org.dandelion.radiot.live.schedule.Scheduler;
 import org.dandelion.radiot.live.ui.ChatTranslationFragment;
 import org.dandelion.radiot.podcasts.main.PodcastsApp;
@@ -24,7 +24,7 @@ public class RadiotApplication extends Application {
         ChatTranslationFragment.chatFactory = new ChatTranslation.Factory() {
             @Override
             public ChatTranslation create() {
-                return new HttpChatTranslation(CHAT_URL, new HandlerScheduler());
+                return new HttpTranslationEngine(CHAT_URL, new HandlerScheduler());
             }
         };
     }

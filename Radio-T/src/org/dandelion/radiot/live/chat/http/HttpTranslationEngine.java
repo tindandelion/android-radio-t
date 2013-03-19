@@ -17,6 +17,10 @@ public class HttpTranslationEngine implements ChatTranslation, HttpChatRequest.E
     private final Scheduler pollScheduler;
     private HttpTranslationState currentState;
 
+    public HttpTranslationEngine(String baseUrl, Scheduler refreshScheduler) {
+        this(new HttpChatClient(baseUrl), refreshScheduler);
+    }
+
     public HttpTranslationEngine(HttpChatClient chatClient, Scheduler pollScheduler) {
         this.chatClient = chatClient;
         this.pollScheduler = pollScheduler;
