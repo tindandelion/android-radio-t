@@ -25,6 +25,7 @@ Version 1.7.1:
 
  * Chat translation goes available while application is paused - should restart
  * java.lang.ClassCastException: android.view.View$BaseSavedState cannot be cast to org.dandelion.radiot.live.ui.ChatStreamView$SavedState
+ * Find more about activity's 'singleTop' launch mode
 
 Version 1.8:
  * Use Jabber to connect to chat
