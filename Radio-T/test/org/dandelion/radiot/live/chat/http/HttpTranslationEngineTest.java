@@ -19,7 +19,6 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
@@ -41,13 +40,13 @@ public class HttpTranslationEngineTest {
         engine.shutdown();
 
         verify(chatClient).shutdown();
-        assertThat(engine, isInState(HttpTranslationState.Disconnected.class));
+        assertThat(engine, isInState("Disconnected"));
     }
 
     @Test
     public void whenDisconnected_onStop_doesNothing() throws Exception {
         engine.disconnect();
-        engine.currentState().onStop();
+        engine.start();
     }
 
     @Test
@@ -56,12 +55,12 @@ public class HttpTranslationEngineTest {
         when(chatClient.retrieveMessages("last")).thenAnswer(new Answer<Object>() {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
-                assertThat(engine, isInState(HttpTranslationState.Connecting.class));
+                assertThat(engine, isInState("Connecting"));
                 return messageList();
             }
         });
 
-        engine.currentState().onStart();
+        engine.start();
 
         verify(chatClient).retrieveMessages("last");
     }
@@ -90,7 +89,7 @@ public class HttpTranslationEngineTest {
         when(chatClient.retrieveMessages("last")).thenAnswer(new Answer<Object>() {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
-                assertThat(engine, isInState(HttpTranslationState.Connecting.class));
+                assertThat(engine, isInState("Connecting"));
                 return messageList();
             }
         });
@@ -103,12 +102,12 @@ public class HttpTranslationEngineTest {
         when(chatClient.retrieveMessages("last")).thenAnswer(new Answer<Object>() {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
-                engine.currentState().onStop();
-                assertThat(engine, isInState(HttpTranslationState.PausedConnecting.class));
+                engine.stop();
+                assertThat(engine, isInState("PausedConnecting"));
                 return messageList();
             }
         });
-        engine.currentState().onStart();
+        engine.start();
     }
 
     @Test
@@ -119,7 +118,7 @@ public class HttpTranslationEngineTest {
         engine.startConnecting();
 
         verify(consumer).processMessages(messages);
-        assertThat(engine, isInState(HttpTranslationState.Listening.class));
+        assertThat(engine, isInState("Listening"));
     }
 
     @Test
@@ -129,7 +128,7 @@ public class HttpTranslationEngineTest {
         engine.startConnecting();
 
         verify(listener).onError();
-        assertThat(engine, isInState(HttpTranslationState.Disconnected.class));
+        assertThat(engine, isInState("Disconnected"));
     }
 
     @Test
@@ -155,7 +154,7 @@ public class HttpTranslationEngineTest {
                 return null;
             }
         });
-        engine.currentState().onStart();
+        engine.start();
 
         verify(listener).onConnected();
     }
@@ -164,16 +163,16 @@ public class HttpTranslationEngineTest {
     public void whenPausedConnecting_onStart_notifiesListenerAndGoesToConnecting() throws Exception {
         engine.pauseConnecting();
 
-        engine.currentState().onStart();
+        engine.start();
 
         verify(listener).onConnecting();
-        assertThat(engine, isInState(HttpTranslationState.Connecting.class));
+        assertThat(engine, isInState("Connecting"));
     }
 
     @Test
     public void whenPausedConnecting_onStop_doesNothing() throws Exception {
         engine.pauseConnecting();
-        engine.currentState().onStop();
+        engine.stop();
     }
 
     @Test
@@ -182,7 +181,7 @@ public class HttpTranslationEngineTest {
         engine.processMessages(Collections.<Message>emptyList());
 
         verify(listener).onConnected();
-        assertThat(engine, isInState(HttpTranslationState.PausedListening.class));
+        assertThat(engine, isInState("PausedListening"));
     }
 
     @Test
@@ -191,7 +190,7 @@ public class HttpTranslationEngineTest {
         engine.onError();
 
         verify(listener).onError();
-        assertThat(engine, isInState(HttpTranslationState.Disconnected.class));
+        assertThat(engine, isInState("Disconnected"));
     }
 
     @Test
@@ -205,24 +204,24 @@ public class HttpTranslationEngineTest {
     public void whenStartsListening_schedulesPolling() throws Exception {
         engine.startListening();
 
-        assertThat(engine, isInState(HttpTranslationState.Listening.class));
+        assertThat(engine, isInState("Listening"));
         assertTrue(scheduler.isScheduled());
     }
 
     @Test
     public void whenListening_onStart_doesNothing() throws Exception {
         engine.startListening();
-        engine.currentState().onStart();
+        engine.start();
     }
 
 
     @Test
     public void whenListening_onStop_cancelsPollingAndGoesToPausedListening() throws Exception {
         engine.startListening();
-        engine.currentState().onStop();
+        engine.stop();
 
         assertFalse(scheduler.isScheduled());
-        assertThat(engine, isInState(HttpTranslationState.PausedListening.class));
+        assertThat(engine, isInState("PausedListening"));
     }
 
     @Test
@@ -255,24 +254,24 @@ public class HttpTranslationEngineTest {
         scheduler.performAction();
 
         verify(listener).onError();
-        assertThat(engine, isInState(HttpTranslationState.Disconnected.class));
+        assertThat(engine, isInState("Disconnected"));
     }
 
     @Test
     public void whenPausedListening_onStart_schedulesNextPoll() throws Exception {
         engine.pauseListening();
 
-        engine.currentState().onStart();
+        engine.start();
 
         assertTrue(scheduler.isScheduled());
-        assertThat(engine, isInState(HttpTranslationState.Listening.class));
+        assertThat(engine, isInState("Listening"));
     }
 
     @Test
     public void whenPausedListening_onStop_doesNothing() throws Exception {
         engine.pauseListening();
 
-        engine.currentState().onStop();
+        engine.stop();
     }
 
     @Test
@@ -281,7 +280,7 @@ public class HttpTranslationEngineTest {
         engine.processMessages(Collections.<Message>emptyList());
 
         assertFalse(scheduler.isScheduled());
-        assertThat(engine, isInState(HttpTranslationState.PausedListening.class));
+        assertThat(engine, isInState("PausedListening"));
     }
 
     @Test
@@ -289,11 +288,11 @@ public class HttpTranslationEngineTest {
         engine.pauseListening();
         engine.onError();
 
-        assertThat(engine, isInState(HttpTranslationState.Disconnected.class));
+        assertThat(engine, isInState("Disconnected"));
     }
 
     @Test
-    public void whenPausedListening_andPollScheduleEventOccures_doesNothing() throws Exception {
+    public void whenPausedListening_andPollScheduleEventOccurs_doesNothing() throws Exception {
         engine.pauseListening();
         engine.performAction();
         assertFalse(scheduler.isScheduled());
@@ -338,21 +337,21 @@ public class HttpTranslationEngineTest {
         engine.setMessageConsumer(consumer);
     }
 
-    private Matcher<? super HttpTranslationEngine> isInState(final Class<? extends HttpTranslationState> aClass) {
+    private Matcher<? super HttpTranslationEngine> isInState(final String state) {
         return new TypeSafeMatcher<HttpTranslationEngine>() {
             @Override
-            protected boolean matchesSafely(HttpTranslationEngine httpTranslationEngine) {
-                return instanceOf(aClass).matches(httpTranslationEngine.currentState());
+            protected boolean matchesSafely(HttpTranslationEngine engine) {
+                return state.equals(engine.currentState());
             }
 
             @Override
             public void describeTo(Description description) {
-                description.appendText("Engine in state").appendValue(aClass);
+                description.appendText("Engine in state").appendValue(state);
             }
 
             @Override
-            protected void describeMismatchSafely(HttpTranslationEngine item, Description mismatchDescription) {
-                mismatchDescription.appendText("Engine in state").appendValue(item.currentState().getClass());
+            protected void describeMismatchSafely(HttpTranslationEngine engine, Description mismatchDescription) {
+                mismatchDescription.appendText("Engine in state").appendValue(engine.currentState());
             }
         };
     }

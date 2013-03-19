@@ -2,6 +2,7 @@ package org.dandelion.radiot.live.chat.http;
 
 import android.util.Log;
 import org.dandelion.radiot.common.ui.Announcer;
+import org.dandelion.radiot.live.chat.ChatTranslation;
 import org.dandelion.radiot.live.chat.Message;
 import org.dandelion.radiot.live.chat.MessageConsumer;
 import org.dandelion.radiot.live.chat.ProgressListener;
@@ -9,7 +10,7 @@ import org.dandelion.radiot.live.schedule.Scheduler;
 
 import java.util.List;
 
-public class HttpTranslationEngine implements HttpChatRequest.ErrorListener, MessageConsumer, Scheduler.Performer {
+public class HttpTranslationEngine implements ChatTranslation, HttpChatRequest.ErrorListener, MessageConsumer, Scheduler.Performer {
     private final HttpChatClient chatClient;
     private Announcer<ProgressListener> progressAnnouncer = new Announcer<ProgressListener>(ProgressListener.class);
     private Announcer<MessageConsumer> messageAnnouncer = new Announcer<MessageConsumer>(MessageConsumer.class);
@@ -19,29 +20,40 @@ public class HttpTranslationEngine implements HttpChatRequest.ErrorListener, Mes
     public HttpTranslationEngine(HttpChatClient chatClient, Scheduler pollScheduler) {
         this.chatClient = chatClient;
         this.pollScheduler = pollScheduler;
-        pollScheduler.setPerformer(this);
         this.currentState = new HttpTranslationState.Disconnected(this);
+
+        pollScheduler.setPerformer(this);
     }
 
+    @Override
     public void setProgressListener(ProgressListener listener) {
         progressAnnouncer.setTarget(listener);
     }
 
+    @Override
     public void setMessageConsumer(MessageConsumer consumer) {
         messageAnnouncer.setTarget(consumer);
     }
 
-    public void disconnect() {
-        setCurrentState(new HttpTranslationState.Disconnected(this));
+    @Override
+    public void start() {
+        currentState.onStart();
     }
 
-    public HttpTranslationState currentState() {
-        return currentState;
+    @Override
+    public void stop() {
+        currentState.onStop();
     }
 
-    private void requestMessages(String mode) {
-        new HttpChatRequest(mode, chatClient, this, this).execute();
+    @Override
+    public void shutdown() {
+        setMessageConsumer(null);
+        setProgressListener(null);
+
+        chatClient.shutdown();
+        disconnect();
     }
+
 
     @Override
     public void onError() {
@@ -60,7 +72,19 @@ public class HttpTranslationEngine implements HttpChatRequest.ErrorListener, Mes
         requestMessages("next");
     }
 
-    public void setCurrentState(HttpTranslationState newState) {
+    public String currentState() {
+        return currentState.getClass().getSimpleName();
+    }
+
+    public void disconnect() {
+        setCurrentState(new HttpTranslationState.Disconnected(this));
+    }
+
+    private void requestMessages(String mode) {
+        new HttpChatRequest(mode, chatClient, this, this).execute();
+    }
+
+    private void setCurrentState(HttpTranslationState newState) {
         Log.d("CHAT", "Changing state " + this.currentState.getClass().getSimpleName() + " -> " + newState.getClass().getSimpleName());
         this.currentState = newState;
     }
@@ -98,11 +122,4 @@ public class HttpTranslationEngine implements HttpChatRequest.ErrorListener, Mes
         pollScheduler.scheduleNext();
     }
 
-    public void shutdown() {
-        setMessageConsumer(null);
-        setProgressListener(null);
-
-        chatClient.shutdown();
-        disconnect();
-    }
 }

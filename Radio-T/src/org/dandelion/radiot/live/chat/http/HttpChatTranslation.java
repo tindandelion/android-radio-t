@@ -28,12 +28,12 @@ public class HttpChatTranslation implements ChatTranslation {
 
     @Override
     public void start() {
-        engine.currentState().onStart();
+        engine.start();
     }
 
     @Override
     public void stop() {
-        engine.currentState().onStop();
+        engine.stop();
     }
 
     @Override
