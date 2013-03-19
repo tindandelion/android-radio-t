@@ -8,6 +8,7 @@ import org.dandelion.radiot.robolectric.RadiotRobolectricRunner;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.invocation.InvocationOnMock;
@@ -31,7 +32,7 @@ public class HttpTranslationEngineTest {
     private final MessageConsumer consumer = mock(MessageConsumer.class);
     private final ProgressListener listener = mock(ProgressListener.class);
     private final HttpTranslationEngine engine =
-            new HttpTranslationEngine(chatClient, consumer, listener, scheduler);
+            new HttpTranslationEngine(chatClient, scheduler);
 
     @Test
     public void shutdown_terminatesChatClient_andGoesToDisconnected() throws Exception {
@@ -296,6 +297,12 @@ public class HttpTranslationEngineTest {
         engine.pauseListening();
         engine.performAction();
         assertFalse(scheduler.isScheduled());
+    }
+
+    @Before
+    public void setUp() throws Exception {
+        engine.setProgressListener(listener);
+        engine.setMessageConsumer(consumer);
     }
 
     private Matcher<? super HttpTranslationEngine> isInState(final Class<? extends HttpTranslationState> aClass) {
