@@ -258,6 +258,12 @@ public class HttpTranslationEngineTest {
     }
 
     @Test
+    public void whenListening_andNetworkRequestCompletes_schedulesNextPoll() throws Exception {
+        engine.startListening();
+        engine.processMessages(messageList());
+    }
+
+    @Test
     public void whenPausedListening_onStart_schedulesNextPoll() throws Exception {
         engine.pauseListening();
 

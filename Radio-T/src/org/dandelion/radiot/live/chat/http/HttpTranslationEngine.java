@@ -113,7 +113,7 @@ public class HttpTranslationEngine implements ChatTranslation, HttpChatRequest.E
 
     public void startListening() {
         setCurrentState(new HttpTranslationState.Listening(this));
-        pollScheduler.scheduleNext();
+        scheduleNextPoll();
     }
 
     public void pauseListening() {
@@ -123,7 +123,11 @@ public class HttpTranslationEngine implements ChatTranslation, HttpChatRequest.E
 
     public void resumeListening() {
         setCurrentState(new HttpTranslationState.Listening(this));
-        pollScheduler.scheduleNext();
+        scheduleNextPoll();
     }
 
+    private void scheduleNextPoll() {
+        pollScheduler.cancel();
+        pollScheduler.scheduleNext();
+    }
 }
