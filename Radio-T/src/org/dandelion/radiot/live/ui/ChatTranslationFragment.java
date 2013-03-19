@@ -42,7 +42,7 @@ public class ChatTranslationFragment extends ListFragment {
         super.onViewCreated(view, savedInstanceState);
         ChatStreamAdapter adapter = new ChatStreamAdapter(getActivity(), messages, MESSAGE_LIMIT);
         setListAdapter(adapter);
-        chat.setProgressListener(new ChatProgressController(this));
+        chat.setProgressListener(new ChatProgressController(this, adapter));
         chat.setMessageConsumer(new ChatScroller(adapter, getListView()));
     }
 
