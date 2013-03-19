@@ -4,7 +4,7 @@ import android.util.Log;
 import org.dandelion.radiot.live.chat.ProgressListener;
 import org.dandelion.radiot.util.ProgrammerError;
 
-public class HttpTranslationState {
+public abstract class HttpTranslationState {
     protected final HttpTranslationEngine engine;
 
     public HttpTranslationState(HttpTranslationEngine engine) {

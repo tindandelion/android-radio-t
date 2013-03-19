@@ -33,7 +33,16 @@ public class HttpTranslationEngineTest {
     private final HttpTranslationEngine engine =
             new HttpTranslationEngine(chatClient, consumer, listener, scheduler);
 
-    // TODO: 'Does nothing' should literally mean no interactions with the outer world
+    @Test
+    public void shutdown_terminatesChatClient_andGoesToDisconnected() throws Exception {
+        engine.startListening();
+
+        engine.shutdown();
+
+        verify(chatClient).shutdown();
+        assertThat(engine, isInState(HttpTranslationState.Disconnected.class));
+    }
+
     @Test
     public void whenDisconnected_onStop_doesNothing() throws Exception {
         engine.disconnect();

@@ -10,7 +10,6 @@ public class HttpChatTranslation implements ChatTranslation {
 
     private final Announcer<ProgressListener> progressAnnouncer = new Announcer<ProgressListener>(ProgressListener.class);
     private final Announcer<MessageConsumer> messageAnnouncer = new Announcer<MessageConsumer>(MessageConsumer.class);
-    private final HttpChatClient chatClient;
     private HttpTranslationEngine engine;
 
     public HttpChatTranslation(String baseUrl, Scheduler refreshScheduler) {
@@ -18,8 +17,6 @@ public class HttpChatTranslation implements ChatTranslation {
     }
 
     public HttpChatTranslation(HttpChatClient chatClient, Scheduler pollScheduler) {
-        this.chatClient = chatClient;
-
         engine = new HttpTranslationEngine(
                 chatClient, messageAnnouncer.announce(), progressAnnouncer.announce(), pollScheduler);
     }
@@ -48,10 +45,6 @@ public class HttpChatTranslation implements ChatTranslation {
     public void shutdown() {
         setMessageConsumer(null);
         setProgressListener(null);
-        chatClient.shutdown();
-    }
-
-    public HttpTranslationState currentState() {
-        return engine.currentState();
+        engine.shutdown();
     }
 }

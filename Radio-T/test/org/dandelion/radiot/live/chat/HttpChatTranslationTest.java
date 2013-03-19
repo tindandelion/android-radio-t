@@ -2,7 +2,6 @@ package org.dandelion.radiot.live.chat;
 
 import org.dandelion.radiot.live.chat.http.HttpChatClient;
 import org.dandelion.radiot.live.chat.http.HttpChatTranslation;
-import org.dandelion.radiot.live.chat.http.HttpTranslationState;
 import org.dandelion.radiot.live.schedule.DeterministicScheduler;
 import org.dandelion.radiot.robolectric.RadiotRobolectricRunner;
 import org.junit.Before;
@@ -15,10 +14,6 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
-import static org.hamcrest.Matchers.instanceOf;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 @SuppressWarnings("unchecked")
@@ -30,64 +25,6 @@ public class HttpChatTranslationTest {
     private final HttpChatTranslation translation = new HttpChatTranslation(chatClient, pollScheduler);
     private final MessageConsumer consumer = mock(MessageConsumer.class);
     private final ProgressListener listener = mock(ProgressListener.class);
-
-    @Test
-    public void whenStoppedWhileConnecting_doesNotStartPolling() throws Exception {
-        when(chatClient.retrieveMessages("last")).thenAnswer(new Answer<Object>() {
-            @Override
-            public Object answer(InvocationOnMock invocation) throws Throwable {
-                translation.stop();
-                return null;
-            }
-        });
-        translation.start();
-        assertFalse(pollScheduler.isScheduled());
-    }
-
-    @Test
-    public void whenRestartedWhileConnecting_startsPolling() throws Exception {
-        when(chatClient.retrieveMessages("last")).thenAnswer(new Answer<Object>() {
-            @Override
-            public Object answer(InvocationOnMock invocation) throws Throwable {
-                translation.stop();
-                translation.start();
-                return null;
-            }
-        });
-        translation.start();
-
-        assertTrue("restarted", pollScheduler.isScheduled());
-    }
-
-    @Test
-    public void whenStoppedWhileRefreshing_stopsPolling() throws Exception {
-        translation.start();
-
-        when(chatClient.retrieveMessages("next")).thenAnswer(new Answer<Object>() {
-            @Override
-            public Object answer(InvocationOnMock invocation) throws Throwable {
-                translation.stop();
-                return null;
-            }
-        });
-
-        pollScheduler.performAction();
-        assertFalse(pollScheduler.isScheduled());
-    }
-
-    @Test
-    public void whenRestarted_startsPolling() throws Exception {
-        translation.start();
-        assertThat(translation.currentState(), instanceOf(HttpTranslationState.Listening.class));
-
-        translation.stop();
-        assertThat(translation.currentState(), instanceOf(HttpTranslationState.PausedListening.class));
-        assertFalse("stopped", pollScheduler.isScheduled());
-
-        translation.start();
-        assertThat(translation.currentState(), instanceOf(HttpTranslationState.Listening.class));
-        assertTrue("restarted", pollScheduler.isScheduled());
-    }
 
     @Test
     public void whenShutsDown_closesHttpConnection() throws Exception {
