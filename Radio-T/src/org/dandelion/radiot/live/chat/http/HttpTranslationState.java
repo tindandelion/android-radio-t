@@ -74,8 +74,11 @@ public class HttpTranslationState {
     }
 
     public static class PausedConnecting extends HttpTranslationState {
-        public PausedConnecting(HttpTranslationEngine engine) {
+        private final ProgressListener progressListener;
+
+        public PausedConnecting(HttpTranslationEngine engine, ProgressListener progressListener) {
             super(engine);
+            this.progressListener = progressListener;
         }
 
         @Override
@@ -85,6 +88,7 @@ public class HttpTranslationState {
 
         @Override
         public void onRequestCompleted() {
+            progressListener.onConnected();
             engine.stopListening();
         }
     }

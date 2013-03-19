@@ -52,7 +52,7 @@ public class HttpTranslationStateTest {
 
     @Test
     public void pausedConnectingState_onStart_commandsEngineToResumeConnecting() throws Exception {
-        state = new HttpTranslationState.PausedConnecting(mockEngine);
+        state = new HttpTranslationState.PausedConnecting(mockEngine, listener);
         state.onStart();
 
         verify(mockEngine).resumeConnecting();

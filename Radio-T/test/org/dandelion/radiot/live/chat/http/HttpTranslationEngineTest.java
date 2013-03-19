@@ -101,10 +101,11 @@ public class HttpTranslationEngineTest {
     }
 
     @Test
-    public void whenPausedConnecting_andNetworkRequestCompletes_switchesToPausedListening() throws Exception {
+    public void whenPausedConnecting_andNetworkRequestCompletes_notifiesListener_andSwitchesToPausedListening() throws Exception {
         engine.stopConnecting();
         engine.processMessages(Collections.<Message>emptyList());
 
+        verify(listener).onConnected();
         assertThat(engine, isInState(HttpTranslationState.PausedListening.class));
     }
 
