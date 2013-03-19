@@ -1,5 +1,6 @@
 package org.dandelion.radiot.live.chat.http;
 
+import android.util.Log;
 import org.dandelion.radiot.live.chat.Message;
 import org.dandelion.radiot.live.chat.MessageConsumer;
 import org.dandelion.radiot.live.chat.ProgressListener;
@@ -12,7 +13,7 @@ public class HttpTranslationEngine implements HttpChatRequest.ErrorListener, Mes
     private final MessageConsumer consumer;
     private final ProgressListener progressListener;
     private final Scheduler pollScheduler;
-    public HttpTranslationState currentState;
+    private HttpTranslationState currentState;
 
     public HttpTranslationEngine(HttpChatClient chatClient, MessageConsumer consumer, ProgressListener progressListener, Scheduler pollScheduler) {
         this.chatClient = chatClient;
@@ -25,22 +26,24 @@ public class HttpTranslationEngine implements HttpChatRequest.ErrorListener, Mes
 
     public void connect() {
         progressListener.onConnecting();
-        currentState = new HttpTranslationState.Connecting(this, progressListener);
+        setCurrentState(new HttpTranslationState.Connecting(this, progressListener));
         requestMessages("last");
     }
 
     public void startListening() {
-        currentState = new HttpTranslationState.Listening(this);
+        Log.d("CHAT", "Start listening from " + this.currentState.getClass().getSimpleName());
+        setCurrentState(new HttpTranslationState.Listening(this));
         pollScheduler.scheduleNext();
     }
 
     public void stopListening() {
-        currentState = new HttpTranslationState.Paused(this);
+        Log.d("CHAT", "Stop listening from " + this.currentState.getClass().getSimpleName());
+        setCurrentState(new HttpTranslationState.Paused(this));
         pollScheduler.cancel();
     }
 
     public void disconnect() {
-        currentState = new HttpTranslationState.Disconnected(this);
+        setCurrentState(new HttpTranslationState.Disconnected(this));
     }
 
     public HttpTranslationState currentState() {
@@ -66,5 +69,10 @@ public class HttpTranslationEngine implements HttpChatRequest.ErrorListener, Mes
     @Override
     public void performAction() {
         requestMessages("next");
+    }
+
+    public void setCurrentState(HttpTranslationState newState) {
+        Log.d("CHAT", "Changing state " + this.currentState.getClass().getSimpleName() + " -> " + newState.getClass().getSimpleName());
+        this.currentState = newState;
     }
 }
