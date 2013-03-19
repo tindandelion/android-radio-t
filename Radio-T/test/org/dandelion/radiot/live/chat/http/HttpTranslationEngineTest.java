@@ -8,7 +8,6 @@ import org.dandelion.radiot.robolectric.RadiotRobolectricRunner;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.invocation.InvocationOnMock;
@@ -16,6 +15,7 @@ import org.mockito.stubbing.Answer;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
@@ -95,6 +95,21 @@ public class HttpTranslationEngineTest {
     }
 
     @Test
+    public void whenRestarted_whileConnecting_restoresConnectingState() throws Exception {
+        when(chatClient.retrieveMessages("last")).thenAnswer(new Answer<Object>() {
+            @Override
+            public Object answer(InvocationOnMock invocation) throws Throwable {
+                engine.currentState().onStop();
+                engine.currentState().onStart();
+                return null;
+            }
+        });
+        engine.connect();
+
+        assertThat(engine, isInState(HttpTranslationState.Connecting.class));
+    }
+
+    @Test
     public void whenListening_schedulesPolling() throws Exception {
         engine.startListening();
 
@@ -123,6 +138,17 @@ public class HttpTranslationEngineTest {
     }
 
     @Test
+    public void whenListening_reportsError_andGoesDisconnected() throws Exception {
+        engine.startListening();
+        when(chatClient.retrieveMessages("next")).thenThrow(IOException.class);
+
+        scheduler.performAction();
+
+        verify(listener).onError();
+        assertThat(engine, isInState(HttpTranslationState.Disconnected.class));
+    }
+
+    @Test
     public void whenStopsListening_cancelsPolling_andGoesToPaused() throws Exception {
         engine.startListening();
         engine.stopListening();
@@ -131,11 +157,14 @@ public class HttpTranslationEngineTest {
         assertThat(engine, isInState(HttpTranslationState.Paused.class));
     }
 
+    @Test
+    public void whenPaused_andNetworkRequestCompletes_doesNotScheduleNextPoll() throws Exception {
+        engine.stopListening();
+        engine.processMessages(Collections.<Message>emptyList());
 
-    @Test @Ignore
-    public void reportErrorsWhileRefreshing() throws Exception {
+        assertFalse(scheduler.isScheduled());
+        assertThat(engine, isInState(HttpTranslationState.Paused.class));
     }
-
 
     private Matcher<? super HttpTranslationEngine> isInState(final Class<? extends HttpTranslationState> aClass) {
         return new TypeSafeMatcher<HttpTranslationEngine>() {
