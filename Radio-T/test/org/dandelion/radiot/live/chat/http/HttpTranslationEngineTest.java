@@ -299,6 +299,39 @@ public class HttpTranslationEngineTest {
         assertFalse(scheduler.isScheduled());
     }
 
+    @Test
+    public void whenShutdownWhileStarting_SuppressAllFurtherNotifications() throws Exception {
+        when(chatClient.retrieveMessages("last")).then(new Answer<Object>() {
+            @Override
+            public Object answer(InvocationOnMock invocation) throws Throwable {
+                engine.shutdown();
+                return messageList();
+            }
+        });
+
+        engine.startConnecting();
+        verify(listener, never()).onConnected();
+        verify(listener, never()).onError();
+        verify(consumer, never()).processMessages(anyList());
+    }
+
+    @Test
+    public void whenShutdownWhileRefreshing_SuppressMessageConsuming() throws Exception {
+        when(chatClient.retrieveMessages("next")).then(new Answer<Object>() {
+            @Override
+            public Object answer(InvocationOnMock invocation) throws Throwable {
+                engine.shutdown();
+                return messageList();
+            }
+        });
+
+        engine.startListening();
+        scheduler.performAction();
+
+        verify(consumer, never()).processMessages(anyList());
+    }
+
+
     @Before
     public void setUp() throws Exception {
         engine.setProgressListener(listener);
