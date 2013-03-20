@@ -15,8 +15,11 @@ Backlog:
    * New icon with ICS guidelines
 
 Version 1.7.1:
- * Remove Log messages
- * Check all URLs
+ DONE Remove Log messages
+ DONE Check all URLs
+ * Version in manifest
+ * Description
+
  DONE java.lang.ClassCastException: android.view.View$BaseSavedState cannot be cast to org.dandelion.radiot.live.ui.ChatStreamView$SavedState
  DONE Problem with re-entrant scheduling
  DONE Chat translation goes available while application is paused - should restart

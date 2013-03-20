@@ -1,6 +1,5 @@
 package org.dandelion.radiot.live.chat.http;
 
-import android.util.Log;
 import org.dandelion.radiot.common.ui.Announcer;
 import org.dandelion.radiot.live.chat.ChatTranslation;
 import org.dandelion.radiot.live.chat.Message;
@@ -89,7 +88,6 @@ public class HttpTranslationEngine implements ChatTranslation, HttpChatRequest.E
     }
 
     private void setCurrentState(HttpTranslationState newState) {
-        Log.d("CHAT", "Changing state " + this.currentState.getClass().getSimpleName() + " -> " + newState.getClass().getSimpleName());
         this.currentState = newState;
     }
 
