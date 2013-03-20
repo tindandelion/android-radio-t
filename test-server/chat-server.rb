@@ -4,16 +4,21 @@ require 'faker'
 require 'pry'
 
 get '/data/jsonp' do
-  content_type 'application/json'
+  puts "*** Request received"
   binding.pry if pry?
-  puts "*** Received request, waiting..."
-  sleep 5
+  sleep 5 if sleep?
+
+  content_type 'application/json'
   msg_count = (request.params['mode'] == 'last') ? 10 : 5
   wrap_into_callback compose_chat_json(msg_count)
 end
 
 def pry?
   ENV['PRY']
+end
+
+def sleep?
+  ENV['SLEEP']
 end
 
 def wrap_into_callback(json)
