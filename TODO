@@ -15,17 +15,12 @@ Backlog:
    * New icon with ICS guidelines
 
 Version 1.7.1:
- * Problem with re-entrant scheduling
-   DONE Testing: pause/restart
-   DONE Testing: orientation change
-   DONE Testing: lock/unlock
-   DONE Testing: orientation change while locked
-   * Testing: orientation change while requesting
-   * Testing: locking/unlocking while requesting
-
- * Chat translation goes available while application is paused - should restart
- * java.lang.ClassCastException: android.view.View$BaseSavedState cannot be cast to org.dandelion.radiot.live.ui.ChatStreamView$SavedState
- * Find more about activity's 'singleTop' launch mode
+ * Remove Log messages
+ * Check all URLs
+ DONE java.lang.ClassCastException: android.view.View$BaseSavedState cannot be cast to org.dandelion.radiot.live.ui.ChatStreamView$SavedState
+ DONE Problem with re-entrant scheduling
+ DONE Chat translation goes available while application is paused - should restart
+ DONE Find more about activity's 'singleTop' launch mode
 
 Version 1.8:
  * Use Jabber to connect to chat

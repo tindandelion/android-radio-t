@@ -2,12 +2,14 @@ package org.dandelion.radiot.live.ui;
 
 import android.content.Context;
 import android.os.Build;
+import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.widget.ListView;
 
 public class ChatStreamView extends ListView {
     private static boolean useSmoothScroll = true;
+
     static {
         useSmoothScroll = Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO;
     }
@@ -54,6 +56,29 @@ public class ChatStreamView extends ListView {
 
         public SavedState(Parcelable superState) {
             super(superState);
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            super.writeToParcel(dest, flags);
+            dest.writeByte((byte) (atBottom ? 1 : 0));
+        }
+
+        @SuppressWarnings("UnusedDeclaration")
+        public static final Parcelable.Creator<SavedState> CREATOR
+                = new Parcelable.Creator<SavedState>() {
+            public SavedState createFromParcel(Parcel in) {
+                return new SavedState(in);
+            }
+
+            public SavedState[] newArray(int size) {
+                return new SavedState[size];
+            }
+        };
+
+        public SavedState(Parcel in) {
+            super(in);
+            atBottom = in.readByte() > 0;
         }
     }
 }
