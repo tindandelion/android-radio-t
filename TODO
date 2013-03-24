@@ -5,6 +5,9 @@ Backlog:
  * Chat translation:
      * Discard incorrect messages?
      * Different font sizes for tablets / phones
+ * Use Jabber to connect to chat
+ * Podcast list: Activity leak in PodcastSelectionHandler
+ * Podcast list: Better error explanation
 
  * Landscape orientation
    * Podcast list: Flickers when changing orientation (due to loading all stuff)
@@ -14,25 +17,12 @@ Backlog:
  * Android 4.0 UI
    * New icon with ICS guidelines
 
-Version 1.7.1:
- DONE Remove Log messages
- DONE Check all URLs
- * Version in manifest
- * Description
-
- DONE java.lang.ClassCastException: android.view.View$BaseSavedState cannot be cast to org.dandelion.radiot.live.ui.ChatStreamView$SavedState
- DONE Problem with re-entrant scheduling
- DONE Chat translation goes available while application is paused - should restart
- DONE Find more about activity's 'singleTop' launch mode
-
 Version 1.8:
- * Use Jabber to connect to chat
- * Follow links in chat
- * Lock screen when translating chat (?)
- * Podcast list: Activity leak in PodcastSelectionHandler
- * Podcast list: Better error explanation
- * Bug: ANR with MediaPlayer setDataSource()
-
+  * Podcast list: no flickering when orientation changes
+  * Analytics: how many people fail to see the chat?
+  * Chat: follow links in chat
+  * Chat: lock screen while translating
+  * Analytics: how many people are connecting to translation? How many of them succeed?
 
 * Debt:
  * Podcast type "audo/mpeg" appears in lots of places
