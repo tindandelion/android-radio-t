@@ -39,7 +39,7 @@
     <orderEntry type="module-library" scope="TEST">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/libs/test/junit-4.10.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/test/junit-4.11.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
