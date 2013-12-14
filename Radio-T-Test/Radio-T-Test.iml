@@ -30,7 +30,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/libs/robotium-solo-4.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/robotium-solo-4.3.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
