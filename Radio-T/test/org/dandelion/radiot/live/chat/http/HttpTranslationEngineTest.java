@@ -4,7 +4,6 @@ import org.dandelion.radiot.live.chat.Message;
 import org.dandelion.radiot.live.chat.MessageConsumer;
 import org.dandelion.radiot.live.chat.ProgressListener;
 import org.dandelion.radiot.live.schedule.DeterministicScheduler;
-import org.dandelion.radiot.robolectric.RadiotRobolectricRunner;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
@@ -13,6 +12,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -24,7 +25,8 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 @SuppressWarnings("unchecked")
-@RunWith(RadiotRobolectricRunner.class)
+@RunWith(RobolectricTestRunner.class)
+@Config(manifest = Config.NONE)
 public class HttpTranslationEngineTest {
     private final DeterministicScheduler scheduler  = new DeterministicScheduler();
     private final HttpChatClient chatClient = mock(HttpChatClient.class);
