@@ -1,3 +1,8 @@
+Version 1.8:
+  * Chat: Show current topic in Live Show screen
+  * Analytics: how many people fail to see the chat?
+  * Analytics: how many people are connecting to translation? How many of them succeed?
+
 Backlog:
  * Live show: graceful process termination
  * Downloading: Respect background data loading settings
@@ -8,21 +13,15 @@ Backlog:
  * Use Jabber to connect to chat
  * Podcast list: Activity leak in PodcastSelectionHandler
  * Podcast list: Better error explanation
-
+ * Podcast list: no flickering when orientation changes
+ * Chat: follow links in chat
+ * Chat: lock screen while translating
  * Landscape orientation
    * Podcast list: Flickers when changing orientation (due to loading all stuff)
    * Main screen: Tagline should show single-line if possible
-
  * User topics
  * Android 4.0 UI
    * New icon with ICS guidelines
-
-Version 1.8:
-  * Podcast list: no flickering when orientation changes
-  * Analytics: how many people fail to see the chat?
-  * Chat: follow links in chat
-  * Chat: lock screen while translating
-  * Analytics: how many people are connecting to translation? How many of them succeed?
 
 * Debt:
  * Podcast type "audo/mpeg" appears in lots of places
