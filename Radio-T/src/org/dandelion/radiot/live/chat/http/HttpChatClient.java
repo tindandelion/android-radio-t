@@ -29,7 +29,14 @@ public class HttpChatClient {
     }
 
     private String chatStreamUrl(String mode) {
+        if (mode.equals("last")) {
+            return lastRecordsUrl();
+        }
         return baseUrl + "/data/jsonp?mode=" + mode + "&recs=10";
+    }
+
+    private String lastRecordsUrl() {
+        return baseUrl + "/api/last/50";
     }
 
     private List<Message> parseMessages(String json) throws JSONException {

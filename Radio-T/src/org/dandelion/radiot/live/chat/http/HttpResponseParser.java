@@ -55,7 +55,7 @@ public class HttpResponseParser {
         JSONTokener tokener = new JSONTokener(source);
         tokener.skipTo('{');
         JSONObject json = new JSONObject(tokener);
-        return json.getJSONArray("records");
+        return json.getJSONArray("msgs");
     }
 
 }

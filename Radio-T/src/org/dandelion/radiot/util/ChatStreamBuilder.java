@@ -7,12 +7,8 @@ import org.json.JSONObject;
 public class ChatStreamBuilder {
     public static String chatStream(JSONArray messages) throws JSONException {
         JSONObject result = new JSONObject();
-        result.put("records", messages);
-        return wrapIntoCallback(result);
-    }
-
-    private static String wrapIntoCallback(JSONObject object) {
-        return String.format("callback_fn(%s);", object);
+        result.put("msgs", messages);
+        return result.toString();
     }
 
     public static JSONArray withMessages(String... msgs) throws JSONException {
