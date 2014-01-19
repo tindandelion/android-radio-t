@@ -24,7 +24,7 @@ public class ApacheHttpClient implements HttpClient {
     @Override
     public String getStringContent(String url) throws IOException {
         HttpEntity entity = executeRequestFor(url);
-        return EntityUtils.toString(entity);
+        return EntityUtils.toString(entity, "utf-8");
     }
 
     @Override
