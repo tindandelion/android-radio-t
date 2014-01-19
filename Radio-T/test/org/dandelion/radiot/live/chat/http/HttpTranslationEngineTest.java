@@ -54,7 +54,7 @@ public class HttpTranslationEngineTest {
     @Test
     public void whenDisconnected_onStart_startsConnecting() throws Exception {
         engine.disconnect();
-        when(chatClient.retrieveMessages("last")).thenAnswer(new Answer<Object>() {
+        when(chatClient.retrieveLastMessages()).thenAnswer(new Answer<Object>() {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 assertThat(engine, isInState("Connecting"));
@@ -64,7 +64,7 @@ public class HttpTranslationEngineTest {
 
         engine.start();
 
-        verify(chatClient).retrieveMessages("last");
+        verify(chatClient).retrieveLastMessages();
     }
 
     @Test
@@ -88,7 +88,7 @@ public class HttpTranslationEngineTest {
 
     @Test
     public void whenConnecting_onStart_switchesToConnectingStateWhileRetrievingMessages() throws Exception {
-        when(chatClient.retrieveMessages("last")).thenAnswer(new Answer<Object>() {
+        when(chatClient.retrieveLastMessages()).thenAnswer(new Answer<Object>() {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 assertThat(engine, isInState("Connecting"));
@@ -101,7 +101,7 @@ public class HttpTranslationEngineTest {
 
     @Test
     public void whenConnecting_onStop_switchesToPausedConnecting() throws Exception {
-        when(chatClient.retrieveMessages("last")).thenAnswer(new Answer<Object>() {
+        when(chatClient.retrieveLastMessages()).thenAnswer(new Answer<Object>() {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 engine.stop();
@@ -116,7 +116,7 @@ public class HttpTranslationEngineTest {
     public void whenConnecting_andPreviousNetworkRequestCompletes_feedsMessagesToConsumerAndGoesToListening() throws Exception {
         final List<Message> messages = messageList();
 
-        when(chatClient.retrieveMessages("last")).thenReturn(messages);
+        when(chatClient.retrieveLastMessages()).thenReturn(messages);
         engine.startConnecting();
 
         verify(consumer).processMessages(messages);
@@ -125,7 +125,7 @@ public class HttpTranslationEngineTest {
 
     @Test
     public void whenConnecting_andPreviousNetworkRequestFails_NotifiesListenerAndGoesToDisconnected() throws Exception {
-        when(chatClient.retrieveMessages("last")).thenThrow(IOException.class);
+        when(chatClient.retrieveLastMessages()).thenThrow(IOException.class);
 
         engine.startConnecting();
 
@@ -135,7 +135,7 @@ public class HttpTranslationEngineTest {
 
     @Test
     public void whenConnecting_andPollScheduleEventOccures_doesNothing() throws Exception {
-        when(chatClient.retrieveMessages("last")).thenAnswer(new Answer<Object>() {
+        when(chatClient.retrieveLastMessages()).thenAnswer(new Answer<Object>() {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 scheduler.performAction();
@@ -149,7 +149,7 @@ public class HttpTranslationEngineTest {
 
     @Test
     public void whenConnecting_notifiesListenerOfProgress() throws Exception {
-        when(chatClient.retrieveMessages("last")).thenAnswer(new Answer<Object>() {
+        when(chatClient.retrieveLastMessages()).thenAnswer(new Answer<Object>() {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 verify(listener).onConnecting();
@@ -231,11 +231,11 @@ public class HttpTranslationEngineTest {
         engine.startListening();
 
         List<Message> nextMessages = messageList();
-        when(chatClient.retrieveMessages("next")).thenReturn(nextMessages);
+        when(chatClient.retrieveNewMessages()).thenReturn(nextMessages);
 
         scheduler.performAction();
 
-        verify(chatClient).retrieveMessages("next");
+        verify(chatClient).retrieveNewMessages();
         verify(consumer).processMessages(nextMessages);
     }
 
@@ -251,7 +251,7 @@ public class HttpTranslationEngineTest {
     @Test
     public void whenListening_andNetworkRequestFails_notifiesListenerAndGoesDisconnected() throws Exception {
         engine.startListening();
-        when(chatClient.retrieveMessages("next")).thenThrow(IOException.class);
+        when(chatClient.retrieveNewMessages()).thenThrow(IOException.class);
 
         scheduler.performAction();
 
@@ -308,7 +308,7 @@ public class HttpTranslationEngineTest {
 
     @Test
     public void whenShutdownWhileStarting_SuppressAllFurtherNotifications() throws Exception {
-        when(chatClient.retrieveMessages("last")).then(new Answer<Object>() {
+        when(chatClient.retrieveLastMessages()).then(new Answer<Object>() {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 engine.shutdown();
@@ -324,7 +324,7 @@ public class HttpTranslationEngineTest {
 
     @Test
     public void whenShutdownWhileRefreshing_SuppressMessageConsuming() throws Exception {
-        when(chatClient.retrieveMessages("next")).then(new Answer<Object>() {
+        when(chatClient.retrieveNewMessages()).then(new Answer<Object>() {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 engine.shutdown();

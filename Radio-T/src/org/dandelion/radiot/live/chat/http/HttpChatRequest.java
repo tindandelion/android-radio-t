@@ -28,7 +28,11 @@ public class HttpChatRequest extends AsyncTask<Void, Void, Object> {
     @Override
     protected Object doInBackground(Void... params) {
         try {
-            return chatClient.retrieveMessages(mode);
+            if (mode.equals("last")) {
+                return chatClient.retrieveLastMessages();
+            } else {
+                return chatClient.retrieveNewMessages();
+            }
         } catch (Exception e) {
             return e;
         }

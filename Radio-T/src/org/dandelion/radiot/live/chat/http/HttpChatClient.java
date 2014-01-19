@@ -20,7 +20,15 @@ public class HttpChatClient {
         client.setReadTimeout(READ_TIMEOUT_MS);
     }
 
-    public List<Message> retrieveMessages(String mode) throws IOException, JSONException {
+    public List<Message> retrieveLastMessages() throws IOException, JSONException {
+        return retrieveMessages("last");
+    }
+
+    public List<Message> retrieveNewMessages() throws IOException, JSONException {
+        return retrieveMessages("next");
+    }
+
+    private List<Message> retrieveMessages(String mode) throws IOException, JSONException {
         return parseMessages(requestMessages(mode));
     }
 
