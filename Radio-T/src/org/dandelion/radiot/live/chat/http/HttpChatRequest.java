@@ -16,13 +16,15 @@ public class HttpChatRequest extends AsyncTask<Void, Void, Object> {
     private final HttpChatClient chatClient;
     private final ErrorListener errorListener;
     private final MessageConsumer messageConsumer;
-    private String mode;
+    private final String mode;
+    private final int seq;
 
-    protected HttpChatRequest(String mode, HttpChatClient chatClient, MessageConsumer messageConsumer, ErrorListener errorListener) {
+    protected HttpChatRequest(String mode, HttpChatClient chatClient, MessageConsumer messageConsumer, ErrorListener errorListener, int seq) {
         this.chatClient = chatClient;
         this.errorListener = errorListener;
         this.messageConsumer = messageConsumer;
         this.mode = mode;
+        this.seq = seq;
     }
 
     @Override
@@ -31,7 +33,7 @@ public class HttpChatRequest extends AsyncTask<Void, Void, Object> {
             if (mode.equals("last")) {
                 return chatClient.retrieveLastMessages();
             } else {
-                return chatClient.retrieveNewMessages();
+                return chatClient.retrieveNewMessages(seq);
             }
         } catch (Exception e) {
             return e;

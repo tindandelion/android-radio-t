@@ -21,30 +21,21 @@ public class HttpChatClient {
     }
 
     public List<Message> retrieveLastMessages() throws IOException, JSONException {
-        return retrieveMessages("last");
+        return parseMessages(requestLastMessages());
     }
 
-    public List<Message> retrieveNewMessages() throws IOException, JSONException {
-        return retrieveMessages("next");
+    public List<Message> retrieveNewMessages(int seq) throws IOException, JSONException {
+        return parseMessages(requestNewMessages(seq));
     }
 
-    private List<Message> retrieveMessages(String mode) throws IOException, JSONException {
-        return parseMessages(requestMessages(mode));
+    private String requestNewMessages(int seq) throws IOException {
+        String url = baseUrl + "/api/new/" + seq;
+        return client.getStringContent(url);
     }
 
-    private String requestMessages(String mode) throws IOException {
-        return client.getStringContent(chatStreamUrl(mode));
-    }
-
-    private String chatStreamUrl(String mode) {
-        if (mode.equals("last")) {
-            return lastRecordsUrl();
-        }
-        return baseUrl + "/data/jsonp?mode=" + mode + "&recs=10";
-    }
-
-    private String lastRecordsUrl() {
-        return baseUrl + "/api/last/50";
+    private String requestLastMessages() throws IOException {
+        String url = baseUrl + "/api/last/50";
+        return client.getStringContent(url);
     }
 
     private List<Message> parseMessages(String json) throws JSONException {
