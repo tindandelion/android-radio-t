@@ -19,12 +19,11 @@ public class LiveChatTranslationServer extends ResponsiveHttpServer {
     }
 
     public void hasReceivedInitialRequest() throws InterruptedException {
-        hasReceivedRequest("/data/jsonp", "mode=last&recs=10");
+        hasReceivedRequest("/api/last/50", "");
     }
 
-    public void hasReceivedContinuationRequest() throws InterruptedException {
-        String[] expectedCookie = new String[]{SESSION_COOKIE, SESSION_ID};
-        hasReceivedRequest("/data/jsonp", "mode=next&recs=10", expectedCookie);
+    public void hasReceivedContinuationRequest(int seq) throws InterruptedException {
+        hasReceivedRequest("/api/new/" + seq, "");
     }
 
     public void respondWithError() {

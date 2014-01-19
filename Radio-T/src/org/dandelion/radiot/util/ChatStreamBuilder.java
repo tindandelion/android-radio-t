@@ -5,33 +5,33 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class ChatStreamBuilder {
+
+    public static final String DEFAULT_TIMESTAMP = "Sat Dec 15 22:19:27 UTC 2012";
+
     public static String chatStream(JSONArray messages) throws JSONException {
         JSONObject result = new JSONObject();
         result.put("msgs", messages);
         return result.toString();
     }
 
-    public static JSONArray withMessages(String... msgs) throws JSONException {
-        JSONArray array = new JSONArray();
-        for (String msg : msgs) {
-            array.put(chatMessage("", msg, "Sat Dec 15 22:19:27 UTC 2012"));
-        }
-        return array;
-    }
-
-    public static JSONArray withMessages(JSONObject... messages) {
+    public static String chatStream(JSONObject... messages) throws JSONException {
         JSONArray array = new JSONArray();
         for (JSONObject msg : messages) {
             array.put(msg);
         }
-        return array;
+        return chatStream(array);
     }
 
-    public static JSONObject chatMessage(String sender, String body, String timestamp) throws JSONException {
+    public static JSONObject message(String sender, String body, String timestamp, int seq) throws JSONException {
         JSONObject message = new JSONObject();
         message.put("from", sender);
-        message.put("msg", body);
+        message.put("text", body);
         message.put("time", timestamp);
+        message.put("seq", seq);
         return message;
+    }
+
+    public static JSONObject message(int seq, String body) throws JSONException {
+        return message("", body, DEFAULT_TIMESTAMP, seq);
     }
 }

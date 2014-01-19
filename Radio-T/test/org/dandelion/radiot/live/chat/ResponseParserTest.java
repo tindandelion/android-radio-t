@@ -21,14 +21,14 @@ public class ResponseParserTest {
 
     @Test
     public void extractMessageList() throws Exception {
-        String strJson = chatStream(withMessages(
-                chatMessage("sender1", "Lorem ipsum", "Sat Dec 15 22:19:27 UTC 2012"),
-                chatMessage("sender2", "Dolor sit amet", "Sat Dec 15 00:15:27 UTC 2012"),
-                chatMessage("sender3","Consectur", "")));
+        String strJson = chatStream(
+                message("sender1", "Lorem ipsum", "Sat Dec 15 22:19:27 UTC 2012", 10),
+                message("sender2", "Dolor sit amet", "Sat Dec 15 00:15:27 UTC 2012", 11),
+                message("sender3", "Consectur", "", 12));
         List<Message> messages = HttpResponseParser.parse(strJson);
 
-        assertThat(messages, hasItem(new Message("sender1", "Lorem ipsum", "01:19")));
-        assertThat(messages, hasItem(new Message("sender2", "Dolor sit amet", "03:15")));
-        assertThat(messages, hasItem(new Message("sender3", "Consectur", "")));
+        assertThat(messages, hasItem(new Message("sender1", "Lorem ipsum", "01:19", 10)));
+        assertThat(messages, hasItem(new Message("sender2", "Dolor sit amet", "03:15", 11)));
+        assertThat(messages, hasItem(new Message("sender3", "Consectur", "", 12)));
     }
 }

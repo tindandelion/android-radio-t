@@ -37,8 +37,11 @@ public class HttpResponseParser {
     }
 
     private Message newMessage(JSONObject record) throws JSONException {
-        return new Message(record.getString("from"), record.getString("msg"),
-                formatTime(record.getString("time")));
+        return new Message(
+                record.getString("from"),
+                record.getString("text"),
+                formatTime(record.getString("time")),
+                record.getInt("seq"));
     }
 
     private String formatTime(String timestamp) {

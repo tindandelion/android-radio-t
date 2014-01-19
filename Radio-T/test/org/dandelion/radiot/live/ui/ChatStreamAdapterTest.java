@@ -39,7 +39,7 @@ public class ChatStreamAdapterTest {
         ArrayList<Message> result = new ArrayList<Message>(count);
         for (int i = 0; i < count; i++) {
             String str = Integer.toString(i);
-            result.add(new Message(str, "", ""));
+            result.add(new Message(str, "", "", 0));
         }
         return result;
     }
