@@ -24,10 +24,10 @@ public class HttpChatClient {
         return baseUrl + "/api/new/" + lastMessageSeq;
     }
 
-    public HttpChatClient(String baseUrl) {
-        this.baseUrl = baseUrl;
-        client = new ApacheHttpClient();
-        client.setReadTimeout(READ_TIMEOUT_MS);
+    public static HttpChatClient create(String baseUrl) {
+        ApacheHttpClient httpClient = new ApacheHttpClient();
+        httpClient.setReadTimeout(READ_TIMEOUT_MS);
+        return new HttpChatClient(baseUrl, httpClient);
     }
 
     public HttpChatClient(String baseUrl, HttpClient httpClient) {
