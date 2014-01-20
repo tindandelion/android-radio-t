@@ -20,6 +20,11 @@ public class HttpChatClient {
         client.setReadTimeout(READ_TIMEOUT_MS);
     }
 
+    public HttpChatClient(String baseUrl, HttpClient httpClient) {
+        this.baseUrl = baseUrl;
+        client = httpClient;
+    }
+
     public List<Message> retrieveLastMessages() throws IOException, JSONException {
         return parseMessages(requestLastMessages());
     }
@@ -34,7 +39,7 @@ public class HttpChatClient {
     }
 
     private String requestLastMessages() throws IOException {
-        String url = baseUrl + "/api/last/50";
+        String url = lastRecordsUrl(baseUrl);
         return client.getStringContent(url);
     }
 
@@ -44,5 +49,9 @@ public class HttpChatClient {
 
     public void shutdown() {
         client.shutdown();
+    }
+
+    public static String lastRecordsUrl(String baseUrl) {
+        return baseUrl + "/api/last/50";
     }
 }
