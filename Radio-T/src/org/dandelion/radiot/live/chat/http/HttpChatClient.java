@@ -8,6 +8,7 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.util.List;
 
+// TODO: Collapse retrieveLastMessages() and retrieveNewMessages() into a single call?
 public class HttpChatClient {
     private static final int READ_TIMEOUT_MS = 20 * 1000;
 
