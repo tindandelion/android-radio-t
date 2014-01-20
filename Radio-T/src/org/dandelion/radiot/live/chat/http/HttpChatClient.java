@@ -13,6 +13,7 @@ public class HttpChatClient {
 
     private final String baseUrl;
     private final HttpClient client;
+    private int lastMessageSeq = 0;
 
     public HttpChatClient(String baseUrl) {
         this.baseUrl = baseUrl;
@@ -44,7 +45,16 @@ public class HttpChatClient {
     }
 
     private List<Message> parseMessages(String json) throws JSONException {
-        return HttpResponseParser.parse(json);
+        List<Message> messages = HttpResponseParser.parse(json);
+        updateLastMessageSeq(messages);
+        return messages;
+    }
+
+    private void updateLastMessageSeq(List<Message> messages) {
+        if (messages.isEmpty()) return;
+
+        Message lastMessage = messages.get(messages.size() - 1);
+        lastMessageSeq = lastMessage.seq;
     }
 
     public void shutdown() {
@@ -53,5 +63,9 @@ public class HttpChatClient {
 
     public static String lastRecordsUrl(String baseUrl) {
         return baseUrl + "/api/last/50";
+    }
+
+    public int lastMessageSeq() {
+        return lastMessageSeq;
     }
 }

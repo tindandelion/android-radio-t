@@ -10,6 +10,7 @@ import java.util.List;
 
 import static org.dandelion.radiot.util.ChatStreamBuilder.chatStream;
 import static org.dandelion.radiot.util.ChatStreamBuilder.message;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
@@ -19,6 +20,7 @@ import static org.mockito.Mockito.when;
 
 public class HttpChatClientTest {
     private static final String CHAT_URL = "http://chat.test.com";
+
     private final HttpClient httpClient = mock(HttpClient.class);
     private final HttpChatClient client = new HttpChatClient(CHAT_URL, httpClient);
 
@@ -28,6 +30,7 @@ public class HttpChatClientTest {
 
         List<Message> messages = client.retrieveLastMessages();
         assertThat(messages, is(empty()));
+        assertThat(client.lastMessageSeq(), is(equalTo(0)));
     }
 
     @Test
@@ -43,6 +46,17 @@ public class HttpChatClientTest {
         assertThat(messages, hasItem(new Message("sender1", "Lorem ipsum", "01:19", 10)));
         assertThat(messages, hasItem(new Message("sender2", "Dolor sit amet", "03:15", 11)));
         assertThat(messages, hasItem(new Message("sender3", "Consectur", "", 12)));
+    }
+
+    @Test
+    public void whenRequestingLastMessages_recordsLastMessageSeq() throws Exception {
+        whenRequestingLastMessages(httpClient)
+                .thenReturn(chatStream(
+                        message(10, "message1"),
+                        message(11, "message2")));
+
+        client.retrieveLastMessages();
+        assertThat(client.lastMessageSeq(), is(equalTo(11)));
     }
 
     private OngoingStubbing<String> whenRequestingLastMessages(HttpClient httpClient) throws IOException {
