@@ -38,7 +38,7 @@ public class HttpChatClient {
         return parseMessages(requestLastMessages());
     }
 
-    public List<Message> retrieveNewMessages(int seq) throws IOException, JSONException {
+    public List<Message> retrieveNewMessages() throws IOException, JSONException {
         return parseMessages(requestNewMessages());
     }
 

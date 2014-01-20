@@ -231,11 +231,11 @@ public class HttpTranslationEngineTest {
         engine.startListening();
 
         List<Message> nextMessages = messageList();
-        when(chatClient.retrieveNewMessages(0)).thenReturn(nextMessages);
+        when(chatClient.retrieveNewMessages()).thenReturn(nextMessages);
 
         scheduler.performAction();
 
-        verify(chatClient).retrieveNewMessages(0);
+        verify(chatClient).retrieveNewMessages();
         verify(consumer).processMessages(nextMessages);
     }
 
@@ -251,7 +251,7 @@ public class HttpTranslationEngineTest {
     @Test
     public void whenListening_andNetworkRequestFails_notifiesListenerAndGoesDisconnected() throws Exception {
         engine.startListening();
-        when(chatClient.retrieveNewMessages(anyInt())).thenThrow(IOException.class);
+        when(chatClient.retrieveNewMessages()).thenThrow(IOException.class);
 
         scheduler.performAction();
 
@@ -324,7 +324,7 @@ public class HttpTranslationEngineTest {
 
     @Test
     public void whenShutdownWhileRefreshing_SuppressMessageConsuming() throws Exception {
-        when(chatClient.retrieveNewMessages(anyInt())).then(new Answer<Object>() {
+        when(chatClient.retrieveNewMessages()).then(new Answer<Object>() {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 engine.shutdown();

@@ -16,9 +16,7 @@ import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class HttpChatClientTest {
     private static final String CHAT_URL = "http://chat.test.com";
@@ -63,15 +61,14 @@ public class HttpChatClientTest {
 
     @Test
     public void whenRequestingNewMessages_usesLastMessageSeq() throws Exception {
-        whenRequestingLastMessages(httpClient)
-                .thenReturn(chatStream(message(10, "lorem ipsum")));
-
-        whenRequestingNewMessages(httpClient).thenReturn(chatStream());
+        whenRequestingLastMessages(httpClient).thenReturn(chatStream(message(10, "lorem ipsum")));
+        whenRequestingNewMessages(httpClient, 10).thenReturn(chatStream());
 
         client.retrieveLastMessages();
-        client.retrieveNewMessages(0);
+        client.retrieveNewMessages();
 
-        verify(httpClient);
+        verify(httpClient).getStringContent(HttpChatClient.lastRecordsUrl(CHAT_URL));
+        verify(httpClient).getStringContent(HttpChatClient.newRecordsUrl(CHAT_URL, 10));
     }
 
     @Test
@@ -79,18 +76,18 @@ public class HttpChatClientTest {
         whenRequestingLastMessages(httpClient)
                 .thenReturn(chatStream(message(10, "lorem ipsum")));
 
-        whenRequestingNewMessages(httpClient)
+        whenRequestingNewMessages(httpClient, 10)
                 .thenReturn(chatStream(message(11, "dolor sit amet")));
 
         client.retrieveLastMessages();
-        client.retrieveNewMessages(0);
+        client.retrieveNewMessages();
 
         assertThat(client.lastMessageSeq(), is(Matchers.equalTo(11)));
     }
 
-    private OngoingStubbing<String> whenRequestingNewMessages(HttpClient httpClient1) throws IOException {
-        String url = HttpChatClient.newRecordsUrl(CHAT_URL, 10);
-        return when(httpClient1.getStringContent(url));
+    private OngoingStubbing<String> whenRequestingNewMessages(HttpClient httpClient, int lastMessageSeq) throws IOException {
+        String url = HttpChatClient.newRecordsUrl(CHAT_URL, lastMessageSeq);
+        return when(httpClient.getStringContent(url));
     }
 
     private OngoingStubbing<String> whenRequestingLastMessages(HttpClient httpClient) throws IOException {

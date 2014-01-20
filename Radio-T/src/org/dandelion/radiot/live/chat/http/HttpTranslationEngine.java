@@ -84,8 +84,7 @@ public class HttpTranslationEngine implements ChatTranslation, HttpChatRequest.E
     }
 
     private void requestMessages(String mode) {
-        int seq = 0;
-        new HttpChatRequest(mode, chatClient, this, this, seq).execute();
+        new HttpChatRequest(mode, chatClient, this, this).execute();
     }
 
     private void setCurrentState(HttpTranslationState newState) {
