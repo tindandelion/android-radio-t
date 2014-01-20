@@ -15,6 +15,14 @@ public class HttpChatClient {
     private final HttpClient client;
     private int lastMessageSeq = 0;
 
+    public static String lastRecordsUrl(String baseUrl) {
+        return baseUrl + "/api/last/50";
+    }
+
+    public static String newRecordsUrl(String baseUrl, int lastMessageSeq) {
+        return baseUrl + "/api/new/" + lastMessageSeq;
+    }
+
     public HttpChatClient(String baseUrl) {
         this.baseUrl = baseUrl;
         client = new ApacheHttpClient();
@@ -31,11 +39,11 @@ public class HttpChatClient {
     }
 
     public List<Message> retrieveNewMessages(int seq) throws IOException, JSONException {
-        return parseMessages(requestNewMessages(seq));
+        return parseMessages(requestNewMessages());
     }
 
-    private String requestNewMessages(int seq) throws IOException {
-        String url = baseUrl + "/api/new/" + seq;
+    private String requestNewMessages() throws IOException {
+        String url = newRecordsUrl(baseUrl, lastMessageSeq);
         return client.getStringContent(url);
     }
 
@@ -61,9 +69,6 @@ public class HttpChatClient {
         client.shutdown();
     }
 
-    public static String lastRecordsUrl(String baseUrl) {
-        return baseUrl + "/api/last/50";
-    }
 
     public int lastMessageSeq() {
         return lastMessageSeq;

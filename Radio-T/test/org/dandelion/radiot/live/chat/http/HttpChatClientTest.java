@@ -2,6 +2,7 @@ package org.dandelion.radiot.live.chat.http;
 
 import org.dandelion.radiot.http.HttpClient;
 import org.dandelion.radiot.live.chat.Message;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.mockito.stubbing.OngoingStubbing;
 
@@ -16,6 +17,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class HttpChatClientTest {
@@ -57,6 +59,38 @@ public class HttpChatClientTest {
 
         client.retrieveLastMessages();
         assertThat(client.lastMessageSeq(), is(equalTo(11)));
+    }
+
+    @Test
+    public void whenRequestingNewMessages_usesLastMessageSeq() throws Exception {
+        whenRequestingLastMessages(httpClient)
+                .thenReturn(chatStream(message(10, "lorem ipsum")));
+
+        whenRequestingNewMessages(httpClient).thenReturn(chatStream());
+
+        client.retrieveLastMessages();
+        client.retrieveNewMessages(0);
+
+        verify(httpClient);
+    }
+
+    @Test
+    public void whenRequestingNewMessages_updatesLastMessageSeq() throws Exception {
+        whenRequestingLastMessages(httpClient)
+                .thenReturn(chatStream(message(10, "lorem ipsum")));
+
+        whenRequestingNewMessages(httpClient)
+                .thenReturn(chatStream(message(11, "dolor sit amet")));
+
+        client.retrieveLastMessages();
+        client.retrieveNewMessages(0);
+
+        assertThat(client.lastMessageSeq(), is(Matchers.equalTo(11)));
+    }
+
+    private OngoingStubbing<String> whenRequestingNewMessages(HttpClient httpClient1) throws IOException {
+        String url = HttpChatClient.newRecordsUrl(CHAT_URL, 10);
+        return when(httpClient1.getStringContent(url));
     }
 
     private OngoingStubbing<String> whenRequestingLastMessages(HttpClient httpClient) throws IOException {
