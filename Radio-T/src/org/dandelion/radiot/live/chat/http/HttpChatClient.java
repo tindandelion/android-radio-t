@@ -8,7 +8,6 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.util.List;
 
-// TODO: Collapse retrieveLastMessages() and retrieveNewMessages() into a single call?
 public class HttpChatClient {
     private static final int READ_TIMEOUT_MS = 20 * 1000;
 
@@ -35,22 +34,23 @@ public class HttpChatClient {
         client = httpClient;
     }
 
-    public List<Message> retrieveLastMessages() throws IOException, JSONException {
-        return parseMessages(requestLastMessages());
+    public List<Message> retrieveMessages() throws IOException, JSONException {
+        return parseMessages(requestMessages());
     }
 
-    public List<Message> retrieveNewMessages() throws IOException, JSONException {
-        return parseMessages(requestNewMessages());
-    }
+    private String requestMessages() throws IOException {
+        String url;
 
-    private String requestNewMessages() throws IOException {
-        String url = newRecordsUrl(baseUrl, lastMessageSeq);
+        if (isFirstTime()) {
+            url = lastRecordsUrl(baseUrl);
+        } else {
+            url = newRecordsUrl(baseUrl, lastMessageSeq);
+        }
         return client.getStringContent(url);
     }
 
-    private String requestLastMessages() throws IOException {
-        String url = lastRecordsUrl(baseUrl);
-        return client.getStringContent(url);
+    private boolean isFirstTime() {
+        return lastMessageSeq == 0;
     }
 
     private List<Message> parseMessages(String json) throws JSONException {
@@ -74,4 +74,5 @@ public class HttpChatClient {
     public int lastMessageSeq() {
         return lastMessageSeq;
     }
+
 }

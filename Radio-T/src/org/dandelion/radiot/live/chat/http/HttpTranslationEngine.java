@@ -72,7 +72,7 @@ public class HttpTranslationEngine implements ChatTranslation, HttpChatRequest.E
 
     @Override
     public void performAction() {
-        requestMessages("next");
+        requestMessages();
     }
 
     public String currentState() {
@@ -83,8 +83,8 @@ public class HttpTranslationEngine implements ChatTranslation, HttpChatRequest.E
         setCurrentState(new HttpTranslationState.Disconnected(this));
     }
 
-    private void requestMessages(String mode) {
-        new HttpChatRequest(mode, chatClient, this, this).execute();
+    private void requestMessages() {
+        new HttpChatRequest(chatClient, this, this).execute();
     }
 
     private void setCurrentState(HttpTranslationState newState) {
@@ -93,7 +93,7 @@ public class HttpTranslationEngine implements ChatTranslation, HttpChatRequest.E
 
     public void startConnecting() {
         switchToConnecting();
-        requestMessages("last");
+        requestMessages();
     }
 
     private void switchToConnecting() {

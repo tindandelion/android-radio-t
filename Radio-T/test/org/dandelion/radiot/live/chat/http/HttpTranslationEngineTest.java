@@ -7,11 +7,13 @@ import org.dandelion.radiot.live.schedule.DeterministicScheduler;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+import org.json.JSONException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
+import org.mockito.stubbing.OngoingStubbing;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
@@ -54,17 +56,16 @@ public class HttpTranslationEngineTest {
     @Test
     public void whenDisconnected_onStart_startsConnecting() throws Exception {
         engine.disconnect();
-        when(chatClient.retrieveLastMessages()).thenAnswer(new Answer<Object>() {
+        whileRetrievingMessagesDo(new Runnable() {
             @Override
-            public Object answer(InvocationOnMock invocation) throws Throwable {
+            public void run() {
                 assertThat(engine, isInState("Connecting"));
-                return messageList();
             }
         });
 
         engine.start();
 
-        verify(chatClient).retrieveLastMessages();
+        verify(chatClient).retrieveMessages();
     }
 
     @Test
@@ -88,11 +89,10 @@ public class HttpTranslationEngineTest {
 
     @Test
     public void whenConnecting_onStart_switchesToConnectingStateWhileRetrievingMessages() throws Exception {
-        when(chatClient.retrieveLastMessages()).thenAnswer(new Answer<Object>() {
+        whileRetrievingMessagesDo(new Runnable() {
             @Override
-            public Object answer(InvocationOnMock invocation) throws Throwable {
+            public void run() {
                 assertThat(engine, isInState("Connecting"));
-                return messageList();
             }
         });
 
@@ -101,12 +101,11 @@ public class HttpTranslationEngineTest {
 
     @Test
     public void whenConnecting_onStop_switchesToPausedConnecting() throws Exception {
-        when(chatClient.retrieveLastMessages()).thenAnswer(new Answer<Object>() {
+        whileRetrievingMessagesDo(new Runnable() {
             @Override
-            public Object answer(InvocationOnMock invocation) throws Throwable {
+            public void run() {
                 engine.stop();
                 assertThat(engine, isInState("PausedConnecting"));
-                return messageList();
             }
         });
         engine.start();
@@ -116,7 +115,7 @@ public class HttpTranslationEngineTest {
     public void whenConnecting_andPreviousNetworkRequestCompletes_feedsMessagesToConsumerAndGoesToListening() throws Exception {
         final List<Message> messages = messageList();
 
-        when(chatClient.retrieveLastMessages()).thenReturn(messages);
+        when(chatClient.retrieveMessages()).thenReturn(messages);
         engine.startConnecting();
 
         verify(consumer).processMessages(messages);
@@ -125,7 +124,7 @@ public class HttpTranslationEngineTest {
 
     @Test
     public void whenConnecting_andPreviousNetworkRequestFails_NotifiesListenerAndGoesToDisconnected() throws Exception {
-        when(chatClient.retrieveLastMessages()).thenThrow(IOException.class);
+        whenRetrievingMessages().thenThrow(IOException.class);
 
         engine.startConnecting();
 
@@ -135,27 +134,27 @@ public class HttpTranslationEngineTest {
 
     @Test
     public void whenConnecting_andPollScheduleEventOccures_doesNothing() throws Exception {
-        when(chatClient.retrieveLastMessages()).thenAnswer(new Answer<Object>() {
+        whileRetrievingMessagesDo(new Runnable() {
             @Override
-            public Object answer(InvocationOnMock invocation) throws Throwable {
+            public void run() {
                 scheduler.performAction();
                 assertFalse(scheduler.isScheduled());
-                return messageList();
             }
         });
 
         engine.startConnecting();
     }
 
+
     @Test
     public void whenConnecting_notifiesListenerOfProgress() throws Exception {
-        when(chatClient.retrieveLastMessages()).thenAnswer(new Answer<Object>() {
+        whileRetrievingMessagesDo(new Runnable() {
             @Override
-            public Object answer(InvocationOnMock invocation) throws Throwable {
+            public void run() {
                 verify(listener).onConnecting();
-                return null;
             }
         });
+
         engine.start();
 
         verify(listener).onConnected();
@@ -180,7 +179,7 @@ public class HttpTranslationEngineTest {
     @Test
     public void whenPausedConnecting_andPreviousNetworkRequestCompletes_notifiesListenerAndGoesToPausedListening() throws Exception {
         engine.pauseConnecting();
-        engine.processMessages(Collections.<Message>emptyList());
+        engine.processMessages(messageList());
 
         verify(listener).onConnected();
         assertThat(engine, isInState("PausedListening"));
@@ -231,11 +230,11 @@ public class HttpTranslationEngineTest {
         engine.startListening();
 
         List<Message> nextMessages = messageList();
-        when(chatClient.retrieveNewMessages()).thenReturn(nextMessages);
+        whenRetrievingMessages().thenReturn(nextMessages);
 
         scheduler.performAction();
 
-        verify(chatClient).retrieveNewMessages();
+        verify(chatClient).retrieveMessages();
         verify(consumer).processMessages(nextMessages);
     }
 
@@ -251,7 +250,7 @@ public class HttpTranslationEngineTest {
     @Test
     public void whenListening_andNetworkRequestFails_notifiesListenerAndGoesDisconnected() throws Exception {
         engine.startListening();
-        when(chatClient.retrieveNewMessages()).thenThrow(IOException.class);
+        whenRetrievingMessages().thenThrow(IOException.class);
 
         scheduler.performAction();
 
@@ -308,15 +307,15 @@ public class HttpTranslationEngineTest {
 
     @Test
     public void whenShutdownWhileStarting_SuppressAllFurtherNotifications() throws Exception {
-        when(chatClient.retrieveLastMessages()).then(new Answer<Object>() {
+        whileRetrievingMessagesDo(new Runnable() {
             @Override
-            public Object answer(InvocationOnMock invocation) throws Throwable {
+            public void run() {
                 engine.shutdown();
-                return messageList();
             }
         });
 
         engine.startConnecting();
+
         verify(listener, never()).onConnected();
         verify(listener, never()).onError();
         verify(consumer, never()).processMessages(anyList());
@@ -324,11 +323,10 @@ public class HttpTranslationEngineTest {
 
     @Test
     public void whenShutdownWhileRefreshing_SuppressMessageConsuming() throws Exception {
-        when(chatClient.retrieveNewMessages()).then(new Answer<Object>() {
+        whileRetrievingMessagesDo(new Runnable() {
             @Override
-            public Object answer(InvocationOnMock invocation) throws Throwable {
+            public void run() {
                 engine.shutdown();
-                return messageList();
             }
         });
 
@@ -337,7 +335,6 @@ public class HttpTranslationEngineTest {
 
         verify(consumer, never()).processMessages(anyList());
     }
-
 
     @Before
     public void setUp() throws Exception {
@@ -368,4 +365,17 @@ public class HttpTranslationEngineTest {
         return Collections.emptyList();
     }
 
+    private OngoingStubbing<List<Message>> whenRetrievingMessages() throws IOException, JSONException {
+        return when(chatClient.retrieveMessages());
+    }
+
+    private void whileRetrievingMessagesDo(final Runnable action) throws IOException, JSONException {
+        whenRetrievingMessages().thenAnswer(new Answer<Object>() {
+            @Override
+            public Object answer(InvocationOnMock invocation) throws Throwable {
+                action.run();
+                return messageList();
+            }
+        });
+    }
 }
