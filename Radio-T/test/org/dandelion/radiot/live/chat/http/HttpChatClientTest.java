@@ -10,7 +10,6 @@ import java.util.List;
 
 import static org.dandelion.radiot.util.ChatStreamBuilder.chatStream;
 import static org.dandelion.radiot.util.ChatStreamBuilder.message;
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
@@ -38,7 +37,6 @@ public class HttpChatClientTest {
 
         List<Message> messages = client.retrieveMessages();
         assertThat(messages, is(empty()));
-        assertThat(client.lastMessageSeq(), is(equalTo(0)));
     }
 
     @Test

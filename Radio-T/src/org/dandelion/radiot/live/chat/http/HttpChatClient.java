@@ -69,10 +69,4 @@ public class HttpChatClient {
     public void shutdown() {
         client.shutdown();
     }
-
-
-    public int lastMessageSeq() {
-        return lastMessageSeq;
-    }
-
 }
