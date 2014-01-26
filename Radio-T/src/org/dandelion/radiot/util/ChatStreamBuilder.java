@@ -25,7 +25,7 @@ public class ChatStreamBuilder {
     public static JSONObject message(String sender, String body, String timestamp, int seq) throws JSONException {
         JSONObject message = new JSONObject();
         message.put("from", sender);
-        message.put("text", body);
+        message.put("msg", body);
         message.put("time", timestamp);
         message.put("seq", seq);
         return message;
