@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-// TODO: Move it closer to HttpChatClient?
 public class HttpResponseParser {
     private final String source;
     private static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm");
