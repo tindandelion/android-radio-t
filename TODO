@@ -1,7 +1,7 @@
 Version 1.8:
-  * Chat: Show current topic in Live Show screen
-  * Analytics: how many people fail to see the chat?
-  * Analytics: how many people are connecting to translation? How many of them succeed?
+ * Respect Android 4.3 foreground notification rules
+ * Chat: follow links in chat
+ * Gradle integration
 
 Backlog:
  * Live show: graceful process termination
@@ -13,9 +13,8 @@ Backlog:
  * Use Jabber to connect to chat
  * Podcast list: Activity leak in PodcastSelectionHandler
  * Podcast list: Better error explanation
- * Podcast list: no flickering when orientation changes
- * Chat: follow links in chat
  * Chat: lock screen while translating
+ * Chat: Show current topic in Live Show screen
  * Landscape orientation
    * Podcast list: Flickers when changing orientation (due to loading all stuff)
    * Main screen: Tagline should show single-line if possible
