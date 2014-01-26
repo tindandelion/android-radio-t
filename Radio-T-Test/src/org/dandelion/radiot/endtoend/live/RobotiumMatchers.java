@@ -1,6 +1,6 @@
 package org.dandelion.radiot.endtoend.live;
 
-import com.jayway.android.robotium.solo.Solo;
+import com.robotium.solo.Solo;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;

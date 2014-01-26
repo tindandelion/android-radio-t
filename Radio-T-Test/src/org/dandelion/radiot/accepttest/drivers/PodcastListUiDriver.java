@@ -2,7 +2,7 @@ package org.dandelion.radiot.accepttest.drivers;
 
 import android.app.Instrumentation;
 import android.widget.ListAdapter;
-import com.jayway.android.robotium.solo.Solo;
+import com.robotium.solo.Solo;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
 import org.dandelion.radiot.podcasts.ui.PodcastVisual;

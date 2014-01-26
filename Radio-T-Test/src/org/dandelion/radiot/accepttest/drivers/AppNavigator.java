@@ -1,13 +1,13 @@
 package org.dandelion.radiot.accepttest.drivers;
 
 import android.os.Build;
+import com.robotium.solo.Solo;
 import org.dandelion.radiot.home_screen.AboutAppActivity;
 import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
 import org.dandelion.radiot.home_screen.HomeScreenActivity;
 import android.app.Activity;
 import android.app.Instrumentation;
 
-import com.jayway.android.robotium.solo.Solo;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;

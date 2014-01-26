@@ -2,7 +2,7 @@ package org.dandelion.radiot.endtoend.live.helpers;
 
 import android.app.Activity;
 import android.app.Instrumentation;
-import com.jayway.android.robotium.solo.Solo;
+import com.robotium.solo.Solo;
 
 import static junit.framework.Assert.assertTrue;
 

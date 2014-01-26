@@ -1,7 +1,7 @@
 package org.dandelion.radiot.endtoend.podcasts.helpers;
 
 import android.app.Activity;
-import com.jayway.android.robotium.solo.Solo;
+import com.robotium.solo.Solo;
 import org.dandelion.radiot.R;
 import android.app.Instrumentation;
 import android.view.View;

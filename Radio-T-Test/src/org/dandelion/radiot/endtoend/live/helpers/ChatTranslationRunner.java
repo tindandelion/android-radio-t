@@ -1,7 +1,7 @@
 package org.dandelion.radiot.endtoend.live.helpers;
 
 import android.app.Instrumentation;
-import com.jayway.android.robotium.solo.Solo;
+import com.robotium.solo.Solo;
 import org.dandelion.radiot.live.schedule.DeterministicScheduler;
 import org.dandelion.radiot.live.ui.LiveShowActivity;
 
