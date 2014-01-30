@@ -2,6 +2,7 @@ package org.dandelion.radiot.endtoend.live;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
@@ -90,7 +91,7 @@ public class LiveShowPlaybackTest extends
                     }
 
                     @Override
-                    public LiveShowStateListener createStatusDisplayer(Context context) {
+                    public LiveShowStateListener createStatusDisplayer(Service service) {
                         return statusDisplayer;
                     }
                 });

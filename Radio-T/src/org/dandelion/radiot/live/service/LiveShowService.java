@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.live.core.*;
-import org.dandelion.radiot.util.IconNote;
 
 public class LiveShowService extends WakefulService implements PlayerActivityListener {
     private static final String TAG = LiveShowService.class.getName();
@@ -46,7 +45,7 @@ public class LiveShowService extends WakefulService implements PlayerActivityLis
     }
 
     private void createVisual() {
-        statusDisplayer = app().createStatusDisplayer(this.getApplicationContext());
+        statusDisplayer = app().createStatusDisplayer(this);
         stateHolder().addListener(statusDisplayer);
     }
 
@@ -88,8 +87,6 @@ public class LiveShowService extends WakefulService implements PlayerActivityLis
 
     @Override
     public void onActivated() {
-        IconNote note = app().createForegroundNote(this);
-        startForeground(note.id(), note.build());
         networkLock.acquire();
     }
 
