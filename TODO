@@ -1,7 +1,10 @@
 Version 1.8:
- * Respect Android 4.3 foreground notification rules
- * Chat: follow links in chat
  * Gradle integration
+   * Build and test all in one click
+
+ * Live show: Control playback from the notification view
+ DONE Respect Android 4.3 foreground notification rules
+ DONE Chat: follow links in chat
 
 Backlog:
  * Live show: graceful process termination
@@ -25,9 +28,6 @@ Backlog:
 * Debt:
  * Podcast type "audo/mpeg" appears in lots of places
  * Duplication between playback start from podcast list and from download notification
-
-Development:
- * Build and test all in one click
 
 Notes:
  * Audio stream url: http://listen.radionomy.com/radio-mozart
