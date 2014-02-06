@@ -1,9 +1,11 @@
 Version 1.8:
- * Gradle integration
-   * Build and test all in one click
-
+ PROGRESS Respect Android 4.3 foreground notification rules
+   * Test the behaviour on previous Android versions:
+     - Make a list of versions
  * Live show: Control playback from the notification view
- DONE Respect Android 4.3 foreground notification rules
+
+ DONE Build and test all in one click
+   - Use Idea's dependent tasks for that
  DONE Chat: follow links in chat
 
 Backlog:
@@ -24,6 +26,7 @@ Backlog:
  * User topics
  * Android 4.0 UI
    * New icon with ICS guidelines
+ * Gradle integration
 
 * Debt:
  * Podcast type "audo/mpeg" appears in lots of places
