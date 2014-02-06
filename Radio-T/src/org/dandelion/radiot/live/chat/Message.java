@@ -23,6 +23,7 @@ public class Message {
                 '}';
     }
 
+    @SuppressWarnings("RedundantIfStatement")
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -33,7 +34,6 @@ public class Message {
         if (seq != message.seq) return false;
         if (body != null ? !body.equals(message.body) : message.body != null) return false;
         if (sender != null ? !sender.equals(message.sender) : message.sender != null) return false;
-        if (time != null ? !time.equals(message.time) : message.time != null) return false;
 
         return true;
     }
