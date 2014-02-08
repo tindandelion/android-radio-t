@@ -1,7 +1,10 @@
 Version 1.8:
  PROGRESS Respect Android 4.3 foreground notification rules
    * Test the behaviour on previous Android versions:
-     - Make a list of versions
+     - 4.0 - disappears
+     - 4.1 - disappears
+     - 4.4 - OK
+     - 2.3 - disappears
  * Live show: Control playback from the notification view
 
  DONE Build and test all in one click

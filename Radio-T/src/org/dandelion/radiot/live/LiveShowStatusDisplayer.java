@@ -1,6 +1,7 @@
 package org.dandelion.radiot.live;
 
 import android.app.Service;
+import android.content.Context;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.live.core.LiveShowState;
 import org.dandelion.radiot.live.core.LiveShowStateListener;
@@ -20,7 +21,8 @@ public class LiveShowStatusDisplayer implements LiveShowStateListener {
     }
 
     private IconNote createNote() {
-        return new IconNote(service, LIVE_NOTE_ID) {{
+        Context appContext = service.getApplicationContext();
+        return new IconNote(appContext, LIVE_NOTE_ID) {{
             setTitle(context.getString(R.string.app_name));
             setIcon(R.drawable.stat_live);
             showsActivity(LiveShowActivity.class);
