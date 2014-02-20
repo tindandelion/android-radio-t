@@ -14,7 +14,8 @@ public class LiveShowApp {
     private static final String LIVE_SHOW_URL = "http://stream.radio-t.com/stream";
     // private static final String LIVE_SHOW_URL = "http://172.20.10.5:4567/stream";
     private LiveShowStateHolder stateHolder = LiveShowStateHolder.initial();
-    private static final int LIVE_NOTE_ID = 1;
+    private static final int FOREGROUND_NOTE_ID = 1;
+    private static final int BACKGROUND_NOTE_ID = 2;
 
     public static LiveShowApp getInstance() {
         return instance;
@@ -42,12 +43,21 @@ public class LiveShowApp {
 
     public LiveShowStateListener createStatusDisplayer(Context context) {
         String[] labels = context.getResources().getStringArray(R.array.live_show_notification_labels);
-        IconNote note = createNotification(context);
-        return new NotificationStatusDisplayer(note, labels);
+        IconNote foregroundNote = createForegroundNotification(context);
+        IconNote backgroundNote = createBackgroundNotification(context);
+        return new NotificationStatusDisplayer(foregroundNote, backgroundNote, labels);
     }
 
-    public IconNote createNotification(final Context context) {
-        return new IconNote(context.getApplicationContext(), LIVE_NOTE_ID)
+    public IconNote createForegroundNotification(final Context context) {
+        return createNotification(context, FOREGROUND_NOTE_ID);
+    }
+
+    public IconNote createBackgroundNotification(final Context context) {
+        return createNotification(context, BACKGROUND_NOTE_ID);
+    }
+
+    private IconNote createNotification(Context context, int id) {
+        return new IconNote(context.getApplicationContext(), id)
                 .setTitle(context.getString(R.string.app_name))
                 .setIcon(R.drawable.stat_live)
                 .showsActivity(LiveShowActivity.class)
