@@ -12,7 +12,7 @@ import org.dandelion.radiot.util.IconNote;
 public class LiveShowApp {
     private static LiveShowApp instance = new LiveShowApp();
     private static final String LIVE_SHOW_URL = "http://stream.radio-t.com/stream";
-    // private static final String LIVE_SHOW_URL = "http://172.20.10.5:4567/stream";
+    // private static final String LIVE_SHOW_URL = "http://10.0.1.2:4567/stream";
     private LiveShowStateHolder stateHolder = LiveShowStateHolder.initial();
     private static final int FOREGROUND_NOTE_ID = 1;
     private static final int BACKGROUND_NOTE_ID = 2;
