@@ -88,7 +88,7 @@ public class LiveShowService extends WakefulService implements PlayerActivityLis
 
     @Override
     public void onActivated() {
-        IconNote note = app().createForegroundNote(this);
+        IconNote note = app().createNotification(this);
         startForeground(note.id(), note.build());
         networkLock.acquire();
     }

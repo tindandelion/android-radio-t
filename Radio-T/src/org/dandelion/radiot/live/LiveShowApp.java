@@ -31,7 +31,7 @@ public class LiveShowApp {
     public AudioStream createAudioStream() {
         return new MediaPlayerStream(LIVE_SHOW_URL);
     }
-    
+
     public LiveShowClient createClient(Context context) {
         return new LiveShowClient(context, stateHolder);
     }
@@ -42,21 +42,16 @@ public class LiveShowApp {
 
     public LiveShowStateListener createStatusDisplayer(Context context) {
         String[] labels = context.getResources().getStringArray(R.array.live_show_notification_labels);
-        IconNote note = createNote(context);
+        IconNote note = createNotification(context);
         return new NotificationStatusDisplayer(note, labels);
     }
 
-    public IconNote createNote(final Context context) {
-        return new IconNote(context.getApplicationContext(), LIVE_NOTE_ID) {{
-            setTitle(context.getString(R.string.app_name));
-            setIcon(R.drawable.stat_live);
-            showsActivity(LiveShowActivity.class);
-            beOngoing();
-        }};
-    }
-
-    public IconNote createForegroundNote(final Context context) {
-        return createNote(context);
+    public IconNote createNotification(final Context context) {
+        return new IconNote(context.getApplicationContext(), LIVE_NOTE_ID)
+                .setTitle(context.getString(R.string.app_name))
+                .setIcon(R.drawable.stat_live)
+                .showsActivity(LiveShowActivity.class)
+                .beOngoing();
     }
 
     public Lockable createNetworkLock(Context context) {
