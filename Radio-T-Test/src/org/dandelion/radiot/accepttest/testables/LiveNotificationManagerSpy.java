@@ -1,7 +1,7 @@
 package org.dandelion.radiot.accepttest.testables;
 
 import org.dandelion.radiot.helpers.async.NotificationTrace;
-import org.dandelion.radiot.live.LiveNotificationManager;
+import org.dandelion.radiot.live.ui.LiveNotificationManager;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 

@@ -8,7 +8,7 @@ import android.test.ActivityInstrumentationTestCase2;
 import org.dandelion.radiot.accepttest.testables.LiveNotificationManagerSpy;
 import org.dandelion.radiot.endtoend.live.helpers.LiveShowRunner;
 import org.dandelion.radiot.endtoend.live.helpers.LiveShowServer;
-import org.dandelion.radiot.live.LiveNotificationManager;
+import org.dandelion.radiot.live.ui.LiveNotificationManager;
 import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.live.MediaPlayerStream;
 import org.dandelion.radiot.live.chat.ProgressListener;

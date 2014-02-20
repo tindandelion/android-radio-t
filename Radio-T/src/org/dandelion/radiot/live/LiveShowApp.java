@@ -4,8 +4,8 @@ import android.content.Context;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.live.core.AudioStream;
 import org.dandelion.radiot.live.core.LiveShowStateHolder;
-import org.dandelion.radiot.live.core.LiveShowStateListener;
 import org.dandelion.radiot.live.service.Lockable;
+import org.dandelion.radiot.live.ui.LiveNotificationManager;
 import org.dandelion.radiot.live.ui.LiveShowActivity;
 import org.dandelion.radiot.util.IconNote;
 
@@ -39,12 +39,6 @@ public class LiveShowApp {
 
     public LiveShowStateHolder stateHolder() {
         return stateHolder;
-    }
-
-    public LiveShowStateListener createStatusDisplayer(Context context) {
-        String[] labels = context.getResources().getStringArray(R.array.live_show_notification_labels);
-        LiveNotificationManager notificationManager = createNotificationManager(context);
-        return new NotificationStatusDisplayer(notificationManager, labels);
     }
 
     public LiveNotificationManager createNotificationManager(Context context) {

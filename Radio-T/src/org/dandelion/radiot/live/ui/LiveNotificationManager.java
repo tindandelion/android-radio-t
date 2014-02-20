@@ -1,4 +1,4 @@
-package org.dandelion.radiot.live;
+package org.dandelion.radiot.live.ui;
 
 import org.dandelion.radiot.util.IconNote;
 

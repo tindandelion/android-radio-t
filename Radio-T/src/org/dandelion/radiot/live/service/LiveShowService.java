@@ -2,8 +2,10 @@ package org.dandelion.radiot.live.service;
 
 import android.content.Context;
 import android.content.Intent;
+import org.dandelion.radiot.R;
 import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.live.core.*;
+import org.dandelion.radiot.live.ui.LiveNotificationManager;
 import org.dandelion.radiot.util.IconNote;
 
 public class LiveShowService extends WakefulService implements PlayerActivityListener {
@@ -46,7 +48,9 @@ public class LiveShowService extends WakefulService implements PlayerActivityLis
     }
 
     private void createVisual() {
-        statusDisplayer = app().createStatusDisplayer(this.getApplicationContext());
+        LiveNotificationManager notificationManager = app().createNotificationManager(this);
+        String[] statusLables = getResources().getStringArray(R.array.live_show_notification_labels);
+        statusDisplayer = new NotificationStatusDisplayer(notificationManager, statusLables);
         stateHolder().addListenerSilently(statusDisplayer);
     }
 
@@ -96,5 +100,33 @@ public class LiveShowService extends WakefulService implements PlayerActivityLis
     @Override
     public void onDeactivated() {
         stopSelf();
+    }
+
+    public static class NotificationStatusDisplayer implements LiveShowStateListener {
+        private final String[] labels;
+        private final LiveNotificationManager notificationManager;
+
+        public NotificationStatusDisplayer(LiveNotificationManager notificationManager, String[] stateLabels) {
+            this.labels = stateLabels;
+            this.notificationManager = notificationManager;
+        }
+
+        private String textForState(LiveShowState state) {
+            return labels[state.ordinal()-1];
+        }
+
+        @Override
+        public void onStateChanged(LiveShowState state, long timestamp) {
+            if (LiveShowState.isIdle(state)) {
+                notificationManager.hideNotifications();
+            } else {
+                String text = textForState(state);
+                if (LiveShowState.isActive(state)) {
+                    notificationManager.showForegroundNote(text);
+                } else {
+                    notificationManager.showBackgroundNote(text);
+                }
+            }
+        }
     }
 }
