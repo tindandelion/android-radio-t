@@ -4,19 +4,18 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Context;
 import android.content.Intent;
-import org.dandelion.radiot.accepttest.testables.FakeStatusDisplayer;
-import org.dandelion.radiot.live.core.LiveShowState;
+import org.dandelion.radiot.accepttest.testables.LiveNotificationManagerSpy;
 import org.dandelion.radiot.live.service.LiveShowService;
 
 public class LiveShowRunner {
     private final LiveShowUiDriver uiDriver;
     private final Context context;
-    private final FakeStatusDisplayer statusNotifier;
+    private final LiveNotificationManagerSpy notificationManager;
 
-    public LiveShowRunner(Instrumentation inst, Activity activity, FakeStatusDisplayer statusNotifier) {
+    public LiveShowRunner(Instrumentation inst, Activity activity, LiveNotificationManagerSpy notificationManager) {
         this.uiDriver = new LiveShowUiDriver(inst, activity);
         this.context = inst.getTargetContext();
-        this.statusNotifier = statusNotifier;
+        this.notificationManager = notificationManager;
     }
 
     public void finish() {
@@ -35,7 +34,7 @@ public class LiveShowRunner {
 
     public void showsTranslationInProgress() throws InterruptedException {
         uiDriver.showsTranslationStatus("Трансляция");
-        statusNotifier.showsStatusFor(LiveShowState.Playing);
+        notificationManager.showsForegroundNotification("Прямой эфир: Идет трансляция");
     }
 
     public void stopTranslation() {
@@ -44,14 +43,11 @@ public class LiveShowRunner {
 
     public void showsTranslationStopped() throws InterruptedException {
         uiDriver.showsTranslationStatus("Остановлено");
-        statusNotifier.showsStatusFor(LiveShowState.Idle);
+        notificationManager.notificationsHidden();
     }
 
-    public void showsWaiting() {
+    public void showsWaiting() throws InterruptedException {
         uiDriver.showsTranslationStatus("Ожидание");
-    }
-
-    public void showsStopped() {
-        uiDriver.showsTranslationStatus("Остановлено");
+        notificationManager.showsBackgroundNotification("Прямой эфир: Ожидание");
     }
 }

@@ -43,9 +43,14 @@ public class LiveShowApp {
 
     public LiveShowStateListener createStatusDisplayer(Context context) {
         String[] labels = context.getResources().getStringArray(R.array.live_show_notification_labels);
+        LiveNotificationManager notificationManager = createNotificationManager(context);
+        return new NotificationStatusDisplayer(notificationManager, labels);
+    }
+
+    public LiveNotificationManager createNotificationManager(Context context) {
         IconNote foregroundNote = createForegroundNotification(context);
         IconNote backgroundNote = createBackgroundNotification(context);
-        return new NotificationStatusDisplayer(foregroundNote, backgroundNote, labels);
+        return new LiveNotificationManager(foregroundNote, backgroundNote);
     }
 
     public IconNote createForegroundNotification(final Context context) {

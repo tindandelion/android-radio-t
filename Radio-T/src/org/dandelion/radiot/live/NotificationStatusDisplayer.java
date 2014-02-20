@@ -2,17 +2,14 @@ package org.dandelion.radiot.live;
 
 import org.dandelion.radiot.live.core.LiveShowState;
 import org.dandelion.radiot.live.core.LiveShowStateListener;
-import org.dandelion.radiot.util.IconNote;
 
 public class NotificationStatusDisplayer implements LiveShowStateListener {
-    private final IconNote backgroundNote;
-    private final IconNote foregroundNote;
     private final String[] labels;
+    private final LiveNotificationManager notificationManager;
 
-    public NotificationStatusDisplayer(IconNote foregroundNote, IconNote backgroundNote, String[] stateLabels) {
+    public NotificationStatusDisplayer(LiveNotificationManager notificationManager, String[] stateLabels) {
         this.labels = stateLabels;
-        this.foregroundNote = foregroundNote;
-        this.backgroundNote = backgroundNote;
+        this.notificationManager = notificationManager;
     }
 
     private String textForState(LiveShowState state) {
@@ -22,27 +19,14 @@ public class NotificationStatusDisplayer implements LiveShowStateListener {
     @Override
     public void onStateChanged(LiveShowState state, long timestamp) {
         if (LiveShowState.isIdle(state)) {
-            hideAllNotifications();
+            notificationManager.hideNotifications();
         } else {
             String text = textForState(state);
             if (LiveShowState.isActive(state)) {
-                updateNotifications(foregroundNote, backgroundNote, text);
+                notificationManager.showForegroundNote(text);
             } else {
-                updateNotifications(backgroundNote, foregroundNote, text);
+                notificationManager.showBackgroundNote(text);
             }
         }
-    }
-
-    private void updateNotifications(IconNote active, IconNote inactive, String text) {
-        inactive.hide();
-        active
-                .setTicker(text)
-                .setText(text)
-                .show();
-    }
-
-    private void hideAllNotifications() {
-        foregroundNote.hide();
-        backgroundNote.hide();
     }
 }

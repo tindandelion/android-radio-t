@@ -5,15 +5,15 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
-import org.dandelion.radiot.accepttest.testables.FakeStatusDisplayer;
+import org.dandelion.radiot.accepttest.testables.LiveNotificationManagerSpy;
 import org.dandelion.radiot.endtoend.live.helpers.LiveShowRunner;
 import org.dandelion.radiot.endtoend.live.helpers.LiveShowServer;
+import org.dandelion.radiot.live.LiveNotificationManager;
 import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.live.MediaPlayerStream;
 import org.dandelion.radiot.live.chat.ProgressListener;
 import org.dandelion.radiot.live.chat.MessageConsumer;
 import org.dandelion.radiot.live.core.AudioStream;
-import org.dandelion.radiot.live.core.LiveShowStateListener;
 import org.dandelion.radiot.live.service.TimeoutReceiver;
 import org.dandelion.radiot.live.chat.ChatTranslation;
 import org.dandelion.radiot.live.ui.ChatTranslationFragment;
@@ -54,7 +54,7 @@ public class LiveShowPlaybackTest extends
         runner.showsWaiting();
 
         runner.stopTranslation();
-        runner.showsStopped();
+        runner.showsTranslationStopped();
     }
 
     public LiveShowPlaybackTest() {
@@ -64,11 +64,11 @@ public class LiveShowPlaybackTest extends
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        FakeStatusDisplayer statusDisplayer = new FakeStatusDisplayer();
-        setupTestingApp(statusDisplayer);
+        LiveNotificationManagerSpy notificationManager = new LiveNotificationManagerSpy();
+        setupTestingApp(notificationManager);
 
-        ChatTranslationFragment.chatFactory = new NullChatTranlation();
-        runner = new LiveShowRunner(getInstrumentation(), getActivity(), statusDisplayer);
+        ChatTranslationFragment.chatFactory = new NullChatTranslation();
+        runner = new LiveShowRunner(getInstrumentation(), getActivity(), notificationManager);
         backend = new LiveShowServer(getInstrumentation().getContext());
     }
 
@@ -79,7 +79,7 @@ public class LiveShowPlaybackTest extends
         super.tearDown();
     }
 
-    private void setupTestingApp(final LiveShowStateListener statusDisplayer) {
+    private void setupTestingApp(final LiveNotificationManagerSpy notificationManager) {
         getInstrumentation().runOnMainSync(new Runnable() {
             @Override
             public void run() {
@@ -90,8 +90,8 @@ public class LiveShowPlaybackTest extends
                     }
 
                     @Override
-                    public LiveShowStateListener createStatusDisplayer(Context context) {
-                        return statusDisplayer;
+                    public LiveNotificationManager createNotificationManager(Context context) {
+                        return notificationManager;
                     }
                 });
             }
@@ -117,7 +117,7 @@ public class LiveShowPlaybackTest extends
         return getInstrumentation().getTargetContext().getApplicationContext();
     }
 
-    private static class NullChatTranlation implements ChatTranslation, ChatTranslation.Factory {
+    private static class NullChatTranslation implements ChatTranslation, ChatTranslation.Factory {
         @Override
         public void setProgressListener(ProgressListener listener) {
         }
@@ -143,4 +143,5 @@ public class LiveShowPlaybackTest extends
             return this;
         }
     }
+
 }
