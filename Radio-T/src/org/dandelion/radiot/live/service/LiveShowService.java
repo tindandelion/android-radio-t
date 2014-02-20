@@ -47,7 +47,7 @@ public class LiveShowService extends WakefulService implements PlayerActivityLis
 
     private void createVisual() {
         statusDisplayer = app().createStatusDisplayer(this.getApplicationContext());
-        stateHolder().addListener(statusDisplayer);
+        stateHolder().addListenerSilently(statusDisplayer);
     }
 
     @Override

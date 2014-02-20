@@ -11,9 +11,15 @@ public class LiveShowStateHolderTest {
     private final LiveShowStateListener listener = mock(LiveShowStateListener.class);
 
     @Test
-    public void callListenerWhenAttached() throws Exception {
+    public void whenListenerAdded_instantlyCallItWithCurrentValue() throws Exception {
         holder.addListener(listener);
         verify(listener).onStateChanged(state, TIMESTAMP);
+    }
+
+    @Test
+    public void whenListenerAddedSilently_doesNotCallItImmediately() throws Exception {
+        holder.addListenerSilently(listener);
+        verifyZeroInteractions(listener);
     }
 
     @Test

@@ -15,7 +15,6 @@ public class LiveShowApp {
     // private static final String LIVE_SHOW_URL = "http://172.20.10.5:4567/stream";
     private LiveShowStateHolder stateHolder = LiveShowStateHolder.initial();
     private static final int LIVE_NOTE_ID = 1;
-    private static final int FOREGROUND_NOTE_ID = 2;
 
     public static LiveShowApp getInstance() {
         return instance;
@@ -57,9 +56,7 @@ public class LiveShowApp {
     }
 
     public IconNote createForegroundNote(final Context context) {
-        // Creating the invisible note simply to satisfy
-        // the Android Service.startForeground() requirements
-        return new IconNote(context, FOREGROUND_NOTE_ID);
+        return createNote(context);
     }
 
     public Lockable createNetworkLock(Context context) {

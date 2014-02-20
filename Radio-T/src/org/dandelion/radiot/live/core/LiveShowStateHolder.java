@@ -38,6 +38,10 @@ public class LiveShowStateHolder {
         listener.onStateChanged(value, timestamp);
     }
 
+    public void addListenerSilently(LiveShowStateListener listener) {
+        listeners.add(listener);
+    }
+
     public void addListener(LiveShowStateListener listener) {
         listeners.add(listener);
         notifyListener(listener);
@@ -46,5 +50,4 @@ public class LiveShowStateHolder {
     public void removeListener(LiveShowStateListener listener) {
         listeners.remove(listener);
     }
-
 }
