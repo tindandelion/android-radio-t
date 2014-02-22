@@ -1,7 +1,7 @@
 Version 1.8:
- PROGRESS Respect Android 4.3 foreground notification rules
-  * Live show: Control playback from the notification view
-  DONE Test the behaviour on previous Android versions:
+ DONE Live show: Control playback from the notification view
+ DONE Respect Android 4.3 foreground notification rules
+ DONE Test the behaviour on previous Android versions:
      - 4.0 - disappears
      - 4.1 - disappears
      - 4.4 - OK
