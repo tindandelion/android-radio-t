@@ -23,7 +23,7 @@ end
 
 desc "Create button drawables"
 task :buttons do
-  ['ic_play.svg', 'ic_stop.svg'].each do |fn|
+  ['ic_play.svg', 'ic_stop.svg', 'ic_stop_notification.svg'].each do |fn|
     create_button_drawables(SVG_DIR + fn, RESOURCE_DIR)
   end
 end

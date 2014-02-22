@@ -10,7 +10,7 @@ import org.dandelion.radiot.util.IconNote;
 
 public class LiveShowService extends WakefulService implements PlayerActivityListener {
     private static final String TAG = LiveShowService.class.getName();
-    private static final String TOGGLE_ACTION = TAG + ".Toggle";
+    public static final String TOGGLE_ACTION = TAG + ".Toggle";
     private static final String TIMEOUT_ACTION = TAG + ".Timeout";
 
     private LiveShowPlayer player;
@@ -25,6 +25,10 @@ public class LiveShowService extends WakefulService implements PlayerActivityLis
 
     public static void sendTogglePlayback(Context context) {
         performWakefulAction(context, LiveShowService.class, TOGGLE_ACTION);
+    }
+
+    public static Intent createToggleIntent(Context context) {
+        return createIntent(context, LiveShowService.class, TOGGLE_ACTION);
     }
 
     @Override

@@ -1,9 +1,11 @@
 package org.dandelion.radiot.live;
 
+import android.app.PendingIntent;
 import android.content.Context;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.live.core.AudioStream;
 import org.dandelion.radiot.live.core.LiveShowStateHolder;
+import org.dandelion.radiot.live.service.LiveShowService;
 import org.dandelion.radiot.live.service.Lockable;
 import org.dandelion.radiot.live.ui.LiveNotificationManager;
 import org.dandelion.radiot.live.ui.LiveShowActivity;
@@ -56,10 +58,14 @@ public class LiveShowApp {
     }
 
     private IconNote createNotification(Context context, int id) {
+        String actionTitle = context.getResources().getStringArray(R.array.live_show_button_labels)[0];
+        PendingIntent actionIntent = PendingIntent.getService(
+                context, 0, LiveShowService.createToggleIntent(context), 0);
         return new IconNote(context.getApplicationContext(), id)
                 .setTitle(context.getString(R.string.app_name))
                 .setIcon(R.drawable.stat_live)
                 .showsActivity(LiveShowActivity.class)
+                .addAction(R.drawable.ic_stop_notification, actionTitle, actionIntent)
                 .beOngoing();
     }
 

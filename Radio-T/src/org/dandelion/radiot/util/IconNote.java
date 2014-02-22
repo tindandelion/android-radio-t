@@ -100,4 +100,9 @@ public class IconNote {
     public int id() {
         return notificationId;
     }
+
+    public IconNote addAction(int icon, String title, PendingIntent intent) {
+        builder.addAction(icon, title, intent);
+        return this;
+    }
 }

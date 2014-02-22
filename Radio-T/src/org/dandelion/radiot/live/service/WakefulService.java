@@ -17,9 +17,13 @@ public class WakefulService extends Service {
     }
 
     private static void sendActionIntent(Context context, Class<? extends WakefulService> serviceCls, String action) {
+        context.startService(createIntent(context, serviceCls, action));
+    }
+
+    protected static Intent createIntent(Context context, Class<? extends WakefulService> serviceCls, String action) {
         Intent intent = new Intent(context, serviceCls);
         intent.setAction(action);
-        context.startService(intent);
+        return intent;
     }
 
     private static void acquireWakeLock(Context context) {
