@@ -1,3 +1,7 @@
+Version 1.9:
+ * Show current topic
+ * Hide controls from chat screen
+
 Version 1.8:
  DONE Live show: Control playback from the notification view
  DONE Respect Android 4.3 foreground notification rules
@@ -22,7 +26,6 @@ Backlog:
  * Podcast list: Activity leak in PodcastSelectionHandler
  * Podcast list: Better error explanation
  * Chat: lock screen while translating
- * Chat: Show current topic in Live Show screen
  * Landscape orientation
    * Podcast list: Flickers when changing orientation (due to loading all stuff)
    * Main screen: Tagline should show single-line if possible
