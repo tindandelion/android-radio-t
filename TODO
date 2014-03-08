@@ -1,14 +1,8 @@
 Version 1.9:
  PROGRESS Show current topic
- - Ratpack
-   - Build a sample server app;
-   - Testing;
-   - Deploy to Digital Ocean;
- - Server app
-   - Listen to Radio-T chat;
-   - Parse messages;
- - Client side
- - Web sockets?
+ - Scalatra
+ - Testing Scalatra
+
  * Hide controls from chat screen
 
 Version 1.8:
