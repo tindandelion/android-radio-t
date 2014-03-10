@@ -8,4 +8,8 @@ repositories {
 
 dependencies {
     compile 'org.scala-lang:scala-library:2.10.3'
+    compile 'org.scalatra:scalatra_2.10:2.3.0.M1'
+    compile 'javax.servlet:servlet-api:2.5'
+
+    testCompile 'org.scalatra:scalatra-scalatest_2.10:2.3.0.M1'
 }

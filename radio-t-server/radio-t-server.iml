@@ -23,6 +23,39 @@
     <orderEntry type="jdk" jdkName="1.7" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="Gradle: scala-library-2.10.3" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: slf4j-api-1.7.5" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: grizzled-slf4j_2.10-1.0.1" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: juniversalchardet-1.0.3" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: mime-util-2.1.3" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: scalatra_2.10-2.3.0.M1" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: scalatra-common_2.10-2.3.0.M1" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: rl_2.10-0.4.8" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: joda-time-2.3" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: joda-convert-1.4" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: scalatra-scalatest_2.10-2.3.0.M1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: jetty-util-8.1.12.v20130726" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: jetty-xml-8.1.12.v20130726" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: javax.servlet-3.0.0.v201112011016" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: jetty-continuation-8.1.12.v20130726" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: jetty-io-8.1.12.v20130726" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: jetty-http-8.1.12.v20130726" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: jetty-server-8.1.12.v20130726" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: jetty-security-8.1.12.v20130726" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: jetty-servlet-8.1.12.v20130726" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: jetty-webapp-8.1.12.v20130726" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: mockito-all-1.9.5" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: commons-lang3-3.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: httpcore-4.2.4" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: commons-logging-1.1.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: commons-codec-1.6" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: httpclient-4.2.5" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: httpmime-4.2.5" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: scalatra-test_2.10-2.3.0.M1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: scala-reflect-2.10.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: scalatest_2.10-2.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: hamcrest-core-1.3" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: junit-4.11" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: servlet-api-2.5" level="project" />
   </component>
 </module>
 
