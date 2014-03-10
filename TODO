@@ -1,7 +1,8 @@
 Version 1.9:
  PROGRESS Show current topic
- - Scalatra
- - Testing Scalatra
+  DONE Scalatra
+  DONE Testing Scalatra
+  - Deploy simple servlet
 
  * Hide controls from chat screen
 
