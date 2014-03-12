@@ -6,4 +6,8 @@ tmp
 *.iws
 .metadata
 .DS_Store
+*/.gradle
+*/build
+.vagrant
+
 
