@@ -1,4 +1,6 @@
 apply plugin: 'scala'
+apply plugin: 'war'
+apply plugin: 'jetty'
 
 version = '1.0'
 
@@ -7,9 +9,10 @@ repositories {
 }
 
 dependencies {
+    providedCompile 'javax.servlet:javax.servlet-api:3.0.1'
+
     compile 'org.scala-lang:scala-library:2.10.3'
     compile 'org.scalatra:scalatra_2.10:2.3.0.M1'
-    compile 'javax.servlet:servlet-api:2.5'
 
     testCompile 'org.scalatra:scalatra-scalatest_2.10:2.3.0.M1'
 }

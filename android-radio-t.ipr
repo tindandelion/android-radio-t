@@ -310,6 +310,15 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.orbit/javax.servlet/3.0.0.v201112011016/15c914135cf30177b83c321250c458396289cd37/javax.servlet-3.0.0.v201112011016-sources.jar!/" />
       </SOURCES>
     </library>
+    <library name="Gradle: javax.servlet-api-3.0.1">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.servlet/javax.servlet-api/3.0.1/6bf0ebb7efd993e222fc1112377b5e92a13b38dd/javax.servlet-api-3.0.1.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.servlet/javax.servlet-api/3.0.1/1952f91d84016a39e31346c9d18bd8c9c4a128a/javax.servlet-api-3.0.1-sources.jar!/" />
+      </SOURCES>
+    </library>
     <library name="Gradle: jetty-continuation-8.1.12.v20130726">
       <CLASSES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-continuation/8.1.12.v20130726/56983c28a934cb2b8cdfcf3a3fa9b28320f7ac7d/jetty-continuation-8.1.12.v20130726.jar!/" />
@@ -513,15 +522,6 @@
       <JAVADOC />
       <SOURCES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.scalatra/scalatra_2.10/2.3.0.M1/d409fef072fb0661d5e650b76703b7094cfa6941/scalatra_2.10-2.3.0.M1-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: servlet-api-2.5">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.servlet/servlet-api/2.5/5959582d97d8b61f4d154ca9e495aafd16726e34/servlet-api-2.5.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.servlet/servlet-api/2.5/21599814ad9a605b86f3e6381571beccd861a32/servlet-api-2.5-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: slf4j-api-1.7.5">
