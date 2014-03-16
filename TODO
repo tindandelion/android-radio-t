@@ -2,7 +2,10 @@ Version 1.9:
  PROGRESS Show current topic
   DONE Scalatra
   DONE Testing Scalatra
-  - Deploy simple servlet
+  DONE Deploy simple servlet
+  - Daemonize
+  - Logging
+  - Deploy to DigitalOcean
 
  * Hide controls from chat screen
 

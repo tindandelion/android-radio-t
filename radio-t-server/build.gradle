@@ -2,6 +2,7 @@ apply plugin: 'scala'
 apply plugin: 'application'
 
 version = '1.0'
+//noinspection GroovyUnusedAssignment
 mainClassName = "JettyLauncher"
 
 repositories {
@@ -9,10 +10,10 @@ repositories {
 }
 
 dependencies {
-
     compile 'org.scala-lang:scala-library:2.10.3'
     compile 'org.scalatra:scalatra_2.10:2.3.0.M1'
     compile 'org.eclipse.jetty:jetty-webapp:8.1.10.v20130312'
+    compile files('libs/smack-3.4.1-0cec571.jar')
 
     testCompile 'org.scalatra:scalatra-scalatest_2.10:2.3.0.M1'
 }

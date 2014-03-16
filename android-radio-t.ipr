@@ -605,6 +605,13 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-api/1.7.5/654135274d4c27132ea208a4ec07f344bdb83bcb/slf4j-api-1.7.5-sources.jar!/" />
       </SOURCES>
     </library>
+    <library name="Gradle: smack-3.4.1-0cec571">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/radio-t-server/libs/smack-3.4.1-0cec571.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
   </component>
 </project>
 
