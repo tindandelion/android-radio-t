@@ -7,47 +7,66 @@ import scala.collection.mutable
 class ChatMessageListener extends PacketListener {
   val messages: mutable.MutableList[Message] = new mutable.MutableList[Message]
 
+  @Override
   def processPacket(p: Packet) = {
     val msg: Message = p.asInstanceOf[Message]
+    println("Message " + msg.getBody)
     messages += msg
   }
 
   def receivedMessages = !messages.isEmpty
 }
 
-class TopicTrackerTest extends FunSpec with Matchers with BeforeAndAfter {
-  val config = new ConnectionConfiguration("jabber.org", 5222)
-  val connection = new XMPPConnection(config)
+object TopicTracker {
+  private val Server = "jabber.org"
+  private val Username = "android-radiot@jabber.org"
+  private val Password = "android-radiot"
+  private val Room = "online@conference.radio-t.com"
+  private val Nickname = "android-radio-t"
 
-  before {
+  private val connection = new XMPPConnection(new ConnectionConfiguration(Server, 5222))
+  private val chat = new MultiUserChat(connection, TopicTracker.Room)
+
+  def connect() {
     connection.connect()
-    connection.login("android-radiot@jabber.org", "android-radiot")
+    connection.login(Username, Password)
+    chat.join(Nickname)
   }
 
-  after {
+  def disconnect() {
+    chat.leave()
     connection.disconnect()
   }
 
-  it("joins the chat") {
-    val chat = new MultiUserChat(connection, "online@conference.radio-t.com")
+  def isJoined = chat.isJoined
 
-    chat.join("android-radiot")
-    chat should be('joined)
+  def addListener(listener: PacketListener) {
+    chat.addMessageListener(listener)
+  }
+}
 
-    chat.leave()
+class TopicTrackerTest extends FunSpec with Matchers with BeforeAndAfter {
+  val tracker = TopicTracker
+
+  before {
+    tracker.connect()
+  }
+
+  after {
+    tracker.disconnect()
+  }
+
+  it("joins the chat at start") {
+    tracker should be('joined)
   }
 
   it("listens for the messages") {
-    val chat = new MultiUserChat(connection, "online@conference.radio-t.com")
+    tracker should be('joined)
+
     val listener = new ChatMessageListener
 
-    chat.addMessageListener(listener)
-
-    chat.join("android-radiot")
-    chat should be('joined)
-
+    tracker.addListener(listener)
+    Thread.sleep(5000)
     listener should be('receivedMessages)
-
-    chat.leave()
   }
 }
