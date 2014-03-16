@@ -65,6 +65,7 @@
     <orderEntry type="library" exported="" name="Gradle: jetty-security-8.1.10.v20130312" level="project" />
     <orderEntry type="library" exported="" name="Gradle: jetty-servlet-8.1.10.v20130312" level="project" />
     <orderEntry type="library" exported="" name="Gradle: smack-3.4.1-0cec571" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: smackx-3.4.1-0cec571" level="project" />
   </component>
 </module>
 

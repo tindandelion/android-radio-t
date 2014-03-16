@@ -612,6 +612,13 @@
       <JAVADOC />
       <SOURCES />
     </library>
+    <library name="Gradle: smackx-3.4.1-0cec571">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/radio-t-server/libs/smackx-3.4.1-0cec571.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
   </component>
 </project>
 
