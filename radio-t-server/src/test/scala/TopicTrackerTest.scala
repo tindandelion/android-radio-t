@@ -18,11 +18,18 @@ class ChatMessageListener extends PacketListener {
 }
 
 object TopicTracker {
-  private val Server = "jabber.org"
-  private val Username = "android-radiot@jabber.org"
+//  private val Server = "jabber.org"
+//  private val Username = "android-radiot@jabber.org"
+//  private val Password = "android-radiot"
+//  private val Room = "online@conference.radio-t.com"
+//  private val Nickname = "android-radio-t"
+
+  private val Server = "localhost"
+  private val Username = "android-radiot"
   private val Password = "android-radiot"
-  private val Room = "online@conference.radio-t.com"
+  private val Room = "online@conference.precise32"
   private val Nickname = "android-radio-t"
+
 
   private val connection = new XMPPConnection(new ConnectionConfiguration(Server, 5222))
   private val chat = new MultiUserChat(connection, TopicTracker.Room)
@@ -58,15 +65,5 @@ class TopicTrackerTest extends FunSpec with Matchers with BeforeAndAfter {
 
   it("joins the chat at start") {
     tracker should be('joined)
-  }
-
-  it("listens for the messages") {
-    tracker should be('joined)
-
-    val listener = new ChatMessageListener
-
-    tracker.addListener(listener)
-    Thread.sleep(5000)
-    listener should be('receivedMessages)
   }
 }
