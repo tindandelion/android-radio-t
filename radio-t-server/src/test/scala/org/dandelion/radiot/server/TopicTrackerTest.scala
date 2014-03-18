@@ -1,3 +1,5 @@
+package org.dandelion.radiot.server
+
 import org.jivesoftware.smack.packet.{Message, Packet}
 import org.jivesoftware.smack.{PacketListener, ConnectionConfiguration, XMPPConnection}
 import org.jivesoftware.smackx.muc.MultiUserChat
