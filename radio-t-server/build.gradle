@@ -12,8 +12,9 @@ repositories {
 dependencies {
     compile 'org.scala-lang:scala-library:2.10.3'
     compile 'org.scalatra:scalatra_2.10:2.3.0.M1'
-    compile 'org.eclipse.jetty:jetty-webapp:8.1.10.v20130312'
+    compile 'org.eclipse.jetty:jetty-webapp:9.1.3.v20140225'
     compile files('libs/smack-3.4.1-0cec571.jar', 'libs/smackx-3.4.1-0cec571.jar')
 
-    testCompile 'org.scalatra:scalatra-scalatest_2.10:2.3.0.M1'
+    testCompile 'org.scalatra:scalatra-scalatest_2.10:2.3.0.RC1'
+    testCompile 'org.eclipse.jetty.websocket:websocket-client:9.1.3.v20140225'
 }

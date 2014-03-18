@@ -238,22 +238,22 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-codec/commons-codec/1.6/61e9f9d11fe3e12ec62f633006e99d75fd7f19c8/commons-codec-1.6-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: commons-lang3-3.1">
+    <library name="Gradle: commons-lang3-3.2.1">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-lang3/3.1/905075e6c80f206bbe6cf1e809d2caa69f420c76/commons-lang3-3.1.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-lang3/3.2.1/66f13681add50ca9e4546ffabafaaac7645db3cf/commons-lang3-3.2.1.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-lang3/3.1/8d30b90ae8bda4fbac8363161c8a9b5a99e23baf/commons-lang3-3.1-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-lang3/3.2.1/77e5da73ecc389bda26f9953fd91e9b53b571a6f/commons-lang3-3.2.1-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: commons-logging-1.1.1">
+    <library name="Gradle: commons-logging-1.1.3">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-logging/commons-logging/1.1.1/5043bfebc3db072ed80fbd362e7caf00e885d8ae/commons-logging-1.1.1.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-logging/commons-logging/1.1.3/f6f66e966c70a83ffbdb6f17a0919eaf7c8aca7f/commons-logging-1.1.3.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-logging/commons-logging/1.1.1/f3f156cbff0e0fb0d64bfce31a352cce4a33bc19/commons-logging-1.1.1-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-logging/commons-logging/1.1.3/28bb0405fddaf04f15058fbfbe01fe2780d7d3b6/commons-logging-1.1.3-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: grizzled-slf4j_2.10-1.0.1">
@@ -274,202 +274,112 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.hamcrest/hamcrest-core/1.3/1dc37250fbc78e23a65a67fbbaf71d2e9cbc3c0b/hamcrest-core-1.3-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: httpclient-4.2.5">
+    <library name="Gradle: httpclient-4.3.2">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpclient/4.2.5/666e26e76f2e87d84e4f16acb546481ae1b8e9a6/httpclient-4.2.5.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpclient/4.3.2/10a45d03873baa34436ae54548d9f1140d4bb68a/httpclient-4.3.2.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpclient/4.2.5/55d345272944d7e8dace47925336a3764ee0e24b/httpclient-4.2.5-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpclient/4.3.2/b2ee1f7676394469864f3350c34dceb2214cd372/httpclient-4.3.2-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: httpcore-4.2.4">
+    <library name="Gradle: httpcore-4.3.1">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpcore/4.2.4/3b7f38df6de5dd8b500e602ae8c2dd5ee446f883/httpcore-4.2.4.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpcore/4.3.1/98e2eefcf524f757188f172642ecf5e2c7421947/httpcore-4.3.1.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpcore/4.2.4/c3ffe3a73348645042fb0b06303b6a3de194494e/httpcore-4.2.4-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpcore/4.3.1/c2fbd38f2a7d6e063831c590a350dc4abbd0fc38/httpcore-4.3.1-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: httpmime-4.2.5">
+    <library name="Gradle: httpmime-4.3.2">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpmime/4.2.5/412b9914d0adec6d5716df1ada8acbc4f6f2dd37/httpmime-4.2.5.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpmime/4.3.2/3202421d9425ced69919b282afa644e7ef0e8fef/httpmime-4.3.2.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpmime/4.2.5/c07ce7f6b153284a9ebaf58532c2442200cf3aa2/httpmime-4.2.5-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpmime/4.3.2/ab36bd1a7095d8dabd3a0df055114fa8b84236c5/httpmime-4.3.2-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: javax.servlet-3.0.0.v201112011016">
+    <library name="Gradle: javax.servlet-api-3.1.0">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.orbit/javax.servlet/3.0.0.v201112011016/aaaa85845fb5c59da00193f06b8e5278d8bf3f8/javax.servlet-3.0.0.v201112011016.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.servlet/javax.servlet-api/3.1.0/3cd63d075497751784b2fa84be59432f4905bf7c/javax.servlet-api-3.1.0.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.orbit/javax.servlet/3.0.0.v201112011016/15c914135cf30177b83c321250c458396289cd37/javax.servlet-3.0.0.v201112011016-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.servlet/javax.servlet-api/3.1.0/ab3976d4574c48d22dc1abf6a9e8bd0fdf928223/javax.servlet-api-3.1.0-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: jetty-continuation-8.1.10.v20130312">
+    <library name="Gradle: jetty-http-9.1.3.v20140225">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-continuation/8.1.10.v20130312/c0e26574ddcac7a86486f19a8b3782657acfd961/jetty-continuation-8.1.10.v20130312.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-http/9.1.3.v20140225/7b06e7b8de781201838aba5c668bf900dc7ab29/jetty-http-9.1.3.v20140225.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-continuation/8.1.10.v20130312/6f7d56c06f0a709900442e15964b96e8abb83fd1/jetty-continuation-8.1.10.v20130312-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-http/9.1.3.v20140225/1ec21e559abbd90318ff55e2963cc1be448a1a37/jetty-http-9.1.3.v20140225-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: jetty-continuation-8.1.12.v20130726">
+    <library name="Gradle: jetty-io-9.1.3.v20140225">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-continuation/8.1.12.v20130726/56983c28a934cb2b8cdfcf3a3fa9b28320f7ac7d/jetty-continuation-8.1.12.v20130726.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-io/9.1.3.v20140225/3aa9e99a7eb29d2fd11e3230186b62bc4622f7ab/jetty-io-9.1.3.v20140225.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-continuation/8.1.12.v20130726/fe73da392c26fc11778d233424834583a257e33c/jetty-continuation-8.1.12.v20130726-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-io/9.1.3.v20140225/9e1628de36b6fc069a00aad042d051247051383f/jetty-io-9.1.3.v20140225-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: jetty-http-8.1.10.v20130312">
+    <library name="Gradle: jetty-security-9.1.3.v20140225">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-http/8.1.10.v20130312/d9eb53007e04d6338f12f3ded60fad1f7bfcb40e/jetty-http-8.1.10.v20130312.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-security/9.1.3.v20140225/49fc76468753bb12a00feb5a4e4bba906514c3f2/jetty-security-9.1.3.v20140225.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-http/8.1.10.v20130312/711aeb224d359451d560e1f7e987635a1696aa23/jetty-http-8.1.10.v20130312-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-security/9.1.3.v20140225/fa5f53b17735a90b80c7670ff6ed885d38fa4330/jetty-security-9.1.3.v20140225-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: jetty-http-8.1.12.v20130726">
+    <library name="Gradle: jetty-server-9.1.3.v20140225">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-http/8.1.12.v20130726/530b3a21d71ac69279bee129869d7eac031e3533/jetty-http-8.1.12.v20130726.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-server/9.1.3.v20140225/90a77839178444a6b8291839f6bcd180e6d5959c/jetty-server-9.1.3.v20140225.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-http/8.1.12.v20130726/6501806c29564cea6a6f6f8c725f972905bc8bb0/jetty-http-8.1.12.v20130726-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-server/9.1.3.v20140225/7fa41a50bdefbf263e35590cc2ec68d0207611f3/jetty-server-9.1.3.v20140225-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: jetty-io-8.1.10.v20130312">
+    <library name="Gradle: jetty-servlet-9.1.3.v20140225">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-io/8.1.10.v20130312/e829c768f2b9de5d9fae3bc0aba3996bd0344f56/jetty-io-8.1.10.v20130312.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-servlet/9.1.3.v20140225/15b73c81fd700fa87abc8de4043814fcb7de80f/jetty-servlet-9.1.3.v20140225.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-io/8.1.10.v20130312/453095334fb1970c272e1dcadac3c2dfab46438e/jetty-io-8.1.10.v20130312-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-servlet/9.1.3.v20140225/4320588fb90e5b150f0308869ad2af8923f4a09/jetty-servlet-9.1.3.v20140225-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: jetty-io-8.1.12.v20130726">
+    <library name="Gradle: jetty-util-9.1.3.v20140225">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-io/8.1.12.v20130726/859ad5da478e34bca888812a81e12cd4dcdef6fd/jetty-io-8.1.12.v20130726.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-util/9.1.3.v20140225/7ea31ff707ea3da59e70c0bbc7dcfe1bbf4f2200/jetty-util-9.1.3.v20140225.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-io/8.1.12.v20130726/f53e6c374fc35805cc90ea419137c93280288680/jetty-io-8.1.12.v20130726-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-util/9.1.3.v20140225/f2cb762edfbfb72de2c1051a0ff0e6cded75b0ce/jetty-util-9.1.3.v20140225-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: jetty-security-8.1.10.v20130312">
+    <library name="Gradle: jetty-webapp-9.1.3.v20140225">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-security/8.1.10.v20130312/a386e7f0a8b9157b99a2f29a6deac61e007a2b9b/jetty-security-8.1.10.v20130312.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-webapp/9.1.3.v20140225/7126e24d1467d9e8b9be42881d7e126a74dc36a2/jetty-webapp-9.1.3.v20140225.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-security/8.1.10.v20130312/393cf4e10ddc2e6b7eb1f2b7fdb5641836be5a0d/jetty-security-8.1.10.v20130312-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-webapp/9.1.3.v20140225/cd677c1b641c68cc502bc271e4ded53d27137f2b/jetty-webapp-9.1.3.v20140225-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: jetty-security-8.1.12.v20130726">
+    <library name="Gradle: jetty-xml-9.1.3.v20140225">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-security/8.1.12.v20130726/3e5ba848730a8ca6dc7ee562ebafbb44f49d8abd/jetty-security-8.1.12.v20130726.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-xml/9.1.3.v20140225/c3c0f6b24560a13160659efa52569ec4c3adbc62/jetty-xml-9.1.3.v20140225.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-security/8.1.12.v20130726/b854847af05a4e41efd97907c0d77505f2cd32fb/jetty-security-8.1.12.v20130726-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: jetty-server-8.1.10.v20130312">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-server/8.1.10.v20130312/13ca9587bc1645f8fac89454b15252a2ad5bdcf5/jetty-server-8.1.10.v20130312.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-server/8.1.10.v20130312/a1d3f38ce5fdd6640fd5cf858c30bc0689c82fe8/jetty-server-8.1.10.v20130312-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: jetty-server-8.1.12.v20130726">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-server/8.1.12.v20130726/e8d89c85edd00680a7b30bf219e6dba181dc4aa1/jetty-server-8.1.12.v20130726.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-server/8.1.12.v20130726/c44ada0510dae0cf9e41ab744093520c4173fd6a/jetty-server-8.1.12.v20130726-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: jetty-servlet-8.1.10.v20130312">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-servlet/8.1.10.v20130312/98f8029fe7236e9c66381c04f292b5319f47ca84/jetty-servlet-8.1.10.v20130312.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-servlet/8.1.10.v20130312/60fe9e092bf57997fd5709a276b1f61f5e452116/jetty-servlet-8.1.10.v20130312-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: jetty-servlet-8.1.12.v20130726">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-servlet/8.1.12.v20130726/c0a4cba995dcb585a89c524c16370eb9c393f582/jetty-servlet-8.1.12.v20130726.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-servlet/8.1.12.v20130726/f4333a415780e9aa15b48cf6a9747d4f1f701e35/jetty-servlet-8.1.12.v20130726-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: jetty-util-8.1.10.v20130312">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-util/8.1.10.v20130312/d198a8ad8ea20b4fb74c781175c48500ec2b8b7a/jetty-util-8.1.10.v20130312.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-util/8.1.10.v20130312/a3158f7d8932461d534bfff4d14020458310f76b/jetty-util-8.1.10.v20130312-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: jetty-util-8.1.12.v20130726">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-util/8.1.12.v20130726/255cb3b9a415146252796915d8dc3c3745ff1eb6/jetty-util-8.1.12.v20130726.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-util/8.1.12.v20130726/68fdb12d9ec9ce33a35f8ff899d795144237c6a9/jetty-util-8.1.12.v20130726-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: jetty-webapp-8.1.10.v20130312">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-webapp/8.1.10.v20130312/a3353244b93e895f1ca8f607077f247063470233/jetty-webapp-8.1.10.v20130312.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-webapp/8.1.10.v20130312/a341cf0c2f128a1ee1764ae1c90f1c487e15a6ef/jetty-webapp-8.1.10.v20130312-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: jetty-webapp-8.1.12.v20130726">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-webapp/8.1.12.v20130726/f600e35da3d23987ff5795933bf731b4fc3b0cd/jetty-webapp-8.1.12.v20130726.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-webapp/8.1.12.v20130726/a7966717b79ec24bbfa9b663f0a7f5ae051ce183/jetty-webapp-8.1.12.v20130726-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: jetty-xml-8.1.10.v20130312">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-xml/8.1.10.v20130312/96eb17dd4265732b0cb9cd15e36f83633832dd65/jetty-xml-8.1.10.v20130312.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-xml/8.1.10.v20130312/d9885ab204a3ff6e90a60f9c16a4982ece81747d/jetty-xml-8.1.10.v20130312-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: jetty-xml-8.1.12.v20130726">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-xml/8.1.12.v20130726/f9c71ae185c6f867965a305a78370fba9d0941ba/jetty-xml-8.1.12.v20130726.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-xml/8.1.12.v20130726/d9050d5bae27eec624b2fb825fb3ba85eb5576e0/jetty-xml-8.1.12.v20130726-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-xml/9.1.3.v20140225/4320d07299f8f4f46be0424020c20664389e43a9/jetty-xml-9.1.3.v20140225-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: joda-convert-1.4">
@@ -569,22 +479,31 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.scalatra/scalatra-common_2.10/2.3.0.M1/41e3093d9939be584adb3bd6ddd1e410133fb08c/scalatra-common_2.10-2.3.0.M1-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: scalatra-scalatest_2.10-2.3.0.M1">
+    <library name="Gradle: scalatra-common_2.10-2.3.0.RC1">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.scalatra/scalatra-scalatest_2.10/2.3.0.M1/75367a037584387c66ef491ce46c6c9ad409683b/scalatra-scalatest_2.10-2.3.0.M1.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.scalatra/scalatra-common_2.10/2.3.0.RC1/a70976ea804a2607cd4add06aacf6cc484b23cf4/scalatra-common_2.10-2.3.0.RC1.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.scalatra/scalatra-scalatest_2.10/2.3.0.M1/ffe79cdce00d517fe1c1ec18fa75591255f1bfbe/scalatra-scalatest_2.10-2.3.0.M1-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.scalatra/scalatra-common_2.10/2.3.0.RC1/459aa3d655e9b98111e3e7ac2587644fad714fb2/scalatra-common_2.10-2.3.0.RC1-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: scalatra-test_2.10-2.3.0.M1">
+    <library name="Gradle: scalatra-scalatest_2.10-2.3.0.RC1">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.scalatra/scalatra-test_2.10/2.3.0.M1/34d8716a28d11e4fb5d0ff508691de8a5e4f4ea0/scalatra-test_2.10-2.3.0.M1.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.scalatra/scalatra-scalatest_2.10/2.3.0.RC1/7082eb459a52616afb9bf3019b279df0942b4c9c/scalatra-scalatest_2.10-2.3.0.RC1.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.scalatra/scalatra-test_2.10/2.3.0.M1/9dc2b971b3fef210a811140145af841f18d76d63/scalatra-test_2.10-2.3.0.M1-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.scalatra/scalatra-scalatest_2.10/2.3.0.RC1/df46234c1fd2b83697822f64377964c69e4127d3/scalatra-scalatest_2.10-2.3.0.RC1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Gradle: scalatra-test_2.10-2.3.0.RC1">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.scalatra/scalatra-test_2.10/2.3.0.RC1/b3871163958f5cf7a0567d510114e335178b599a/scalatra-test_2.10-2.3.0.RC1.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.scalatra/scalatra-test_2.10/2.3.0.RC1/f395a913174a24cc778670f0643bc660deee78cd/scalatra-test_2.10-2.3.0.RC1-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: scalatra_2.10-2.3.0.M1">
@@ -618,6 +537,33 @@
       </CLASSES>
       <JAVADOC />
       <SOURCES />
+    </library>
+    <library name="Gradle: websocket-api-9.1.3.v20140225">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-api/9.1.3.v20140225/55ababaf62cd00094e0103a602751ae2ef7dfe89/websocket-api-9.1.3.v20140225.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-api/9.1.3.v20140225/fd2b365ba11a04be7cda4f440a13e6601ace0a43/websocket-api-9.1.3.v20140225-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Gradle: websocket-client-9.1.3.v20140225">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-client/9.1.3.v20140225/aaebabaa03107ea48b5be1b11e823862fc335e80/websocket-client-9.1.3.v20140225.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-client/9.1.3.v20140225/7e577338bc46146d87945c95f7746619ca016c2c/websocket-client-9.1.3.v20140225-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Gradle: websocket-common-9.1.3.v20140225">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-common/9.1.3.v20140225/6dd50ae9e4e9122d16a8d3a2815dbf41ebf3ad3d/websocket-common-9.1.3.v20140225.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-common/9.1.3.v20140225/6dbeea15fa6a1645f77b1d80addc04302d28901f/websocket-common-9.1.3.v20140225-sources.jar!/" />
+      </SOURCES>
     </library>
   </component>
 </project>
