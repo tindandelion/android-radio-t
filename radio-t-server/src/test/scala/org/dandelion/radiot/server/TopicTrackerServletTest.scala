@@ -30,8 +30,6 @@ class SimpleEchoSocket {
   }
 
   def isConnected = (session != null) && session.isOpen
-
-  def sendMessage(msg: String) = session.getRemote.sendString(msg)
 }
 
 class TopicTrackerServletTest extends ScalatraSpec with Matchers with Eventually {
@@ -51,13 +49,13 @@ class TopicTrackerServletTest extends ScalatraSpec with Matchers with Eventually
     val socket = new SimpleEchoSocket
 
     client.start()
-    client.connect(socket, new URI("ws://echo.websocket.org"))
+    client.connect(socket, serverUrl)
     eventually { socket should be('connected) }
-
-    socket.sendMessage("Hello")
-    socket.sendMessage("World")
-
     eventually { socket.messages should contain allOf("Hello", "World") }
     client.stop()
+  }
+
+  def serverUrl = localPort match {
+    case Some(port) => new URI(s"ws://localhost:$port/current-topic")
   }
 }
