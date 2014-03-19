@@ -21,10 +21,11 @@ with JacksonJsonSupport with JValueResult {
     new AtmosphereClient {
       override def receive: AtmoReceive = {
         case Connected =>
-          println("Connected a client!")
-          send("Hello")
-          send("World")
-          println("Messages sent")
+          println("Connected a client: %s!".format(uuid))
+          send("Blah")
+        case TextMessage(text) =>
+          println("Message received: " + text)
+          send(text)
       }
     }
   }

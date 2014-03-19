@@ -8,6 +8,7 @@ import org.eclipse.jetty.websocket.api.annotations._
 import org.eclipse.jetty.websocket.api.Session
 import org.scalatest.concurrent.Eventually
 import scala.concurrent.duration._
+import org.eclipse.jetty.websocket.api.extensions.Frame
 
 @WebSocket
 class SimpleEchoSocket {
@@ -28,6 +29,8 @@ class SimpleEchoSocket {
   def onError(error: Throwable) {
     println("Error " + error.toString)
   }
+
+  def sendMessage(msg: String) = session.getRemote.sendString(msg)
 
   def isConnected = (session != null) && session.isOpen
 }
@@ -51,6 +54,9 @@ class TopicTrackerServletTest extends ScalatraSpec with Matchers with Eventually
     client.start()
     client.connect(socket, serverUrl)
     eventually { socket should be('connected) }
+
+    socket.sendMessage("Hello")
+    socket.sendMessage("World")
     eventually { socket.messages should contain allOf("Hello", "World") }
     client.stop()
   }
