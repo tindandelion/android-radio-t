@@ -20,12 +20,6 @@ class ChatMessageListener extends PacketListener {
 }
 
 object TopicTracker {
-//  private val Server = "jabber.org"
-//  private val Username = "android-radiot@jabber.org"
-//  private val Password = "android-radiot"
-//  private val Room = "online@conference.radio-t.com"
-//  private val Nickname = "android-radio-t"
-
   private val Server = "localhost"
   private val Username = "android-radiot"
   private val Password = "android-radiot"
