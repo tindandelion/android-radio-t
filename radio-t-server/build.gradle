@@ -9,6 +9,16 @@ repositories {
     mavenCentral()
 }
 
+task uberjar(type: Jar) {
+    from files(sourceSets.main.output.classesDir)
+    from files(sourceSets.main.output.resourcesDir)
+    from {configurations.compile.collect {zipTree(it)}}
+
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
+}
+
 dependencies {
     compile 'org.scala-lang:scala-library:2.10.3'
     compile 'org.scalatra:scalatra_2.10:2.3.0.M1'
