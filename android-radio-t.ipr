@@ -553,6 +553,24 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.googlecode.juniversalchardet/juniversalchardet/1.0.3/77979eaa98f90806f984155f44f63cc1fb60ac25/juniversalchardet-1.0.3-sources.jar!/" />
       </SOURCES>
     </library>
+    <library name="Gradle: logback-classic-1.1.1">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/ch.qos.logback/logback-classic/1.1.1/19e1e2be2670b33c5dcc835550527028dddddcd1/logback-classic-1.1.1.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/ch.qos.logback/logback-classic/1.1.1/28d79153709568f830b52d041aa8f8da82f87d25/logback-classic-1.1.1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Gradle: logback-core-1.1.1">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/ch.qos.logback/logback-core/1.1.1/6d9866eb3f38b66530d7b1d41526228df3e9d963/logback-core-1.1.1.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/ch.qos.logback/logback-core/1.1.1/ea3eb9e2655c41f76ef44596659353d495ce3780/logback-core-1.1.1-sources.jar!/" />
+      </SOURCES>
+    </library>
     <library name="Gradle: mime-util-2.1.3">
       <CLASSES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/eu.medsea.mimeutil/mime-util/2.1.3/c9cfae15c74f62491d4f28def0dff1dabe52a47/mime-util-2.1.3.jar!/" />
