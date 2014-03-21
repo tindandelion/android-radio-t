@@ -11,6 +11,7 @@ import ExecutionContext.Implicits.global
 class TopicTrackerServlet extends ScalatraServlet
 with AtmosphereSupport with SessionSupport
 with JacksonJsonSupport with JValueResult {
+
   implicit protected val jsonFormats: Formats = DefaultFormats
 
   get("/") {
@@ -20,12 +21,7 @@ with JacksonJsonSupport with JValueResult {
   atmosphere("/current-topic") {
     new AtmosphereClient {
       override def receive: AtmoReceive = {
-        case Connected =>
-          println("Connected a client: %s!".format(uuid))
-          send("Blah")
-        case TextMessage(text) =>
-          println("Message received: " + text)
-          send(text)
+        case TextMessage(text) => send("Default topic")
       }
     }
   }

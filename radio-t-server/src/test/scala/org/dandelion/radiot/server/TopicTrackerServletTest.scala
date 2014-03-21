@@ -11,26 +11,20 @@ import scala.concurrent.duration._
 import org.eclipse.jetty.websocket.api.extensions.Frame
 
 @WebSocket
-class SimpleEchoSocket {
-  var session: Session = null
-  var messages: List[String] = List()
+class TopicTrackerSocket {
+  var topic: String = ""
+  private var session: Session = null
 
   @OnWebSocketConnect
   def onConnect(session: Session) {
     this.session = session
+    session.getRemote.sendString("get")
   }
 
   @OnWebSocketMessage
   def onMessage(msg: String) {
-    messages = msg :: messages
+    topic = msg
   }
-
-  @OnWebSocketError
-  def onError(error: Throwable) {
-    println("Error " + error.toString)
-  }
-
-  def sendMessage(msg: String) = session.getRemote.sendString(msg)
 
   def isConnected = (session != null) && session.isOpen
 }
@@ -47,21 +41,21 @@ class TopicTrackerServletTest extends ScalatraSpec with Matchers with Eventually
     }
   }
 
-  it("connects to a WebSocket server") {
+  it("receives current topic after connection is established") {
     val client = new WebSocketClient
-    val socket = new SimpleEchoSocket
+    val socket = new TopicTrackerSocket
 
     client.start()
     client.connect(socket, serverUrl)
-    eventually { socket should be('connected) }
 
-    socket.sendMessage("Hello")
-    socket.sendMessage("World")
-    eventually { socket.messages should contain allOf("Hello", "World") }
+    eventually { socket should be('connected) }
+    eventually { socket.topic should equal("Default topic") }
+
     client.stop()
   }
 
   def serverUrl = localPort match {
     case Some(port) => new URI(s"ws://localhost:$port/current-topic")
+    case None => throw new RuntimeException("No port is specified")
   }
 }
