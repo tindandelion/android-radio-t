@@ -10,3 +10,4 @@ exec { "apt-update":
 Exec["apt-update"] -> Package<||>
 
 include openfire
+include jre7

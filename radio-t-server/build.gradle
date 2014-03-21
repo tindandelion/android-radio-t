@@ -9,11 +9,7 @@ repositories {
     mavenCentral()
 }
 
-task uberjar(type: Jar) {
-    from files(sourceSets.main.output.classesDir)
-    from files(sourceSets.main.output.resourcesDir)
-    from {configurations.compile.collect {zipTree(it)}}
-
+jar {
     manifest {
         attributes 'Main-Class': mainClassName
     }
