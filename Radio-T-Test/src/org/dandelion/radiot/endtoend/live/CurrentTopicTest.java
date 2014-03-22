@@ -15,6 +15,8 @@ public class CurrentTopicTest extends ActivityInstrumentationTestCase2<LiveShowA
     public static final String DEFAULT_TOPIC = "What is a Web Framework?";
     private static final String NEW_TOPIC = "Amazon's ginormous public cloud turns 8 today";
 
+    private FakeTopicTrackerClient client = new FakeTopicTrackerClient();
+
     public void testShowsCurrentTopic() throws Exception {
         Solo solo = new Solo(getInstrumentation(), getActivity());
         assertThat(solo, showsText(DEFAULT_TOPIC));
@@ -22,12 +24,8 @@ public class CurrentTopicTest extends ActivityInstrumentationTestCase2<LiveShowA
 
     public void testWhenTopicChanges_refreshView() throws Exception {
         Solo solo = new Solo(getInstrumentation(), getActivity());
-        changeTopicTo(NEW_TOPIC);
+        client.changeTopic(NEW_TOPIC);
         assertThat(solo, showsText(NEW_TOPIC));
-    }
-
-    private void changeTopicTo(String newTopic) {
-
     }
 
     @TargetApi(Build.VERSION_CODES.FROYO)
@@ -39,5 +37,11 @@ public class CurrentTopicTest extends ActivityInstrumentationTestCase2<LiveShowA
     public void setUp() throws Exception {
         super.setUp();
         ChatTranslationFragment.chatFactory = new NullChatTranslation();
+    }
+
+    private static class FakeTopicTrackerClient {
+        public void changeTopic(String newTopic) {
+
+        }
     }
 }
