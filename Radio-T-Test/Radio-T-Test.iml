@@ -11,6 +11,7 @@
   <component name="FacetManager">
     <facet type="android" name="Android">
       <configuration>
+        <option name="UPDATE_PROPERTY_FILES" value="true" />
         <includeAssetsFromLibraries>true</includeAssetsFromLibraries>
       </configuration>
     </facet>
@@ -43,7 +44,7 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module" module-name="Radio-T" scope="PROVIDED" />
+    <orderEntry type="module" module-name="radio-t" scope="PROVIDED" />
   </component>
 </module>
 

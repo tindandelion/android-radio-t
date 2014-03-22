@@ -11,11 +11,8 @@ import org.dandelion.radiot.endtoend.live.helpers.LiveShowServer;
 import org.dandelion.radiot.live.ui.LiveNotificationManager;
 import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.live.MediaPlayerStream;
-import org.dandelion.radiot.live.chat.ProgressListener;
-import org.dandelion.radiot.live.chat.MessageConsumer;
 import org.dandelion.radiot.live.core.AudioStream;
 import org.dandelion.radiot.live.service.TimeoutReceiver;
-import org.dandelion.radiot.live.chat.ChatTranslation;
 import org.dandelion.radiot.live.ui.ChatTranslationFragment;
 import org.dandelion.radiot.live.ui.LiveShowActivity;
 
@@ -115,33 +112,6 @@ public class LiveShowPlaybackTest extends
 
     private Context context() {
         return getInstrumentation().getTargetContext().getApplicationContext();
-    }
-
-    private static class NullChatTranslation implements ChatTranslation, ChatTranslation.Factory {
-        @Override
-        public void setProgressListener(ProgressListener listener) {
-        }
-
-        @Override
-        public void setMessageConsumer(MessageConsumer consumer) {
-        }
-
-        @Override
-        public void start() {
-        }
-
-        @Override
-        public void stop() {
-        }
-
-        @Override
-        public void shutdown() {
-        }
-
-        @Override
-        public ChatTranslation create() {
-            return this;
-        }
     }
 
 }

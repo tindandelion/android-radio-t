@@ -211,9 +211,9 @@
   </component>
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/radio-t/Radio-T.iml" filepath="$PROJECT_DIR$/radio-t/Radio-T.iml" />
-      <module fileurl="file://$PROJECT_DIR$/radio-t-test/Radio-T-Test.iml" filepath="$PROJECT_DIR$/radio-t-test/Radio-T-Test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/radio-t/radio-t.iml" filepath="$PROJECT_DIR$/radio-t/radio-t.iml" />
       <module fileurl="file://$PROJECT_DIR$/radio-t-server/radio-t-server.iml" filepath="$PROJECT_DIR$/radio-t-server/radio-t-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/radio-t-test/radio-t-test.iml" filepath="$PROJECT_DIR$/radio-t-test/radio-t-test.iml" />
     </modules>
   </component>
   <component name="ProjectResources">
