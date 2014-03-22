@@ -43,8 +43,7 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module" module-name="radio-t" scope="PROVIDED" />
-    <orderEntry type="module" module-name="Radio-T" />
+    <orderEntry type="module" module-name="Radio-T" scope="PROVIDED" />
   </component>
 </module>
 
