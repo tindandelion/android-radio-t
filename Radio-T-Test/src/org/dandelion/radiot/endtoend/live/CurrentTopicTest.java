@@ -13,10 +13,21 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class CurrentTopicTest extends ActivityInstrumentationTestCase2<LiveShowActivity> {
     public static final String DEFAULT_TOPIC = "What is a Web Framework?";
+    private static final String NEW_TOPIC = "Amazon's ginormous public cloud turns 8 today";
 
     public void testShowsCurrentTopic() throws Exception {
         Solo solo = new Solo(getInstrumentation(), getActivity());
         assertThat(solo, showsText(DEFAULT_TOPIC));
+    }
+
+    public void testWhenTopicChanges_refreshView() throws Exception {
+        Solo solo = new Solo(getInstrumentation(), getActivity());
+        changeTopicTo(NEW_TOPIC);
+        assertThat(solo, showsText(NEW_TOPIC));
+    }
+
+    private void changeTopicTo(String newTopic) {
+
     }
 
     @TargetApi(Build.VERSION_CODES.FROYO)
