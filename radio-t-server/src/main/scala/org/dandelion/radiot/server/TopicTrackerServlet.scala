@@ -7,6 +7,7 @@ import org.json4s.{DefaultFormats, Formats}
 
 import scala.concurrent._
 import ExecutionContext.Implicits.global
+import org.slf4j.LoggerFactory
 
 class TopicTrackerServlet extends ScalatraServlet
 with AtmosphereSupport with SessionSupport
@@ -16,6 +17,7 @@ with JacksonJsonSupport with JValueResult {
 
   val TopicRoute = "/current-topic"
 
+  val logger = LoggerFactory.getLogger(getClass)
   var topic = "Default topic"
 
   get("/") {
@@ -23,6 +25,7 @@ with JacksonJsonSupport with JValueResult {
   }
 
   def changeTopicTo(newTopic: String) {
+    logger.info("Changing current topic to: [%s]", newTopic)
     topic = newTopic
     AtmosphereClient.broadcast(TopicRoute, topic)
   }
