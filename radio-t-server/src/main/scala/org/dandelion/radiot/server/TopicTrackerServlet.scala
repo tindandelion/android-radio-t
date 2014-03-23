@@ -9,7 +9,7 @@ import scala.concurrent._
 import ExecutionContext.Implicits.global
 import org.slf4j.LoggerFactory
 
-class TopicTrackerServlet(val mountPoint: String) extends ScalatraServlet
+class TopicTrackerServlet extends ScalatraServlet
 with AtmosphereSupport with SessionSupport
 with JacksonJsonSupport with JValueResult {
 
@@ -29,7 +29,7 @@ with JacksonJsonSupport with JValueResult {
   def changeTopicTo(newTopic: String) {
     logger.info("Changing current topic to: [%s]".format(newTopic))
     topic = newTopic
-    AtmosphereClient.broadcast(mountPoint + "/current-topic", topic)
+    AtmosphereClient.broadcast(routeBasePath + "/current-topic", topic)
   }
 
   post("/set-topic") {

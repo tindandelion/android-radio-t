@@ -7,8 +7,6 @@ import java.net.URI
 import org.eclipse.jetty.websocket.api.annotations._
 import org.eclipse.jetty.websocket.api.Session
 import org.scalatest.concurrent.Eventually
-import org.scalatest.concurrent.PatienceConfiguration.Timeout
-import scala.concurrent.duration._
 
 @WebSocket
 class TopicTrackerSocket {
@@ -32,7 +30,7 @@ class TopicTrackerSocket {
 class TopicTrackerServletTest extends ScalatraSpec
 with Matchers with Eventually with BeforeAndAfter {
 
-  addServlet(new TopicTrackerServlet("/chat"), "/chat/*")
+  addServlet(new TopicTrackerServlet, "/chat/*")
 
   val client = new WebSocketClient
   val socket = new TopicTrackerSocket
@@ -59,7 +57,7 @@ with Matchers with Eventually with BeforeAndAfter {
   }
 
   it("changes a topic by POST request") {
-    eventually(Timeout(5 seconds)) { socket should be('connected) }
+    eventually { socket should be('connected) }
 
     post("/chat/set-topic", "New topic") {
       status should equal(200)
