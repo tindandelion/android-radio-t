@@ -7,6 +7,8 @@ import java.net.URI
 import org.eclipse.jetty.websocket.api.annotations._
 import org.eclipse.jetty.websocket.api.Session
 import org.scalatest.concurrent.Eventually
+import org.scalatest.concurrent.PatienceConfiguration.Timeout
+import scala.concurrent.duration._
 
 @WebSocket
 class TopicTrackerSocket {
@@ -30,7 +32,7 @@ class TopicTrackerSocket {
 class TopicTrackerServletTest extends ScalatraSpec
 with Matchers with Eventually with BeforeAndAfter {
 
-  addServlet(new TopicTrackerServlet, "/*")
+  addServlet(new TopicTrackerServlet("/chat"), "/chat/*")
 
   val client = new WebSocketClient
   val socket = new TopicTrackerSocket
@@ -45,7 +47,7 @@ with Matchers with Eventually with BeforeAndAfter {
   }
 
   it("answers a simple request") {
-    get("/") {
+    get("/chat") {
       status should equal(200)
       body should equal("Hello world!")
     }
@@ -57,16 +59,16 @@ with Matchers with Eventually with BeforeAndAfter {
   }
 
   it("changes a topic by POST request") {
-    eventually { socket should be('connected) }
+    eventually(Timeout(5 seconds)) { socket should be('connected) }
 
-    post("/set-topic", "New topic") {
+    post("/chat/set-topic", "New topic") {
       status should equal(200)
       eventually { socket.topic should equal("New topic") }
     }
   }
 
   def serverUrl = localPort match {
-    case Some(port) => new URI(s"ws://localhost:$port/current-topic")
+    case Some(port) => new URI(s"ws://localhost:$port/chat/current-topic")
     case None => throw new RuntimeException("No port is specified")
   }
 }
