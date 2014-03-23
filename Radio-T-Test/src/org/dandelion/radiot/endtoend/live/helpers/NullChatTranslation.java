@@ -1,4 +1,4 @@
-package org.dandelion.radiot.endtoend.live;
+package org.dandelion.radiot.endtoend.live.helpers;
 
 import org.dandelion.radiot.live.chat.ChatTranslation;
 import org.dandelion.radiot.live.chat.MessageConsumer;

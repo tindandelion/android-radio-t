@@ -4,20 +4,16 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.test.ActivityInstrumentationTestCase2;
 import org.dandelion.radiot.accepttest.testables.LiveNotificationManagerSpy;
 import org.dandelion.radiot.endtoend.live.helpers.LiveShowRunner;
 import org.dandelion.radiot.endtoend.live.helpers.LiveShowServer;
-import org.dandelion.radiot.live.ui.LiveNotificationManager;
 import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.live.MediaPlayerStream;
 import org.dandelion.radiot.live.core.AudioStream;
 import org.dandelion.radiot.live.service.TimeoutReceiver;
-import org.dandelion.radiot.live.ui.ChatTranslationFragment;
-import org.dandelion.radiot.live.ui.LiveShowActivity;
+import org.dandelion.radiot.live.ui.LiveNotificationManager;
 
-public class LiveShowPlaybackTest extends
-        ActivityInstrumentationTestCase2<LiveShowActivity> {
+public class LiveShowPlaybackTest extends LiveShowActivityTestCase {
     private LiveShowRunner runner;
     private LiveShowServer backend;
 
@@ -54,17 +50,12 @@ public class LiveShowPlaybackTest extends
         runner.showsTranslationStopped();
     }
 
-    public LiveShowPlaybackTest() {
-        super(LiveShowActivity.class);
-    }
-
     @Override
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
         super.setUp();
         LiveNotificationManagerSpy notificationManager = new LiveNotificationManagerSpy();
         setupTestingApp(notificationManager);
 
-        ChatTranslationFragment.chatFactory = new NullChatTranslation();
         runner = new LiveShowRunner(getInstrumentation(), getActivity(), notificationManager);
         backend = new LiveShowServer(getInstrumentation().getContext());
     }

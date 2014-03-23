@@ -1,23 +1,18 @@
 package org.dandelion.radiot.endtoend.live;
 
-import android.test.ActivityInstrumentationTestCase2;
 import org.dandelion.radiot.endtoend.live.helpers.ChatTranslationRunner;
 import org.dandelion.radiot.endtoend.live.helpers.LiveChatTranslationServer;
 import org.dandelion.radiot.live.chat.ChatTranslation;
 import org.dandelion.radiot.live.chat.http.HttpTranslationEngine;
 import org.dandelion.radiot.live.schedule.DeterministicScheduler;
 import org.dandelion.radiot.live.ui.ChatTranslationFragment;
-import org.dandelion.radiot.live.ui.LiveShowActivity;
 
-import static org.dandelion.radiot.util.ChatStreamBuilder.*;
+import static org.dandelion.radiot.util.ChatStreamBuilder.chatStream;
+import static org.dandelion.radiot.util.ChatStreamBuilder.message;
 
-public class ChatTranslationTest extends ActivityInstrumentationTestCase2<LiveShowActivity> {
+public class ChatTranslationTest extends LiveShowActivityTestCase {
     private LiveChatTranslationServer backend;
     private DeterministicScheduler scheduler;
-
-    public ChatTranslationTest() {
-        super(LiveShowActivity.class);
-    }
 
     public void testAtStartup_RequestsChatContent() throws Exception {
         ChatTranslationRunner app = openScreen();

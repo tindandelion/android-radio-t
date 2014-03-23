@@ -7,6 +7,7 @@ Version 1.9:
     - Configure logging for runtime (log to a file, disable DEBUG by default)
   - Daemonize
   - Deploy to DigitalOcean
+  - Move chat-related classes into a separate package similar to topics
 
  * Hide controls from chat screen
 
