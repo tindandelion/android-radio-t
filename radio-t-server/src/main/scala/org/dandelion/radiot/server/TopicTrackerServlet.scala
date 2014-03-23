@@ -14,14 +14,27 @@ with JacksonJsonSupport with JValueResult {
 
   implicit protected val jsonFormats: Formats = DefaultFormats
 
+  val TopicRoute = "/current-topic"
+
+  var topic = "Default topic"
+
   get("/") {
     "Hello world!"
   }
 
-  atmosphere("/current-topic") {
+  def changeTopicTo(newTopic: String) {
+    topic = newTopic
+    AtmosphereClient.broadcast(TopicRoute, topic)
+  }
+
+  post("/set-topic") {
+    changeTopicTo(request.body)
+  }
+
+  atmosphere(TopicRoute) {
     new AtmosphereClient {
       override def receive: AtmoReceive = {
-        case TextMessage(text) => send("Default topic")
+        case TextMessage(text) => send(topic)
       }
     }
   }

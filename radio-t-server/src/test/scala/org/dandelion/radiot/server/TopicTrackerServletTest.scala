@@ -1,14 +1,12 @@
 package org.dandelion.radiot.server
 
-import org.scalatest.Matchers
+import org.scalatest.{BeforeAndAfter, Matchers}
 import org.scalatra.test.scalatest.ScalatraSpec
 import org.eclipse.jetty.websocket.client.WebSocketClient
 import java.net.URI
 import org.eclipse.jetty.websocket.api.annotations._
 import org.eclipse.jetty.websocket.api.Session
 import org.scalatest.concurrent.Eventually
-import scala.concurrent.duration._
-import org.eclipse.jetty.websocket.api.extensions.Frame
 
 @WebSocket
 class TopicTrackerSocket {
@@ -29,10 +27,22 @@ class TopicTrackerSocket {
   def isConnected = (session != null) && session.isOpen
 }
 
-class TopicTrackerServletTest extends ScalatraSpec with Matchers with Eventually {
-  implicit override def patienceConfig = PatienceConfig(timeout = 5 seconds)
+class TopicTrackerServletTest extends ScalatraSpec
+with Matchers with Eventually with BeforeAndAfter {
 
   addServlet(new TopicTrackerServlet, "/*")
+
+  val client = new WebSocketClient
+  val socket = new TopicTrackerSocket
+
+  before {
+    client.start()
+    client.connect(socket, serverUrl)
+  }
+
+  after {
+    client.stop()
+  }
 
   it("answers a simple request") {
     get("/") {
@@ -42,16 +52,17 @@ class TopicTrackerServletTest extends ScalatraSpec with Matchers with Eventually
   }
 
   it("receives current topic after connection is established") {
-    val client = new WebSocketClient
-    val socket = new TopicTrackerSocket
-
-    client.start()
-    client.connect(socket, serverUrl)
-
     eventually { socket should be('connected) }
     eventually { socket.topic should equal("Default topic") }
+  }
 
-    client.stop()
+  it("changes a topic by POST request") {
+    eventually { socket should be('connected) }
+
+    post("/set-topic", "New topic") {
+      status should equal(200)
+      eventually { socket.topic should equal("New topic") }
+    }
   }
 
   def serverUrl = localPort match {
