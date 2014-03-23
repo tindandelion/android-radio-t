@@ -1,6 +1,7 @@
 package org.dandelion.radiot.endtoend.live;
 
 import com.robotium.solo.Solo;
+import org.dandelion.radiot.endtoend.live.helpers.TopicTrackerServer;
 import org.dandelion.radiot.live.ui.topics.CurrentTopicFragment;
 import org.dandelion.radiot.live.ui.topics.TopicListener;
 import org.dandelion.radiot.live.ui.topics.TopicTracker;
@@ -12,9 +13,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class CurrentTopicTest extends LiveShowActivityTestCase {
     public static final String DEFAULT_TOPIC = "What is a Web Framework?";
+    private static final String TEST_SERVER_ADDRESS = "10.0.1.2";
 
     private FakeTopicTrackerClient client = new FakeTopicTrackerClient();
     private Solo solo;
+    private TopicTrackerServer server;
 
     public void testShowsCurrentTopic() throws Exception {
         assertThat(solo, showsText(DEFAULT_TOPIC));
@@ -22,6 +25,7 @@ public class CurrentTopicTest extends LiveShowActivityTestCase {
 
     public void testWhenTopicChanges_refreshView() throws Exception {
         final String newTopic = "Amazon's ginormous public cloud turns 8 today";
+        server.changeTopic(newTopic);
         client.changeTopic(newTopic);
         assertThat(solo, showsText(newTopic));
     }
@@ -32,6 +36,7 @@ public class CurrentTopicTest extends LiveShowActivityTestCase {
         CurrentTopicFragment.trackerFactory = client;
 
         solo = new Solo(getInstrumentation(), getActivity());
+        server = new TopicTrackerServer(TEST_SERVER_ADDRESS);
     }
 
     private class FakeTopicTrackerClient implements TopicTracker, TopicTrackerFactory {
