@@ -8,7 +8,6 @@
     <TextView
         android:id="@+id/current_topic_text"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="What is a Web Framework?"/>
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

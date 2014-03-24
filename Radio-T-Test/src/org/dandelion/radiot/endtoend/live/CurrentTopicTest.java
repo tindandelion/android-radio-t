@@ -37,8 +37,11 @@ public class CurrentTopicTest extends LiveShowActivityTestCase {
         CurrentTopicFragment.trackerFactory = new TopicTrackerClient(
                 String.format("ws://%s:8080/chat/current-topic", TEST_SERVER_ADDRESS));
 
-        solo = new Solo(getInstrumentation(), getActivity());
         server = new TopicTrackerServer(TEST_SERVER_ADDRESS);
+        server.changeTopic(DEFAULT_TOPIC);
+
+        solo = new Solo(getInstrumentation(), getActivity());
+
     }
 
     private static class TopicTrackerClient implements TopicTracker, TopicTrackerFactory {
@@ -52,6 +55,11 @@ public class CurrentTopicTest extends LiveShowActivityTestCase {
 
         private WebSocketHandler handler() {
             return new WebSocketHandler() {
+                @Override
+                public void onOpen() {
+                    connection.sendTextMessage("get");
+                }
+
                 @Override
                 public void onTextMessage(String payload) {
                     if (listener != null) listener.onTopicChanged(payload);
