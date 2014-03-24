@@ -202,9 +202,11 @@
         <w>dest</w>
         <w>displayer</w>
         <w>foregrounder</w>
+        <w>logback</w>
         <w>podcast</w>
         <w>podcasts</w>
         <w>scalatra</w>
+        <w>stdout</w>
         <w>подключиться</w>
       </words>
     </dictionary>
