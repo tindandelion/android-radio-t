@@ -1,9 +1,20 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'org.hidetake:gradle-ssh-plugin:0.3.0'
+    }
+}
+
 apply plugin: 'scala'
 apply plugin: 'application'
+apply plugin: 'ssh'
 
 version = '1.0'
-//noinspection GroovyUnusedAssignment
 mainClassName = "JettyLauncher"
+
 
 repositories {
     mavenCentral()
@@ -12,6 +23,27 @@ repositories {
 jar {
     manifest {
         attributes 'Main-Class': mainClassName
+    }
+}
+
+ssh {
+    knownHosts = allowAnyHosts
+}
+
+remotes {
+    vagrant {
+        host = 'localhost'
+        port = 2222
+        user = 'vagrant'
+        identity = new File('~/.vagrant.d/insecure_private_key')
+    }
+}
+
+task deployVagrant(type: SshTask, dependsOn: 'distTar') {
+    description 'Deploys the server to the local Vagrant environment'
+
+    session(remotes.vagrant) {
+        execute('echo Hello')
     }
 }
 
