@@ -3,10 +3,10 @@ Version 1.9:
   DONE Scalatra
   DONE Testing Scalatra
   DONE Deploy simple servlet
-  PROGRESS Logging
-    - Configure logging for runtime (log to a file, disable DEBUG by default)
+  DONE Logging: configure logging for runtime (log to a file, disable DEBUG by default)
   - Daemonize
   - Deploy to DigitalOcean
+  - Make sure we connect and disconnect from the topic tracker correctly
   - Move chat-related classes into a separate package similar to topics
 
  * Hide controls from chat screen

@@ -54,7 +54,7 @@ public class CurrentTopicTest extends LiveShowActivityTestCase {
             return new WebSocketHandler() {
                 @Override
                 public void onTextMessage(String payload) {
-                    listener.onTopicChanged(payload);
+                    if (listener != null) listener.onTopicChanged(payload);
                 }
             };
         }
