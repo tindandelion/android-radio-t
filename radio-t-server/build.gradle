@@ -42,8 +42,14 @@ remotes {
 task deployVagrant(type: SshTask, dependsOn: 'distTar') {
     description 'Deploys the server to the local Vagrant environment'
 
+    def tempPath = '/tmp/' + distTar.archiveName
+    def distributionDir = '/opt'
+
     session(remotes.vagrant) {
-        execute('echo Hello')
+        put(distTar.archivePath.absolutePath, tempPath)
+
+        executeSudo("rm -rf ${distributionDir}/${distTar.archiveName}")
+        executeSudo("tar xf ${tempPath} -C ${distributionDir}")
     }
 }
 
