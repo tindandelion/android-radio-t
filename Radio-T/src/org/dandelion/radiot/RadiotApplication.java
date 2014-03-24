@@ -5,12 +5,15 @@ import android.os.Handler;
 import org.dandelion.radiot.live.chat.ChatTranslation;
 import org.dandelion.radiot.live.chat.http.HttpTranslationEngine;
 import org.dandelion.radiot.live.schedule.Scheduler;
+import org.dandelion.radiot.live.topics.TopicTrackerFactory;
 import org.dandelion.radiot.live.ui.ChatTranslationFragment;
+import org.dandelion.radiot.live.ui.topics.CurrentTopicFragment;
 import org.dandelion.radiot.podcasts.main.PodcastsApp;
 import org.dandelion.radiot.util.ProgrammerError;
 
 public class RadiotApplication extends Application {
     private static final String CHAT_URL = "http://chat.radio-t.com";
+    private static final String TOPIC_TRACKER_ADDRESS = "10.0.1.2";
     // private static final String CHAT_URL = "http://192.168.5.206:4567";
 
     @Override
@@ -18,6 +21,11 @@ public class RadiotApplication extends Application {
         super.onCreate();
         PodcastsApp.initialize(this);
         setupChatTranslation();
+        setupTopicTracker();
+    }
+
+    private void setupTopicTracker() {
+        CurrentTopicFragment.trackerFactory = new TopicTrackerFactory(TOPIC_TRACKER_ADDRESS);
     }
 
     private void setupChatTranslation() {

@@ -2,9 +2,8 @@ package org.dandelion.radiot.endtoend.live.helpers;
 
 import org.dandelion.radiot.live.ui.topics.TopicListener;
 import org.dandelion.radiot.live.ui.topics.TopicTracker;
-import org.dandelion.radiot.live.ui.topics.TopicTrackerFactory;
 
-public class NullTopicTracker implements TopicTrackerFactory, TopicTracker {
+public class NullTopicTracker implements TopicTracker.Factory, TopicTracker {
     @Override
     public TopicTracker create() {
         return this;

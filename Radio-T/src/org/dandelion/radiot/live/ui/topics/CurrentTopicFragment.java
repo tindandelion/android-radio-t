@@ -2,7 +2,6 @@ package org.dandelion.radiot.live.ui.topics;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,7 @@ import android.widget.TextView;
 import org.dandelion.radiot.R;
 
 public class CurrentTopicFragment extends Fragment implements TopicListener {
-    public static TopicTrackerFactory trackerFactory = null;
+    public static TopicTracker.Factory trackerFactory = null;
     private TextView topicText;
     private TopicTracker client;
 
@@ -19,7 +18,6 @@ public class CurrentTopicFragment extends Fragment implements TopicListener {
         super.onCreate(savedInstanceState);
         client = trackerFactory.create();
         client.setListener(this);
-        Log.d("TOPIC", "Created a fragment");
     }
 
     @Override
