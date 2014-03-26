@@ -4,8 +4,13 @@ Version 1.9:
   DONE Testing Scalatra
   DONE Deploy simple servlet
   DONE Logging: configure logging for runtime (log to a file, disable DEBUG by default)
-  - Daemonize
   - Deploy to DigitalOcean
+    - Sign up
+    - Create a virtual machine
+    - How to deploy?
+    - How to access from outside?
+
+  - Daemonize
   - Make sure we connect and disconnect from the topic tracker correctly
   - Move chat-related classes into a separate package similar to topics
 
