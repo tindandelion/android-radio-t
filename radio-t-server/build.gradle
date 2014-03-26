@@ -1,16 +1,19 @@
 buildscript {
     repositories {
         mavenCentral()
+        jcenter()
     }
 
     dependencies {
         classpath 'org.hidetake:gradle-ssh-plugin:0.3.0'
+        classpath 'org.gradle.api.plugins:gradle-vagrant-plugin:0.5'
     }
 }
 
 apply plugin: 'scala'
 apply plugin: 'application'
 apply plugin: 'ssh'
+apply plugin: 'vagrant'
 
 version = '1.0'
 mainClassName = "JettyLauncher"
@@ -31,7 +34,7 @@ ssh {
 }
 
 remotes {
-    vagrant {
+    local {
         host = 'localhost'
         port = 2222
         user = 'vagrant'
@@ -45,9 +48,9 @@ remotes {
     }
 }
 
-task deployVagrant(dependsOn: 'distTar') {
+task deployLocal(dependsOn: ['distTar', 'vagrantUp']) {
     description 'Deploys the server to the local Vagrant environment'
-    doLast { deployApp(remotes.vagrant) }
+    doLast { deployApp(remotes.local) }
 }
 
 task deployProduction(dependsOn: 'distTar') {
