@@ -5,10 +5,11 @@ Version 1.9:
   DONE Deploy simple servlet
   DONE Logging: configure logging for runtime (log to a file, disable DEBUG by default)
   - Deploy to DigitalOcean
-    - Sign up
-    - Create a virtual machine
-    - How to deploy?
-    - How to access from outside?
+    DONE Sign up
+    DONE Create a virtual machine
+    DONE How to access from outside?
+    - Create a domain?
+    - Use Vagrant to provision to DigitalOcean http://blog.publysher.nl/2013/07/infra-as-repo-using-vagrant-and-salt.html
 
   - Daemonize
   - Make sure we connect and disconnect from the topic tracker correctly

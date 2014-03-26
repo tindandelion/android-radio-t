@@ -37,7 +37,14 @@ remotes {
         user = 'vagrant'
         identity = new File('~/.vagrant.d/insecure_private_key')
     }
+
+    production {
+        host = '107.170.84.215'
+        user = 'root'
+        identity = new File('~/.ssh/id_rsa')
+    }
 }
+
 
 task deployVagrant(type: SshTask, dependsOn: 'distTar') {
     description 'Deploys the server to the local Vagrant environment'
@@ -46,6 +53,20 @@ task deployVagrant(type: SshTask, dependsOn: 'distTar') {
     def distributionDir = '/opt'
 
     session(remotes.vagrant) {
+        put(distTar.archivePath.absolutePath, tempPath)
+
+        executeSudo("rm -rf ${distributionDir}/${distTar.archiveName}")
+        executeSudo("tar xf ${tempPath} -C ${distributionDir}")
+    }
+}
+
+task deployProduction(type: SshTask, dependsOn: 'distTar') {
+    description 'Deploys the server to the production environment'
+
+    def tempPath = '/tmp/' + distTar.archiveName
+    def distributionDir = '/opt'
+
+    session(remotes.production) {
         put(distTar.archivePath.absolutePath, tempPath)
 
         executeSudo("rm -rf ${distributionDir}/${distTar.archiveName}")
