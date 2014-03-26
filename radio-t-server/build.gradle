@@ -45,34 +45,31 @@ remotes {
     }
 }
 
-
-task deployVagrant(type: SshTask, dependsOn: 'distTar') {
+task deployVagrant(dependsOn: 'distTar') {
     description 'Deploys the server to the local Vagrant environment'
-
-    def tempPath = '/tmp/' + distTar.archiveName
-    def distributionDir = '/opt'
-
-    session(remotes.vagrant) {
-        put(distTar.archivePath.absolutePath, tempPath)
-
-        executeSudo("rm -rf ${distributionDir}/${distTar.archiveName}")
-        executeSudo("tar xf ${tempPath} -C ${distributionDir}")
-    }
+    doLast { deployApp(remotes.vagrant) }
 }
 
-task deployProduction(type: SshTask, dependsOn: 'distTar') {
+task deployProduction(dependsOn: 'distTar') {
     description 'Deploys the server to the production environment'
+    doLast { deployApp(remotes.production) }
+}
 
+
+private void deployApp(def remote) {
     def tempPath = '/tmp/' + distTar.archiveName
     def distributionDir = '/opt'
 
-    session(remotes.production) {
-        put(distTar.archivePath.absolutePath, tempPath)
+    sshexec {
+        session(remote) {
+            put(distTar.archivePath.absolutePath, tempPath)
 
-        executeSudo("rm -rf ${distributionDir}/${distTar.archiveName}")
-        executeSudo("tar xf ${tempPath} -C ${distributionDir}")
+            executeSudo("rm -rf ${distributionDir}/${distTar.archiveName}")
+            executeSudo("tar xf ${tempPath} -C ${distributionDir}")
+        }
     }
 }
+
 
 dependencies {
     compile 'org.scala-lang:scala-library:2.10.3'
