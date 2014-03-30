@@ -11,22 +11,13 @@ buildscript {
 }
 
 apply plugin: 'scala'
-apply plugin: 'application'
 apply plugin: 'ssh'
 apply plugin: 'vagrant'
 
 version = '1.0'
-mainClassName = "JettyLauncher"
-
 
 repositories {
     mavenCentral()
-}
-
-jar {
-    manifest {
-        attributes 'Main-Class': mainClassName
-    }
 }
 
 ssh {
@@ -45,6 +36,16 @@ remotes {
         host = '107.170.84.215'
         user = 'root'
         identity = new File('~/.ssh/id_rsa')
+    }
+}
+
+task uberjar(type: Jar, dependsOn: 'classes') {
+    from files(sourceSets.main.output.classesDir)
+    from files(sourceSets.main.output.resourcesDir)
+    from {configurations.compile.collect {zipTree(it)}}
+
+    manifest {
+        attributes 'Main-Class': "JettyLauncher"
     }
 }
 
