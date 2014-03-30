@@ -292,6 +292,15 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-codec/commons-codec/1.6/61e9f9d11fe3e12ec62f633006e99d75fd7f19c8/commons-codec-1.6-sources.jar!/" />
       </SOURCES>
     </library>
+    <library name="Gradle: commons-daemon-1.0.15">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-daemon/commons-daemon/1.0.15/275b3f1efc36c6a5c276440a96a489f4ff90fa8a/commons-daemon-1.0.15.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-daemon/commons-daemon/1.0.15/be9e3caa33ab36521b0cbdc8df9188ca416cd1df/commons-daemon-1.0.15-sources.jar!/" />
+      </SOURCES>
+    </library>
     <library name="Gradle: commons-lang3-3.2.1">
       <CLASSES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-lang3/3.2.1/66f13681add50ca9e4546ffabafaaac7645db3cf/commons-lang3-3.2.1.jar!/" />

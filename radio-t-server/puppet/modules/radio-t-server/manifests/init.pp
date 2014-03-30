@@ -3,6 +3,10 @@ class radio-t-server {
     ensure => installed
   }
 
+  package { "jsvc":
+      ensure => installed
+  }
+
   exec { "update-default-jre":
       command => "update-alternatives --set java /usr/lib/jvm/java-7-openjdk-i386/jre/bin/java",
       path => $path,
@@ -15,5 +19,10 @@ class radio-t-server {
 
   file { "/opt/radio-t-server":
       ensure => directory
+  }
+
+  file { "/etc/init.d/radio-t-server":
+      content => template("radio-t-server/start-stop-script.erb"),
+      mode => "a+x"
   }
 }

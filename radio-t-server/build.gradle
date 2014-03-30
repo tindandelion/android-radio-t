@@ -68,6 +68,7 @@ private void deployApp(def remote) {
         session(remote) {
             put(uberjar.archivePath.absolutePath, tempPath)
             executeSudo("mv $tempPath $distributionDir")
+            executeSudo("/etc/init.d/radio-t-server restart")
         }
     }
 }
@@ -81,6 +82,7 @@ dependencies {
     compile 'org.eclipse.jetty:jetty-webapp:9.1.3.v20140225'
     compile 'org.eclipse.jetty.websocket:websocket-server:9.1.3.v20140225'
     compile 'ch.qos.logback:logback-classic:1.1.1'
+    compile 'commons-daemon:commons-daemon:1.0.15'
     compile files('libs/smack-3.4.1-0cec571.jar', 'libs/smackx-3.4.1-0cec571.jar')
 
     testCompile 'org.scalatra:scalatra-scalatest_2.10:2.3.0.RC1'
