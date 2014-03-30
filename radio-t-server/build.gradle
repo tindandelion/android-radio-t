@@ -43,10 +43,6 @@ task uberjar(type: Jar, dependsOn: 'classes') {
     from files(sourceSets.main.output.classesDir)
     from files(sourceSets.main.output.resourcesDir)
     from {configurations.compile.collect {zipTree(it)}}
-
-    manifest {
-        attributes 'Main-Class': "JettyLauncher"
-    }
 }
 
 task deployLocal(dependsOn: ['uberjar', 'vagrantUp']) {
