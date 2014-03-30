@@ -49,27 +49,25 @@ task uberjar(type: Jar, dependsOn: 'classes') {
     }
 }
 
-task deployLocal(dependsOn: ['distTar', 'vagrantUp']) {
+task deployLocal(dependsOn: ['uberjar', 'vagrantUp']) {
     description 'Deploys the server to the local Vagrant environment'
     doLast { deployApp(remotes.local) }
 }
 
-task deployProduction(dependsOn: 'distTar') {
+task deployProduction(dependsOn: 'uberjar') {
     description 'Deploys the server to the production environment'
     doLast { deployApp(remotes.production) }
 }
 
 
 private void deployApp(def remote) {
-    def tempPath = '/tmp/' + distTar.archiveName
-    def distributionDir = '/opt'
+    def tempPath = '/tmp/' + uberjar.archiveName
+    def distributionDir = '/opt/radio-t-server'
 
     sshexec {
         session(remote) {
-            put(distTar.archivePath.absolutePath, tempPath)
-
-            executeSudo("rm -rf ${distributionDir}/${distTar.archiveName}")
-            executeSudo("tar xf ${tempPath} -C ${distributionDir}")
+            put(uberjar.archivePath.absolutePath, tempPath)
+            executeSudo("mv $tempPath $distributionDir")
         }
     }
 }
