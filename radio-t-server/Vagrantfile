@@ -25,5 +25,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       provider.image = 'Ubuntu 12.04.3 x64'
       provider.size = '512MB'
     end
+    
+    prod.vm.provision 'shell', inline: 'apt-get -qq update && apt-get -qq -y install puppet'
+    prod.vm.provision "puppet" do |puppet|
+      puppet.manifests_path = "puppet/manifests"
+      puppet.module_path = "puppet/modules"
+      puppet.manifest_file  = "production.pp"
+    end
   end
 end
