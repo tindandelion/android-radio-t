@@ -9,11 +9,21 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     local.vm.network "forwarded_port", guest: 9090, host: 9090
     local.vm.network "forwarded_port", guest: 5222, host: 5222
     local.vm.network "forwarded_port", guest: 8080, host: 8080
-
+    
     local.vm.provision "puppet" do |puppet|
       puppet.manifests_path = "puppet/manifests"
       puppet.module_path = "puppet/modules"
       puppet.manifest_file  = "local.pp"
+    end
+  end
+  
+  config.vm.define 'radio-t-server' do |prod|
+    prod.vm.box = 'digital_ocean'
+    prod.vm.synced_folder '.', '/vagrant', disabled: true
+    
+    prod.vm.provider :digital_ocean do |provider|
+      provider.image = 'Ubuntu 12.04.3 x64'
+      provider.size = '512MB'
     end
   end
 end
