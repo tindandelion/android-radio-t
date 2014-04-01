@@ -12,7 +12,10 @@ buildscript {
 
 apply plugin: 'scala'
 apply plugin: 'ssh'
-apply plugin: 'vagrant'
+apply plugin: 'vagrant-base'
+
+import org.gradle.api.plugins.vagrant.tasks.Vagrant
+import org.gradle.api.plugins.vagrant.tasks.VagrantUp
 
 version = '1.0'
 
@@ -45,12 +48,21 @@ task uberjar(type: Jar, dependsOn: 'classes') {
     from {configurations.compile.collect {zipTree(it)}}
 }
 
-task deployLocal(dependsOn: ['uberjar', 'vagrantUp']) {
+task vagrantLocalUp(type: VagrantUp) {
+    commands << 'local'
+}
+
+task vagrantProductionUp(type: VagrantUp) {
+    commands << 'radio-t-server'
+    provider = 'digital_ocean'
+}
+
+task deployLocal(dependsOn: ['uberjar', 'vagrantLocalUp']) {
     description 'Deploys the server to the local Vagrant environment'
     doLast { deployApp(remotes.local) }
 }
 
-task deployProduction(dependsOn: 'uberjar') {
+task deployProduction(dependsOn: ['uberjar', 'vagrantProductionUp']) {
     description 'Deploys the server to the production environment'
     doLast { deployApp(remotes.production) }
 }

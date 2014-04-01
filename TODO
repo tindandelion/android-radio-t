@@ -12,11 +12,11 @@ Version 1.9:
     DONE Use Vagrant to provision to DigitalOcean
       http://blog.publysher.nl/2013/07/infra-as-repo-using-vagrant-and-salt.html
     DONE Provision with Puppet
+    DONE Gradle task to build and deploy - local and production
     - Create a domain?
     - Can I use a Vagrant's VM name different from droplet name?
-    - Gradle task to build and deploy - local and production
 
-
+  - Tests are not running with Gradle?
   - Make sure we connect and disconnect from the topic tracker correctly
   - Move chat-related classes into a separate package similar to topics
 
