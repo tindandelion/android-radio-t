@@ -9,11 +9,13 @@ Version 1.9:
     DONE Sign up
     DONE Create a virtual machine
     DONE How to access from outside?
-    - Use Vagrant to provision to DigitalOcean
+    DONE Use Vagrant to provision to DigitalOcean
       http://blog.publysher.nl/2013/07/infra-as-repo-using-vagrant-and-salt.html
-      - Can I use a VM name different from droplet name?
-      - Provision with Puppet
+    DONE Provision with Puppet
     - Create a domain?
+    - Can I use a Vagrant's VM name different from droplet name?
+    - Gradle task to build and deploy - local and production
+
 
   - Make sure we connect and disconnect from the topic tracker correctly
   - Move chat-related classes into a separate package similar to topics
