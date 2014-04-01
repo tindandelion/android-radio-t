@@ -16,7 +16,7 @@ Version 1.9:
     - Create a domain?
     - Can I use a Vagrant's VM name different from droplet name?
 
-  - Tests are not running with Gradle?
+  DONE Tests are not running with Gradle?
   - Make sure we connect and disconnect from the topic tracker correctly
   - Move chat-related classes into a separate package similar to topics
 

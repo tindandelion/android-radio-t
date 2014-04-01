@@ -1,7 +1,6 @@
 package org.dandelion.radiot.server
 
 import org.scalatest.{BeforeAndAfter, Matchers}
-import org.scalatra.test.scalatest.ScalatraSpec
 import org.eclipse.jetty.websocket.client.WebSocketClient
 import java.net.URI
 import org.eclipse.jetty.websocket.api.annotations._
@@ -27,7 +26,7 @@ class TopicTrackerSocket {
   def isConnected = (session != null) && session.isOpen
 }
 
-class TopicTrackerServletTest extends ScalatraSpec
+class TopicTrackerServletTest extends RadiotServerSpec
 with Matchers with Eventually with BeforeAndAfter {
 
   addServlet(new TopicTrackerServlet, "/chat/*")
