@@ -1,4 +1,6 @@
 class radio-t-server {
+  $jre_home = "/usr/lib/jvm/java-7-openjdk-amd64/jre"
+
   package { "openjdk-7-jre-headless":
     ensure => installed
   }
@@ -8,7 +10,7 @@ class radio-t-server {
   }
 
   exec { "update-default-jre":
-      command => "update-alternatives --set java /usr/lib/jvm/java-7-openjdk-i386/jre/bin/java",
+      command => "update-alternatives --set java ${jre_home}/bin/java",
       path => $path,
       require => Package["openjdk-7-jre-headless"]
   }

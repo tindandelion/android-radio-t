@@ -4,7 +4,7 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define 'local', primary: true do |local|
-    local.vm.box = "hashicorp/precise32"
+    local.vm.box = "hashicorp/precise64"
     
     local.vm.network "forwarded_port", guest: 9090, host: 9090
     local.vm.network "forwarded_port", guest: 5222, host: 5222
