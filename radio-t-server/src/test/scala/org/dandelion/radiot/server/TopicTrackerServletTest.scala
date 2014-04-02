@@ -10,6 +10,8 @@ import scala.concurrent.duration._
 import org.jivesoftware.smack.{ConnectionConfiguration, XMPPConnection}
 import org.jivesoftware.smackx.muc.MultiUserChat
 
+
+
 class TopicTrackerServletTest extends RadiotServerSpec
 with Matchers with Eventually with BeforeAndAfter {
   implicit val config = PatienceConfig(timeout = 5 seconds, interval = 0.5 seconds)
@@ -55,27 +57,12 @@ with Matchers with Eventually with BeforeAndAfter {
 
   it("changes a topic by a message from the chat") {
     val newTopic = "New topic to discuss"
-    sendMessageToChat("jc-radio-t", newTopic)
+
+    JabberChat.sendMessage(newTopic)
+
     topicShouldBe(newTopic)
   }
 
-
-  def sendMessageToChat(user: String, message: String) {
-    val password = "password"
-    val room = "online@conference.precise64"
-
-    val config = new ConnectionConfiguration("localhost", 5222)
-    val connection = new XMPPConnection(config)
-    connection.connect()
-    try {
-      connection.login(user, password)
-      val chat = new MultiUserChat(connection, room)
-      chat.join(user)
-      chat.sendMessage(message)
-    } finally {
-      connection.disconnect()
-    }
-  }
 
   def topicShouldBe(expected: String) {
     eventually { socket.topic should equal(expected) }
@@ -86,6 +73,31 @@ with Matchers with Eventually with BeforeAndAfter {
     case None => throw new RuntimeException("No port is specified")
   }
 }
+
+object JabberChat {
+  val Room = "online@conference.precise64"
+  val Username = "jc-radio-t"
+  val Password = "password"
+  val Config = new ConnectionConfiguration("localhost", 5222)
+
+  def connect(action: (MultiUserChat) => Unit) {
+    val connection = new XMPPConnection(Config)
+    connection.connect()
+    try {
+      connection.login(Username, Password)
+      val chat = new MultiUserChat(connection, JabberChat.Room)
+      chat.join(JabberChat.Username)
+      action(chat)
+    } finally {
+      connection.disconnect()
+    }
+  }
+
+  def sendMessage(message: String) {
+    connect { chat => chat.sendMessage(message) }
+  }
+}
+
 
 @WebSocket
 class TopicTrackerSocket {
