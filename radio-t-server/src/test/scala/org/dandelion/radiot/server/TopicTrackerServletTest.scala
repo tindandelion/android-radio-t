@@ -7,6 +7,8 @@ import org.eclipse.jetty.websocket.api.annotations._
 import org.eclipse.jetty.websocket.api.Session
 import org.scalatest.concurrent.Eventually
 import scala.concurrent.duration._
+import org.jivesoftware.smack.{ConnectionConfiguration, XMPPConnection}
+import org.jivesoftware.smackx.muc.MultiUserChat
 
 class TopicTrackerServletTest extends RadiotServerSpec
 with Matchers with Eventually with BeforeAndAfter {
@@ -44,6 +46,30 @@ with Matchers with Eventually with BeforeAndAfter {
     post("/chat/set-topic", newTopic) {
       status should equal(200)
       topicShouldBe(newTopic)
+    }
+  }
+
+  it("changes a topic by a message from the chat") {
+    val newTopic = "New topic to discuss"
+    sendMessageToChat("jc-radio-t", newTopic)
+    topicShouldBe(newTopic)
+  }
+
+
+  def sendMessageToChat(user: String, message: String) {
+    val password = "jc-radio-t"
+    val room = "online@conference.precise32"
+
+    val config = new ConnectionConfiguration("localhost", 5222)
+    val connection = new XMPPConnection(config)
+    connection.connect()
+    try {
+      connection.login(user, password)
+      val chat = new MultiUserChat(connection, room)
+      chat.join(user)
+      chat.sendMessage(message)
+    } finally {
+      connection.disconnect()
     }
   }
 
