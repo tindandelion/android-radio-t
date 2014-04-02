@@ -13,13 +13,16 @@ import org.jivesoftware.smackx.muc.MultiUserChat
 class TopicTrackerServletTest extends RadiotServerSpec
 with Matchers with Eventually with BeforeAndAfter {
   implicit val config = PatienceConfig(timeout = 5 seconds, interval = 0.5 seconds)
-
-  addServlet(new TopicTrackerServlet, "/chat/*")
-
   val client = new WebSocketClient
   val socket = new TopicTrackerSocket
+  val servlet = new TopicTrackerServlet
+
+  addServlet(servlet, "/chat/*")
+
 
   before {
+    servlet.connectToChat()
+
     client.start()
     client.connect(socket, serverUrl)
 
@@ -28,6 +31,7 @@ with Matchers with Eventually with BeforeAndAfter {
 
   after {
     client.stop()
+    servlet.disconnectFromChat()
   }
 
   it("answers a simple request") {
