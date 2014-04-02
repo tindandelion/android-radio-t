@@ -34,7 +34,7 @@ with JacksonJsonSupport with JValueResult {
   def connectToChat() {
     connection.connect()
     connection.login("android-radiot", "password")
-    chat = new MultiUserChat(connection, "online@conference.precise32")
+    chat = new MultiUserChat(connection, "online@conference.precise64")
     val history = new DiscussionHistory()
     history.setMaxStanzas(0)
     chat.join("android-radiot", "password", history,

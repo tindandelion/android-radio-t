@@ -61,8 +61,8 @@ with Matchers with Eventually with BeforeAndAfter {
 
 
   def sendMessageToChat(user: String, message: String) {
-    val password = "jc-radio-t"
-    val room = "online@conference.precise32"
+    val password = "password"
+    val room = "online@conference.precise64"
 
     val config = new ConnectionConfiguration("localhost", 5222)
     val connection = new XMPPConnection(config)

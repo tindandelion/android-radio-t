@@ -5,4 +5,4 @@ import org.scalatest.junit.JUnitRunner
 import org.scalatra.test.scalatest.ScalatraSpec
 
 @RunWith(classOf[JUnitRunner])
-class RadiotServerSpec extends ScalatraSpec
+abstract class RadiotServerSpec extends ScalatraSpec
