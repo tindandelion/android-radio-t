@@ -8,8 +8,8 @@ import org.json4s.{DefaultFormats, Formats}
 import scala.concurrent._
 import ExecutionContext.Implicits.global
 import org.slf4j.LoggerFactory
-import org.jivesoftware.smack.{PacketListener, XMPPConnection, ConnectionConfiguration}
-import org.jivesoftware.smackx.muc.MultiUserChat
+import org.jivesoftware.smack.{SmackConfiguration, PacketListener, XMPPConnection, ConnectionConfiguration}
+import org.jivesoftware.smackx.muc.{DiscussionHistory, MultiUserChat}
 import org.jivesoftware.smack.packet.{Message, Packet}
 
 class TopicTrackerServlet extends ScalatraServlet
@@ -35,7 +35,10 @@ with JacksonJsonSupport with JValueResult {
     connection.connect()
     connection.login("android-radiot", "password")
     chat = new MultiUserChat(connection, "online@conference.precise32")
-    chat.join("android-radiot")
+    val history = new DiscussionHistory()
+    history.setMaxStanzas(0)
+    chat.join("android-radiot", "password", history,
+      SmackConfiguration.getPacketReplyTimeout)
     chat.addMessageListener(topicListener)
   }
 
@@ -64,11 +67,6 @@ with JacksonJsonSupport with JValueResult {
   def changeTopicTo(newTopic: String) {
     logger.info("Changing current topic to: [%s]".format(newTopic))
     currentTopic = newTopic
-    notifyClients()
-  }
-
-  def notifyClients() {
-    if (request != null)
-      AtmosphereClient.broadcast(routeBasePath + "/current-topic", currentTopic)
+    AtmosphereClient.broadcastAll(currentTopic)
   }
 }

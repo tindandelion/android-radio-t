@@ -17,6 +17,7 @@ Version 1.9:
     - Create a domain?
     - Can I use a Vagrant's VM name different from droplet name?
 
+  - Broadcast current topic only to current topic's clients
   - Make sure we connect and disconnect from the topic tracker correctly
   - Move chat-related classes into a separate package similar to topics
 
