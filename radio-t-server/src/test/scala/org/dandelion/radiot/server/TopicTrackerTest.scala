@@ -3,7 +3,7 @@ package org.dandelion.radiot.server
 import org.jivesoftware.smack.packet.{Message, Packet}
 import org.jivesoftware.smack.{PacketListener, ConnectionConfiguration, XMPPConnection}
 import org.jivesoftware.smackx.muc.MultiUserChat
-import org.scalatest.{BeforeAndAfter, Matchers, FunSpec}
+import org.scalatest.{Ignore, BeforeAndAfter, Matchers, FunSpec}
 import scala.collection.mutable
 
 class ChatMessageListener extends PacketListener {
@@ -48,6 +48,7 @@ object TopicTracker {
   }
 }
 
+@Ignore
 class TopicTrackerTest extends FunSpec with Matchers with BeforeAndAfter {
   val tracker = TopicTracker
 
