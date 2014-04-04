@@ -15,11 +15,14 @@ Version 1.9:
     DONE Provision with Puppet
     DONE Gradle task to build and deploy - local and production
     - Create a domain?
-    - Can I use a Vagrant's VM name different from droplet name?
 
-  - Broadcast current topic only to current topic's clients
+  DONE Broadcast current topic only to current topic's clients
+  - Listening to chat
+    - Connect to chat at server start
+    - Store chat user's credentials in a safe place
   - Make sure we connect and disconnect from the topic tracker correctly
   - Move chat-related classes into a separate package similar to topics
+  - Chat tracker's fault tolerance
 
  * Hide controls from chat screen
 
