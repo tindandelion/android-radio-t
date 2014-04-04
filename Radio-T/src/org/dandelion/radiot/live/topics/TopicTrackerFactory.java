@@ -4,10 +4,10 @@ import de.tavendo.autobahn.WebSocketException;
 import org.dandelion.radiot.live.ui.topics.TopicTracker;
 
 public class TopicTrackerFactory implements TopicTracker.Factory {
-    private final String address;
+    private final String baseUrl;
 
-    public TopicTrackerFactory(String address) {
-        this.address = address;
+    public TopicTrackerFactory(String baseUrl) {
+        this.baseUrl = baseUrl;
     }
 
     @Override
@@ -20,6 +20,6 @@ public class TopicTrackerFactory implements TopicTracker.Factory {
     }
 
     private String trackerUrl() {
-        return String.format("ws://%s:8080/chat/current-topic", address);
+        return String.format("ws://%s/current-topic", baseUrl);
     }
 }

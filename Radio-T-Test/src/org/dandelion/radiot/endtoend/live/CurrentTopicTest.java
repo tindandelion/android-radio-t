@@ -11,7 +11,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class CurrentTopicTest extends LiveShowActivityTestCase {
     public static final String DEFAULT_TOPIC = "What is a Web Framework?";
-    private static final String TEST_SERVER_ADDRESS = "10.0.1.2";
+    private static final String TEST_SERVER_BASE_URL = "10.0.1.2:8080/testing/chat";
 
     private Solo solo;
     private TopicTrackerServer server;
@@ -29,9 +29,9 @@ public class CurrentTopicTest extends LiveShowActivityTestCase {
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        CurrentTopicFragment.trackerFactory = new TopicTrackerFactory(TEST_SERVER_ADDRESS);
+        CurrentTopicFragment.trackerFactory = new TopicTrackerFactory(TEST_SERVER_BASE_URL);
 
-        server = new TopicTrackerServer(TEST_SERVER_ADDRESS);
+        server = new TopicTrackerServer(TEST_SERVER_BASE_URL);
         server.changeTopic(DEFAULT_TOPIC);
 
         solo = new Solo(getInstrumentation(), getActivity());

@@ -13,7 +13,7 @@ import org.dandelion.radiot.util.ProgrammerError;
 
 public class RadiotApplication extends Application {
     private static final String CHAT_URL = "http://chat.radio-t.com";
-    private static final String TOPIC_TRACKER_ADDRESS = "10.0.1.2";
+    private static final String TOPIC_TRACKER_BASE_URL = "10.0.1.2:8080/chat";
     // private static final String CHAT_URL = "http://192.168.5.206:4567";
 
     @Override
@@ -25,7 +25,7 @@ public class RadiotApplication extends Application {
     }
 
     private void setupTopicTracker() {
-        CurrentTopicFragment.trackerFactory = new TopicTrackerFactory(TOPIC_TRACKER_ADDRESS);
+        CurrentTopicFragment.trackerFactory = new TopicTrackerFactory(TOPIC_TRACKER_BASE_URL);
     }
 
     private void setupChatTranslation() {

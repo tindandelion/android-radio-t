@@ -11,10 +11,10 @@ import java.io.IOException;
 import static java.lang.String.format;
 
 public class TopicTrackerServer {
-    private final String address;
+    private final String baseUrl;
 
-    public TopicTrackerServer(String address) {
-        this.address = address;
+    public TopicTrackerServer(String baseUrl) {
+        this.baseUrl = baseUrl;
     }
 
     public void changeTopic(String newTopic) throws IOException {
@@ -33,6 +33,6 @@ public class TopicTrackerServer {
     }
 
     private String changeTopicUrl() {
-        return format("http://%s:8080/chat/set-topic", address);
+        return format("http://%s/set-topic", baseUrl);
     }
 }
