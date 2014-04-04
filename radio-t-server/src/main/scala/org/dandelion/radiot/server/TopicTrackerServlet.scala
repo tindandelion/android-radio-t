@@ -8,9 +8,6 @@ import org.json4s.{DefaultFormats, Formats}
 import scala.concurrent._
 import ExecutionContext.Implicits.global
 import org.slf4j.LoggerFactory
-import org.jivesoftware.smack.{SmackConfiguration, PacketListener, XMPPConnection, ConnectionConfiguration}
-import org.jivesoftware.smackx.muc.{DiscussionHistory, MultiUserChat}
-import org.jivesoftware.smack.packet.{Message, Packet}
 
 class TopicTrackerServlet extends ScalatraServlet
 with AtmosphereSupport with SessionSupport
@@ -19,32 +16,19 @@ with JacksonJsonSupport with JValueResult {
   implicit protected val jsonFormats: Formats = DefaultFormats
 
   val logger = LoggerFactory.getLogger(getClass)
-  var currentTopic = "Default topic"
-
-  val topicListener: PacketListener = new PacketListener {
-    override def processPacket(packet: Packet) {
-      val msg: Message = packet.asInstanceOf[Message]
-      changeTopicTo(msg.getBody)
-    }
+  val jabberChat = new JabberChat("android-radiot", "password") {
+    override def onMessage(msg: String) = changeTopicTo(msg)
   }
 
-  val connection = new XMPPConnection(new ConnectionConfiguration("localhost", 5222))
-  var chat: MultiUserChat = null
+  var currentTopic = "Default topic"
+
 
   def connectToChat() {
-    connection.connect()
-    connection.login("android-radiot", "password")
-    chat = new MultiUserChat(connection, "online@conference.precise64")
-    val history = new DiscussionHistory()
-    history.setMaxStanzas(0)
-    chat.join("android-radiot", "password", history,
-      SmackConfiguration.getPacketReplyTimeout)
-    chat.addMessageListener(topicListener)
+    jabberChat.connect()
   }
 
   def disconnectFromChat() {
-    chat.leave()
-    connection.disconnect()
+    jabberChat.disconnect()
   }
 
   get("/") {

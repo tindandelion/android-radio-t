@@ -7,9 +7,6 @@ import org.eclipse.jetty.websocket.api.annotations._
 import org.eclipse.jetty.websocket.api.Session
 import org.scalatest.concurrent.Eventually
 import scala.concurrent.duration._
-import org.jivesoftware.smack.{ConnectionConfiguration, XMPPConnection}
-import org.jivesoftware.smackx.muc.MultiUserChat
-
 
 
 class TopicTrackerServletTest extends RadiotServerSpec
@@ -20,7 +17,6 @@ with Matchers with Eventually with BeforeAndAfter {
   val servlet = new TopicTrackerServlet
 
   addServlet(servlet, "/chat/*")
-
 
   before {
     servlet.connectToChat()
@@ -58,7 +54,7 @@ with Matchers with Eventually with BeforeAndAfter {
   it("changes a topic by a message from the chat") {
     val newTopic = "New topic to discuss"
 
-    JabberChat.sendMessage(newTopic)
+    sendMessageToChat(newTopic)
 
     topicShouldBe(newTopic)
   }
@@ -68,33 +64,17 @@ with Matchers with Eventually with BeforeAndAfter {
     eventually { socket.topic should equal(expected) }
   }
 
-  def serverUrl = localPort match {
-    case Some(port) => new URI(s"ws://localhost:$port/chat/current-topic")
-    case None => throw new RuntimeException("No port is specified")
-  }
-}
-
-object JabberChat {
-  val Room = "online@conference.precise64"
-  val Username = "jc-radio-t"
-  val Password = "password"
-  val Config = new ConnectionConfiguration("localhost", 5222)
-
-  def connect(action: (MultiUserChat) => Unit) {
-    val connection = new XMPPConnection(Config)
-    connection.connect()
-    try {
-      connection.login(Username, Password)
-      val chat = new MultiUserChat(connection, JabberChat.Room)
-      chat.join(JabberChat.Username)
-      action(chat)
-    } finally {
-      connection.disconnect()
+  def sendMessageToChat(msg: String) {
+    new JabberChat("jc-radio-t", "password") {
+      connect()
+      sendMessage(msg)
+      disconnect()
     }
   }
 
-  def sendMessage(message: String) {
-    connect { chat => chat.sendMessage(message) }
+  def serverUrl = localPort match {
+    case Some(port) => new URI(s"ws://localhost:$port/chat/current-topic")
+    case None => throw new RuntimeException("No port is specified")
   }
 }
 
