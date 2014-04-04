@@ -33,8 +33,8 @@ class JabberChat(val username: String, val password: String) {
   def onMessage(msg: String) {}
 
   private def logIntoServer() {
-    connection.connect()
-    connection.login(username, password)
+    if (!connection.isConnected) connection.connect()
+    if (!connection.isAuthenticated) connection.login(username, password)
   }
 
   private def joinChat() {

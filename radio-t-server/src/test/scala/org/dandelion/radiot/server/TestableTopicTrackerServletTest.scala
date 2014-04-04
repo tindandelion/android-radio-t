@@ -1,24 +1,9 @@
 package org.dandelion.radiot.server
 
-import org.scalatest.Matchers
 
-
-class TestableTopicTrackerServletTest extends RadiotServerSpec
-with Matchers  {
+class TestableTopicTrackerServletTest extends RadiotServerSpec {
   override val servlet = new TestableTopicTrackerServlet("/testing/chat")
-
   addServlet(servlet, servlet.root + "/*")
-
-
-  before {
-    client.start()
-    client.connect(socket, serverUrl)
-    eventually { socket should be('connected) }
-  }
-
-  after {
-    client.stop()
-  }
 
   it("changes a topic by POST request") {
     val newTopic = "New topic"

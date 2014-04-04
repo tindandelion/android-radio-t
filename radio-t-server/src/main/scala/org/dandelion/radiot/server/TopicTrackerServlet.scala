@@ -38,22 +38,23 @@ class TopicTrackerServlet(root: String) extends BaseTopicTrackerServlet(root) {
     override def onMessage(msg: String) = changeTopicTo(msg)
   }
 
-
-  def connectToChat() {
-    jabberChat.connect()
-  }
-
-
-  def disconnectFromChat() {
-    jabberChat.disconnect()
-  }
-
   get("/") {
     "Hello world!"
   }
+
+
+  override def init() {
+    super.init()
+    jabberChat.connect()
+  }
+
+  override def destroy() {
+    jabberChat.disconnect()
+    super.destroy()
+  }
 }
 
-class TestableTopicTrackerServlet(root: String) extends TopicTrackerServlet(root) {
+class TestableTopicTrackerServlet(root: String) extends BaseTopicTrackerServlet(root) {
   post("/set-topic") {
     changeTopicTo(request.body)
   }

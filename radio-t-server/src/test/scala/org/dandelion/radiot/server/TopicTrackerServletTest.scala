@@ -1,26 +1,9 @@
 package org.dandelion.radiot.server
 
-import org.scalatest.{BeforeAndAfter, Matchers}
 
-
-class TopicTrackerServletTest extends RadiotServerSpec
-with BeforeAndAfter with Matchers {
+class TopicTrackerServletTest extends RadiotServerSpec {
   override val servlet = new TopicTrackerServlet("/chat")
-
   addServlet(servlet, servlet.root + "/*")
-
-  before {
-    client.start()
-    client.connect(socket, serverUrl)
-    eventually { socket should be('connected) }
-
-    servlet.connectToChat()
-  }
-
-  after {
-    client.stop()
-    servlet.disconnectFromChat()
-  }
 
   it("answers a simple request") {
     get("/chat") {
