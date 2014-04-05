@@ -6,7 +6,7 @@ Version 1.9:
   DONE Logging: configure logging for runtime (log to a file, disable DEBUG by default)
   DONE Tests are not running with Gradle?
   DONE Daemonize
-  - Deploy to DigitalOcean
+  DONE Deploy to DigitalOcean
     DONE Sign up
     DONE Create a virtual machine
     DONE How to access from outside?
@@ -14,15 +14,16 @@ Version 1.9:
       http://blog.publysher.nl/2013/07/infra-as-repo-using-vagrant-and-salt.html
     DONE Provision with Puppet
     DONE Gradle task to build and deploy - local and production
-    - Create a domain?
+
+   - Listening to chat
+     - Store chat user's credentials in a safe place
+     - Connect to chat at server start
 
   DONE Broadcast current topic only to current topic's clients
-  - Listening to chat
-    - Connect to chat at server start
-    - Store chat user's credentials in a safe place
   - Make sure we connect and disconnect from the topic tracker correctly
   - Move chat-related classes into a separate package similar to topics
   - Chat tracker's fault tolerance
+
 
  * Hide controls from chat screen
 
@@ -43,6 +44,7 @@ Backlog:
  * User topics
  * Android 4.0 UI
    * New icon with ICS guidelines
+ * Register a DNS name
  * Gradle integration
 
 * Debt:
