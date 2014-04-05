@@ -2,6 +2,9 @@ class radio-t-server {
   $jre_home = "/usr/lib/jvm/java-7-openjdk-amd64/jre"
 
   $xmpp_server = "localhost"
+  $xmpp_room = "online@conference.precise64"
+  $xmpp_username = "android-radiot"
+  $xmpp_password = "password"
 
   package { "openjdk-7-jre-headless":
     ensure => installed
