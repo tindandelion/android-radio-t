@@ -6,20 +6,15 @@ import org.jivesoftware.smack.packet.{Message, Packet}
 import org.slf4j.LoggerFactory
 
 class JabberChat(val cfg: JabberConfig) {
+  type MessageConsumer = (String, String) => Unit
+
   private val logger = LoggerFactory.getLogger(getClass)
   private val connection = new XMPPConnection(new ConnectionConfiguration(cfg.server, cfg.port))
   private val chat = new MultiUserChat(connection, cfg.room)
 
-  private val messageListener = new PacketListener {
-    override def processPacket(packet: Packet) = packet match {
-      case msg: Message => onMessage(msg.getBody)
-      case _ =>
-    }
-  }
-
-  def connect() {
+  def connect(consumer: MessageConsumer) {
     logIntoServer(cfg.username, cfg.password)
-    joinChat(cfg.username)
+    joinChat(cfg.username, consumer)
   }
 
   def disconnect() {
@@ -37,10 +32,10 @@ class JabberChat(val cfg: JabberConfig) {
     if (!connection.isAuthenticated) connection.login(username, password)
   }
 
-  private def joinChat(username: String) {
+  private def joinChat(username: String, consumer: MessageConsumer) {
     logger.info(s" Joining group chat [${chat.getRoom}] as [$username]")
     chat.join(username, null, emptyHistory, SmackConfiguration.getPacketReplyTimeout)
-    chat.addMessageListener(messageListener)
+    chat.addMessageListener(messageListener(consumer))
   }
 
   private def emptyHistory = {
@@ -49,4 +44,10 @@ class JabberChat(val cfg: JabberConfig) {
     history
   }
 
+  private def messageListener(consumer: MessageConsumer) = new PacketListener {
+    override def processPacket(packet: Packet) = packet match {
+      case msg: Message => consumer(msg.getFrom, msg.getBody)
+      case _ =>
+    }
+  }
 }

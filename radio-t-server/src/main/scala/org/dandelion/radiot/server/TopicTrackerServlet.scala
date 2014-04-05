@@ -25,7 +25,7 @@ with JacksonJsonSupport with JValueResult {
     }
   }
 
-  def changeTopicTo(newTopic: String) {
+  def changeTopic(newTopic: String) {
     logger.info("Changing current topic to: [%s]".format(newTopic))
 
     currentTopic = newTopic
@@ -33,19 +33,21 @@ with JacksonJsonSupport with JValueResult {
   }
 }
 
-class TopicTrackerServlet(root: String, val chatConfig: JabberConfig) extends BaseTopicTrackerServlet(root) {
+object TopicTrackerServlet {
+  val TopicStarter = "jc-radio-t"
+}
 
-  val jabberChat = new JabberChat(chatConfig) {
-    override def onMessage(msg: String) = changeTopicTo(msg)
-  }
+class TopicTrackerServlet(root: String, val chatConfig: JabberConfig) extends BaseTopicTrackerServlet(root) {
+  val jabberChat = new JabberChat(chatConfig)
 
   get("/") {
     "Hello world!"
   }
 
+
   override def init() {
     super.init()
-    jabberChat.connect()
+    jabberChat.connect(new TopicFilter(TopicTrackerServlet.TopicStarter, changeTopic))
   }
 
   override def destroy() {
@@ -56,6 +58,7 @@ class TopicTrackerServlet(root: String, val chatConfig: JabberConfig) extends Ba
 
 class TestableTopicTrackerServlet(root: String) extends BaseTopicTrackerServlet(root) {
   post("/set-topic") {
-    changeTopicTo(request.body)
+    changeTopic(request.body)
   }
 }
+

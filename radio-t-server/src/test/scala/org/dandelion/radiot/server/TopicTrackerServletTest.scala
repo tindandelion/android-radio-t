@@ -8,7 +8,7 @@ class TopicTrackerServletTest extends RadiotServerSpec {
     password = "password",
     room = "online@conference.precise64")
 
-  val localAdminConfig = localChatConfig.copy(username = "jc-radio-t")
+  val localAdminConfig = localChatConfig.copy(username = TopicTrackerServlet.TopicStarter)
 
   override val servlet = new TopicTrackerServlet("/chat", localChatConfig)
   addServlet(servlet, servlet.root + "/*")
@@ -35,7 +35,7 @@ class TopicTrackerServletTest extends RadiotServerSpec {
 
   def sendMessageToChat(msg: String) {
     new JabberChat(localAdminConfig) {
-      connect()
+      connect { (_, _) => }
       sendMessage(msg)
       disconnect()
     }
