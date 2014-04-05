@@ -1,6 +1,8 @@
 class radio-t-server {
   $jre_home = "/usr/lib/jvm/java-7-openjdk-amd64/jre"
 
+  $xmpp_server = "localhost"
+
   package { "openjdk-7-jre-headless":
     ensure => installed
   }
