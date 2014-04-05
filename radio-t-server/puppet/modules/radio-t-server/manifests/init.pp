@@ -29,6 +29,7 @@ class radio-t-server($xmpp_server, $xmpp_room, $xmpp_username, $xmpp_password) {
   }
 
   file { "/etc/radio-t-server.conf":
-      content => template("radio-t-server/radio-t-server.conf.erb")
+      content => template("radio-t-server/radio-t-server.conf.erb"),
+      replace => false
   }
 }
