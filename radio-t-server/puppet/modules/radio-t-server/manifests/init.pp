@@ -27,4 +27,8 @@ class radio-t-server {
       content => template("radio-t-server/start-stop-script.erb"),
       mode => "a+x"
   }
+
+  file { "/etc/radio-t-server.conf":
+      content => template("radio-t-server/radio-t-server.conf.erb")
+  }
 }

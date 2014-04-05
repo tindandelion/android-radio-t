@@ -4,11 +4,10 @@ import org.jivesoftware.smack.{PacketListener, SmackConfiguration, XMPPConnectio
 import org.jivesoftware.smackx.muc.{DiscussionHistory, MultiUserChat}
 import org.jivesoftware.smack.packet.{Message, Packet}
 
-class JabberChat(val username: String, val password: String) {
-  private val Room = "online@conference.precise64"
+class JabberChat(val cfg: JabberConfig) {
 
-  private val connection = new XMPPConnection(new ConnectionConfiguration("localhost", 5222))
-  private val chat = new MultiUserChat(connection, Room)
+  private val connection = new XMPPConnection(new ConnectionConfiguration(cfg.server, cfg.port))
+  private val chat = new MultiUserChat(connection, cfg.room)
 
   private val messageListener = new PacketListener {
     override def processPacket(packet: Packet) = packet match {
@@ -17,10 +16,9 @@ class JabberChat(val username: String, val password: String) {
     }
   }
 
-
   def connect() {
-    logIntoServer()
-    joinChat()
+    logIntoServer(cfg.username, cfg.password)
+    joinChat(cfg.username)
   }
 
   def disconnect() {
@@ -32,12 +30,12 @@ class JabberChat(val username: String, val password: String) {
 
   def onMessage(msg: String) {}
 
-  private def logIntoServer() {
+  private def logIntoServer(username: String, password: String) {
     if (!connection.isConnected) connection.connect()
     if (!connection.isAuthenticated) connection.login(username, password)
   }
 
-  private def joinChat() {
+  private def joinChat(username: String) {
     chat.join(username, null, emptyHistory, SmackConfiguration.getPacketReplyTimeout)
     chat.addMessageListener(messageListener)
   }

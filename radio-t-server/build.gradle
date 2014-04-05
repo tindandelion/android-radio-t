@@ -14,7 +14,6 @@ apply plugin: 'scala'
 apply plugin: 'ssh'
 apply plugin: 'vagrant-base'
 
-import org.gradle.api.plugins.vagrant.tasks.Vagrant
 import org.gradle.api.plugins.vagrant.tasks.VagrantUp
 
 version = '1.0'
@@ -76,6 +75,7 @@ private void deployApp(def remote) {
         session(remote) {
             put(uberjar.archivePath.absolutePath, tempPath)
             executeSudo("mv $tempPath $distributionDir")
+            executeSudo("rm /var/log/radio-t-server/*")
             executeSudo("/etc/init.d/radio-t-server restart")
         }
     }

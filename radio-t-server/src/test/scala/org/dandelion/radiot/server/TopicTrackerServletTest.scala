@@ -2,7 +2,15 @@ package org.dandelion.radiot.server
 
 
 class TopicTrackerServletTest extends RadiotServerSpec {
-  override val servlet = new TopicTrackerServlet("/chat")
+  val localChatConfig = JabberConfig(
+    server = "localhost",
+    username = "android-radiot",
+    password = "password",
+    room = "online@conference.precise64")
+
+  val localAdminConfig = localChatConfig.copy(username = "jc-radio-t")
+
+  override val servlet = new TopicTrackerServlet("/chat", localChatConfig)
   addServlet(servlet, servlet.root + "/*")
 
   it("answers a simple request") {
@@ -26,7 +34,7 @@ class TopicTrackerServletTest extends RadiotServerSpec {
 
 
   def sendMessageToChat(msg: String) {
-    new JabberChat("jc-radio-t", "password") {
+    new JabberChat(localAdminConfig) {
       connect()
       sendMessage(msg)
       disconnect()

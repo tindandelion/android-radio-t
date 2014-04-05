@@ -33,15 +33,15 @@ with JacksonJsonSupport with JValueResult {
   }
 }
 
-class TopicTrackerServlet(root: String) extends BaseTopicTrackerServlet(root) {
-  val jabberChat = new JabberChat("android-radiot", "password") {
+class TopicTrackerServlet(root: String, val chatConfig: JabberConfig) extends BaseTopicTrackerServlet(root) {
+
+  val jabberChat = new JabberChat(chatConfig) {
     override def onMessage(msg: String) = changeTopicTo(msg)
   }
 
   get("/") {
     "Hello world!"
   }
-
 
   override def init() {
     super.init()
