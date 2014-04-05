@@ -9,5 +9,11 @@ exec { "apt-update":
 
 Exec["apt-update"] -> Package<||>
 
-include openfire
-include radio-t-server
+class { "openfire": }
+
+class { "radio-t-server":
+  xmpp_server => 'localhost',
+  xmpp_room => 'online@conference.precise64',
+  xmpp_username => 'android-radiot',
+  xmpp_password => 'password'
+}
