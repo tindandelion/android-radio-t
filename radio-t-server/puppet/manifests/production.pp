@@ -9,4 +9,9 @@ exec { "apt-update":
 
 Exec["apt-update"] -> Package<||>
 
-include radio-t-server
+class { "radio-t-server":
+  xmpp_server => 'jabber.ru',
+  xmpp_room => 'online@conference.radio-t.com',
+  xmpp_username => '<USERNAME_HERE>',
+  xmpp_password => '<PASSWORD_HERE>'
+}
