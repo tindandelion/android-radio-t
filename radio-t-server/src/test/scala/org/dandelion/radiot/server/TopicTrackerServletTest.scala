@@ -27,11 +27,9 @@ class TopicTrackerServletTest extends RadiotServerSpec {
   it("changes a topic by a message from the chat") {
     val newTopic = "New topic to discuss"
 
-    sendMessageToChat(newTopic)
-
+    sendMessageToChat("--> " + newTopic)
     topicShouldBe(newTopic)
   }
-
 
   def sendMessageToChat(msg: String) {
     new JabberChat(localAdminConfig) {

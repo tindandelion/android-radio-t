@@ -1,23 +1,29 @@
 package org.dandelion.radiot.server
 
 import org.scalatest.{Matchers, FunSpec}
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 
+@RunWith(classOf[JUnitRunner])
 class TopicFilterTest extends FunSpec with Matchers {
-  it("passes a message to the consumer when a sender is a topic starter") {
-    var topic = ""
-    val topicStarter = "jc-radio-t"
-    val filter = new TopicFilter(topicStarter, msg => topic = msg)
+  var topic = ""
+  val TopicStarter = "jc-radio-t"
+  val filter = new TopicFilter(TopicStarter, msg => topic = msg)
 
-    filter("online@conference/" + topicStarter, "New topic started")
+  it("suppresses messages which are not topic change notifications") {
+    topic = "Current topic"
+    filter("online@conference/" + TopicStarter, "Blah-blah from the robot")
+    topic should equal("Current topic")
+  }
+
+  it("extracts the topic to the consumer when a sender is a topic starter") {
+    filter("online@conference/" + TopicStarter, "-->   New topic started")
     topic should equal("New topic started")
   }
 
   it("suppresses a message if the sender is not a topic starter") {
-    var topic = "Current topic"
-    val topicStarter = "jc-radio-t"
-    val filter = new TopicFilter(topicStarter, msg => topic = msg)
-
-    filter("online@conference/some-other-user", "New topic started")
+    topic = "Current topic"
+    filter("online@conference/some-other-user", "--> New topic started")
     topic should equal("Current topic")
   }
 }

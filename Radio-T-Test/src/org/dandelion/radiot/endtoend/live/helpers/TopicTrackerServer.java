@@ -18,7 +18,7 @@ public class TopicTrackerServer {
     }
 
     public void changeTopic(String newTopic) throws IOException {
-        broadcast(newTopic);
+        broadcast("--> " + newTopic);
     }
 
     private void checkResponse(HttpResponse response) {
