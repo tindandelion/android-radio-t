@@ -18,10 +18,7 @@ public class TopicTrackerServer {
     }
 
     public void changeTopic(String newTopic) throws IOException {
-        DefaultHttpClient client = new DefaultHttpClient();
-        HttpPost request = new HttpPost(changeTopicUrl());
-        request.setEntity(new StringEntity(newTopic));
-        checkResponse(client.execute(request));
+        broadcast(newTopic);
     }
 
     private void checkResponse(HttpResponse response) {
@@ -34,5 +31,12 @@ public class TopicTrackerServer {
 
     private String changeTopicUrl() {
         return format("http://%s/set-topic", baseUrl);
+    }
+
+    public void broadcast(String value) throws IOException {
+        DefaultHttpClient client = new DefaultHttpClient();
+        HttpPost request = new HttpPost(changeTopicUrl());
+        request.setEntity(new StringEntity(value));
+        checkResponse(client.execute(request));
     }
 }

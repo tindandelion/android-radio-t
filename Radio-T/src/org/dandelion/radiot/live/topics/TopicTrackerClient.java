@@ -24,7 +24,12 @@ public class TopicTrackerClient implements TopicTracker {
 
             @Override
             public void onTextMessage(String payload) {
-                if (listener != null) listener.onTopicChanged(payload);
+                if (notEmpty(payload) && listener != null)
+                    listener.onTopicChanged(payload);
+            }
+
+            private boolean notEmpty(String payload) {
+                return payload.trim().length() > 0;
             }
         };
     }

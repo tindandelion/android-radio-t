@@ -26,6 +26,12 @@ public class CurrentTopicTest extends LiveShowActivityTestCase {
         assertThat(solo, showsText(newTopic));
     }
 
+    public void testDoesNotReactToHeartbeatMessages() throws Exception {
+        final String HEARTBEAT_MESSAGE = " ";
+        server.broadcast(HEARTBEAT_MESSAGE);
+        assertThat(solo, showsText(DEFAULT_TOPIC));
+    }
+
     @Override
     public void setUp() throws Exception {
         super.setUp();
