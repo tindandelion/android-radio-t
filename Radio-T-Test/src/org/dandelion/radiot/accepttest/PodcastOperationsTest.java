@@ -122,9 +122,6 @@ public class PodcastOperationsTest extends
             @Override
             protected HttpClient newThumbnailClient() {
                 return new HttpClient() {
-                    @Override
-                    public void setReadTimeout(int millis) {
-                    }
 
                     @Override
                     public String getStringContent(String url) throws IOException {

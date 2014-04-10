@@ -15,7 +15,6 @@ public class ApacheHttpClient implements HttpClient {
 
     private DefaultHttpClient client = new DefaultHttpClient();
 
-    @Override
     public void setReadTimeout(int millis) {
         HttpParams params = client.getParams();
         HttpConnectionParams.setSoTimeout(params, millis);

@@ -92,11 +92,6 @@ public class RssFeedProviderTest extends TestCase {
         private String feedContent = "";
 
         @Override
-        public void setReadTimeout(int millis) {
-
-        }
-
-        @Override
         public String getStringContent(String url) throws IOException {
             return getCompleteFeed();
         }
