@@ -18,7 +18,7 @@ public class TopicTrackerServer {
     }
 
     public void changeTopic(String newTopic) throws IOException {
-        broadcast("--> " + newTopic);
+        broadcast(newTopic);
     }
 
     private void checkResponse(HttpResponse response) {
@@ -29,14 +29,24 @@ public class TopicTrackerServer {
             throw new RuntimeException("Unable to change the topic: " + statusLine);
     }
 
-    private String changeTopicUrl() {
-        return format("http://%s/set-topic", baseUrl);
+    private String serverUrl(String command) {
+        return format("http://%s/%s", baseUrl, command);
     }
 
     public void broadcast(String value) throws IOException {
-        DefaultHttpClient client = new DefaultHttpClient();
-        HttpPost request = new HttpPost(changeTopicUrl());
+        HttpPost request = new HttpPost(serverUrl("set-topic"));
         request.setEntity(new StringEntity(value));
+        executeRequest(request);
+    }
+
+    private void executeRequest(HttpPost request) throws IOException {
+        DefaultHttpClient client = new DefaultHttpClient();
         checkResponse(client.execute(request));
     }
+
+    public void heartbeat() throws IOException {
+        HttpPost request = new HttpPost(serverUrl("heartbeat"));
+        executeRequest(request);
+    }
+
 }

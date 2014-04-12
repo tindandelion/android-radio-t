@@ -14,12 +14,12 @@ Version 1.9:
       http://blog.publysher.nl/2013/07/infra-as-repo-using-vagrant-and-salt.html
     DONE Provision with Puppet
     DONE Gradle task to build and deploy - local and production
-
-   - Listening to chat
-     - Store chat user's credentials in a safe place
-     - Connect to chat at server start
+   DONE Listening to chat
+     DONE Store chat user's credentials in a safe place
+     DONE Connect to chat at server start
 
   DONE Broadcast current topic only to current topic's clients
+  - Better error handling when parsing topic JSON
   - Make sure we connect and disconnect from the topic tracker correctly
   - Move chat-related classes into a separate package similar to topics
   - Chat tracker's fault tolerance

@@ -1,12 +1,14 @@
 package org.dandelion.radiot.endtoend.live;
 
+import android.widget.TextView;
 import com.robotium.solo.Solo;
 import org.dandelion.radiot.endtoend.live.helpers.TopicTrackerServer;
+import org.dandelion.radiot.helpers.async.Probe;
 import org.dandelion.radiot.live.topics.TopicTrackerFactory;
 import org.dandelion.radiot.live.ui.topics.CurrentTopicFragment;
+import org.hamcrest.Description;
 
-import static org.dandelion.radiot.endtoend.live.RobotiumMatchers.showsText;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.dandelion.radiot.helpers.async.Poller.assertEventually;
 
 
 public class CurrentTopicTest extends LiveShowActivityTestCase {
@@ -17,19 +19,19 @@ public class CurrentTopicTest extends LiveShowActivityTestCase {
     private TopicTrackerServer server;
 
     public void testShowsCurrentTopic() throws Exception {
-        assertThat(solo, showsText(DEFAULT_TOPIC));
+        assertCurrentTopic(DEFAULT_TOPIC);
     }
+
 
     public void testWhenTopicChanges_refreshView() throws Exception {
         final String newTopic = "Amazon's ginormous public cloud turns 8 today";
         server.changeTopic(newTopic);
-        assertThat(solo, showsText(newTopic));
+        assertCurrentTopic(newTopic);
     }
 
     public void testDoesNotReactToHeartbeatMessages() throws Exception {
-        final String HEARTBEAT_MESSAGE = " ";
-        server.broadcast(HEARTBEAT_MESSAGE);
-        assertThat(solo, showsText(DEFAULT_TOPIC));
+        server.heartbeat();
+        assertCurrentTopic(DEFAULT_TOPIC);
     }
 
     @Override
@@ -44,4 +46,32 @@ public class CurrentTopicTest extends LiveShowActivityTestCase {
 
     }
 
+    private void assertCurrentTopic(final String topic) throws InterruptedException {
+        Probe topicProbe = new Probe() {
+            private CharSequence currentTopic = "";
+
+            @Override
+            public boolean isSatisfied() {
+                return topic.equals(currentTopic);
+            }
+
+            @Override
+            public void sample() {
+                TextView view = (TextView) solo.getView(org.dandelion.radiot.R.id.current_topic_text);
+                this.currentTopic = view.getText();
+            }
+
+            @Override
+            public void describeAcceptanceCriteriaTo(Description d) {
+                d.appendText("Current topic equal to: ").appendValue(topic);
+            }
+
+            @Override
+            public void describeFailureTo(Description d) {
+                d.appendText("Current topic was: ").appendValue(currentTopic);
+            }
+        };
+
+        assertEventually(topicProbe);
+    }
 }

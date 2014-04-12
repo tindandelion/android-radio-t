@@ -66,5 +66,9 @@ class TestableTopicTrackerServlet(root: String) extends BaseTopicTrackerServlet(
   post("/set-topic") {
     changeTopic(request.body)
   }
+
+  post("/heartbeat") {
+    AtmosphereClient.broadcast(root + "/current-topic", " ")
+  }
 }
 

@@ -5,6 +5,8 @@ import de.tavendo.autobahn.WebSocketException;
 import de.tavendo.autobahn.WebSocketHandler;
 import org.dandelion.radiot.live.ui.topics.TopicListener;
 import org.dandelion.radiot.live.ui.topics.TopicTracker;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class TopicTrackerClient implements TopicTracker {
     private TopicListener listener;
@@ -25,7 +27,17 @@ public class TopicTrackerClient implements TopicTracker {
             @Override
             public void onTextMessage(String payload) {
                 if (notEmpty(payload) && listener != null)
-                    listener.onTopicChanged(payload);
+                    listener.onTopicChanged(extractTopic(payload));
+            }
+
+            private String extractTopic(String json) {
+                try {
+                    JSONObject obj = new JSONObject(json);
+                    return obj.getString("topic");
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+
             }
 
             private boolean notEmpty(String payload) {
