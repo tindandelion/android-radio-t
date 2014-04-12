@@ -35,7 +35,7 @@ with BeforeAndAfter with Eventually with Matchers {
     case None => throw new RuntimeException("No port is specified")
   }
 
-  def topicShouldBe(expected: String) {
-    eventually { socket.topic should equal(expected) }
+  def topicShouldBe(text: String, link: String) {
+    eventually { socket.topic should equal(Topic(text, link)) }
   }
 }

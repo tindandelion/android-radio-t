@@ -10,7 +10,7 @@ import org.json4s.jackson.JsonMethods._
 class TopicTrackerSocket {
   implicit val formats = DefaultFormats
 
-  var topic: String = ""
+  var topic: Topic = Topic("")
   private var session: Session = null
 
   @OnWebSocketConnect
@@ -19,9 +19,7 @@ class TopicTrackerSocket {
     session.getRemote.sendString("get")
   }
 
-  def fromJson(json: String): String = {
-    (parse(json) \ "topic").extract[String]
-  }
+  def fromJson(json: String) = parse(json).extract[Topic]
 
   @OnWebSocketMessage
   def onMessage(msg: String) {

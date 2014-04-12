@@ -6,24 +6,24 @@ import org.scalatest.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
 class TopicFilterTest extends FunSpec with Matchers {
-  var topic = ""
+  var topic = Topic("", "")
   val TopicStarter = "jc-radio-t"
-  val filter = new TopicFilter(TopicStarter, msg => topic = msg)
+  val filter = new TopicFilter(TopicStarter, (newTopic) => topic = newTopic)
 
   it("suppresses messages which are not topic change notifications") {
-    topic = "Current topic"
+    topic = Topic("Current topic")
     filter("online@conference/" + TopicStarter, "Blah-blah from the robot")
-    topic should equal("Current topic")
+    topic should equal(Topic("Current topic"))
   }
 
   it("extracts the topic to the consumer when a sender is a topic starter") {
-    filter("online@conference/" + TopicStarter, "-->   New topic started")
-    topic should equal("New topic started")
+    filter("online@conference/" + TopicStarter, "-->   New topic started   http://example.org  ")
+    topic should equal(Topic("New topic started", "http://example.org"))
   }
 
   it("suppresses a message if the sender is not a topic starter") {
-    topic = "Current topic"
+    topic = Topic("Current topic", "")
     filter("online@conference/some-other-user", "--> New topic started")
-    topic should equal("Current topic")
+    topic should equal(Topic("Current topic"))
   }
 }

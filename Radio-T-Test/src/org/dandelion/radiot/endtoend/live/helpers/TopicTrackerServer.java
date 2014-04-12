@@ -17,8 +17,10 @@ public class TopicTrackerServer {
         this.baseUrl = baseUrl;
     }
 
-    public void changeTopic(String newTopic) throws IOException {
-        broadcast(newTopic);
+    public void changeTopic(String text, String link) throws IOException {
+        HttpPost request = new HttpPost(serverUrl("set-topic"));
+        request.setEntity(new StringEntity(text + "\n" + link));
+        executeRequest(request);
     }
 
     private void checkResponse(HttpResponse response) {
@@ -31,12 +33,6 @@ public class TopicTrackerServer {
 
     private String serverUrl(String command) {
         return format("http://%s/%s", baseUrl, command);
-    }
-
-    public void broadcast(String value) throws IOException {
-        HttpPost request = new HttpPost(serverUrl("set-topic"));
-        request.setEntity(new StringEntity(value));
-        executeRequest(request);
     }
 
     private void executeRequest(HttpPost request) throws IOException {

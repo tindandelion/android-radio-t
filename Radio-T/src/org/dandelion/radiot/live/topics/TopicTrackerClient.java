@@ -33,7 +33,7 @@ public class TopicTrackerClient implements TopicTracker {
             private String extractTopic(String json) {
                 try {
                     JSONObject obj = new JSONObject(json);
-                    return obj.getString("topic");
+                    return obj.getString("text");
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }

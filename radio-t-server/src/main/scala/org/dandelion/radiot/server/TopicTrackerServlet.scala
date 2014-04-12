@@ -11,31 +11,31 @@ import ExecutionContext.Implicits.global
 import org.slf4j.LoggerFactory
 import org.json4s.JsonAST.JObject
 
+case class Topic(text: String, link: String = "") {
+  def toJson: JObject = ("text" -> text) ~ ("link" -> link)
+}
+
 class BaseTopicTrackerServlet(val root: String) extends ScalatraServlet
 with AtmosphereSupport with SessionSupport
 with JacksonJsonSupport with JValueResult {
   implicit protected val jsonFormats: Formats = DefaultFormats
   val logger = LoggerFactory.getLogger(getClass)
 
-  private var currentTopic = "Default topic"
+  private var currentTopic = Topic("Default topic", "http://example.org")
 
   atmosphere("/current-topic") {
     new AtmosphereClient {
       override def receive: AtmoReceive = {
-        case TextMessage(text) => send(toJson(currentTopic))
+        case TextMessage(text) => send(currentTopic.toJson)
       }
     }
   }
 
-  def changeTopic(newTopic: String) {
-    logger.info("Changing current topic to: [%s]".format(newTopic))
+  def changeTopic(topic: Topic) {
+    logger.info("Changing current topic to: [%s]".format(topic.text))
 
-    currentTopic = newTopic
-    AtmosphereClient.broadcast(root + "/current-topic", toJson(currentTopic))
-  }
-
-  def toJson(topic: String): JObject = {
-    "topic" -> topic
+    currentTopic = topic
+    AtmosphereClient.broadcast(root + "/current-topic", currentTopic.toJson)
   }
 }
 
@@ -63,8 +63,10 @@ class TopicTrackerServlet(root: String, val chatConfig: JabberConfig) extends Ba
 }
 
 class TestableTopicTrackerServlet(root: String) extends BaseTopicTrackerServlet(root) {
+
   post("/set-topic") {
-    changeTopic(request.body)
+    val values: Array[String] = request.body.split("\n")
+    changeTopic(Topic(values(0), values(1)))
   }
 
   post("/heartbeat") {

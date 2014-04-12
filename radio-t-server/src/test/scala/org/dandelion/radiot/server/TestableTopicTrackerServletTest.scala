@@ -6,10 +6,12 @@ class TestableTopicTrackerServletTest extends RadiotServerSpec {
   addServlet(servlet, servlet.root + "/*")
 
   it("changes a topic by POST request") {
-    val newTopic = "New topic"
-    post("/testing/chat/set-topic", newTopic) {
+    val text = "New topic"
+    val link = "http://example.org"
+    val requestBody = text + "\n" + link
+    post("/testing/chat/set-topic", requestBody) {
       status should equal(200)
-      topicShouldBe(newTopic)
+      topicShouldBe(text, link)
     }
   }
 }

@@ -25,7 +25,7 @@ public class CurrentTopicTest extends LiveShowActivityTestCase {
 
     public void testWhenTopicChanges_refreshView() throws Exception {
         final String newTopic = "Amazon's ginormous public cloud turns 8 today";
-        server.changeTopic(newTopic);
+        server.changeTopic(newTopic, "http://example.com");
         assertCurrentTopic(newTopic);
     }
 
@@ -40,7 +40,7 @@ public class CurrentTopicTest extends LiveShowActivityTestCase {
         CurrentTopicFragment.trackerFactory = new TopicTrackerFactory(TEST_SERVER_BASE_URL);
 
         server = new TopicTrackerServer(TEST_SERVER_BASE_URL);
-        server.changeTopic(DEFAULT_TOPIC);
+        server.changeTopic(DEFAULT_TOPIC, "http://example.com");
 
         solo = new Solo(getInstrumentation(), getActivity());
 

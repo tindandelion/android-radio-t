@@ -21,14 +21,13 @@ class TopicTrackerServletTest extends RadiotServerSpec {
   }
 
   it("receives current topic after connection is established") {
-    topicShouldBe("Default topic")
+    topicShouldBe("Default topic", "http://example.org")
   }
 
   it("changes a topic by a message from the chat") {
-    val newTopic = "New topic to discuss"
-
-    sendMessageToChat("--> " + newTopic)
-    topicShouldBe(newTopic)
+    val newTopic = Topic("New topic to discuss", "http://new-topic.org")
+    sendMessageToChat(s"--> ${newTopic.text} ${newTopic.link}")
+    topicShouldBe(newTopic.text, newTopic.link)
   }
 
   def sendMessageToChat(msg: String) {
