@@ -18,7 +18,7 @@ public class TopicTrackerServer {
     }
 
     public void changeTopic(String text, String link) throws IOException {
-        HttpPost request = new HttpPost(serverUrl("set-topic"));
+        HttpPost request = new HttpPost(serverUrl("topic"));
         request.setEntity(new StringEntity(text + "\n" + link));
         executeRequest(request);
     }

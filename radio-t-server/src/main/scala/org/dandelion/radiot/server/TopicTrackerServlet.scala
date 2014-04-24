@@ -15,13 +15,19 @@ case class Topic(text: String, link: String = "") {
   def toJson: JObject = ("text" -> text) ~ ("link" -> link)
 }
 
-class BaseTopicTrackerServlet(val root: String) extends ScalatraServlet
+class TopicTrackerServlet(val root: String, val chatConfig: JabberConfig) extends ScalatraServlet
 with AtmosphereSupport with SessionSupport
 with JacksonJsonSupport with JValueResult {
   implicit protected val jsonFormats: Formats = DefaultFormats
-  val logger = LoggerFactory.getLogger(getClass)
 
-  private var currentTopic = Topic("Default topic", "http://example.org")
+  val logger = LoggerFactory.getLogger(getClass)
+  val jabberChat = new JabberChat(chatConfig)
+  var currentTopic = Topic("Default topic", "http://example.org")
+
+
+  get("/") {
+    "Hello world!"
+  }
 
   atmosphere("/current-topic") {
     new AtmosphereClient {
@@ -31,25 +37,21 @@ with JacksonJsonSupport with JValueResult {
     }
   }
 
+  post("/topic") {
+    val values: Array[String] = request.body.split("\n")
+    changeTopic(Topic(values(0), values(1)))
+  }
+
+  post("/heartbeat") {
+    AtmosphereClient.broadcast(root + "/current-topic", " ")
+  }
+
   def changeTopic(topic: Topic) {
     logger.info("Changing current topic to: [%s]".format(topic.text))
 
     currentTopic = topic
     AtmosphereClient.broadcast(root + "/current-topic", currentTopic.toJson)
   }
-}
-
-object TopicTrackerServlet {
-  val TopicStarter = "jc-radio-t"
-}
-
-class TopicTrackerServlet(root: String, val chatConfig: JabberConfig) extends BaseTopicTrackerServlet(root) {
-  val jabberChat = new JabberChat(chatConfig)
-
-  get("/") {
-    "Hello world!"
-  }
-
 
   override def init() {
     super.init()
@@ -62,15 +64,7 @@ class TopicTrackerServlet(root: String, val chatConfig: JabberConfig) extends Ba
   }
 }
 
-class TestableTopicTrackerServlet(root: String) extends BaseTopicTrackerServlet(root) {
-
-  post("/set-topic") {
-    val values: Array[String] = request.body.split("\n")
-    changeTopic(Topic(values(0), values(1)))
-  }
-
-  post("/heartbeat") {
-    AtmosphereClient.broadcast(root + "/current-topic", " ")
-  }
+object TopicTrackerServlet {
+  val TopicStarter = "jc-radio-t"
 }
 

@@ -13,7 +13,7 @@ import static org.dandelion.radiot.helpers.async.Poller.assertEventually;
 
 public class CurrentTopicTest extends LiveShowActivityTestCase {
     public static final String DEFAULT_TOPIC = "What is a Web Framework?";
-    private static final String TEST_SERVER_BASE_URL = "10.0.1.2:8080/testing/chat";
+    private static final String TEST_SERVER_BASE_URL = "10.0.1.2:8080/chat";
 
     private Solo solo;
     private TopicTrackerServer server;

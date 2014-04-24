@@ -1,6 +1,6 @@
 import java.io.{FileInputStream, File}
 import java.util.Properties
-import org.dandelion.radiot.server.{JabberConfig, TestableTopicTrackerServlet, TopicTrackerServlet}
+import org.dandelion.radiot.server.{JabberConfig, TopicTrackerServlet}
 import org.scalatra._
 import javax.servlet.ServletContext
 
@@ -9,7 +9,6 @@ class ScalatraBootstrap extends LifeCycle {
 
   override def init(context: ServletContext) {
     context.mount(new TopicTrackerServlet("/chat", loadChatConfig(ConfigFile)), "/chat/*")
-    context.mount(new TestableTopicTrackerServlet("/testing/chat"), "/testing/chat/*")
   }
 
   def loadChatConfig(file: File) =

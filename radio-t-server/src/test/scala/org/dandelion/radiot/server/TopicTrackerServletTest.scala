@@ -1,17 +1,42 @@
 package org.dandelion.radiot.server
 
+import java.net.URI
+import org.eclipse.jetty.websocket.client.WebSocketClient
+import scala.concurrent.duration._
+import org.scalatra.test.scalatest.ScalatraSpec
+import org.scalatest.{Matchers, BeforeAndAfter}
+import org.scalatest.concurrent.Eventually
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 
-class TopicTrackerServletTest extends RadiotServerSpec {
-  val localChatConfig = JabberConfig(
+@RunWith(classOf[JUnitRunner])
+class TopicTrackerServletTest extends ScalatraSpec
+with BeforeAndAfter with Eventually with Matchers {
+  implicit val config = PatienceConfig(timeout = 5 seconds, interval = 0.5 seconds)
+
+  val LocalChatConfig = JabberConfig(
     server = "localhost",
     username = "android-radiot",
     password = "password",
     room = "online@conference.precise64")
 
-  val localAdminConfig = localChatConfig.copy(username = TopicTrackerServlet.TopicStarter)
+  val LocalAdminConfig = LocalChatConfig.copy(username = TopicTrackerServlet.TopicStarter)
 
-  override val servlet = new TopicTrackerServlet("/chat", localChatConfig)
+  val client = new WebSocketClient
+  val socket = new TopicTrackerSocket
+  val servlet = new TopicTrackerServlet("/chat", LocalChatConfig)
+
   addServlet(servlet, servlet.root + "/*")
+
+  before {
+    client.start()
+    client.connect(socket, serverUrl)
+    eventually { socket should be('connected) }
+  }
+
+  after {
+    client.stop()
+  }
 
   it("answers a simple request") {
     get("/chat") {
@@ -30,14 +55,33 @@ class TopicTrackerServletTest extends RadiotServerSpec {
     topicShouldBe(newTopic.text, newTopic.link)
   }
 
+  it("changes a topic by POST request") {
+    val text = "New topic"
+    val link = "http://example.org"
+    val requestBody = text + "\n" + link
+    post("/chat/topic", requestBody) {
+      status should equal(200)
+      topicShouldBe(text, link)
+    }
+  }
+
+  def serverUrl = localPort match {
+    case Some(port) => new URI(s"ws://localhost:$port${servlet.root}/current-topic")
+    case None => throw new RuntimeException("No port is specified")
+  }
+
   def sendMessageToChat(msg: String) {
-    new JabberChat(localAdminConfig) {
-      connect { (_, _) => }
+    new JabberChat(LocalAdminConfig) {
+      connect {
+        (_, _) =>
+      }
       sendMessage(msg)
       disconnect()
     }
   }
 
+  def topicShouldBe(text: String, link: String) =
+    eventually { socket.topic should equal(Topic(text, link)) }
 }
 
 
