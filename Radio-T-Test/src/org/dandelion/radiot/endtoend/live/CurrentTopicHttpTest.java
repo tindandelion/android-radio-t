@@ -8,7 +8,7 @@ import org.dandelion.radiot.live.ui.topics.TopicTracker;
 
 public class CurrentTopicHttpTest extends LiveShowActivityTestCase {
     public static final String DEFAULT_TOPIC = "What is a Web Framework?";
-    private static final String TEST_SERVER_BASE_URL = "10.0.1.2:8080/chat";
+    private static final String TEST_SERVER_BASE_URL = "http://10.0.1.2:8080";
 
     private CurrentTopicRunner app;
     private TopicTrackerServer server;
@@ -19,21 +19,16 @@ public class CurrentTopicHttpTest extends LiveShowActivityTestCase {
 
 
     public void testWhenTopicChanges_refreshView() throws Exception {
-        final String newTopic = "Amazon's ginormous public cloud turns 8 today";
+        final String newTopic = "Amazon's ginormous public cloud turns 81 today";
         server.changeTopic(newTopic, "http://example.com");
-        app.refreshTopic(newTopic);
+        app.refreshTopic();
         app.showsCurrentTopic(newTopic);
-    }
-
-    public void testDoesNotReactToHeartbeatMessages() throws Exception {
-        server.heartbeat();
-        app.showsCurrentTopic(DEFAULT_TOPIC);
     }
 
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        final HttpTopicTrackerClient trackerClient = new HttpTopicTrackerClient(DEFAULT_TOPIC);
+        final HttpTopicTrackerClient trackerClient = new HttpTopicTrackerClient(TEST_SERVER_BASE_URL);
 
         CurrentTopicFragment.trackerFactory = new TopicTracker.Factory() {
             @Override

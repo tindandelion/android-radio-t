@@ -8,8 +8,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.IOException;
 
-import static java.lang.String.format;
-
 public class TopicTrackerServer {
     private final String baseUrl;
 
@@ -18,7 +16,7 @@ public class TopicTrackerServer {
     }
 
     public void changeTopic(String text, String link) throws IOException {
-        HttpPost request = new HttpPost(serverUrl("topic"));
+        HttpPost request = new HttpPost(baseUrl + "/chat/topic");
         request.setEntity(new StringEntity(text + "\n" + link));
         executeRequest(request);
     }
@@ -31,18 +29,8 @@ public class TopicTrackerServer {
             throw new RuntimeException("Unable to change the topic: " + statusLine);
     }
 
-    private String serverUrl(String command) {
-        return format("http://%s/%s", baseUrl, command);
-    }
-
     private void executeRequest(HttpPost request) throws IOException {
         DefaultHttpClient client = new DefaultHttpClient();
         checkResponse(client.execute(request));
     }
-
-    public void heartbeat() throws IOException {
-        HttpPost request = new HttpPost(serverUrl("heartbeat"));
-        executeRequest(request);
-    }
-
 }

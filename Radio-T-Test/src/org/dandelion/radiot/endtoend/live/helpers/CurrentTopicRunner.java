@@ -18,8 +18,8 @@ public class CurrentTopicRunner extends Solo {
         this.trackerClient = trackerClient;
     }
 
-    public void refreshTopic(String newTopic) {
-        trackerClient.refreshTopic(newTopic);
+    public void refreshTopic() {
+        trackerClient.refreshTopic();
     }
 
     public void showsCurrentTopic(final String topic) throws InterruptedException {
