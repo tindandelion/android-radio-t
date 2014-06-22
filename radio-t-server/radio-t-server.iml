@@ -54,34 +54,34 @@
     <orderEntry type="library" exported="" name="Gradle: jetty-servlet-9.1.4.v20140401" level="project" />
     <orderEntry type="library" exported="" name="Gradle: scala-compiler-2.11.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: scala-library-2.11.1" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: scalatra_2.11-2.3.0.RC3" level="project" />
     <orderEntry type="library" exported="" name="Gradle: json4s-jackson_2.11-3.2.10" level="project" />
     <orderEntry type="library" exported="" name="Gradle: scala-reflect-2.11.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: scala-xml_2.11-1.0.2" level="project" />
     <orderEntry type="library" exported="" name="Gradle: scala-parser-combinators_2.11-1.0.1" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: scalatra-common_2.11-2.3.0.RC3" level="project" />
     <orderEntry type="library" exported="" name="Gradle: slf4j-api-1.7.7" level="project" />
     <orderEntry type="library" exported="" name="Gradle: grizzled-slf4j_2.11-1.0.2" level="project" />
     <orderEntry type="library" exported="" name="Gradle: rl_2.11-0.4.10" level="project" />
     <orderEntry type="library" exported="" name="Gradle: json4s-ast_2.11-3.2.10" level="project" />
     <orderEntry type="library" exported="" name="Gradle: scalap-2.11.0" level="project" />
     <orderEntry type="library" exported="" name="Gradle: json4s-core_2.11-3.2.10" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: scalatra-scalatest_2.11-2.3.0.RC3" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: jetty-webapp-9.1.5.v20140505" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: jetty-util-9.1.5.v20140505" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: jetty-io-9.1.5.v20140505" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: jetty-http-9.1.5.v20140505" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: jetty-server-9.1.5.v20140505" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: jetty-security-9.1.5.v20140505" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: jetty-servlet-9.1.5.v20140505" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: commons-lang3-3.3.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: httpcore-4.3.2" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: httpclient-4.3.3" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: httpmime-4.3.3" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: jetty-xml-9.1.5.v20140505" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: scalatra-test_2.11-2.3.0.RC3" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: scalatest_2.11-2.1.6" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: scalatra-json_2.11-2.3.0.RC3" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: scalatra_2.11-2.3.0" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: scalatra-json_2.11-2.3.0" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: scalatra-common_2.11-2.3.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: scalatra-scalatest_2.11-2.3.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: jetty-webapp-9.2.1.v20140609" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: httpclient-4.3.4" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: httpmime-4.3.4" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: jetty-util-9.2.1.v20140609" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: jetty-xml-9.2.1.v20140609" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: jetty-http-9.2.1.v20140609" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: jetty-io-9.2.1.v20140609" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: jetty-server-9.2.1.v20140609" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: jetty-security-9.2.1.v20140609" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: jetty-servlet-9.2.1.v20140609" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: scalatra-test_2.11-2.3.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: scalatest_2.11-2.2.0" level="project" />
   </component>
 </module>
 

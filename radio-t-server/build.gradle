@@ -85,13 +85,13 @@ private void deployApp(def remote) {
 dependencies {
     compile 'org.scala-lang:scala-compiler:2.11.1'
     compile 'org.scala-lang:scala-library:2.11.1'
-    compile 'org.scalatra:scalatra_2.11:2.3.0.RC3'
-    compile 'org.scalatra:scalatra-json_2.11:2.3.0.RC3'
+    compile 'org.scalatra:scalatra_2.11:2.3.0'
+    compile 'org.scalatra:scalatra-json_2.11:2.3.0'
     compile 'org.json4s:json4s-jackson_2.11:3.2.10'
     compile 'org.eclipse.jetty:jetty-webapp:9.1.4.v20140401'
     compile 'ch.qos.logback:logback-classic:1.1.1'
     compile 'commons-daemon:commons-daemon:1.0.15'
     compile files('libs/smack-3.4.1-0cec571.jar', 'libs/smackx-3.4.1-0cec571.jar')
 
-    testCompile 'org.scalatra:scalatra-scalatest_2.11:2.3.0.RC3'
+    testCompile 'org.scalatra:scalatra-scalatest_2.11:2.3.0'
 }
