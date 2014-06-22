@@ -38,11 +38,6 @@
     <orderEntry type="library" exported="" name="Gradle: javax.servlet-api-3.1.0" level="project" />
     <orderEntry type="library" exported="" name="Gradle: joda-convert-1.6" level="project" />
     <orderEntry type="library" exported="" name="Gradle: paranamer-2.6" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: commons-pool-1.5.5" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: jedis-2.0.0" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: atmosphere-compat-tomcat-2.0.1" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: atmosphere-compat-jbossweb-2.0.1" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: atmosphere-compat-tomcat7-2.0.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: jackson-annotations-2.3.0" level="project" />
     <orderEntry type="library" exported="" name="Gradle: jackson-core-2.3.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: jackson-databind-2.3.1" level="project" />
@@ -60,9 +55,7 @@
     <orderEntry type="library" exported="" name="Gradle: scala-compiler-2.11.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: scala-library-2.11.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: scalatra_2.11-2.3.0.RC3" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: scalatra-atmosphere_2.11-2.3.0.RC3" level="project" />
     <orderEntry type="library" exported="" name="Gradle: json4s-jackson_2.11-3.2.10" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: websocket-server-9.1.4.v20140401" level="project" />
     <orderEntry type="library" exported="" name="Gradle: scala-reflect-2.11.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: scala-xml_2.11-1.0.2" level="project" />
     <orderEntry type="library" exported="" name="Gradle: scala-parser-combinators_2.11-1.0.1" level="project" />
@@ -73,15 +66,6 @@
     <orderEntry type="library" exported="" name="Gradle: json4s-ast_2.11-3.2.10" level="project" />
     <orderEntry type="library" exported="" name="Gradle: scalap-2.11.0" level="project" />
     <orderEntry type="library" exported="" name="Gradle: json4s-core_2.11-3.2.10" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: scalatra-json_2.11-2.3.0.RC3" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: config-1.2.0" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: akka-actor_2.11-2.3.2" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: atmosphere-runtime-2.1.4" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: atmosphere-redis-2.1.1" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: websocket-api-9.1.4.v20140401" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: websocket-common-9.1.4.v20140401" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: websocket-client-9.1.4.v20140401" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: websocket-servlet-9.1.4.v20140401" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: scalatra-scalatest_2.11-2.3.0.RC3" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: jetty-webapp-9.1.5.v20140505" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: jetty-util-9.1.5.v20140505" level="project" />
@@ -97,6 +81,7 @@
     <orderEntry type="library" scope="TEST" name="Gradle: jetty-xml-9.1.5.v20140505" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: scalatra-test_2.11-2.3.0.RC3" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: scalatest_2.11-2.1.6" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: scalatra-json_2.11-2.3.0.RC3" level="project" />
   </component>
 </module>
 

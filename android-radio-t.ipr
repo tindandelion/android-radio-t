@@ -229,60 +229,6 @@
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
   </component>
   <component name="libraryTable">
-    <library name="Gradle: akka-actor_2.11-2.3.2">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.typesafe.akka/akka-actor_2.11/2.3.2/27c4ed3e33dcd030e138c2c02fc68e84a41bbb36/akka-actor_2.11-2.3.2.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.typesafe.akka/akka-actor_2.11/2.3.2/8e0fa714f0ae36d9d39fd23961dbbd847585b69b/akka-actor_2.11-2.3.2-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: atmosphere-compat-jbossweb-2.0.1">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.atmosphere/atmosphere-compat-jbossweb/2.0.1/f55931f6441c888b434be0a4868c6461b8a101c0/atmosphere-compat-jbossweb-2.0.1.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.atmosphere/atmosphere-compat-jbossweb/2.0.1/b4cc57bc14d16a72985a0f649ec60b05a9b45ed/atmosphere-compat-jbossweb-2.0.1-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: atmosphere-compat-tomcat-2.0.1">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.atmosphere/atmosphere-compat-tomcat/2.0.1/1d0eed68c08c89f36f2f8cbbe7236177bfadd729/atmosphere-compat-tomcat-2.0.1.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.atmosphere/atmosphere-compat-tomcat/2.0.1/2f59c576207bbcde6cfac5e92066413a8d88ac76/atmosphere-compat-tomcat-2.0.1-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: atmosphere-compat-tomcat7-2.0.1">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.atmosphere/atmosphere-compat-tomcat7/2.0.1/fe42105cd9f720ec1ac8a55bf310ab10b0c3a0d9/atmosphere-compat-tomcat7-2.0.1.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.atmosphere/atmosphere-compat-tomcat7/2.0.1/f171464ccaeea8fedabd17433354b4efb0412b58/atmosphere-compat-tomcat7-2.0.1-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: atmosphere-redis-2.1.1">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.atmosphere/atmosphere-redis/2.1.1/cf0329e89a391c09dbd4641ebd41044e441ee3c4/atmosphere-redis-2.1.1.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.atmosphere/atmosphere-redis/2.1.1/f5ea7d2df346df2390a35ac9bba9f62d9eecccdb/atmosphere-redis-2.1.1-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: atmosphere-runtime-2.1.4">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.atmosphere/atmosphere-runtime/2.1.4/594c386d97a152a5a7750fb344775775711d7713/atmosphere-runtime-2.1.4.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.atmosphere/atmosphere-runtime/2.1.4/f0f721d421201b2808795225fbcc11ddb5ab6a7e/atmosphere-runtime-2.1.4-sources.jar!/" />
-      </SOURCES>
-    </library>
     <library name="Gradle: commons-codec-1.6">
       <CLASSES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-codec/commons-codec/1.6/b7f0fc8f61ecadeb3695f0b9464755eee44374d4/commons-codec-1.6.jar!/" />
@@ -317,24 +263,6 @@
       <JAVADOC />
       <SOURCES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-logging/commons-logging/1.1.3/28bb0405fddaf04f15058fbfbe01fe2780d7d3b6/commons-logging-1.1.3-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: commons-pool-1.5.5">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-pool/commons-pool/1.5.5/7d8ffbdc47aa0c5a8afe5dc2aaf512f369f1d19b/commons-pool-1.5.5.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-pool/commons-pool/1.5.5/22dae31a0b73022e69d66baaaf36ab4355f91f4f/commons-pool-1.5.5-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: config-1.2.0">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.typesafe/config/1.2.0/b2b6ad16307793a8e57f378de24447a4968c0ca3/config-1.2.0.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.typesafe/config/1.2.0/75f72540ff3257bed5dffae175dd03b4a9135db6/config-1.2.0-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: grizzled-slf4j_2.11-1.0.2">
@@ -416,15 +344,6 @@
       <JAVADOC />
       <SOURCES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.servlet/javax.servlet-api/3.1.0/ab3976d4574c48d22dc1abf6a9e8bd0fdf928223/javax.servlet-api-3.1.0-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: jedis-2.0.0">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/redis.clients/jedis/2.0.0/83fd129417dab44c09d85f8e125fe8007ee52bc7/jedis-2.0.0.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/redis.clients/jedis/2.0.0/8a33a0569948ba6b7a6ba356a99ea51e6f196040/jedis-2.0.0-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: jetty-http-9.1.4.v20140401">
@@ -749,15 +668,6 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.scalatest/scalatest_2.11/2.1.6/c9fb2eddef63abe1209236c007621cddffa23a45/scalatest_2.11-2.1.6-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: scalatra-atmosphere_2.11-2.3.0.RC3">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.scalatra/scalatra-atmosphere_2.11/2.3.0.RC3/13d938b407ae30b95fe955a4ce9900a10fdffdba/scalatra-atmosphere_2.11-2.3.0.RC3.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.scalatra/scalatra-atmosphere_2.11/2.3.0.RC3/f43e971ac9dc5cb36d3e095b40ac4caa10ae5f9b/scalatra-atmosphere_2.11-2.3.0.RC3-sources.jar!/" />
-      </SOURCES>
-    </library>
     <library name="Gradle: scalatra-common_2.11-2.3.0.RC3">
       <CLASSES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.scalatra/scalatra-common_2.11/2.3.0.RC3/8588f3347b6544eef8c7c27e8949f7756d469a18/scalatra-common_2.11-2.3.0.RC3.jar!/" />
@@ -825,51 +735,6 @@
       </CLASSES>
       <JAVADOC />
       <SOURCES />
-    </library>
-    <library name="Gradle: websocket-api-9.1.4.v20140401">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-api/9.1.4.v20140401/7b162b9102b2be5f9223539dacdcb3f5483cc645/websocket-api-9.1.4.v20140401.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-api/9.1.4.v20140401/221426ff6f0e8c8ce729d5c244207736b2960038/websocket-api-9.1.4.v20140401-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: websocket-client-9.1.4.v20140401">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-client/9.1.4.v20140401/3cb8a7a847a1f8898c57742ce61230e360a02813/websocket-client-9.1.4.v20140401.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-client/9.1.4.v20140401/b79219bb5d98abf62d09e3e13e2fc4959038af07/websocket-client-9.1.4.v20140401-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: websocket-common-9.1.4.v20140401">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-common/9.1.4.v20140401/dbced2e4e056cea68cb50bb7a2ff3890099ce66b/websocket-common-9.1.4.v20140401.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-common/9.1.4.v20140401/9b932f02caa38eac1d8d357e2cc9dd8443e7cc94/websocket-common-9.1.4.v20140401-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: websocket-server-9.1.4.v20140401">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-server/9.1.4.v20140401/f10d2b87fbee359b3ef9ec028fa3f6234dcf34f3/websocket-server-9.1.4.v20140401.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-server/9.1.4.v20140401/5bf911bb3a47251693b472a9dd408745ecf443f8/websocket-server-9.1.4.v20140401-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: websocket-servlet-9.1.4.v20140401">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-servlet/9.1.4.v20140401/674e88fa8e18c5394292ed30e46e29d62d89d414/websocket-servlet-9.1.4.v20140401.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-servlet/9.1.4.v20140401/1d7fbf88fe30324e718bc92598a971fa61112164/websocket-servlet-9.1.4.v20140401-sources.jar!/" />
-      </SOURCES>
     </library>
     <library name="Gradle:: scala-compiler-bundle-2.11.1">
       <CLASSES>
