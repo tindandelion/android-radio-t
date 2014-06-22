@@ -50,4 +50,9 @@ public class TopicTrackerClient implements TopicTracker {
     public void setListener(TopicListener listener) {
         this.listener = listener;
     }
+
+    @Override
+    public void start() {
+
+    }
 }

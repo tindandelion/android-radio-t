@@ -6,4 +6,5 @@ public interface TopicTracker {
     }
 
     void setListener(TopicListener listener);
+    void start();
 }

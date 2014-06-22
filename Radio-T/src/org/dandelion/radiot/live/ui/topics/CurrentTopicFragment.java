@@ -21,6 +21,12 @@ public class CurrentTopicFragment extends Fragment implements TopicListener {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        client.start();
+    }
+
+    @Override
     public void onDestroy() {
         client.setListener(null);
         super.onDestroy();
@@ -36,7 +42,13 @@ public class CurrentTopicFragment extends Fragment implements TopicListener {
     }
 
     @Override
-    public void onTopicChanged(String newTopic) {
-        topicText.setText(newTopic);
+    public void onTopicChanged(final String newTopic) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                topicText.setText(newTopic);
+            }
+        });
+
     }
 }

@@ -13,4 +13,9 @@ public class NullTopicTracker implements TopicTracker.Factory, TopicTracker {
     public void setListener(TopicListener listener) {
 
     }
+
+    @Override
+    public void start() {
+
+    }
 }
