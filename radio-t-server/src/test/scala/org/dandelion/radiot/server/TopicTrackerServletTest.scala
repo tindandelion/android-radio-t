@@ -9,6 +9,9 @@ import org.scalatest.concurrent.Eventually
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 
+import org.json4s.jackson.JsonMethods._
+
+
 @RunWith(classOf[JUnitRunner])
 class TopicTrackerServletTest extends ScalatraSpec
 with BeforeAndAfter with Eventually with Matchers {
@@ -45,6 +48,25 @@ with BeforeAndAfter with Eventually with Matchers {
     }
   }
 
+  it("answers no data while no current topic is set") {
+    get("/chat/topic") {
+      status should equal(204)
+      body shouldBe 'empty
+    }
+  }
+
+  it("answers a topic JSON when current topic is set") {
+    val newTopic = Topic("New topic to discuss", "http://new-topic.org")
+    sendMessageToChat(s"--> ${newTopic.text} ${newTopic.link}")
+
+    get("/chat/topic") {
+      status should equal(200)
+      header("Content-Type") should equal("application/json; charset=UTF-8")
+      body should equal(topicJson(newTopic))
+    }
+
+  }
+
   it("receives current topic after connection is established") {
     topicShouldBe("Default topic", "http://example.org")
   }
@@ -78,6 +100,10 @@ with BeforeAndAfter with Eventually with Matchers {
       sendMessage(msg)
       disconnect()
     }
+  }
+
+  def topicJson(newTopic: Topic): String = {
+    compact(render(newTopic.toJson))
   }
 
   def topicShouldBe(text: String, link: String) =

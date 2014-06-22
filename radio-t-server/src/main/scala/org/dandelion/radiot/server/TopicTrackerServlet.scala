@@ -1,6 +1,6 @@
 package org.dandelion.radiot.server
 
-import org.scalatra.{SessionSupport, ScalatraServlet}
+import org.scalatra.{NoContent, Ok, SessionSupport, ScalatraServlet}
 import org.scalatra.atmosphere._
 import org.scalatra.json.{JValueResult, JacksonJsonSupport}
 import org.json4s.{DefaultFormats, Formats}
@@ -23,6 +23,7 @@ with JacksonJsonSupport with JValueResult {
   val logger = LoggerFactory.getLogger(getClass)
   val jabberChat = new JabberChat(chatConfig)
   var currentTopic = Topic("Default topic", "http://example.org")
+  var currentTopic2: Option[Topic] = None
 
 
   get("/") {
@@ -34,6 +35,14 @@ with JacksonJsonSupport with JValueResult {
       override def receive: AtmoReceive = {
         case TextMessage(text) => send(currentTopic.toJson)
       }
+    }
+  }
+
+  get("/topic") {
+    contentType = formats("json")
+    currentTopic2 match {
+      case Some(topic) => Ok(topic)
+      case None => NoContent()
     }
   }
 
@@ -50,6 +59,7 @@ with JacksonJsonSupport with JValueResult {
     logger.info("Changing current topic to: [%s]".format(topic.text))
 
     currentTopic = topic
+    currentTopic2 = Some(topic)
     AtmosphereClient.broadcast(root + "/current-topic", currentTopic.toJson)
   }
 
