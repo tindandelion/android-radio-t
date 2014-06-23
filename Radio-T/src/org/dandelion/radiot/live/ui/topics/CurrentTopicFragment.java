@@ -7,8 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import org.dandelion.radiot.R;
+import org.dandelion.radiot.http.Consumer;
 
-public class CurrentTopicFragment extends Fragment implements TopicListener {
+public class CurrentTopicFragment extends Fragment implements Consumer<String> {
     public static TopicTracker.Factory trackerFactory = null;
     private TextView topicText;
     private TopicTracker client;
@@ -17,7 +18,7 @@ public class CurrentTopicFragment extends Fragment implements TopicListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         client = trackerFactory.create();
-        client.setListener(this);
+        client.setConsumer(this);
     }
 
     @Override
@@ -28,7 +29,7 @@ public class CurrentTopicFragment extends Fragment implements TopicListener {
 
     @Override
     public void onDestroy() {
-        client.setListener(null);
+        client.setConsumer(null);
         super.onDestroy();
     }
 
@@ -42,7 +43,7 @@ public class CurrentTopicFragment extends Fragment implements TopicListener {
     }
 
     @Override
-    public void onTopicChanged(final String newTopic) {
+    public void accept(final String newTopic) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {

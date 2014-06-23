@@ -65,9 +65,9 @@ public class HttpTranslationEngine implements ChatTranslation, HttpChatRequest.E
     }
 
     @Override
-    public void processMessages(List<Message> messages) {
+    public void accept(List<Message> messages) {
         currentState.onRequestCompleted();
-        messageAnnouncer.announce().processMessages(messages);
+        messageAnnouncer.announce().accept(messages);
     }
 
     @Override
@@ -84,7 +84,7 @@ public class HttpTranslationEngine implements ChatTranslation, HttpChatRequest.E
     }
 
     private void requestMessages() {
-        new HttpChatRequest(chatClient, this, this).execute();
+        new HttpChatRequest<List<Message>>(chatClient, this, this).execute();
     }
 
     private void setCurrentState(HttpTranslationState newState) {

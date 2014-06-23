@@ -23,13 +23,13 @@ public class ChatStreamAdapterTest {
         Activity activity = Robolectric.buildActivity(Activity.class).create().get();
         ChatStreamAdapter adapter = new ChatStreamAdapter(activity, messages, messageLimit);
 
-        adapter.processMessages(messages(5));
+        adapter.accept(messages(5));
         assertThat(messages.size(), equalTo(5));
 
-        adapter.processMessages(messages(3));
+        adapter.accept(messages(3));
         assertThat(messages.size(), equalTo(8));
 
-        adapter.processMessages(messages(3));
+        adapter.accept(messages(3));
         assertThat(messages.size(), equalTo(messageLimit));
     }
 

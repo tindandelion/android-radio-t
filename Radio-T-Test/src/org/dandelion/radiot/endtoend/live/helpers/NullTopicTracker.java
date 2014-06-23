@@ -1,6 +1,6 @@
 package org.dandelion.radiot.endtoend.live.helpers;
 
-import org.dandelion.radiot.live.ui.topics.TopicListener;
+import org.dandelion.radiot.http.Consumer;
 import org.dandelion.radiot.live.ui.topics.TopicTracker;
 
 public class NullTopicTracker implements TopicTracker.Factory, TopicTracker {
@@ -10,7 +10,7 @@ public class NullTopicTracker implements TopicTracker.Factory, TopicTracker {
     }
 
     @Override
-    public void setListener(TopicListener listener) {
+    public void setConsumer(Consumer<String> consumer) {
 
     }
 

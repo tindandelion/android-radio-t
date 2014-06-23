@@ -2,8 +2,8 @@ package org.dandelion.radiot.live.topics;
 
 import android.os.AsyncTask;
 import org.dandelion.radiot.http.ApacheHttpClient;
+import org.dandelion.radiot.http.Consumer;
 import org.dandelion.radiot.http.HttpClient;
-import org.dandelion.radiot.live.ui.topics.TopicListener;
 import org.dandelion.radiot.live.ui.topics.TopicTracker;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class HttpTopicTrackerClient implements TopicTracker {
     private final HttpClient client;
-    private TopicListener listener;
+    private Consumer<String> consumer;
     private final String serverUrl;
 
     public HttpTopicTrackerClient(String serverUrl) {
@@ -21,8 +21,8 @@ public class HttpTopicTrackerClient implements TopicTracker {
     }
 
     @Override
-    public void setListener(TopicListener listener) {
-        this.listener = listener;
+    public void setConsumer(Consumer<String> consumer) {
+        this.consumer = consumer;
     }
 
     @Override
@@ -31,7 +31,7 @@ public class HttpTopicTrackerClient implements TopicTracker {
     }
 
     private void requestTopic() {
-        new HttpTopicRequest(this, listener).execute();
+        new HttpTopicRequest(this, consumer).execute();
     }
 
     private String retrieveTopic() {
@@ -63,11 +63,11 @@ public class HttpTopicTrackerClient implements TopicTracker {
 
     static class HttpTopicRequest extends AsyncTask<Void, Void, Object> {
         private final HttpTopicTrackerClient client;
-        private final TopicListener listener;
+        private final Consumer<String> consumer;
 
-        HttpTopicRequest(HttpTopicTrackerClient client, TopicListener listener) {
+        HttpTopicRequest(HttpTopicTrackerClient client, Consumer<String> consumer) {
             this.client = client;
-            this.listener = listener;
+            this.consumer = consumer;
         }
 
         @Override
@@ -77,7 +77,7 @@ public class HttpTopicTrackerClient implements TopicTracker {
 
         @Override
         protected void onPostExecute(Object result) {
-            listener.onTopicChanged((String) result);
+            consumer.accept((String) result);
         }
     }
 }

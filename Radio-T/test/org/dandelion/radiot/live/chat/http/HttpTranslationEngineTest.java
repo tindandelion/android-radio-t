@@ -71,7 +71,7 @@ public class HttpTranslationEngineTest {
     @Test
     public void whenDisconnected_andPreviousNetworkRequestCompletes_doesNothing() throws Exception {
         engine.disconnect();
-        engine.processMessages(messageList());
+        engine.accept(messageList());
     }
 
     @Test
@@ -118,7 +118,7 @@ public class HttpTranslationEngineTest {
         when(chatClient.retrieveMessages()).thenReturn(messages);
         engine.startConnecting();
 
-        verify(consumer).processMessages(messages);
+        verify(consumer).accept(messages);
         assertThat(engine, isInState("Listening"));
     }
 
@@ -179,7 +179,7 @@ public class HttpTranslationEngineTest {
     @Test
     public void whenPausedConnecting_andPreviousNetworkRequestCompletes_notifiesListenerAndGoesToPausedListening() throws Exception {
         engine.pauseConnecting();
-        engine.processMessages(messageList());
+        engine.accept(messageList());
 
         verify(listener).onConnected();
         assertThat(engine, isInState("PausedListening"));
@@ -235,7 +235,7 @@ public class HttpTranslationEngineTest {
         scheduler.performAction();
 
         verify(chatClient).retrieveMessages();
-        verify(consumer).processMessages(nextMessages);
+        verify(consumer).accept(nextMessages);
     }
 
     @Test
@@ -261,7 +261,7 @@ public class HttpTranslationEngineTest {
     @Test
     public void whenListening_andNetworkRequestCompletes_schedulesNextPoll() throws Exception {
         engine.startListening();
-        engine.processMessages(messageList());
+        engine.accept(messageList());
     }
 
     @Test
@@ -284,7 +284,7 @@ public class HttpTranslationEngineTest {
     @Test
     public void whenPausedListening_andNetworkRequestCompletes_doesNotScheduleNextPoll() throws Exception {
         engine.pauseListening();
-        engine.processMessages(Collections.<Message>emptyList());
+        engine.accept(Collections.<Message>emptyList());
 
         assertFalse(scheduler.isScheduled());
         assertThat(engine, isInState("PausedListening"));
@@ -318,7 +318,7 @@ public class HttpTranslationEngineTest {
 
         verify(listener, never()).onConnected();
         verify(listener, never()).onError();
-        verify(consumer, never()).processMessages(anyList());
+        verify(consumer, never()).accept(anyList());
     }
 
     @Test
@@ -333,7 +333,7 @@ public class HttpTranslationEngineTest {
         engine.startListening();
         scheduler.performAction();
 
-        verify(consumer, never()).processMessages(anyList());
+        verify(consumer, never()).accept(anyList());
     }
 
     @Before

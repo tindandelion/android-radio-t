@@ -1,7 +1,9 @@
 package org.dandelion.radiot.live.chat;
 
+import org.dandelion.radiot.http.Consumer;
+
 import java.util.List;
 
-public interface MessageConsumer {
-    void processMessages(List<Message> messages);
+public interface MessageConsumer extends Consumer<List<Message>> {
+
 }
