@@ -1,5 +1,6 @@
 package org.dandelion.radiot.live.topics;
 
+import android.os.AsyncTask;
 import org.dandelion.radiot.http.ApacheHttpClient;
 import org.dandelion.radiot.http.HttpClient;
 import org.dandelion.radiot.live.ui.topics.TopicListener;
@@ -30,12 +31,7 @@ public class HttpTopicTrackerClient implements TopicTracker {
     }
 
     private void requestTopic() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                listener.onTopicChanged(retrieveTopic());
-            }
-        }).start();
+        new HttpTopicRequest(this, listener).execute();
     }
 
     private String retrieveTopic() {
@@ -63,5 +59,25 @@ public class HttpTopicTrackerClient implements TopicTracker {
 
     public void refreshTopic() {
         requestTopic();
+    }
+
+    static class HttpTopicRequest extends AsyncTask<Void, Void, Object> {
+        private final HttpTopicTrackerClient client;
+        private final TopicListener listener;
+
+        HttpTopicRequest(HttpTopicTrackerClient client, TopicListener listener) {
+            this.client = client;
+            this.listener = listener;
+        }
+
+        @Override
+        protected Object doInBackground(Void... params) {
+            return client.retrieveTopic();
+        }
+
+        @Override
+        protected void onPostExecute(Object result) {
+            listener.onTopicChanged((String) result);
+        }
     }
 }
