@@ -1,6 +1,7 @@
 package org.dandelion.radiot.live.chat.http;
 
 import org.dandelion.radiot.common.ui.Announcer;
+import org.dandelion.radiot.http.HttpRequest;
 import org.dandelion.radiot.live.chat.ChatTranslation;
 import org.dandelion.radiot.live.chat.Message;
 import org.dandelion.radiot.live.chat.MessageConsumer;
@@ -9,7 +10,7 @@ import org.dandelion.radiot.live.schedule.Scheduler;
 
 import java.util.List;
 
-public class HttpTranslationEngine implements ChatTranslation, HttpChatRequest.ErrorListener, MessageConsumer, Scheduler.Performer {
+public class HttpTranslationEngine implements ChatTranslation, HttpRequest.ErrorListener, MessageConsumer, Scheduler.Performer {
     private final HttpChatClient chatClient;
     private Announcer<ProgressListener> progressAnnouncer = new Announcer<ProgressListener>(ProgressListener.class);
     private Announcer<MessageConsumer> messageAnnouncer = new Announcer<MessageConsumer>(MessageConsumer.class);
@@ -84,7 +85,7 @@ public class HttpTranslationEngine implements ChatTranslation, HttpChatRequest.E
     }
 
     private void requestMessages() {
-        new HttpChatRequest<List<Message>>(chatClient, this, this).execute();
+        new HttpRequest<>(chatClient, this, this).execute();
     }
 
     private void setCurrentState(HttpTranslationState newState) {

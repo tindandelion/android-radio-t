@@ -26,7 +26,7 @@ public class HttpChatClientTest {
     public void whenRetievingFirstTime_askForLastMessages() throws Exception {
         whenRequestingLastMessages(httpClient).thenReturn(chatStream());
 
-        client.retrieveMessages();
+        client.get();
 
         verify(httpClient).getStringContent(HttpChatClient.lastRecordsUrl(CHAT_URL));
     }
@@ -35,7 +35,7 @@ public class HttpChatClientTest {
     public void whenNoMessages_returnsEmptyMessageList() throws Exception {
         whenRequestingLastMessages(httpClient).thenReturn(chatStream());
 
-        List<Message> messages = client.retrieveMessages();
+        List<Message> messages = client.get();
         assertThat(messages, is(empty()));
     }
 
@@ -48,7 +48,7 @@ public class HttpChatClientTest {
                         message("sender3", "Consectur", "", 12)));
 
 
-        List<Message> messages = client.retrieveMessages();
+        List<Message> messages = client.get();
         assertThat(messages, hasItem(new Message("sender1", "Lorem ipsum", "01:19", 10)));
         assertThat(messages, hasItem(new Message("sender2", "Dolor sit amet", "03:15", 11)));
         assertThat(messages, hasItem(new Message("sender3", "Consectur", "", 12)));
@@ -63,8 +63,8 @@ public class HttpChatClientTest {
                         message(LAST_SEQ, "dolor sit amet")));
         whenRequestingNewMessages(httpClient, LAST_SEQ).thenReturn(chatStream());
 
-        client.retrieveMessages();
-        client.retrieveMessages();
+        client.get();
+        client.get();
 
         verify(httpClient).getStringContent(HttpChatClient.lastRecordsUrl(CHAT_URL));
         verify(httpClient).getStringContent(HttpChatClient.newRecordsUrl(CHAT_URL, LAST_SEQ));
@@ -83,9 +83,9 @@ public class HttpChatClientTest {
         whenRequestingNewMessages(httpClient, 12).thenReturn(
                 chatStream(message(13, "")));
 
-        client.retrieveMessages();
-        client.retrieveMessages();
-        client.retrieveMessages();
+        client.get();
+        client.get();
+        client.get();
 
         verify(httpClient).getStringContent(HttpChatClient.lastRecordsUrl(CHAT_URL));
         verify(httpClient).getStringContent(HttpChatClient.newRecordsUrl(CHAT_URL, 11));

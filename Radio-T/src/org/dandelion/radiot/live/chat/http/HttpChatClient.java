@@ -2,13 +2,14 @@ package org.dandelion.radiot.live.chat.http;
 
 import org.dandelion.radiot.http.ApacheHttpClient;
 import org.dandelion.radiot.http.HttpClient;
+import org.dandelion.radiot.http.Provider;
 import org.dandelion.radiot.live.chat.Message;
 import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.List;
 
-public class HttpChatClient {
+public class HttpChatClient implements Provider<List<Message>> {
     private static final int READ_TIMEOUT_MS = 20 * 1000;
 
     private final String baseUrl;
@@ -34,7 +35,8 @@ public class HttpChatClient {
         client = httpClient;
     }
 
-    public List<Message> retrieveMessages() throws IOException, JSONException {
+    @Override
+    public List<Message> get() throws IOException, JSONException {
         return parseMessages(requestMessages());
     }
 

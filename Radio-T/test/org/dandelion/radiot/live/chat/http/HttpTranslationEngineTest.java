@@ -65,7 +65,7 @@ public class HttpTranslationEngineTest {
 
         engine.start();
 
-        verify(chatClient).retrieveMessages();
+        verify(chatClient).get();
     }
 
     @Test
@@ -115,7 +115,7 @@ public class HttpTranslationEngineTest {
     public void whenConnecting_andPreviousNetworkRequestCompletes_feedsMessagesToConsumerAndGoesToListening() throws Exception {
         final List<Message> messages = messageList();
 
-        when(chatClient.retrieveMessages()).thenReturn(messages);
+        when(chatClient.get()).thenReturn(messages);
         engine.startConnecting();
 
         verify(consumer).accept(messages);
@@ -234,7 +234,7 @@ public class HttpTranslationEngineTest {
 
         scheduler.performAction();
 
-        verify(chatClient).retrieveMessages();
+        verify(chatClient).get();
         verify(consumer).accept(nextMessages);
     }
 
@@ -366,7 +366,7 @@ public class HttpTranslationEngineTest {
     }
 
     private OngoingStubbing<List<Message>> whenRetrievingMessages() throws IOException, JSONException {
-        return when(chatClient.retrieveMessages());
+        return when(chatClient.get());
     }
 
     private void whileRetrievingMessagesDo(final Runnable action) throws IOException, JSONException {

@@ -1,16 +1,13 @@
 package org.dandelion.radiot.live.topics;
 
-import android.os.AsyncTask;
-import org.dandelion.radiot.http.ApacheHttpClient;
-import org.dandelion.radiot.http.Consumer;
-import org.dandelion.radiot.http.HttpClient;
+import org.dandelion.radiot.http.*;
 import org.dandelion.radiot.live.ui.topics.TopicTracker;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 
-public class HttpTopicTrackerClient implements TopicTracker {
+public class HttpTopicTrackerClient implements TopicTracker, Provider<String> {
     private final HttpClient client;
     private Consumer<String> consumer;
     private final String serverUrl;
@@ -31,17 +28,13 @@ public class HttpTopicTrackerClient implements TopicTracker {
     }
 
     private void requestTopic() {
-        new HttpTopicRequest(this, consumer).execute();
-    }
+        HttpRequest.ErrorListener errorListener = new HttpRequest.ErrorListener() {
+            @Override
+            public void onError() {
 
-    private String retrieveTopic() {
-        try {
-            String json = client.getStringContent(trackerServerUrl());
-            return parseResponseJson(json);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
+            }
+        };
+        new HttpRequest<>(this, consumer, errorListener).execute();
     }
 
     private String parseResponseJson(String json) {
@@ -61,23 +54,14 @@ public class HttpTopicTrackerClient implements TopicTracker {
         requestTopic();
     }
 
-    static class HttpTopicRequest extends AsyncTask<Void, Void, Object> {
-        private final HttpTopicTrackerClient client;
-        private final Consumer<String> consumer;
-
-        HttpTopicRequest(HttpTopicTrackerClient client, Consumer<String> consumer) {
-            this.client = client;
-            this.consumer = consumer;
+    @Override
+    public String get() throws Exception {
+        try {
+            String json = client.getStringContent(trackerServerUrl());
+            return parseResponseJson(json);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
-        @Override
-        protected Object doInBackground(Void... params) {
-            return client.retrieveTopic();
-        }
-
-        @Override
-        protected void onPostExecute(Object result) {
-            consumer.accept((String) result);
-        }
     }
 }
