@@ -68,7 +68,8 @@ public class HttpChatClient implements Provider<List<Message>> {
         lastMessageSeq = lastMessage.seq;
     }
 
-    public void shutdown() {
+    @Override
+    public void abort() {
         client.shutdown();
     }
 }

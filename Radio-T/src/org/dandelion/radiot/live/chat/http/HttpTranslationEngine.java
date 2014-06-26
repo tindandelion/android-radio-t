@@ -78,7 +78,7 @@ public class HttpTranslationEngine implements ChatTranslation {
         setMessageConsumer(null);
         setProgressListener(null);
 
-        chatClient.shutdown();
+        chatClient.abort();
         disconnect();
     }
 

@@ -64,4 +64,9 @@ public class HttpTopicTrackerClient implements TopicTracker, Provider<String> {
         }
 
     }
+
+    @Override
+    public void abort() {
+        client.shutdown();
+    }
 }

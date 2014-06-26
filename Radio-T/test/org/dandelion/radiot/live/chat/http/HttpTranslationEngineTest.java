@@ -43,7 +43,7 @@ public class HttpTranslationEngineTest {
 
         engine.shutdown();
 
-        verify(chatClient).shutdown();
+        verify(chatClient).abort();
         assertThat(engine, isInState("Disconnected"));
     }
 
