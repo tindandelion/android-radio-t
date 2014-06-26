@@ -3,6 +3,7 @@ package org.dandelion.radiot.live.chat.http;
 import org.dandelion.radiot.common.ui.Announcer;
 import org.dandelion.radiot.http.Consumer;
 import org.dandelion.radiot.http.HttpRequest;
+import org.dandelion.radiot.http.Provider;
 import org.dandelion.radiot.live.chat.ChatTranslation;
 import org.dandelion.radiot.live.chat.Message;
 import org.dandelion.radiot.live.chat.MessageConsumer;
@@ -12,9 +13,10 @@ import org.dandelion.radiot.live.schedule.Scheduler;
 import java.util.List;
 
 public class HttpTranslationEngine implements ChatTranslation {
-    private final HttpChatClient chatClient;
-    private Announcer<ProgressListener> progressAnnouncer = new Announcer<ProgressListener>(ProgressListener.class);
-    private Announcer<MessageConsumer> messageAnnouncer = new Announcer<MessageConsumer>(MessageConsumer.class);
+    private final Provider<List<Message>> dataProvider;
+    private Consumer<List<Message>> dataConsumer;
+
+    private Announcer<ProgressListener> progressAnnouncer = new Announcer<>(ProgressListener.class);
     private final Scheduler pollScheduler;
     private HttpTranslationState currentState;
 
@@ -30,7 +32,7 @@ public class HttpTranslationEngine implements ChatTranslation {
         @Override
         public void accept(List<Message> value) {
             currentState.onRequestCompleted();
-            messageAnnouncer.announce().accept(value);
+            if (dataConsumer != null) dataConsumer.accept(value);
         }
     };
 
@@ -45,8 +47,8 @@ public class HttpTranslationEngine implements ChatTranslation {
         this(HttpChatClient.create(baseUrl), refreshScheduler);
     }
 
-    public HttpTranslationEngine(HttpChatClient chatClient, Scheduler pollScheduler) {
-        this.chatClient = chatClient;
+    public HttpTranslationEngine(HttpChatClient dataProvider, Scheduler pollScheduler) {
+        this.dataProvider = dataProvider;
         this.pollScheduler = pollScheduler;
         this.currentState = new HttpTranslationState.Disconnected(this);
 
@@ -60,7 +62,7 @@ public class HttpTranslationEngine implements ChatTranslation {
 
     @Override
     public void setMessageConsumer(MessageConsumer consumer) {
-        messageAnnouncer.setTarget(consumer);
+        dataConsumer = consumer;
     }
 
     @Override
@@ -78,7 +80,7 @@ public class HttpTranslationEngine implements ChatTranslation {
         setMessageConsumer(null);
         setProgressListener(null);
 
-        chatClient.abort();
+        dataProvider.abort();
         disconnect();
     }
 
@@ -91,7 +93,7 @@ public class HttpTranslationEngine implements ChatTranslation {
     }
 
     private void requestMessages() {
-        new HttpRequest<>(chatClient, onMessages, onError).execute();
+        new HttpRequest<>(dataProvider, onMessages, onError).execute();
     }
 
     private void setCurrentState(HttpTranslationState newState) {
