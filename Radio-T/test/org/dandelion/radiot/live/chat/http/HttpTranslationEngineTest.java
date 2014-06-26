@@ -77,7 +77,7 @@ public class HttpTranslationEngineTest {
     @Test
     public void whenDisconnected_andPreviousNetworkRequestFails_doesNothing() throws Exception {
         engine.disconnect();
-        engine.onError();
+        engine.onError.accept(new Exception());
     }
 
     @Test
@@ -188,7 +188,7 @@ public class HttpTranslationEngineTest {
     @Test
     public void whenPausedConnecting_andPreviousNetworkRequestFails_notifiesListenerAndGoesToDisconnected() throws Exception {
         engine.pauseConnecting();
-        engine.onError();
+        engine.onError.accept(new Exception());
 
         verify(listener).onError();
         assertThat(engine, isInState("Disconnected"));
@@ -293,7 +293,7 @@ public class HttpTranslationEngineTest {
     @Test
     public void whenPausedListening_andNetworkRequestFails_goesDisconnected() throws Exception {
         engine.pauseListening();
-        engine.onError();
+        engine.onError.accept(new Exception());
 
         assertThat(engine, isInState("Disconnected"));
     }

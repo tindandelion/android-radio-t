@@ -3,18 +3,14 @@ package org.dandelion.radiot.http;
 import android.os.AsyncTask;
 
 public class HttpRequest<T> extends AsyncTask<Void, Void, Object> {
-    public interface ErrorListener {
-        void onError();
-    }
-
     protected final Provider<T> provider;
-    protected final Consumer<T> consumer;
-    protected final ErrorListener errorListener;
+    protected final Consumer<T> dataConsumer;
+    protected final Consumer<Exception> errorConsumer;
 
-    public HttpRequest(Provider<T> provider, Consumer<T> consumer, ErrorListener errorListener) {
+    public HttpRequest(Provider<T> provider, Consumer<T> dataConsumer, Consumer<Exception> errorConsumer) {
         this.provider = provider;
-        this.consumer = consumer;
-        this.errorListener = errorListener;
+        this.dataConsumer = dataConsumer;
+        this.errorConsumer = errorConsumer;
     }
 
     @Override
@@ -29,9 +25,9 @@ public class HttpRequest<T> extends AsyncTask<Void, Void, Object> {
     @Override
     protected void onPostExecute(Object result) {
         if (result instanceof Exception) {
-            errorListener.onError();
+            errorConsumer.accept((Exception) result);
         } else {
-            consumer.accept((T) result);
+            dataConsumer.accept((T) result);
         }
     }
 

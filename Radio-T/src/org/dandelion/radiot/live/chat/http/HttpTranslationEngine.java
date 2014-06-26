@@ -1,6 +1,7 @@
 package org.dandelion.radiot.live.chat.http;
 
 import org.dandelion.radiot.common.ui.Announcer;
+import org.dandelion.radiot.http.Consumer;
 import org.dandelion.radiot.http.HttpRequest;
 import org.dandelion.radiot.live.chat.ChatTranslation;
 import org.dandelion.radiot.live.chat.Message;
@@ -10,12 +11,20 @@ import org.dandelion.radiot.live.schedule.Scheduler;
 
 import java.util.List;
 
-public class HttpTranslationEngine implements ChatTranslation, HttpRequest.ErrorListener, MessageConsumer, Scheduler.Performer {
+public class HttpTranslationEngine implements ChatTranslation, MessageConsumer, Scheduler.Performer {
     private final HttpChatClient chatClient;
     private Announcer<ProgressListener> progressAnnouncer = new Announcer<ProgressListener>(ProgressListener.class);
     private Announcer<MessageConsumer> messageAnnouncer = new Announcer<MessageConsumer>(MessageConsumer.class);
     private final Scheduler pollScheduler;
     private HttpTranslationState currentState;
+
+    public final Consumer<Exception> onError = new Consumer<Exception>() {
+        @Override
+        public void accept(Exception value) {
+            progressAnnouncer.announce().onError();
+            currentState.onError();
+        }
+    };
 
     public HttpTranslationEngine(String baseUrl, Scheduler refreshScheduler) {
         this(HttpChatClient.create(baseUrl), refreshScheduler);
@@ -60,12 +69,6 @@ public class HttpTranslationEngine implements ChatTranslation, HttpRequest.Error
 
 
     @Override
-    public void onError() {
-        progressAnnouncer.announce().onError();
-        currentState.onError();
-    }
-
-    @Override
     public void accept(List<Message> messages) {
         currentState.onRequestCompleted();
         messageAnnouncer.announce().accept(messages);
@@ -85,7 +88,7 @@ public class HttpTranslationEngine implements ChatTranslation, HttpRequest.Error
     }
 
     private void requestMessages() {
-        new HttpRequest<>(chatClient, this, this).execute();
+        new HttpRequest<>(chatClient, this, onError).execute();
     }
 
     private void setCurrentState(HttpTranslationState newState) {

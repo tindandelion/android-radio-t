@@ -28,13 +28,13 @@ public class HttpTopicTrackerClient implements TopicTracker, Provider<String> {
     }
 
     private void requestTopic() {
-        HttpRequest.ErrorListener errorListener = new HttpRequest.ErrorListener() {
+        Consumer<Exception> onError = new Consumer<Exception>() {
             @Override
-            public void onError() {
+            public void accept(Exception ex) {
 
             }
         };
-        new HttpRequest<>(this, consumer, errorListener).execute();
+        new HttpRequest<>(this, consumer, onError).execute();
     }
 
     private String parseResponseJson(String json) {
