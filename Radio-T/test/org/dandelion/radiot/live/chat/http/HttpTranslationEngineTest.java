@@ -71,7 +71,7 @@ public class HttpTranslationEngineTest {
     @Test
     public void whenDisconnected_andPreviousNetworkRequestCompletes_doesNothing() throws Exception {
         engine.disconnect();
-        engine.accept(messageList());
+        engine.onMessages.accept(messageList());
     }
 
     @Test
@@ -179,7 +179,7 @@ public class HttpTranslationEngineTest {
     @Test
     public void whenPausedConnecting_andPreviousNetworkRequestCompletes_notifiesListenerAndGoesToPausedListening() throws Exception {
         engine.pauseConnecting();
-        engine.accept(messageList());
+        engine.onMessages.accept(messageList());
 
         verify(listener).onConnected();
         assertThat(engine, isInState("PausedListening"));
@@ -261,7 +261,7 @@ public class HttpTranslationEngineTest {
     @Test
     public void whenListening_andNetworkRequestCompletes_schedulesNextPoll() throws Exception {
         engine.startListening();
-        engine.accept(messageList());
+        engine.onMessages.accept(messageList());
     }
 
     @Test
@@ -284,7 +284,7 @@ public class HttpTranslationEngineTest {
     @Test
     public void whenPausedListening_andNetworkRequestCompletes_doesNotScheduleNextPoll() throws Exception {
         engine.pauseListening();
-        engine.accept(Collections.<Message>emptyList());
+        engine.onMessages.accept(Collections.<Message>emptyList());
 
         assertFalse(scheduler.isScheduled());
         assertThat(engine, isInState("PausedListening"));
@@ -301,7 +301,7 @@ public class HttpTranslationEngineTest {
     @Test
     public void whenPausedListening_andPollScheduleEventOccurs_doesNothing() throws Exception {
         engine.pauseListening();
-        engine.performAction();
+        engine.onRefresh.performAction();
         assertFalse(scheduler.isScheduled());
     }
 

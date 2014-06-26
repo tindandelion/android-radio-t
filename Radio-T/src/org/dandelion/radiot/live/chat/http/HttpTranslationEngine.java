@@ -11,7 +11,7 @@ import org.dandelion.radiot.live.schedule.Scheduler;
 
 import java.util.List;
 
-public class HttpTranslationEngine implements ChatTranslation, MessageConsumer, Scheduler.Performer {
+public class HttpTranslationEngine implements ChatTranslation {
     private final HttpChatClient chatClient;
     private Announcer<ProgressListener> progressAnnouncer = new Announcer<ProgressListener>(ProgressListener.class);
     private Announcer<MessageConsumer> messageAnnouncer = new Announcer<MessageConsumer>(MessageConsumer.class);
@@ -26,6 +26,21 @@ public class HttpTranslationEngine implements ChatTranslation, MessageConsumer, 
         }
     };
 
+    public final Consumer<List<Message>> onMessages = new Consumer<List<Message>>() {
+        @Override
+        public void accept(List<Message> value) {
+            currentState.onRequestCompleted();
+            messageAnnouncer.announce().accept(value);
+        }
+    };
+
+    public final Scheduler.Performer onRefresh = new Scheduler.Performer() {
+        @Override
+        public void performAction() {
+            requestMessages();
+        }
+    };
+
     public HttpTranslationEngine(String baseUrl, Scheduler refreshScheduler) {
         this(HttpChatClient.create(baseUrl), refreshScheduler);
     }
@@ -35,7 +50,7 @@ public class HttpTranslationEngine implements ChatTranslation, MessageConsumer, 
         this.pollScheduler = pollScheduler;
         this.currentState = new HttpTranslationState.Disconnected(this);
 
-        pollScheduler.setPerformer(this);
+        pollScheduler.setPerformer(onRefresh);
     }
 
     @Override
@@ -67,18 +82,6 @@ public class HttpTranslationEngine implements ChatTranslation, MessageConsumer, 
         disconnect();
     }
 
-
-    @Override
-    public void accept(List<Message> messages) {
-        currentState.onRequestCompleted();
-        messageAnnouncer.announce().accept(messages);
-    }
-
-    @Override
-    public void performAction() {
-        requestMessages();
-    }
-
     public String currentState() {
         return currentState.getClass().getSimpleName();
     }
@@ -88,7 +91,7 @@ public class HttpTranslationEngine implements ChatTranslation, MessageConsumer, 
     }
 
     private void requestMessages() {
-        new HttpRequest<>(chatClient, this, onError).execute();
+        new HttpRequest<>(chatClient, onMessages, onError).execute();
     }
 
     private void setCurrentState(HttpTranslationState newState) {
