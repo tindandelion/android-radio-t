@@ -6,7 +6,7 @@ import org.dandelion.radiot.http.DataEngine;
 import org.dandelion.radiot.http.HttpDataEngine;
 import org.dandelion.radiot.live.schedule.DeterministicScheduler;
 import org.dandelion.radiot.live.topics.HttpTopicProvider;
-import org.dandelion.radiot.live.ui.topics.CurrentTopicFragment;
+import org.dandelion.radiot.live.ui.CurrentTopicFragment;
 
 public class CurrentTopicHttpTest extends LiveShowActivityTestCase {
     public static final String DEFAULT_TOPIC = "What is a Web Framework?";
@@ -33,7 +33,7 @@ public class CurrentTopicHttpTest extends LiveShowActivityTestCase {
         final HttpTopicProvider trackerClient = new HttpTopicProvider(TEST_SERVER_BASE_URL);
         final DeterministicScheduler scheduler = new DeterministicScheduler();
 
-        CurrentTopicFragment.engineFactory = new DataEngine.Factory() {
+        CurrentTopicFragment.trackerFactory = new DataEngine.Factory() {
             @Override
             public DataEngine create() {
                 return new HttpDataEngine(trackerClient, scheduler);

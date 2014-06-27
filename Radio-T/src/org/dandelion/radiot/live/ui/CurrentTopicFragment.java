@@ -1,4 +1,4 @@
-package org.dandelion.radiot.live.ui.topics;
+package org.dandelion.radiot.live.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,14 +11,14 @@ import org.dandelion.radiot.http.Consumer;
 import org.dandelion.radiot.http.DataEngine;
 
 public class CurrentTopicFragment extends Fragment implements Consumer<String> {
-    public static DataEngine.Factory engineFactory = null;
+    public static DataEngine.Factory trackerFactory = null;
     private TextView topicText;
     private DataEngine engine;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        engine = engineFactory.create();
+        engine = trackerFactory.create();
         engine.setDataConsumer(this);
     }
 

@@ -4,7 +4,7 @@
     android:layout_height="fill_parent">
 
     <fragment
-        android:name="org.dandelion.radiot.live.ui.topics.CurrentTopicFragment"
+        android:name="org.dandelion.radiot.live.ui.CurrentTopicFragment"
         android:id="@+id/current_topic"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/current_topic_control_height"

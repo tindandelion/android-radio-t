@@ -6,7 +6,7 @@ import android.test.ActivityInstrumentationTestCase2;
 import org.dandelion.radiot.endtoend.live.helpers.NullDataEngine;
 import org.dandelion.radiot.live.ui.ChatTranslationFragment;
 import org.dandelion.radiot.live.ui.LiveShowActivity;
-import org.dandelion.radiot.live.ui.topics.CurrentTopicFragment;
+import org.dandelion.radiot.live.ui.CurrentTopicFragment;
 
 public class LiveShowActivityTestCase extends ActivityInstrumentationTestCase2<LiveShowActivity> {
     @TargetApi(Build.VERSION_CODES.FROYO)
@@ -17,7 +17,7 @@ public class LiveShowActivityTestCase extends ActivityInstrumentationTestCase2<L
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        CurrentTopicFragment.engineFactory = new NullDataEngine();
+        CurrentTopicFragment.trackerFactory = new NullDataEngine();
         ChatTranslationFragment.chatFactory = new NullDataEngine();
     }
 }
