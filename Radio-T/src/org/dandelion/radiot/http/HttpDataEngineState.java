@@ -1,11 +1,9 @@
-package org.dandelion.radiot.live.chat.http;
+package org.dandelion.radiot.http;
 
-import org.dandelion.radiot.live.chat.ProgressListener;
+public abstract class HttpDataEngineState {
+    protected final HttpDataEngine engine;
 
-public abstract class HttpTranslationState {
-    protected final HttpTranslationEngine engine;
-
-    public HttpTranslationState(HttpTranslationEngine engine) {
+    public HttpDataEngineState(HttpDataEngine engine) {
         this.engine = engine;
     }
 
@@ -14,9 +12,9 @@ public abstract class HttpTranslationState {
     abstract public void onError();
     abstract public void onRequestCompleted();
 
-    static class Disconnected extends HttpTranslationState {
-        public Disconnected(HttpTranslationEngine httpTranslationEngine) {
-            super(httpTranslationEngine);
+    static class Disconnected extends HttpDataEngineState {
+        public Disconnected(HttpDataEngine httpDataEngine) {
+            super(httpDataEngine);
         }
 
         @Override
@@ -37,10 +35,10 @@ public abstract class HttpTranslationState {
         }
     }
 
-    static class Connecting extends HttpTranslationState  {
+    static class Connecting extends HttpDataEngineState {
         private final ProgressListener progressListener;
 
-        public Connecting(HttpTranslationEngine engine, ProgressListener progressListener) {
+        public Connecting(HttpDataEngine engine, ProgressListener progressListener) {
             super(engine);
             this.progressListener = progressListener;
         }
@@ -66,10 +64,10 @@ public abstract class HttpTranslationState {
         }
     }
 
-    public static class PausedConnecting extends HttpTranslationState {
+    public static class PausedConnecting extends HttpDataEngineState {
         private final ProgressListener progressListener;
 
-        public PausedConnecting(HttpTranslationEngine engine, ProgressListener progressListener) {
+        public PausedConnecting(HttpDataEngine engine, ProgressListener progressListener) {
             super(engine);
             this.progressListener = progressListener;
         }
@@ -95,8 +93,8 @@ public abstract class HttpTranslationState {
         }
     }
 
-    public static class PausedListening extends HttpTranslationState {
-        public PausedListening(HttpTranslationEngine engine) {
+    public static class PausedListening extends HttpDataEngineState {
+        public PausedListening(HttpDataEngine engine) {
             super(engine);
         }
 
@@ -120,9 +118,9 @@ public abstract class HttpTranslationState {
     }
 
 
-    public static class Listening extends HttpTranslationState {
+    public static class Listening extends HttpDataEngineState {
 
-        public Listening(HttpTranslationEngine engine) {
+        public Listening(HttpDataEngine engine) {
             super(engine);
         }
 

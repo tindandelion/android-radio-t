@@ -1,4 +1,4 @@
-package org.dandelion.radiot.live.schedule;
+package org.dandelion.radiot.common;
 
 // TODO: Combine setPerformer() and scheduleNext() into one?
 public interface Scheduler {

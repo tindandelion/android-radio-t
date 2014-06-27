@@ -1,15 +1,14 @@
-package org.dandelion.radiot.live.chat.http;
+package org.dandelion.radiot.live.chat;
 
 import org.dandelion.radiot.http.ApacheHttpClient;
 import org.dandelion.radiot.http.HttpClient;
 import org.dandelion.radiot.http.Provider;
-import org.dandelion.radiot.live.chat.Message;
 import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.List;
 
-public class HttpChatClient implements Provider<List<Message>> {
+public class ChatClient implements Provider<List<Message>> {
     private static final int READ_TIMEOUT_MS = 20 * 1000;
 
     private final String baseUrl;
@@ -24,13 +23,13 @@ public class HttpChatClient implements Provider<List<Message>> {
         return baseUrl + "/api/new/" + lastMessageSeq;
     }
 
-    public static HttpChatClient create(String baseUrl) {
+    public static ChatClient create(String baseUrl) {
         ApacheHttpClient httpClient = new ApacheHttpClient();
         httpClient.setReadTimeout(READ_TIMEOUT_MS);
-        return new HttpChatClient(baseUrl, httpClient);
+        return new ChatClient(baseUrl, httpClient);
     }
 
-    public HttpChatClient(String baseUrl, HttpClient httpClient) {
+    public ChatClient(String baseUrl, HttpClient httpClient) {
         this.baseUrl = baseUrl;
         client = httpClient;
     }

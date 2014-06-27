@@ -1,8 +1,11 @@
 package org.dandelion.radiot.live.chat.http;
 
+import org.dandelion.radiot.http.Consumer;
+import org.dandelion.radiot.http.HttpDataEngine;
+import org.dandelion.radiot.http.ProgressListener;
+import org.dandelion.radiot.live.chat.ChatClient;
+import org.dandelion.radiot.live.chat.ChatTranslationEngine;
 import org.dandelion.radiot.live.chat.Message;
-import org.dandelion.radiot.live.chat.MessageConsumer;
-import org.dandelion.radiot.live.chat.ProgressListener;
 import org.dandelion.radiot.live.schedule.DeterministicScheduler;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -29,13 +32,13 @@ import static org.mockito.Mockito.*;
 @SuppressWarnings("unchecked")
 @RunWith(RobolectricTestRunner.class)
 @Config(manifest = Config.NONE)
-public class HttpTranslationEngineTest {
+public class HttpDataEngineTest {
     private final DeterministicScheduler scheduler  = new DeterministicScheduler();
-    private final HttpChatClient chatClient = mock(HttpChatClient.class);
-    private final MessageConsumer consumer = mock(MessageConsumer.class);
+    private final ChatClient chatClient = mock(ChatClient.class);
+    private final Consumer consumer = mock(Consumer.class);
     private final ProgressListener listener = mock(ProgressListener.class);
-    private final HttpTranslationEngine engine =
-            new HttpTranslationEngine(chatClient, scheduler);
+    private final HttpDataEngine engine =
+            new ChatTranslationEngine(chatClient, scheduler);
 
     @Test
     public void shutdown_terminatesChatClient_andGoesToDisconnected() throws Exception {
@@ -339,13 +342,13 @@ public class HttpTranslationEngineTest {
     @Before
     public void setUp() throws Exception {
         engine.setProgressListener(listener);
-        engine.setMessageConsumer(consumer);
+        engine.setDataConsumer(consumer);
     }
 
-    private Matcher<? super HttpTranslationEngine> isInState(final String state) {
-        return new TypeSafeMatcher<HttpTranslationEngine>() {
+    private Matcher<? super HttpDataEngine> isInState(final String state) {
+        return new TypeSafeMatcher<HttpDataEngine>() {
             @Override
-            protected boolean matchesSafely(HttpTranslationEngine engine) {
+            protected boolean matchesSafely(HttpDataEngine engine) {
                 return state.equals(engine.currentState());
             }
 
@@ -355,7 +358,7 @@ public class HttpTranslationEngineTest {
             }
 
             @Override
-            protected void describeMismatchSafely(HttpTranslationEngine engine, Description mismatchDescription) {
+            protected void describeMismatchSafely(HttpDataEngine engine, Description mismatchDescription) {
                 mismatchDescription.appendText("Engine in state").appendValue(engine.currentState());
             }
         };

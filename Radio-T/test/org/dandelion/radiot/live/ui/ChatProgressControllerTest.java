@@ -1,7 +1,7 @@
 package org.dandelion.radiot.live.ui;
 
 import android.widget.ArrayAdapter;
-import org.dandelion.radiot.live.chat.ProgressListener;
+import org.dandelion.radiot.http.ProgressListener;
 import org.junit.Test;
 
 import static org.mockito.Mockito.mock;

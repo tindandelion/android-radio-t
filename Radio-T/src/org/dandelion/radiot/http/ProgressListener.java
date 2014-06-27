@@ -1,4 +1,4 @@
-package org.dandelion.radiot.live.chat;
+package org.dandelion.radiot.http;
 
 public interface ProgressListener {
     void onConnecting();

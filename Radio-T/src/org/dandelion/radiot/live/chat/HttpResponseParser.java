@@ -1,6 +1,5 @@
-package org.dandelion.radiot.live.chat.http;
+package org.dandelion.radiot.live.chat;
 
-import org.dandelion.radiot.live.chat.Message;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

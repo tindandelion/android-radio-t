@@ -8,15 +8,15 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import org.dandelion.radiot.R;
-import org.dandelion.radiot.live.chat.ChatTranslation;
+import org.dandelion.radiot.http.DataEngine;
 import org.dandelion.radiot.live.chat.Message;
 
 import java.util.ArrayList;
 
 public class ChatTranslationFragment extends ListFragment {
-    public static ChatTranslation.Factory chatFactory;
+    public static DataEngine.Factory chatFactory;
     private static final int MESSAGE_LIMIT = 30;
-    private ChatTranslation chat;
+    private DataEngine chat;
     private View errorView;
     private View progressView;
     private ArrayList<Message> messages;
@@ -43,7 +43,7 @@ public class ChatTranslationFragment extends ListFragment {
         ChatStreamAdapter adapter = new ChatStreamAdapter(getActivity(), messages, MESSAGE_LIMIT);
         setListAdapter(adapter);
         chat.setProgressListener(new ChatProgressController(this, adapter));
-        chat.setMessageConsumer(new ChatScroller(adapter, getListView()));
+        chat.setDataConsumer(new ChatScroller(adapter, getListView()));
     }
 
     @Override
@@ -55,7 +55,7 @@ public class ChatTranslationFragment extends ListFragment {
     public void onDestroyView() {
         super.onDestroyView();
         chat.setProgressListener(null);
-        chat.setMessageConsumer(null);
+        chat.setDataConsumer(null);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package org.dandelion.radiot.live.core;
 
-import org.dandelion.radiot.live.schedule.Scheduler;
+import org.dandelion.radiot.common.Scheduler;
 import org.junit.Before;
 import org.junit.Test;
 

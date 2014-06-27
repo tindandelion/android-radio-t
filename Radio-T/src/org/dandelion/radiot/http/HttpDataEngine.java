@@ -1,24 +1,15 @@
-package org.dandelion.radiot.live.chat.http;
+package org.dandelion.radiot.http;
 
-import org.dandelion.radiot.common.ui.Announcer;
-import org.dandelion.radiot.http.Consumer;
-import org.dandelion.radiot.http.HttpRequest;
-import org.dandelion.radiot.http.Provider;
-import org.dandelion.radiot.live.chat.ChatTranslation;
-import org.dandelion.radiot.live.chat.Message;
-import org.dandelion.radiot.live.chat.MessageConsumer;
-import org.dandelion.radiot.live.chat.ProgressListener;
-import org.dandelion.radiot.live.schedule.Scheduler;
+import org.dandelion.radiot.common.Announcer;
+import org.dandelion.radiot.common.Scheduler;
 
-import java.util.List;
-
-public class HttpTranslationEngine implements ChatTranslation {
-    private final Provider<List<Message>> dataProvider;
-    private Consumer<List<Message>> dataConsumer;
+public class HttpDataEngine<T> implements DataEngine<T> {
+    private final Provider<T> dataProvider;
+    private Consumer<T> dataConsumer;
 
     private Announcer<ProgressListener> progressAnnouncer = new Announcer<>(ProgressListener.class);
     private final Scheduler pollScheduler;
-    private HttpTranslationState currentState;
+    private HttpDataEngineState currentState;
 
     public final Consumer<Exception> onError = new Consumer<Exception>() {
         @Override
@@ -28,9 +19,9 @@ public class HttpTranslationEngine implements ChatTranslation {
         }
     };
 
-    public final Consumer<List<Message>> onMessages = new Consumer<List<Message>>() {
+    public final Consumer<T> onMessages = new Consumer<T>() {
         @Override
-        public void accept(List<Message> value) {
+        public void accept(T value) {
             currentState.onRequestCompleted();
             if (dataConsumer != null) dataConsumer.accept(value);
         }
@@ -43,14 +34,10 @@ public class HttpTranslationEngine implements ChatTranslation {
         }
     };
 
-    public HttpTranslationEngine(String baseUrl, Scheduler refreshScheduler) {
-        this(HttpChatClient.create(baseUrl), refreshScheduler);
-    }
-
-    public HttpTranslationEngine(HttpChatClient dataProvider, Scheduler pollScheduler) {
+    public HttpDataEngine(Provider<T> dataProvider, Scheduler pollScheduler) {
         this.dataProvider = dataProvider;
         this.pollScheduler = pollScheduler;
-        this.currentState = new HttpTranslationState.Disconnected(this);
+        this.currentState = new HttpDataEngineState.Disconnected(this);
 
         pollScheduler.setPerformer(onRefresh);
     }
@@ -61,7 +48,7 @@ public class HttpTranslationEngine implements ChatTranslation {
     }
 
     @Override
-    public void setMessageConsumer(MessageConsumer consumer) {
+    public void setDataConsumer(Consumer<T> consumer) {
         dataConsumer = consumer;
     }
 
@@ -77,7 +64,7 @@ public class HttpTranslationEngine implements ChatTranslation {
 
     @Override
     public void shutdown() {
-        setMessageConsumer(null);
+        setDataConsumer(null);
         setProgressListener(null);
 
         dataProvider.abort();
@@ -89,14 +76,14 @@ public class HttpTranslationEngine implements ChatTranslation {
     }
 
     public void disconnect() {
-        setCurrentState(new HttpTranslationState.Disconnected(this));
+        setCurrentState(new HttpDataEngineState.Disconnected(this));
     }
 
     private void requestMessages() {
         new HttpRequest<>(dataProvider, onMessages, onError).execute();
     }
 
-    private void setCurrentState(HttpTranslationState newState) {
+    private void setCurrentState(HttpDataEngineState newState) {
         this.currentState = newState;
     }
 
@@ -107,11 +94,11 @@ public class HttpTranslationEngine implements ChatTranslation {
 
     private void switchToConnecting() {
         progressAnnouncer.announce().onConnecting();
-        setCurrentState(new HttpTranslationState.Connecting(this, progressAnnouncer.announce()));
+        setCurrentState(new HttpDataEngineState.Connecting(this, progressAnnouncer.announce()));
     }
 
     public void pauseConnecting() {
-        setCurrentState(new HttpTranslationState.PausedConnecting(this, progressAnnouncer.announce()));
+        setCurrentState(new HttpDataEngineState.PausedConnecting(this, progressAnnouncer.announce()));
     }
 
     public void resumeConnecting() {
@@ -119,17 +106,17 @@ public class HttpTranslationEngine implements ChatTranslation {
     }
 
     public void startListening() {
-        setCurrentState(new HttpTranslationState.Listening(this));
+        setCurrentState(new HttpDataEngineState.Listening(this));
         scheduleNextPoll();
     }
 
     public void pauseListening() {
-        setCurrentState(new HttpTranslationState.PausedListening(this));
+        setCurrentState(new HttpDataEngineState.PausedListening(this));
         pollScheduler.cancel();
     }
 
     public void resumeListening() {
-        setCurrentState(new HttpTranslationState.Listening(this));
+        setCurrentState(new HttpDataEngineState.Listening(this));
         scheduleNextPoll();
     }
 

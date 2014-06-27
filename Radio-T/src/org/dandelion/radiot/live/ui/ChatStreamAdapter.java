@@ -6,13 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import org.dandelion.radiot.R;
+import org.dandelion.radiot.http.Consumer;
 import org.dandelion.radiot.live.chat.Message;
-import org.dandelion.radiot.live.chat.MessageConsumer;
 
 import java.util.List;
 
 class ChatStreamAdapter extends ArrayAdapter<Message>
-        implements MessageConsumer {
+        implements Consumer<List<Message>> {
 
     private final LayoutInflater inflater;
     private final int messageLimit;

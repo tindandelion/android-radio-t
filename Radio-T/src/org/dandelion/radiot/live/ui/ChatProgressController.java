@@ -1,7 +1,7 @@
 package org.dandelion.radiot.live.ui;
 
 import android.widget.ArrayAdapter;
-import org.dandelion.radiot.live.chat.ProgressListener;
+import org.dandelion.radiot.http.ProgressListener;
 
 class ChatProgressController implements ProgressListener {
     private final ChatTranslationFragment view;

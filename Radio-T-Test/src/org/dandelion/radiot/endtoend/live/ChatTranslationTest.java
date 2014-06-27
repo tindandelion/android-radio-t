@@ -2,8 +2,8 @@ package org.dandelion.radiot.endtoend.live;
 
 import org.dandelion.radiot.endtoend.live.helpers.ChatTranslationRunner;
 import org.dandelion.radiot.endtoend.live.helpers.LiveChatTranslationServer;
-import org.dandelion.radiot.live.chat.ChatTranslation;
-import org.dandelion.radiot.live.chat.http.HttpTranslationEngine;
+import org.dandelion.radiot.http.DataEngine;
+import org.dandelion.radiot.live.chat.ChatTranslationEngine;
 import org.dandelion.radiot.live.schedule.DeterministicScheduler;
 import org.dandelion.radiot.live.ui.ChatTranslationFragment;
 
@@ -65,10 +65,10 @@ public class ChatTranslationTest extends LiveShowActivityTestCase {
         super.setUp();
         backend = new LiveChatTranslationServer();
         scheduler = new DeterministicScheduler();
-        ChatTranslationFragment.chatFactory = new ChatTranslation.Factory() {
+        ChatTranslationFragment.chatFactory = new DataEngine.Factory() {
             @Override
-            public ChatTranslation create() {
-                return new HttpTranslationEngine(
+            public DataEngine create() {
+                return new ChatTranslationEngine(
                         LiveChatTranslationServer.baseUrl(), scheduler);
             }
         };

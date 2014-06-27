@@ -1,5 +1,6 @@
 package org.dandelion.radiot.live.schedule;
 
+import org.dandelion.radiot.common.Scheduler;
 import org.dandelion.radiot.util.ProgrammerError;
 
 public class DeterministicScheduler implements Scheduler {

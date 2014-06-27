@@ -1,15 +1,15 @@
 package org.dandelion.radiot.live.ui;
 
+import org.dandelion.radiot.http.Consumer;
 import org.dandelion.radiot.live.chat.Message;
-import org.dandelion.radiot.live.chat.MessageConsumer;
 
 import java.util.List;
 
-public class ChatScroller implements MessageConsumer {
-    private final MessageConsumer consumer;
+public class ChatScroller implements Consumer<List<Message>> {
+    private final Consumer<List<Message>> consumer;
     private final ChatStreamView view;
 
-    public ChatScroller(MessageConsumer consumer, ChatStreamView view) {
+    public ChatScroller(Consumer<List<Message>> consumer, ChatStreamView view) {
         this.consumer = consumer;
         this.view = view;
     }
