@@ -5,21 +5,21 @@ import android.app.Instrumentation;
 import android.widget.TextView;
 import com.robotium.solo.Solo;
 import org.dandelion.radiot.helpers.async.Probe;
-import org.dandelion.radiot.live.topics.HttpTopicTrackerClient;
+import org.dandelion.radiot.live.schedule.DeterministicScheduler;
 import org.hamcrest.Description;
 
 import static org.dandelion.radiot.helpers.async.Poller.assertEventually;
 
 public class CurrentTopicRunner extends Solo {
-    private final HttpTopicTrackerClient trackerClient;
+    private final DeterministicScheduler scheduler;
 
-    public CurrentTopicRunner(Instrumentation instrumentation, Activity activity, HttpTopicTrackerClient trackerClient) {
+    public CurrentTopicRunner(Instrumentation instrumentation, Activity activity, DeterministicScheduler scheduler) {
         super(instrumentation, activity);
-        this.trackerClient = trackerClient;
+        this.scheduler = scheduler;
     }
 
     public void refreshTopic() {
-        trackerClient.refreshTopic();
+        scheduler.performAction();
     }
 
     public void showsCurrentTopic(final String topic) throws InterruptedException {

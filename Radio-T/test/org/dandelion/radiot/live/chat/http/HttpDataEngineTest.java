@@ -37,8 +37,7 @@ public class HttpDataEngineTest {
     private final ChatClient chatClient = mock(ChatClient.class);
     private final Consumer consumer = mock(Consumer.class);
     private final ProgressListener listener = mock(ProgressListener.class);
-    private final HttpDataEngine engine =
-            new ChatTranslation(chatClient, scheduler);
+    private final HttpDataEngine engine = new ChatTranslation(chatClient, scheduler);
 
     @Test
     public void shutdown_terminatesChatClient_andGoesToDisconnected() throws Exception {

@@ -5,6 +5,7 @@ import org.dandelion.radiot.http.HttpDataEngine;
 
 import java.util.List;
 
+// Remove ChatTranslation class completely?
 public class ChatTranslation extends HttpDataEngine<List<Message>> {
     public ChatTranslation(String baseUrl, Scheduler refreshScheduler) {
         super(ChatClient.create(baseUrl), refreshScheduler);

@@ -8,28 +8,29 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.http.Consumer;
+import org.dandelion.radiot.http.DataEngine;
 
 public class CurrentTopicFragment extends Fragment implements Consumer<String> {
-    public static TopicTracker.Factory trackerFactory = null;
+    public static DataEngine.Factory engineFactory = null;
     private TextView topicText;
-    private TopicTracker client;
+    private DataEngine engine;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        client = trackerFactory.create();
-        client.setConsumer(this);
+        engine = engineFactory.create();
+        engine.setDataConsumer(this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        client.start();
+        engine.start();
     }
 
     @Override
     public void onDestroy() {
-        client.setConsumer(null);
+        engine.setDataConsumer(null);
         super.onDestroy();
     }
 

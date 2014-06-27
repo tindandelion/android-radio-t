@@ -2,9 +2,11 @@ package org.dandelion.radiot.endtoend.live;
 
 import org.dandelion.radiot.endtoend.live.helpers.CurrentTopicRunner;
 import org.dandelion.radiot.endtoend.live.helpers.TopicTrackerServer;
-import org.dandelion.radiot.live.topics.HttpTopicTrackerClient;
+import org.dandelion.radiot.http.DataEngine;
+import org.dandelion.radiot.http.HttpDataEngine;
+import org.dandelion.radiot.live.schedule.DeterministicScheduler;
+import org.dandelion.radiot.live.topics.HttpTopicProvider;
 import org.dandelion.radiot.live.ui.topics.CurrentTopicFragment;
-import org.dandelion.radiot.live.ui.topics.TopicTracker;
 
 public class CurrentTopicHttpTest extends LiveShowActivityTestCase {
     public static final String DEFAULT_TOPIC = "What is a Web Framework?";
@@ -28,19 +30,20 @@ public class CurrentTopicHttpTest extends LiveShowActivityTestCase {
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        final HttpTopicTrackerClient trackerClient = new HttpTopicTrackerClient(TEST_SERVER_BASE_URL);
+        final HttpTopicProvider trackerClient = new HttpTopicProvider(TEST_SERVER_BASE_URL);
+        final DeterministicScheduler scheduler = new DeterministicScheduler();
 
-        CurrentTopicFragment.trackerFactory = new TopicTracker.Factory() {
+        CurrentTopicFragment.engineFactory = new DataEngine.Factory() {
             @Override
-            public TopicTracker create() {
-                return trackerClient;
+            public DataEngine create() {
+                return new HttpDataEngine(trackerClient, scheduler);
             }
         };
 
         server = new TopicTrackerServer(TEST_SERVER_BASE_URL);
         server.changeTopic(DEFAULT_TOPIC, "http://example.com");
 
-        app = new CurrentTopicRunner(getInstrumentation(), getActivity(), trackerClient);
+        app = new CurrentTopicRunner(getInstrumentation(), getActivity(), scheduler);
     }
 
 }

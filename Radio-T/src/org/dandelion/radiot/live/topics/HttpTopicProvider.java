@@ -1,40 +1,20 @@
 package org.dandelion.radiot.live.topics;
 
-import org.dandelion.radiot.http.*;
-import org.dandelion.radiot.live.ui.topics.TopicTracker;
+import org.dandelion.radiot.http.ApacheHttpClient;
+import org.dandelion.radiot.http.HttpClient;
+import org.dandelion.radiot.http.Provider;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 
-public class HttpTopicTrackerClient implements TopicTracker, Provider<String> {
+public class HttpTopicProvider implements Provider<String> {
     private final HttpClient client;
-    private Consumer<String> consumer;
     private final String serverUrl;
 
-    public HttpTopicTrackerClient(String serverUrl) {
+    public HttpTopicProvider(String serverUrl) {
         this.serverUrl = serverUrl;
         this.client = new ApacheHttpClient();
-    }
-
-    @Override
-    public void setConsumer(Consumer<String> consumer) {
-        this.consumer = consumer;
-    }
-
-    @Override
-    public void start() {
-        requestTopic();
-    }
-
-    private void requestTopic() {
-        Consumer<Exception> onError = new Consumer<Exception>() {
-            @Override
-            public void accept(Exception ex) {
-
-            }
-        };
-        new HttpRequest<>(this, consumer, onError).execute();
     }
 
     private String parseResponseJson(String json) {
@@ -48,10 +28,6 @@ public class HttpTopicTrackerClient implements TopicTracker, Provider<String> {
 
     private String trackerServerUrl() {
         return serverUrl + "/chat/topic";
-    }
-
-    public void refreshTopic() {
-        requestTopic();
     }
 
     @Override

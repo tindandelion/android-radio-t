@@ -2,10 +2,9 @@ package org.dandelion.radiot;
 
 import android.app.Application;
 import android.os.Handler;
+import org.dandelion.radiot.common.Scheduler;
 import org.dandelion.radiot.http.DataEngine;
 import org.dandelion.radiot.live.chat.ChatTranslation;
-import org.dandelion.radiot.common.Scheduler;
-import org.dandelion.radiot.live.topics.TopicTrackerFactory;
 import org.dandelion.radiot.live.ui.ChatTranslationFragment;
 import org.dandelion.radiot.live.ui.topics.CurrentTopicFragment;
 import org.dandelion.radiot.podcasts.main.PodcastsApp;
@@ -25,7 +24,7 @@ public class RadiotApplication extends Application {
     }
 
     private void setupTopicTracker() {
-        CurrentTopicFragment.trackerFactory = new TopicTrackerFactory(TOPIC_TRACKER_BASE_URL);
+        CurrentTopicFragment.engineFactory = null;
     }
 
     private void setupChatTranslation() {
