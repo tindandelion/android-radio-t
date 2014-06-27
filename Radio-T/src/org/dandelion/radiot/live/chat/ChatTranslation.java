@@ -5,12 +5,12 @@ import org.dandelion.radiot.http.HttpDataEngine;
 
 import java.util.List;
 
-public class ChatTranslationEngine extends HttpDataEngine<List<Message>> {
-    public ChatTranslationEngine(String baseUrl, Scheduler refreshScheduler) {
+public class ChatTranslation extends HttpDataEngine<List<Message>> {
+    public ChatTranslation(String baseUrl, Scheduler refreshScheduler) {
         super(ChatClient.create(baseUrl), refreshScheduler);
     }
 
-    public ChatTranslationEngine(ChatClient dataProvider, Scheduler pollScheduler) {
+    public ChatTranslation(ChatClient dataProvider, Scheduler pollScheduler) {
         super(dataProvider, pollScheduler);
     }
 }

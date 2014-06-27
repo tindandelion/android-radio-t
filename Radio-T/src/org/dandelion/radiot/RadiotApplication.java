@@ -3,7 +3,7 @@ package org.dandelion.radiot;
 import android.app.Application;
 import android.os.Handler;
 import org.dandelion.radiot.http.DataEngine;
-import org.dandelion.radiot.live.chat.ChatTranslationEngine;
+import org.dandelion.radiot.live.chat.ChatTranslation;
 import org.dandelion.radiot.common.Scheduler;
 import org.dandelion.radiot.live.topics.TopicTrackerFactory;
 import org.dandelion.radiot.live.ui.ChatTranslationFragment;
@@ -32,7 +32,7 @@ public class RadiotApplication extends Application {
         ChatTranslationFragment.chatFactory = new DataEngine.Factory() {
             @Override
             public DataEngine create() {
-                return new ChatTranslationEngine(CHAT_URL, new HandlerScheduler());
+                return new ChatTranslation(CHAT_URL, new HandlerScheduler());
             }
         };
     }

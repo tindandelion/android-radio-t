@@ -4,7 +4,7 @@ import org.dandelion.radiot.http.Consumer;
 import org.dandelion.radiot.http.HttpDataEngine;
 import org.dandelion.radiot.http.ProgressListener;
 import org.dandelion.radiot.live.chat.ChatClient;
-import org.dandelion.radiot.live.chat.ChatTranslationEngine;
+import org.dandelion.radiot.live.chat.ChatTranslation;
 import org.dandelion.radiot.live.chat.Message;
 import org.dandelion.radiot.live.schedule.DeterministicScheduler;
 import org.hamcrest.Description;
@@ -38,7 +38,7 @@ public class HttpDataEngineTest {
     private final Consumer consumer = mock(Consumer.class);
     private final ProgressListener listener = mock(ProgressListener.class);
     private final HttpDataEngine engine =
-            new ChatTranslationEngine(chatClient, scheduler);
+            new ChatTranslation(chatClient, scheduler);
 
     @Test
     public void shutdown_terminatesChatClient_andGoesToDisconnected() throws Exception {
