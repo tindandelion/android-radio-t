@@ -5,8 +5,8 @@ import android.os.Handler;
 import org.dandelion.radiot.common.Scheduler;
 import org.dandelion.radiot.http.DataEngine;
 import org.dandelion.radiot.http.HttpDataEngine;
-import org.dandelion.radiot.http.Provider;
 import org.dandelion.radiot.live.chat.ChatClient;
+import org.dandelion.radiot.live.topics.HttpTopicProvider;
 import org.dandelion.radiot.live.ui.ChatTranslationFragment;
 import org.dandelion.radiot.live.ui.CurrentTopicFragment;
 import org.dandelion.radiot.podcasts.main.PodcastsApp;
@@ -14,26 +14,11 @@ import org.dandelion.radiot.util.ProgrammerError;
 
 public class RadiotApplication extends Application {
     private static final String CHAT_URL = "http://chat.radio-t.com";
-    private static final String TOPIC_TRACKER_BASE_URL = "107.170.84.215:8080/chat";
+    private static final String TOPIC_TRACKER_BASE_URL = "http://107.170.84.215:8080";
     // private static final String CHAT_URL = "http://192.168.5.206:4567";
 
     public static DataEngine createChatTranslation(String chatUrl, Scheduler scheduler) {
         return new HttpDataEngine<>(ChatClient.create(chatUrl), scheduler);
-    }
-
-    private DataEngine createTopicTracker() {
-        Provider<String> provider = new Provider<String>() {
-            @Override
-            public String get() throws Exception {
-                return "";
-            }
-
-            @Override
-            public void abort() {
-            }
-        };
-
-        return new HttpDataEngine(provider, new HandlerScheduler());
     }
 
     @Override
@@ -45,19 +30,22 @@ public class RadiotApplication extends Application {
     }
 
     private void setupTopicTracker() {
+        final int updateDelayMillis = 60000;
         CurrentTopicFragment.trackerFactory = new DataEngine.Factory() {
             @Override
             public DataEngine create() {
-                return createTopicTracker();
+                return new HttpDataEngine(new HttpTopicProvider(TOPIC_TRACKER_BASE_URL),
+                        new HandlerScheduler(updateDelayMillis));
             }
         };
     }
 
     private void setupChatTranslation() {
+        final int updateDelayMillis = 5000;
         ChatTranslationFragment.chatFactory = new DataEngine.Factory() {
             @Override
             public DataEngine create() {
-                return createChatTranslation(CHAT_URL, new HandlerScheduler());
+                return createChatTranslation(CHAT_URL, new HandlerScheduler(updateDelayMillis));
             }
         };
     }
@@ -69,6 +57,7 @@ public class RadiotApplication extends Application {
     }
 
     private static class HandlerScheduler implements Scheduler {
+        private final int delayMillis;
         private Handler handler = new Handler();
         private Performer performer;
         private boolean isScheduled = false;
@@ -79,6 +68,10 @@ public class RadiotApplication extends Application {
                 isScheduled = false;
             }
         };
+
+        private HandlerScheduler(int delayMillis) {
+            this.delayMillis = delayMillis;
+        }
 
         @Override
         public void setPerformer(Performer performer) {
@@ -92,7 +85,7 @@ public class RadiotApplication extends Application {
             }
 
             isScheduled = true;
-            handler.postDelayed(action, 5000);
+            handler.postDelayed(action, delayMillis);
         }
 
         @Override
