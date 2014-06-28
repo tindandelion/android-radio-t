@@ -8,7 +8,7 @@ import org.dandelion.radiot.live.schedule.DeterministicScheduler;
 import org.dandelion.radiot.live.topics.HttpTopicProvider;
 import org.dandelion.radiot.live.ui.CurrentTopicFragment;
 
-public class CurrentTopicHttpTest extends LiveShowActivityTestCase {
+public class CurrentTopicTest extends LiveShowActivityTestCase {
     public static final String DEFAULT_TOPIC = "What is a Web Framework?";
     private static final String TEST_SERVER_BASE_URL = "http://10.0.1.2:8080";
 
