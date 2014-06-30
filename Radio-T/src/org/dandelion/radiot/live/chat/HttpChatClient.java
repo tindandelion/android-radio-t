@@ -8,7 +8,7 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.util.List;
 
-public class ChatClient implements Provider<List<Message>> {
+public class HttpChatClient implements Provider<List<Message>> {
     private static final int READ_TIMEOUT_MS = 20 * 1000;
 
     private final String baseUrl;
@@ -23,13 +23,13 @@ public class ChatClient implements Provider<List<Message>> {
         return baseUrl + "/api/new/" + lastMessageSeq;
     }
 
-    public static ChatClient create(String baseUrl) {
+    public static HttpChatClient create(String baseUrl) {
         ApacheHttpClient httpClient = new ApacheHttpClient();
         httpClient.setReadTimeout(READ_TIMEOUT_MS);
-        return new ChatClient(baseUrl, httpClient);
+        return new HttpChatClient(baseUrl, httpClient);
     }
 
-    public ChatClient(String baseUrl, HttpClient httpClient) {
+    public HttpChatClient(String baseUrl, HttpClient httpClient) {
         this.baseUrl = baseUrl;
         client = httpClient;
     }

@@ -10,9 +10,13 @@ public class HttpTopicProvider implements Provider<String> {
     private final HttpClient client;
     private final String serverUrl;
 
-    public HttpTopicProvider(String serverUrl) {
+    public HttpTopicProvider(HttpClient client, String serverUrl) {
+        this.client = client;
         this.serverUrl = serverUrl;
-        this.client = new ApacheHttpClient();
+    }
+
+    public HttpTopicProvider(String serverUrl) {
+        this(new ApacheHttpClient(), serverUrl);
     }
 
     private String parseResponseJson(String json) {

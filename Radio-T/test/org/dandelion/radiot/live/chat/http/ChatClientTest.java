@@ -1,7 +1,7 @@
 package org.dandelion.radiot.live.chat.http;
 
 import org.dandelion.radiot.http.HttpClient;
-import org.dandelion.radiot.live.chat.ChatClient;
+import org.dandelion.radiot.live.chat.HttpChatClient;
 import org.dandelion.radiot.live.chat.Message;
 import org.junit.Test;
 import org.mockito.stubbing.OngoingStubbing;
@@ -21,7 +21,7 @@ public class ChatClientTest {
     private static final String CHAT_URL = "http://chat.test.com";
 
     private final HttpClient httpClient = mock(HttpClient.class);
-    private final ChatClient client = new ChatClient(CHAT_URL, httpClient);
+    private final HttpChatClient client = new HttpChatClient(CHAT_URL, httpClient);
 
     @Test
     public void whenRetievingFirstTime_askForLastMessages() throws Exception {
@@ -29,7 +29,7 @@ public class ChatClientTest {
 
         client.get();
 
-        verify(httpClient).getStringContent(ChatClient.lastRecordsUrl(CHAT_URL));
+        verify(httpClient).getStringContent(HttpChatClient.lastRecordsUrl(CHAT_URL));
     }
 
     @Test
@@ -67,8 +67,8 @@ public class ChatClientTest {
         client.get();
         client.get();
 
-        verify(httpClient).getStringContent(ChatClient.lastRecordsUrl(CHAT_URL));
-        verify(httpClient).getStringContent(ChatClient.newRecordsUrl(CHAT_URL, LAST_SEQ));
+        verify(httpClient).getStringContent(HttpChatClient.lastRecordsUrl(CHAT_URL));
+        verify(httpClient).getStringContent(HttpChatClient.newRecordsUrl(CHAT_URL, LAST_SEQ));
     }
 
     @Test
@@ -88,18 +88,18 @@ public class ChatClientTest {
         client.get();
         client.get();
 
-        verify(httpClient).getStringContent(ChatClient.lastRecordsUrl(CHAT_URL));
-        verify(httpClient).getStringContent(ChatClient.newRecordsUrl(CHAT_URL, 11));
-        verify(httpClient).getStringContent(ChatClient.newRecordsUrl(CHAT_URL, 12));
+        verify(httpClient).getStringContent(HttpChatClient.lastRecordsUrl(CHAT_URL));
+        verify(httpClient).getStringContent(HttpChatClient.newRecordsUrl(CHAT_URL, 11));
+        verify(httpClient).getStringContent(HttpChatClient.newRecordsUrl(CHAT_URL, 12));
     }
 
     private OngoingStubbing<String> whenRequestingNewMessages(HttpClient httpClient, int lastMessageSeq) throws IOException {
-        String url = ChatClient.newRecordsUrl(CHAT_URL, lastMessageSeq);
+        String url = HttpChatClient.newRecordsUrl(CHAT_URL, lastMessageSeq);
         return when(httpClient.getStringContent(url));
     }
 
     private OngoingStubbing<String> whenRequestingLastMessages(HttpClient httpClient) throws IOException {
-        String url = ChatClient.lastRecordsUrl(CHAT_URL);
+        String url = HttpChatClient.lastRecordsUrl(CHAT_URL);
         return when(httpClient.getStringContent(url));
     }
 }

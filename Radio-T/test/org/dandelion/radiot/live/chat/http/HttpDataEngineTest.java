@@ -3,7 +3,7 @@ package org.dandelion.radiot.live.chat.http;
 import org.dandelion.radiot.http.Consumer;
 import org.dandelion.radiot.http.HttpDataEngine;
 import org.dandelion.radiot.http.ProgressListener;
-import org.dandelion.radiot.live.chat.ChatClient;
+import org.dandelion.radiot.live.chat.HttpChatClient;
 import org.dandelion.radiot.live.chat.Message;
 import org.dandelion.radiot.live.schedule.DeterministicScheduler;
 import org.hamcrest.Description;
@@ -33,7 +33,7 @@ import static org.mockito.Mockito.*;
 @Config(manifest = Config.NONE)
 public class HttpDataEngineTest {
     private final DeterministicScheduler scheduler  = new DeterministicScheduler();
-    private final ChatClient chatClient = mock(ChatClient.class);
+    private final HttpChatClient chatClient = mock(HttpChatClient.class);
     private final Consumer consumer = mock(Consumer.class);
     private final ProgressListener listener = mock(ProgressListener.class);
     private final HttpDataEngine engine = new HttpDataEngine(chatClient, scheduler);

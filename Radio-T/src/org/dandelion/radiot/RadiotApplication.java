@@ -5,7 +5,7 @@ import android.os.Handler;
 import org.dandelion.radiot.common.Scheduler;
 import org.dandelion.radiot.http.DataEngine;
 import org.dandelion.radiot.http.HttpDataEngine;
-import org.dandelion.radiot.live.chat.ChatClient;
+import org.dandelion.radiot.live.chat.HttpChatClient;
 import org.dandelion.radiot.live.topics.HttpTopicProvider;
 import org.dandelion.radiot.live.ui.ChatTranslationFragment;
 import org.dandelion.radiot.live.ui.CurrentTopicFragment;
@@ -18,7 +18,7 @@ public class RadiotApplication extends Application {
     // private static final String CHAT_URL = "http://192.168.5.206:4567";
 
     public static DataEngine createChatTranslation(String chatUrl, Scheduler scheduler) {
-        return new HttpDataEngine<>(ChatClient.create(chatUrl), scheduler);
+        return new HttpDataEngine<>(HttpChatClient.create(chatUrl), scheduler);
     }
 
     @Override
