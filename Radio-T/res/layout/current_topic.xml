@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:background="@color/blue"
-              android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:background="@color/background_darkest"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
     <TextView
         android:id="@+id/current_topic_text"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:lines="2"
+        android:ellipsize="end"
+        android:paddingBottom="4dp"
+        android:paddingLeft="32dp"/>
 
-</LinearLayout>
+    <View
+        style="@style/DividerHorizontal"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>

@@ -5,8 +5,8 @@ import android.os.Handler;
 import org.dandelion.radiot.common.Scheduler;
 import org.dandelion.radiot.http.DataEngine;
 import org.dandelion.radiot.http.HttpDataEngine;
+import org.dandelion.radiot.http.Provider;
 import org.dandelion.radiot.live.chat.HttpChatClient;
-import org.dandelion.radiot.live.topics.HttpTopicProvider;
 import org.dandelion.radiot.live.ui.ChatTranslationFragment;
 import org.dandelion.radiot.live.ui.CurrentTopicFragment;
 import org.dandelion.radiot.podcasts.main.PodcastsApp;
@@ -34,8 +34,17 @@ public class RadiotApplication extends Application {
         CurrentTopicFragment.trackerFactory = new DataEngine.Factory() {
             @Override
             public DataEngine create() {
-                return new HttpDataEngine(new HttpTopicProvider(TOPIC_TRACKER_BASE_URL),
-                        new HandlerScheduler(updateDelayMillis));
+                // Provider provider = new HttpTopicProvider(TOPIC_TRACKER_BASE_URL);
+                Provider provider = new Provider<String>() {
+                    @Override
+                    public String get() throws Exception {
+                        return "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec aliquet, massa ut tincidunt pellentesque, dui nibh lacinia magna, elementum ultrices magna risus a tellus";
+                    }
+
+                    @Override
+                    public void abort() { }
+                };
+                return new HttpDataEngine(provider, new HandlerScheduler(updateDelayMillis));
             }
         };
     }

@@ -1,27 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-
-    <fragment
-        android:name="org.dandelion.radiot.live.ui.CurrentTopicFragment"
-        android:id="@+id/current_topic"
-        android:layout_width="fill_parent"
-        android:layout_height="@dimen/current_topic_control_height"
-        android:layout_alignParentTop="true" />
 
     <fragment
         android:name="org.dandelion.radiot.live.ui.ChatTranslationFragment"
         android:id="@+id/chat_translation"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/current_topic"
+        tools:layout="@layout/chat_translation"/>
+
+    <fragment
+        android:name="org.dandelion.radiot.live.ui.CurrentTopicFragment"
+        android:id="@+id/current_topic"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/current_topic_control_height"
         android:layout_above="@+id/playback_control"
-        android:layout_below="@+id/current_topic"/>
+        tools:layout="@layout/current_topic"/>
 
     <fragment
         android:name="org.dandelion.radiot.live.ui.PlaybackControlFragment"
         android:id="@+id/playback_control"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/playback_control_height"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true"
+        tools:layout="@layout/live_playback_control"/>
 </RelativeLayout>
