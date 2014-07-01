@@ -15,8 +15,19 @@ public class CurrentTopicTest extends LiveShowActivityTestCase {
     private TopicTrackerBackend backend;
     private DeterministicScheduler scheduler;
 
-    public void testShowsCurrentTopic() throws Exception {
+    public void testWhenNoCurrentTopic_hidesTheView() throws Exception {
+        backend.respondNoContent();
+
         CurrentTopicRunner app = openScreen();
+
+        app.showsNoTopic();
+    }
+
+    public void testShowsCurrentTopic() throws Exception {
+        backend.respondWithTopic(DEFAULT_TOPIC);
+
+        CurrentTopicRunner app = openScreen();
+
         app.showsCurrentTopic(DEFAULT_TOPIC);
     }
 
@@ -37,7 +48,7 @@ public class CurrentTopicTest extends LiveShowActivityTestCase {
         backend = new TopicTrackerBackend();
         scheduler = new DeterministicScheduler();
 
-        backend.respondWithTopic(DEFAULT_TOPIC);
+
         CurrentTopicFragment.trackerFactory = new DataEngine.Factory() {
             @Override
             public DataEngine create() {
@@ -60,11 +71,17 @@ public class CurrentTopicTest extends LiveShowActivityTestCase {
 }
 
 class TopicTrackerBackend extends ResponsiveHttpServer {
+    private static final String HTTP_NO_CONTENT = "204 No Content";
+
     public TopicTrackerBackend() throws IOException {
         super();
     }
 
     public void respondWithTopic(String topicText) {
         respondSuccessWith(String.format("{text:\"%s\"}", topicText), MIME_JSON);
+    }
+
+    public void respondNoContent() {
+        respondWith(new Response(HTTP_NO_CONTENT, MIME_JSON, ""));
     }
 }
