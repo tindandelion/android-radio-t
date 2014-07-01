@@ -5,6 +5,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 
 public abstract class ResponsiveHttpServer extends HttpServer {
+    public static final String MIME_JSON = "application/json";
     private BlockingQueue<Response> responseHolder = new LinkedBlockingDeque<Response>();
 
     public ResponsiveHttpServer() throws IOException {

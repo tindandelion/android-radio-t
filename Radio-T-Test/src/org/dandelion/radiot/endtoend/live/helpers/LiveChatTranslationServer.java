@@ -5,7 +5,6 @@ import org.dandelion.radiot.helpers.ResponsiveHttpServer;
 import java.io.IOException;
 
 public class LiveChatTranslationServer extends ResponsiveHttpServer {
-    private static final String MIME_JSON = "application/json";
     public static final String SESSION_COOKIE = "JSESSIONID";
     public static final String SESSION_ID = "123445667";
 
