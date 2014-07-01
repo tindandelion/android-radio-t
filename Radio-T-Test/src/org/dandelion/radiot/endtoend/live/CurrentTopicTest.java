@@ -12,17 +12,20 @@ import java.io.IOException;
 
 public class CurrentTopicTest extends LiveShowActivityTestCase {
     public static final String DEFAULT_TOPIC = "What is a Web Framework?";
-
-    private CurrentTopicRunner app;
     private TopicTrackerBackend backend;
+    private DeterministicScheduler scheduler;
 
     public void testShowsCurrentTopic() throws Exception {
+        CurrentTopicRunner app = openScreen();
         app.showsCurrentTopic(DEFAULT_TOPIC);
     }
 
 
     public void testWhenTopicChanges_refreshView() throws Exception {
         final String newTopic = "Amazon's ginormous public cloud turns 81 today";
+
+        CurrentTopicRunner app = openScreen();
+
         backend.respondWithTopic(newTopic);
         app.refreshTopic();
         app.showsCurrentTopic(newTopic);
@@ -32,19 +35,20 @@ public class CurrentTopicTest extends LiveShowActivityTestCase {
     public void setUp() throws Exception {
         super.setUp();
         backend = new TopicTrackerBackend();
+        scheduler = new DeterministicScheduler();
+
         backend.respondWithTopic(DEFAULT_TOPIC);
-
-        final HttpTopicProvider trackerClient = new HttpTopicProvider(TopicTrackerBackend.baseUrl());
-        final DeterministicScheduler scheduler = new DeterministicScheduler();
-
         CurrentTopicFragment.trackerFactory = new DataEngine.Factory() {
             @Override
             public DataEngine create() {
+                HttpTopicProvider trackerClient = new HttpTopicProvider(TopicTrackerBackend.baseUrl());
                 return new HttpDataEngine(trackerClient, scheduler);
             }
         };
+    }
 
-        app = new CurrentTopicRunner(getInstrumentation(), getActivity(), scheduler);
+    private CurrentTopicRunner openScreen() {
+        return new CurrentTopicRunner(getInstrumentation(), getActivity(), scheduler);
     }
 
     @Override
@@ -53,13 +57,14 @@ public class CurrentTopicTest extends LiveShowActivityTestCase {
         super.tearDown();
     }
 
-    private static class TopicTrackerBackend extends ResponsiveHttpServer {
-        public TopicTrackerBackend() throws IOException {
-            super();
-        }
+}
 
-        public void respondWithTopic(String topicText) {
-            respondSuccessWith(String.format("{text:\"%s\"}", topicText), MIME_JSON);
-        }
+class TopicTrackerBackend extends ResponsiveHttpServer {
+    public TopicTrackerBackend() throws IOException {
+        super();
+    }
+
+    public void respondWithTopic(String topicText) {
+        respondSuccessWith(String.format("{text:\"%s\"}", topicText), MIME_JSON);
     }
 }

@@ -2,10 +2,12 @@ package org.dandelion.radiot.endtoend.live;
 
 import org.dandelion.radiot.RadiotApplication;
 import org.dandelion.radiot.endtoend.live.helpers.ChatTranslationRunner;
-import org.dandelion.radiot.endtoend.live.helpers.LiveChatTranslationServer;
+import org.dandelion.radiot.helpers.ResponsiveHttpServer;
 import org.dandelion.radiot.http.DataEngine;
 import org.dandelion.radiot.live.schedule.DeterministicScheduler;
 import org.dandelion.radiot.live.ui.ChatTranslationFragment;
+
+import java.io.IOException;
 
 import static org.dandelion.radiot.util.ChatStreamBuilder.chatStream;
 import static org.dandelion.radiot.util.ChatStreamBuilder.message;
@@ -79,4 +81,27 @@ public class ChatTranslationTest extends LiveShowActivityTestCase {
         super.tearDown();
     }
 }
+
+class LiveChatTranslationServer extends ResponsiveHttpServer {
+    public LiveChatTranslationServer() throws IOException {
+        super();
+    }
+
+    public void respondWithChatStream(String content) {
+        respondSuccessWith(content, MIME_JSON);
+    }
+
+    public void hasReceivedInitialRequest() throws InterruptedException {
+        hasReceivedRequest("/api/last/50", "");
+    }
+
+    public void hasReceivedContinuationRequest(int seq) throws InterruptedException {
+        hasReceivedRequest("/api/new/" + seq, "");
+    }
+
+    public void respondWithError() {
+        respondWith(new Response(HTTP_NOTFOUND, MIME_HTML, ""));
+    }
+}
+
 
