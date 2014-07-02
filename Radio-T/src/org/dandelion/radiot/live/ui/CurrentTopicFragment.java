@@ -21,8 +21,19 @@ public class CurrentTopicFragment extends Fragment implements Consumer<String>,P
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         engine = trackerFactory.create();
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         engine.setDataConsumer(this);
         engine.setProgressListener(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        engine.stop();
     }
 
     @Override
@@ -32,9 +43,15 @@ public class CurrentTopicFragment extends Fragment implements Consumer<String>,P
     }
 
     @Override
-    public void onDestroy() {
+    public void onDestroyView() {
+        super.onDestroyView();
         engine.setDataConsumer(null);
         engine.setProgressListener(null);
+    }
+
+    @Override
+    public void onDestroy() {
+        engine.shutdown();
         super.onDestroy();
     }
 
