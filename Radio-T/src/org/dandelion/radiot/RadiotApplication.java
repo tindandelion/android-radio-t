@@ -38,6 +38,7 @@ public class RadiotApplication extends Application {
                 Provider provider = new Provider<String>() {
                     @Override
                     public String get() throws Exception {
+                        Thread.sleep(5000);
                         return "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec aliquet, massa ut tincidunt pellentesque, dui nibh lacinia magna, elementum ultrices magna risus a tellus";
                     }
 

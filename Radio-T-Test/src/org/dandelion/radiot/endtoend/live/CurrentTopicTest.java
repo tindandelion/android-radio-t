@@ -15,31 +15,40 @@ public class CurrentTopicTest extends LiveShowActivityTestCase {
     private TopicTrackerBackend backend;
     private DeterministicScheduler scheduler;
 
-    public void testWhenNoCurrentTopic_hidesTheView() throws Exception {
+    public void testWhenNoCurrentTopicInitially_viewIsHidden() throws Exception {
         backend.respondNoContent();
 
         CurrentTopicRunner app = openScreen();
-
         app.showsNoTopic();
     }
 
-    public void testShowsCurrentTopic() throws Exception {
+    public void testOnStart_showsCurrentTopic() throws Exception {
         backend.respondWithTopic(DEFAULT_TOPIC);
 
         CurrentTopicRunner app = openScreen();
-
         app.showsCurrentTopic(DEFAULT_TOPIC);
     }
 
 
-    public void testWhenTopicChanges_refreshView() throws Exception {
-        final String newTopic = "Amazon's ginormous public cloud turns 81 today";
-
+    public void testWhenTopicChanges_updatesView() throws Exception {
+        backend.respondWithTopic(DEFAULT_TOPIC);
         CurrentTopicRunner app = openScreen();
 
+        final String newTopic = "Amazon's ginormous public cloud turns 81 today";
         backend.respondWithTopic(newTopic);
+
         app.refreshTopic();
         app.showsCurrentTopic(newTopic);
+    }
+
+    public void testWhenTopicSwitchesToNoTopic_hidesView() throws Exception {
+        backend.respondWithTopic(DEFAULT_TOPIC);
+        CurrentTopicRunner app = openScreen();
+        app.showsCurrentTopic(DEFAULT_TOPIC);
+
+        backend.respondNoContent();
+        app.refreshTopic();
+        app.showsNoTopic();
     }
 
     @Override
