@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.http.Consumer;
@@ -16,6 +17,12 @@ public class CurrentTopicFragment extends Fragment implements Consumer<String>,P
     public static DataEngine.Factory trackerFactory = null;
     private TextView topicText;
     private DataEngine engine;
+    private View.OnClickListener onHide = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            hideMyself();
+        }
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,6 +66,8 @@ public class CurrentTopicFragment extends Fragment implements Consumer<String>,P
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.current_topic, container, false);
         topicText = (TextView) view.findViewById(R.id.current_topic_text);
+        ImageButton hideButton = (ImageButton) view.findViewById(R.id.current_topic_hide);
+        hideButton.setOnClickListener(onHide);
         return view;
     }
 

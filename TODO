@@ -19,6 +19,8 @@ Version 1.9:
      DONE Connect to chat at server start
 
   DONE Broadcast current topic only to current topic's clients
+  - Current topic animation
+  - Use smaller font for current topic text on small screens?
   - Better error handling when parsing topic JSON
   - Make sure we connect and disconnect from the topic tracker correctly
   - Move chat-related classes into a separate package similar to topics
