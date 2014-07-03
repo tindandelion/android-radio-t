@@ -21,6 +21,8 @@ Version 1.9:
   DONE Broadcast current topic only to current topic's clients
   DONE Current topic animation
   - Use smaller font for current topic text on small screens?
+  - Respect current topic view closed after screen rotation
+  - Do not show current topic if it was forcibly closed and hasn't changed
   - Smoother current topic show animation
   - Better error handling when parsing topic JSON
   - Make sure we connect and disconnect from the topic tracker correctly
