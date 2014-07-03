@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import org.dandelion.radiot.R;
+import org.dandelion.radiot.common.ui.Typefaces;
 import org.dandelion.radiot.http.Consumer;
 import org.dandelion.radiot.http.DataEngine;
 import org.dandelion.radiot.http.ProgressListener;
@@ -66,6 +67,7 @@ public class CurrentTopicFragment extends Fragment implements Consumer<String>,P
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.current_topic, container, false);
         topicText = (TextView) view.findViewById(R.id.current_topic_text);
+        topicText.setTypeface(Typefaces.robotoLight(getActivity()));
         ImageButton hideButton = (ImageButton) view.findViewById(R.id.current_topic_hide);
         hideButton.setOnClickListener(onHide);
         return view;
@@ -86,6 +88,7 @@ public class CurrentTopicFragment extends Fragment implements Consumer<String>,P
     private void showMyself() {
         getFragmentManager()
                 .beginTransaction()
+                .setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_down)
                 .show(this)
                 .commit();
     }
@@ -93,6 +96,7 @@ public class CurrentTopicFragment extends Fragment implements Consumer<String>,P
     private void hideMyself() {
         getFragmentManager()
                 .beginTransaction()
+                .setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_down)
                 .hide(this)
                 .commit();
     }
