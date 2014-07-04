@@ -87,5 +87,8 @@
         <item name="android:textSize">11sp</item>
     </style>
 
-
+    <style name="CurrentTopic.Text" parent="Radiot.TextView">
+        <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
+        <item name="android:lines">3</item>
+    </style>
 </resources>

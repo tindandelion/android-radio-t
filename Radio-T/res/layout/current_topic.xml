@@ -5,12 +5,12 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
     <TextView
+        style="@style/CurrentTopic.Text"
         android:id="@+id/current_topic_text"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_toLeftOf="@+id/current_topic_hide"
         android:gravity="center_vertical"
-        android:lines="2"
         android:ellipsize="end"
         android:paddingBottom="4dp"
         android:paddingLeft="32dp"/>
