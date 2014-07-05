@@ -44,7 +44,11 @@ class TopicTrackerServletTest extends ScalatraSpec with Matchers {
     get("/chat/topic") {
       status should equal(200)
       header("Content-Type") should equal("application/json; charset=UTF-8")
-      extractTopic(body) should equal(newTopic)
+
+      val receivedTopic = extractTopic(body)
+      receivedTopic.id shouldNot be('empty)
+      receivedTopic.text should equal(newTopic.text)
+      receivedTopic.link should equal(newTopic.link)
     }
 
   }
@@ -54,7 +58,7 @@ class TopicTrackerServletTest extends ScalatraSpec with Matchers {
   def sendMessageToChat(msg: String) {
     new JabberChat(LocalAdminConfig) {
       connect {
-        (_, _) =>
+        (_, _, _) =>
       }
       sendMessage(msg)
       disconnect()

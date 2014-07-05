@@ -7,8 +7,8 @@ import org.scalatra.json.{JValueResult, JacksonJsonSupport}
 import org.scalatra.{NoContent, Ok, ScalatraServlet}
 import org.slf4j.LoggerFactory
 
-case class Topic(text: String, link: String = "") {
-  def toJson: JObject = ("text" -> text) ~ ("link" -> link)
+case class Topic(text: String, link: String = "", id: String = "") {
+  def toJson: JObject = ("id" -> id) ~ ("text" -> text) ~ ("link" -> link)
 }
 
 class TopicTrackerServlet(val root: String, val chatConfig: JabberConfig) extends ScalatraServlet

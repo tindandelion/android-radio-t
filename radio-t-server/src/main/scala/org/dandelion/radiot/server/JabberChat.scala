@@ -6,7 +6,7 @@ import org.jivesoftware.smack.packet.{Message, Packet}
 import org.slf4j.LoggerFactory
 
 class JabberChat(val cfg: JabberConfig) {
-  type MessageConsumer = (String, String) => Unit
+  type MessageConsumer = (String, String, String) => Unit
 
   private val logger = LoggerFactory.getLogger(getClass)
   private val connection = new XMPPConnection(new ConnectionConfiguration(cfg.server, cfg.port))
@@ -46,7 +46,7 @@ class JabberChat(val cfg: JabberConfig) {
 
   private def messageListener(consumer: MessageConsumer) = new PacketListener {
     override def processPacket(packet: Packet) = packet match {
-      case msg: Message => consumer(msg.getFrom, msg.getBody)
+      case msg: Message => consumer(msg.getPacketID, msg.getFrom, msg.getBody)
       case _ =>
     }
   }
