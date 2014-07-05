@@ -33,7 +33,7 @@ with JacksonJsonSupport with JValueResult {
   }
 
   def changeTopic(topic: Topic) {
-    logger.info("Changing current topic to: [%s]".format(topic.text))
+    logger.info("Changing current topic to: [%s][%s]".format(topic.id, topic.text))
     currentTopic = Some(topic)
   }
 
