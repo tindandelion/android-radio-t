@@ -1,5 +1,6 @@
 package org.dandelion.radiot.server
 
+import org.json4s.DefaultFormats
 import org.json4s.jackson.JsonMethods._
 import org.junit.runner.RunWith
 import org.scalatest.Matchers
@@ -9,6 +10,8 @@ import org.scalatra.test.scalatest.ScalatraSpec
 
 @RunWith(classOf[JUnitRunner])
 class TopicTrackerServletTest extends ScalatraSpec with Matchers {
+  implicit val formats = DefaultFormats
+
   val LocalChatConfig = JabberConfig(
     server = "localhost",
     username = "android-radiot",
@@ -41,10 +44,12 @@ class TopicTrackerServletTest extends ScalatraSpec with Matchers {
     get("/chat/topic") {
       status should equal(200)
       header("Content-Type") should equal("application/json; charset=UTF-8")
-      body should equal(topicJson(newTopic))
+      extractTopic(body) should equal(newTopic)
     }
 
   }
+
+  def extractTopic(json: String): Topic = parse(json).extract[Topic]
 
   def sendMessageToChat(msg: String) {
     new JabberChat(LocalAdminConfig) {
@@ -54,10 +59,6 @@ class TopicTrackerServletTest extends ScalatraSpec with Matchers {
       sendMessage(msg)
       disconnect()
     }
-  }
-
-  def topicJson(newTopic: Topic): String = {
-    compact(render(newTopic.toJson))
   }
 }
 
