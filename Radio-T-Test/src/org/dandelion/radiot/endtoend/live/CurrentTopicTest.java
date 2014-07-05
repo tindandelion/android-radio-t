@@ -62,7 +62,7 @@ public class CurrentTopicTest extends LiveShowActivityTestCase {
             @Override
             public DataEngine create() {
                 HttpTopicProvider trackerClient = new HttpTopicProvider(TopicTrackerBackend.baseUrl());
-                return new HttpDataEngine(trackerClient, scheduler);
+                return new HttpDataEngine<>(trackerClient, scheduler);
             }
         };
     }

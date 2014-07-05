@@ -6,7 +6,7 @@ import org.dandelion.radiot.http.Provider;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class HttpTopicProvider implements Provider<String> {
+public class HttpTopicProvider implements Provider<CurrentTopic> {
     private final HttpClient client;
     private final String serverUrl;
 
@@ -19,10 +19,10 @@ public class HttpTopicProvider implements Provider<String> {
         this(new ApacheHttpClient(), serverUrl);
     }
 
-    private String parseResponseJson(String json) {
+    private CurrentTopic parseResponseJson(String json) {
         try {
             JSONObject obj = new JSONObject(json);
-            return obj.getString("text");
+            return new CurrentTopic(obj.getString("text"));
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -33,7 +33,7 @@ public class HttpTopicProvider implements Provider<String> {
     }
 
     @Override
-    public String get() throws Exception {
+    public CurrentTopic get() throws Exception {
         String json = client.getStringContent(trackerServerUrl());
         return parseResponseJson(json);
     }

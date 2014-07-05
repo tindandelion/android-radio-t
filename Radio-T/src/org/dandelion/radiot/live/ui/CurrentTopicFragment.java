@@ -13,9 +13,10 @@ import org.dandelion.radiot.common.ui.Typefaces;
 import org.dandelion.radiot.http.Consumer;
 import org.dandelion.radiot.http.DataEngine;
 import org.dandelion.radiot.http.ProgressListener;
+import org.dandelion.radiot.live.topics.CurrentTopic;
 
-public class CurrentTopicFragment extends Fragment implements Consumer<String>,ProgressListener {
-    public static DataEngine.Factory trackerFactory = null;
+public class CurrentTopicFragment extends Fragment implements Consumer<CurrentTopic>,ProgressListener {
+    public static DataEngine.Factory<CurrentTopic> trackerFactory = null;
     private TextView topicText;
     private DataEngine engine;
     private View.OnClickListener onHide = new View.OnClickListener() {
@@ -80,8 +81,8 @@ public class CurrentTopicFragment extends Fragment implements Consumer<String>,P
     }
 
     @Override
-    public void accept(final String newTopic) {
-        topicText.setText(newTopic);
+    public void accept(CurrentTopic newTopic) {
+        topicText.setText(newTopic.text);
         showMyself();
     }
 

@@ -18,8 +18,8 @@ public class HttpTopicProviderTest {
         when(httpClient.getStringContent(SERVER_URL + "/chat/topic"))
                 .thenReturn("{text: \"Lorem ipsum\"}");
 
-        String topic = provider.get();
-        assertThat(topic, equalTo("Lorem ipsum"));
+        CurrentTopic topic = provider.get();
+        assertThat(topic.text, equalTo("Lorem ipsum"));
 
     }
 }
