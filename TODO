@@ -23,9 +23,9 @@ Version 1.9:
   DONE Use smaller font for current topic text on small screens?
   DONE Do not show current topic if it was forcibly closed and hasn't changed
   DONE Update Roboto Light font
-  - Can topic id be null ?
   - Respect current topic view closed after screen rotation
   - Current topic display in landscape orientation
+  - Can topic id be null ?
   - Number of lines of current topic on Android 2.3 should be 3?
   - Smoother current topic show animation
   - Better error handling when parsing topic JSON
