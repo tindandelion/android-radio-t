@@ -3,11 +3,12 @@ package org.dandelion.radiot.endtoend.live.helpers;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import com.robotium.solo.Solo;
+import org.dandelion.radiot.R;
 import org.dandelion.radiot.helpers.async.Probe;
 import org.dandelion.radiot.live.schedule.DeterministicScheduler;
-import org.dandelion.radiot.R;
 import org.hamcrest.Description;
 
 import static org.dandelion.radiot.helpers.async.Poller.assertEventually;
@@ -22,6 +23,11 @@ public class CurrentTopicRunner extends Solo {
 
     public void refreshTopic() {
         scheduler.performAction();
+    }
+
+    public void closeTopicView() {
+        ImageButton button = (ImageButton) getView(R.id.current_topic_hide);
+        clickOnView(button);
     }
 
     public void showsCurrentTopic(final String topic) throws InterruptedException {

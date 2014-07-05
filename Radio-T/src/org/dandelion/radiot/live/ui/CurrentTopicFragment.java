@@ -25,6 +25,7 @@ public class CurrentTopicFragment extends Fragment implements Consumer<CurrentTo
             hideMyself();
         }
     };
+    private String currentTopicId = "";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,9 +82,20 @@ public class CurrentTopicFragment extends Fragment implements Consumer<CurrentTo
     }
 
     @Override
-    public void accept(CurrentTopic newTopic) {
-        topicText.setText(newTopic.text);
-        showMyself();
+    public void accept(CurrentTopic topic) {
+        if (isNewTopic(topic)) {
+            updateTopic(topic);
+            showMyself();
+        }
+    }
+
+    private void updateTopic(CurrentTopic topic) {
+        currentTopicId = topic.id;
+        topicText.setText(topic.text);
+    }
+
+    private boolean isNewTopic(CurrentTopic topic) {
+        return !currentTopicId.equals(topic.id);
     }
 
     private void showMyself() {

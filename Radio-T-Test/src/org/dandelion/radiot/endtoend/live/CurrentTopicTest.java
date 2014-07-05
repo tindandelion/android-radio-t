@@ -5,13 +5,16 @@ import org.dandelion.radiot.helpers.ResponsiveHttpServer;
 import org.dandelion.radiot.http.DataEngine;
 import org.dandelion.radiot.http.HttpDataEngine;
 import org.dandelion.radiot.live.schedule.DeterministicScheduler;
+import org.dandelion.radiot.live.topics.CurrentTopic;
 import org.dandelion.radiot.live.topics.HttpTopicProvider;
 import org.dandelion.radiot.live.ui.CurrentTopicFragment;
 
 import java.io.IOException;
 
 public class CurrentTopicTest extends LiveShowActivityTestCase {
-    public static final String DEFAULT_TOPIC = "What is a Web Framework?";
+    public static final CurrentTopic DEFAULT_TOPIC =
+            new CurrentTopic("default-id", "What is a Web Framework?");
+
     private TopicTrackerBackend backend;
     private DeterministicScheduler scheduler;
 
@@ -26,7 +29,7 @@ public class CurrentTopicTest extends LiveShowActivityTestCase {
         backend.respondWithTopic(DEFAULT_TOPIC);
 
         CurrentTopicRunner app = openScreen();
-        app.showsCurrentTopic(DEFAULT_TOPIC);
+        app.showsCurrentTopic(DEFAULT_TOPIC.text);
     }
 
 
@@ -34,19 +37,33 @@ public class CurrentTopicTest extends LiveShowActivityTestCase {
         backend.respondWithTopic(DEFAULT_TOPIC);
         CurrentTopicRunner app = openScreen();
 
-        final String newTopic = "Amazon's ginormous public cloud turns 81 today";
+        final CurrentTopic newTopic = new CurrentTopic("new-topic", "Amazon's ginormous public cloud turns 81 today");
+
         backend.respondWithTopic(newTopic);
 
         app.refreshTopic();
-        app.showsCurrentTopic(newTopic);
+        app.showsCurrentTopic(newTopic.text);
     }
 
     public void testWhenTopicSwitchesToNoTopic_hidesView() throws Exception {
         backend.respondWithTopic(DEFAULT_TOPIC);
         CurrentTopicRunner app = openScreen();
-        app.showsCurrentTopic(DEFAULT_TOPIC);
+        app.showsCurrentTopic(DEFAULT_TOPIC.text);
 
         backend.respondNoContent();
+        app.refreshTopic();
+        app.showsNoTopic();
+    }
+
+    public void testWhenTopicForciblyHidden_showAgain_onlyWhenTopicChanges() throws Exception {
+        backend.respondWithTopic(DEFAULT_TOPIC);
+        CurrentTopicRunner app = openScreen();
+        app.showsCurrentTopic(DEFAULT_TOPIC.text);
+
+        app.closeTopicView();
+        app.showsNoTopic();
+
+        backend.respondWithTopic(DEFAULT_TOPIC);
         app.refreshTopic();
         app.showsNoTopic();
     }
@@ -86,12 +103,8 @@ class TopicTrackerBackend extends ResponsiveHttpServer {
         super();
     }
 
-    public void respondWithTopic(String text) {
-        respondWithTopic("default-topic-id", text);
-    }
-
-    public void respondWithTopic(String id, String text) {
-        respondSuccessWith(String.format("{id: \"%s\", text:\"%s\"}", id, text), MIME_JSON);
+    public void respondWithTopic(CurrentTopic topic) {
+        respondSuccessWith(String.format("{id: \"%s\", text:\"%s\"}", topic.id, topic.text), MIME_JSON);
     }
 
     public void respondNoContent() {
