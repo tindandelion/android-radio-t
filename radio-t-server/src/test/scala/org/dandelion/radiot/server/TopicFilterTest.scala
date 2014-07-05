@@ -9,7 +9,7 @@ class TopicFilterTest extends FunSpec with Matchers {
   val TopicId = "topic-id"
   val TopicStarter = "jc-radio-t"
   val TopicStarterJid = "online@conference/" + TopicStarter
-  val InitialTopic = Topic("Initial topic", "http://example.org", "initial-topic-id")
+  val InitialTopic = Topic("initial-topic-id", "Initial topic", "http://example.org")
 
   var topic: Topic = null
   val filter = new TopicFilter(TopicStarter, (newTopic) => topic = newTopic)
@@ -29,7 +29,7 @@ class TopicFilterTest extends FunSpec with Matchers {
   it("extracts the topic to the consumer when a sender is a topic starter") {
     topic = InitialTopic
     filter(TopicId, TopicStarterJid, "-->   New topic started   http://example.org  ")
-    topic should equal(Topic("New topic started", "http://example.org", TopicId))
+    topic should equal(Topic(TopicId, "New topic started", "http://example.org"))
   }
 
 }

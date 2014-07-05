@@ -38,8 +38,7 @@ class TopicTrackerServletTest extends ScalatraSpec with Matchers {
   }
 
   it("answers a topic JSON when current topic is set") {
-    val newTopic = Topic("New topic to discuss", "http://new-topic.org")
-    sendMessageToChat(s"--> ${newTopic.text} ${newTopic.link}")
+    sendMessageToChat(s"--> New topic to discuss http://new-topic.org")
 
     get("/chat/topic") {
       status should equal(200)
@@ -47,8 +46,8 @@ class TopicTrackerServletTest extends ScalatraSpec with Matchers {
 
       val receivedTopic = extractTopic(body)
       receivedTopic.id shouldNot be('empty)
-      receivedTopic.text should equal(newTopic.text)
-      receivedTopic.link should equal(newTopic.link)
+      receivedTopic.text should equal("New topic to discuss")
+      receivedTopic.link should equal("http://new-topic.org")
     }
 
   }

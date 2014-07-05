@@ -11,7 +11,7 @@ class TopicFilter(val topicStarter: String, val consumer: (Topic) => Unit)
   }
 
   def filterTopicChangeNotification(id: String, message: String) = message match {
-    case TopicChangeTemplate(topic, link) => consumer(Topic(topic.trim, link.trim, id))
+    case TopicChangeTemplate(topic, link) => consumer(Topic(id, topic.trim, link.trim))
     case _ =>
   }
 }

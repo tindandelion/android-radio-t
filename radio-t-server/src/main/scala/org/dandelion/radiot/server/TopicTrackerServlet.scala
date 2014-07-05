@@ -7,7 +7,7 @@ import org.scalatra.json.{JValueResult, JacksonJsonSupport}
 import org.scalatra.{NoContent, Ok, ScalatraServlet}
 import org.slf4j.LoggerFactory
 
-case class Topic(text: String, link: String = "", id: String = "") {
+case class Topic(id: String, text: String, link: String) {
   def toJson: JObject = ("id" -> id) ~ ("text" -> text) ~ ("link" -> link)
 }
 
@@ -30,11 +30,6 @@ with JacksonJsonSupport with JValueResult {
       case Some(topic) => Ok(topic)
       case None => NoContent()
     }
-  }
-
-  post("/topic") {
-    val values: Array[String] = request.body.split("\n")
-    changeTopic(Topic(values(0), values(1)))
   }
 
   def changeTopic(topic: Topic) {
