@@ -33,7 +33,7 @@ class TopicTrackerServletTest extends ScalatraSpec with Matchers {
   it("answers no data while no current topic is set") {
     get("/chat/topic") {
       status should equal(204)
-      body shouldBe 'empty
+      body should be('empty)
     }
   }
 
