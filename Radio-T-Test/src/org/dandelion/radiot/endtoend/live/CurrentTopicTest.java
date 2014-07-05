@@ -86,8 +86,12 @@ class TopicTrackerBackend extends ResponsiveHttpServer {
         super();
     }
 
-    public void respondWithTopic(String topicText) {
-        respondSuccessWith(String.format("{text:\"%s\"}", topicText), MIME_JSON);
+    public void respondWithTopic(String text) {
+        respondWithTopic("default-topic-id", text);
+    }
+
+    public void respondWithTopic(String id, String text) {
+        respondSuccessWith(String.format("{id: \"%s\", text:\"%s\"}", id, text), MIME_JSON);
     }
 
     public void respondNoContent() {

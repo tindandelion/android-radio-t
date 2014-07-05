@@ -16,9 +16,10 @@ public class HttpTopicProviderTest {
     @Test
     public void retrieveTopic() throws Exception {
         when(httpClient.getStringContent(SERVER_URL + "/chat/topic"))
-                .thenReturn("{text: \"Lorem ipsum\"}");
+                .thenReturn("{id: \"topic-id\", text: \"Lorem ipsum\"}");
 
         CurrentTopic topic = provider.get();
+        assertThat(topic.id, equalTo("topic-id"));
         assertThat(topic.text, equalTo("Lorem ipsum"));
 
     }

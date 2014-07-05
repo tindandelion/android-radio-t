@@ -22,7 +22,9 @@ public class HttpTopicProvider implements Provider<CurrentTopic> {
     private CurrentTopic parseResponseJson(String json) {
         try {
             JSONObject obj = new JSONObject(json);
-            return new CurrentTopic(obj.getString("text"));
+            String id = obj.getString("id");
+            String text = obj.getString("text");
+            return new CurrentTopic(id, text);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
