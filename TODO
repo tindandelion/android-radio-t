@@ -22,7 +22,7 @@ Version 1.9:
   DONE Current topic animation
   DONE Use smaller font for current topic text on small screens?
   DONE Do not show current topic if it was forcibly closed and hasn't changed
-  - Update Roboto Light font
+  DONE Update Roboto Light font
   - Can topic id be null ?
   - Respect current topic view closed after screen rotation
   - Current topic display in landscape orientation
