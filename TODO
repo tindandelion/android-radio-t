@@ -22,6 +22,7 @@ Version 1.9:
   DONE Current topic animation
   DONE Use smaller font for current topic text on small screens?
   - Do not show current topic if it was forcibly closed and hasn't changed
+  - Can topic id be null ?
   - Respect current topic view closed after screen rotation
   - Current topic display in landscape orientation
   - Number of lines of current topic on Android 2.3 should be 3?
