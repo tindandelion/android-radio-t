@@ -25,6 +25,7 @@ Version 1.9:
   DONE Update Roboto Light font
   - Respect current topic view closed after screen rotation
   - Current topic display in landscape orientation
+  - In DataEngine, extract ErrorListener
   - Can topic id be null ?
   - Number of lines of current topic on Android 2.3 should be 3?
   - Smoother current topic show animation
@@ -37,6 +38,7 @@ Version 1.9:
  * Hide controls from chat screen
 
 Backlog:
+ * Chat: lock screen while translating
  * Live show: graceful process termination
  * Downloading: Respect background data loading settings
  * Downloading: Warn a user if a file already exists
@@ -46,7 +48,6 @@ Backlog:
  * Use Jabber to connect to chat
  * Podcast list: Activity leak in PodcastSelectionHandler
  * Podcast list: Better error explanation
- * Chat: lock screen while translating
  * Landscape orientation
    * Podcast list: Flickers when changing orientation (due to loading all stuff)
    * Main screen: Tagline should show single-line if possible

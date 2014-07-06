@@ -1,8 +1,8 @@
 package org.dandelion.radiot.live.ui;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,28 +15,37 @@ import org.dandelion.radiot.http.DataEngine;
 import org.dandelion.radiot.http.ProgressListener;
 import org.dandelion.radiot.live.topics.CurrentTopic;
 
-public class CurrentTopicFragment extends Fragment implements Consumer<CurrentTopic>,ProgressListener {
+public class CurrentTopicFragment extends Fragment implements ProgressListener {
     public static DataEngine.Factory<CurrentTopic> trackerFactory = null;
     private TextView topicText;
     private DataEngine engine;
     private View.OnClickListener onHide = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            hideMyself();
+            hideAnimated();
         }
     };
-    private String currentTopicId = "";
+    private Controller controller;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         engine = trackerFactory.create();
+        controller = new Controller(this);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        controller.saveState(outState);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        engine.setDataConsumer(this);
+        controller.onViewCreated(savedInstanceState);
+
+        engine.setDataConsumer(controller);
         engine.setProgressListener(this);
     }
 
@@ -76,45 +85,6 @@ public class CurrentTopicFragment extends Fragment implements Consumer<CurrentTo
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        hideMyself();
-    }
-
-    @Override
-    public void accept(CurrentTopic topic) {
-        if (isNewTopic(topic)) {
-            updateTopic(topic);
-            showMyself();
-        }
-    }
-
-    private void updateTopic(CurrentTopic topic) {
-        currentTopicId = topic.id;
-        topicText.setText(topic.text);
-    }
-
-    private boolean isNewTopic(CurrentTopic topic) {
-        return !currentTopicId.equals(topic.id);
-    }
-
-    private void showMyself() {
-        getFragmentManager()
-                .beginTransaction()
-                .setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_down)
-                .show(this)
-                .commit();
-    }
-
-    private void hideMyself() {
-        getFragmentManager()
-                .beginTransaction()
-                .setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_down)
-                .hide(this)
-                .commit();
-    }
-
-    @Override
     public void onConnecting() {
 
     }
@@ -126,6 +96,93 @@ public class CurrentTopicFragment extends Fragment implements Consumer<CurrentTo
 
     @Override
     public void onError() {
-        hideMyself();
+        hideAnimated();
+    }
+
+    public void setTopicText(CharSequence text) {
+        topicText.setText(text);
+    }
+
+    public void showImmediately() {
+        getFragmentTransaction(false).show(this).commit();
+    }
+
+    public void hideImmediately() {
+        getFragmentTransaction(false).hide(this).commit();
+    }
+
+    public void showAnimated() {
+        getFragmentTransaction(true).show(this).commit();
+    }
+
+    public void hideAnimated() {
+        getFragmentTransaction(true).hide(this).commit();
+    }
+
+    private FragmentTransaction getFragmentTransaction(boolean animated) {
+        FragmentTransaction t = getFragmentManager().beginTransaction();
+        if (animated) t.setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_down);
+        return t;
+    }
+
+    public CharSequence getTopicText() {
+        return topicText.getText();
+    }
+
+
+    public static class Controller implements Consumer<CurrentTopic> {
+        private static final String TOPIC_ID_KEY = "topic_id";
+        public static final String TOPIC_TEXT_KEY = "topic_text";
+        public static final String HIDDEN_KEY = "hidden";
+
+        private final CurrentTopicFragment view;
+        private String currentTopicId = "";
+
+        public Controller(CurrentTopicFragment view) {
+            this.view = view;
+        }
+
+        public void onViewCreated(Bundle savedState) {
+            if (savedState == null) {
+                view.hideImmediately();
+            } else {
+                restoreState(savedState);
+            }
+
+        }
+
+        private void restoreState(Bundle savedState) {
+            currentTopicId = savedState.getString(TOPIC_ID_KEY);
+
+            if (savedState.getBoolean(HIDDEN_KEY, true)) {
+                view.hideImmediately();
+            } else {
+                view.setTopicText(savedState.getCharSequence(TOPIC_TEXT_KEY));
+                view.showImmediately();
+            }
+        }
+
+        public void saveState(Bundle outState) {
+            outState.putBoolean(HIDDEN_KEY, view.isHidden());
+            outState.putString(TOPIC_ID_KEY, currentTopicId);
+            outState.putCharSequence(TOPIC_TEXT_KEY, view.getTopicText());
+        }
+
+        @Override
+        public void accept(CurrentTopic topic) {
+            if (isNewTopic(topic)) updateTopic(topic);
+        }
+
+        private boolean isNewTopic(CurrentTopic topic) {
+            return !currentTopicId.equals(topic.id);
+        }
+
+        private void updateTopic(CurrentTopic topic) {
+            currentTopicId = topic.id;
+
+            view.setTopicText(topic.text);
+            view.showAnimated();
+        }
     }
 }
+
