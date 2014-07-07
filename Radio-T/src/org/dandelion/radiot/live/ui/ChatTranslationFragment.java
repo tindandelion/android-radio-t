@@ -42,7 +42,9 @@ public class ChatTranslationFragment extends ListFragment {
         super.onViewCreated(view, savedInstanceState);
         ChatStreamAdapter adapter = new ChatStreamAdapter(getActivity(), messages, MESSAGE_LIMIT);
         setListAdapter(adapter);
-        chat.setProgressListener(new ChatProgressController(this, adapter));
+        ChatProgressController progressController = new ChatProgressController(this, adapter);
+        chat.setProgressListener(progressController);
+        chat.setErrorConsumer(progressController);
         chat.setDataConsumer(new ChatScroller(adapter, getListView()));
     }
 
@@ -55,6 +57,7 @@ public class ChatTranslationFragment extends ListFragment {
     public void onDestroyView() {
         super.onDestroyView();
         chat.setProgressListener(null);
+        chat.setErrorConsumer(null);
         chat.setDataConsumer(null);
     }
 

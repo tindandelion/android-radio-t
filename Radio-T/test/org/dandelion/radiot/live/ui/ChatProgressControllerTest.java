@@ -1,7 +1,6 @@
 package org.dandelion.radiot.live.ui;
 
 import android.widget.ArrayAdapter;
-import org.dandelion.radiot.http.ProgressListener;
 import org.junit.Test;
 
 import static org.mockito.Mockito.mock;
@@ -11,7 +10,7 @@ public class ChatProgressControllerTest {
 
     private ArrayAdapter adapter = mock(ArrayAdapter.class);
     private ChatTranslationFragment view = mock(ChatTranslationFragment.class);
-    private ProgressListener controller = new ChatProgressController(view, adapter);
+    private ChatProgressController controller = new ChatProgressController(view, adapter);
 
     @Test
     public void onConnecting_clearsArrayAdapter() throws Exception {
@@ -39,13 +38,13 @@ public class ChatProgressControllerTest {
 
     @Test
     public void onError_showsErrorMessage() throws Exception {
-        controller.onError();
+        controller.accept(new Exception());
         verify(view).showError();
     }
 
     @Test
     public void onError_hidesProgressIndicator() throws Exception {
-        controller.onError();
+        controller.accept(new Exception());
         verify(view).hideProgress();
     }
 }

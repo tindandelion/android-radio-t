@@ -136,7 +136,6 @@ public class HttpDataEngineTest {
     }
 
     private void verifyErrorNotification(Exception error) {
-        verify(listener).onError();
         verify(errorConsumer).accept(error);
     }
 
@@ -327,7 +326,6 @@ public class HttpDataEngineTest {
         engine.startConnecting();
 
         verify(listener, never()).onConnected();
-        verify(listener, never()).onError();
         verify(errorConsumer, never()).accept(anyObject());
         verify(dataConsumer, never()).accept(anyList());
     }

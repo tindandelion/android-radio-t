@@ -1,9 +1,10 @@
 package org.dandelion.radiot.live.ui;
 
 import android.widget.ArrayAdapter;
+import org.dandelion.radiot.http.Consumer;
 import org.dandelion.radiot.http.ProgressListener;
 
-class ChatProgressController implements ProgressListener {
+class ChatProgressController implements ProgressListener, Consumer<Exception> {
     private final ChatTranslationFragment view;
     private final ArrayAdapter adapter;
 
@@ -25,7 +26,7 @@ class ChatProgressController implements ProgressListener {
     }
 
     @Override
-    public void onError() {
+    public void accept(Exception value) {
         view.hideProgress();
         view.showError();
     }

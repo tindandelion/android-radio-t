@@ -15,7 +15,6 @@ public class HttpDataEngine<T> implements DataEngine<T> {
     public final Consumer<Exception> onError = new Consumer<Exception>() {
         @Override
         public void accept(Exception error) {
-            progressAnnouncer.announce().onError();
             if (errorConsumer != null) errorConsumer.accept(error);
             currentState.onError();
         }
