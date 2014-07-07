@@ -12,20 +12,27 @@ import org.dandelion.radiot.R;
 import org.dandelion.radiot.common.ui.Typefaces;
 import org.dandelion.radiot.http.Consumer;
 import org.dandelion.radiot.http.DataEngine;
-import org.dandelion.radiot.http.ProgressListener;
 import org.dandelion.radiot.live.topics.CurrentTopic;
 
-public class CurrentTopicFragment extends Fragment implements ProgressListener {
+public class CurrentTopicFragment extends Fragment {
     public static DataEngine.Factory<CurrentTopic> trackerFactory = null;
     private TextView topicText;
     private DataEngine engine;
+    private Controller controller;
+
     private View.OnClickListener onHide = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             hideAnimated();
         }
     };
-    private Controller controller;
+
+    private Consumer<Exception> onError = new Consumer<Exception>() {
+        @Override
+        public void accept(Exception value) {
+            hideAnimated();
+        }
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,7 +53,7 @@ public class CurrentTopicFragment extends Fragment implements ProgressListener {
         controller.onViewCreated(savedInstanceState);
 
         engine.setDataConsumer(controller);
-        engine.setProgressListener(this);
+        engine.setErrorConsumer(onError);
     }
 
     @Override
@@ -65,7 +72,7 @@ public class CurrentTopicFragment extends Fragment implements ProgressListener {
     public void onDestroyView() {
         super.onDestroyView();
         engine.setDataConsumer(null);
-        engine.setProgressListener(null);
+        engine.setErrorConsumer(null);
     }
 
     @Override
@@ -82,21 +89,6 @@ public class CurrentTopicFragment extends Fragment implements ProgressListener {
         ImageButton hideButton = (ImageButton) view.findViewById(R.id.current_topic_hide);
         hideButton.setOnClickListener(onHide);
         return view;
-    }
-
-    @Override
-    public void onConnecting() {
-
-    }
-
-    @Override
-    public void onConnected() {
-
-    }
-
-    @Override
-    public void onError() {
-        hideAnimated();
     }
 
     public void setTopicText(CharSequence text) {

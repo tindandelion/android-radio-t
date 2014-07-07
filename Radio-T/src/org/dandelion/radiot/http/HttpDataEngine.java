@@ -6,6 +6,7 @@ import org.dandelion.radiot.common.Scheduler;
 public class HttpDataEngine<T> implements DataEngine<T> {
     private final Provider<T> dataProvider;
     private Consumer<T> dataConsumer;
+    private Consumer<Exception> errorConsumer;
 
     private Announcer<ProgressListener> progressAnnouncer = new Announcer<>(ProgressListener.class);
     private final Scheduler pollScheduler;
@@ -13,8 +14,9 @@ public class HttpDataEngine<T> implements DataEngine<T> {
 
     public final Consumer<Exception> onError = new Consumer<Exception>() {
         @Override
-        public void accept(Exception value) {
+        public void accept(Exception error) {
             progressAnnouncer.announce().onError();
+            if (errorConsumer != null) errorConsumer.accept(error);
             currentState.onError();
         }
     };
@@ -53,6 +55,11 @@ public class HttpDataEngine<T> implements DataEngine<T> {
     }
 
     @Override
+    public void setErrorConsumer(Consumer<Exception> consumer) {
+        this.errorConsumer = consumer;
+    }
+
+    @Override
     public void start() {
         currentState.onStart();
     }
@@ -66,6 +73,7 @@ public class HttpDataEngine<T> implements DataEngine<T> {
     public void shutdown() {
         setDataConsumer(null);
         setProgressListener(null);
+        setErrorConsumer(null);
 
         dataProvider.abort();
         disconnect();

@@ -15,6 +15,11 @@ public class NullDataEngine<T> implements DataEngine<T>, DataEngine.Factory {
     }
 
     @Override
+    public void setErrorConsumer(Consumer<Exception> consumer) {
+
+    }
+
+    @Override
     public void start() {
     }
 
