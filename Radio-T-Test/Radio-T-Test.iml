@@ -12,7 +12,6 @@
     <facet type="android" name="Android">
       <configuration>
         <includeAssetsFromLibraries>true</includeAssetsFromLibraries>
-        <resOverlayFolders />
       </configuration>
     </facet>
   </component>
@@ -46,4 +45,3 @@
     <orderEntry type="module" module-name="Radio-T" scope="PROVIDED" />
   </component>
 </module>
-

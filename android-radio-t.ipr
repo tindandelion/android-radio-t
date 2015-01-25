@@ -3,8 +3,8 @@
   <component name="CompilerConfiguration">
     <option name="DEFAULT_COMPILER" value="Javac" />
     <excludeFromCompile>
-      <directory url="file://$PROJECT_DIR$/Radio-T/gen" includeSubdirectories="true" />
-      <directory url="file://$PROJECT_DIR$/Radio-T-Test/gen" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/radio-t/gen" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/radio-t-test/gen" includeSubdirectories="true" />
       <directory url="file://$PROJECT_DIR$/ActionBarSherlock/gen" includeSubdirectories="true" />
     </excludeFromCompile>
     <resourceExtensions />
@@ -26,9 +26,7 @@
       </profile>
     </annotationProcessing>
   </component>
-  <component name="CopyrightManager" default="">
-    <module2copyright />
-  </component>
+  <component name="CopyrightManager" default="" />
   <component name="DependencyValidationManager">
     <option name="SKIP_IMPORT_STATEMENTS" value="false" />
   </component>
@@ -195,8 +193,8 @@
   </component>
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Radio-T/Radio-T.iml" filepath="$PROJECT_DIR$/Radio-T/Radio-T.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Radio-T-Test/Radio-T-Test.iml" filepath="$PROJECT_DIR$/Radio-T-Test/Radio-T-Test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/radio-t/Radio-T.iml" filepath="$PROJECT_DIR$/radio-t/Radio-T.iml" />
+      <module fileurl="file://$PROJECT_DIR$/radio-t-test/Radio-T-Test.iml" filepath="$PROJECT_DIR$/radio-t-test/Radio-T-Test.iml" />
     </modules>
   </component>
   <component name="ProjectResources">
@@ -209,4 +207,3 @@
     <mapping directory="" vcs="Git" />
   </component>
 </project>
-
