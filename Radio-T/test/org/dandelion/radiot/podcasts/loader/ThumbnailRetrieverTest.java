@@ -91,7 +91,7 @@ public class ThumbnailRetrieverTest {
         list.add(item);
 
         when(cache.lookup(REMOTE_URL)).thenReturn(null);
-        when(httpClient.getByteContent(REMOTE_URL)).thenThrow(IOException.class);
+        when(httpClient.getByteContent(REMOTE_URL)).thenThrow(Exception.class);
 
         retriever.retrieve(list, consumer, noInterrupts());
 

@@ -4,8 +4,6 @@ import org.dandelion.radiot.http.HttpClient;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastList;
 
-import java.io.IOException;
-
 public class ThumbnailRetriever {
 
     public interface Controller {
@@ -39,7 +37,7 @@ public class ThumbnailRetriever {
             byte[] result = httpClient.getByteContent(pi.thumbnailUrl);
             cache.update(pi.thumbnailUrl, result);
             consumer.updateThumbnail(pi, result);
-        } catch (IOException ignored) {
+        } catch (Exception ignored) {
         }
     }
 
