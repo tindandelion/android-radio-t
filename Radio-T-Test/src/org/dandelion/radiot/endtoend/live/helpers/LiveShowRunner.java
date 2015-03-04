@@ -4,16 +4,27 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Context;
 import android.content.Intent;
+import com.robotium.solo.Solo;
 import org.dandelion.radiot.accepttest.testables.LiveNotificationManagerSpy;
 import org.dandelion.radiot.live.service.LiveShowService;
 
+import static junit.framework.Assert.assertTrue;
+
 public class LiveShowRunner {
-    private final LiveShowUiDriver uiDriver;
+
+    // 60 seconds to wait for the stupid MediaPlayer to detect that the
+    // audio stream is not playable (HTTP error 404). Prior to Android 5.0
+    // MediaPlayer.prepareAsync() returned instantly, in Android 5.0 it
+    // makes several attempts to connect to the stream, so it only returns after
+    // 40 seconds or so.
+    private static final int TRANSLATION_TIMEOUT = 60_000;
+
+    private final Solo uiDriver;
     private final Context context;
     private final LiveNotificationManagerSpy notificationManager;
 
     public LiveShowRunner(Instrumentation inst, Activity activity, LiveNotificationManagerSpy notificationManager) {
-        this.uiDriver = new LiveShowUiDriver(inst, activity);
+        this.uiDriver = new Solo(inst, activity);
         this.context = inst.getTargetContext();
         this.notificationManager = notificationManager;
     }
@@ -29,25 +40,33 @@ public class LiveShowRunner {
     }
 
     public void startTranslation() {
-        uiDriver.togglePlayback();
+        togglePlayback();
     }
 
     public void showsTranslationInProgress() throws InterruptedException {
-        uiDriver.showsTranslationStatus("Трансляция");
+        showsTranslationStatus("Трансляция");
         notificationManager.showsForegroundNotification("Прямой эфир: Идет трансляция");
     }
 
     public void stopTranslation() {
-        uiDriver.togglePlayback();
+        togglePlayback();
     }
 
     public void showsTranslationStopped() throws InterruptedException {
-        uiDriver.showsTranslationStatus("Остановлено");
+        showsTranslationStatus("Остановлено");
         notificationManager.notificationsHidden();
     }
 
     public void showsWaiting() throws InterruptedException {
-        uiDriver.showsTranslationStatus("Ожидание");
+        showsTranslationStatus("Ожидание");
         notificationManager.showsBackgroundNotification("Прямой эфир: Ожидание");
+    }
+
+    private void showsTranslationStatus(String text) {
+        assertTrue(uiDriver.waitForText(text, 0, TRANSLATION_TIMEOUT));
+    }
+
+    private void togglePlayback() {
+        uiDriver.clickOnImageButton(0);
     }
 }
