@@ -31,7 +31,7 @@ remotes {
         host = 'localhost'
         port = 2222
         user = 'vagrant'
-        identity = new File('~/.vagrant.d/insecure_private_key')
+        identity = new File('.vagrant/machines/local/virtualbox/private_key')
     }
 
     production {
@@ -75,7 +75,7 @@ private void deployApp(def remote) {
         session(remote) {
             put(uberjar.archivePath.absolutePath, tempPath)
             executeSudo("mv $tempPath $distributionDir")
-            executeSudo("rm /var/log/radio-t-server/*")
+            executeSudo("rm -f /var/log/radio-t-server/*")
             executeSudo("/etc/init.d/radio-t-server restart")
         }
     }
