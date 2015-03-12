@@ -25,14 +25,16 @@ Version 1.9:
   DONE Update Roboto Light font
   DONE Respect current topic view closed after screen rotation
   DONE In DataEngine, extract ErrorListener
-  - Current topic display in landscape orientation
-  - Can topic id be null ?
-  - Number of lines of current topic on Android 2.3 should be 3?
+  DONE Can topic id be null? (Answer: Consider not)
+  - Current topic display in landscape orientation (1 line)
   - Smoother current topic show animation
   - Better error handling when parsing topic JSON
   - Make sure we connect and disconnect from the topic tracker correctly
   - Move chat-related classes into a separate package similar to topics
   - Chat tracker's fault tolerance
+
+  ? Number of lines of current topic on Android 2.3 should be 3?
+
 
  * Fix problems with 'null' in chats
  * Hide controls from chat screen
