@@ -7,4 +7,5 @@
     <dimen name="logo_text_padding_bottom">5dp</dimen>
     <dimen name="playback_control_height">72dp</dimen>
     <dimen name="current_topic_control_height">72dp</dimen>
+    <bool name="current_topic_single_line">false</bool>
 </resources>

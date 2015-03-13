@@ -11,6 +11,7 @@
         android:layout_height="match_parent"
         android:layout_toLeftOf="@+id/current_topic_hide"
         android:gravity="center_vertical"
+        android:singleLine="@bool/current_topic_single_line"
         android:ellipsize="end"
         android:paddingBottom="4dp"
         android:paddingLeft="32dp"/>
