@@ -35,7 +35,7 @@ remotes {
     }
 
     production {
-        host = '107.170.84.215'
+        host = '188.166.29.129'
         user = 'root'
         identity = new File('~/.ssh/id_rsa')
     }

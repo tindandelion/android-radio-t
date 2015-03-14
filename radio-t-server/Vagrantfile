@@ -22,8 +22,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     prod.vm.synced_folder '.', '/vagrant', disabled: true
     
     prod.vm.provider :digital_ocean do |provider|
-      provider.image = 'Ubuntu 12.04.3 x64'
-      provider.size = '512MB'
+      provider.image = 'ubuntu-14-04-x64'
+      provider.size = '512mb'
+      provider.region = "ams3"
     end
     
     prod.vm.provision 'shell', inline: 'apt-get -qq update && apt-get -qq -y install puppet'

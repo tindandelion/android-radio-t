@@ -9,6 +9,8 @@ exec { "apt-update":
 
 Exec["apt-update"] -> Package<||>
 
+class { "timezone": zone => "Europe/Helsinki" }
+
 class { "openfire": }
 
 class { "radio-t-server":
