@@ -27,9 +27,8 @@ Version 1.9:
   DONE In DataEngine, extract ErrorListener
   DONE Can topic id be null? (Answer: Consider not)
   DONE Current topic display in landscape orientation (1 line)
-  - Move chat-related classes into a separate package similar to topics
-  - Make sure we connect and disconnect from the topic tracker correctly
-  - Better error handling when parsing topic JSON
+  - Better error handling when parsing topic JSON (Report to GA?)
+ * Track how many people hit "Download" button, how many "Play"
 
 Backlog:
  * Chat: Hide controls from chat screen
