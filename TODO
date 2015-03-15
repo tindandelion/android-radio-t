@@ -1,34 +1,8 @@
 Version 1.9:
- PROGRESS Show current topic
-  DONE Scalatra
-  DONE Testing Scalatra
-  DONE Deploy simple servlet
-  DONE Logging: configure logging for runtime (log to a file, disable DEBUG by default)
-  DONE Tests are not running with Gradle?
-  DONE Daemonize
-  DONE Deploy to DigitalOcean
-    DONE Sign up
-    DONE Create a virtual machine
-    DONE How to access from outside?
-    DONE Use Vagrant to provision to DigitalOcean
-      http://blog.publysher.nl/2013/07/infra-as-repo-using-vagrant-and-salt.html
-    DONE Provision with Puppet
-    DONE Gradle task to build and deploy - local and production
-   DONE Listening to chat
-     DONE Store chat user's credentials in a safe place
-     DONE Connect to chat at server start
-
-  DONE Broadcast current topic only to current topic's clients
-  DONE Current topic animation
-  DONE Use smaller font for current topic text on small screens?
-  DONE Do not show current topic if it was forcibly closed and hasn't changed
-  DONE Update Roboto Light font
-  DONE Respect current topic view closed after screen rotation
-  DONE In DataEngine, extract ErrorListener
-  DONE Can topic id be null? (Answer: Consider not)
-  DONE Current topic display in landscape orientation (1 line)
-  - Better error handling when parsing topic JSON (Report to GA?)
+ DONE Show current topic
+ * Upgrade GA engine
  * Track how many people hit "Download" button, how many "Play"
+ * Current topic: Better error handling when parsing topic JSON (Report to GA?)
 
 Backlog:
  * Chat: Hide controls from chat screen
