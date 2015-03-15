@@ -1,10 +1,12 @@
 Version 1.9:
  DONE Show current topic
- * Upgrade GA engine
  * Track how many people hit "Download" button, how many "Play"
  * Current topic: Better error handling when parsing topic JSON (Report to GA?)
 
 Backlog:
+ * Upgrade GA engine
+   * No more Android 2.2 support?
+
  * Chat: Hide controls from chat screen
  * Chat: lock screen while translating
  * Live show: graceful process termination
