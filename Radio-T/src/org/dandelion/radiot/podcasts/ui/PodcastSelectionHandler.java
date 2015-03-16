@@ -20,14 +20,12 @@ class PodcastSelectionHandler implements DialogInterface.OnClickListener, Adapte
     private Context context;
     private PodcastAction player;
     private PodcastAction downloader;
-    private ErrorListener errorListener;
     private PodcastItem podcast;
 
-    public PodcastSelectionHandler(Context context, PodcastAction player, PodcastAction downloader, ErrorListener errorListener) {
+    public PodcastSelectionHandler(Context context, PodcastAction player, PodcastAction downloader) {
         this.context = context;
         this.player = player;
         this.downloader = downloader;
-        this.errorListener = errorListener;
     }
 
     @Override
@@ -58,8 +56,13 @@ class PodcastSelectionHandler implements DialogInterface.OnClickListener, Adapte
             PodcastAction action = selectProcessor(index);
             action.perform(context, podcast);
         } catch (MalformedURLException ex) {
-            errorListener.onError(context.getString(R.string.incorrect_audio_url));
+            showIncorrectUrlError();
         }
+    }
+
+    private void showIncorrectUrlError() {
+        ErrorListener listener = new DialogErrorDisplayer(context);
+        listener.onError(context.getString(R.string.incorrect_audio_url));
     }
 
     private void checkPodcastUrl() throws MalformedURLException {

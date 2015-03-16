@@ -13,9 +13,13 @@ public abstract class ActivityTracker {
     }
 
     public abstract void activityStarted(TrackedActivity activity);
+
     public abstract void activityStopped(TrackedActivity activity);
 
+    public abstract void trackEvent(String action, String label);
+
     private static class GoogleAnalyticsTracker extends ActivityTracker {
+        private static final String UI_EVENT = "ui_event";
         public EasyTracker tracker = EasyTracker.getInstance();
 
         @Override
@@ -27,6 +31,14 @@ public abstract class ActivityTracker {
         public void activityStopped(TrackedActivity activity) {
             tracker.activityStop(activity);
         }
+
+        @Override
+        public void trackEvent(String action, String label) {
+            try {
+                EasyTracker.getTracker().sendEvent(UI_EVENT, action, label, null);
+            } catch (Exception ignored) {
+            }
+        }
     }
 
     private static class NullTracker extends ActivityTracker {
@@ -36,6 +48,10 @@ public abstract class ActivityTracker {
 
         @Override
         public void activityStopped(TrackedActivity activity) {
+        }
+
+        @Override
+        public void trackEvent(String action, String label) {
         }
     }
 }

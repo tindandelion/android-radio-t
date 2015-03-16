@@ -23,4 +23,8 @@ public class TrackedActivity extends FragmentActivity {
         super.onStop();
         tracker.activityStopped(this);
     }
+
+    public void trackEvent(String action, String label) {
+        tracker.trackEvent(action, label);
+    }
 }

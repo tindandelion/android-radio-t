@@ -9,6 +9,8 @@ import android.view.MenuItem;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import org.dandelion.radiot.R;
+import org.dandelion.radiot.podcasts.core.PodcastAction;
+import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.loader.PodcastListClient;
 import org.dandelion.radiot.podcasts.main.PodcastsApp;
 import org.dandelion.radiot.common.ui.CustomTitleActivity;
@@ -53,8 +55,19 @@ public class PodcastListActivity extends CustomTitleActivity {
 
     private PodcastSelectionHandler createSelectionHandler() {
         PodcastsApp app = PodcastsApp.getInstance();
-        return new PodcastSelectionHandler(this, app.createPlayer(),
-                app.createDownloader(), new DialogErrorDisplayer(this));
+        return new PodcastSelectionHandler(this,
+                trackingAction("play", app.createPlayer()),
+                trackingAction("download", app.createDownloader()));
+    }
+
+    private PodcastAction trackingAction(final String label, final PodcastAction action) {
+        return new PodcastAction() {
+            @Override
+            public void perform(Context context, PodcastItem podcast) {
+                trackEvent("podcast_list", label);
+                action.perform(context, podcast);
+            }
+        };
     }
 
     protected void attachToLoader(String show, PodcastListAdapter la, ProgressIndicator pi) {
