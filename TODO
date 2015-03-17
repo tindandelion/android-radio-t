@@ -1,6 +1,6 @@
 Version 1.9:
  DONE Show current topic
- * Track how many people hit "Download" button, how many "Play"
+ DONE Track how many people hit "Download" button, how many "Play"
  * Current topic: Better error handling when parsing topic JSON (Report to GA?)
 
 Backlog:
