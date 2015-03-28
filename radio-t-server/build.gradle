@@ -13,10 +13,12 @@ buildscript {
 apply plugin: 'scala'
 apply plugin: 'ssh'
 apply plugin: 'vagrant-base'
+apply plugin: 'application'
 
 import org.gradle.api.plugins.vagrant.tasks.VagrantUp
 
 version = '1.0'
+mainClassName = 'ServerCommandLine'
 
 repositories {
     mavenCentral()

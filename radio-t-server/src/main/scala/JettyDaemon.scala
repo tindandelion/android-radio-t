@@ -51,3 +51,8 @@ class JettyDaemon extends Daemon with JettyStarter {
     logger.info("Daemon destroyed")
   }
 }
+
+object ServerCommandLine extends App with JettyStarter {
+  initJetty()
+  startJetty()
+}
