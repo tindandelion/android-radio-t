@@ -5,12 +5,12 @@ import org.eclipse.jetty.webapp.WebAppContext
 import org.scalatra.servlet.ScalatraListener
 import org.slf4j.LoggerFactory
 
-class JettyDaemon extends Daemon {
+trait JettyStarter {
   val Port = 8080
   val server = new Server(Port)
   val logger = LoggerFactory.getLogger(getClass)
 
-  override def init(context: DaemonContext) {
+  def initJetty() {
     logger.info("Initializing daemon")
     val context = new WebAppContext()
 
@@ -21,14 +21,29 @@ class JettyDaemon extends Daemon {
     server.setHandler(context)
   }
 
-  override def start() {
+  def startJetty(): Unit = {
     logger.info("Starting Jetty server")
     server.start()
   }
 
-  override def stop() {
+  def stopJetty(): Unit = {
     logger.info("Stopping Jetty server")
     server.stop()
+  }
+}
+
+class JettyDaemon extends Daemon with JettyStarter {
+
+  override def init(context: DaemonContext): Unit = {
+    initJetty()
+  }
+
+  override def start() {
+    startJetty()
+  }
+
+  override def stop() {
+    stopJetty()
   }
 
 
