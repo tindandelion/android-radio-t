@@ -15,8 +15,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       puppet.module_path = "puppet/modules"
       puppet.manifest_file  = "local.pp"
     end
-
-    local.vm.provision "docker"
+    
+    local.vm.provision "docker" do |docker|
+      docker.run "sergeymo/radio-t-openfire", args: "-p 9090:9090 -p 5222:5222"
+    end
   end
   
   config.vm.define 'radio-t-server' do |prod|

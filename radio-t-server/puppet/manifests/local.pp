@@ -11,8 +11,6 @@ Exec["apt-update"] -> Package<||>
 
 class { "timezone": zone => "Europe/Helsinki" }
 
-class { "openfire": }
-
 class { "radio-t-server":
   xmpp_server => 'localhost',
   xmpp_room => 'online@conference.precise64',
