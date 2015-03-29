@@ -7,7 +7,6 @@ buildscript {
   dependencies {
     classpath 'org.hidetake:gradle-ssh-plugin:0.3.0'
     classpath 'org.gradle.api.plugins:gradle-vagrant-plugin:0.5'
-    classpath 'com.bmuschko:gradle-docker-plugin:2.1'
   }
 }
 
@@ -15,7 +14,6 @@ apply plugin: 'scala'
 apply plugin: 'ssh'
 apply plugin: 'vagrant-base'
 apply plugin: 'application'
-apply plugin: 'com.bmuschko.docker-java-application'
 
 import org.gradle.api.plugins.vagrant.tasks.VagrantUp
 
@@ -48,17 +46,6 @@ remotes {
     host = '188.166.29.129'
     user = 'root'
     identity = new File('~/.ssh/id_rsa')
-  }
-}
-
-docker {
-  url = 'https://192.168.59.103:2376'
-
-  javaApplication {
-    baseImage = 'java:7-jre'
-//    port = 8080
-//    maintainer = 'Sergey Moshnikov <apps-dandelion@gmail.com>'
-//    tag = 'sergeymo/radio-t-server:latest'
   }
 }
 
