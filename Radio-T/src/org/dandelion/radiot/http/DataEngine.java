@@ -8,7 +8,7 @@ public interface DataEngine<T> {
     void stop();
     void shutdown();
 
-    public interface Factory<T> {
+    interface Factory<T> {
         DataEngine<T> create();
     }
 }

@@ -2,13 +2,13 @@ package org.dandelion.radiot;
 
 import android.app.Application;
 import android.os.Handler;
-import android.util.Log;
 import org.dandelion.radiot.common.Scheduler;
 import org.dandelion.radiot.http.DataEngine;
 import org.dandelion.radiot.http.HttpDataEngine;
 import org.dandelion.radiot.http.Provider;
 import org.dandelion.radiot.live.chat.HttpChatClient;
 import org.dandelion.radiot.live.topics.CurrentTopic;
+import org.dandelion.radiot.live.topics.HttpTopicProvider;
 import org.dandelion.radiot.live.ui.ChatTranslationFragment;
 import org.dandelion.radiot.live.ui.CurrentTopicFragment;
 import org.dandelion.radiot.podcasts.main.PodcastsApp;
@@ -34,23 +34,23 @@ public class RadiotApplication extends Application {
 
     private void setupTopicTracker() {
         final int updateDelayMillis = 60000;
-        CurrentTopicFragment.trackerFactory = new DataEngine.Factory() {
+        CurrentTopicFragment.trackerFactory = new DataEngine.Factory<CurrentTopic>() {
             @Override
-            public DataEngine create() {
-//                 Provider provider = new HttpTopicProvider(TOPIC_TRACKER_BASE_URL);
-                Provider provider = new Provider<CurrentTopic>() {
-                    @Override
-                    public CurrentTopic get() throws Exception {
-                        Log.d("TOPIC", "Requested new topic");
-                        Thread.sleep(2000);
-                        return new CurrentTopic("topic",
-                                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec aliquet, massa ut tincidunt pellentesque, dui nibh lacinia magna, elementum ultrices magna risus a tellus");
-                    }
-
-                    @Override
-                    public void abort() { }
-                };
-                return new HttpDataEngine(provider, new HandlerScheduler(updateDelayMillis));
+            public DataEngine<CurrentTopic> create() {
+                Provider<CurrentTopic> provider = new HttpTopicProvider(TOPIC_TRACKER_BASE_URL);
+//                Provider provider = new Provider<CurrentTopic>() {
+//                    @Override
+//                    public CurrentTopic get() throws Exception {
+//                        Log.d("TOPIC", "Requested new topic");
+//                        Thread.sleep(2000);
+//                        return new CurrentTopic("topic",
+//                                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec aliquet, massa ut tincidunt pellentesque, dui nibh lacinia magna, elementum ultrices magna risus a tellus");
+//                    }
+//
+//                    @Override
+//                    public void abort() { }
+//                };
+                return new HttpDataEngine<>(provider, new HandlerScheduler(updateDelayMillis));
             }
         };
     }
