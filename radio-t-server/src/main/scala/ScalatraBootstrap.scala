@@ -11,14 +11,22 @@ class ScalatraBootstrap extends LifeCycle {
     context.mount(new TopicTrackerServlet("/chat", loadChatConfig(ConfigFile)), "/chat/*")
   }
 
-  def loadChatConfig(file: File) =
-    if (!file.exists()) throw new RuntimeException(s"Configuration file [$file] not found")
-    else readProperties(file)
 
-  def readProperties(file: File) = {
+  def loadChatConfig(file: File) = {
+    val props =
+      if (file.exists()) readPropertiesFrom(file)
+      else System.getProperties
+
+    configFrom(props)
+  }
+
+  def readPropertiesFrom(file: File) = {
     val props = new Properties()
     props.load(new FileInputStream(file))
+    props
+  }
 
+  def configFrom(props: Properties) = {
     JabberConfig(
       server = props.getProperty("xmpp.server"),
       username = props.getProperty("xmpp.username"),
