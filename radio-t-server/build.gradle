@@ -1,13 +1,13 @@
 buildscript {
-    repositories {
-        mavenCentral()
-        jcenter()
-    }
+  repositories {
+    mavenCentral()
+    jcenter()
+  }
 
-    dependencies {
-        classpath 'org.hidetake:gradle-ssh-plugin:0.3.0'
-        classpath 'org.gradle.api.plugins:gradle-vagrant-plugin:0.5'
-    }
+  dependencies {
+    classpath 'org.hidetake:gradle-ssh-plugin:0.3.0'
+    classpath 'org.gradle.api.plugins:gradle-vagrant-plugin:0.5'
+  }
 }
 
 apply plugin: 'scala'
@@ -18,82 +18,95 @@ apply plugin: 'application'
 import org.gradle.api.plugins.vagrant.tasks.VagrantUp
 
 version = '1.0'
+
 mainClassName = 'ServerCommandLine'
+applicationDefaultJvmArgs = ["-Dlogback.configurationFile=logback-console.xml"]
 
 repositories {
-    mavenCentral()
+  mavenCentral()
 }
 
 ssh {
-    knownHosts = allowAnyHosts
+  knownHosts = allowAnyHosts
 }
 
 remotes {
-    local {
-        host = 'localhost'
-        port = 2222
-        user = 'vagrant'
-        identity = new File('.vagrant/machines/local/virtualbox/private_key')
-    }
+  local {
+    host = 'localhost'
+    port = 2222
+    user = 'vagrant'
+    identity = new File('.vagrant/machines/local/virtualbox/private_key')
+  }
 
-    production {
-        host = '188.166.29.129'
-        user = 'root'
-        identity = new File('~/.ssh/id_rsa')
-    }
+  production {
+    host = '188.166.29.129'
+    user = 'root'
+    identity = new File('~/.ssh/id_rsa')
+  }
 }
 
 task uberjar(type: Jar, dependsOn: 'classes') {
-    from files(sourceSets.main.output.classesDir)
-    from files(sourceSets.main.output.resourcesDir)
-    from {configurations.compile.collect {zipTree(it)}}
+  from files(sourceSets.main.output.classesDir)
+  from files(sourceSets.main.output.resourcesDir)
+  from { configurations.compile.collect { zipTree(it) } }
 }
 
 task vagrantLocalUp(type: VagrantUp) {
-    commands << 'local'
+  commands << 'local'
 }
 
 task vagrantProductionUp(type: VagrantUp) {
-    commands << 'radio-t-server'
-    provider = 'digital_ocean'
+  commands << 'radio-t-server'
+  provider = 'digital_ocean'
 }
 
 task deployLocal(dependsOn: ['uberjar', 'vagrantLocalUp']) {
-    description 'Deploys the server to the local Vagrant environment'
-    doLast { deployApp(remotes.local) }
+  description = 'Deploys the server to the local Vagrant environment'
+  doLast { deployApp(remotes.local) }
 }
 
 task deployProduction(dependsOn: ['uberjar', 'vagrantProductionUp']) {
-    description 'Deploys the server to the production environment'
-    doLast { deployApp(remotes.production) }
+  description = 'Deploys the server to the production environment'
+  doLast { deployApp(remotes.production) }
+}
+
+task dumpLocalLog(dependsOn: 'vagrantLocalUp') {
+  description = 'Prints server.log from the local installation'
+  doLast {
+    sshexec {
+      session(remotes.local) {
+        executeSudo("cat /var/log/radio-t-server/server.log")
+      }
+    }
+  }
 }
 
 
 private void deployApp(def remote) {
-    def tempPath = '/tmp/' + uberjar.archiveName
-    def distributionDir = '/opt/radio-t-server'
+  def tempPath = '/tmp/' + uberjar.archiveName
+  def distributionDir = '/opt/radio-t-server'
 
-    sshexec {
-        session(remote) {
-            put(uberjar.archivePath.absolutePath, tempPath)
-            executeSudo("mv $tempPath $distributionDir")
-            executeSudo("rm -f /var/log/radio-t-server/*")
-            executeSudo("/etc/init.d/radio-t-server restart")
-        }
+  sshexec {
+    session(remote) {
+      put(uberjar.archivePath.absolutePath, tempPath)
+      executeSudo("mv $tempPath $distributionDir")
+      executeSudo("rm -f /var/log/radio-t-server/*")
+      executeSudo("/etc/init.d/radio-t-server restart")
     }
+  }
 }
 
 
 dependencies {
-    compile 'org.scala-lang:scala-compiler:2.11.1'
-    compile 'org.scala-lang:scala-library:2.11.1'
-    compile 'org.scalatra:scalatra_2.11:2.3.0'
-    compile 'org.scalatra:scalatra-json_2.11:2.3.0'
-    compile 'org.json4s:json4s-jackson_2.11:3.2.10'
-    compile 'org.eclipse.jetty:jetty-webapp:9.1.4.v20140401'
-    compile 'ch.qos.logback:logback-classic:1.1.1'
-    compile 'commons-daemon:commons-daemon:1.0.15'
-    compile files('libs/smack-3.4.1-0cec571.jar', 'libs/smackx-3.4.1-0cec571.jar')
+  compile 'org.scala-lang:scala-compiler:2.11.1'
+  compile 'org.scala-lang:scala-library:2.11.1'
+  compile 'org.scalatra:scalatra_2.11:2.3.0'
+  compile 'org.scalatra:scalatra-json_2.11:2.3.0'
+  compile 'org.json4s:json4s-jackson_2.11:3.2.10'
+  compile 'org.eclipse.jetty:jetty-webapp:9.1.4.v20140401'
+  compile 'ch.qos.logback:logback-classic:1.1.1'
+  compile 'commons-daemon:commons-daemon:1.0.15'
+  compile files('libs/smack-3.4.1-0cec571.jar', 'libs/smackx-3.4.1-0cec571.jar')
 
-    testCompile 'org.scalatra:scalatra-scalatest_2.11:2.3.0'
+  testCompile 'org.scalatra:scalatra-scalatest_2.11:2.3.0'
 }
