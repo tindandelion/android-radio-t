@@ -6,16 +6,16 @@ buildscript {
 
   dependencies {
     classpath 'org.hidetake:gradle-ssh-plugin:0.3.0'
-    classpath 'org.gradle.api.plugins:gradle-vagrant-plugin:0.5'
+    classpath 'com.bmuschko:gradle-vagrant-plugin:2.0'
   }
 }
 
 apply plugin: 'scala'
-apply plugin: 'ssh'
-apply plugin: 'vagrant-base'
 apply plugin: 'application'
+apply plugin: 'ssh'
+apply plugin: 'com.bmuschko.vagrant-base'
 
-import org.gradle.api.plugins.vagrant.tasks.VagrantUp
+import com.bmuschko.gradle.vagrant.tasks.VagrantUp
 
 version = '1.0'
 
