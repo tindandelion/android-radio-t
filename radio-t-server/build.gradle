@@ -22,11 +22,7 @@ import org.gradle.api.plugins.vagrant.tasks.VagrantUp
 version = '1.0'
 
 mainClassName = 'ServerCommandLine'
-applicationDefaultJvmArgs = ["-Dlogback.configurationFile=logback-console.xml",
-                             "-Dxmpp.server=localhost",
-                             "-Dxmpp.room=online@conference.precise64",
-                             "-Dxmpp.username=android-radiot",
-                             "-Dxmpp.password=password"]
+applicationDefaultJvmArgs = ["-Dlogback.configurationFile=logback-console.xml"]
 
 repositories {
   mavenCentral()
@@ -56,9 +52,9 @@ docker {
 
   javaApplication {
     baseImage = 'java:7-jre'
-//    port = 8080
-//    maintainer = 'Sergey Moshnikov <apps-dandelion@gmail.com>'
-//    tag = 'sergeymo/radio-t-server:latest'
+    port = 8080
+    maintainer = 'Sergey Moshnikov <apps-dandelion@gmail.com>'
+    tag = 'sergeymo/radio-t-server:latest'
   }
 }
 
