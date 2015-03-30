@@ -5,17 +5,22 @@ VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define 'local', primary: true do |local|
     local.vm.box = "ubuntu/trusty64"
-    
+
+    local.vm.network "forwarded_port", guest: 2375, host: 2375
     local.vm.network "forwarded_port", guest: 9090, host: 9090
     local.vm.network "forwarded_port", guest: 5222, host: 5222
     local.vm.network "forwarded_port", guest: 8080, host: 8080
-    
+
+    local.vm.provision 'shell', inline: <<-SH
+      sudo echo DOCKER_OPTS=\\"-H unix:///var/run/docker.sock -H tcp://0.0.0.0:2375\\" > /etc/default/docker
+    SH
+
     local.vm.provision "puppet" do |puppet|
       puppet.manifests_path = "puppet/manifests"
       puppet.module_path = "puppet/modules"
       puppet.manifest_file  = "local.pp"
     end
-    
+
     local.vm.provision "docker" do |docker|
       docker.run "sergeymo/radio-t-openfire", args: "-p 9090:9090 -p 5222:5222"
     end
@@ -32,6 +37,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
     
     prod.vm.provision 'shell', inline: 'apt-get -qq update && apt-get -qq -y install puppet'
+
     prod.vm.provision "puppet" do |puppet|
       puppet.manifests_path = "puppet/manifests"
       puppet.module_path = "puppet/modules"
