@@ -18,6 +18,7 @@ apply plugin: 'com.bmuschko.vagrant-base'
 apply plugin: 'com.bmuschko.docker-java-application'
 
 import com.bmuschko.gradle.vagrant.tasks.VagrantUp
+import com.bmuschko.gradle.docker.tasks.container.*
 
 version = '1.0'
 
@@ -58,6 +59,18 @@ docker {
 
 dockerBuildImage {
   dependsOn 'vagrantLocalUp'
+}
+
+task dockerCreateLocalContainer(type: DockerCreateContainer) {
+  description = 'Create local radio-t-server instance'
+  dependsOn 'dockerBuildImage'
+  targetImageId { dockerBuildImage.getImageId() }
+}
+
+task dockerStartLocalContainer(type: DockerStartContainer) {
+  description = 'Starts local radio-t-server instance'
+  dependsOn 'dockerCreateLocalContainer'
+  targetContainerId { dockerCreateLocalContainer.getContainerId() }
 }
 
 task uberjar(type: Jar, dependsOn: 'classes') {
