@@ -64,12 +64,15 @@ dockerBuildImage {
 task dockerCreateLocalContainer(type: DockerCreateContainer) {
   description = 'Create local radio-t-server instance'
   dependsOn 'dockerBuildImage'
+
+  volumes = ['/etc/radio-t-server.conf']
   targetImageId { dockerBuildImage.getImageId() }
 }
 
 task dockerStartLocalContainer(type: DockerStartContainer) {
   description = 'Starts local radio-t-server instance'
   dependsOn 'dockerCreateLocalContainer'
+
   targetContainerId { dockerCreateLocalContainer.getContainerId() }
 }
 
