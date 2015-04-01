@@ -26,22 +26,22 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
   
-  config.vm.define 'radio-t-server' do |prod|
-    prod.vm.box = 'digital_ocean'
-    prod.vm.synced_folder '.', '/vagrant', disabled: true
-    
-    prod.vm.provider :digital_ocean do |provider|
-      provider.image = 'ubuntu-14-04-x64'
-      provider.size = '512mb'
-      provider.region = "ams3"
-    end
-    
-    prod.vm.provision 'shell', inline: 'apt-get -qq update && apt-get -qq -y install puppet'
-
-    prod.vm.provision "puppet" do |puppet|
-      puppet.manifests_path = "puppet/manifests"
-      puppet.module_path = "puppet/modules"
-      puppet.manifest_file  = "production.pp"
-    end
-  end
+#  config.vm.define 'radio-t-server' do |prod|
+#    prod.vm.box = 'digital_ocean'
+#    prod.vm.synced_folder '.', '/vagrant', disabled: true
+#
+#    prod.vm.provider :digital_ocean do |provider|
+#      provider.image = 'ubuntu-14-04-x64'
+#      provider.size = '512mb'
+#      provider.region = "ams3"
+#    end
+#
+#    prod.vm.provision 'shell', inline: 'apt-get -qq update && apt-get -qq -y install puppet'
+#
+#    prod.vm.provision "puppet" do |puppet|
+#      puppet.manifests_path = "puppet/manifests"
+#      puppet.module_path = "puppet/modules"
+#      puppet.manifest_file  = "production.pp"
+#    end
+#  end
 end

@@ -17,8 +17,8 @@ apply plugin: 'ssh'
 apply plugin: 'com.bmuschko.vagrant-base'
 apply plugin: 'com.bmuschko.docker-java-application'
 
+
 import com.bmuschko.gradle.vagrant.tasks.VagrantUp
-import com.bmuschko.gradle.docker.tasks.container.*
 
 version = '1.0'
 
@@ -52,28 +52,13 @@ docker {
   javaApplication {
     baseImage = 'java:7-jre'
     maintainer = 'Sergey Moshnikov <apps-dandelion@gmail.com>'
-    port = 8080
-    tag = 'sergeymo/radio-t-server:latest'
+    port = 80
+    group = 'sergeymo'
   }
 }
 
 dockerBuildImage {
   dependsOn 'vagrantLocalUp'
-}
-
-task dockerCreateLocalContainer(type: DockerCreateContainer) {
-  description = 'Create local radio-t-server instance'
-  dependsOn 'dockerBuildImage'
-
-  volumes = ['/etc/radio-t-server.conf']
-  targetImageId { dockerBuildImage.getImageId() }
-}
-
-task dockerStartLocalContainer(type: DockerStartContainer) {
-  description = 'Starts local radio-t-server instance'
-  dependsOn 'dockerCreateLocalContainer'
-
-  targetContainerId { dockerCreateLocalContainer.getContainerId() }
 }
 
 task uberjar(type: Jar, dependsOn: 'classes') {
