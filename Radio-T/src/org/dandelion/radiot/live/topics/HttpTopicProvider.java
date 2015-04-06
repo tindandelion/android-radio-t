@@ -10,6 +10,10 @@ public class HttpTopicProvider implements Provider<CurrentTopic> {
     private final HttpClient client;
     private final String serverUrl;
 
+    public static String topicRequestUrl(String serverUrl) {
+        return serverUrl + "/api/chat/v1/topic";
+    }
+
     public HttpTopicProvider(HttpClient client, String serverUrl) {
         this.client = client;
         this.serverUrl = serverUrl;
@@ -30,13 +34,9 @@ public class HttpTopicProvider implements Provider<CurrentTopic> {
         }
     }
 
-    private String trackerServerUrl() {
-        return serverUrl + "/api/chat/v1/topic";
-    }
-
     @Override
     public CurrentTopic get() throws Exception {
-        String json = client.getStringContent(trackerServerUrl());
+        String json = client.getStringContent(topicRequestUrl(serverUrl));
         return parseResponseJson(json);
     }
 

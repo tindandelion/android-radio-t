@@ -15,7 +15,8 @@ public class HttpTopicProviderTest {
 
     @Test
     public void retrieveTopic() throws Exception {
-        when(httpClient.getStringContent(SERVER_URL + "/chat/topic"))
+        final String requestUrl = HttpTopicProvider.topicRequestUrl(SERVER_URL);
+        when(httpClient.getStringContent(requestUrl))
                 .thenReturn("{id: \"topic-id\", text: \"Lorem ipsum\"}");
 
         CurrentTopic topic = provider.get();
