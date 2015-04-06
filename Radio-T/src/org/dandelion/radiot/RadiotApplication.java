@@ -16,7 +16,7 @@ import org.dandelion.radiot.util.ProgrammerError;
 
 public class RadiotApplication extends Application {
     private static final String CHAT_URL = "http://chat.radio-t.com";
-    private static final String TOPIC_TRACKER_BASE_URL = "http://188.166.29.129:8080";
+    private static final String TOPIC_TRACKER_BASE_URL = "http://radiot.tindandelion.com:8080";
     //private static final String TOPIC_TRACKER_BASE_URL = "http://10.0.1.2:8080";
     // private static final String CHAT_URL = "http://10.0.1.2:4567";
 

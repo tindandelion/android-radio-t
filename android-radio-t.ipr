@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactManager">
+    <artifact type="apk" name="Radio-T">
+      <output-path>$PROJECT_DIR$/out/artifacts/Radio_T</output-path>
+      <properties id="android-properties">
+        <options>
+          <option name="keyAlias" value="dnl-release" />
+          <option name="keyPassword" value="cXVhZHJpbG9iYXRh" />
+          <option name="keyStorePassword" value="cXVhZHJpbG9iYXRh" />
+          <option name="keyStoreUrl" value="file://$USER_HOME$/Dropbox/dnl-release.keystore" />
+          <option name="proGuardCfgFiles">
+            <list>
+              <option value="file://%MODULE_SDK_HOME%/tools/proguard/proguard-android.txt" />
+            </list>
+          </option>
+          <option name="signingMode" value="RELEASE_SIGNED" />
+        </options>
+      </properties>
+      <root id="archive" name="Radio-T.apk">
+        <element id="android-final-package" facet="Radio-T/android/Android" />
+      </root>
+    </artifact>
+  </component>
   <component name="CompilerConfiguration">
     <option name="DEFAULT_COMPILER" value="Javac" />
     <excludeFromCompile>
