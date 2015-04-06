@@ -20,8 +20,8 @@ class TopicTrackerServletTest extends ScalatraSpec with Matchers {
 
   val LocalAdminConfig = LocalChatConfig.copy(username = TopicTrackerServlet.TopicStarter)
 
-  val servlet = new TopicTrackerServlet("/chat", LocalChatConfig)
-  addServlet(servlet, servlet.root + "/*")
+  val servlet = new TopicTrackerServlet(LocalChatConfig)
+  addServlet(servlet, "/chat/*")
 
   it("answers a simple request") {
     get("/chat") {

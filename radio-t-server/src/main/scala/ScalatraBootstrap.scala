@@ -8,7 +8,7 @@ class ScalatraBootstrap extends LifeCycle {
   val ConfigFile = new File("/etc/radio-t-server.conf")
 
   override def init(context: ServletContext) {
-    context.mount(new TopicTrackerServlet("/chat", loadChatConfig(ConfigFile)), "/chat/*")
+    context.mount(new TopicTrackerServlet(loadChatConfig(ConfigFile)), "/api/chat/v1/*")
   }
 
   def loadChatConfig(file: File) =

@@ -17,7 +17,7 @@ import org.dandelion.radiot.util.ProgrammerError;
 public class RadiotApplication extends Application {
     private static final String CHAT_URL = "http://chat.radio-t.com";
     private static final String TOPIC_TRACKER_BASE_URL = "http://radiot.tindandelion.com:8080";
-    //private static final String TOPIC_TRACKER_BASE_URL = "http://10.0.1.2:8080";
+//    private static final String TOPIC_TRACKER_BASE_URL = "http://192.168.0.11:8080";
     // private static final String CHAT_URL = "http://10.0.1.2:4567";
 
     public static DataEngine createChatTranslation(String chatUrl, Scheduler scheduler) {
@@ -38,18 +38,6 @@ public class RadiotApplication extends Application {
             @Override
             public DataEngine<CurrentTopic> create() {
                 Provider<CurrentTopic> provider = new HttpTopicProvider(TOPIC_TRACKER_BASE_URL);
-//                Provider provider = new Provider<CurrentTopic>() {
-//                    @Override
-//                    public CurrentTopic get() throws Exception {
-//                        Log.d("TOPIC", "Requested new topic");
-//                        Thread.sleep(2000);
-//                        return new CurrentTopic("topic",
-//                                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec aliquet, massa ut tincidunt pellentesque, dui nibh lacinia magna, elementum ultrices magna risus a tellus");
-//                    }
-//
-//                    @Override
-//                    public void abort() { }
-//                };
                 return new HttpDataEngine<>(provider, new HandlerScheduler(updateDelayMillis));
             }
         };

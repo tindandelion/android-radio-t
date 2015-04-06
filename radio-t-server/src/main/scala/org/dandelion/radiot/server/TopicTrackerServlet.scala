@@ -11,7 +11,7 @@ case class Topic(id: String, text: String, link: String) {
   def toJson: JObject = ("id" -> id) ~ ("text" -> text) ~ ("link" -> link)
 }
 
-class TopicTrackerServlet(val root: String, val chatConfig: JabberConfig) extends ScalatraServlet
+class TopicTrackerServlet(val chatConfig: JabberConfig) extends ScalatraServlet
 with JacksonJsonSupport with JValueResult {
   implicit protected val jsonFormats: Formats = DefaultFormats
 

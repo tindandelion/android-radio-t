@@ -31,7 +31,7 @@ public class HttpTopicProvider implements Provider<CurrentTopic> {
     }
 
     private String trackerServerUrl() {
-        return serverUrl + "/chat/topic";
+        return serverUrl + "/api/chat/v1/topic";
     }
 
     @Override
