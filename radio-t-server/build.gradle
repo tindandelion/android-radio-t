@@ -22,7 +22,7 @@ import com.bmuschko.gradle.vagrant.tasks.VagrantUp
 
 version = '1.0'
 
-mainClassName = 'ServerCommandLine'
+mainClassName = 'ServerStarter'
 applicationDefaultJvmArgs = ["-Dlogback.configurationFile=logback-console.xml"]
 
 repositories {
