@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        package="org.dandelion.radiot"
-        android:versionName="1.8.1"
-        android:versionCode="17">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.dandelion.radiot"
+    android:versionName="1.9"
+    android:versionCode="18">
+
     <supports-screens
-            android:largeScreens="true"
-            android:normalScreens="true"
-            android:smallScreens="true"
-            android:anyDensity="true"/>
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true"
+        android:anyDensity="true"/>
     <uses-sdk
         android:minSdkVersion="7"
-        android:targetSdkVersion="15"/>
+        android:targetSdkVersion="21"/>
+
     <uses-permission
         android:name="android.permission.INTERNET"/>
     <uses-permission
@@ -19,49 +21,54 @@
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission
-        android:name="android.permission.ACCESS_NETWORK_STATE" />
+        android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
-            android:icon="@drawable/icon"
-            android:label="@string/app_name"
-            android:name="RadiotApplication">
+        android:icon="@drawable/icon"
+        android:label="@string/app_name"
+        android:name="RadiotApplication"
+        android:allowBackup="true">
         <activity
-                android:name=".podcasts.ui.PodcastListActivity"
-                android:theme="@style/Theme.Radiot"/>
+            android:name=".podcasts.ui.PodcastListActivity"
+            android:theme="@style/Theme.Radiot"/>
         <activity
-                android:name=".podcasts.download.FakeDownloaderActivity"
-                android:theme="@style/Theme.RadiotHome"/>
+            android:name=".podcasts.download.FakeDownloaderActivity"
+            android:theme="@style/Theme.RadiotHome"/>
         <activity
-                android:name=".live.ui.LiveShowActivity"
-                android:launchMode="singleTop"
-                android:label="@string/live_show_title"
-                android:theme="@style/Theme.Radiot"/>
+            android:name=".live.ui.LiveShowActivity"
+            android:launchMode="singleTop"
+            android:label="@string/live_show_title"
+            android:theme="@style/Theme.Radiot"/>
         <activity
-                android:name=".home_screen.AboutAppActivity"
-                android:label="@string/about_app_title"
-                android:theme="@style/Theme.Radiot"/>
+            android:name=".home_screen.AboutAppActivity"
+            android:label="@string/about_app_title"
+            android:theme="@style/Theme.Radiot"/>
         <activity
-                android:name=".home_screen.HomeScreenActivity"
-                android:theme="@style/Theme.RadiotHome"
-                android:launchMode="singleTask">
+            android:name=".home_screen.HomeScreenActivity"
+            android:theme="@style/Theme.RadiotHome"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action
-                        android:name="android.intent.action.MAIN"/>
+                    android:name="android.intent.action.MAIN"/>
                 <category
-                        android:name="android.intent.category.LAUNCHER"/>
+                    android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
         <service android:name=".live.service.LiveShowService"/>
         <service android:name=".podcasts.download.DownloadService"/>
+
         <receiver android:name=".podcasts.download.DownloadNotificationReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.DOWNLOAD_NOTIFICATION_CLICKED" />
-                <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
+                <action android:name="android.intent.action.DOWNLOAD_NOTIFICATION_CLICKED"/>
+                <action android:name="android.intent.action.DOWNLOAD_COMPLETE"/>
             </intent-filter>
         </receiver>
-        <receiver android:name=".live.service.TimeoutReceiver">
+        <receiver
+            android:name=".live.service.TimeoutReceiver"
+            android:exported="false">
             <intent-filter>
-                <action android:name="org.dandelion.radiot.live.Timeout" />
+                <action android:name="org.dandelion.radiot.live.Timeout"/>
             </intent-filter>
         </receiver>
     </application>
