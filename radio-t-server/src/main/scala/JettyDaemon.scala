@@ -6,7 +6,7 @@ import org.scalatra.servlet.ScalatraListener
 import org.slf4j.LoggerFactory
 
 trait JettyStarter {
-  val Port = 8080
+  val Port = 80
   val server = new Server(Port)
   val logger = LoggerFactory.getLogger(getClass)
 

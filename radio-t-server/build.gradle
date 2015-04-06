@@ -7,6 +7,7 @@ buildscript {
   dependencies {
     classpath 'org.hidetake:gradle-ssh-plugin:0.3.0'
     classpath 'com.bmuschko:gradle-vagrant-plugin:2.0'
+    classpath 'com.bmuschko:gradle-docker-plugin:2.1'
   }
 }
 
@@ -14,6 +15,8 @@ apply plugin: 'scala'
 apply plugin: 'application'
 apply plugin: 'ssh'
 apply plugin: 'com.bmuschko.vagrant-base'
+apply plugin: 'com.bmuschko.docker-java-application'
+
 
 import com.bmuschko.gradle.vagrant.tasks.VagrantUp
 
@@ -43,6 +46,19 @@ remotes {
     user = 'root'
     identity = new File('~/.ssh/id_rsa')
   }
+}
+
+docker {
+  javaApplication {
+    baseImage = 'java:7-jre'
+    maintainer = 'Sergey Moshnikov <apps-dandelion@gmail.com>'
+    port = 80
+    group = 'sergeymo'
+  }
+}
+
+dockerBuildImage {
+  dependsOn 'vagrantLocalUp'
 }
 
 task uberjar(type: Jar, dependsOn: 'classes') {
@@ -95,7 +111,6 @@ private void deployApp(def remote) {
     }
   }
 }
-
 
 dependencies {
   compile 'org.scala-lang:scala-compiler:2.11.1'
