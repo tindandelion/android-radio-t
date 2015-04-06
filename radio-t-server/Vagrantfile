@@ -13,35 +13,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     local.vm.provision 'shell', inline: <<-SH
       sudo echo DOCKER_OPTS=\\"-H unix:///var/run/docker.sock -H tcp://0.0.0.0:2375\\" > /etc/default/docker
-    SH
 
-    local.vm.provision "puppet" do |puppet|
-      puppet.manifests_path = "puppet/manifests"
-      puppet.module_path = "puppet/modules"
-      puppet.manifest_file  = "local.pp"
-    end
+      sudo echo Europe/Helsinki > /etc/timezone
+      sudo /usr/sbin/dpkg-reconfigure --frontend noninteractive tzdata
+    SH
 
     local.vm.provision "docker" do |docker|
       docker.run "sergeymo/radio-t-openfire", args: "-p 9090:9090 -p 5222:5222 --name=xmpp-server"
     end
   end
-  
-#  config.vm.define 'radio-t-server' do |prod|
-#    prod.vm.box = 'digital_ocean'
-#    prod.vm.synced_folder '.', '/vagrant', disabled: true
-#
-#    prod.vm.provider :digital_ocean do |provider|
-#      provider.image = 'ubuntu-14-04-x64'
-#      provider.size = '512mb'
-#      provider.region = "ams3"
-#    end
-#
-#    prod.vm.provision 'shell', inline: 'apt-get -qq update && apt-get -qq -y install puppet'
-#
-#    prod.vm.provision "puppet" do |puppet|
-#      puppet.manifests_path = "puppet/manifests"
-#      puppet.module_path = "puppet/modules"
-#      puppet.manifest_file  = "production.pp"
-#    end
-#  end
 end
