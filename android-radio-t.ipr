@@ -249,6 +249,15 @@
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
   </component>
   <component name="libraryTable">
+    <library name="Gradle: ch.qos.logback:logback-access:1.1.1">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/ch.qos.logback/logback-access/1.1.1/fe2d0e8d5c0bcf565828060af73ea84e3c70d414/logback-access-1.1.1.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/ch.qos.logback/logback-access/1.1.1/1fbf7b388ab670aa0d09c9c4f26f9358d4abfb93/logback-access-1.1.1-sources.jar!/" />
+      </SOURCES>
+    </library>
     <library name="Gradle: ch.qos.logback:logback-classic:1.1.1">
       <CLASSES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/ch.qos.logback/logback-classic/1.1.1/19e1e2be2670b33c5dcc835550527028dddddcd1/logback-classic-1.1.1.jar!/" />
@@ -319,15 +328,6 @@
       <JAVADOC />
       <SOURCES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-codec/commons-codec/1.6/61e9f9d11fe3e12ec62f633006e99d75fd7f19c8/commons-codec-1.6-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: commons-daemon:commons-daemon:1.0.15">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-daemon/commons-daemon/1.0.15/275b3f1efc36c6a5c276440a96a489f4ff90fa8a/commons-daemon-1.0.15.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-daemon/commons-daemon/1.0.15/be9e3caa33ab36521b0cbdc8df9188ca416cd1df/commons-daemon-1.0.15-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: commons-logging:commons-logging:1.1.3">
