@@ -1,4 +1,5 @@
-import org.eclipse.jetty.server.handler.HandlerCollection
+import ch.qos.logback.access.jetty.RequestLogImpl
+import org.eclipse.jetty.server.handler.{RequestLogHandler, HandlerCollection}
 import org.eclipse.jetty.server.{Handler, Server}
 import org.eclipse.jetty.servlet.DefaultServlet
 import org.eclipse.jetty.webapp.WebAppContext
@@ -11,7 +12,8 @@ object ServerStarter extends App {
   val logger = LoggerFactory.getLogger(getClass)
 
   logger.info("Initializing Jetty")
-  server.setHandler(handlerCollectionOf(createContext))
+
+  server.setHandler(handlerCollectionOf(createLogger, createContext))
 
   logger.info("Starting Jetty")
   server.start()
@@ -24,6 +26,15 @@ object ServerStarter extends App {
     context.addEventListener(new ScalatraListener)
     context.addServlet(classOf[DefaultServlet], "/")
     context
+  }
+
+  def createLogger: Handler = {
+    val logImpl = new RequestLogImpl
+    val logHandler = new RequestLogHandler
+
+    logImpl.setResource("/logback-jetty.xml")
+    logHandler.setRequestLog(logImpl)
+    logHandler
   }
 
   def handlerCollectionOf(handlers: Handler*): Handler = {
