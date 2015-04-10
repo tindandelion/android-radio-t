@@ -18,11 +18,16 @@ public class CurrentTopicTest extends LiveShowActivityTestCase {
     private TopicTrackerBackend backend;
     private DeterministicScheduler scheduler;
 
-    public void testWhenNoCurrentTopicInitially_viewIsHidden() throws Exception {
+    public void testWhenNoCurrentTopic_viewIsHidden_untilTopicStarts() throws Exception {
         backend.respondNoContent();
 
         CurrentTopicRunner app = openScreen();
         app.showsNoTopic();
+
+        backend.respondWithTopic(DEFAULT_TOPIC);
+
+        app.refreshTopic();
+        app.showsCurrentTopic(DEFAULT_TOPIC.text);
     }
 
     public void testOnStart_showsCurrentTopic() throws Exception {
@@ -75,9 +80,9 @@ public class CurrentTopicTest extends LiveShowActivityTestCase {
         scheduler = new DeterministicScheduler();
 
 
-        CurrentTopicFragment.trackerFactory = new DataEngine.Factory() {
+        CurrentTopicFragment.trackerFactory = new DataEngine.Factory<CurrentTopic>() {
             @Override
-            public DataEngine create() {
+            public DataEngine<CurrentTopic> create() {
                 HttpTopicProvider trackerClient = new HttpTopicProvider(TopicTrackerBackend.baseUrl());
                 return new HttpDataEngine<>(trackerClient, scheduler);
             }
