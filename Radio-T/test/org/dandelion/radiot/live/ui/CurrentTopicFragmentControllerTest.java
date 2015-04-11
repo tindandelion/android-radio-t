@@ -23,8 +23,7 @@ public class CurrentTopicFragmentControllerTest {
 
     @Test
     public void onCreate_viewIsShownWithText_ifShownBefore() throws Exception {
-        when(view.isHidden()).thenReturn(false);
-        when(view.getTopicText()).thenReturn("Current topic");
+        setViewIsShownWithText("Current topic");
 
         recreateController();
 
@@ -34,8 +33,7 @@ public class CurrentTopicFragmentControllerTest {
 
     @Test
     public void onCreate_viewIsHidden_ifHiddenBefore() throws Exception {
-        when(view.isHidden()).thenReturn(true);
-        when(view.getTopicText()).thenReturn("Current topic");
+        setViewIsHidden();
 
         recreateController();
 
@@ -71,6 +69,23 @@ public class CurrentTopicFragmentControllerTest {
 
         controller.accept(topic);
         verifyZeroInteractions(view);
+    }
+
+    @Test
+    public void whenTopicGoesEmpty_hidesView() throws Exception {
+        setViewIsShownWithText("Current topic");
+
+        controller.accept(CurrentTopic.empty());
+        verify(view).hideAnimated();
+    }
+
+    private void setViewIsShownWithText(String text) {
+        when(view.isHidden()).thenReturn(false);
+        when(view.getTopicText()).thenReturn(text);
+    }
+
+    private void setViewIsHidden() {
+        when(view.isHidden()).thenReturn(true);
     }
 
     private void recreateController() {

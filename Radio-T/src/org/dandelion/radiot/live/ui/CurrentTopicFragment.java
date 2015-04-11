@@ -17,7 +17,7 @@ import org.dandelion.radiot.live.topics.CurrentTopic;
 public class CurrentTopicFragment extends Fragment {
     public static DataEngine.Factory<CurrentTopic> trackerFactory = null;
     private TextView topicText;
-    private DataEngine engine;
+    private DataEngine<CurrentTopic> engine;
     private Controller controller;
 
     private View.OnClickListener onHide = new View.OnClickListener() {
@@ -162,14 +162,27 @@ public class CurrentTopicFragment extends Fragment {
 
         @Override
         public void accept(CurrentTopic topic) {
-            if (isNewTopic(topic)) updateTopic(topic);
+            if (topic.isEmpty()) {
+                reset();
+            } else {
+                updateTopic(topic);
+            }
+        }
+
+        private void reset() {
+            currentTopicId = "";
+            view.hideAnimated();
+        }
+
+        private void updateTopic(CurrentTopic topic) {
+            if (isNewTopic(topic)) displayTopicText(topic);
         }
 
         private boolean isNewTopic(CurrentTopic topic) {
             return !currentTopicId.equals(topic.id);
         }
 
-        private void updateTopic(CurrentTopic topic) {
+        private void displayTopicText(CurrentTopic topic) {
             currentTopicId = topic.id;
 
             view.setTopicText(topic.text);
