@@ -1,8 +1,6 @@
 package org.dandelion.radiot.live.topics;
 
-import org.dandelion.radiot.http.ApacheHttpClient;
-import org.dandelion.radiot.http.HttpClient;
-import org.dandelion.radiot.http.Provider;
+import org.dandelion.radiot.http.*;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -28,7 +26,7 @@ public class HttpTopicProvider implements Provider<CurrentTopic> {
             JSONObject obj = new JSONObject(json);
             String id = obj.getString("id");
             String text = obj.getString("text");
-            return new CurrentTopic(id, text);
+            return CurrentTopic.create(id, text);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -36,8 +34,12 @@ public class HttpTopicProvider implements Provider<CurrentTopic> {
 
     @Override
     public CurrentTopic get() throws Exception {
-        String json = client.getStringContent(topicRequestUrl(serverUrl));
-        return parseResponseJson(json);
+        try {
+            String json = client.getStringContent(topicRequestUrl(serverUrl));
+            return parseResponseJson(json);
+        } catch (NoContentException ex) {
+            return CurrentTopic.empty();
+        }
     }
 
     @Override

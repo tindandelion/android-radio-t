@@ -44,7 +44,7 @@ public class CurrentTopicFragmentControllerTest {
 
     @Test
     public void whenNewTopicAccepted_updatesView_andShowsIt() throws Exception {
-        CurrentTopic topic = new CurrentTopic("id", "New topic");
+        CurrentTopic topic = CurrentTopic.create("id", "New topic");
         controller.accept(topic);
 
         verify(view).setTopicText(topic.text);
@@ -53,7 +53,7 @@ public class CurrentTopicFragmentControllerTest {
 
     @Test
     public void whenSameTopicAccepted_preservesCurrentViewState() throws Exception {
-        CurrentTopic topic = new CurrentTopic("id", "New topic");
+        CurrentTopic topic = CurrentTopic.create("id", "New topic");
         controller.accept(topic);
 
         reset(view);
@@ -63,7 +63,7 @@ public class CurrentTopicFragmentControllerTest {
 
     @Test
     public void whenSameTopicAcceptedAfterRecreation_preservesCurrentViewState() throws Exception {
-        CurrentTopic topic = new CurrentTopic("id", "New topic");
+        CurrentTopic topic = CurrentTopic.create("id", "New topic");
         controller.accept(topic);
 
         recreateController();

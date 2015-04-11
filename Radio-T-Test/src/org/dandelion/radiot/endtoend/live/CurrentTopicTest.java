@@ -13,7 +13,7 @@ import java.io.IOException;
 
 public class CurrentTopicTest extends LiveShowActivityTestCase {
     public static final CurrentTopic DEFAULT_TOPIC =
-            new CurrentTopic("default-id", "What is a Web Framework?");
+            CurrentTopic.create("default-id", "What is a Web Framework?");
 
     private TopicTrackerBackend backend;
     private DeterministicScheduler scheduler;
@@ -42,7 +42,7 @@ public class CurrentTopicTest extends LiveShowActivityTestCase {
         backend.respondWithTopic(DEFAULT_TOPIC);
         CurrentTopicRunner app = openScreen();
 
-        final CurrentTopic newTopic = new CurrentTopic("new-topic", "Amazon's ginormous public cloud turns 81 today");
+        final CurrentTopic newTopic = CurrentTopic.create("new-topic", "Amazon's ginormous public cloud turns 81 today");
 
         backend.respondWithTopic(newTopic);
 
