@@ -61,6 +61,10 @@ dockerBuildImage {
   dependsOn 'vagrantLocalUp'
 }
 
+dockerDistTar {
+  runCommand "echo Europe/Helsinki > /etc/timezone && dpkg-reconfigure tzdata --frontend noninteractive"
+}
+
 task uberjar(type: Jar, dependsOn: 'classes') {
   from files(sourceSets.main.output.classesDir)
   from files(sourceSets.main.output.resourcesDir)
