@@ -1,8 +1,15 @@
-Backlog:
+Version 1.10
  * Upgrade GA engine
    * No more Android 2.2 support?
-
+ * Raise target SDK
+ * Current topic: 'Open topic' (in separate browser, for now)
  * Chat: Hide controls from chat screen
+ * Server: Invalidate current topic after 1 hour
+ * Server: Upgrade frameworks (Jetty, Scalatra)
+ * Server: Attempt to use WebSockets again
+
+Backlog:
+ * Current topic: open topic in embedded browser
  * Chat: lock screen while translating
  * Live show: graceful process termination
  * Downloading: Respect background data loading settings
@@ -17,8 +24,6 @@ Backlog:
    * Podcast list: Flickers when changing orientation (due to loading all stuff)
    * Main screen: Tagline should show single-line if possible
  * User topics
- * Android 4.0 UI
-   * New icon with ICS guidelines
  * Gradle integration
 
 * Debt:
