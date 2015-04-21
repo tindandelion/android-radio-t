@@ -2,14 +2,17 @@ Version 1.10
  * Upgrade GA engine
    * No more Android 2.2 support?
  * Raise target SDK
- * Current topic: 'Open topic' (in separate browser, for now)
+ * New color scheme (light)
+ * Re-design podcast list
+ * Embedded podcast player
  * Chat: Hide controls from chat screen
  * Server: Invalidate current topic after 1 hour
  * Server: Upgrade frameworks (Jetty, Scalatra)
- * Server: Attempt to use WebSockets again
 
 Backlog:
+ * Current topic: 'Open topic' (in separate browser, for now)
  * Current topic: open topic in embedded browser
+ * Server: Attempt to use WebSockets again
  * Chat: lock screen while translating
  * Live show: graceful process termination
  * Downloading: Respect background data loading settings
