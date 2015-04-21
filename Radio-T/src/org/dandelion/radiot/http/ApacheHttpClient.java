@@ -3,6 +3,7 @@ package org.dandelion.radiot.http;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
+import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.HttpConnectionParams;
@@ -15,6 +16,31 @@ public class ApacheHttpClient implements HttpClient {
     private final static int HTTP_OK = 200;
     private final static int HTTP_NO_CONTENT = 204;
 
+    private static final ResponseHandler<byte[]> responseHandler = new ResponseHandler<byte[]>() {
+        @Override
+        public byte[] handleResponse(HttpResponse response) throws IOException {
+            if (!isSuccessful(response)) {
+                throwException(response);
+            }
+            HttpEntity entity = response.getEntity();
+            return EntityUtils.toByteArray(entity);
+        }
+
+        private boolean isSuccessful(HttpResponse response) {
+            return (response.getStatusLine().getStatusCode() == HTTP_OK) &&
+                    (response.getEntity() != null);
+        }
+
+        private void throwException(HttpResponse response) throws IOException {
+            StatusLine sl = response.getStatusLine();
+            if (sl.getStatusCode() == HTTP_NO_CONTENT) {
+                throw new NoContentException();
+            } else {
+                throw new IOException(sl.getReasonPhrase());
+            }
+        }
+    };
+
 
     private DefaultHttpClient client = new DefaultHttpClient();
 
@@ -25,14 +51,13 @@ public class ApacheHttpClient implements HttpClient {
 
     @Override
     public String getStringContent(String url) throws IOException {
-        HttpEntity entity = executeRequestFor(url);
-        return EntityUtils.toString(entity, "utf-8");
+        byte[] content = getByteContent(url);
+        return new String(content, "utf-8");
     }
 
     @Override
-    public byte[] getByteContent(String fullUrl) throws IOException {
-        HttpEntity entity = executeRequestFor(fullUrl);
-        return EntityUtils.toByteArray(entity);
+    public byte[] getByteContent(String url) throws IOException {
+        return client.execute(new HttpGet(url), responseHandler);
     }
 
     @Override
@@ -40,25 +65,4 @@ public class ApacheHttpClient implements HttpClient {
         client.getConnectionManager().shutdown();
     }
 
-    private HttpEntity executeRequestFor(String url) throws IOException {
-        HttpResponse response = client.execute(new HttpGet(url));
-        if (!isSuccessful(response)) {
-            return throwException(response);
-        }
-        return response.getEntity();
-    }
-
-    private HttpEntity throwException(HttpResponse response) throws IOException {
-        StatusLine sl = response.getStatusLine();
-        if (sl.getStatusCode() == HTTP_NO_CONTENT) {
-            throw new NoContentException();
-        } else {
-            throw new IOException(sl.getReasonPhrase());
-        }
-    }
-
-    private boolean isSuccessful(HttpResponse response) {
-        return (response.getStatusLine().getStatusCode() == HTTP_OK) &&
-                (response.getEntity() != null);
-    }
 }
