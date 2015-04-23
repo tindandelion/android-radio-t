@@ -9,7 +9,7 @@ public class TrackedActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        tracker = ActivityTracker.create();
+        tracker = ActivityTracker.getInstance();
     }
 
     @Override

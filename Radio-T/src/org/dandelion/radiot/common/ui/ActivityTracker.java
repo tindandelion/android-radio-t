@@ -4,11 +4,22 @@ import com.google.analytics.tracking.android.EasyTracker;
 import org.dandelion.radiot.BuildConfig;
 
 public abstract class ActivityTracker {
-    public static ActivityTracker create() {
+    private static final String UI_EVENT = "ui_event";
+
+    private static ActivityTracker instance = null;
+
+    public static ActivityTracker getInstance() {
+        if (instance == null) {
+            instance = createTracker();
+        }
+        return instance;
+    }
+
+    private static ActivityTracker createTracker() {
         if (BuildConfig.DEBUG) {
             return new NullTracker();
         } else {
-            return new GoogleAnalyticsTracker();
+            return new GoogleAnalyticsEasyTracker();
         }
     }
 
@@ -18,9 +29,8 @@ public abstract class ActivityTracker {
 
     public abstract void trackEvent(String action, String label);
 
-    private static class GoogleAnalyticsTracker extends ActivityTracker {
-        private static final String UI_EVENT = "ui_event";
-        public EasyTracker tracker = EasyTracker.getInstance();
+    private static class GoogleAnalyticsEasyTracker extends ActivityTracker {
+        private EasyTracker tracker = EasyTracker.getInstance();
 
         @Override
         public void activityStarted(TrackedActivity activity) {
