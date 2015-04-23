@@ -221,6 +221,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Radio-T/Radio-T.iml" filepath="$PROJECT_DIR$/Radio-T/Radio-T.iml" />
       <module fileurl="file://$PROJECT_DIR$/Radio-T-Test/Radio-T-Test.iml" filepath="$PROJECT_DIR$/Radio-T-Test/Radio-T-Test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/google-play-services_lib/google-play-services_lib.iml" filepath="$PROJECT_DIR$/google-play-services_lib/google-play-services_lib.iml" />
       <module fileurl="file://$PROJECT_DIR$/radio-t-server/radio-t-server.iml" filepath="$PROJECT_DIR$/radio-t-server/radio-t-server.iml" />
     </modules>
   </component>
@@ -249,6 +250,13 @@
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
   </component>
   <component name="libraryTable">
+    <library name="google-play-services">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/google-play-services_lib/libs/google-play-services.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
     <library name="Gradle: ch.qos.logback:logback-access:1.1.1">
       <CLASSES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/ch.qos.logback/logback-access/1.1.1/fe2d0e8d5c0bcf565828060af73ea84e3c70d414/logback-access-1.1.1.jar!/" />

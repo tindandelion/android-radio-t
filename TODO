@@ -1,6 +1,11 @@
 Version 1.10
  * Upgrade GA engine
+   * What about non-Google Android phones?
+   * How fat is library now?
    * No more Android 2.2 support?
+   * Debugging options in new GA SDK?
+   * Stripping SDK to using GA only?
+
  * Raise target SDK
  * New color scheme (light)
  * Re-design podcast list
