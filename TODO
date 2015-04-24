@@ -1,9 +1,9 @@
 Version 1.10
  * Upgrade GA engine
    PROG Testing new implementation
-     * What about non-Google Android phones?
+     DONE What about non-Google Android phones? Seems to work fine.
+     DONE No more Android 2.2 support? Seems to work fine.
      * How fat is library now?
-     * No more Android 2.2 support?
    * Debugging options in new GA SDK?
    * Stripping SDK to using GA only?
 

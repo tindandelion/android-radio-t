@@ -1,9 +1,9 @@
 package org.dandelion.radiot.common.ui;
 
 import android.content.Context;
-import com.google.analytics.tracking.android.EasyTracker;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Logger;
 import com.google.android.gms.analytics.Tracker;
 import org.dandelion.radiot.R;
 
@@ -34,34 +34,14 @@ public abstract class ActivityTracker {
 
     public abstract void trackEvent(String action, String label);
 
-    private static class GoogleAnalyticsEasyTracker extends ActivityTracker {
-        private EasyTracker tracker = EasyTracker.getInstance();
-
-        @Override
-        public void activityStarted(TrackedActivity activity) {
-            tracker.activityStart(activity);
-        }
-
-        @Override
-        public void activityStopped(TrackedActivity activity) {
-            tracker.activityStop(activity);
-        }
-
-        @Override
-        public void trackEvent(String action, String label) {
-            try {
-                EasyTracker.getTracker().sendEvent(UI_EVENT, action, label, null);
-            } catch (Exception ignored) {
-            }
-        }
-    }
-
     private static class GooglePlayServicesTracker extends ActivityTracker {
         private final GoogleAnalytics analytics;
         private final Tracker tracker;
 
         public GooglePlayServicesTracker(Context context) {
             analytics = GoogleAnalytics.getInstance(context);
+            analytics.getLogger().setLogLevel(Logger.LogLevel.VERBOSE);
+
             tracker = analytics.newTracker(R.xml.google_analytics);
         }
 
