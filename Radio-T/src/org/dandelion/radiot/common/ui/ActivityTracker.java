@@ -5,80 +5,48 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Logger;
 import com.google.android.gms.analytics.Tracker;
+import org.dandelion.radiot.BuildConfig;
 import org.dandelion.radiot.R;
 
-public abstract class ActivityTracker {
+public class ActivityTracker {
     private static final String UI_EVENT = "ui_event";
 
     private static ActivityTracker instance = null;
+    protected final GoogleAnalytics analytics;
+    protected final Tracker tracker;
 
     public static ActivityTracker getInstance(Context context) {
         if (instance == null) {
-            instance = createTracker(context);
+            instance = new ActivityTracker(context, BuildConfig.DEBUG);
         }
         return instance;
     }
 
-    private static ActivityTracker createTracker(Context context) {
-//        if (BuildConfig.DEBUG) {
-//            return new NullTracker();
-//        } else {
-//            return new GooglePlayServicesTracker(context);
-//        }
-        return new GooglePlayServicesTracker(context);
-    }
-
-    public abstract void activityStarted(TrackedActivity activity);
-
-    public abstract void activityStopped(TrackedActivity activity);
-
-    public abstract void trackEvent(String action, String label);
-
-    private static class GooglePlayServicesTracker extends ActivityTracker {
-        private final GoogleAnalytics analytics;
-        private final Tracker tracker;
-
-        public GooglePlayServicesTracker(Context context) {
-            analytics = GoogleAnalytics.getInstance(context);
+    private ActivityTracker(Context context, boolean debug) {
+        analytics = GoogleAnalytics.getInstance(context);
+        if (debug) {
             analytics.getLogger().setLogLevel(Logger.LogLevel.VERBOSE);
-
-            tracker = analytics.newTracker(R.xml.google_analytics);
+            analytics.setDryRun(true);
         }
-
-        @Override
-        public void activityStarted(TrackedActivity activity) {
-            analytics.reportActivityStart(activity);
-        }
-
-        @Override
-        public void activityStopped(TrackedActivity activity) {
-            analytics.reportActivityStop(activity);
-        }
-
-        @Override
-        public void trackEvent(String action, String label) {
-            try {
-                tracker.send(new HitBuilders.EventBuilder()
-                        .setCategory(UI_EVENT)
-                        .setAction(action)
-                        .setLabel(label)
-                        .build());
-            } catch (Exception ignored) {
-            }
-        }
+        tracker = analytics.newTracker(R.xml.google_analytics);
     }
 
-    private static class NullTracker extends ActivityTracker {
-        @Override
-        public void activityStarted(TrackedActivity activity) {
-        }
+    public void activityStarted(TrackedActivity activity) {
+        analytics.reportActivityStart(activity);
+    }
 
-        @Override
-        public void activityStopped(TrackedActivity activity) {
-        }
+    public void activityStopped(TrackedActivity activity) {
+        analytics.reportActivityStop(activity);
+    }
 
-        @Override
-        public void trackEvent(String action, String label) {
+    public void trackEvent(String action, String label) {
+        try {
+            tracker.send(new HitBuilders.EventBuilder()
+                    .setCategory(UI_EVENT)
+                    .setAction(action)
+                    .setLabel(label)
+                    .build());
+        } catch (Exception ignored) {
         }
     }
 }
