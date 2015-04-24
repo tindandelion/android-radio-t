@@ -3,8 +3,8 @@ Version 1.10
    PROG Testing new implementation
      DONE What about non-Google Android phones? Seems to work fine.
      DONE No more Android 2.2 support? Seems to work fine.
-     * How fat is library now?
-   * Debugging options in new GA SDK?
+     DONE How fat is library now? 2.6MB vs 0.8MB
+     * Debugging options in new GA SDK?
    * Stripping SDK to using GA only?
 
  * Raise target SDK
