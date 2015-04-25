@@ -101,6 +101,14 @@ task dumpLocalLog(dependsOn: 'vagrantLocalUp') {
   }
 }
 
+task checkProduction {
+  description = "Check the production installation"
+  doLast {
+    def topic =  "http://radiot.tindandelion.com:8080/api/chat/v1/topic".toURL().text
+    logger.info "Production server is responding, current topic is: [$topic]"
+  }
+}
+
 
 private void deployApp(def remote) {
   def tempPath = '/tmp/' + uberjar.archiveName
