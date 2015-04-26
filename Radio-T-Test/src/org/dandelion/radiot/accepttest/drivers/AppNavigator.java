@@ -1,16 +1,16 @@
 package org.dandelion.radiot.accepttest.drivers;
 
-import android.os.Build;
-import com.robotium.solo.Solo;
-import org.dandelion.radiot.home_screen.AboutAppActivity;
-import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
-import org.dandelion.radiot.home_screen.HomeScreenActivity;
 import android.app.Activity;
 import android.app.Instrumentation;
+import android.os.Build;
+import com.robotium.solo.Solo;
+import org.dandelion.radiot.helpers.async.Probe;
+import org.dandelion.radiot.home_screen.AboutAppActivity;
+import org.dandelion.radiot.home_screen.HomeScreenActivity;
+import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
+import org.hamcrest.Description;
 
-
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.dandelion.radiot.helpers.async.Poller.assertEventually;
 
 public class AppNavigator extends Solo {
 
@@ -34,10 +34,34 @@ public class AppNavigator extends Solo {
         clickOnText("Выпуски");
     }
 
-    public void showsPodcastsScreen(CharSequence title) {
+    public void showsPodcastsScreen(CharSequence title) throws InterruptedException {
         assertCurrentActivity("Must be on the main show screen", PodcastListActivity.class);
-        assertThat(getCurrentActivity().getTitle(),
-                equalTo(title));
+        assertEventually(activityTitleEquals(title));
+    }
+
+    private Probe activityTitleEquals(final CharSequence expected) {
+        return new Probe() {
+            private CharSequence currentActivityTitle = "";
+            @Override
+            public boolean isSatisfied() {
+                return currentActivityTitle.equals(expected);
+            }
+
+            @Override
+            public void sample() {
+                currentActivityTitle = getCurrentActivity().getTitle();
+            }
+
+            @Override
+            public void describeAcceptanceCriteriaTo(Description d) {
+                d.appendText("Current activity title equal to:").appendValue(expected);
+            }
+
+            @Override
+            public void describeFailureTo(Description d) {
+                d.appendText("Current activity title was: ").appendValue(currentActivityTitle);
+            }
+        };
     }
 
 
