@@ -1,10 +1,13 @@
 Version 1.10
  DONE Upgrade GA engine
-   PROG Testing new implementation
+   DONE Testing new implementation
      DONE What about non-Google Android phones? Seems to work fine.
      DONE No more Android 2.2 support? Seems to work fine.
      DONE How fat is library now? 2.6MB vs 0.8MB
      DONE Debugging options in new GA SDK?
+
+ * Server: Upgrade frameworks (Jetty, Scalatra)
+ * Server: Invalidate current topic after 1 hour
 
  * Use ProGuard to reduce APK size?
  * Raise target SDK
@@ -12,8 +15,6 @@ Version 1.10
  * Re-design podcast list
  * Embedded podcast player
  * Chat: Hide controls from chat screen
- * Server: Invalidate current topic after 1 hour
- * Server: Upgrade frameworks (Jetty, Scalatra)
 
 Backlog:
  * Current topic: 'Open topic' (in separate browser, for now)
