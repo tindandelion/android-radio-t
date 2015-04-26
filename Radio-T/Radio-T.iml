@@ -66,12 +66,10 @@
     <orderEntry type="module-library" scope="TEST">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/libs/test/robolectric-2.2-jar-with-dependencies.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/test/robolectric-2.4-jar-with-dependencies.jar!/" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES>
-          <root url="jar://$MODULE_DIR$/libs/test/robolectric-2.2-jar-with-dependencies.jar!/" />
-        </SOURCES>
+        <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="inheritedJdk" />
