@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 public class FeedbackEmail {
-    private static final String ADDRESS = "apps.dandelion@gmail.com";
+    private static final String ADDRESS = "radiot@tindandelion.com";
     private AppInfo appInfo;
     private Context context;
     private String messageText = "";
