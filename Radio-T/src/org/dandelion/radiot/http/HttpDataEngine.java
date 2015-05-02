@@ -15,7 +15,7 @@ public class HttpDataEngine<T> implements DataEngine<T> {
     public final Consumer<Exception> onError = new Consumer<Exception>() {
         @Override
         public void accept(Exception error) {
-            if (errorConsumer != null) errorConsumer.accept(error);
+            currentState.invokeConsumer(errorConsumer, error);
             currentState.onError();
         }
     };
@@ -23,9 +23,10 @@ public class HttpDataEngine<T> implements DataEngine<T> {
     public final Consumer<T> onMessages = new Consumer<T>() {
         @Override
         public void accept(T value) {
-            currentState.onRequestCompleted();
-            if (dataConsumer != null) dataConsumer.accept(value);
+            currentState.completeRequest();
+            currentState.invokeConsumer(dataConsumer, value);
         }
+
     };
 
     public final Scheduler.Performer onRefresh = new Scheduler.Performer() {
@@ -60,12 +61,12 @@ public class HttpDataEngine<T> implements DataEngine<T> {
 
     @Override
     public void start() {
-        currentState.onStart();
+        currentState.start();
     }
 
     @Override
     public void stop() {
-        currentState.onStop();
+        currentState.stop();
     }
 
     @Override

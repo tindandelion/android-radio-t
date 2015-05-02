@@ -7,10 +7,17 @@ public abstract class HttpDataEngineState {
         this.engine = engine;
     }
 
-    abstract public void onStart();
-    abstract public void onStop();
+    abstract public void start();
+
+    abstract public void stop();
+
     abstract public void onError();
-    abstract public void onRequestCompleted();
+
+    abstract public void completeRequest();
+
+    public <T> void invokeConsumer(Consumer<T> consumer, T value) {
+        if (consumer != null) consumer.accept(value);
+    }
 
     static class Disconnected extends HttpDataEngineState {
         public Disconnected(HttpDataEngine httpDataEngine) {
@@ -18,20 +25,24 @@ public abstract class HttpDataEngineState {
         }
 
         @Override
-        public void onStart() {
+        public void start() {
             engine.startConnecting();
         }
 
         @Override
-        public void onStop() {
+        public void stop() {
         }
 
         @Override
-        public void onRequestCompleted() {
+        public void completeRequest() {
         }
 
         @Override
         public void onError() {
+        }
+
+        @Override
+        public <T> void invokeConsumer(Consumer<T> consumer, T value) {
         }
     }
 
@@ -44,16 +55,16 @@ public abstract class HttpDataEngineState {
         }
 
         @Override
-        public void onStart() {
+        public void start() {
         }
 
         @Override
-        public void onStop() {
+        public void stop() {
             engine.pauseConnecting();
         }
 
         @Override
-        public void onRequestCompleted() {
+        public void completeRequest() {
             progressListener.onConnected();
             engine.startListening();
         }
@@ -73,12 +84,12 @@ public abstract class HttpDataEngineState {
         }
 
         @Override
-        public void onStart() {
+        public void start() {
             engine.resumeConnecting();
         }
 
         @Override
-        public void onStop() {
+        public void stop() {
         }
 
         @Override
@@ -87,9 +98,13 @@ public abstract class HttpDataEngineState {
         }
 
         @Override
-        public void onRequestCompleted() {
+        public void completeRequest() {
             progressListener.onConnected();
             engine.pauseListening();
+        }
+
+        @Override
+        public <T> void invokeConsumer(Consumer<T> consumer, T value) {
         }
     }
 
@@ -99,21 +114,25 @@ public abstract class HttpDataEngineState {
         }
 
         @Override
-        public void onStart() {
+        public void start() {
             engine.resumeListening();
         }
 
         @Override
-        public void onStop() {
+        public void stop() {
         }
 
         @Override
-        public void onRequestCompleted() {
+        public void completeRequest() {
         }
 
         @Override
         public void onError() {
             engine.disconnect();
+        }
+
+        @Override
+        public <T> void invokeConsumer(Consumer<T> consumer, T value) {
         }
     }
 
@@ -125,11 +144,11 @@ public abstract class HttpDataEngineState {
         }
 
         @Override
-        public void onStart() {
+        public void start() {
         }
 
         @Override
-        public void onStop() {
+        public void stop() {
             engine.pauseListening();
         }
 
@@ -139,7 +158,7 @@ public abstract class HttpDataEngineState {
         }
 
         @Override
-        public void onRequestCompleted() {
+        public void completeRequest() {
             engine.startListening();
         }
     }
