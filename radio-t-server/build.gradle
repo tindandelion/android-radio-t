@@ -19,6 +19,8 @@ apply plugin: 'com.bmuschko.docker-java-application'
 
 
 import com.bmuschko.gradle.vagrant.tasks.VagrantUp
+import com.bmuschko.gradle.vagrant.tasks.VagrantSsh
+
 
 version = '1.0'
 
@@ -57,10 +59,6 @@ docker {
   }
 }
 
-dockerBuildImage {
-  dependsOn 'vagrantLocalUp'
-}
-
 dockerDistTar {
   runCommand "echo Europe/Helsinki > /etc/timezone && dpkg-reconfigure tzdata --frontend noninteractive"
 }
@@ -71,8 +69,12 @@ task uberjar(type: Jar, dependsOn: 'classes') {
   from { configurations.compile.collect { zipTree(it) } }
 }
 
-task vagrantLocalUp(type: VagrantUp) {
-  commands << 'local'
+task localUp(type: VagrantUp) {
+  description = "Start local Vagrant box"
+}
+
+dockerBuildImage {
+  dependsOn localUp
 }
 
 task vagrantProductionUp(type: VagrantUp) {
@@ -80,25 +82,15 @@ task vagrantProductionUp(type: VagrantUp) {
   provider = 'digital_ocean'
 }
 
-task deployLocal(dependsOn: ['uberjar', 'vagrantLocalUp']) {
+task deployLocal(type: VagrantSsh, dependsOn: ['localUp', 'dockerBuildImage']) {
   description = 'Deploys the server to the local Vagrant environment'
-  doLast { deployApp(remotes.local) }
+
+  sshCommand = "/vagrant/docker/local/run-server.sh"
 }
 
 task deployProduction(dependsOn: ['uberjar', 'vagrantProductionUp']) {
   description = 'Deploys the server to the production environment'
   doLast { deployApp(remotes.production) }
-}
-
-task dumpLocalLog(dependsOn: 'vagrantLocalUp') {
-  description = 'Prints server.log from the local installation'
-  doLast {
-    sshexec {
-      session(remotes.local) {
-        executeSudo("cat /var/log/radio-t-server/server.log")
-      }
-    }
-  }
 }
 
 task checkProduction {
