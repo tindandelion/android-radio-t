@@ -3,13 +3,12 @@ package org.dandelion.radiot.live.chat.http;
 import org.dandelion.radiot.http.Consumer;
 import org.dandelion.radiot.http.HttpDataEngine;
 import org.dandelion.radiot.http.ProgressListener;
-import org.dandelion.radiot.live.chat.HttpChatClient;
+import org.dandelion.radiot.http.Provider;
 import org.dandelion.radiot.live.chat.Message;
 import org.dandelion.radiot.live.schedule.DeterministicScheduler;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-import org.json.JSONException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,11 +32,19 @@ import static org.mockito.Mockito.*;
 @Config(manifest = Config.NONE)
 public class HttpDataEngineTest {
     private final DeterministicScheduler scheduler  = new DeterministicScheduler();
-    private final HttpChatClient chatClient = mock(HttpChatClient.class);
+    private final Provider<List<Message>> dataProvider = mock(Provider.class);
+    private final HttpDataEngine engine = new HttpDataEngine(dataProvider, scheduler);
+
     private final Consumer dataConsumer = mock(Consumer.class);
     private final Consumer errorConsumer = mock(Consumer.class);
     private final ProgressListener listener = mock(ProgressListener.class);
-    private final HttpDataEngine engine = new HttpDataEngine(chatClient, scheduler);
+
+    @Before
+    public void setUp() throws Exception {
+        engine.setProgressListener(listener);
+        engine.setDataConsumer(dataConsumer);
+        engine.setErrorConsumer(errorConsumer);
+    }
 
     @Test
     public void shutdown_terminatesChatClient_andGoesToDisconnected() throws Exception {
@@ -45,7 +52,7 @@ public class HttpDataEngineTest {
 
         engine.shutdown();
 
-        verify(chatClient).abort();
+        verify(dataProvider).abort();
         assertThat(engine, isInState("Disconnected"));
     }
 
@@ -67,7 +74,7 @@ public class HttpDataEngineTest {
 
         engine.start();
 
-        verify(chatClient).get();
+        verify(dataProvider).get();
     }
 
     @Test
@@ -114,10 +121,41 @@ public class HttpDataEngineTest {
     }
 
     @Test
+    public void whenConnecting_onStop_doesNotInvokeDataConsumer() throws Exception {
+        engine.setDataConsumer(dataConsumer);
+        whileRetrievingMessagesDo(new Runnable() {
+            @Override
+            public void run() {
+                engine.stop();
+            }
+        });
+
+        engine.start();
+
+        verifyZeroInteractions(dataConsumer);
+    }
+
+    @Test
+    public void whenConnecting_onStop_doesNotNotifyErrorConsumer() throws Exception {
+        engine.setDataConsumer(dataConsumer);
+        whileRetrievingMessagesDo(new Runnable() {
+            @Override
+            public void run() {
+                engine.stop();
+                throw new RuntimeException("Error");
+            }
+        });
+
+        engine.start();
+
+        verifyZeroInteractions(errorConsumer);
+    }
+
+    @Test
     public void whenConnecting_andPreviousNetworkRequestCompletes_feedsMessagesToConsumerAndGoesToListening() throws Exception {
         final List<Message> messages = messageList();
 
-        when(chatClient.get()).thenReturn(messages);
+        when(dataProvider.get()).thenReturn(messages);
         engine.startConnecting();
 
         verify(dataConsumer).accept(messages);
@@ -133,10 +171,6 @@ public class HttpDataEngineTest {
 
         verifyErrorNotification(error);
         assertThat(engine, isInState("Disconnected"));
-    }
-
-    private void verifyErrorNotification(Exception error) {
-        verify(errorConsumer).accept(error);
     }
 
     @Test
@@ -193,12 +227,11 @@ public class HttpDataEngineTest {
     }
 
     @Test
-    public void whenPausedConnecting_andPreviousNetworkRequestFails_notifiesListenerAndGoesToDisconnected() throws Exception {
+    public void whenPausedConnecting_andOngoingNetworkRequestFails_goesToDisconnected() throws Exception {
         engine.pauseConnecting();
         final Exception error = new Exception();
         engine.onError.accept(error);
 
-        verifyErrorNotification(error);
         assertThat(engine, isInState("Disconnected"));
     }
 
@@ -242,7 +275,7 @@ public class HttpDataEngineTest {
 
         scheduler.performAction();
 
-        verify(chatClient).get();
+        verify(dataProvider).get();
         verify(dataConsumer).accept(nextMessages);
     }
 
@@ -345,12 +378,6 @@ public class HttpDataEngineTest {
         verify(dataConsumer, never()).accept(anyList());
     }
 
-    @Before
-    public void setUp() throws Exception {
-        engine.setProgressListener(listener);
-        engine.setDataConsumer(dataConsumer);
-        engine.setErrorConsumer(errorConsumer);
-    }
 
     private Matcher<? super HttpDataEngine> isInState(final String state) {
         return new TypeSafeMatcher<HttpDataEngine>() {
@@ -375,11 +402,11 @@ public class HttpDataEngineTest {
         return Collections.emptyList();
     }
 
-    private OngoingStubbing<List<Message>> whenRetrievingMessages() throws IOException, JSONException {
-        return when(chatClient.get());
+    private OngoingStubbing<List<Message>> whenRetrievingMessages() throws Exception {
+        return when(dataProvider.get());
     }
 
-    private void whileRetrievingMessagesDo(final Runnable action) throws IOException, JSONException {
+    private void whileRetrievingMessagesDo(final Runnable action) throws Exception {
         whenRetrievingMessages().thenAnswer(new Answer<Object>() {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
@@ -387,5 +414,9 @@ public class HttpDataEngineTest {
                 return messageList();
             }
         });
+    }
+
+    private void verifyErrorNotification(Exception error) {
+        verify(errorConsumer).accept(error);
     }
 }
