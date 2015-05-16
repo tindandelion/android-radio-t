@@ -3,23 +3,51 @@ package org.dandelion.radiot.podcasts.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import org.dandelion.radiot.R;
+import org.dandelion.radiot.common.ui.CustomTitleActivity;
 import org.dandelion.radiot.podcasts.core.PodcastAction;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.loader.PodcastListClient;
+import org.dandelion.radiot.podcasts.loader.ProgressListener;
 import org.dandelion.radiot.podcasts.main.PodcastsApp;
-import org.dandelion.radiot.common.ui.CustomTitleActivity;
 
 public class PodcastListActivity extends CustomTitleActivity {
     public static PodcastClientFactory clientFactory = null;
 
+    public final SwipeRefreshLayout.OnRefreshListener onRefresh = new SwipeRefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+            client.refreshData();
+        }
+    };
+    private final ProgressListener progressListener = new ProgressListener() {
+        @Override
+        public void onStarted() {
+            refreshLayout.setRefreshing(true);
+        }
+
+        @Override
+        public void onFinished() {
+            refreshLayout.setRefreshing(false);
+        }
+
+        @Override
+        public void onError(String errorMessage) {
+            refreshLayout.setRefreshing(false);
+            showErrorMessage(errorMessage);
+        }
+
+        private void showErrorMessage(String errorMessage) {
+            DialogErrorDisplayer.showError(PodcastListActivity.this, errorMessage);
+        }
+    };
+
+
+    private SwipeRefreshLayout refreshLayout;
     private PodcastListClient client;
-    private ProgressIndicator progress;
 
     public static Intent createIntent(Context context, String title, String showName) {
         return StartParams.createIntent(context, title, showName);
@@ -29,18 +57,25 @@ public class PodcastListActivity extends CustomTitleActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.podcast_screen);
-        progress = ProgressIndicator.create(this);
     }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        progress.onPostCreate(this);
         StartParams params = StartParams.fromIntent(getIntent());
         setTitle(params.title());
         PodcastListAdapter pa = new PodcastListAdapter(this);
         initListView(pa);
-        attachToLoader(params.showName(), pa, progress);
+        initRefreshLayout();
+        attachToLoader(params.showName(), pa);
+    }
+
+    private void initRefreshLayout() {
+        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh);
+        refreshLayout.setOnRefreshListener(onRefresh);
+        refreshLayout.setSize(SwipeRefreshLayout.LARGE);
+        refreshLayout.setProgressBackgroundColorSchemeResource(R.color.background_light_blueish);
+        refreshLayout.setColorSchemeResources(R.color.blue);
     }
 
     private void initListView(PodcastListAdapter adapter) {
@@ -70,15 +105,20 @@ public class PodcastListActivity extends CustomTitleActivity {
         };
     }
 
-    protected void attachToLoader(String show, PodcastListAdapter la, ProgressIndicator pi) {
+    protected void attachToLoader(String show, PodcastListAdapter la) {
 		client = clientFactory.newClientForShow(show);
-		client.attach(pi, la);
+        client.attach(progressListener, la);
 	}
 
-	@Override
+    @Override
 	protected void onResume() {
 		super.onResume();
-		client.populateData();
+        refreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                client.populateData();
+            }
+        });
 	}
 
     @Override
@@ -86,25 +126,6 @@ public class PodcastListActivity extends CustomTitleActivity {
         super.onDestroy();
         client.release();
     }
-
-    @Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.podcast_list, menu);
-        progress.onCreateOptionsMenu(menu);
-		return super.onCreateOptionsMenu(menu);
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.refresh:
-            client.refreshData();
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
-	}
 
     public ListAdapter getListAdapter() {
         return getListView().getAdapter();

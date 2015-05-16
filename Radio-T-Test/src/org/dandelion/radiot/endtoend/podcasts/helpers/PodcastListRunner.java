@@ -7,6 +7,7 @@ import android.app.Instrumentation;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
 import org.hamcrest.*;
 
 import static org.hamcrest.CoreMatchers.allOf;
@@ -17,9 +18,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class PodcastListRunner {
     public static final int LIST_DISPLAY_TIMEOUT_MS = 1000;
     private Solo solo;
-    private Activity activity;
+    private PodcastListActivity activity;
 
-    public PodcastListRunner(Instrumentation instrumentation, Activity activity) {
+    public PodcastListRunner(Instrumentation instrumentation, PodcastListActivity activity) {
         this.solo = new Solo(instrumentation, activity);
         this.activity = activity;
     }
@@ -42,11 +43,16 @@ public class PodcastListRunner {
     }
 
     public void showsErrorMessage() {
-        assertThat(solo.waitForText("Ошибка"), is(true));
+        assertThat("Shows error", solo.waitForText("Ошибка"), is(true));
     }
 
     public void refreshPodcasts() {
-        solo.clickOnActionBarItem(R.id.refresh);
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                activity.onRefresh.onRefresh();
+            }
+        });
     }
 
     private Matcher<? super Activity> isFinishing() {
