@@ -1,9 +1,9 @@
 package org.dandelion.radiot.http;
 
 public abstract class HttpDataEngineState {
-    protected final HttpDataEngine engine;
+    protected final HttpDataMonitor engine;
 
-    public HttpDataEngineState(HttpDataEngine engine) {
+    public HttpDataEngineState(HttpDataMonitor engine) {
         this.engine = engine;
     }
 
@@ -20,7 +20,7 @@ public abstract class HttpDataEngineState {
     }
 
     static class Disconnected extends HttpDataEngineState {
-        public Disconnected(HttpDataEngine httpDataEngine) {
+        public Disconnected(HttpDataMonitor httpDataEngine) {
             super(httpDataEngine);
         }
 
@@ -49,7 +49,7 @@ public abstract class HttpDataEngineState {
     static class Connecting extends HttpDataEngineState {
         private final ProgressListener progressListener;
 
-        public Connecting(HttpDataEngine engine, ProgressListener progressListener) {
+        public Connecting(HttpDataMonitor engine, ProgressListener progressListener) {
             super(engine);
             this.progressListener = progressListener;
         }
@@ -78,7 +78,7 @@ public abstract class HttpDataEngineState {
     public static class PausedConnecting extends HttpDataEngineState {
         private final ProgressListener progressListener;
 
-        public PausedConnecting(HttpDataEngine engine, ProgressListener progressListener) {
+        public PausedConnecting(HttpDataMonitor engine, ProgressListener progressListener) {
             super(engine);
             this.progressListener = progressListener;
         }
@@ -109,7 +109,7 @@ public abstract class HttpDataEngineState {
     }
 
     public static class PausedListening extends HttpDataEngineState {
-        public PausedListening(HttpDataEngine engine) {
+        public PausedListening(HttpDataMonitor engine) {
             super(engine);
         }
 
@@ -139,7 +139,7 @@ public abstract class HttpDataEngineState {
 
     public static class Listening extends HttpDataEngineState {
 
-        public Listening(HttpDataEngine engine) {
+        public Listening(HttpDataMonitor engine) {
             super(engine);
         }
 

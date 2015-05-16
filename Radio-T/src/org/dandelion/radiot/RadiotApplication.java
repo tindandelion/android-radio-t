@@ -3,8 +3,8 @@ package org.dandelion.radiot;
 import android.app.Application;
 import android.os.Handler;
 import org.dandelion.radiot.common.Scheduler;
-import org.dandelion.radiot.http.DataEngine;
-import org.dandelion.radiot.http.HttpDataEngine;
+import org.dandelion.radiot.http.DataMonitor;
+import org.dandelion.radiot.http.HttpDataMonitor;
 import org.dandelion.radiot.http.Provider;
 import org.dandelion.radiot.live.chat.HttpChatClient;
 import org.dandelion.radiot.live.topics.CurrentTopic;
@@ -20,8 +20,8 @@ public class RadiotApplication extends Application {
 //    private static final String TOPIC_TRACKER_BASE_URL = "http://192.168.0.11:8080";
     // private static final String CHAT_URL = "http://10.0.1.2:4567";
 
-    public static DataEngine createChatTranslation(String chatUrl, Scheduler scheduler) {
-        return new HttpDataEngine<>(HttpChatClient.create(chatUrl), scheduler);
+    public static DataMonitor createChatTranslation(String chatUrl, Scheduler scheduler) {
+        return new HttpDataMonitor<>(HttpChatClient.create(chatUrl), scheduler);
     }
 
     @Override
@@ -34,20 +34,20 @@ public class RadiotApplication extends Application {
 
     private void setupTopicTracker() {
         final int updateDelayMillis = 60000;
-        CurrentTopicFragment.trackerFactory = new DataEngine.Factory<CurrentTopic>() {
+        CurrentTopicFragment.trackerFactory = new DataMonitor.Factory<CurrentTopic>() {
             @Override
-            public DataEngine<CurrentTopic> create() {
+            public DataMonitor<CurrentTopic> create() {
                 Provider<CurrentTopic> provider = new HttpTopicProvider(TOPIC_TRACKER_BASE_URL);
-                return new HttpDataEngine<>(provider, new HandlerScheduler(updateDelayMillis));
+                return new HttpDataMonitor<>(provider, new HandlerScheduler(updateDelayMillis));
             }
         };
     }
 
     private void setupChatTranslation() {
         final int updateDelayMillis = 5000;
-        ChatTranslationFragment.chatFactory = new DataEngine.Factory() {
+        ChatTranslationFragment.chatFactory = new DataMonitor.Factory() {
             @Override
-            public DataEngine create() {
+            public DataMonitor create() {
                 return createChatTranslation(CHAT_URL, new HandlerScheduler(updateDelayMillis));
             }
         };

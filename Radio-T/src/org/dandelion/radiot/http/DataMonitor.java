@@ -1,6 +1,6 @@
 package org.dandelion.radiot.http;
 
-public interface DataEngine<T> {
+public interface DataMonitor<T> {
     void setProgressListener(ProgressListener listener);
     void setDataConsumer(Consumer<T> consumer);
     void setErrorConsumer(Consumer<Exception> consumer);
@@ -9,6 +9,6 @@ public interface DataEngine<T> {
     void shutdown();
 
     interface Factory<T> {
-        DataEngine<T> create();
+        DataMonitor<T> create();
     }
 }

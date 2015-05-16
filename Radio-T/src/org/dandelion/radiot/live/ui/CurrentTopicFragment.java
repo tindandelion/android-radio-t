@@ -11,13 +11,13 @@ import android.widget.TextView;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.common.ui.Typefaces;
 import org.dandelion.radiot.http.Consumer;
-import org.dandelion.radiot.http.DataEngine;
+import org.dandelion.radiot.http.DataMonitor;
 import org.dandelion.radiot.live.topics.CurrentTopic;
 
 public class CurrentTopicFragment extends Fragment {
-    public static DataEngine.Factory<CurrentTopic> trackerFactory = null;
+    public static DataMonitor.Factory<CurrentTopic> trackerFactory = null;
     private TextView topicText;
-    private DataEngine<CurrentTopic> engine;
+    private DataMonitor<CurrentTopic> engine;
     private Controller controller;
 
     private View.OnClickListener onHide = new View.OnClickListener() {

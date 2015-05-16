@@ -8,15 +8,15 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import org.dandelion.radiot.R;
-import org.dandelion.radiot.http.DataEngine;
+import org.dandelion.radiot.http.DataMonitor;
 import org.dandelion.radiot.live.chat.Message;
 
 import java.util.ArrayList;
 
 public class ChatTranslationFragment extends ListFragment {
-    public static DataEngine.Factory chatFactory;
+    public static DataMonitor.Factory chatFactory;
     private static final int MESSAGE_LIMIT = 30;
-    private DataEngine chat;
+    private DataMonitor chat;
     private View errorView;
     private View progressView;
     private ArrayList<Message> messages;

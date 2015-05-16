@@ -3,7 +3,7 @@ package org.dandelion.radiot.http;
 import org.dandelion.radiot.common.Announcer;
 import org.dandelion.radiot.common.Scheduler;
 
-public class HttpDataEngine<T> implements DataEngine<T> {
+public class HttpDataMonitor<T> implements DataMonitor<T> {
     private final Provider<T> dataProvider;
     private Consumer<T> dataConsumer;
     private Consumer<Exception> errorConsumer;
@@ -36,7 +36,7 @@ public class HttpDataEngine<T> implements DataEngine<T> {
         }
     };
 
-    public HttpDataEngine(Provider<T> dataProvider, Scheduler pollScheduler) {
+    public HttpDataMonitor(Provider<T> dataProvider, Scheduler pollScheduler) {
         this.dataProvider = dataProvider;
         this.pollScheduler = pollScheduler;
         this.currentState = new HttpDataEngineState.Disconnected(this);

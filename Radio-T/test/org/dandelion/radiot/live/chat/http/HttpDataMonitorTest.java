@@ -1,7 +1,7 @@
 package org.dandelion.radiot.live.chat.http;
 
 import org.dandelion.radiot.http.Consumer;
-import org.dandelion.radiot.http.HttpDataEngine;
+import org.dandelion.radiot.http.HttpDataMonitor;
 import org.dandelion.radiot.http.ProgressListener;
 import org.dandelion.radiot.http.Provider;
 import org.dandelion.radiot.live.chat.Message;
@@ -30,10 +30,10 @@ import static org.mockito.Mockito.*;
 @SuppressWarnings("unchecked")
 @RunWith(RobolectricTestRunner.class)
 @Config(manifest = Config.NONE)
-public class HttpDataEngineTest {
+public class HttpDataMonitorTest {
     private final DeterministicScheduler scheduler  = new DeterministicScheduler();
     private final Provider<List<Message>> dataProvider = mock(Provider.class);
-    private final HttpDataEngine engine = new HttpDataEngine(dataProvider, scheduler);
+    private final HttpDataMonitor engine = new HttpDataMonitor(dataProvider, scheduler);
 
     private final Consumer dataConsumer = mock(Consumer.class);
     private final Consumer errorConsumer = mock(Consumer.class);
@@ -379,10 +379,10 @@ public class HttpDataEngineTest {
     }
 
 
-    private Matcher<? super HttpDataEngine> isInState(final String state) {
-        return new TypeSafeMatcher<HttpDataEngine>() {
+    private Matcher<? super HttpDataMonitor> isInState(final String state) {
+        return new TypeSafeMatcher<HttpDataMonitor>() {
             @Override
-            protected boolean matchesSafely(HttpDataEngine engine) {
+            protected boolean matchesSafely(HttpDataMonitor engine) {
                 return state.equals(engine.currentState());
             }
 
@@ -392,7 +392,7 @@ public class HttpDataEngineTest {
             }
 
             @Override
-            protected void describeMismatchSafely(HttpDataEngine engine, Description mismatchDescription) {
+            protected void describeMismatchSafely(HttpDataMonitor engine, Description mismatchDescription) {
                 mismatchDescription.appendText("Engine in state").appendValue(engine.currentState());
             }
         };

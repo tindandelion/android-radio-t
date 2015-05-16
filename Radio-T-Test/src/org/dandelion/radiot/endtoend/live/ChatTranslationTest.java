@@ -3,7 +3,7 @@ package org.dandelion.radiot.endtoend.live;
 import org.dandelion.radiot.RadiotApplication;
 import org.dandelion.radiot.endtoend.live.helpers.ChatTranslationRunner;
 import org.dandelion.radiot.helpers.ResponsiveHttpServer;
-import org.dandelion.radiot.http.DataEngine;
+import org.dandelion.radiot.http.DataMonitor;
 import org.dandelion.radiot.live.schedule.DeterministicScheduler;
 import org.dandelion.radiot.live.ui.ChatTranslationFragment;
 
@@ -67,9 +67,9 @@ public class ChatTranslationTest extends LiveShowActivityTestCase {
         super.setUp();
         backend = new LiveChatTranslationServer();
         scheduler = new DeterministicScheduler();
-        ChatTranslationFragment.chatFactory = new DataEngine.Factory() {
+        ChatTranslationFragment.chatFactory = new DataMonitor.Factory() {
             @Override
-            public DataEngine create() {
+            public DataMonitor create() {
                 return RadiotApplication.createChatTranslation(LiveChatTranslationServer.baseUrl(), scheduler);
             }
         };

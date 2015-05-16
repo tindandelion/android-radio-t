@@ -2,8 +2,8 @@ package org.dandelion.radiot.endtoend.live;
 
 import org.dandelion.radiot.endtoend.live.helpers.CurrentTopicRunner;
 import org.dandelion.radiot.helpers.ResponsiveHttpServer;
-import org.dandelion.radiot.http.DataEngine;
-import org.dandelion.radiot.http.HttpDataEngine;
+import org.dandelion.radiot.http.DataMonitor;
+import org.dandelion.radiot.http.HttpDataMonitor;
 import org.dandelion.radiot.live.schedule.DeterministicScheduler;
 import org.dandelion.radiot.live.topics.CurrentTopic;
 import org.dandelion.radiot.live.topics.HttpTopicProvider;
@@ -80,11 +80,11 @@ public class CurrentTopicTest extends LiveShowActivityTestCase {
         scheduler = new DeterministicScheduler();
 
 
-        CurrentTopicFragment.trackerFactory = new DataEngine.Factory<CurrentTopic>() {
+        CurrentTopicFragment.trackerFactory = new DataMonitor.Factory<CurrentTopic>() {
             @Override
-            public DataEngine<CurrentTopic> create() {
+            public DataMonitor<CurrentTopic> create() {
                 HttpTopicProvider trackerClient = new HttpTopicProvider(TopicTrackerBackend.baseUrl());
-                return new HttpDataEngine<>(trackerClient, scheduler);
+                return new HttpDataMonitor<>(trackerClient, scheduler);
             }
         };
     }

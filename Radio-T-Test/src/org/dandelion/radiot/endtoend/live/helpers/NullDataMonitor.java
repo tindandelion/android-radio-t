@@ -1,10 +1,10 @@
 package org.dandelion.radiot.endtoend.live.helpers;
 
 import org.dandelion.radiot.http.Consumer;
-import org.dandelion.radiot.http.DataEngine;
+import org.dandelion.radiot.http.DataMonitor;
 import org.dandelion.radiot.http.ProgressListener;
 
-public class NullDataEngine<T> implements DataEngine<T>, DataEngine.Factory {
+public class NullDataMonitor<T> implements DataMonitor<T>, DataMonitor.Factory {
     @Override
     public void setProgressListener(ProgressListener listener) {
     }
@@ -32,7 +32,7 @@ public class NullDataEngine<T> implements DataEngine<T>, DataEngine.Factory {
     }
 
     @Override
-    public DataEngine create() {
+    public DataMonitor create() {
         return this;
     }
 }
