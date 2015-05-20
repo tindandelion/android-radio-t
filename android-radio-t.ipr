@@ -221,6 +221,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Radio-T/Radio-T.iml" filepath="$PROJECT_DIR$/Radio-T/Radio-T.iml" />
       <module fileurl="file://$PROJECT_DIR$/Radio-T-Test/Radio-T-Test.iml" filepath="$PROJECT_DIR$/Radio-T-Test/Radio-T-Test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android-support-v7-appcompat/android-support-v7-appcompat.iml" filepath="$PROJECT_DIR$/android-support-v7-appcompat/android-support-v7-appcompat.iml" />
       <module fileurl="file://$PROJECT_DIR$/google-play-services_lib/google-play-services_lib.iml" filepath="$PROJECT_DIR$/google-play-services_lib/google-play-services_lib.iml" />
       <module fileurl="file://$PROJECT_DIR$/radio-t-server/radio-t-server.iml" filepath="$PROJECT_DIR$/radio-t-server/radio-t-server.iml" />
     </modules>
