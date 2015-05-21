@@ -1,9 +1,9 @@
 package org.dandelion.radiot.common.ui;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 
-public class TrackedActivity extends FragmentActivity {
+public class TrackedActivity extends AppCompatActivity {
     private ActivityTracker tracker;
 
     @Override
