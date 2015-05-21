@@ -1,25 +1,25 @@
 package org.dandelion.radiot.common.ui;
 
 import android.content.Intent;
+import android.os.Build;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
-import org.dandelion.radiot.R;
-import android.app.ActionBar;
-import android.app.Activity;
-import android.os.Build;
 import android.view.Window;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import org.dandelion.radiot.R;
 import org.dandelion.radiot.home_screen.HomeScreenActivity;
 
 public abstract class ActivityHelper {
-    protected Activity activity;
+    protected AppCompatActivity activity;
 
     public static boolean supportsActionBar() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
     }
 
-    public static ActivityHelper create(Activity activity) {
+    public static ActivityHelper create(AppCompatActivity activity) {
         if (supportsActionBar()) {
             return new HoneycombHelper(activity);
         } else {
@@ -27,7 +27,7 @@ public abstract class ActivityHelper {
         }
     }
 
-    private ActivityHelper(Activity activity) {
+    private ActivityHelper(AppCompatActivity activity) {
         this.activity = activity;
     }
 
@@ -52,7 +52,7 @@ public abstract class ActivityHelper {
     }
 
     private static class GingerbreadHelper extends ActivityHelper {
-        public GingerbreadHelper(Activity activity) {
+        public GingerbreadHelper(AppCompatActivity activity) {
             super(activity);
         }
 
@@ -78,14 +78,15 @@ public abstract class ActivityHelper {
     }
 
     private static class HoneycombHelper extends ActivityHelper {
-        public HoneycombHelper(Activity activity) {
+        public HoneycombHelper(AppCompatActivity activity) {
             super(activity);
         }
 
         @Override
         public void onCreate() {
-            ActionBar actionBar = activity.getActionBar();
+            ActionBar actionBar = activity.getSupportActionBar();
             if (actionBar != null)  {
+                actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_TITLE);
                 actionBar.setDisplayHomeAsUpEnabled(true);
             }
         }
