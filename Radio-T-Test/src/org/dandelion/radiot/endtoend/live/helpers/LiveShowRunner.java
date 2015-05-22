@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Context;
 import android.content.Intent;
+import android.widget.ImageButton;
+import com.robotium.solo.Condition;
 import com.robotium.solo.Solo;
 import org.dandelion.radiot.accepttest.testables.LiveNotificationManagerSpy;
 import org.dandelion.radiot.live.service.LiveShowService;
@@ -19,18 +21,18 @@ public class LiveShowRunner {
     // 40 seconds or so.
     private static final int TRANSLATION_TIMEOUT = 60_000;
 
-    private final Solo uiDriver;
+    private final Solo solo;
     private final Context context;
     private final LiveNotificationManagerSpy notificationManager;
 
     public LiveShowRunner(Instrumentation inst, Activity activity, LiveNotificationManagerSpy notificationManager) {
-        this.uiDriver = new Solo(inst, activity);
+        this.solo = new Solo(inst, activity);
         this.context = inst.getTargetContext();
         this.notificationManager = notificationManager;
     }
 
     public void finish() {
-        uiDriver.finishOpenedActivities();
+        solo.finishOpenedActivities();
         stopService();
     }
 
@@ -63,10 +65,27 @@ public class LiveShowRunner {
     }
 
     private void showsTranslationStatus(String text) {
-        assertTrue(uiDriver.waitForText(text, 0, TRANSLATION_TIMEOUT));
+        assertTrue(solo.waitForText(text, 0, TRANSLATION_TIMEOUT));
     }
 
     private void togglePlayback() {
-        uiDriver.clickOnImageButton(0);
+        int btnIndex = waitForTogglePlaybackButton();
+        solo.clickOnImageButton(btnIndex);
+    }
+
+    private int waitForTogglePlaybackButton() {
+        final int expectedBtnIndex = 0;
+        solo.waitForCondition(new Condition() {
+            @Override
+            public boolean isSatisfied() {
+                ImageButton imageButton = solo.getImageButton(expectedBtnIndex);
+                return imageButton.getId() == org.dandelion.radiot.R.id.btn_toggle_live_playback;
+            }
+        }, smallTimeout());
+        return expectedBtnIndex;
+    }
+
+    private int smallTimeout() {
+        return solo.getConfig().timeout_small;
     }
 }
