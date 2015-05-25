@@ -1,15 +1,4 @@
 <resources>
-    <style name="TextAppearance.ActionBar.Title"
-           parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
-        <item name="android:textSize">@dimen/actionbar_text_size</item>
-        <item name="android:textColor">@color/actionbar_text</item>
-    </style>
-
-    <style name="Radiot.ActionBar" parent="Widget.AppCompat.ActionBar.Solid">
-        <item name="android:background">@color/background_darkest</item>
-        <item name="android:titleTextStyle">@style/TextAppearance.ActionBar.Title</item>
-    </style>
-
     <style name="Radiot.Button"
            parent="@android:style/Widget.Holo.Button.Borderless">
         <item name="android:textColor">@color/button_text_color</item>
@@ -25,7 +14,6 @@
 
     <style name="Theme.Radiot" parent="Theme.AppCompat">
         <item name="buttonStyle">@style/Radiot.Button</item>
-        <item name="actionBarStyle">@style/Radiot.ActionBar</item>
 
         <item name="android:textViewStyle">@style/Radiot.TextView</item>
         <item name="android:imageButtonStyle">@style/Radiot.ImageButton</item>

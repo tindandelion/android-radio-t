@@ -1,16 +1,4 @@
 <resources>
-    <style name="ActionBar">
-        <item name="android:background">@color/background_darkest</item>
-    </style>
-
-    <style name="ActionBar.Text"
-           parent="@android:style/Widget.TextView">
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:textSize">@dimen/actionbar_text_size</item>
-        <item name="android:textColor">@color/actionbar_text</item>
-        <item name="android:singleLine">true</item>
-        <item name="android:ellipsize">marquee</item>
-    </style>
 
     <style name="Radiot.Button"
            parent="@android:style/Widget.Button">
@@ -25,18 +13,18 @@
         <item name="android:background">@android:drawable/list_selector_background</item>
     </style>
 
-    <style name="Theme.Radiot" parent="android:Theme">
+    <style name="Theme.Radiot" parent="Theme.AppCompat">
+        <item name="buttonStyle">@style/Radiot.Button</item>
+
         <item name="android:textViewStyle">@style/Radiot.TextView</item>
-        <item name="android:buttonStyle">@style/Radiot.Button</item>
         <item name="android:imageButtonStyle">@style/Radiot.ImageButton</item>
         <item name="android:windowBackground">@color/background_dark</item>
-        <item name="android:windowTitleSize">@dimen/actionbar_height</item>
-        <item name="android:windowTitleBackgroundStyle">@style/ActionBar</item>
         <item name="android:windowContentOverlay">@drawable/titlebar_shadow</item>
     </style>
 
     <style name="Theme.RadiotHome" parent="Theme.Radiot">
-        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
 </resources>

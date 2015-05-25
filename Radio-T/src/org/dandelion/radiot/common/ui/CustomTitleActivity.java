@@ -14,12 +14,6 @@ public class CustomTitleActivity extends TrackedActivity {
     }
 
     @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        helper.onPostCreate();
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return helper.onOptionsItemSelected(item) ||
                 super.onOptionsItemSelected(item);
