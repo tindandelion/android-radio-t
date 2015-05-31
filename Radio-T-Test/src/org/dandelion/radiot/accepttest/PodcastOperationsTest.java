@@ -9,7 +9,6 @@ import org.dandelion.radiot.accepttest.testables.*;
 import org.dandelion.radiot.home_screen.HomeScreenActivity;
 import org.dandelion.radiot.http.HttpClient;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
-import org.dandelion.radiot.podcasts.download.FakeDownloaderActivity;
 import org.dandelion.radiot.podcasts.main.PodcastClientPlatform;
 import org.dandelion.radiot.podcasts.main.PodcastsApp;
 import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
@@ -24,7 +23,6 @@ public class PodcastOperationsTest extends
 
     private FakePodcastPlayer player;
     private FakeDownloadManager downloadManager;
-    private TestingPodcastsApp application;
     private AppNavigator appDriver;
     private FakeMediaScanner mediaScanner;
     private FakeNotificationManager notificationManager;
@@ -49,7 +47,7 @@ public class PodcastOperationsTest extends
     public void testDownloadPodcastFileLocally() throws Exception {
         PodcastListUiDriver driver = gotoPodcastListPage();
         driver.makeSamplePodcastWithUrl(TITLE, SAMPLE_URL);
-        File localPath = new File(getDownloadFolder(), "podcast_file.mp3");
+        File localPath = new File(downloadFolder(), "podcast_file.mp3");
 
         driver.selectItemForDownloading(0);
         downloadManager.assertSubmittedRequest(SAMPLE_URL, localPath);
@@ -62,7 +60,7 @@ public class PodcastOperationsTest extends
     public void testDownloadFinishedWithError() throws Exception {
         PodcastListUiDriver driver = gotoPodcastListPage();
         driver.makeSamplePodcastWithUrl(TITLE, SAMPLE_URL);
-        File localPath = new File(getDownloadFolder(), "podcast_file.mp3");
+        File localPath = new File(downloadFolder(), "podcast_file.mp3");
         final int errorCode = 1000;
 
         driver.selectItemForDownloading(0);
@@ -84,24 +82,12 @@ public class PodcastOperationsTest extends
     public void testCancelDownloadInProgress() throws Exception {
         PodcastListUiDriver driver = gotoPodcastListPage();
         driver.makeSamplePodcastWithUrl(TITLE, SAMPLE_URL);
-        File localPath = new File(getDownloadFolder(), "podcast_file.mp3");
+        File localPath = new File(downloadFolder(), "podcast_file.mp3");
 
         driver.selectItemForDownloading(0);
         downloadManager.assertSubmittedRequest(SAMPLE_URL, localPath);
         downloadManager.cancelDownload();
         mediaScanner.assertNoInteractions();
-    }
-
-    public void testInformsUserOnUnsupportedPlatforms() throws Exception {
-        application.setDownloadSupported(false);
-        PodcastListUiDriver driver = gotoPodcastListPage();
-
-        driver.selectItemForDownloading(0);
-
-        appDriver.assertCurrentActivity(
-                "Should inform user of unsupported platform",
-                FakeDownloaderActivity.class);
-
     }
 
     private PodcastListUiDriver gotoPodcastListPage() throws InterruptedException {
@@ -146,13 +132,13 @@ public class PodcastOperationsTest extends
         downloadManager = new FakeDownloadManager(getInstrumentation().getTargetContext());
         mediaScanner = new FakeMediaScanner();
         notificationManager = new FakeNotificationManager();
-        application = new TestingPodcastsApp(getInstrumentation().getContext(),
+        TestingPodcastsApp application = new TestingPodcastsApp(getInstrumentation().getContext(),
                 player, downloadManager, mediaScanner, notificationManager);
-        application.setDownloadFolder(getDownloadFolder());
+        application.setDownloadFolder(downloadFolder());
         PodcastsApp.setTestingInstance(application);
     }
 
-    private static File getDownloadFolder() {
+    private static File downloadFolder() {
         return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
     }
 

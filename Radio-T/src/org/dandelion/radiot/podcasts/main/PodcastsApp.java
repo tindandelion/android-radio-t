@@ -2,7 +2,6 @@ package org.dandelion.radiot.podcasts.main;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.os.Build;
 import android.os.Environment;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.podcasts.core.PodcastAction;
@@ -51,22 +50,6 @@ public class PodcastsApp {
     }
 
     public PodcastAction createDownloader() {
-        if (supportsDownload()) {
-            return createDownloaderClient();
-        } else {
-            return fakeDownloader();
-        }
-    }
-
-    protected boolean supportsDownload() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD;
-    }
-
-    private PodcastAction fakeDownloader() {
-        return new FakeDownloader();
-    }
-
-    private PodcastAction createDownloaderClient() {
         return new DownloadServiceClient();
     }
 

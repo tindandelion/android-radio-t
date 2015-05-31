@@ -4,6 +4,8 @@
 	package="org.dandelion.radiot.test"
 	android:versionCode="1"
 	android:versionName="1.0">
+	<uses-sdk
+		android:minSdkVersion="9" />
 	<application
 		android:icon="@drawable/icon"
 		android:label="@string/app_name"
@@ -11,8 +13,6 @@
 		<uses-library
 			android:name="android.test.runner" />
 	</application>
-	<uses-sdk
-		android:minSdkVersion="4" />
 	<instrumentation
 		android:targetPackage="org.dandelion.radiot"
 		android:name="android.test.InstrumentationTestRunner" />
