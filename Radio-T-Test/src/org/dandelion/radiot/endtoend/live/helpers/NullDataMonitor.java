@@ -4,7 +4,8 @@ import org.dandelion.radiot.http.Consumer;
 import org.dandelion.radiot.http.DataMonitor;
 import org.dandelion.radiot.http.ProgressListener;
 
-public class NullDataMonitor<T> implements DataMonitor<T>, DataMonitor.Factory {
+public class NullDataMonitor<T> implements DataMonitor<T>, DataMonitor.Factory<T> {
+
     @Override
     public void setProgressListener(ProgressListener listener) {
     }
@@ -32,7 +33,7 @@ public class NullDataMonitor<T> implements DataMonitor<T>, DataMonitor.Factory {
     }
 
     @Override
-    public DataMonitor create() {
+    public DataMonitor<T> create() {
         return this;
     }
 }
