@@ -89,6 +89,7 @@
     <orderEntry type="library" scope="TEST" name="Gradle: org.eclipse.jetty:jetty-http:9.2.1.v20140609" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.eclipse.jetty:jetty-io:9.2.1.v20140609" level="project" />
     <orderEntry type="library" exported="" name="Gradle: ch.qos.logback:logback-access:1.1.1" level="project" />
+    <orderEntry type="library" name="scala-sdk-2.11.6" level="application" />
   </component>
   <component name="PuppetModuleSettings">
     <option name="librariesDisabled" value="true" />
