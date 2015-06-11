@@ -11,8 +11,9 @@ case class Topic(id: String, text: String, link: String) {
   def toJson: JObject = ("id" -> id) ~ ("text" -> text) ~ ("link" -> link)
 }
 
-class TopicTrackerServlet(val chatConfig: JabberConfig) extends ScalatraServlet
-with JacksonJsonSupport with JValueResult {
+class TopicTrackerServlet(val chatConfig: JabberConfig)
+  extends ScalatraServlet
+  with JacksonJsonSupport with JValueResult {
   implicit protected val jsonFormats: Formats = DefaultFormats
 
   val logger = LoggerFactory.getLogger(getClass)
@@ -50,5 +51,6 @@ with JacksonJsonSupport with JValueResult {
 
 object TopicTrackerServlet {
   val TopicStarter = "jc-radio-t"
+  val TopicExpirationTimeout = 60 * 60 * 1000
 }
 

@@ -20,6 +20,8 @@ class TopicTrackerServletTest extends ScalatraSpec with Matchers {
 
   val LocalAdminConfig = LocalChatConfig.copy(username = TopicTrackerServlet.TopicStarter)
 
+  var currentClock = 0
+
   val servlet = new TopicTrackerServlet(LocalChatConfig)
   addServlet(servlet, "/chat/*")
 
@@ -49,10 +51,25 @@ class TopicTrackerServletTest extends ScalatraSpec with Matchers {
       receivedTopic.text should equal("New topic to discuss")
       receivedTopic.link should equal("http://new-topic.org")
     }
+  }
 
+
+  it("expires the topic after certain time") {
+    sendMessageToChat(s"--> New topic to discuss http://new-topic.org")
+    millisecondsPass(TopicTrackerServlet.TopicExpirationTimeout)
+
+    get("/chat/topic") {
+      status should equal(204)
+      body should be('empty)
+    }
   }
 
   def extractTopic(json: String): Topic = parse(json).extract[Topic]
+
+
+  def millisecondsPass(timeout: Int) = {
+    currentClock = currentClock + timeout
+  }
 
   def sendMessageToChat(msg: String) {
     new JabberChat(LocalAdminConfig) {
