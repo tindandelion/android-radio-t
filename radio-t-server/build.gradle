@@ -7,7 +7,7 @@ buildscript {
   dependencies {
     classpath 'org.hidetake:gradle-ssh-plugin:0.3.0'
     classpath 'com.bmuschko:gradle-vagrant-plugin:2.0'
-    classpath 'com.bmuschko:gradle-docker-plugin:2.3.1'
+    classpath 'com.bmuschko:gradle-docker-plugin:2.4'
   }
 }
 
@@ -123,10 +123,10 @@ dependencies {
   compile 'org.scala-lang:scala-compiler:2.11.6'
   compile 'org.scala-lang:scala-library:2.11.6'
   compile 'org.json4s:json4s-jackson_2.11:3.2.11'
+  compile 'org.scalatra:scalatra_2.11:2.3.1'
+  compile 'org.scalatra:scalatra-json_2.11:2.3.1'
+
   compile files('libs/smack-3.4.1-0cec571.jar', 'libs/smackx-3.4.1-0cec571.jar')
 
-  compile 'org.scalatra:scalatra_2.11:2.3.0'
-  compile 'org.scalatra:scalatra-json_2.11:2.3.0'
-
-  testCompile 'org.scalatra:scalatra-scalatest_2.11:2.3.0'
+  testCompile 'org.scalatra:scalatra-scalatest_2.11:2.3.1'
 }

@@ -34,62 +34,53 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" exported="" name="Gradle: org.scala-lang:scala-compiler:2.11.1" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: org.scala-lang:scala-library:2.11.1" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: org.scalatra:scalatra_2.11:2.3.0" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: org.scalatra:scalatra-json_2.11:2.3.0" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: org.json4s:json4s-jackson_2.11:3.2.10" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: ch.qos.logback:logback-classic:1.1.1" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: org.scala-lang:scala-reflect:2.11.1" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: org.scala-lang.modules:scala-xml_2.11:1.0.2" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: org.scala-lang.modules:scala-parser-combinators_2.11:1.0.1" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: org.scalatra:scalatra-common_2.11:2.3.0" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: org.slf4j:slf4j-api:1.7.7" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.clapper:grizzled-slf4j_2.11:1.0.2" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.scalatra.rl:rl_2.11:0.4.10" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.googlecode.juniversalchardet:juniversalchardet:1.0.3" level="project" />
     <orderEntry type="library" exported="" name="Gradle: eu.medsea.mimeutil:mime-util:2.1.3" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: joda-time:joda-time:2.3" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: org.joda:joda-convert:1.6" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: org.json4s:json4s-core_2.11:3.2.10" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.3.1" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: ch.qos.logback:logback-core:1.1.1" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: org.json4s:json4s-ast_2.11:3.2.10" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.thoughtworks.paranamer:paranamer:2.6" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.scala-lang:scalap:2.11.0" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.3.0" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.3.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: javax.servlet:javax.servlet-api:3.1.0" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: org.eclipse.jetty:jetty-webapp:9.1.4.v20140401" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: org.eclipse.jetty:jetty-xml:9.1.4.v20140401" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: org.eclipse.jetty:jetty-servlet:9.1.4.v20140401" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: org.eclipse.jetty:jetty-util:9.1.4.v20140401" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: org.eclipse.jetty:jetty-security:9.1.4.v20140401" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: org.eclipse.jetty:jetty-server:9.1.4.v20140401" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: org.eclipse.jetty:jetty-http:9.1.4.v20140401" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: org.eclipse.jetty:jetty-io:9.1.4.v20140401" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.scalatra:scalatra-scalatest_2.11:2.3.0" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.scalatra:scalatra-test_2.11:2.3.0" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.scalatest:scalatest_2.11:2.2.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: junit:junit:4.11" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.mockito:mockito-all:1.9.5" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.apache.commons:commons-lang3:3.3.2" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.apache.httpcomponents:httpclient:4.3.4" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.apache.httpcomponents:httpmime:4.3.4" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.hamcrest:hamcrest-core:1.3" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.apache.httpcomponents:httpcore:4.3.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: commons-logging:commons-logging:1.1.3" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: commons-codec:commons-codec:1.6" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.eclipse.jetty:jetty-webapp:9.2.1.v20140609" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.eclipse.jetty:jetty-xml:9.2.1.v20140609" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.eclipse.jetty:jetty-servlet:9.2.1.v20140609" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.eclipse.jetty:jetty-util:9.2.1.v20140609" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.eclipse.jetty:jetty-security:9.2.1.v20140609" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.eclipse.jetty:jetty-server:9.2.1.v20140609" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.eclipse.jetty:jetty-http:9.2.1.v20140609" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.eclipse.jetty:jetty-io:9.2.1.v20140609" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: ch.qos.logback:logback-access:1.1.1" level="project" />
-    <orderEntry type="library" name="scala-sdk-2.11.6" level="application" />
+    <orderEntry type="library" exported="" name="Gradle: org.eclipse.jetty:jetty-webapp:9.2.11.v20150529" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: ch.qos.logback:logback-classic:1.1.3" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: ch.qos.logback:logback-access:1.1.3" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.scala-lang:scala-compiler:2.11.6" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.scala-lang:scala-library:2.11.6" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.json4s:json4s-jackson_2.11:3.2.11" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.scalatra:scalatra_2.11:2.3.1" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.scalatra:scalatra-json_2.11:2.3.1" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.eclipse.jetty:jetty-xml:9.2.11.v20150529" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.eclipse.jetty:jetty-servlet:9.2.11.v20150529" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: ch.qos.logback:logback-core:1.1.3" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.scala-lang:scala-reflect:2.11.6" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.scala-lang.modules:scala-xml_2.11:1.0.3" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.scala-lang.modules:scala-parser-combinators_2.11:1.0.3" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.json4s:json4s-core_2.11:3.2.11" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.scalatra:scalatra-common_2.11:2.3.1" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: joda-time:joda-time:2.7" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.joda:joda-convert:1.7" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.eclipse.jetty:jetty-util:9.2.11.v20150529" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.eclipse.jetty:jetty-security:9.2.11.v20150529" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.json4s:json4s-ast_2.11:3.2.11" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.slf4j:slf4j-api:1.7.10" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.eclipse.jetty:jetty-server:9.2.11.v20150529" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.eclipse.jetty:jetty-http:9.2.11.v20150529" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.eclipse.jetty:jetty-io:9.2.11.v20150529" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.scalatra:scalatra-scalatest_2.11:2.3.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.scalatra:scalatra-test_2.11:2.3.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.scalatest:scalatest_2.11:2.2.4" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.mockito:mockito-all:1.10.19" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.apache.httpcomponents:httpclient:4.3.6" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.apache.httpcomponents:httpmime:4.3.6" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.apache.httpcomponents:httpcore:4.3.3" level="project" />
   </component>
   <component name="PuppetModuleSettings">
     <option name="librariesDisabled" value="true" />
