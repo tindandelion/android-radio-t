@@ -5,7 +5,6 @@ buildscript {
   }
 
   dependencies {
-    classpath 'org.hidetake:gradle-ssh-plugin:0.3.0'
     classpath 'com.bmuschko:gradle-vagrant-plugin:2.0'
     classpath 'com.bmuschko:gradle-docker-plugin:2.4'
   }
@@ -13,7 +12,6 @@ buildscript {
 
 apply plugin: 'scala'
 apply plugin: 'application'
-apply plugin: 'ssh'
 apply plugin: 'com.bmuschko.vagrant-base'
 apply plugin: 'com.bmuschko.docker-java-application'
 
@@ -31,25 +29,6 @@ repositories {
   mavenCentral()
 }
 
-ssh {
-  knownHosts = allowAnyHosts
-}
-
-remotes {
-  local {
-    host = 'localhost'
-    port = 2222
-    user = 'vagrant'
-    identity = new File('.vagrant/machines/local/virtualbox/private_key')
-  }
-
-  production {
-    host = '188.166.29.129'
-    user = 'root'
-    identity = new File('~/.ssh/id_rsa')
-  }
-}
-
 docker {
   javaApplication {
     baseImage = 'java:7-jre'
@@ -63,56 +42,25 @@ dockerDistTar {
   runCommand "echo Europe/Helsinki > /etc/timezone && dpkg-reconfigure tzdata --frontend noninteractive"
 }
 
-task uberjar(type: Jar, dependsOn: 'classes') {
-  from files(sourceSets.main.output.classesDir)
-  from files(sourceSets.main.output.resourcesDir)
-  from { configurations.compile.collect { zipTree(it) } }
-}
-
 task localUp(type: VagrantUp) {
   description = "Start local Vagrant box"
 }
 
 dockerBuildImage {
-  dependsOn localUp
-}
-
-task vagrantProductionUp(type: VagrantUp) {
-  commands << 'radio-t-server'
-  provider = 'digital_ocean'
+  dependsOn 'localUp'
 }
 
 task deployLocal(type: VagrantSsh, dependsOn: ['localUp', 'dockerBuildImage']) {
   description = 'Deploys the server to the local Vagrant environment'
-
   sshCommand = "/vagrant/docker/local/run-server.sh"
 }
 
-task deployProduction(dependsOn: ['uberjar', 'vagrantProductionUp']) {
-  description = 'Deploys the server to the production environment'
-  doLast { deployApp(remotes.production) }
-}
 
 task checkProduction {
   description = "Check the production installation"
   doLast {
     def topic =  "http://radiot.tindandelion.com:8080/api/chat/v1/topic".toURL().text
     logger.info "Production server is responding, current topic is: [$topic]"
-  }
-}
-
-
-private void deployApp(def remote) {
-  def tempPath = '/tmp/' + uberjar.archiveName
-  def distributionDir = '/opt/radio-t-server'
-
-  sshexec {
-    session(remote) {
-      put(uberjar.archivePath.absolutePath, tempPath)
-      executeSudo("mv $tempPath $distributionDir")
-      executeSudo("rm -f /var/log/radio-t-server/*")
-      executeSudo("/etc/init.d/radio-t-server restart")
-    }
   }
 }
 
