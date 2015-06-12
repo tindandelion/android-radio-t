@@ -7,6 +7,8 @@ import org.scalatest.Matchers
 import org.scalatest.junit.JUnitRunner
 import org.scalatra.test.scalatest.ScalatraSpec
 
+import scala.concurrent.duration._
+
 
 @RunWith(classOf[JUnitRunner])
 class TopicTrackerServletTest extends ScalatraSpec with Matchers {
@@ -19,10 +21,11 @@ class TopicTrackerServletTest extends ScalatraSpec with Matchers {
     room = "online@conference.precise64")
 
   val LocalAdminConfig = LocalChatConfig.copy(username = TopicTrackerServlet.TopicStarter)
+  var currentClock = 0.milliseconds
 
-  var currentClock = 0
-
-  val servlet = new TopicTrackerServlet(LocalChatConfig)
+  val servlet = new TopicTrackerServlet(LocalChatConfig) {
+    override def clock = currentClock
+  }
   addServlet(servlet, "/chat/*")
 
   it("answers a simple request") {
@@ -67,7 +70,7 @@ class TopicTrackerServletTest extends ScalatraSpec with Matchers {
   def extractTopic(json: String): Topic = parse(json).extract[Topic]
 
 
-  def millisecondsPass(timeout: Int) = {
+  def millisecondsPass(timeout: FiniteDuration) = {
     currentClock = currentClock + timeout
   }
 
