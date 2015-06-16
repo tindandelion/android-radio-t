@@ -5,6 +5,8 @@ import org.json4s.jackson.JsonMethods._
 import org.junit.runner.RunWith
 import org.scalatest.Matchers
 import org.scalatest.junit.JUnitRunner
+import org.scalatest.matchers.{MatchResult, Matcher}
+import org.scalatra.test.ClientResponse
 import org.scalatra.test.scalatest.ScalatraSpec
 
 import scala.concurrent.duration._
@@ -23,9 +25,20 @@ class TopicTrackerServletTest extends ScalatraSpec with Matchers {
   val LocalAdminConfig = LocalChatConfig.copy(username = TopicTrackerServlet.TopicStarter)
   var currentClock = 0.milliseconds
 
+  val haveNoContent = Matcher { (r: ClientResponse) =>
+    MatchResult(r.status == 204,
+      "did not return code 204 (No Content)",
+      "did return code 204 (No Content)")
+  } and Matcher { (r: ClientResponse) =>
+    MatchResult(r.body.isEmpty,
+      "body was not empty",
+      "body was empty")
+  }
+
   val servlet = new TopicTrackerServlet(LocalChatConfig) {
     override def clock = currentClock
   }
+
   addServlet(servlet, "/chat/*")
 
   it("answers a simple request") {
@@ -37,8 +50,7 @@ class TopicTrackerServletTest extends ScalatraSpec with Matchers {
 
   it("answers no data while no current topic is set") {
     get("/chat/topic") {
-      status should equal(204)
-      body should be('empty)
+      response should haveNoContent
     }
   }
 
@@ -62,8 +74,7 @@ class TopicTrackerServletTest extends ScalatraSpec with Matchers {
     millisecondsPass(TopicTrackerServlet.TopicExpirationTimeout)
 
     get("/chat/topic") {
-      status should equal(204)
-      body should be('empty)
+      response should haveNoContent
     }
   }
 
