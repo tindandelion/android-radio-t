@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.id="radio-t-server:main" external.linked.project.path="$MODULE_DIR$/../../radio-t-server" external.root.project.path="$MODULE_DIR$/../../radio-t-server" external.system.id="GRADLE" external.system.module.group="sergeymo" external.system.module.type="sourceSet" external.system.module.version="1.0" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_7" inherit-compiler-output="false">
+    <output url="file://$MODULE_DIR$/../../radio-t-server/build/classes/main" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../../radio-t-server/src/main">
+      <sourceFolder url="file://$MODULE_DIR$/../../radio-t-server/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../radio-t-server/src/main/scala" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../radio-t-server/src/main/resources" type="java-resource" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../radio-t-server/libs/smack-3.4.1-0cec571.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../radio-t-server/libs/smackx-3.4.1-0cec571.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" name="Gradle: org.eclipse.jetty:jetty-webapp:9.2.11.v20150529" level="project" />
+    <orderEntry type="library" name="Gradle: ch.qos.logback:logback-classic:1.1.3" level="project" />
+    <orderEntry type="library" name="Gradle: ch.qos.logback:logback-access:1.1.3" level="project" />
+    <orderEntry type="library" name="Gradle: org.scala-lang:scala-compiler:2.11.6" level="project" />
+    <orderEntry type="library" name="Gradle: org.scala-lang:scala-library:2.11.6" level="project" />
+    <orderEntry type="library" name="Gradle: org.json4s:json4s-jackson_2.11:3.2.11" level="project" />
+    <orderEntry type="library" name="Gradle: org.scalatra:scalatra_2.11:2.3.1" level="project" />
+    <orderEntry type="library" name="Gradle: org.scalatra:scalatra-json_2.11:2.3.1" level="project" />
+    <orderEntry type="library" name="Gradle: org.eclipse.jetty:jetty-xml:9.2.11.v20150529" level="project" />
+    <orderEntry type="library" name="Gradle: org.eclipse.jetty:jetty-servlet:9.2.11.v20150529" level="project" />
+    <orderEntry type="library" name="Gradle: ch.qos.logback:logback-core:1.1.3" level="project" />
+    <orderEntry type="library" name="Gradle: org.scala-lang:scala-reflect:2.11.6" level="project" />
+    <orderEntry type="library" name="Gradle: org.scala-lang.modules:scala-xml_2.11:1.0.3" level="project" />
+    <orderEntry type="library" name="Gradle: org.scala-lang.modules:scala-parser-combinators_2.11:1.0.3" level="project" />
+    <orderEntry type="library" name="Gradle: org.json4s:json4s-core_2.11:3.2.11" level="project" />
+    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.3.1" level="project" />
+    <orderEntry type="library" name="Gradle: org.scalatra:scalatra-common_2.11:2.3.1" level="project" />
+    <orderEntry type="library" name="Gradle: org.clapper:grizzled-slf4j_2.11:1.0.2" level="project" />
+    <orderEntry type="library" name="Gradle: org.scalatra.rl:rl_2.11:0.4.10" level="project" />
+    <orderEntry type="library" name="Gradle: com.googlecode.juniversalchardet:juniversalchardet:1.0.3" level="project" />
+    <orderEntry type="library" name="Gradle: eu.medsea.mimeutil:mime-util:2.1.3" level="project" />
+    <orderEntry type="library" name="Gradle: joda-time:joda-time:2.7" level="project" />
+    <orderEntry type="library" name="Gradle: org.joda:joda-convert:1.7" level="project" />
+    <orderEntry type="library" name="Gradle: org.eclipse.jetty:jetty-util:9.2.11.v20150529" level="project" />
+    <orderEntry type="library" name="Gradle: org.eclipse.jetty:jetty-security:9.2.11.v20150529" level="project" />
+    <orderEntry type="library" name="Gradle: org.json4s:json4s-ast_2.11:3.2.11" level="project" />
+    <orderEntry type="library" name="Gradle: com.thoughtworks.paranamer:paranamer:2.6" level="project" />
+    <orderEntry type="library" name="Gradle: org.scala-lang:scalap:2.11.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.3.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.3.1" level="project" />
+    <orderEntry type="library" name="Gradle: org.eclipse.jetty:jetty-server:9.2.11.v20150529" level="project" />
+    <orderEntry type="library" name="Gradle: javax.servlet:javax.servlet-api:3.1.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.eclipse.jetty:jetty-http:9.2.11.v20150529" level="project" />
+    <orderEntry type="library" name="Gradle: org.eclipse.jetty:jetty-io:9.2.11.v20150529" level="project" />
+    <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:1.7.10" level="project" />
+  </component>
+</module>

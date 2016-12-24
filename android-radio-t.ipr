@@ -23,13 +23,11 @@
     </artifact>
   </component>
   <component name="CompilerConfiguration">
-    <option name="DEFAULT_COMPILER" value="Javac" />
     <excludeFromCompile>
       <directory url="file://$PROJECT_DIR$/Radio-T/gen" includeSubdirectories="true" />
       <directory url="file://$PROJECT_DIR$/Radio-T-Test/gen" includeSubdirectories="true" />
       <directory url="file://$PROJECT_DIR$/ActionBarSherlock/gen" includeSubdirectories="true" />
     </excludeFromCompile>
-    <resourceExtensions />
     <wildcardResourcePatterns>
       <entry name="?*.properties" />
       <entry name="?*.xml" />
@@ -42,11 +40,10 @@
       <entry name="?*.tld" />
       <entry name="?*.ftl" />
     </wildcardResourcePatterns>
-    <annotationProcessing>
-      <profile default="true" name="Default" enabled="false">
-        <processorPath useClasspath="true" />
-      </profile>
-    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="radio-t-server_main" target="1.7" />
+      <module name="radio-t-server_test" target="1.7" />
+    </bytecodeTargetLevel>
   </component>
   <component name="CopyrightManager" default="" />
   <component name="DependencyValidationManager">
@@ -70,6 +67,12 @@
         </option>
       </GradleProjectSettings>
     </option>
+  </component>
+  <component name="InspectionProjectProfileManager">
+    <profile version="1.0">
+      <option name="myName" value="Project Default" />
+    </profile>
+    <version value="1.0" />
   </component>
   <component name="Palette2">
     <group name="Swing">
@@ -225,13 +228,15 @@
       <module fileurl="file://$PROJECT_DIR$/Radio-T-Test/Radio-T-Test.iml" filepath="$PROJECT_DIR$/Radio-T-Test/Radio-T-Test.iml" />
       <module fileurl="file://$PROJECT_DIR$/android-support-v7-appcompat/android-support-v7-appcompat.iml" filepath="$PROJECT_DIR$/android-support-v7-appcompat/android-support-v7-appcompat.iml" />
       <module fileurl="file://$PROJECT_DIR$/google-play-services_lib/google-play-services_lib.iml" filepath="$PROJECT_DIR$/google-play-services_lib/google-play-services_lib.iml" />
-      <module fileurl="file://$PROJECT_DIR$/radio-t-server/radio-t-server.iml" filepath="$PROJECT_DIR$/radio-t-server/radio-t-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/radio-t-server.iml" filepath="$PROJECT_DIR$/.idea/modules/radio-t-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/radio-t-server_main.iml" filepath="$PROJECT_DIR$/.idea/modules/radio-t-server_main.iml" group="radio-t-server" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/radio-t-server_test.iml" filepath="$PROJECT_DIR$/.idea/modules/radio-t-server_test.iml" group="radio-t-server" />
     </modules>
   </component>
   <component name="ProjectResources">
     <default-html-doctype>http://www.w3.org/1999/xhtml</default-html-doctype>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" default="false" assert-keyword="true" jdk-15="true" project-jdk-name="Android API 22 Platform" project-jdk-type="Android SDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" default="false" project-jdk-name="Android API 22 Platform" project-jdk-type="Android SDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
   <component name="ScalaCompilerConfiguration">
