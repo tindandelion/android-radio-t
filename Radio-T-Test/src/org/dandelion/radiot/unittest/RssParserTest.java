@@ -6,17 +6,10 @@ import org.dandelion.radiot.podcasts.core.PodcastList;
 import org.dandelion.radiot.podcasts.loader.rss.RssParser;
 import org.xml.sax.SAXException;
 
-public class RssBuilderTest extends TestCase {
-    private RssBuilder rssBuilder;
-    private RssParser parser;
+public class RssParserTest extends TestCase {
+    private RssBuilder rssBuilder = new RssBuilder();
+    private RssParser parser = new RssParser(new TestNotesExtractor());
 
-
-    @Override
-	protected void setUp() throws Exception {
-		super.setUp();
-        rssBuilder = new RssBuilder();
-        parser = new RssParser();
-	}
 
     public void test_parseAllItems() throws Exception {
         rssBuilder.newFeedItem("");
@@ -41,11 +34,11 @@ public class RssBuilderTest extends TestCase {
         assertEquals("Sun, 13 Jun 2010 01:37:22 +0000", item.pubDate);
 	}
 
-	public void test_extractShowNotes() throws Exception {
+	public void test_extractShowNotes_invokesNotesExtractor() throws Exception {
         rssBuilder.newFeedItem("<itunes:summary>Show notes</itunes:summary>");
 
         PodcastItem item = firstItem(parseRssFeed());
-        assertEquals("Show notes", item.showNotes);
+        assertEquals("test - Show notes", item.showNotes);
 	}
 
 	public void test_extractDownloadLink() throws Exception {
@@ -102,6 +95,14 @@ public class RssBuilderTest extends TestCase {
             return "<rss xmlns:media=\"http://search.yahoo.com/mrss/\" " +
                     "xmlns:itunes=\"http://www.itunes.com/dtds/podcast-1.0.dtd\"><channel>"
                     + feedContent + "</channel></rss>";
+        }
+    }
+
+    private static class TestNotesExtractor implements RssParser.NotesExtractor {
+
+        @Override
+        public String extract(String text) {
+            return "test - " + text;
         }
     }
 }

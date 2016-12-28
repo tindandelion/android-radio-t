@@ -9,12 +9,17 @@ import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 
 public class RssParser {
-    private PodcastItem currentItem;
-    private final PodcastList items;
-
-    public RssParser() {
-        this.items = new PodcastList();
+    public interface NotesExtractor {
+        String extract(String text);
     }
+    private final PodcastList items = new PodcastList();
+    private final NotesExtractor notesExtractor;
+    private PodcastItem currentItem;
+
+    public RssParser(NotesExtractor notesExtractor) {
+        this.notesExtractor = notesExtractor;
+    }
+
 
     public PodcastList parse(String content) throws SAXException {
         Xml.parse(content, contentHandler());
@@ -56,27 +61,35 @@ public class RssParser {
         });
 
         item.getChild("enclosure").setStartElementListener(
-                new StartElementListener() {
-                    public void start(Attributes attributes) {
-                        if (isAudioEnclosure(attributes)) {
-                            currentItem.audioUri = attributes.getValue("url");
-                        }
-                    }
-
-                    private boolean isAudioEnclosure(Attributes attributes) {
-                        return attributes.getValue("type").equals("audio/mpeg");
-                    }
-                });
+                enclosureExtractor());
 
         item.getChild("http://www.itunes.com/dtds/podcast-1.0.dtd", "summary")
-                .setEndTextElementListener(new EndTextElementListener() {
-                    @Override
-                    public void end(String s) {
-                        currentItem.showNotes = s;
-                    }
-                });
+                .setEndTextElementListener(showNotesExtractor());
 
         return root.getContentHandler();
+    }
+
+    private EndTextElementListener showNotesExtractor() {
+        return new EndTextElementListener() {
+            @Override
+            public void end(String s) {
+                currentItem.showNotes = notesExtractor.extract(s);
+            }
+        };
+    }
+
+    private StartElementListener enclosureExtractor() {
+        return new StartElementListener() {
+            public void start(Attributes attributes) {
+                if (isAudioEnclosure(attributes)) {
+                    currentItem.audioUri = attributes.getValue("url");
+                }
+            }
+
+            private boolean isAudioEnclosure(Attributes attributes) {
+                return attributes.getValue("type").equals("audio/mpeg");
+            }
+        };
     }
 
 }
