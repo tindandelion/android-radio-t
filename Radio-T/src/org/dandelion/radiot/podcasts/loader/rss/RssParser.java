@@ -87,7 +87,7 @@ public class RssParser {
             }
 
             private boolean isAudioEnclosure(Attributes attributes) {
-                return attributes.getValue("type").equals("audio/mpeg");
+                return "audio/mp3".equals(attributes.getValue("type"));
             }
         };
     }

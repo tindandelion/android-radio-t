@@ -42,14 +42,14 @@ public class RssParserTest extends TestCase {
 	}
 
 	public void test_extractDownloadLink() throws Exception {
-        rssBuilder.newFeedItem("<enclosure url=\"http://podcast-link\" type=\"audio/mpeg\"/>");
+        rssBuilder.newFeedItem("<enclosure url=\"http://podcast-link\" type=\"audio/mp3\"/>");
 
         PodcastItem item = firstItem(parseRssFeed());
         assertEquals("http://podcast-link", item.audioUri);
 	}
 
 	public void test_extractDownloadLink_skipNonAudioEnclosures() throws Exception {
-        rssBuilder.newFeedItem("<enclosure url=\"http://podcast-link\" type=\"audio/mpeg\"/>"
+        rssBuilder.newFeedItem("<enclosure url=\"http://podcast-link\" type=\"audio/mp3\"/>"
 				+ "<enclosure url=\"http://yet-another-link\" type=\"text/xml\"/>");
 
         PodcastItem item = firstItem(parseRssFeed());
