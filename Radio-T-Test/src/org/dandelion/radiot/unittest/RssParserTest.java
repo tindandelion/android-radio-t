@@ -41,20 +41,37 @@ public class RssParserTest extends TestCase {
         assertEquals("test - Show notes", item.showNotes);
 	}
 
-	public void test_extractDownloadLink() throws Exception {
+	public void test_extractDownloadLink_typeMp3() throws Exception {
         rssBuilder.newFeedItem("<enclosure url=\"http://podcast-link\" type=\"audio/mp3\"/>");
 
         PodcastItem item = firstItem(parseRssFeed());
         assertEquals("http://podcast-link", item.audioUri);
 	}
 
-	public void test_extractDownloadLink_skipNonAudioEnclosures() throws Exception {
+    public void test_extractDownloadLink_typeMpeg() throws Exception {
+        rssBuilder.newFeedItem("<enclosure url=\"http://podcast-link\" type=\"audio/mpeg\"/>");
+
+        PodcastItem item = firstItem(parseRssFeed());
+        assertEquals("http://podcast-link", item.audioUri);
+    }
+
+
+    public void test_extractDownloadLink_skipNonAudioEnclosures() throws Exception {
         rssBuilder.newFeedItem("<enclosure url=\"http://podcast-link\" type=\"audio/mp3\"/>"
 				+ "<enclosure url=\"http://yet-another-link\" type=\"text/xml\"/>");
 
         PodcastItem item = firstItem(parseRssFeed());
         assertEquals("http://podcast-link", item.audioUri);
 	}
+
+    public void test_extractDownloadLink_skipEnclosuresWithoutType() throws Exception {
+        rssBuilder.newFeedItem("<enclosure url=\"http://podcast-link\" type=\"audio/mp3\"/>"
+                + "<enclosure url=\"http://yet-another-link\" />");
+
+        PodcastItem item = firstItem(parseRssFeed());
+        assertEquals("http://podcast-link", item.audioUri);
+    }
+
 
     public void test_extractThumbnailUrl() throws Exception {
         rssBuilder.newFeedItem("<description>" +

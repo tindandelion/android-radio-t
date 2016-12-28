@@ -8,10 +8,15 @@ import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 
+import java.util.List;
+
+import static java.util.Arrays.asList;
+
 public class RssParser {
     public interface NotesExtractor {
         String extract(String text);
     }
+
     private final PodcastList items = new PodcastList();
     private final NotesExtractor notesExtractor;
     private PodcastItem currentItem;
@@ -79,6 +84,8 @@ public class RssParser {
     }
 
     private StartElementListener enclosureExtractor() {
+        final List<String> audioTypes = asList("audio/mp3", "audio/mpeg");
+
         return new StartElementListener() {
             public void start(Attributes attributes) {
                 if (isAudioEnclosure(attributes)) {
@@ -87,7 +94,8 @@ public class RssParser {
             }
 
             private boolean isAudioEnclosure(Attributes attributes) {
-                return "audio/mp3".equals(attributes.getValue("type"));
+                String type = attributes.getValue("type");
+                return audioTypes.contains(type);
             }
         };
     }

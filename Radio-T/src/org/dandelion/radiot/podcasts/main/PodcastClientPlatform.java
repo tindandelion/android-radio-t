@@ -14,7 +14,7 @@ public class PodcastClientPlatform implements PodcastClientFactory {
     private static HashMap<String, PodcastProperties> shows;
 
     static {
-        shows = new HashMap<String, PodcastProperties>();
+        shows = new HashMap<>();
         shows.put("main-show",
                 new PodcastProperties("main-show",
                         "http://feeds.rucast.net/radio-t"));
@@ -25,7 +25,7 @@ public class PodcastClientPlatform implements PodcastClientFactory {
 
     private Context context;
 
-    public PodcastClientPlatform(Context context) {
+    protected PodcastClientPlatform(Context context) {
         this.context = context;
     }
 
@@ -69,7 +69,7 @@ public class PodcastClientPlatform implements PodcastClientFactory {
         public String name;
         public String url;
 
-        public PodcastProperties(String name, String url) {
+        PodcastProperties(String name, String url) {
             this.name = name;
             this.url = url;
         }
