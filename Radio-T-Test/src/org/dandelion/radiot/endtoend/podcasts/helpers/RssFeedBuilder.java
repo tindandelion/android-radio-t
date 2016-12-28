@@ -27,7 +27,7 @@ public class RssFeedBuilder {
 
     public static class RssItemBuilder {
         private String content = "";
-        public String done() {
+        String done() {
             return content;
         }
 
@@ -40,10 +40,6 @@ public class RssFeedBuilder {
             return addTag("pubDate", value);
         }
 
-        public RssItemBuilder description(String value) {
-            return addTag("description", value);
-        }
-
         public RssItemBuilder summary(String value) {
             return addTag("itunes:summary", value);
         }
@@ -54,8 +50,8 @@ public class RssFeedBuilder {
         }
 
         public RssItemBuilder thumbnailUrl(String thumbnailUrl) {
-            return description("&lt;p&gt;&lt;img src=\"" +
-                    thumbnailUrl + "\" alt=\"\" /&gt;&lt;/p&gt;");
+            content += String.format("<itunes:image href=\"%1$s\" />", thumbnailUrl);
+            return this;
         }
     }
 }

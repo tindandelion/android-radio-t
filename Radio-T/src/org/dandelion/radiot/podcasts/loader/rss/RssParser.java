@@ -61,13 +61,6 @@ public class RssParser {
                     }
                 });
 
-        item.getChild("description").setEndTextElementListener(new EndTextElementListener() {
-            @Override
-            public void end(String body) {
-                currentItem.extractThumbnailUrl(body);
-            }
-        });
-
         item.getChild("enclosure").setStartElementListener(
                 enclosureExtractor());
 

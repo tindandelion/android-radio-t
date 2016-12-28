@@ -72,16 +72,6 @@ public class RssParserTest extends TestCase {
         assertEquals("http://podcast-link", item.audioUri);
     }
 
-
-    public void test_extractThumbnailUrl() throws Exception {
-        rssBuilder.newFeedItem("<description>" +
-                "&lt;p&gt;&lt;img src=\"http://www.radio-t.com/images/radio-t/rt302.jpg\" alt=\"\" /&gt;&lt;/p&gt;\n" +
-                "</description>");
-
-        PodcastItem item = firstItem(parseRssFeed());
-        assertEquals("http://www.radio-t.com/images/radio-t/rt302.jpg", item.thumbnailUrl);
-    }
-
     public void test_extractThumbnailUrl_fromITunesTag() throws Exception {
         rssBuilder.newFeedItem("<itunes:image href=\"https://radio-t.com/images/radio-t/rt526.jpg\" />");
 
