@@ -13,9 +13,12 @@ import java.util.List;
 import static java.util.Arrays.asList;
 
 public class RssParser {
+
     public interface NotesExtractor {
         String extract(String text);
     }
+
+    private static final String itunes = "http://www.itunes.com/dtds/podcast-1.0.dtd";
 
     private final PodcastList items = new PodcastList();
     private final NotesExtractor notesExtractor;
@@ -68,8 +71,18 @@ public class RssParser {
         item.getChild("enclosure").setStartElementListener(
                 enclosureExtractor());
 
-        item.getChild("http://www.itunes.com/dtds/podcast-1.0.dtd", "summary")
+        item.getChild(itunes, "summary")
                 .setEndTextElementListener(showNotesExtractor());
+        item.getChild(itunes, "image")
+                .setStartElementListener(
+                        new StartElementListener() {
+                            @Override
+                            public void start(Attributes attributes) {
+                                currentItem.thumbnailUrl = attributes.getValue("href");
+                            }
+                        }
+                );
+
 
         return root.getContentHandler();
     }
