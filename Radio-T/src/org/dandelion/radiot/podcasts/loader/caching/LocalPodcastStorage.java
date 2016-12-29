@@ -7,7 +7,7 @@ import org.dandelion.radiot.podcasts.loader.ThumbnailCache;
 import java.io.File;
 
 public class LocalPodcastStorage implements FilePodcastsCache.Listener {
-    private static final int CACHE_FORMAT_VERSION = 1;
+    private static final int CACHE_FORMAT_VERSION = 2;
 
     private FilePodcastsCache podcastsCache;
     private FileThumbnailCache thumbnailsCache;

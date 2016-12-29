@@ -17,6 +17,8 @@ Version 1.10
  * Chat: Hide controls from chat screen
 
 Backlog:
+ * Tie local podcast storage version to app version, to avoid upgrade problems
+
  * Current topic: 'Open topic' (in separate browser, for now)
  * Current topic: open topic in embedded browser
  * Server: Attempt to use WebSockets again
