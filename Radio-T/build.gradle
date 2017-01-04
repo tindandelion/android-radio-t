@@ -8,6 +8,10 @@ buildscript {
     }
 }
 
+repositories {
+    jcenter()
+}
+
 apply plugin: 'com.android.application'
 
 android {
@@ -25,6 +29,10 @@ android {
             res.srcDirs = ['res']
             assets.srcDirs = ['assets']
         }
+
+        test {
+            java.srcDirs = ['test']
+        }
     }
 
     lintOptions {
@@ -35,4 +43,6 @@ android {
 dependencies {
     compile 'com.android.support:appcompat-v7:22.2.1'
     compile 'com.google.android.gms:play-services-analytics:10.0.1'
+
+    testCompile fileTree(dir: 'libs/test', include: ['*.jar'])
 }
