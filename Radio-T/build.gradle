@@ -23,9 +23,6 @@ android {
     }
 
     sourceSets {
-        main {
-            assets.srcDirs = ['assets']
-        }
 
         test {
             java.srcDirs = ['test']
