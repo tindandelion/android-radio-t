@@ -32,4 +32,6 @@ dependencies {
     compile 'com.google.android.gms:play-services-analytics:10.0.1'
 
     testCompile fileTree(dir: 'libs/test', include: ['*.jar'])
+
+    androidTestCompile 'org.hamcrest:hamcrest-core:1.3'
 }
