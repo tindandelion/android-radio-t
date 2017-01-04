@@ -1,4 +1,4 @@
-package org.dandelion.radiot.integration.helpers;
+package org.dandelion.radiot.helpers;
 
 import java.io.File;
 

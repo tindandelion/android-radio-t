@@ -1,7 +1,7 @@
 package org.dandelion.radiot.integration;
 
 import android.test.InstrumentationTestCase;
-import org.dandelion.radiot.integration.helpers.FileUtils;
+import org.dandelion.radiot.helpers.FileUtils;
 
 import java.io.File;
 

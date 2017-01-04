@@ -1,6 +1,6 @@
 package org.dandelion.radiot.integration;
 
-import org.dandelion.radiot.integration.helpers.FileUtils;
+import org.dandelion.radiot.helpers.FileUtils;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.loader.PodcastsCache;
 import org.dandelion.radiot.podcasts.loader.ThumbnailCache;
