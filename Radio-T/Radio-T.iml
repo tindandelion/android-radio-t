@@ -11,6 +11,7 @@
   <component name="FacetManager">
     <facet type="android" name="Android">
       <configuration>
+        <option name="MANIFEST_FILE_RELATIVE_PATH" value="/src/main/AndroidManifest.xml" />
         <option name="UPDATE_PROPERTY_FILES" value="true" />
         <includeAssetsFromLibraries>true</includeAssetsFromLibraries>
       </configuration>
