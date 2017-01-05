@@ -14,7 +14,6 @@ import java.io.IOException;
 
 public class ApacheHttpClient implements HttpClient {
     private final static int HTTP_OK = 200;
-    private final static int HTTP_NO_CONTENT = 204;
 
     private static final ResponseHandler<byte[]> responseHandler = new ResponseHandler<byte[]>() {
         @Override
