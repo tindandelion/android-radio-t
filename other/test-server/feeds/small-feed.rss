@@ -1,0 +1,916 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:media="http://search.yahoo.com/mrss/"
+     xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
+     xmlns:creativeCommons="http://backend.userland.com/creativeCommonsRssModule"
+ version="2.0">
+  <channel>
+    <title>Радио-Т
+    </title>
+    <link>http://www.radio-t.com/
+    </link>
+    <atom10:link xmlns:atom10="http://www.w3.org/2005/Atom" rel="self"
+		 type="application/rss+xml" href="http://feeds.rucast.net/Radio-t" />
+    <language>en
+    </language>
+    <managingEditor>noemail@noemail.org (podcast@radio-t.com)
+    </managingEditor>
+    <lastBuildDate>Sat, 03 Nov 2012 15:22:47 PDT
+    </lastBuildDate>
+    <generator>Octopress http://octopress.org/
+    </generator>
+    <feedburner:info xmlns:feedburner="http://rssnamespace.org/feedburner/ext/1.0"
+		     uri="radio-t" />
+    <atom10:link xmlns:atom10="http://www.w3.org/2005/Atom" rel="hub"
+		 href="http://pubsubhubbub.appspot.com/" />
+    <description>
+    </description>
+    <media:copyright>Creative Commons - Attribution, Noncommercial, No
+      Derivative Works 3.0 License.
+    </media:copyright>
+    <media:thumbnail url="http://dl.dropbox.com/u/71582/Podcasts/cover_rt_big.png"
+     />
+    <media:keywords>hitech,russian,radiot,tech,news,радио
+    </media:keywords>
+    <media:category scheme="http://www.itunes.com/dtds/podcast-1.0.dtd">Technology/Tech
+  News
+    </media:category>
+    <itunes:owner>
+      <itunes:email>podcast@radio-t.com
+      </itunes:email>
+      <itunes:name>Umputun, Bobuk, Gray, Ksenks
+      </itunes:name>
+    </itunes:owner>
+    <itunes:author>Umputun, Bobuk, Gray, Ksenks
+    </itunes:author>
+    <itunes:explicit>no
+    </itunes:explicit>
+    <itunes:image href="http://dl.dropbox.com/u/71582/Podcasts/cover_rt_big.png"
+  />
+    <itunes:keywords>hitech,russian,radiot,tech,news,радио
+    </itunes:keywords>
+    <itunes:subtitle>Еженедельные импровизации на хай–тек темы
+    </itunes:subtitle>
+    <itunes:summary>Еженедельные импровизации на хай–тек темы
+    </itunes:summary>
+    <itunes:category text="Technology">
+      <itunes:category text="Tech News" />
+    </itunes:category>
+    <creativeCommons:license>http://creativecommons.org/licenses/by-nc-nd/3.0/
+    </creativeCommons:license>
+    <item>
+      <title>Радио-Т 310
+      </title>
+      <link>http://www.radio-t.com/p/2012/10/13/podcast-310/
+      </link>
+      <pubDate>Sat, 13 Oct 2012 16:31:00 PDT
+      </pubDate>
+      <guid isPermaLink="false">http://www.radio-t.com/p/2012/10/13/podcast-310
+      </guid>
+      <description>&lt;p&gt;&lt;img src="http://www.radio-t.com/images/radio-t/rt310.jpg" alt="" /&gt;&lt;/p&gt;
+
+	&lt;ul&gt;
+	&lt;li&gt;Линус Торвальдс ответил на вопросы &lt;a href="http://www.zdnet.com/linus-torvalds-interviewed-by-slashdot-readers-7000005697/"&gt;посетителей slashdot.org&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://thenextweb.com/facebook/2012/10/11/facebook-apparently-down-in-several-countries-worldwide-including-italy-germany-france"&gt;Facebook лег&lt;/a&gt; и сразу в многих странах&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://techcrunch.com/2012/10/12/canonicals-ubuntu-one-cloud-storage-service-comes-to-the-mac/"&gt;Ubuntu One Cloud Storage пришел на Mac &lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;Microsoft решили &lt;a href="http://blog.rabidgremlin.com/2012/10/11/did-microsoft-just-kill-flash-ie10-wont-run-flash-unless-your-site-is-on-a-microsoft-whi"&gt;добить Flash&lt;/a&gt;?&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://www.wired.com/gadgetlab/2012/10/samsung-galaxy-s-iii-mini-4-inch-screen/"&gt;Mini Galaxy S III&lt;/a&gt; с 4"&lt;/li&gt;
+	&lt;li&gt;Статистика &lt;a href="http://gigaom.com/2012/10/10/the-typical-twitter-user-is-a-young-woman-with-an-iphone-and-208-followers/"&gt;о типичых пользователях Twitter&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://habrahabr.ru/post/154255/"&gt;Bitbucket — большое обновление&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://techcrunch.com/2012/10/10/googles-mod_pagespeed-is-now-out-of-beta-and-ready-to-make-your-sites-faster/"&gt;Google Mod_Pagespeed&lt;/a&gt; - хорошее дело&lt;/li&gt;
+	&lt;/ul&gt;
+
+
+	&lt;p&gt;&lt;a href="http://cdn.radio-t.com/rt_podcast310.mp3"&gt;аудио&lt;/a&gt; ● &lt;a href="http://cdn.radio-t.com/torrents/rt_podcast310.mp3.torrent"&gt;radio-t.torrent&lt;/a&gt; ● &lt;a href="http://chat.radio-t.com/logs/radio-t-310.html"&gt;лог чата&lt;/a&gt; ● &lt;a href="http://wiki.radio-t.com/%D0%92%D1%8B%D0%BF%D1%83%D1%81%D0%BA_310"&gt;wiki&lt;/a&gt;&lt;audio src="http://cdn.radio-t.com/rt_podcast310.mp3" preload="none"&gt;&lt;/audio&gt;&lt;/p&gt;
+      </description>
+      <author>podcast@radio-t.com (Umputun, Bobuk, Gray, Ksenks)
+      </author>
+      <enclosure url="http://cdn.radio-t.com/rt_podcast310.mp3"
+		 length="81042724" type="audio/mpeg" />
+      <media:content url="http://cdn.radio-t.com/rt_podcast310.mp3"
+		     fileSize="81042724" type="audio/mpeg" />
+      <itunes:explicit>no
+      </itunes:explicit>
+      <itunes:subtitle> Линус Торвальдс ответил на вопросы посетителей
+      slashdot.org Facebook лег и сразу в многих странах Ubuntu One Cloud
+      Storage пришел на Mac Microsoft решили добить Flash? Mini Galaxy S III с
+	4" Статистика о типичых пользователях Twitter Bitbucket — большое
+      </itunes:subtitle>
+      <itunes:author>Umputun, Bobuk, Gray, Ksenks
+      </itunes:author>
+      <itunes:summary> Линус Торвальдс ответил на вопросы посетителей
+      slashdot.org Facebook лег и сразу в многих странах Ubuntu One Cloud
+      Storage пришел на Mac Microsoft решили добить Flash? Mini Galaxy S III с
+      4" Статистика о типичых пользователях Twitter Bitbucket — большое
+	обновление Google Mod_Pagespeed - хорошее дело аудио ● radio-t.torrent ●
+	лог чата ● wiki
+      </itunes:summary>
+      <itunes:keywords>hitech,russian,radiot,tech,news,радио
+      </itunes:keywords>
+    </item>
+    <item>
+      <title>Радио-Т 309
+      </title>
+      <link>http://www.radio-t.com/p/2012/10/06/podcast-309/
+      </link>
+      <pubDate>Sat, 06 Oct 2012 17:47:00 PDT
+      </pubDate>
+      <guid isPermaLink="false">http://www.radio-t.com/p/2012/10/06/podcast-309
+      </guid>
+      <description>&lt;p&gt;&lt;img src="http://www.radio-t.com/images/radio-t/rt309.jpg" alt="" /&gt;&lt;/p&gt;
+
+	&lt;ul&gt;
+	&lt;li&gt;А мы так хотели поговорить о &lt;a href="http://dz.ru/en/solutions/phantom/"&gt;Phantom Operating System&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://highscalability.com/blog/2012/9/24/google-spanners-most-surprising-revelation-nosql-is-out-and.html"&gt;Google Spanner&lt;/a&gt; – от NoSQL к NewSQL&lt;/li&gt;
+	&lt;li&gt;Переход из &lt;a href="http://code.mixpanel.com/2011/08/05/how-and-why-we-switched-from-erlang-to-python/"&gt;Erlang в Python&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://meri-stuff.blogspot.sk/2012/10/travis-ci-continuous-integration-server.html?m=1"&gt;Travis-CI - Continuous Integration Server&lt;/a&gt; для любителей github&lt;/li&gt;
+	&lt;li&gt;Как не надо организовывать &lt;a href="http://www.readability.com/articles/mjreucfy"&gt;Source Control&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;Microsoft показaли нам &lt;a href="http://www.readability.com/articles/w1osrrfx"&gt;TypeScript&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://java.dzone.com/articles/do-immutability-really-means"&gt;Immutability против Thread Safety?&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://jaxenter.com/roundup-java-news-from-javaone-44845.html"&gt;JavaOne новости&lt;/a&gt;&lt;/li&gt;
+	&lt;/ul&gt;
+
+
+	&lt;p&gt;&lt;a href="http://cdn.radio-t.com/rt_podcast309.mp3"&gt;аудио&lt;/a&gt; ● &lt;a href="http://cdn.radio-t.com/torrents/rt_podcast309.mp3.torrent"&gt;radio-t.torrent&lt;/a&gt; ● &lt;a href="http://chat.radio-t.com/logs/radio-t-309.html"&gt;лог чата&lt;/a&gt; ● &lt;a href="http://wiki.radio-t.com/%D0%92%D1%8B%D0%BF%D1%83%D1%81%D0%BA_309"&gt;wiki&lt;/a&gt;&lt;audio src="http://cdn.radio-t.com/rt_podcast309.mp3" preload="none"&gt;&lt;/audio&gt;&lt;/p&gt;
+      </description>
+      <author>podcast@radio-t.com (Umputun, Bobuk, Gray, Ksenks)
+      </author>
+      <enclosure url="http://cdn.radio-t.com/rt_podcast309.mp3"
+		 length="95985810" type="audio/mpeg" />
+      <media:content url="http://cdn.radio-t.com/rt_podcast309.mp3"
+		     fileSize="95985810" type="audio/mpeg" />
+      <itunes:explicit>no
+      </itunes:explicit>
+      <itunes:subtitle> А мы так хотели поговорить о Phantom Operating System
+      Google Spanner – от NoSQL к NewSQL Переход из Erlang в Python Travis-CI -
+      Continuous Integration Server для любителей github Как не надо
+	организовывать Source Control Microsoft показaли нам TypeScript
+      </itunes:subtitle>
+      <itunes:author>Umputun, Bobuk, Gray, Ksenks
+      </itunes:author>
+      <itunes:summary> А мы так хотели поговорить о Phantom Operating System
+      Google Spanner – от NoSQL к NewSQL Переход из Erlang в Python Travis-CI -
+      Continuous Integration Server для любителей github Как не надо
+      организовывать Source Control Microsoft показaли нам TypeScript
+	Immutability против Thread Safety? JavaOne новости аудио ● radio-t.torrent
+	● лог чата ● wiki
+      </itunes:summary>
+      <itunes:keywords>hitech,russian,radiot,tech,news,радио
+      </itunes:keywords>
+    </item>
+    <item>
+      <title>Радио-Т 308
+      </title>
+      <link>http://www.radio-t.com/p/2012/09/29/podcast-308/
+      </link>
+      <pubDate>Sat, 29 Sep 2012 14:57:00 PDT
+      </pubDate>
+      <guid isPermaLink="false">http://www.radio-t.com/p/2012/09/29/podcast-308
+      </guid>
+      <description>&lt;p&gt;&lt;img src="http://www.radio-t.com/images/radio-t/rt308_5.jpg" alt="" /&gt;&lt;/p&gt;
+
+	&lt;ul&gt;
+	&lt;li&gt;&lt;a href="http://habrahabr.ru/post/152441/"&gt;14 лет Google&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;Instagram &lt;a href="http://www.dailymail.co.uk/sciencetech/article-2209545/Instagram-overtakes-Twitter-cell-phones-7-3million-users-day.html"&gt;обогнал Twitter&lt;/a&gt; на телефонах&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://techcrunch.com/2012/09/28/the-feedburner-deathwatch-continues-google-kills-adsense-for-feeds/"&gt;FeedBurner вышел на финишную&lt;/a&gt; кривую&lt;/li&gt;
+	&lt;li&gt;Шестой релиз свободной облачной платформы &lt;a href="http://www.opennet.ru/opennews/art.shtml?num=34964"&gt;OpenStack "Folsom"&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;Почему Apple &lt;a href="http://gizmodo.com/5946706/"&gt;отказались от Google Maps&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://appleinsider.com/articles/12/09/27/googles-ilost-motorola-ad-faked-an-address-to-lose-ios-6-maps"&gt;iLost от Motorola&lt;/a&gt; пахнет странно&lt;/li&gt;
+	&lt;li&gt;За что извиняемся? &lt;a href="http://qz.com/9440/why-steve-jobs-wouldnt-have-apologized-for-maps-and-tim-cook-shouldnt-have-either/"&gt;При Джобсе такого не было&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://techcrunch.com/2012/09/28/evernote-skitch-201-update/"&gt;Evernote починил&lt;/a&gt; немного из того, что сломал&lt;/li&gt;
+	&lt;/ul&gt;
+
+
+	&lt;p&gt;&lt;a href="http://cdn.radio-t.com/rt_podcast308.mp3"&gt;аудио&lt;/a&gt; ● &lt;a href="http://cdn.radio-t.com/torrents/rt_podcast308.mp3.torrent"&gt;radio-t.torrent&lt;/a&gt; ● &lt;a href="http://chat.radio-t.com/logs/radio-t-308.html"&gt;лог чата&lt;/a&gt; ● &lt;a href="http://wiki.radio-t.com/%D0%92%D1%8B%D0%BF%D1%83%D1%81%D0%BA_308"&gt;wiki&lt;/a&gt;&lt;audio src="http://cdn.radio-t.com/rt_podcast308.mp3" preload="none"&gt;&lt;/audio&gt;&lt;/p&gt;
+      </description>
+      <author>podcast@radio-t.com (Umputun, Bobuk, Gray, Ksenks)
+      </author>
+      <enclosure url="http://cdn.radio-t.com/rt_podcast308.mp3"
+		 length="83751884" type="audio/mpeg" />
+      <media:content url="http://cdn.radio-t.com/rt_podcast308.mp3"
+		     fileSize="83751884" type="audio/mpeg" />
+      <itunes:explicit>no
+      </itunes:explicit>
+      <itunes:subtitle> 14 лет Google Instagram обогнал Twitter на телефонах
+      FeedBurner вышел на финишную кривую Шестой релиз свободной облачной
+      платформы OpenStack "Folsom" Почему Apple отказались от Google Maps iLost
+	от Motorola пахнет странно За что извиняемся?При Джобсе та
+      </itunes:subtitle>
+      <itunes:author>Umputun, Bobuk, Gray, Ksenks
+      </itunes:author>
+      <itunes:summary> 14 лет Google Instagram обогнал Twitter на телефонах
+      FeedBurner вышел на финишную кривую Шестой релиз свободной облачной
+      платформы OpenStack "Folsom" Почему Apple отказались от Google Maps iLost
+      от Motorola пахнет странно За что извиняемся? При Джобсе такого не было
+	Evernote починил немного из того, что сломал аудио ● radio-t.torrent ● лог
+	чата ● wiki
+      </itunes:summary>
+      <itunes:keywords>hitech,russian,radiot,tech,news,радио
+      </itunes:keywords>
+    </item>
+    <item>
+      <title>Радио-Т 307
+      </title>
+      <link>http://www.radio-t.com/p/2012/09/22/podcast-307/
+      </link>
+      <pubDate>Sat, 22 Sep 2012 15:08:00 PDT
+      </pubDate>
+      <guid isPermaLink="false">http://www.radio-t.com/p/2012/09/22/podcast-307
+      </guid>
+      <description>&lt;p&gt;&lt;img src="http://www.radio-t.com/images/radio-t/rt307.jpg" alt="" /&gt;&lt;/p&gt;
+
+	&lt;ul&gt;
+	&lt;li&gt;Конец &lt;a href="http://allthingsd.com/20120915/its-official-the-era-of-the-personal-computer-is-over/"&gt;эры персональных компьютеров&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://thenextweb.com/microsoft/2012/09/21/this-ridiculous-microsoft-longer-accepts-long-passwords-shortens/"&gt;Короткие пароли&lt;/a&gt; по версии Microsoft&lt;/li&gt;
+	&lt;li&gt;За что они &lt;a href="http://www.tuaw.com/2012/09/20/skitch-2-0-is-like-skitch-1-0-without-all-those-pesky-features/"&gt;убили Skitch?&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://techcrunch.com/2012/09/14/google-apps-says-goodbye-to-internet-explorer-pulls-support-for-the-browser/"&gt;Google больше не любит&lt;/a&gt; Internet Explorer 8&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://addmeto.cc/post/2012-09-14/"&gt;Асер, Алибаба и 40 разбойников&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;Почему &lt;a href="http://blog.capwatkins.com/nfc-sucks"&gt;NFC унылое ... нечто&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://osxdaily.com/2012/09/20/battery-life-improves-dramatically-in-os-x-mountain-lion-10-8-2/"&gt;OS X Mountain Lion 10.8.2&lt;/a&gt; продал нам козу&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://habrahabr.ru/post/151518/"&gt;Начало агонии IPv4&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;Новый &lt;a href="http://techcrunch.com/2012/09/14/new-intel-chip-wont-support-linux/"&gt;Intel чип&lt;/a&gt; несовместим (?!) с линуксом&lt;/li&gt;
+	&lt;/ul&gt;
+
+
+	&lt;p&gt;&lt;a href="http://cdn.radio-t.com/rt_podcast307.mp3"&gt;аудио&lt;/a&gt; ● &lt;a href="http://cdn.radio-t.com/torrents/rt_podcast307.mp3.torrent"&gt;radio-t.torrent&lt;/a&gt;  ● &lt;a href="http://wiki.radio-t.com/%D0%92%D1%8B%D0%BF%D1%83%D1%81%D0%BA_307"&gt;wiki&lt;/a&gt;&lt;audio src="http://cdn.radio-t.com/rt_podcast307.mp3" preload="none"&gt;&lt;/audio&gt;&lt;/p&gt;
+      </description>
+      <author>podcast@radio-t.com (Umputun, Bobuk, Gray, Ksenks)
+      </author>
+      <enclosure url="http://cdn.radio-t.com/rt_podcast307.mp3"
+		 length="82677467" type="audio/mpeg" />
+      <media:content url="http://cdn.radio-t.com/rt_podcast307.mp3"
+		     fileSize="82677467" type="audio/mpeg" />
+      <itunes:explicit>no
+      </itunes:explicit>
+      <itunes:subtitle> Конец эры персональных компьютеров Короткие пароли по
+      версии Microsoft За что они убили Skitch? Google больше не любит Internet
+      Explorer 8 Асер, Алибаба и 40 разбойников Почему NFC унылое ... нечто OS X
+	Mountain Lion 10.8.2 продал нам козуНачало агонии
+      </itunes:subtitle>
+      <itunes:author>Umputun, Bobuk, Gray, Ksenks
+      </itunes:author>
+      <itunes:summary> Конец эры персональных компьютеров Короткие пароли по
+      версии Microsoft За что они убили Skitch? Google больше не любит Internet
+      Explorer 8 Асер, Алибаба и 40 разбойников Почему NFC унылое ... нечто OS X
+      Mountain Lion 10.8.2 продал нам козу Начало агонии IPv4 Новый Intel чип
+	несовместим (?!) с линуксом аудио ● radio-t.torrent ● wiki
+      </itunes:summary>
+      <itunes:keywords>hitech,russian,radiot,tech,news,радио
+      </itunes:keywords>
+    </item>
+    <item>
+      <title>Радио-Т 306
+      </title>
+      <link>http://www.radio-t.com/p/2012/09/15/podcast-306/
+      </link>
+      <pubDate>Sat, 15 Sep 2012 15:20:00 PDT
+      </pubDate>
+      <guid isPermaLink="false">http://www.radio-t.com/p/2012/09/15/podcast-306
+      </guid>
+      <description>&lt;p&gt;&lt;img src="http://www.radio-t.com/images/radio-t/rt306.jpg" alt="" /&gt;&lt;/p&gt;
+
+	&lt;ul&gt;
+	&lt;li&gt;Большое &lt;a href="http://mashable.com/2012/09/12/apple-iphone-5-event-recap/"&gt;шоу от Apple&lt;/a&gt; и что там не так&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://www.wired.com/gadgetlab/2012/09/the-iphone-5-is-boring-and-amazing/"&gt;iPhone 5&lt;/a&gt; скучно но солидно&lt;/li&gt;
+	&lt;li&gt;Открыты двери для &lt;a href="http://reviews.cnet.com/8301-19512_7-57511658-233/iphone-5-opens-the-door-for-nokia-samsung/"&gt;Nokia и Samsung&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://www.fastcodesign.com/1670778/the-3-worst-design-details-from-apples-iphone-5-event"&gt;Худшее из лучшего&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://thenextweb.com/apple/2012/09/13/developers-say-iphone-5s-larger-screen-poses-challenges-especially-without-device-test-ap"&gt;Большой и другой экран&lt;/a&gt; для разработчиков&lt;/li&gt;
+	&lt;li&gt;Падение&lt;a href="http://www.zdnet.com/go-daddy-claims-internal-problems-not-an-attack-took-it-down-7000004066/"&gt;GoDaddy&lt;/a&gt; это не атака&lt;/li&gt;
+	&lt;li&gt;GoDaddy &lt;a href="http://www.pcworld.com/article/262317/godaddy_apologizes_for_outage_with_30_discounts.html"&gt;просит прощения&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://www.geekwire.com/2012/hp-device-imac/"&gt;iMac от HP&lt;/a&gt;. Что это было?&lt;/li&gt;
+	&lt;li&gt;Релиз системы виртуализации &lt;a href="http://www.opennet.ru/opennews/art.shtml?num=34830"&gt;VirtualBox 4.2.0&lt;/a&gt;&lt;/li&gt;
+	&lt;/ul&gt;
+
+
+	&lt;p&gt;&lt;a href="http://cdn.radio-t.com/rt_podcast306.mp3"&gt;аудио&lt;/a&gt; ● &lt;a href="http://cdn.radio-t.com/torrents/rt_podcast306.mp3.torrent"&gt;radio-t.torrent&lt;/a&gt; ● &lt;a href="http://chat.radio-t.com/logs/radio-t-306.html"&gt;лог чата&lt;/a&gt; ● &lt;a href="http://wiki.radio-t.com/%D0%92%D1%8B%D0%BF%D1%83%D1%81%D0%BA_306"&gt;wiki&lt;/a&gt;&lt;audio src="http://cdn.radio-t.com/rt_podcast306.mp3" preload="none"&gt;&lt;/audio&gt;&lt;/p&gt;
+      </description>
+      <author>podcast@radio-t.com (Umputun, Bobuk, Gray, Ksenks)
+      </author>
+      <enclosure url="http://cdn.radio-t.com/rt_podcast306.mp3"
+		 length="81781990" type="audio/mpeg" />
+      <media:content url="http://cdn.radio-t.com/rt_podcast306.mp3"
+		     fileSize="81781990" type="audio/mpeg" />
+      <itunes:explicit>no
+      </itunes:explicit>
+      <itunes:subtitle> Большое шоу от Apple и что там не так iPhone 5 скучно но
+      солидно Открыты двери для Nokia и Samsung Худшее из лучшего Большой и
+      другой экран для разработчиков ПадениеGoDaddy это не атака GoDaddy просит
+	прощения iMac от HP. Что это было? Релиз системы вирт
+      </itunes:subtitle>
+      <itunes:author>Umputun, Bobuk, Gray, Ksenks
+      </itunes:author>
+      <itunes:summary> Большое шоу от Apple и что там не так iPhone 5 скучно но
+      солидно Открыты двери для Nokia и Samsung Худшее из лучшего Большой и
+      другой экран для разработчиков ПадениеGoDaddy это не атака GoDaddy просит
+      прощения iMac от HP. Что это было? Релиз системы виртуализации VirtualBox
+	4.2.0 аудио ● radio-t.torrent ● лог чата ● wiki
+      </itunes:summary>
+      <itunes:keywords>hitech,russian,radiot,tech,news,радио
+      </itunes:keywords>
+    </item>
+    <item>
+      <title>Радио-Т 305
+      </title>
+      <link>http://www.radio-t.com/p/2012/09/08/podcast-305/
+      </link>
+      <pubDate>Sat, 08 Sep 2012 15:46:00 PDT
+      </pubDate>
+      <guid isPermaLink="false">http://www.radio-t.com/p/2012/09/08/podcast-305
+      </guid>
+      <description>&lt;p&gt;&lt;img src="http://www.radio-t.com/images/radio-t/rt305.jpg" alt="" /&gt;&lt;/p&gt;
+
+	&lt;ul&gt;
+	&lt;li&gt;Google Chrome &lt;a href="http://habrahabr.ru/post/150869/"&gt;исполнилось четыре года&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://gizmodo.com/5941083/amazons-new-kindle-avalanche-everything-you-need-to-know?utm_campaign=socialflow_gizmodo_twitter"&gt;Amazon представил&lt;/a&gt; новые киндлы&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://gizmodo.com/5940654/nokia-lumia-920-hands-on-you-really-want-this-thing-but-enough-to-switch"&gt;Nokia Lumia 920&lt;/a&gt; прелестен&lt;/li&gt;
+	&lt;li&gt;Вырубили топором &lt;a href="http://mashable.com/2012/09/05/motorola-razr-hd/"&gt;Motorola Unveils Razr HD&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://techcrunch.com/2012/09/07/the-razr-m-motorolas-clever-answer-to-the-99-iphone-4s/"&gt;RAZR M за $99&lt;/a&gt; еще один убийца iPhone&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://news.cnet.com/8301-17852_3-57506127-71/iphone-5-clone-maker-to-sue-apple-over-um-iphone-5-patent/"&gt;Клоне iPhone 5&lt;/a&gt; был самый первый и самый настоящий&lt;/li&gt;
+	&lt;li&gt;Клиент &lt;a href="http://techcrunch.com/2012/09/06/reportedly-development-to-cease-for-twitters-mac-client/"&gt;Twitter для Mac&lt;/a&gt; прикроют&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://news.cnet.com/8301-1023_3-57507026-93/twitter-introduces-embeddable-tweet-stream-tool/"&gt;Tweet-stream&lt;/a&gt; для веба&lt;/li&gt;
+	&lt;li&gt;Пришло время &lt;a href="http://www.scientificamerican.com/article.cfm?id=computer-game-for-security"&gt;забыть пароли.&lt;/a&gt;&lt;/li&gt;
+	&lt;/ul&gt;
+
+
+	&lt;p&gt;&lt;a href="http://cdn.radio-t.com/rt_podcast305.mp3"&gt;аудио&lt;/a&gt; ● &lt;a href="http://cdn.radio-t.com/torrents/rt_podcast305.mp3.torrent"&gt;radio-t.torrent&lt;/a&gt; ● &lt;a href="http://chat.radio-t.com/logs/radio-t-305.html"&gt;лог чата&lt;/a&gt; ● &lt;a href="http://wiki.radio-t.com/%D0%92%D1%8B%D0%BF%D1%83%D1%81%D0%BA_305"&gt;wiki&lt;/a&gt;&lt;audio src="http://cdn.radio-t.com/rt_podcast305.mp3" preload="none"&gt;&lt;/audio&gt;&lt;/p&gt;
+      </description>
+      <author>podcast@radio-t.com (Umputun, Bobuk, Gray, Ksenks)
+      </author>
+      <enclosure url="http://cdn.radio-t.com/rt_podcast305.mp3"
+		 length="77543100" type="audio/mpeg" />
+      <media:content url="http://cdn.radio-t.com/rt_podcast305.mp3"
+		     fileSize="77543100" type="audio/mpeg" />
+      <itunes:explicit>no
+      </itunes:explicit>
+      <itunes:subtitle> Google Chrome исполнилось четыре года Amazon представил
+      новые киндлы Nokia Lumia 920 прелестен Вырубили топором Motorola Unveils
+      Razr HD RAZR M за $99 еще один убийца iPhone Клоне iPhone 5 был самый
+	первый и самый настоящий Клиент Twitter для Mac прикрою
+      </itunes:subtitle>
+      <itunes:author>Umputun, Bobuk, Gray, Ksenks
+      </itunes:author>
+      <itunes:summary> Google Chrome исполнилось четыре года Amazon представил
+      новые киндлы Nokia Lumia 920 прелестен Вырубили топором Motorola Unveils
+      Razr HD RAZR M за $99 еще один убийца iPhone Клоне iPhone 5 был самый
+      первый и самый настоящий Клиент Twitter для Mac прикроют Tweet-stream для
+	веба Пришло время забыть пароли. аудио ● radio-t.torrent ● лог чата ● wiki
+      </itunes:summary>
+      <itunes:keywords>hitech,russian,radiot,tech,news,радио
+      </itunes:keywords>
+    </item>
+    <item>
+      <title>Радио-Т 304
+      </title>
+      <link>http://www.radio-t.com/p/2012/09/01/podcast-304/
+      </link>
+      <pubDate>Sat, 01 Sep 2012 15:34:00 PDT
+      </pubDate>
+      <guid isPermaLink="false">http://www.radio-t.com/p/2012/09/01/podcast-304
+      </guid>
+      <description>&lt;p&gt;&lt;img src="http://www.radio-t.com/images/radio-t/rt304.jpg" alt="" /&gt;&lt;/p&gt;
+
+	&lt;ul&gt;
+	&lt;li&gt;Релиз &lt;a href="http://www.opennet.ru/opennews/art.shtml?num=34702"&gt;MongoDB 2.2&lt;/a&gt; - что новенького&lt;/li&gt;
+	&lt;li&gt;&lt;a href="https://github.com/zenexity/ReactiveMongo"&gt;ReactiveMongo&lt;/a&gt; в ассортименте&lt;/li&gt;
+	&lt;li&gt;Typesafe &lt;a href="http://www.forbes.com/sites/petercohan/2012/08/30/typesafes-300-growth-targets-6-billion-java-market/"&gt;вырос на 300%&lt;/a&gt; и присматривается к рынку Java&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://www.theserverside.com/feature/Disruptive-forces-in-Java-Is-Scala-the-new-Spring-framework"&gt;Scala как новый Spring&lt;/a&gt; и почему это страшно&lt;/li&gt;
+	&lt;li&gt;Почему &lt;a href="http://harmful.cat-v.org/software/OO_programming/why_oo_sucks"&gt;OOP ужасен&lt;/a&gt; полностью и по частям&lt;/li&gt;
+	&lt;li&gt;Так &lt;a href="http://www.enrico-franchi.org/2012/08/does-object-oriented-programming-really.html"&gt;неужели&lt;/a&gt; он так уж плох?&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://zishanbilal.wordpress.com/2011/04/28/design-patterns-by-examples-decorator-pattern/"&gt;Decorator Pattern&lt;/a&gt; для простых программистов&lt;/li&gt;
+	&lt;/ul&gt;
+
+
+	&lt;p&gt;&lt;a href="http://cdn.radio-t.com/rt_podcast304.mp3"&gt;аудио&lt;/a&gt; ● &lt;a href="http://cdn.radio-t.com/torrents/rt_podcast304.mp3.torrent"&gt;radio-t.torrent&lt;/a&gt; ● &lt;a href="http://chat.radio-t.com/logs/radio-t-304.html"&gt;лог чата&lt;/a&gt; ● &lt;a href="http://wiki.radio-t.com/%D0%92%D1%8B%D0%BF%D1%83%D1%81%D0%BA_304"&gt;wiki&lt;/a&gt;&lt;audio src="http://cdn.radio-t.com/rt_podcast304.mp3" preload="none"&gt;&lt;/audio&gt;&lt;/p&gt;
+      </description>
+      <author>podcast@radio-t.com (Umputun, Bobuk, Gray, Ksenks)
+      </author>
+      <enclosure url="http://cdn.radio-t.com/rt_podcast304.mp3"
+		 length="80003312" type="audio/mpeg" />
+      <media:content url="http://cdn.radio-t.com/rt_podcast304.mp3"
+		     fileSize="80003312" type="audio/mpeg" />
+      <itunes:explicit>no
+      </itunes:explicit>
+      <itunes:subtitle> Релиз MongoDB 2.2 - что новенького ReactiveMongo в
+      ассортименте Typesafe вырос на 300% и присматривается к рынку Java Scala
+      как новый Spring и почему это страшно Почему OOP ужасен полностью и по
+	частям Так неужели он так уж плох? Decorator Pattern для пр
+      </itunes:subtitle>
+      <itunes:author>Umputun, Bobuk, Gray, Ksenks
+      </itunes:author>
+      <itunes:summary> Релиз MongoDB 2.2 - что новенького ReactiveMongo в
+      ассортименте Typesafe вырос на 300% и присматривается к рынку Java Scala
+      как новый Spring и почему это страшно Почему OOP ужасен полностью и по
+      частям Так неужели он так уж плох? Decorator Pattern для простых
+	программистов аудио ● radio-t.torrent ● лог чата ● wiki
+      </itunes:summary>
+      <itunes:keywords>hitech,russian,radiot,tech,news,радио
+      </itunes:keywords>
+    </item>
+    <item>
+      <title>Радио-Т 303
+      </title>
+      <link>http://www.radio-t.com/p/2012/08/25/podcast-303/
+      </link>
+      <pubDate>Sat, 25 Aug 2012 16:06:00 PDT
+      </pubDate>
+      <guid isPermaLink="false">http://www.radio-t.com/p/2012/08/25/podcast-303
+      </guid>
+      <description>&lt;p&gt;&lt;img src="http://www.radio-t.com/images/radio-t/rt303.jpg" alt="" /&gt;&lt;/p&gt;
+
+	&lt;ul&gt;
+	&lt;li&gt;&lt;a href="http://www.engadget.com/2012/08/24/apple-v-samsung-decision/"&gt;Apple против Samsung&lt;/a&gt; - есть решение&lt;/li&gt;
+	&lt;li&gt;И &lt;a href="http://online.wsj.com/article/SB10000872396390444812704577610012314155098.html"&gt;Android теперь бояться&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;Очень привлекательный &lt;a href="http://www.backupcentral.com/mr-backup-blog-mainmenu-47/13-mr-backup-blog/404-amazon-glacier-release.html"&gt;Amazon Glacier&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://www.androidpolice.com/2012/08/21/samsung-galaxy-note-10-1-review-an-embarrassing-lazy-arrogant-money-grab/"&gt;Samsung Galaxy Note 10.1&lt;/a&gt; уныл совершенно&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://www.smh.com.au/digital-life/digital-life-news/store-wars-samsung-apple-gadgets-at-10-paces-20120823-24njn.html"&gt;Samsung открыл&lt;/a&gt; Apple store&lt;/li&gt;
+	&lt;li&gt;Продвижение &lt;a href="http://habrahabr.ru/post/149878/"&gt;GTD&lt;/a&gt; и адатация под реалии&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://gizmodo.com/5935201/the-internet-is-terrible-for-the-sex-industry-no-really"&gt;Sex индустрия&lt;/a&gt; страдает от интернетов&lt;/li&gt;
+	&lt;li&gt;Все не так c &lt;a href="http://beust.com/weblog/2012/08/19/a-note-on-null-pointers/"&gt;null pointers&lt;/a&gt;&lt;/li&gt;
+	&lt;/ul&gt;
+
+
+	&lt;p&gt;&lt;a href="http://cdn.radio-t.com/rt_podcast303.mp3"&gt;аудио&lt;/a&gt; ● &lt;a href="http://cdn.radio-t.com/torrents/rt_podcast303.mp3.torrent"&gt;radio-t.torrent&lt;/a&gt; ● &lt;a href="http://chat.radio-t.com/logs/radio-t-303.html"&gt;лог чата&lt;/a&gt; ● &lt;a href="http://wiki.radio-t.com/%D0%92%D1%8B%D0%BF%D1%83%D1%81%D0%BA_303"&gt;wiki&lt;/a&gt;&lt;audio src="http://cdn.radio-t.com/rt_podcast303.mp3" preload="none"&gt;&lt;/audio&gt;&lt;/p&gt;
+      </description>
+      <author>podcast@radio-t.com (Umputun, Bobuk, Gray, Ksenks)
+      </author>
+      <enclosure url="http://cdn.radio-t.com/rt_podcast303.mp3"
+		 length="83110839" type="audio/mpeg" />
+      <media:content url="http://cdn.radio-t.com/rt_podcast303.mp3"
+		     fileSize="83110839" type="audio/mpeg" />
+      <itunes:explicit>no
+      </itunes:explicit>
+      <itunes:subtitle> Apple против Samsung - есть решение И Android теперь
+      бояться Очень привлекательный Amazon Glacier Samsung Galaxy Note 10.1 уныл
+      совершенно Samsung открыл Apple store Продвижение GTD и адатация под
+	реалии Sex индустрия страдает от интернетов Все не так c
+      </itunes:subtitle>
+      <itunes:author>Umputun, Bobuk, Gray, Ksenks
+      </itunes:author>
+      <itunes:summary> Apple против Samsung - есть решение И Android теперь
+      бояться Очень привлекательный Amazon Glacier Samsung Galaxy Note 10.1 уныл
+      совершенно Samsung открыл Apple store Продвижение GTD и адатация под
+      реалии Sex индустрия страдает от интернетов Все не так c null pointers
+	аудио ● radio-t.torrent ● лог чата ● wiki
+      </itunes:summary>
+      <itunes:keywords>hitech,russian,radiot,tech,news,радио
+      </itunes:keywords>
+    </item>
+    <item>
+      <title>Радио-Т 302
+      </title>
+      <link>http://www.radio-t.com/p/2012/08/18/podcast-302/
+      </link>
+      <pubDate>Sat, 18 Aug 2012 14:30:00 PDT
+      </pubDate>
+      <guid isPermaLink="false">http://www.radio-t.com/p/2012/08/18/podcast-302
+      </guid>
+      <description>&lt;p&gt;&lt;img src="http://www.radio-t.com/images/radio-t/rt302.jpg" alt="" /&gt;&lt;/p&gt;
+
+	&lt;ul&gt;
+	&lt;li&gt;Как &lt;a href="http://addmeto.cc/post/2012-08-14-trust-no-one/"&gt;зашурупили&lt;/a&gt; Apple-сообщество&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://www.readwriteweb.com/archives/twitter-to-developers-display-tweets-our-way-or-else.php"&gt;Twitter обижает&lt;/a&gt;  разработчиков&lt;/li&gt;
+	&lt;li&gt;Что значат &lt;a href="http://www.marco.org/2012/08/16/twitter-api-changes"&gt;новые API законы&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://www.infoworld.com/t/java-programming/oracle-has-been-good-java-despite-early-fears-200200"&gt;Oracle не оправдал&lt;/a&gt; наших страхов&lt;/li&gt;
+	&lt;li&gt;Первые &lt;a href="http://techcrunch.com/2012/08/17/marissa-mayers-30-days-in/"&gt;30 дней Марисы&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://www.businessinsider.com/twitter-cofounders-unveil-their-newest-project-an-online-publishing-platform-called-medium-2012-8"&gt;Medium&lt;/a&gt; - это что было?&lt;/li&gt;
+	&lt;li&gt;Империя добра &lt;a href="http://techcrunch.com/2012/08/17/google-files-new-patent-lawsuit-against-apple-seeks-to-block-iphone-ipad-mac-imports-to-u-s/"&gt;наносит ответный удар&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://www.zdnet.com/apple-is-in-danger-of-being-boring-7000002599/"&gt;Apple уже скучен&lt;/a&gt; и был таким всегда&lt;/li&gt;
+	&lt;li&gt;Что можно сделать &lt;a href="http://www.businessinsider.com/heres-how-apple-is-telling-cable-companies-it-will-make-apple-tv-work-2012-8"&gt;с телевидением&lt;/a&gt; если взяться с умом&lt;/li&gt;
+	&lt;/ul&gt;
+
+
+	&lt;p&gt;&lt;a href="http://cdn.radio-t.com/rt_podcast302.mp3"&gt;аудио&lt;/a&gt; ● &lt;a href="http://cdn.radio-t.com/torrents/rt_podcast302.mp3.torrent"&gt;radio-t.torrent&lt;/a&gt; ● &lt;a href="http://chat.radio-t.com/logs/radio-t-302.html"&gt;лог чата&lt;/a&gt; ● &lt;a href="http://wiki.radio-t.com/%D0%92%D1%8B%D0%BF%D1%83%D1%81%D0%BA_302"&gt;wiki&lt;/a&gt;&lt;audio src="http://cdn.radio-t.com/rt_podcast302.mp3" preload="none"&gt;&lt;/audio&gt;&lt;/p&gt;
+      </description>
+      <author>podcast@radio-t.com (Umputun, Bobuk, Gray, Ksenks)
+      </author>
+      <enclosure url="http://cdn.radio-t.com/rt_podcast302.mp3"
+		 length="73251965" type="audio/mpeg" />
+      <media:content url="http://cdn.radio-t.com/rt_podcast302.mp3"
+		     fileSize="73251965" type="audio/mpeg" />
+      <itunes:explicit>no
+      </itunes:explicit>
+      <itunes:subtitle> Как зашурупили Apple-сообщество Twitter обижает
+      разработчиков Что значат новые API законы Oracle не оправдал наших страхов
+      Первые 30 дней Марисы Medium - это что было? Империя добра наносит
+	ответный удар Apple уже скучен и был таким всегда Что можно сдел
+      </itunes:subtitle>
+      <itunes:author>Umputun, Bobuk, Gray, Ksenks
+      </itunes:author>
+      <itunes:summary> Как зашурупили Apple-сообщество Twitter обижает
+      разработчиков Что значат новые API законы Oracle не оправдал наших страхов
+      Первые 30 дней Марисы Medium - это что было? Империя добра наносит
+      ответный удар Apple уже скучен и был таким всегда Что можно сделать с
+	телевидением если взяться с умом аудио ● radio-t.torrent ● лог чата ● wiki
+      </itunes:summary>
+      <itunes:keywords>hitech,russian,radiot,tech,news,радио
+      </itunes:keywords>
+    </item>
+    <item>
+      <title>Радио-Т 301
+      </title>
+      <link>http://www.radio-t.com/p/2012/08/11/podcast-301/
+      </link>
+      <pubDate>Sat, 11 Aug 2012 17:11:00 PDT
+      </pubDate>
+      <guid isPermaLink="false">http://www.radio-t.com/p/2012/08/11/podcast-301
+      </guid>
+      <description>&lt;p&gt;&lt;img src="http://www.radio-t.com/images/radio-t/rt301.jpg" alt="" /&gt;&lt;/p&gt;
+
+	&lt;ul&gt;
+	&lt;li&gt;Первый в мире сайт отметил &lt;a href="http://habrahabr.ru/post/149226/"&gt;21-ю годовщину&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://www.zdnet.com/sco-is-finally-dead-parrot-dead-7000002357/"&gt;SCO совсем кончился&lt;/a&gt; и это радует&lt;/li&gt;
+	&lt;li&gt;Gmail &lt;a href="http://www.huffingtonpost.com/2012/08/08/gmail-search-results-google_n_1756896.html"&gt;поищет&lt;/a&gt; в самом сокровенном&lt;/li&gt;
+	&lt;li&gt;Как поломали &lt;a href="http://www.wired.com/gadgetlab/2012/08/apple-amazon-mat-honan-hacking/"&gt;Apple и Amazon&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://www.techrepublic.com/blog/security/five-ways-to-protect-yourself-in-a-multi-device-multi-platform-world/8233"&gt;Очевидные методы&lt;/a&gt; защиты&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://arstechnica.com/apple/2012/08/odgaard-i-will-continue-working-on-textmate-as-long-as-i-am-a-mac-user/"&gt;TextMate&lt;/a&gt; уходит&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://www.linux.org.ru/news/opensource/8085759"&gt;Nokia полностью передала разработку Qt&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;Перлы от &lt;a href="http://www.attendly.com/linux-founder-linus-torvalds-delivers-a-smackdown-like-no-other/"&gt;Линуса&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;Mail.ru запустила браузер с &lt;a href="http://thenextweb.com/insider/2012/08/08/russias-mail-ru-launches-internet-a-new-browser-with-web-of-trust-ratings-integrated/?a"&gt;Web of Trust&lt;/a&gt;&lt;/li&gt;
+	&lt;/ul&gt;
+
+
+	&lt;p&gt;&lt;a href="http://cdn.radio-t.com/rt_podcast301.mp3"&gt;аудио&lt;/a&gt; ● &lt;a href="http://cdn.radio-t.com/torrents/rt_podcast301.mp3.torrent"&gt;radio-t.torrent&lt;/a&gt; ● &lt;a href="http://chat.radio-t.com/logs/radio-t-301.html"&gt;лог чата&lt;/a&gt; ● &lt;a href="http://wiki.radio-t.com/%D0%92%D1%8B%D0%BF%D1%83%D1%81%D0%BA_301"&gt;wiki&lt;/a&gt;&lt;audio src="http://cdn.radio-t.com/rt_podcast301.mp3" preload="none"&gt;&lt;/audio&gt;&lt;/p&gt;
+      </description>
+      <author>podcast@radio-t.com (Umputun, Bobuk, Gray, Ksenks)
+      </author>
+      <enclosure url="http://cdn.radio-t.com/rt_podcast301.mp3"
+		 length="71593451" type="audio/mpeg" />
+      <media:content url="http://cdn.radio-t.com/rt_podcast301.mp3"
+		     fileSize="71593451" type="audio/mpeg" />
+      <itunes:explicit>no
+      </itunes:explicit>
+      <itunes:subtitle> Первый в мире сайт отметил 21-ю годовщину SCO совсем
+      кончился и это радует Gmail поищет в самом сокровенном Как поломали Apple
+      и Amazon Очевидные методы защиты TextMate уходит Nokia полностью передала
+	разработку Qt Перлы от Линуса Mail.ru запустила брауз
+      </itunes:subtitle>
+      <itunes:author>Umputun, Bobuk, Gray, Ksenks
+      </itunes:author>
+      <itunes:summary> Первый в мире сайт отметил 21-ю годовщину SCO совсем
+      кончился и это радует Gmail поищет в самом сокровенном Как поломали Apple
+      и Amazon Очевидные методы защиты TextMate уходит Nokia полностью передала
+      разработку Qt Перлы от Линуса Mail.ru запустила браузер с Web of Trust
+	аудио ● radio-t.torrent ● лог чата ● wiki
+      </itunes:summary>
+      <itunes:keywords>hitech,russian,radiot,tech,news,радио
+      </itunes:keywords>
+    </item>
+    <item>
+      <title>Радио-Т 300
+      </title>
+      <link>http://www.radio-t.com/p/2012/08/04/podcast-300/
+      </link>
+      <pubDate>Sat, 04 Aug 2012 18:35:00 PDT
+      </pubDate>
+      <guid isPermaLink="false">http://www.radio-t.com/p/2012/08/04/podcast-300
+      </guid>
+      <description>&lt;p&gt;&lt;img src="/images/radio-t/rt300.jpg" alt="" /&gt;&lt;/p&gt;
+
+	&lt;ul&gt;
+	&lt;li&gt;Это катастрофа - &lt;a href="http://www.networkworld.com/community/blog/nokia-preps-sell-qt-not-elop-screws-it"&gt;Nokia продаст Qt&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://radar.oreilly.com/2012/07/open-source-won.html"&gt;Open source&lt;/a&gt; победил всех&lt;/li&gt;
+	&lt;li&gt;Вина и самобичевание против &lt;a href="http://www.hanselman.com/blog/ProductivityVsGuiltAndSelfLoathing.aspx"&gt;производительности труда&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;Microsoft &lt;a href="http://gizmodo.com/5930358/microsoft-did-the-impossible-the-new-hotmail-is-fantastic"&gt;сделали невероятное&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;Фромальная, нo удобная модель &lt;a href="http://blog.sourcetreeapp.com/2012/08/01/smart-branching-with-sourcetree-and-git-flow/"&gt;Git-flow и HG-flow&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;Почему TCP отстой &lt;a href="http://ayende.com/blog/157282/why-tcp-is-evil-and-http-is-king?key=e3ca0477-7b77-4695-b3b6-788e857003ce"&gt;а HTTP&lt;/a&gt; наше все&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://www.radio-t.com/p/2012/08/04/podarki-k-iubilieiu/"&gt;Раздача подарков&lt;/a&gt; в процессе подкаста и после подкаста&lt;/li&gt;
+	&lt;/ul&gt;
+
+
+	&lt;p&gt;&lt;a href="http://cdn.radio-t.com/rt_podcast300.mp3"&gt;аудио&lt;/a&gt; ● &lt;a href="http://cdn.radio-t.com/torrents/rt_podcast300.mp3.torrent"&gt;radio-t.torrent&lt;/a&gt;  ● &lt;a href="http://wiki.radio-t.com/%D0%92%D1%8B%D0%BF%D1%83%D1%81%D0%BA_300"&gt;wiki&lt;/a&gt;&lt;audio src="http://cdn.radio-t.com/rt_podcast300.mp3" preload="none"&gt;&lt;/audio&gt;&lt;/p&gt;
+      </description>
+      <author>podcast@radio-t.com (Umputun, Bobuk, Gray, Ksenks)
+      </author>
+      <enclosure url="http://cdn.radio-t.com/rt_podcast300.mp3"
+		 length="87857810" type="audio/mpeg" />
+      <media:content url="http://cdn.radio-t.com/rt_podcast300.mp3"
+		     fileSize="87857810" type="audio/mpeg" />
+      <itunes:explicit>no
+      </itunes:explicit>
+      <itunes:subtitle> Это катастрофа - Nokia продаст Qt Open source победил
+      всех Вина и самобичевание против производительности труда Microsoft
+      сделали невероятное Фромальная, нo удобная модель Git-flow и HG-flow
+	Почему TCP отстой а HTTP наше все Раздача подарков в процессе п
+      </itunes:subtitle>
+      <itunes:author>Umputun, Bobuk, Gray, Ksenks
+      </itunes:author>
+      <itunes:summary> Это катастрофа - Nokia продаст Qt Open source победил
+      всех Вина и самобичевание против производительности труда Microsoft
+      сделали невероятное Фромальная, нo удобная модель Git-flow и HG-flow
+      Почему TCP отстой а HTTP наше все Раздача подарков в процессе подкаста и
+	после подкаста аудио ● radio-t.torrent ● wiki
+      </itunes:summary>
+      <itunes:keywords>hitech,russian,radiot,tech,news,радио
+      </itunes:keywords>
+    </item>
+    <item>
+      <title>Радио-Т 299
+      </title>
+      <link>http://www.radio-t.com/p/2012/07/28/podcast-299/
+      </link>
+      <pubDate>Sat, 28 Jul 2012 15:18:00 PDT
+      </pubDate>
+      <guid isPermaLink="false">http://www.radio-t.com/p/2012/07/28/podcast-299
+      </guid>
+      <description>&lt;p&gt;&lt;img src="/images/radio-t/rt299.jpg" alt="" /&gt;&lt;/p&gt;
+
+	&lt;ul&gt;
+	&lt;li&gt;Поздравляем с днем &lt;a href="http://habrahabr.ru/company/ideco/blog/148555/"&gt;системного администратора&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;OS X 10.8 &lt;a href="http://mac.appstorm.net/reviews/utilities/os-x-10-8-mountain-lion-review/"&gt;Mountain Lion&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;Twitter &lt;a href="http://www.zdnet.com/twitter-malware-warning-its-you-on-photo-or-its-about-you-7000001736/"&gt;предупредил&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;Twitter &lt;a href="http://mashable.com/2012/07/26/twitter-apology/"&gt;извинился&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;Azure &lt;a href="http://thenextweb.com/microsoft/2012/07/28/microsoft-azure-went-down-in-western-europe-due-to-misconfigured-network-device/"&gt;сильно упал&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://gigaom.com/2012/07/21/freemium-has-run-its-course/"&gt;Freemium&lt;/a&gt; отходит&lt;/li&gt;
+	&lt;li&gt;Темы наших слушателей&lt;/li&gt;
+	&lt;/ul&gt;
+
+
+	&lt;p&gt;&lt;a href="http://cdn.radio-t.com/rt_podcast299.mp3"&gt;аудио&lt;/a&gt; ● &lt;a href="http://cdn.radio-t.com/torrents/rt_podcast299.mp3.torrent"&gt;radio-t.torrent&lt;/a&gt; ● &lt;a href="http://chat.radio-t.com/logs/radio-t-299.html"&gt;лог чата&lt;/a&gt; ● &lt;a href="http://wiki.radio-t.com/%D0%92%D1%8B%D0%BF%D1%83%D1%81%D0%BA_299"&gt;wiki&lt;/a&gt;&lt;audio src="http://cdn.radio-t.com/rt_podcast299.mp3" preload="none"&gt;&lt;/audio&gt;&lt;/p&gt;
+      </description>
+      <author>podcast@radio-t.com (Umputun, Bobuk, Gray, Ksenks)
+      </author>
+      <enclosure url="http://cdn.radio-t.com/rt_podcast299.mp3"
+		 length="75001124" type="audio/mpeg" />
+      <media:content url="http://cdn.radio-t.com/rt_podcast299.mp3"
+		     fileSize="75001124" type="audio/mpeg" />
+      <itunes:explicit>no
+      </itunes:explicit>
+      <itunes:subtitle> Поздравляем с днем системного администратора OS X 10.8
+      Mountain Lion Twitter предупредил Twitter извинился Azure сильно упал
+	Freemium отходит Темы наших слушателей аудио ● radio-t.torrent ● лог чата
+	● wiki
+      </itunes:subtitle>
+      <itunes:author>Umputun, Bobuk, Gray, Ksenks
+      </itunes:author>
+      <itunes:summary> Поздравляем с днем системного администратора OS X 10.8
+      Mountain Lion Twitter предупредил Twitter извинился Azure сильно упал
+	Freemium отходит Темы наших слушателей аудио ● radio-t.torrent ● лог чата
+	● wiki
+      </itunes:summary>
+      <itunes:keywords>hitech,russian,radiot,tech,news,радио
+      </itunes:keywords>
+    </item>
+    <item>
+      <title>Радио-Т 298
+      </title>
+      <link>http://www.radio-t.com/p/2012/07/21/podcast-298/
+      </link>
+      <pubDate>Sat, 21 Jul 2012 14:51:00 PDT
+      </pubDate>
+      <guid isPermaLink="false">http://www.radio-t.com/p/2012/07/21/podcast-298
+      </guid>
+      <description>&lt;p&gt;&lt;img src="/images/radio-t/rt298.jpg" alt="" /&gt;&lt;/p&gt;
+
+	&lt;ul&gt;
+	&lt;li&gt;О виртуализации вообще и Parallels в частности.&lt;/li&gt;
+	&lt;li&gt;Марисса Майер стала &lt;a href="http://habrahabr.ru/post/147918/"&gt;новым СЕО Yahoo&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://www.dgl.ru/news/ibm-ps2-legenda-otmechaet-25-letie_2102.html"&gt;IBM PS/2&lt;/a&gt; отмечает 25-летие&lt;/li&gt;
+	&lt;li&gt;Разорение &lt;a href="http://www.latimes.com/business/la-fi-microsoft-earns-20120719,0,3760896.story"&gt;Microsoft&lt;/a&gt;. Все не так плохо&lt;/li&gt;
+	&lt;li&gt;«Лаборатория Касперского» разрабатывает &lt;a href="http://safe.cnews.ru/news/top/index.shtml?2012/07/19/496956"&gt;собственную ОС&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;Теперь они убьют &lt;a href="http://arstechnica.com/information-technology/2012/07/you-shall-know-google-by-its-trail-of-dead-a-sparrow-users-lament/"&gt;Sparrow&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;Приоткрытие &lt;a href="http://mashable.com/2012/07/19/google-plus-api-businesses/"&gt;Google+ API&lt;/a&gt;&lt;/li&gt;
+	&lt;/ul&gt;
+
+
+	&lt;p&gt;&lt;a href="http://cdn.radio-t.com/rt_podcast298.mp3"&gt;аудио&lt;/a&gt; ● &lt;a href="http://cdn.radio-t.com/torrents/rt_podcast298.mp3.torrent"&gt;radio-t.torrent&lt;/a&gt; ● &lt;a href="http://chat.radio-t.com/logs/radio-t-298.html"&gt;лог чата&lt;/a&gt; ● &lt;a href="http://wiki.radio-t.com/%D0%92%D1%8B%D0%BF%D1%83%D1%81%D0%BA_298"&gt;wiki&lt;/a&gt;&lt;audio src="http://cdn.radio-t.com/rt_podcast298.mp3" preload="none"&gt;&lt;/audio&gt;&lt;/p&gt;
+      </description>
+      <author>podcast@radio-t.com (Umputun, Bobuk, Gray, Ksenks)
+      </author>
+      <enclosure url="http://cdn.radio-t.com/rt_podcast298.mp3"
+		 length="82314365" type="audio/mpeg" />
+      <media:content url="http://cdn.radio-t.com/rt_podcast298.mp3"
+		     fileSize="82314365" type="audio/mpeg" />
+      <itunes:explicit>no
+      </itunes:explicit>
+      <itunes:subtitle> О виртуализации вообще и Parallels в частности. Марисса
+      Майер стала новым СЕО Yahoo IBM PS/2 отмечает 25-летие Разорение
+      Microsoft. Все не так плохо «Лаборатория Касперского» разрабатывает
+	собственную ОС Теперь они убьют Sparrow ПриоткрытиеGoogle+ API а
+      </itunes:subtitle>
+      <itunes:author>Umputun, Bobuk, Gray, Ksenks
+      </itunes:author>
+      <itunes:summary> О виртуализации вообще и Parallels в частности. Марисса
+      Майер стала новым СЕО Yahoo IBM PS/2 отмечает 25-летие Разорение
+      Microsoft. Все не так плохо «Лаборатория Касперского» разрабатывает
+      собственную ОС Теперь они убьют Sparrow Приоткрытие Google+ API аудио ●
+	radio-t.torrent ● лог чата ● wiki
+      </itunes:summary>
+      <itunes:keywords>hitech,russian,radiot,tech,news,радио
+      </itunes:keywords>
+    </item>
+    <item>
+      <title>Радио-Т 297
+      </title>
+      <link>http://www.radio-t.com/p/2012/07/14/podcast-297/
+      </link>
+      <pubDate>Sat, 14 Jul 2012 16:47:00 PDT
+      </pubDate>
+      <guid isPermaLink="false">http://www.radio-t.com/p/2012/07/14/podcast-297
+      </guid>
+      <description>&lt;p&gt;&lt;img src="/images/radio-t/rt297.jpg" alt="" /&gt;&lt;/p&gt;
+
+	&lt;ul&gt;
+	&lt;li&gt;Не в тему от &lt;a href="http://www.scottberkun.com/blog/2010/woody-guthries-new-years-resolutions/"&gt;Woody Guthrie&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;Взлом &lt;a href="http://techcrunch.com/2012/07/12/yahoo-confirms-apologizes-for-the-email-hack-says-still-fixing-plus-check-if-you-were-impacted-"&gt;Yahoo&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;Взлом &lt;a href="http://habrahabr.ru/post/147593/"&gt;Formspring&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;Фильтрация рунета &lt;a href="http://hi-tech.mail.ru/news/misc/runet_filtration.html"&gt;одобрена Госдумой&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://gizmodo.com/5925586/digg-sells-itself-for-pathetic-pocketchange-500000"&gt;Digg всего за $500,000&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;Смелый русский хаккер против &lt;a href="http://www.macworld.com/article/1167677/hacker_exploits_ios_flaw_for_free_in_app_purchases.html"&gt;iOS in-app покупок&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;Британский судья &lt;a href="http://habrahabr.ru/post/147425/"&gt;оценил iPad&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;Github &lt;a href="http://habrahabr.ru/post/147464/"&gt;получает инвестиции&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;Построим наш &lt;a href="http://gigaom.com/2012/07/04/we-could-build-an-open-twitter-but-would-anyone-use-it/"&gt;открытый Twitter&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;Новая революция через &lt;a href="http://blog.bittorrent.com/2012/07/06/introducing-bittorrent-torque/"&gt;BitTorrent Torque&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;Темы наших слушателей&lt;/li&gt;
+	&lt;/ul&gt;
+
+
+	&lt;p&gt;&lt;a href="http://cdn.radio-t.com/rt_podcast297.mp3"&gt;аудио&lt;/a&gt; ● &lt;a href="http://cdn.radio-t.com/torrents/rt_podcast297.mp3.torrent"&gt;radio-t.torrent&lt;/a&gt; ● &lt;a href="http://chat.radio-t.com/logs/radio-t-297.html"&gt;лог чата&lt;/a&gt; ● &lt;a href="http://wiki.radio-t.com/%D0%92%D1%8B%D0%BF%D1%83%D1%81%D0%BA_297"&gt;wiki&lt;/a&gt;&lt;audio src="http://cdn.radio-t.com/rt_podcast297.mp3" preload="none"&gt;&lt;/audio&gt;&lt;/p&gt;
+      </description>
+      <author>podcast@radio-t.com (Umputun, Bobuk, Gray, Ksenks)
+      </author>
+      <enclosure url="http://cdn.radio-t.com/rt_podcast297.mp3"
+		 length="84050463" type="audio/mpeg" />
+      <media:content url="http://cdn.radio-t.com/rt_podcast297.mp3"
+		     fileSize="84050463" type="audio/mpeg" />
+      <itunes:explicit>no
+      </itunes:explicit>
+      <itunes:subtitle> Не в тему от Woody Guthrie Взлом Yahoo Взлом Formspring
+      Фильтрация рунета одобрена Госдумой Digg всего за $500,000 Смелый русский
+      хаккер против iOS in-app покупок Британский судья оценил iPad Github
+	получает инвестиции Построим наш открытыйTwitter Новая
+      </itunes:subtitle>
+      <itunes:author>Umputun, Bobuk, Gray, Ksenks
+      </itunes:author>
+      <itunes:summary> Не в тему от Woody Guthrie Взлом Yahoo Взлом Formspring
+      Фильтрация рунета одобрена Госдумой Digg всего за $500,000 Смелый русский
+      хаккер против iOS in-app покупок Британский судья оценил iPad Github
+      получает инвестиции Построим наш открытый Twitter Новая революция через
+	BitTorrent Torque Темы наших слушателей аудио ● radio-t.torrent ● лог чата
+	● wiki
+      </itunes:summary>
+      <itunes:keywords>hitech,russian,radiot,tech,news,радио
+      </itunes:keywords>
+    </item>
+    <item>
+      <title>Радио-Т 296
+      </title>
+      <link>http://www.radio-t.com/p/2012/07/07/podcast-296/
+      </link>
+      <pubDate>Sat, 07 Jul 2012 16:11:00 PDT
+      </pubDate>
+      <guid isPermaLink="false">http://www.radio-t.com/p/2012/07/07/podcast-296
+      </guid>
+      <description>&lt;p&gt;&lt;img src="/images/radio-t/rt296.png" alt="" /&gt;&lt;/p&gt;
+
+	&lt;ul&gt;
+	&lt;li&gt;Очередной, но странный &lt;a href="http://redmonk.com/sogrady/2012/02/08/language-rankings-2-2012/"&gt;рейтинг языков&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;Плохое и хорошее об &lt;a href="http://eclipsesource.com/blogs/2012/06/27/top-10-eclipse-juno-features/"&gt;Eclipse Juno&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;Одна лишняя &lt;a href="http://landslidecoding.blogspot.com/2012/07/linuxs-leap-second-deadlocks.html"&gt;секунда&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://habrahabr.ru/post/147257/"&gt;PHP&lt;/a&gt; гораздо лучше чем все остальное&lt;/li&gt;
+	&lt;li&gt;Что такое &lt;a href="http://whatismarkdown.com/"&gt;Markdown&lt;/a&gt; и зачем он нужен&lt;/li&gt;
+	&lt;li&gt;Разговоры о &lt;a href="http://myronmars.to/n/dev-blog/2012/06/thoughts-on-mocking"&gt;моках&lt;/a&gt; и их пользе&lt;/li&gt;
+	&lt;li&gt;Питон это не для того, а для &lt;a href="http://lateral.netmanagers.com.ar/weblog/posts/python-is-not-a-configuration-file-format.html"&gt;этого&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://www.radio-t.com/p/2012/07/03/prep-296/"&gt;Темы&lt;/a&gt; наших слушателей&lt;/li&gt;
+	&lt;/ul&gt;
+
+
+	&lt;p&gt;&lt;a href="http://cdn.radio-t.com/rt_podcast296.mp3"&gt;аудио&lt;/a&gt; ● &lt;a href="http://cdn.radio-t.com/torrents/rt_podcast296.mp3.torrent"&gt;radio-t.torrent&lt;/a&gt; ● &lt;a href="http://chat.radio-t.com/logs/radio-t-296.html"&gt;лог чата&lt;/a&gt; ● &lt;a href="http://wiki.radio-t.com/%D0%92%D1%8B%D0%BF%D1%83%D1%81%D0%BA_296"&gt;wiki&lt;/a&gt;&lt;audio src="http://cdn.radio-t.com/rt_podcast296.mp3" preload="none"&gt;&lt;/audio&gt;&lt;/p&gt;
+      </description>
+      <author>podcast@radio-t.com (Umputun, Bobuk, Gray, Ksenks)
+      </author>
+      <enclosure url="http://cdn.radio-t.com/rt_podcast296.mp3"
+		 length="86783655" type="audio/mpeg" />
+      <media:content url="http://cdn.radio-t.com/rt_podcast296.mp3"
+		     fileSize="86783655" type="audio/mpeg" />
+      <itunes:explicit>no
+      </itunes:explicit>
+      <itunes:subtitle> Очередной, но странный рейтинг языков Плохое и хорошее
+      об Eclipse Juno Одна лишняя секунда PHP гораздо лучше чем все остальное
+      Что такое Markdown и зачем он нужен Разговоры о моках и их пользе Питон
+	это не для того, а для этого Темы наших слушателей ауди
+      </itunes:subtitle>
+      <itunes:author>Umputun, Bobuk, Gray, Ksenks
+      </itunes:author>
+      <itunes:summary> Очередной, но странный рейтинг языков Плохое и хорошее об
+      Eclipse Juno Одна лишняя секунда PHP гораздо лучше чем все остальное Что
+      такое Markdown и зачем он нужен Разговоры о моках и их пользе Питон это не
+	для того, а для этого Темы наших слушателей аудио ● radio-t.torrent ● лог
+	чата ● wiki
+      </itunes:summary>
+      <itunes:keywords>hitech,russian,radiot,tech,news,радио
+      </itunes:keywords>
+    </item>
+    <item>
+      <title>Радио-Т 295
+      </title>
+      <link>http://www.radio-t.com/p/2012/07/01/radio-t-295/
+      </link>
+      <pubDate>Sat, 30 Jun 2012 22:49:00 PDT
+      </pubDate>
+      <guid isPermaLink="false">http://www.radio-t.com/p/2012/07/01/radio-t-295
+      </guid>
+      <description>&lt;p&gt;&lt;img src="http://www.radio-t.com/images/radio-t/rt295.jpeg" alt="" /&gt;&lt;/p&gt;
+
+	&lt;ul&gt;
+	&lt;li&gt;5-летие &lt;a href="http://www.businessinsider.com/heres-what-steve-ballmer-thought-about-the-iphone-five-years-ago-2012-6"&gt;iPhone'а&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;Google &lt;a href="http://habrahabr.ru/post/146650/"&gt;IO 2012&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;Chrome для &lt;a href="http://www.v3.co.uk/v3-uk/news/2188015/google-announces-chrome-ios"&gt;iOS&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://habrahabr.ru/post/146648/"&gt;Android 4.1&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;Google Now&lt;/li&gt;
+	&lt;li&gt;NFC в телефонах&lt;/li&gt;
+	&lt;li&gt;Google &lt;a href="http://habrahabr.ru/post/146649/"&gt;Nexus 7&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://www.readwriteweb.com/archives/will-googles-new-nexus-q-kill-google-tv.php"&gt;Nexus Q&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;Год существования &lt;a href="http://mashable.com/2012/06/28/google-plus-one-year-later/"&gt;Google+&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;Очки &lt;a href="http://habrahabr.ru/post/141422/"&gt;Google&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://www.cloudave.com/20852/why-google-compute-engine-is-the-right-move/"&gt;Compute Engine&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;Релиз &lt;a href="http://www.sublimetext.com/blog/articles/sublime-text-2-0-released"&gt;Sublime Text 2.0&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://techcrunch.com/2012/06/25/its-official-microsoft-confirms-it-has-acquired-yammer-for-1-2-billion-in-cash/"&gt;Yammer&lt;/a&gt; за 1,2 Instaram-a&lt;/li&gt;
+	&lt;/ul&gt;
+
+
+	&lt;p&gt;&lt;a href="http://cdn.radio-t.com/rt_podcast295.mp3"&gt;аудио&lt;/a&gt; ● &lt;a href="http://cdn.radio-t.com/torrents/rt_podcast295.mp3.torrent"&gt;radio-t.torrent&lt;/a&gt; ● &lt;a href="http://chat.radio-t.com/logs/radio-t-295.html"&gt;лог чата&lt;/a&gt; ● &lt;a href="http://wiki.radio-t.com/%D0%92%D1%8B%D0%BF%D1%83%D1%81%D0%BA_295"&gt;wiki&lt;/a&gt;&lt;audio src="http://cdn.radio-t.com/rt_podcast295.mp3" preload="none"&gt;&lt;/audio&gt;&lt;/p&gt;
+      </description>
+      <author>podcast@radio-t.com (Umputun, Bobuk, Gray, Ksenks)
+      </author>
+      <enclosure url="http://cdn.radio-t.com/rt_podcast295.mp3"
+		 length="76560718" type="audio/mpeg" />
+      <media:content url="http://cdn.radio-t.com/rt_podcast295.mp3"
+		     fileSize="76560718" type="audio/mpeg" />
+      <itunes:explicit>no
+      </itunes:explicit>
+      <itunes:subtitle> 5-летие iPhone'а Google IO 2012 Chrome для iOS Android
+      4.1 Google Now NFC в телефонах Google Nexus 7 Nexus Q Год существования
+      Google+ Очки Google Compute Engine Релиз Sublime Text 2.0 Yammer за 1,2
+	Instaram-a аудио ● radio-t.torrent ● лог чата ● wiki
+      </itunes:subtitle>
+      <itunes:author>Umputun, Bobuk, Gray, Ksenks
+      </itunes:author>
+      <itunes:summary> 5-летие iPhone'а Google IO 2012 Chrome для iOS Android
+      4.1 Google Now NFC в телефонах Google Nexus 7 Nexus Q Год существования
+      Google+ Очки Google Compute Engine Релиз Sublime Text 2.0 Yammer за 1,2
+	Instaram-a аудио ● radio-t.torrent ● лог чата ● wiki
+      </itunes:summary>
+      <itunes:keywords>hitech,russian,radiot,tech,news,радио
+      </itunes:keywords>
+    </item>
+    <item>
+      <title>Радио-Т 294
+      </title>
+      <link>http://www.radio-t.com/p/2012/06/23/radio-t-294/
+      </link>
+      <pubDate>Sat, 23 Jun 2012 18:34:00 PDT
+      </pubDate>
+      <guid isPermaLink="false">http://www.radio-t.com/p/2012/06/23/radio-t-294
+      </guid>
+      <description>&lt;p&gt;&lt;img src="http://www.radio-t.com/images/radio-t/rt294.jpeg" alt="" /&gt;&lt;/p&gt;
+
+	&lt;ul&gt;
+	&lt;li&gt;Взлом &lt;a href="http://www.cnews.ru/reviews/index.shtml?2012/06/19/493446"&gt;каждого 10&lt;/a&gt; крупного сайта&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://mashable.com/2012/06/22/flipboard-comes-to-android/"&gt;Flipboard&lt;/a&gt; на Android&lt;/li&gt;
+	&lt;li&gt;Будущее &lt;a href="http://opensignalmaps.com/reports/fragmentation.php"&gt;фрагментации Android&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;Планшеты &lt;a href="http://spectrum.ieee.org/tech-talk/consumer-electronics/portable-devices/the-downsizing-of-microsofts-surface"&gt;Microsoft Surface&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://www.engadget.com/2012/06/18/microsoft-tablet-announced/"&gt;Windows Phone 8&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;NFC в телефонах&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://www.engadget.com/2012/06/20/microsoft-unveils-internet-explorer-10-for-windows-phone-very-s/"&gt;IE10&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;Снижение цен на &lt;a href="http://habrahabr.ru/post/146409/"&gt;Google Maps&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;Проблема с &lt;a href="http://mashable.com/2012/06/21/twitter-outage-not-hacked/"&gt;Twitter&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://www.good.is/post/the-top-10-technology-game-changers-for-the-next-decade"&gt;Численная тема&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;a href="http://arstechnica.com/information-technology/2012/06/linus-torvalds-says-f-k-you-to-nvidia/"&gt;Торвальдс&lt;/a&gt; о NVidia&lt;/li&gt;
+	&lt;li&gt;Миф о разгоне команды Qt&lt;/li&gt;
+	&lt;/ul&gt;
+
+
+	&lt;p&gt;&lt;a href="http://cdn.radio-t.com/rt_podcast294.mp3"&gt;аудио&lt;/a&gt; ● &lt;a href="http://cdn.radio-t.com/torrents/rt_podcast294.mp3.torrent"&gt;radio-t.torrent&lt;/a&gt; ● &lt;a href="http://chat.radio-t.com/logs/radio-t-294.html"&gt;лог чата&lt;/a&gt; ● &lt;a href="http://wiki.radio-t.com/%D0%92%D1%8B%D0%BF%D1%83%D1%81%D0%BA_294"&gt;wiki&lt;/a&gt;&lt;audio src="http://cdn.radio-t.com/rt_podcast294.mp3" preload="none"&gt;&lt;/audio&gt;&lt;/p&gt;
+      </description>
+      <author>podcast@radio-t.com (Umputun, Bobuk, Gray, Ksenks)
+      </author>
+      <enclosure url="http://cdn.radio-t.com/rt_podcast294.mp3"
+		 length="78385633" type="audio/mpeg" />
+      <media:content url="http://cdn.radio-t.com/rt_podcast294.mp3"
+		     fileSize="78385633" type="audio/mpeg" />
+      <itunes:explicit>no
+      </itunes:explicit>
+      <itunes:subtitle> Взлом каждого 10 крупного сайта Flipboard на Android
+      Будущее фрагментации Android Планшеты Microsoft Surface Windows Phone 8
+      NFC в телефонах IE10 Снижение цен на Google Maps Проблема с Twitter
+	Численная тема Торвальдс о NVidia Миф о разгонекоманды Qt ау
+      </itunes:subtitle>
+      <itunes:author>Umputun, Bobuk, Gray, Ksenks
+      </itunes:author>
+      <itunes:summary> Взлом каждого 10 крупного сайта Flipboard на Android
+      Будущее фрагментации Android Планшеты Microsoft Surface Windows Phone 8
+      NFC в телефонах IE10 Снижение цен на Google Maps Проблема с Twitter
+      Численная тема Торвальдс о NVidia Миф о разгоне команды Qt аудио ●
+	radio-t.torrent ● лог чата ● wiki
+      </itunes:summary>
+      <itunes:keywords>hitech,russian,radiot,tech,news,радио
+      </itunes:keywords>
+    </item>
+    <copyright>Creative Commons - Attribution, Noncommercial, No Derivative
+      Works 3.0 License.
+    </copyright>
+    <media:credit role="author">Umputun, Bobuk, Gray, Ksenks
+    </media:credit>
+    <media:rating>nonadult
+    </media:rating>
+  </channel>
+</rss>
