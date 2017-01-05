@@ -3,14 +3,18 @@ package org.dandelion.radiot.integration;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.test.InstrumentationTestCase;
+import org.dandelion.radiot.helpers.async.Probe;
 import org.dandelion.radiot.live.LiveShowApp;
 import org.dandelion.radiot.live.core.AudioStream;
 import org.dandelion.radiot.live.LiveShowClient;
 import org.dandelion.radiot.live.service.LiveShowService;
 import org.dandelion.radiot.live.service.Lockable;
+import org.hamcrest.Description;
 
 import java.io.IOException;
 import java.util.List;
+
+import static org.dandelion.radiot.helpers.async.Poller.assertEventually;
 
 public class LiveShowServiceLifecycleTest extends InstrumentationTestCase {
     private FakeAudioStream audioStream = new FakeAudioStream();
@@ -25,17 +29,17 @@ public class LiveShowServiceLifecycleTest extends InstrumentationTestCase {
 
     public void testManagesWifiLockInStandardLifecycle() throws Exception {
         startPlayback();
-        assertTrue(lock.isAcquired);
+        assertEventually(lockAcquired(lock));
         stopPlayback();
-        assertFalse(lock.isAcquired);
+        assertEventually(lockReleased(lock));
     }
 
     public void testReleasesWifiLockInWaitingLifecycle() throws Exception {
         startPlayback();
         audioStream.signalError();
-        assertFalse(lock.isAcquired);
+        assertEventually(lockReleased(lock));
         stopPlayback();
-        assertFalse(lock.isAcquired);
+        assertEventually(lockReleased(lock));
     }
 
     public void testStopServiceWhenPlayerGoesWaiting() throws Exception {
@@ -53,6 +57,14 @@ public class LiveShowServiceLifecycleTest extends InstrumentationTestCase {
     public void setUp() throws Exception {
         super.setUp();
         LiveShowApp.setTestingInstance(createTestingApp());
+    }
+
+    private Probe lockAcquired(FakeLock lock) {
+        return new WifiLockProbe(lock, true);
+    }
+
+    private Probe lockReleased(final FakeLock lock) {
+        return new WifiLockProbe(lock, false);
     }
 
     private LiveShowApp createTestingApp() {
@@ -109,7 +121,7 @@ public class LiveShowServiceLifecycleTest extends InstrumentationTestCase {
     }
 
     private static class FakeLock implements Lockable {
-        public boolean isAcquired;
+        volatile boolean isAcquired;
 
         @Override
         public void release() {
@@ -119,6 +131,37 @@ public class LiveShowServiceLifecycleTest extends InstrumentationTestCase {
         @Override
         public void acquire() {
             isAcquired = true;
+        }
+    }
+
+    private static class WifiLockProbe implements Probe {
+        private final FakeLock lock;
+        private final boolean expectedState;
+        private boolean actualState;
+
+        public WifiLockProbe(FakeLock lock, boolean expectedState) {
+            this.lock = lock;
+            this.expectedState = expectedState;
+        }
+
+        @Override
+        public boolean isSatisfied() {
+            return actualState == expectedState;
+        }
+
+        @Override
+        public void sample() {
+            actualState = lock.isAcquired;
+        }
+
+        @Override
+        public void describeAcceptanceCriteriaTo(Description d) {
+            d.appendText("Wifi lock state should be: ").appendValue(expectedState);
+        }
+
+        @Override
+        public void describeFailureTo(Description d) {
+            d.appendText("Wifi lock state was: ").appendValue(actualState);
         }
     }
 
