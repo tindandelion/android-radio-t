@@ -1,14 +1,3 @@
-Version 1.10
- DONE Upgrade GA engine
-   DONE Testing new implementation
-     DONE What about non-Google Android phones? Seems to work fine.
-     DONE No more Android 2.2 support? Seems to work fine.
-     DONE How fat is library now? 2.6MB vs 0.8MB
-     DONE Debugging options in new GA SDK?
-
- * Server: Upgrade frameworks (Jetty, Scalatra)
- * Server: Invalidate current topic after 1 hour
-
  * Use ProGuard to reduce APK size?
  * Raise target SDK
  * New color scheme (light)
@@ -21,7 +10,6 @@ Backlog:
 
  * Current topic: 'Open topic' (in separate browser, for now)
  * Current topic: open topic in embedded browser
- * Server: Attempt to use WebSockets again
  * Chat: lock screen while translating
  * Live show: graceful process termination
  * Downloading: Respect background data loading settings
@@ -29,14 +17,12 @@ Backlog:
  * Chat translation:
      * Discard incorrect messages?
      * Different font sizes for tablets / phones
- * Use Jabber to connect to chat
  * Podcast list: Activity leak in PodcastSelectionHandler
  * Podcast list: Better error explanation
  * Landscape orientation
    * Podcast list: Flickers when changing orientation (due to loading all stuff)
    * Main screen: Tagline should show single-line if possible
  * User topics
- * Gradle integration
 
 * Debt:
  * Podcast type "audo/mpeg" appears in lots of places
