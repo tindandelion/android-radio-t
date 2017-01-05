@@ -1,13 +1,17 @@
 package org.dandelion.radiot.endtoend.live;
 
-import org.dandelion.radiot.RadiotApplication;
 import org.dandelion.radiot.endtoend.live.helpers.ChatTranslationRunner;
 import org.dandelion.radiot.helpers.ResponsiveHttpServer;
 import org.dandelion.radiot.http.DataMonitor;
+import org.dandelion.radiot.http.HttpDataMonitor;
+import org.dandelion.radiot.http.Provider;
+import org.dandelion.radiot.live.chat.HttpChatClient;
+import org.dandelion.radiot.live.chat.Message;
 import org.dandelion.radiot.live.schedule.DeterministicScheduler;
 import org.dandelion.radiot.live.ui.ChatTranslationFragment;
 
 import java.io.IOException;
+import java.util.List;
 
 import static org.dandelion.radiot.util.ChatStreamBuilder.chatStream;
 import static org.dandelion.radiot.util.ChatStreamBuilder.message;
@@ -70,7 +74,9 @@ public class ChatTranslationTest extends LiveShowActivityTestCase {
         ChatTranslationFragment.chatFactory = new DataMonitor.Factory() {
             @Override
             public DataMonitor create() {
-                return RadiotApplication.createChatTranslation(LiveChatTranslationServer.baseUrl(), scheduler);
+                String chatUrl = LiveChatTranslationServer.baseUrl();
+                Provider<List<Message>> client = HttpChatClient.create(chatUrl);
+                return new HttpDataMonitor<>(client, scheduler);
             }
         };
     }
