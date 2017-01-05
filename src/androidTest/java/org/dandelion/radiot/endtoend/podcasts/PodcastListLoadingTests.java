@@ -166,7 +166,7 @@ public class PodcastListLoadingTests
         private final TestableCacheFile cacheFile;
         private FilePodcastsCache localCache;
 
-        public TestPodcastsPlatform(Context context) {
+        TestPodcastsPlatform(Context context) {
             cacheFile = new TestableCacheFile(context.getCacheDir(), CACHE_FILENAME);
             cacheFile.delete();
             localCache = new FilePodcastsCache(cacheFile, CACHE_FORMAT_VERSION);
@@ -181,11 +181,11 @@ public class PodcastListLoadingTests
             );
         }
 
-        public void saveInLocalCache(PodcastList pl) {
+        void saveInLocalCache(PodcastList pl) {
             localCache.updateWith(pl);
         }
 
-        public void expireCache() {
+        void expireCache() {
             cacheFile.setLastModified(LONG_AGO);
         }
 

@@ -12,11 +12,16 @@ public class OkBasedHttpClient implements HttpClient {
 
     private static HttpClient instance = new OkBasedHttpClient();
 
-    public static HttpClient instance() {
+    public static HttpClient defaultInstance() {
         return instance;
     }
 
-    protected OkBasedHttpClient() {}
+    public static HttpClient newInstance() {
+        return new OkBasedHttpClient();
+    }
+
+    private OkBasedHttpClient() {
+    }
 
     private final OkHttpClient client = new OkHttpClient.Builder()
             .cookieJar(new AcceptAllCookies())
