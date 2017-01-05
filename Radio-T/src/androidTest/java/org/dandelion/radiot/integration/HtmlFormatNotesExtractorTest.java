@@ -1,4 +1,4 @@
-package org.dandelion.radiot.unittest;
+package org.dandelion.radiot.integration;
 
 import junit.framework.TestCase;
 import org.dandelion.radiot.podcasts.loader.rss.HtmlFormatNotesExtractor;
