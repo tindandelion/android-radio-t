@@ -4,35 +4,52 @@ import junit.framework.TestCase;
 import org.dandelion.radiot.helpers.HttpServer;
 import org.dandelion.radiot.http.ApacheHttpClient;
 import org.dandelion.radiot.http.HttpClient;
+import org.dandelion.radiot.http.NoContentException;
 
 import java.io.IOException;
 
+import static org.dandelion.radiot.helpers.NanoHTTPD.HTTP_OK;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class HttpClientTest extends TestCase {
+public class ApacheHttpClientTest extends TestCase {
     private static final String URL = HttpServer.addressForUrl("/");
     private final HttpClient client = new ApacheHttpClient();
     private MyHttpServer server;
 
     public void testExecuteGetRequest() throws Exception {
+        server.respondWith(HTTP_OK, "");
+
         client.getStringContent(URL);
         server.hasReceivedRequest("/");
     }
 
-    public void testRequestString() throws Exception {
+    public void testGetContent_asString() throws Exception {
+        final String expected = "Hello world!";
+        server.respondWith(HTTP_OK, expected);
+
         String body = client.getStringContent(URL);
-        assertThat(body, equalTo(MyHttpServer.BODY_TEXT));
-    }
-
-    public void testRequestBytes() throws Exception {
-        byte[] expected = MyHttpServer.BODY_TEXT.getBytes();
-
-        byte[] body = client.getByteContent(URL);
         assertThat(body, equalTo(expected));
     }
 
-    public void testSettingCookies() throws Exception {
+    public void testGetContent_whenNoContent_throwsException() throws Exception {
+        server.respondWith("204 No Content", "");
+        try {
+            client.getStringContent(URL);
+            fail("NoContentException expected");
+        } catch (NoContentException ignored) {
+        }
+    }
+
+    public void testGetContent_asBytes() throws Exception {
+        final String expected = "Hello world!";
+        server.respondWith(HTTP_OK, expected);
+
+        byte[] body = client.getByteContent(URL);
+        assertThat(body, equalTo(expected.getBytes()));
+    }
+
+    public void testSetCookies() throws Exception {
         server.setCookie("TestCookie", "TestCookieValue");
         client.getStringContent(URL);
 
@@ -55,13 +72,18 @@ public class HttpClientTest extends TestCase {
 
     private static class MyHttpServer extends HttpServer {
         static final String BODY_TEXT = "Hello world!";
+        private Response response = new Response(HTTP_OK, MIME_HTML, BODY_TEXT);
 
         MyHttpServer() throws IOException {
         }
 
         @Override
         protected Response serveUri(String uri) {
-            return new Response(HTTP_OK, MIME_HTML, BODY_TEXT);
+            return response;
+        }
+
+        void respondWith(String status, String body) {
+            this.response = new Response(status, MIME_HTML, body);
         }
     }
 }
