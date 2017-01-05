@@ -13,7 +13,7 @@ import org.dandelion.radiot.live.ui.CurrentTopicFragment;
 import java.io.IOException;
 
 public class CurrentTopicTest extends LiveShowActivityTestCase {
-    public static final CurrentTopic DEFAULT_TOPIC =
+    private static final CurrentTopic DEFAULT_TOPIC =
             CurrentTopic.create("default-id", "What is a Web Framework?");
 
     private TopicTrackerBackend backend;

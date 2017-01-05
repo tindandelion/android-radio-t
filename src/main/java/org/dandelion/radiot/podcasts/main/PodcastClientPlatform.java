@@ -1,8 +1,8 @@
 package org.dandelion.radiot.podcasts.main;
 
 import android.content.Context;
-import org.dandelion.radiot.http.ApacheHttpClient;
 import org.dandelion.radiot.http.HttpClient;
+import org.dandelion.radiot.http.OkBasedHttpClient;
 import org.dandelion.radiot.podcasts.loader.*;
 import org.dandelion.radiot.podcasts.loader.caching.LocalPodcastStorage;
 import org.dandelion.radiot.podcasts.ui.PodcastClientFactory;
@@ -54,7 +54,7 @@ public class PodcastClientPlatform implements PodcastClientFactory {
     }
 
     protected HttpClient newThumbnailClient() {
-        return new ApacheHttpClient();
+        return OkBasedHttpClient.make();
     }
 
     private ThumbnailCache newThumbnailCache(LocalPodcastStorage localStorage) {

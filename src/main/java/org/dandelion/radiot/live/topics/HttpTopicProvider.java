@@ -8,17 +8,17 @@ public class HttpTopicProvider implements Provider<CurrentTopic> {
     private final HttpClient client;
     private final String serverUrl;
 
-    public static String topicRequestUrl(String serverUrl) {
+    static String topicRequestUrl(String serverUrl) {
         return serverUrl + "/api/chat/v1/topic";
     }
 
-    public HttpTopicProvider(HttpClient client, String serverUrl) {
+    HttpTopicProvider(HttpClient client, String serverUrl) {
         this.client = client;
         this.serverUrl = serverUrl;
     }
 
     public HttpTopicProvider(String serverUrl) {
-        this(new ApacheHttpClient(), serverUrl);
+        this(OkBasedHttpClient.make(), serverUrl);
     }
 
     private CurrentTopic parseResponseJson(String json) {

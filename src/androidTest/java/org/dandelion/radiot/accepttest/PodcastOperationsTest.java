@@ -120,6 +120,11 @@ public class PodcastOperationsTest extends
                     }
 
                     @Override
+                    public void setReadTimeout(int milliseconds) {
+
+                    }
+
+                    @Override
                     public void shutdown() {
                     }
                 };

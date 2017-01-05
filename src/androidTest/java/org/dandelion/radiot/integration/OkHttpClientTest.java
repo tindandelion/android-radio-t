@@ -14,7 +14,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class OkHttpClientTest extends TestCase {
     private static final String URL = HttpServer.addressForUrl("/");
-    private final HttpClient client = OkBasedHttpClient.newInstance();
+    private final HttpClient client = OkBasedHttpClient.make();
     private MyHttpServer server;
 
     public void testExecuteGetRequest() throws Exception {

@@ -5,27 +5,25 @@ import okhttp3.*;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static java.util.Collections.emptyList;
 
 public class OkBasedHttpClient implements HttpClient {
+    private static final OkHttpClient sharedClient =
+            new OkHttpClient.Builder()
+                    .cookieJar(new AcceptAllCookies())
+                    .build();
 
-    private static HttpClient instance = new OkBasedHttpClient();
-
-    public static HttpClient defaultInstance() {
-        return instance;
+    public static HttpClient make() {
+        return new OkBasedHttpClient(sharedClient);
     }
 
-    public static HttpClient newInstance() {
-        return new OkBasedHttpClient();
-    }
+    private OkHttpClient client;
 
-    private OkBasedHttpClient() {
+    private OkBasedHttpClient(OkHttpClient client) {
+        this.client = client;
     }
-
-    private final OkHttpClient client = new OkHttpClient.Builder()
-            .cookieJar(new AcceptAllCookies())
-            .build();
 
     @Override
     public String getStringContent(String url) throws IOException {
@@ -37,6 +35,13 @@ public class OkBasedHttpClient implements HttpClient {
     public byte[] getByteContent(String url) throws IOException {
         Response response = executeGetRequest(url);
         return response.body().bytes();
+    }
+
+    @Override
+    public void setReadTimeout(int milliseconds) {
+        client = client.newBuilder()
+                .readTimeout(milliseconds, TimeUnit.MILLISECONDS)
+                .build();
     }
 
     @Override

@@ -11,8 +11,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class HttpTopicProviderTest {
-    public static final String SERVER_URL = "http://server.com";
-    public static final String REQUEST_URL = HttpTopicProvider.topicRequestUrl(SERVER_URL);
+    private static final String SERVER_URL = "http://server.com";
+    private static final String REQUEST_URL = HttpTopicProvider.topicRequestUrl(SERVER_URL);
 
     private final HttpClient httpClient = mock(HttpClient.class);
     private final HttpTopicProvider provider = new HttpTopicProvider(httpClient, SERVER_URL);

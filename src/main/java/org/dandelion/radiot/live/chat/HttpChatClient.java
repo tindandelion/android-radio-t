@@ -1,7 +1,7 @@
 package org.dandelion.radiot.live.chat;
 
-import org.dandelion.radiot.http.ApacheHttpClient;
 import org.dandelion.radiot.http.HttpClient;
+import org.dandelion.radiot.http.OkBasedHttpClient;
 import org.dandelion.radiot.http.Provider;
 import org.json.JSONException;
 
@@ -24,9 +24,9 @@ public class HttpChatClient implements Provider<List<Message>> {
     }
 
     public static HttpChatClient create(String baseUrl) {
-        ApacheHttpClient httpClient = new ApacheHttpClient();
-        httpClient.setReadTimeout(READ_TIMEOUT_MS);
-        return new HttpChatClient(baseUrl, httpClient);
+        HttpClient http = OkBasedHttpClient.make();
+        http.setReadTimeout(READ_TIMEOUT_MS);
+        return new HttpChatClient(baseUrl, http);
     }
 
     public HttpChatClient(String baseUrl, HttpClient httpClient) {

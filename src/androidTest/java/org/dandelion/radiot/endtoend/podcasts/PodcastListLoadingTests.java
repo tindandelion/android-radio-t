@@ -6,7 +6,7 @@ import android.test.ActivityInstrumentationTestCase2;
 import org.dandelion.radiot.endtoend.podcasts.helpers.PodcastListRunner;
 import org.dandelion.radiot.endtoend.podcasts.helpers.TestRssServer;
 import org.dandelion.radiot.helpers.TestableCacheFile;
-import org.dandelion.radiot.http.ApacheHttpClient;
+import org.dandelion.radiot.http.OkBasedHttpClient;
 import org.dandelion.radiot.podcasts.core.PodcastList;
 import org.dandelion.radiot.podcasts.loader.PodcastListClient;
 import org.dandelion.radiot.podcasts.loader.RssFeedProvider;
@@ -177,7 +177,7 @@ public class PodcastListLoadingTests
             return new PodcastListClient(
                     new RssFeedProvider(RSS_URL),
                     localCache,
-                    new ApacheHttpClient(), new NullThumbnailCache()
+                    OkBasedHttpClient.make(), new NullThumbnailCache()
             );
         }
 
