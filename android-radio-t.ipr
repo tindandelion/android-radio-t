@@ -50,21 +50,6 @@
     <option name="SKIP_IMPORT_STATEMENTS" value="false" />
   </component>
   <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false" />
-  <component name="GradleSettings">
-    <option name="linkedExternalProjectsSettings">
-      <GradleProjectSettings>
-        <option name="distributionType" value="LOCAL" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/radio-t-server" />
-        <option name="gradleHome" value="/usr/local/Cellar/gradle/2.4/libexec" />
-        <option name="gradleJvm" value="1.7" />
-        <option name="modules">
-          <set>
-            <option value="$PROJECT_DIR$/radio-t-server" />
-          </set>
-        </option>
-      </GradleProjectSettings>
-    </option>
-  </component>
   <component name="InspectionProjectProfileManager">
     <profile version="1.0">
       <option name="myName" value="Project Default" />
@@ -224,9 +209,6 @@
       <module fileurl="file://$PROJECT_DIR$/Radio-T/Radio-T.iml" filepath="$PROJECT_DIR$/Radio-T/Radio-T.iml" />
       <module fileurl="file://$PROJECT_DIR$/android-support-v7-appcompat/android-support-v7-appcompat.iml" filepath="$PROJECT_DIR$/android-support-v7-appcompat/android-support-v7-appcompat.iml" />
       <module fileurl="file://$PROJECT_DIR$/google-play-services_lib/google-play-services_lib.iml" filepath="$PROJECT_DIR$/google-play-services_lib/google-play-services_lib.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/radio-t-server.iml" filepath="$PROJECT_DIR$/.idea/modules/radio-t-server.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/radio-t-server_main.iml" filepath="$PROJECT_DIR$/.idea/modules/radio-t-server_main.iml" group="radio-t-server" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/radio-t-server_test.iml" filepath="$PROJECT_DIR$/.idea/modules/radio-t-server_test.iml" group="radio-t-server" />
     </modules>
   </component>
   <component name="ProjectResources">
