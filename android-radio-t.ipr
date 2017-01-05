@@ -50,9 +50,6 @@
     <option name="SKIP_IMPORT_STATEMENTS" value="false" />
   </component>
   <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false" />
-  <component name="EntryPointsManager">
-    <entry_points version="2.0" />
-  </component>
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
@@ -225,7 +222,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Radio-T/Radio-T.iml" filepath="$PROJECT_DIR$/Radio-T/Radio-T.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Radio-T-Test/Radio-T-Test.iml" filepath="$PROJECT_DIR$/Radio-T-Test/Radio-T-Test.iml" />
       <module fileurl="file://$PROJECT_DIR$/android-support-v7-appcompat/android-support-v7-appcompat.iml" filepath="$PROJECT_DIR$/android-support-v7-appcompat/android-support-v7-appcompat.iml" />
       <module fileurl="file://$PROJECT_DIR$/google-play-services_lib/google-play-services_lib.iml" filepath="$PROJECT_DIR$/google-play-services_lib/google-play-services_lib.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/radio-t-server.iml" filepath="$PROJECT_DIR$/.idea/modules/radio-t-server.iml" />
