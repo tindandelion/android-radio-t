@@ -1,10 +1,12 @@
 v1.10
  DONE Raise target SDK
- * Tracking current topic
  * Gitter-based chat
+ * Review GA-related settings and XMLs
+ * Review Lint report
+ * Tracking current topic
  * Tie local podcast storage version to app version, to avoid upgrade problems
 
-
+ * Use vector graphics?
  * Use ProGuard to reduce APK size?
  * New color scheme (light)
  * Re-design podcast list
