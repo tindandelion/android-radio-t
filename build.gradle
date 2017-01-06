@@ -21,10 +21,18 @@ android {
     defaultConfig {
         minSdkVersion 9
         targetSdkVersion 25
+        jackOptions {
+            enabled true
+        }
     }
 
     lintOptions {
         abortOnError false
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
