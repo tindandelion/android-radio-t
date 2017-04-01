@@ -5,15 +5,9 @@ import android.text.Spanned;
 
 public class HtmlFormatNotesExtractor implements RssParser.NotesExtractor {
 
-    private static final Html.TagHandler tagHandler = (opening, tag, output, xmlReader) -> {
-        if (opening && "li".equals(tag)) {
-            output.append(" ● ");
-        }
-    };
-
     @Override
     public String extract(String text) {
-        Spanned spanned = Html.fromHtml(text, null, tagHandler);
+        Spanned spanned = Html.fromHtml(text, null, null);
         return trimBlanks(removeLineBreaks(removeImageMarkers(spanned.toString())));
     }
 
