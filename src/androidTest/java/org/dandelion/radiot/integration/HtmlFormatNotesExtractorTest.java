@@ -29,11 +29,11 @@ public class HtmlFormatNotesExtractorTest extends TestCase {
 
     public void test_extractFromHtml_listItems() throws Exception {
         String text = "<li>item1</li><li>item2</li>";
-        assertEquals("● item1 ● item2", extractor.extract(text));
+        assertEquals("item1  item2", extractor.extract(text));
     }
 
     public void test_replaceNewLines_withTwoSpaces() throws Exception {
         String text = "<ul><li>line1</li></ul><p>line2</p>";
-        assertEquals("● line1  line2", extractor.extract(text));
+        assertEquals("line1  line2", extractor.extract(text));
     }
 }
