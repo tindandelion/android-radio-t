@@ -17,20 +17,20 @@
 		<item name="android:textColor">?android:attr/textColorSecondary</item>
 	</style>
 
-	<style name="DividerHorizontal">
-		<item name="android:layout_height">1px</item>
-		<item name="android:layout_width">fill_parent</item>
+    <style name="DividerHorizontal">
+        <item name="android:layout_height">1px</item>
+        <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_marginLeft">@dimen/divider_margin</item>
         <item name="android:layout_marginRight">@dimen/divider_margin</item>
-        <item name="android:background">@color/divider</item>
-	</style>
+        <item name="android:background">?android:attr/dividerHorizontal</item>
+    </style>
 
     <style name="DividerVertical">
         <item name="android:layout_height">fill_parent</item>
         <item name="android:layout_width">1px</item>
         <item name="android:layout_marginTop">@dimen/divider_margin</item>
         <item name="android:layout_marginBottom">@dimen/divider_margin</item>
-        <item name="android:background">@color/divider</item>
+        <item name="android:background">?android:attr/dividerVertical</item>
     </style>
 
     <style name="DashboardButton">

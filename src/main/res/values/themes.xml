@@ -1,17 +1,16 @@
 <resources>
-
     <style name="Radiot.Button"
-           parent="@android:style/Widget.Button">
+           parent="@android:style/Widget.Holo.Button.Borderless">
         <item name="android:textColor">@color/button_text_color</item>
         <item name="android:textSize">@dimen/button_text_size</item>
         <item name="android:padding">8dp</item>
-        <item name="android:background">@android:drawable/list_selector_background</item>
     </style>
 
     <style name="Radiot.ImageButton"
-           parent="@android:style/Widget.ImageButton">
-        <item name="android:background">@android:drawable/list_selector_background</item>
+           parent="@android:style/Widget.Holo.ImageButton">
+        <item name="android:background">?android:attr/selectableItemBackground</item>
     </style>
+
 
     <style name="Theme.Radiot" parent="Theme.AppCompat">
         <item name="buttonStyle">@style/Radiot.Button</item>
