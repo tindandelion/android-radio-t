@@ -1,5 +1,6 @@
 package org.dandelion.radiot.endtoend.podcasts;
 
+import android.app.Instrumentation;
 import android.content.Context;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
@@ -25,6 +26,7 @@ public class PodcastListLoadingTests
     private TestRssServer backend;
     private PodcastListRunner app;
     private TestPodcastsPlatform platform;
+    private PodcastListActivity mActivity;
 
     public PodcastListLoadingTests() {
         super(PodcastListActivity.class);
@@ -148,6 +150,21 @@ public class PodcastListLoadingTests
     private PodcastListRunner startApplication() {
         setActivityIntent(startupIntent());
         return new PodcastListRunner(getInstrumentation(), getActivity());
+    }
+
+    @Override
+    public PodcastListActivity getActivity() {
+        if (mActivity == null) {
+            Intent intent = new Intent(getInstrumentation().getTargetContext(), PodcastListActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            // register activity that need to be monitored.
+            Instrumentation.ActivityMonitor monitor = getInstrumentation().addMonitor(PodcastListActivity.class.getName(), null, false);
+            getInstrumentation().getTargetContext().startActivity(intent);
+            mActivity = (PodcastListActivity) getInstrumentation().waitForMonitor(monitor);
+            setActivity(mActivity);
+        }
+        return mActivity;
     }
 
     private Intent startupIntent() {
