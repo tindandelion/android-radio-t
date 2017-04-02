@@ -14,9 +14,9 @@
 
     <style name="Theme.Radiot" parent="Theme.AppCompat">
         <item name="buttonStyle">@style/Radiot.Button</item>
+        <item name="imageButtonStyle">@style/Radiot.ImageButton</item>
 
         <item name="android:textViewStyle">@style/Radiot.TextView</item>
-        <item name="android:imageButtonStyle">@style/Radiot.ImageButton</item>
         <item name="android:windowBackground">@color/background_dark</item>
         <item name="android:windowContentOverlay">@drawable/titlebar_shadow</item>
     </style>
