@@ -5,11 +5,11 @@ import org.dandelion.radiot.http.HttpClient;
 import org.dandelion.radiot.http.OkBasedHttpClient;
 import org.dandelion.radiot.podcasts.loader.*;
 import org.dandelion.radiot.podcasts.loader.caching.LocalPodcastStorage;
-import org.dandelion.radiot.podcasts.ui.PodcastClientFactory;
+import org.dandelion.radiot.podcasts.ui.PodcastListModel;
 
 import java.util.HashMap;
 
-public class PodcastClientPlatform implements PodcastClientFactory {
+public class PodcastClientPlatform implements PodcastListModel.Factory {
 
     private static HashMap<String, PodcastProperties> shows;
 
@@ -30,8 +30,8 @@ public class PodcastClientPlatform implements PodcastClientFactory {
     }
 
     @Override
-    public PodcastListClient newClientForShow(String name) {
-        PodcastProperties props = propertiesForShow(name);
+    public PodcastListModel create(String showName) {
+        PodcastProperties props = propertiesForShow(showName);
         return newLoaderWithProperties(props);
     }
 
@@ -64,6 +64,7 @@ public class PodcastClientPlatform implements PodcastClientFactory {
     private PodcastsCache newPodcastsCache(LocalPodcastStorage localStorage) {
         return localStorage.podcastsCache();
     }
+
 
     private static class PodcastProperties {
         public String name;

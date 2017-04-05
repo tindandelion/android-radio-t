@@ -4,9 +4,10 @@ import android.os.AsyncTask;
 import org.dandelion.radiot.http.HttpClient;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastList;
+import org.dandelion.radiot.podcasts.ui.PodcastListModel;
 
 @SuppressWarnings("unchecked")
-public class PodcastListClient {
+public class PodcastListClient implements PodcastListModel {
     private ProgressListener progressListener = ProgressListener.Null;
     private PodcastsConsumer consumer = PodcastsConsumer.Null;
 
@@ -23,11 +24,11 @@ public class PodcastListClient {
         startRefreshTask(true);
     }
 
-    public void populateData() {
+    public void populateConsumer() {
         startRefreshTask(false);
     }
 
-    public void taskFinished() {
+    private void taskFinished() {
         task = null;
     }
 
@@ -49,11 +50,11 @@ public class PodcastListClient {
     }
 
 
-    protected boolean isInProgress() {
+    private boolean isInProgress() {
         return task != null;
     }
 
-    protected void startRefreshTask(boolean forceRefresh) {
+    private void startRefreshTask(boolean forceRefresh) {
         if (!isInProgress()) {
             task = new UpdateTask();
             task.execute(forceRefresh);
@@ -63,7 +64,7 @@ public class PodcastListClient {
     class UpdateTask extends AsyncTask<Boolean, Runnable, Exception> implements PodcastsConsumer {
         private PodcastList list;
 
-        public UpdateTask() {
+        UpdateTask() {
         }
 
         @Override

@@ -104,7 +104,7 @@ public class PodcastOperationsTest extends
     }
 
     private void setupFakeLoader() {
-        PodcastListActivity.clientFactory = new PodcastClientPlatform(getInstrumentation().getTargetContext()) {
+        PodcastListActivity.modelFactory = new PodcastClientPlatform(getInstrumentation().getTargetContext()) {
             @Override
             protected HttpClient newThumbnailClient() {
                 return new HttpClient() {

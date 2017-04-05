@@ -10,19 +10,19 @@ import org.dandelion.radiot.R;
 import org.dandelion.radiot.common.ui.CustomTitleActivity;
 import org.dandelion.radiot.podcasts.core.PodcastAction;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
-import org.dandelion.radiot.podcasts.loader.PodcastListClient;
 import org.dandelion.radiot.podcasts.loader.ProgressListener;
 import org.dandelion.radiot.podcasts.main.PodcastsApp;
 
 public class PodcastListActivity extends CustomTitleActivity {
-    public static PodcastClientFactory clientFactory = null;
+    public static PodcastListModel.Factory modelFactory = null;
 
     public final SwipeRefreshLayout.OnRefreshListener onRefresh = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {
-            client.refreshData();
+            model.refreshData();
         }
     };
+
     private final ProgressListener progressListener = new ProgressListener() {
         @Override
         public void onStarted() {
@@ -47,15 +47,16 @@ public class PodcastListActivity extends CustomTitleActivity {
 
 
     private SwipeRefreshLayout refreshLayout;
-    private PodcastListClient client;
+    private PodcastListModel model;
+
 
     public static Intent createIntent(Context context, String title, String showName) {
         return StartParams.createIntent(context, title, showName);
     }
 
     @Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.podcast_screen);
     }
 
@@ -105,26 +106,26 @@ public class PodcastListActivity extends CustomTitleActivity {
         };
     }
 
-    protected void attachToLoader(String show, PodcastListAdapter la) {
-		client = clientFactory.newClientForShow(show);
-        client.attach(progressListener, la);
-	}
+    private void attachToLoader(String show, PodcastListAdapter la) {
+        model = modelFactory.create(show);
+        model.attach(progressListener, la);
+    }
 
     @Override
-	protected void onResume() {
-		super.onResume();
+    protected void onResume() {
+        super.onResume();
         refreshLayout.post(new Runnable() {
             @Override
             public void run() {
-                client.populateData();
+                model.populateConsumer();
             }
         });
-	}
+    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        client.release();
+        model.release();
     }
 
     public ListAdapter getListAdapter() {

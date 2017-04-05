@@ -13,8 +13,8 @@ import org.dandelion.radiot.podcasts.loader.PodcastListClient;
 import org.dandelion.radiot.podcasts.loader.RssFeedProvider;
 import org.dandelion.radiot.podcasts.loader.ThumbnailCache;
 import org.dandelion.radiot.podcasts.loader.caching.FilePodcastsCache;
-import org.dandelion.radiot.podcasts.ui.PodcastClientFactory;
 import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
+import org.dandelion.radiot.podcasts.ui.PodcastListModel;
 
 import static org.dandelion.radiot.endtoend.podcasts.helpers.RssFeedBuilder.rssFeed;
 import static org.dandelion.radiot.endtoend.podcasts.helpers.RssFeedBuilder.rssItem;
@@ -138,7 +138,7 @@ public class PodcastListLoadingTests
         super.setUp();
         backend = new TestRssServer();
         platform = new TestPodcastsPlatform(context());
-        PodcastListActivity.clientFactory = platform;
+        PodcastListActivity.modelFactory = platform;
     }
 
     @Override
@@ -175,7 +175,7 @@ public class PodcastListLoadingTests
         return getInstrumentation().getTargetContext();
     }
 
-    private static class TestPodcastsPlatform implements PodcastClientFactory {
+    private static class TestPodcastsPlatform implements PodcastListModel.Factory {
         private static String CACHE_FILENAME = "test-show";
         private static final String RSS_URL = TestRssServer.addressForUrl("/rss");
         private static final int CACHE_FORMAT_VERSION = 0;
@@ -188,22 +188,22 @@ public class PodcastListLoadingTests
             cacheFile.delete();
             localCache = new FilePodcastsCache(cacheFile, CACHE_FORMAT_VERSION);
         }
-
-        @Override
-        public PodcastListClient newClientForShow(String name) {
-            return new PodcastListClient(
-                    new RssFeedProvider(RSS_URL),
-                    localCache,
-                    OkBasedHttpClient.make(), new NullThumbnailCache()
-            );
-        }
-
+        
         void saveInLocalCache(PodcastList pl) {
             localCache.updateWith(pl);
         }
 
         void expireCache() {
             cacheFile.setLastModified(LONG_AGO);
+        }
+
+        @Override
+        public PodcastListModel create(String showName) {
+            return new PodcastListClient(
+                    new RssFeedProvider(RSS_URL),
+                    localCache,
+                    OkBasedHttpClient.make(), new NullThumbnailCache()
+            );
         }
 
         private static class NullThumbnailCache implements ThumbnailCache {

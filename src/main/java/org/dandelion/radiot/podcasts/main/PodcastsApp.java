@@ -22,7 +22,7 @@ public class PodcastsApp {
         if (null == instance) {
             instance = new PodcastsApp(context);
         }
-        PodcastListActivity.clientFactory = new PodcastClientPlatform(context);
+        PodcastListActivity.modelFactory = new PodcastClientPlatform(context);
     }
     
     public static void release() {
