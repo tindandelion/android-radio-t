@@ -19,6 +19,7 @@ public interface PodcastListModel {
 
     interface Consumer {
         void updateList(PodcastList podcasts);
+
         void updateThumbnail(PodcastItem item, byte[] thumbnail);
     }
 
