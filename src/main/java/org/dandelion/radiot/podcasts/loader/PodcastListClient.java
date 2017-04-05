@@ -8,7 +8,8 @@ import org.dandelion.radiot.podcasts.ui.PodcastListModel;
 
 @SuppressWarnings("unchecked")
 public class PodcastListClient implements PodcastListModel {
-    private ProgressListener progressListener = ProgressListener.Null;
+    private ProgressListener progressListener = nullListener();
+
     private PodcastsConsumer consumer = PodcastsConsumer.Null;
 
     private UpdateTask task;
@@ -34,7 +35,7 @@ public class PodcastListClient implements PodcastListModel {
 
     public void release() {
         cancelCurrentTask();
-        progressListener = ProgressListener.Null;
+        progressListener = nullListener();
         consumer = PodcastsConsumer.Null;
     }
 
@@ -59,6 +60,22 @@ public class PodcastListClient implements PodcastListModel {
             task = new UpdateTask();
             task.execute(forceRefresh);
         }
+    }
+
+    private static ProgressListener nullListener() {
+        return new ProgressListener() {
+            @Override
+            public void onStarted() {
+            }
+
+            @Override
+            public void onFinished() {
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+            }
+        };
     }
 
     class UpdateTask extends AsyncTask<Boolean, Runnable, Exception> implements PodcastsConsumer {

@@ -10,7 +10,6 @@ import org.dandelion.radiot.R;
 import org.dandelion.radiot.common.ui.CustomTitleActivity;
 import org.dandelion.radiot.podcasts.core.PodcastAction;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
-import org.dandelion.radiot.podcasts.loader.ProgressListener;
 import org.dandelion.radiot.podcasts.main.PodcastsApp;
 
 public class PodcastListActivity extends CustomTitleActivity {
@@ -23,7 +22,7 @@ public class PodcastListActivity extends CustomTitleActivity {
         }
     };
 
-    private final ProgressListener progressListener = new ProgressListener() {
+    private final PodcastListModel.ProgressListener progressListener = new PodcastListModel.ProgressListener() {
         @Override
         public void onStarted() {
             refreshLayout.setRefreshing(true);
