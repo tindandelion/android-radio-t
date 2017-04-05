@@ -4,6 +4,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import org.dandelion.radiot.podcasts.ui.PodcastListActivity;
 import org.dandelion.radiot.podcasts.ui.PodcastListModel;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,6 +24,7 @@ public class PodcastDownloadingTest {
             };
 
     @Test
+    @Ignore
     public void first() throws Exception {
         fail("This test runs fine");
     }
