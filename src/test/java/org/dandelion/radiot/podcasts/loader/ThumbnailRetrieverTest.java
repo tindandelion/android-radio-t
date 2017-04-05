@@ -3,6 +3,7 @@ package org.dandelion.radiot.podcasts.loader;
 import org.dandelion.radiot.http.HttpClient;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastList;
+import org.dandelion.radiot.podcasts.ui.PodcastListModel;
 import org.junit.Test;
 import org.mockito.InOrder;
 
@@ -13,13 +14,13 @@ import static org.mockito.Mockito.*;
 
 @SuppressWarnings("unchecked")
 public class ThumbnailRetrieverTest {
-    final static String REMOTE_URL = "http://radio-t.com/thumbnail1.jpg";
-    final static String CACHED_URL = "http://radio-t.com/thumbnail2.jpg";
+    private final static String REMOTE_URL = "http://radio-t.com/thumbnail1.jpg";
+    private final static String CACHED_URL = "http://radio-t.com/thumbnail2.jpg";
 
-    final static byte[] THUMBNAIL = new byte[0];
+    private final static byte[] THUMBNAIL = new byte[0];
 
     private final HttpClient httpClient = mock(HttpClient.class);
-    private final PodcastsConsumer consumer = mock(PodcastsConsumer.class);
+    private final PodcastListModel.Consumer consumer = mock(PodcastListModel.Consumer.class);
     private final ThumbnailCache cache = mock(ThumbnailCache.class);
     private final PodcastList list = anEmptyList();
     private ThumbnailRetriever retriever = new ThumbnailRetriever(httpClient, cache);

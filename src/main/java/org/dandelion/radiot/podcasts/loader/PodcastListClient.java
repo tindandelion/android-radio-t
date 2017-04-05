@@ -9,8 +9,7 @@ import org.dandelion.radiot.podcasts.ui.PodcastListModel;
 @SuppressWarnings("unchecked")
 public class PodcastListClient implements PodcastListModel {
     private ProgressListener progressListener = nullListener();
-
-    private PodcastsConsumer consumer = PodcastsConsumer.Null;
+    private Consumer consumer = nullConsumer();
 
     private UpdateTask task;
     private final PodcastListRetriever podcastRetriever;
@@ -36,7 +35,7 @@ public class PodcastListClient implements PodcastListModel {
     public void release() {
         cancelCurrentTask();
         progressListener = nullListener();
-        consumer = PodcastsConsumer.Null;
+        consumer = nullConsumer();
     }
 
     private void cancelCurrentTask() {
@@ -45,7 +44,8 @@ public class PodcastListClient implements PodcastListModel {
         }
     }
 
-    public void attach(ProgressListener listener, PodcastsConsumer consumer) {
+    @Override
+    public void attach(ProgressListener listener, Consumer consumer) {
         this.progressListener = listener;
         this.consumer = consumer;
     }
@@ -78,7 +78,19 @@ public class PodcastListClient implements PodcastListModel {
         };
     }
 
-    class UpdateTask extends AsyncTask<Boolean, Runnable, Exception> implements PodcastsConsumer {
+    private static Consumer nullConsumer() {
+        return new Consumer() {
+            @Override
+            public void updateList(PodcastList podcasts) {
+            }
+
+            @Override
+            public void updateThumbnail(PodcastItem item, byte[] thumbnail) {
+            }
+        };
+    }
+
+    class UpdateTask extends AsyncTask<Boolean, Runnable, Exception> implements Consumer {
         private PodcastList list;
 
         UpdateTask() {

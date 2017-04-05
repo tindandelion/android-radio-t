@@ -1,6 +1,7 @@
 package org.dandelion.radiot.podcasts.loader;
 
 import org.dandelion.radiot.podcasts.core.PodcastList;
+import org.dandelion.radiot.podcasts.ui.PodcastListModel;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InOrder;
@@ -13,7 +14,7 @@ public class PodcastListRetrieverTest {
 
     private final PodcastsProvider provider = mock(PodcastsProvider.class);
     private final PodcastsCache cache = mock(PodcastsCache.class);
-    private final PodcastsConsumer consumer = mock(PodcastsConsumer.class);
+    private final PodcastListModel.Consumer consumer = mock(PodcastListModel.Consumer.class);
     private final PodcastListRetriever retriever = new PodcastListRetriever(provider, cache);
 
     @Test

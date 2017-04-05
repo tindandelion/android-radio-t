@@ -13,12 +13,11 @@ import android.widget.ArrayAdapter;
 import org.dandelion.radiot.R;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
 import org.dandelion.radiot.podcasts.core.PodcastList;
-import org.dandelion.radiot.podcasts.loader.PodcastsConsumer;
 
-class PodcastListAdapter extends ArrayAdapter<PodcastVisual> implements PodcastsConsumer {
+class PodcastListAdapter extends ArrayAdapter<PodcastVisual> implements PodcastListModel.Consumer {
     private LayoutInflater inflater;
 
-    public PodcastListAdapter(Activity activity) {
+    PodcastListAdapter(Activity activity) {
         super(activity, 0);
         this.inflater = activity.getLayoutInflater();
     }

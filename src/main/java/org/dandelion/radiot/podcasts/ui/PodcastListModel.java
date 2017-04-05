@@ -1,6 +1,7 @@
 package org.dandelion.radiot.podcasts.ui;
 
-import org.dandelion.radiot.podcasts.loader.PodcastsConsumer;
+import org.dandelion.radiot.podcasts.core.PodcastItem;
+import org.dandelion.radiot.podcasts.core.PodcastList;
 
 public interface PodcastListModel {
 
@@ -16,7 +17,12 @@ public interface PodcastListModel {
         void onError(String errorMessage);
     }
 
-    void attach(ProgressListener progressListener, PodcastsConsumer consumer);
+    interface Consumer {
+        void updateList(PodcastList podcasts);
+        void updateThumbnail(PodcastItem item, byte[] thumbnail);
+    }
+
+    void attach(ProgressListener progressListener, Consumer consumer);
 
     void release();
 
