@@ -49,10 +49,6 @@ public class PodcastsApp {
         return new ExternalPlayer();
     }
 
-    public PodcastAction createDownloader() {
-        return new DownloadServiceClient();
-    }
-
     protected File getSystemDownloadFolder() {
         return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
     }

@@ -10,6 +10,7 @@ import org.dandelion.radiot.podcasts.ui.PodcastVisual;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onData;
@@ -30,9 +31,14 @@ public class PodcastDownloadingTest {
                 }
             };
 
+    @Rule
+    public TemporaryFolder downloadFolder = new TemporaryFolder();
+
     @Test
     @Ignore
     public void downloadPodcast() throws Exception {
+        activityRule.getActivity().setDownloadFolder(downloadFolder.getRoot());
+
         onData(instanceOf(PodcastVisual.class))
                 .atPosition(0)
                 .perform(click());

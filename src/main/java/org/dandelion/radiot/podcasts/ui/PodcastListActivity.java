@@ -10,7 +10,10 @@ import org.dandelion.radiot.R;
 import org.dandelion.radiot.common.ui.CustomTitleActivity;
 import org.dandelion.radiot.podcasts.core.PodcastAction;
 import org.dandelion.radiot.podcasts.core.PodcastItem;
+import org.dandelion.radiot.podcasts.download.DownloadServiceClient;
 import org.dandelion.radiot.podcasts.main.PodcastsApp;
+
+import java.io.File;
 
 public class PodcastListActivity extends CustomTitleActivity {
     public static PodcastListModel.Factory modelFactory = null;
@@ -45,6 +48,7 @@ public class PodcastListActivity extends CustomTitleActivity {
     };
 
 
+    private DownloadServiceClient downloader = new DownloadServiceClient();
     private SwipeRefreshLayout refreshLayout;
     private PodcastListModel model;
 
@@ -92,7 +96,7 @@ public class PodcastListActivity extends CustomTitleActivity {
         PodcastsApp app = PodcastsApp.getInstance();
         return new PodcastSelectionHandler(this,
                 trackingAction("play", app.createPlayer()),
-                trackingAction("download", app.createDownloader()));
+                trackingAction("download", downloader));
     }
 
     private PodcastAction trackingAction(final String label, final PodcastAction action) {
@@ -129,5 +133,9 @@ public class PodcastListActivity extends CustomTitleActivity {
 
     public ListAdapter getListAdapter() {
         return getListView().getAdapter();
+    }
+
+    public void setDownloadFolder(File folder) {
+
     }
 }
